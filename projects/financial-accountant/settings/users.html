@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>إدارة المستخدمين</title>
+  <link rel="stylesheet" href="css/main.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">💼 Financial Accountant</div>
+  <nav>
+    <a href="index.html" class="">الرئيسية</a>
+    <a href="dashboard.html" class="">لوحة التحكم</a>
+    <a href="invoices/list.html">الفواتير</a>
+    <a href="customers/list.html">العملاء</a>
+    <a href="products/list.html">المنتجات</a>
+    <a href="expenses/list.html">المصروفات</a>
+    <a href="reports/financial.html">التقارير</a>
+    <a href="settings/company.html">الإعدادات</a>
+    <a href="auth/login.html" class="btn small">تسجيل الدخول</a>
+  </nav>
+</header>
+
+  <main class="container">
+
+<div class="card">
+  <h2>المستخدمون</h2>
+  <div id="users-list" class="empty">سيتم التحميل من LocalStorage</div>
+</div>
+
+  </main>
+
+<footer class="app-footer">
+  <small>© 2025 Financial Accountant App — إصدار تجريبي</small>
+</footer>
+
+  <script defer src="js/helpers.js"></script><script defer src="js/storage.js"></script><script defer src="js/main.js"></script>
+</body>
+</html>

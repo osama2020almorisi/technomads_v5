@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="حاسبة العمر المتكاملة - إدارة أعياد الميلاد للأشخاص والحيوانات وأي كائن مع حساب العمر الدقيق">
+    <title>الرئيسية - حاسبة العمر المتكاملة</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* ========== المتغيرات العامة ========== */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --primary-light: #4895ef;
+            --accent: #f72585;
+            --dark: #14213d;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #ef233c;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --border-radius: 16px;
+            --border-radius-sm: 12px;
+            --box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --box-shadow-hover: 0 20px 40px rgba(67, 97, 238, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        /* ========== الحاوية الرئيسية ========== */
+        .app-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ========== الهيدر ========== */
+        .main-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 30px 25px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .main-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-content h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-content h1 i {
+            font-size: 48px;
+            color: var(--accent);
+            filter: drop-shadow(0 0 10px rgba(247, 37, 133, 0.5));
+        }
+
+        .header-content p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+        }
+
+        .header-actions {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+            color: var(--primary-dark);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(247, 37, 133, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn i {
+            font-size: 20px;
+        }
+
+        /* ========== بطاقات الإحصائيات ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+        }
+
+        .stat-info h3 {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .stat-info .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .stat-info .stat-label {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        /* ========== شريط البحث والتصفية ========== */
+        .filter-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            flex: 2;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            border: 2px solid var(--gray-light);
+            border-radius: 50px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.1);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 12px 24px;
+            border-radius: 50px;
+            background: var(--light);
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .filter-tab:hover:not(.active) {
+            background: var(--gray-light);
+        }
+
+        /* ========== قائمة المواليد ========== */
+        .birthdays-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .birthdays-header h2 {
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+        }
+
+        .birthdays-header h2 i {
+            color: var(--accent);
+        }
+
+        .view-options {
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 8px;
+            border-radius: 50px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .view-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--gray);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* عرض الشبكة */
+        .birthday-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* عرض القائمة */
+        .birthday-list {
+            display: none;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 40px;
+        }
+
+        .list-header, .list-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            padding: 18px 25px;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .list-header {
+            background: var(--primary-dark);
+            color: white;
+            font-weight: 700;
+        }
+
+        .list-row {
+            border-bottom: 1px solid var(--gray-light);
+            transition: var(--transition);
+        }
+
+        .list-row:hover {
+            background: var(--light);
+        }
+
+        .list-row:last-child {
+            border-bottom: none;
+        }
+
+        /* البطاقة */
+        .birthday-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .birthday-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 3px 10px rgba(247, 37, 133, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+
+        .card-title h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .card-title .type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            background: var(--light);
+            color: var(--gray);
+        }
+
+        .card-info {
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--gray-light);
+        }
+
+        .info-label {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .age-progress {
+            margin: 15px 0;
+            height: 8px;
+            background: var(--gray-light);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--success), var(--primary));
+            border-radius: 10px;
+            width: 0%;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        .action-btn.view {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn.edit {
+            background: var(--warning);
+            color: white;
+        }
+
+        .action-btn.delete {
+            background: var(--danger);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+        }
+
+        /* رسالة عدم وجود بيانات */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .empty-state i {
+            font-size: 80px;
+            color: var(--gray-light);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 28px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            color: var(--gray);
+            margin-bottom: 25px;
+        }
+
+        /* ========== الفوتر ========== */
+        .main-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 25px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            color: var(--gray);
+        }
+
+        /* ========== التجاوب ========== */
+        @media (max-width: 992px) {
+            .main-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .header-content h1 {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .list-header {
+                display: none;
+            }
+            .list-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 20px;
+                border: 1px solid var(--gray-light);
+                border-radius: var(--border-radius);
+                margin-bottom: 10px;
+                background: white;
+            }
+            .list-row::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: var(--primary);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content h1 {
+                font-size: 32px;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* تحميل */
+        .loader-small {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- الهيدر الرئيسي -->
+        <header class="main-header">
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-birthday-cake"></i>
+                    حاسبة العمر المتكاملة
+                </h1>
+                <p>قم بإدارة أعياد الميلاد للأشخاص، الحيوانات، أو أي شيء تحبه، واحسب العمر بدقة مع العد التنازلي الحي</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="window.location.href='add-birthday.html'">
+                    <i class="fas fa-plus-circle"></i> إضافة مولود جديد
+                </button>
+                <button class="btn btn-outline" onclick="window.location.href='upcoming.html'">
+                    <i class="fas fa-gift"></i> الأعياد القادمة
+                </button>
+                <button class="btn btn-outline" onclick="window.location.href='calculator.html'">
+                    <i class="fas fa-calculator"></i> حاسبة العمر
+                </button>
+            </div>
+        </header>
+
+        <!-- بطاقات الإحصائيات -->
+        <div class="stats-grid" id="statsContainer">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <h3>إجمالي المواليد</h3>
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">سجل</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
+                <div class="stat-info">
+                    <h3>عيد الميلاد القادم</h3>
+                    <div class="stat-number" id="nextBirthday">-</div>
+                    <div class="stat-label" id="nextBirthdayDays"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-crown"></i></div>
+                <div class="stat-info">
+                    <h3>أكبر مولود</h3>
+                    <div class="stat-number" id="oldestName">-</div>
+                    <div class="stat-label" id="oldestAge"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-paw"></i></div>
+                <div class="stat-info">
+                    <h3>الحيوانات</h3>
+                    <div class="stat-number" id="animalsCount">0</div>
+                    <div class="stat-label">من total</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- شريط البحث والتصفية -->
+        <div class="filter-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="ابحث بالاسم أو النوع..." autocomplete="off">
+            </div>
+            <div class="filter-tabs">
+                <span class="filter-tab active" data-filter="all">الكل</span>
+                <span class="filter-tab" data-filter="human"><i class="fas fa-user"></i> بشر</span>
+                <span class="filter-tab" data-filter="animal"><i class="fas fa-paw"></i> حيوانات</span>
+                <span class="filter-tab" data-filter="other"><i class="fas fa-robot"></i> آخر</span>
+            </div>
+        </div>
+
+        <!-- رأس قائمة المواليد مع خيارات العرض -->
+        <div class="birthdays-header">
+            <h2><i class="fas fa-list-ul"></i> المواليد المسجلين</h2>
+            <div class="view-options">
+                <button class="view-btn active" id="gridViewBtn" title="عرض شبكي"><i class="fas fa-th-large"></i></button>
+                <button class="view-btn" id="listViewBtn" title="عرض قائمة"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+
+        <!-- عرض الشبكة (افتراضي) -->
+        <div id="birthdayGrid" class="birthday-grid"></div>
+
+        <!-- عرض القائمة (مخفي افتراضي) -->
+        <div id="birthdayList" class="birthday-list">
+            <div class="list-header">
+                <span>الاسم</span>
+                <span>النوع</span>
+                <span>تاريخ الميلاد</span>
+                <span>العمر</span>
+                <span>الإجراءات</span>
+            </div>
+            <div id="listContainer"></div>
+        </div>
+
+        <!-- الفوتر -->
+        <footer class="main-footer">
+            <p>تم التطوير بدقة وعناية باستخدام أحدث التقنيات | © <span id="currentYear"></span> حاسبة العمر المتكاملة</p>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            // ========== البيانات والمتغيرات العامة ==========
+            const STORAGE_KEY = 'birthday_app_data';
+            let birthdays = [];
+            let currentFilter = 'all';
+            let searchTerm = '';
+            let currentView = 'grid'; // 'grid' or 'list'
+
+            // العناصر
+            const gridEl = document.getElementById('birthdayGrid');
+            const listEl = document.getElementById('birthdayList');
+            const listContainer = document.getElementById('listContainer');
+            const gridViewBtn = document.getElementById('gridViewBtn');
+            const listViewBtn = document.getElementById('listViewBtn');
+            const searchInput = document.getElementById('searchInput');
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            const stats = {
+                total: document.getElementById('totalCount'),
+                nextBirthday: document.getElementById('nextBirthday'),
+                nextBirthdayDays: document.getElementById('nextBirthdayDays'),
+                oldestName: document.getElementById('oldestName'),
+                oldestAge: document.getElementById('oldestAge'),
+                animalsCount: document.getElementById('animalsCount')
+            };
+
+            // ========== الدوال المساعدة ==========
+            function loadData() {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    try {
+                        birthdays = JSON.parse(stored);
+                    } catch (e) {
+                        birthdays = [];
+                    }
+                } else {
+                    // بيانات افتراضية للتجربة
+                    birthdays = [
+                        { id: '1', name: 'أحمد محمد', type: 'human', birthDate: '1995-05-20T00:00', notes: '', createdAt: Date.now() },
+                        { id: '2', name: 'لونا (قطة)', type: 'animal', birthDate: '2020-03-15T00:00', notes: '', createdAt: Date.now() },
+                        { id: '3', name: 'نبتة الصبار', type: 'other', typeCustom: 'نبات', birthDate: '2022-01-10T00:00', notes: '', createdAt: Date.now() },
+                        { id: '4', name: 'سارة علي', type: 'human', birthDate: '1988-11-02T00:00', notes: '', createdAt: Date.now() },
+                        { id: '5', name: 'كلوي (كلب)', type: 'animal', birthDate: '2019-07-22T00:00', notes: '', createdAt: Date.now() }
+                    ];
+                    saveData();
+                }
+                renderAll();
+            }
+
+            function saveData() {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(birthdays));
+            }
+
+            // حساب العمر من تاريخ الميلاد حتى الآن
+            function calculateAge(birthDateStr) {
+                const birth = new Date(birthDateStr);
+                const now = new Date();
+                let years = now.getFullYear() - birth.getFullYear();
+                let months = now.getMonth() - birth.getMonth();
+                let days = now.getDate() - birth.getDate();
+
+                if (days < 0) {
+                    months--;
+                    const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                    days += lastMonth.getDate();
+                }
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+                return { years, months, days, totalDays: Math.floor((now - birth) / (1000*60*60*24)) };
+            }
+
+            // تنسيق التاريخ
+            function formatDate(dateStr) {
+                const date = new Date(dateStr);
+                return date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+            }
+
+            // الحصول على أيقونة النوع
+            function getTypeIcon(type, custom) {
+                if (type === 'human') return '<i class="fas fa-user"></i>';
+                if (type === 'animal') return '<i class="fas fa-paw"></i>';
+                if (custom) return `<i class="fas fa-tag"></i> ${custom}`;
+                return '<i class="fas fa-robot"></i> آخر';
+            }
+
+            // تصفية البيانات حسب البحث والفلتر
+            function getFilteredBirthdays() {
+                return birthdays.filter(b => {
+                    // فلتر النوع
+                    if (currentFilter !== 'all' && b.type !== currentFilter) return false;
+                    
+                    // بحث
+                    if (searchTerm.trim() !== '') {
+                        const term = searchTerm.trim().toLowerCase();
+                        const nameMatch = b.name.toLowerCase().includes(term);
+                        const typeMatch = b.type.toLowerCase().includes(term) || (b.typeCustom && b.typeCustom.toLowerCase().includes(term));
+                        return nameMatch || typeMatch;
+                    }
+                    return true;
+                }).sort((a, b) => new Date(a.birthDate) - new Date(b.birthDate)); // ترتيب حسب الأقدم
+            }
+
+            // تحديث الإحصائيات
+            function updateStats() {
+                // العدد الإجمالي
+                stats.total.textContent = birthdays.length;
+
+                // عدد الحيوانات
+                const animals = birthdays.filter(b => b.type === 'animal').length;
+                stats.animalsCount.textContent = animals;
+
+                // أقرب عيد ميلاد (حسب التاريخ الحالي)
+                const today = new Date();
+                const currentYear = today.getFullYear();
+                let nextBirthday = null;
+                let minDays = Infinity;
+                birthdays.forEach(b => {
+                    const bd = new Date(b.birthDate);
+                    // تاريخ عيد الميلاد هذا العام
+                    let next = new Date(currentYear, bd.getMonth(), bd.getDate());
+                    // إذا كان قد مضى، نأخذ السنة القادمة
+                    if (next < today) {
+                        next = new Date(currentYear + 1, bd.getMonth(), bd.getDate());
+                    }
+                    const diffDays = Math.ceil((next - today) / (1000*60*60*24));
+                    if (diffDays < minDays) {
+                        minDays = diffDays;
+                        nextBirthday = { name: b.name, days: diffDays };
+                    }
+                });
+                if (nextBirthday) {
+                    stats.nextBirthday.textContent = nextBirthday.name;
+                    stats.nextBirthdayDays.textContent = `بعد ${nextBirthday.days} يوم`;
+                } else {
+                    stats.nextBirthday.textContent = '-';
+                    stats.nextBirthdayDays.textContent = '';
+                }
+
+                // أكبر مولود (أقدم تاريخ)
+                if (birthdays.length > 0) {
+                    const oldest = birthdays.reduce((oldest, current) => {
+                        return new Date(current.birthDate) < new Date(oldest.birthDate) ? current : oldest;
+                    });
+                    stats.oldestName.textContent = oldest.name;
+                    const age = calculateAge(oldest.birthDate);
+                    stats.oldestAge.textContent = `${age.years} سنة`;
+                } else {
+                    stats.oldestName.textContent = '-';
+                    stats.oldestAge.textContent = '';
+                }
+            }
+
+            // عرض المحتوى حسب العرض الحالي
+            function renderAll() {
+                const filtered = getFilteredBirthdays();
+                renderGrid(filtered);
+                renderList(filtered);
+                updateStats();
+
+                if (filtered.length === 0) {
+                    // عرض رسالة فارغة إذا لم توجد نتائج
+                    if (currentView === 'grid') {
+                        gridEl.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-calendar-times"></i>
+                                <h3>لا توجد نتائج</h3>
+                                <p>لم نعثر على أي مولود يطابق بحثك. حاول بكلمات أخرى أو أضف مولوداً جديداً.</p>
+                                <button class="btn btn-primary" onclick="window.location.href='add-birthday.html'">
+                                    <i class="fas fa-plus-circle"></i> إضافة مولود جديد
+                                </button>
+                            </div>
+                        `;
+                    } else {
+                        listContainer.innerHTML = `
+                            <div class="empty-state" style="grid-column:span 5;">
+                                <i class="fas fa-calendar-times"></i>
+                                <h3>لا توجد نتائج</h3>
+                                <p>لم نعثر على أي مولود...</p>
+                            </div>
+                        `;
+                    }
+                }
+            }
+
+            // عرض الشبكة
+            function renderGrid(items) {
+                if (items.length === 0) {
+                    gridEl.innerHTML = ''; // سيتم التعامل معه في renderAll
+                    return;
+                }
+                let html = '';
+                items.forEach(item => {
+                    const age = calculateAge(item.birthDate);
+                    const typeIcon = getTypeIcon(item.type, item.typeCustom);
+                    const typeLabel = item.type === 'human' ? 'إنسان' : (item.type === 'animal' ? 'حيوان' : (item.typeCustom || 'آخر'));
+                    const birthFormatted = formatDate(item.birthDate);
+                    // حساب نسبة التقدم في السنة (لشريط التقدم)
+                    const birthDate = new Date(item.birthDate);
+                    const now = new Date();
+                    const nextBirthday = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+                    if (nextBirthday < now) nextBirthday.setFullYear(now.getFullYear() + 1);
+                    const totalYearMs = 365 * 24 * 60 * 60 * 1000; // تقريبي
+                    const progress = Math.min(100, Math.max(0, ((now - nextBirthday) / totalYearMs) * 100 + 100));
+
+                    html += `
+                        <div class="birthday-card" data-id="${item.id}">
+                            <span class="card-badge"><i class="fas fa-birthday-cake"></i> ${typeLabel}</span>
+                            <div class="card-header">
+                                <div class="card-avatar">
+                                    ${typeIcon}
+                                </div>
+                                <div class="card-title">
+                                    <h3>${item.name}</h3>
+                                    <span class="type-badge">${typeLabel}</span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <div class="info-row">
+                                    <span class="info-label">تاريخ الميلاد:</span>
+                                    <span class="info-value">${birthFormatted}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">العمر:</span>
+                                    <span class="info-value">${age.years} سنة، ${age.months} شهر، ${age.days} يوم</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">بالأيام:</span>
+                                    <span class="info-value">${age.totalDays.toLocaleString()} يوم</span>
+                                </div>
+                            </div>
+                            <div class="age-progress">
+                                <div class="progress-fill" style="width: ${progress}%;"></div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="action-btn view" onclick="window.location.href='calculator.html?id=${item.id}'"><i class="fas fa-calculator"></i> حساب</button>
+                                <button class="action-btn edit" onclick="window.location.href='add-birthday.html?id=${item.id}'"><i class="fas fa-edit"></i> تعديل</button>
+                                <button class="action-btn delete" onclick="deleteBirthday('${item.id}')"><i class="fas fa-trash-alt"></i> حذف</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                gridEl.innerHTML = html;
+            }
+
+            // عرض القائمة
+            function renderList(items) {
+                if (items.length === 0) {
+                    listContainer.innerHTML = '';
+                    return;
+                }
+                let rows = '';
+                items.forEach(item => {
+                    const age = calculateAge(item.birthDate);
+                    const typeLabel = item.type === 'human' ? 'إنسان' : (item.type === 'animal' ? 'حيوان' : (item.typeCustom || 'آخر'));
+                    rows += `
+                        <div class="list-row" data-id="${item.id}">
+                            <span><strong>${item.name}</strong></span>
+                            <span>${typeLabel}</span>
+                            <span>${formatDate(item.birthDate)}</span>
+                            <span>${age.years} سنة</span>
+                            <span>
+                                <button class="action-btn view" style="display:inline-block; padding:6px 12px;" onclick="window.location.href='calculator.html?id=${item.id}'"><i class="fas fa-calculator"></i></button>
+                                <button class="action-btn edit" style="display:inline-block; padding:6px 12px;" onclick="window.location.href='add-birthday.html?id=${item.id}'"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete" style="display:inline-block; padding:6px 12px;" onclick="deleteBirthday('${item.id}')"><i class="fas fa-trash-alt"></i></button>
+                            </span>
+                        </div>
+                    `;
+                });
+                listContainer.innerHTML = rows;
+            }
+
+            // تبديل العرض
+            function setView(view) {
+                currentView = view;
+                if (view === 'grid') {
+                    gridEl.style.display = 'grid';
+                    listEl.style.display = 'none';
+                    gridViewBtn.classList.add('active');
+                    listViewBtn.classList.remove('active');
+                } else {
+                    gridEl.style.display = 'none';
+                    listEl.style.display = 'block';
+                    listViewBtn.classList.add('active');
+                    gridViewBtn.classList.remove('active');
+                }
+                renderAll(); // لإعادة توليد المحتوى حسب العرض الجديد
+            }
+
+            // حذف سجل (مع تأكيد)
+            window.deleteBirthday = function(id) {
+                Swal.fire({
+                    title: 'هل أنت متأكد؟',
+                    text: "لن تتمكن من استعادة هذا السجل بعد الحذف!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ef233c',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'نعم، احذف!',
+                    cancelButtonText: 'إلغاء'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        birthdays = birthdays.filter(b => b.id !== id);
+                        saveData();
+                        renderAll();
+                        Swal.fire('تم الحذف!', 'تم حذف السجل بنجاح.', 'success');
+                    }
+                });
+            };
+
+            // أحداث البحث
+            searchInput.addEventListener('input', (e) => {
+                searchTerm = e.target.value;
+                renderAll();
+            });
+
+            // أحداث التصفية
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentFilter = tab.dataset.filter;
+                    renderAll();
+                });
+            });
+
+            // أحداث تغيير العرض
+            gridViewBtn.addEventListener('click', () => setView('grid'));
+            listViewBtn.addEventListener('click', () => setView('list'));
+
+            // تعيين السنة الحالية في الفوتر
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // تهيئة الصفحة
+            loadData();
+            setView('grid');
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="register_title">إنشاء حساب - Pulse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page register-page">
+    <!-- شاشة التحميل -->
+    <div class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-heartbeat pulse-animation"></i>
+            </div>
+            <h3>Pulse Health System</h3>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p data-i18n="loading_system">جاري تحميل النظام الصحي...</p>
+        </div>
+    </div>
+
+    <div class="auth-container">
+        <!-- جانب الشعار والمعلومات -->
+        <div class="brand-side">
+            <div class="brand-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="logo-text">Pulse</div>
+                </div>
+                
+                <div class="welcome-text">
+                    <h1 data-i18n="register_hero_title">انضم إلى ثورة الرعاية الصحية الذكية</h1>
+                    <p data-i18n="register_hero_description">ابدأ رحلتك مع Pulse واستفد من أحدث تقنيات الذكاء الاصطناعي في تحليل التحاليل الطبية.</p>
+                </div>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-injured"></i>
+                        </div>
+                        <div class="feature-text" data-i18n="register_feature1">إدارة كاملة للمرضى</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="feature-text" data-i18n="register_feature2">تحليل ذكي للتحاليل</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-text" data-i18n="register_feature3">حماية وأمان تام</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial">
+                <div class="testimonial-content" data-i18n="register_testimonial_text">
+                    "منذ أن بدأت استخدام Pulse، تمكنت من تحسين جودة الرعاية التي أقدمها لمرضاي بشكل ملحوظ"
+                </div>
+                <div class="testimonial-author">
+                    <strong data-i18n="register_doctor_name">د. فاطمة أحمد</strong>
+                    <span data-i18n="register_doctor_specialty">أخصائية باطنية</span>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" data-i18n="register_doctors_count">١٬٢٤٧</div>
+                    <div class="stat-label" data-i18n="register_doctors_registered">طبيب مسجل</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" data-i18n="register_patients_count">١٢٬٥٨٩</div>
+                    <div class="stat-label" data-i18n="register_patients_served">مريض تم خدمتهم</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- جانب إنشاء الحساب -->
+        <div class="auth-side">
+            <div class="auth-header">
+                <a href="index.html" class="back-home">
+                    <i class="fas fa-arrow-right"></i>
+                    <span data-i18n="back_home">العودة للرئيسية</span>
+                </a>
+                
+                <div class="language-switcher">
+                    <button class="lang-btn" id="langToggle">
+                        <i class="fas fa-globe"></i>
+                        <span data-i18n="nav_language">English</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown">
+                        <button class="lang-option" data-lang="ar">
+                            <i class="fas fa-language"></i>
+                            <span data-i18n="arabic">العربية</span>
+                        </button>
+                        <button class="lang-option" data-lang="en">
+                            <i class="fas fa-language"></i>
+                            <span data-i18n="english">English</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="auth-card">
+                <div class="auth-logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Pulse</span>
+                </div>
+                
+                <div class="auth-content">
+                    <h2 data-i18n="register_title_main">أنشئ حسابك!</h2>
+                    <p data-i18n="register_subtitle">انضم إلى نظام Pulse الصحي الذكي</p>
+                    
+                    <form class="auth-form" id="registerForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" data-i18n="first_name_label">الاسم الأول</label>
+                                <input type="text" id="firstName" name="firstName" data-i18n-ph="first_name_placeholder" placeholder="ادخل الاسم الأول" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" data-i18n="last_name_label">اسم العائلة</label>
+                                <input type="text" id="lastName" name="lastName" data-i18n-ph="last_name_placeholder" placeholder="ادخل اسم العائلة" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" data-i18n="email_label">البريد الإلكتروني</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" data-i18n-ph="email_placeholder" placeholder="ادخل بريدك الإلكتروني" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" data-i18n="phone_label">رقم الهاتف</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="phone" name="phone" data-i18n-ph="phone_placeholder" placeholder="ادخل رقم الهاتف" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="specialty" data-i18n="specialty_label">التخصص الطبي</label>
+                            <select id="specialty" name="specialty" required>
+                                <option value="" data-i18n="choose_specialty">اختر تخصصك</option>
+                                <option value="general" data-i18n="general_medicine">طب عام</option>
+                                <option value="internal" data-i18n="internal_medicine">باطنية</option>
+                                <option value="cardiology" data-i18n="cardiology">قلب</option>
+                                <option value="endocrinology" data-i18n="endocrinology">غدد صماء</option>
+                                <option value="other" data-i18n="other_specialty">تخصص آخر</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="license" data-i18n="license_label">رقم الترخيص الطبي</label>
+                            <input type="text" id="license" name="license" data-i18n-ph="license_placeholder" placeholder="ادخل رقم الترخيص" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" data-i18n="password_label">كلمة المرور</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" data-i18n-ph="password_placeholder_register" placeholder="أنشئ كلمة مرور قوية" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill" id="password-strength"></div>
+                                </div>
+                                <span class="strength-text" id="password-text" data-i18n="password_strength">قوة كلمة المرور</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" data-i18n="confirm_password_label">تأكيد كلمة المرور</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="confirmPassword" name="confirmPassword" data-i18n-ph="confirm_password_placeholder" placeholder="أعد إدخال كلمة المرور" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                <span>
+                                    <span data-i18n="agree_terms">أوافق على</span>
+                                    <a href="#" data-i18n="terms_link">الشروط والأحكام</a>
+                                    <span data-i18n="and">و</span>
+                                    <a href="#" data-i18n="privacy_link">سياسة الخصوصية</a>
+                                </span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-user-plus"></i>
+                            <span data-i18n="register_button">إنشاء الحساب</span>
+                        </button>
+
+                        <div class="auth-divider">
+                            <span data-i18n="or">أو</span>
+                        </div>
+
+                        <div class="social-auth">
+                            <button type="button" class="btn btn-google">
+                                <i class="fab fa-google"></i>
+                                <span data-i18n="signup_google">التسجيل مع Google</span>
+                            </button>
+                        </div>
+
+                        <div class="auth-footer">
+                            <p>
+                                <span data-i18n="have_account">لديك حساب بالفعل؟</span>
+                                <a href="login.html" data-i18n="login_link">سجل الدخول</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/language.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

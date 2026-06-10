@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>النسخ الاحتياطي | نظام إدارة الصيدلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-prescription-bottle-medical"></i>
+                    <span>صيدليتي</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle"><i class="fas fa-bars"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i><span>لوحة التحكم</span></a></li>
+                    <li><a href="medicines.html"><i class="fas fa-pills"></i><span>الأدوية</span></a></li>
+                    <li><a href="sales.html"><i class="fas fa-cash-register"></i><span>المبيعات</span></a></li>
+                    <li><a href="customers.html"><i class="fas fa-users"></i><span>العملاء</span></a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck"></i><span>الموردين</span></a></li>
+                    <li><a href="purchases.html"><i class="fas fa-shopping-cart"></i><span>المشتريات</span></a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i><span>التقارير</span></a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a></li>
+                    <li><a href="profile.html"><i class="fas fa-user-circle"></i><span>الملف الشخصي</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details"><div class="user-name"></div><div class="user-role"></div></div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="page-title"><h1>النسخ الاحتياطي</h1><p>إدارة نسخ الاحتياط واستعادة البيانات</p></div>
+                <div class="header-actions">
+                    <button class="header-btn" id="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <button class="header-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- Backup Cards -->
+                <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                    <!-- Backup Card -->
+                    <div class="dashboard-card">
+                        <div class="card-header"><h3 class="card-title"><i class="fas fa-download"></i> إنشاء نسخة احتياطية</h3></div>
+                        <div style="text-align: center; padding: 2rem 0;">
+                            <i class="fas fa-database" style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem; display: inline-block;"></i>
+                            <p>قم بإنشاء نسخة احتياطية كاملة لجميع بيانات النظام بما فيها:<br>الأدوية، المبيعات، العملاء، الموردين، المشتريات، المستخدمين والإعدادات.</p>
+                            <button class="btn btn-primary" onclick="createBackup()" style="margin-top: 1.5rem; width: auto;">
+                                <i class="fas fa-download"></i> إنشاء نسخة احتياطية الآن
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Restore Card -->
+                    <div class="dashboard-card">
+                        <div class="card-header"><h3 class="card-title"><i class="fas fa-upload"></i> استعادة نسخة احتياطية</h3></div>
+                        <div style="text-align: center; padding: 2rem 0;">
+                            <i class="fas fa-upload" style="font-size: 4rem; color: var(--warning); margin-bottom: 1rem; display: inline-block;"></i>
+                            <p>استعادة البيانات من ملف نسخة احتياطية سابقة.<br><strong style="color: var(--danger);">تحذير: سيتم استبدال جميع البيانات الحالية!</strong></p>
+                            <label class="btn btn-warning" style="margin-top: 1.5rem; width: auto; cursor: pointer;">
+                                <i class="fas fa-folder-open"></i> اختيار ملف للاستعادة
+                                <input type="file" id="restoreFileInput" accept=".json" style="display: none;" onchange="restoreFromFile(this.files[0])">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backup History / Info -->
+                <div class="dashboard-card" style="margin-top: 1.5rem;">
+                    <div class="card-header"><h3 class="card-title"><i class="fas fa-history"></i> معلومات النسخ الاحتياطي</h3></div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead><tr><th>نوع البيانات</th><th>عدد السجلات</th><th>آخر تحديث</th><th></th></tr></thead>
+                            <tbody id="backupInfoBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Reset System Card -->
+                <div class="dashboard-card" style="margin-top: 1.5rem; border-right-color: var(--danger);">
+                    <div class="card-header"><h3 class="card-title"><i class="fas fa-trash-alt" style="color: var(--danger);"></i> إعادة تعيين النظام بالكامل</h3></div>
+                    <div style="text-align: center; padding: 1rem;">
+                        <p style="color: var(--danger); margin-bottom: 1rem;"><i class="fas fa-exclamation-triangle"></i> تحذير: هذا الإجراء لا يمكن التراجع عنه!</p>
+                        <button class="btn btn-danger" onclick="resetSystem()" style="width: auto;">
+                            <i class="fas fa-trash-alt"></i> حذف جميع البيانات وإعادة تعيين النظام
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        function loadBackupInfo() {
+            const medicines = getAllMedicines();
+            const sales = getAllSales();
+            const customers = getAllCustomers();
+            const suppliers = getAllSuppliers();
+            const purchases = getAllPurchases();
+            const users = getAllUsers();
+            const settings = getSettings();
+
+            document.getElementById('backupInfoBody').innerHTML = `
+                <tr><td><strong>الأدوية</strong></td><td>${medicines.length}</td><td>${medicines.length > 0 ? formatDate(medicines[medicines.length-1]?.createdAt) : '-'}</td><td><i class="fas fa-pills" style="color: var(--primary);"></i></td></tr>
+                <tr><td><strong>المبيعات</strong></td><td>${sales.length}</td><td>${sales.length > 0 ? formatDate(sales[sales.length-1]?.createdAt) : '-'}</td><td><i class="fas fa-cash-register" style="color: var(--secondary);"></i></td></tr>
+                <tr><td><strong>العملاء</strong></td><td>${customers.length}</td><td>${customers.length > 0 ? formatDate(customers[customers.length-1]?.createdAt) : '-'}</td><td><i class="fas fa-users" style="color: var(--accent);"></i></td></tr>
+                <tr><td><strong>الموردين</strong></td><td>${suppliers.length}</td><td>-</td><td><i class="fas fa-truck"></i></td></tr>
+                <tr><td><strong>المشتريات</strong></td><td>${purchases.length}</td><td>${purchases.length > 0 ? formatDate(purchases[purchases.length-1]?.createdAt) : '-'}</td><td><i class="fas fa-shopping-cart"></i></td></tr>
+                <tr><td><strong>المستخدمين</strong></td><td>${users.length}</td><td>-</td><td><i class="fas fa-users-cog"></i></td></tr>
+            `;
+        }
+
+        function createBackup() {
+            const allKeys = Object.keys(localStorage).filter(key => key.startsWith('pharmacy_'));
+            const backup = {};
+            allKeys.forEach(key => { backup[key] = localStorage.getItem(key); });
+            const backupStr = JSON.stringify(backup, null, 2);
+            const blob = new Blob([backupStr], { type: 'application/json' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.href = url;
+            const now = new Date();
+            const filename = `pharmacy_backup_${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}_${now.getHours().toString().padStart(2,'0')}-${now.getMinutes().toString().padStart(2,'0')}.json`;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showNotification('تم إنشاء النسخة الاحتياطية بنجاح', 'success');
+        }
+
+        function restoreFromFile(file) {
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const backup = JSON.parse(e.target.result);
+                    let count = 0;
+                    Object.keys(backup).forEach(key => {
+                        if (key.startsWith('pharmacy_')) {
+                            localStorage.setItem(key, backup[key]);
+                            count++;
+                        }
+                    });
+                    showNotification(`تم استعادة ${count} عنصر بنجاح. سيتم تحديث الصفحة...`, 'success');
+                    setTimeout(() => window.location.reload(), 1500);
+                } catch (error) {
+                    showNotification('الملف غير صالح أو تالف', 'error');
+                }
+            };
+            reader.onerror = () => { showNotification('حدث خطأ أثناء قراءة الملف', 'error'); };
+            reader.readAsText(file);
+        }
+
+        function resetSystem() {
+            confirmDialog('تحذير نهائي: سيتم حذف جميع البيانات نهائياً ولا يمكن استعادتها. هل أنت متأكد من إعادة تعيين النظام بالكامل؟', () => {
+                const allKeys = Object.keys(localStorage).filter(key => key.startsWith('pharmacy_'));
+                allKeys.forEach(key => localStorage.removeItem(key));
+                showNotification('تم حذف جميع البيانات. سيتم تحويلك إلى صفحة تسجيل الدخول...', 'warning');
+                setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadBackupInfo);
+    </script>
+</body>
+</html>

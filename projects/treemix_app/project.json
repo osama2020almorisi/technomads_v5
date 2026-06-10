@@ -1,0 +1,8 @@
+{
+  "title": "تطبيق Treemix",
+  "description": "تطبيق متخصص في تحليل البيانات وعرضها بشكل تفاعلي مع لوحات تحكم.",
+  "keywords": "Treemix, تحليل بيانات, عرض بيانات, تفاعلي",
+  "technologies": ["HTML", "CSS", "JavaScript"],
+  "date": "2024-01-25",
+  "status": "مكتمل"
+}

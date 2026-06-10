@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>نظام حجز الطيران — أمان للسفريات</title>
+
+  <!-- خطوط وأيقونات -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* نفس التنسيق الاحترافي */
+    :root{
+      --bg1: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      --card:#fff; --primary:#2563eb; --accent:#f59e0b; --muted:#64748b;
+      --success:#10b981; --danger:#ef4444; --radius:12px; --shadow:0 10px 30px rgba(2,6,23,0.12);
+      font-family: 'Tajawal', sans-serif;
+    }
+    body{margin:0;padding:28px;background:var(--bg1);color:#0f172a}
+    .wrap{max-width:1100px;margin:0 auto}
+    .card{background:var(--card);border-radius:18px;box-shadow:var(--shadow)}
+    .hero{padding:20px;background:linear-gradient(90deg,var(--primary),#7c3aed);color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+    .brand{font-weight:700;font-size:1.3rem;display:flex;gap:10px;align-items:center}
+    .content{padding:20px}
+    .tabs{display:flex;background:#f1f5f9;border-radius:10px;padding:6px;gap:6px;margin-bottom:18px}
+    .tab{flex:1;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
+    .tab[aria-pressed="true"]{background:#fff;box-shadow:0 6px 18px rgba(2,6,23,0.06);color:var(--primary)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+    .form-group{display:flex;flex-direction:column;gap:6px}
+    label{font-weight:600}
+    select,input{padding:10px;border-radius:10px;border:1px solid #ddd}
+    .btn{padding:10px 16px;border-radius:12px;cursor:pointer;font-weight:700;border:none}
+    .btn-primary{background:linear-gradient(90deg,var(--primary),#7c3aed);color:#fff}
+    .btn-whatsapp{background:linear-gradient(90deg,#25d366,#128c7e);color:#fff}
+    .btn-ghost{background:#fff;border:1px solid #eee}
+    .summary{margin-top:16px;padding:16px;background:#f8fafc;border-radius:12px;border:1px solid #eef2ff}
+    .toast{position:fixed;left:20px;bottom:20px;background:#111;color:#fff;padding:12px 16px;border-radius:10px;box-shadow:0 8px 28px rgba(2,6,23,0.3);display:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header class="hero">
+        <div class="brand"><i class="fas fa-plane-departure"></i> نظام حجز الطيران — أمان للسفريات</div>
+        <button id="open-demo" class="btn btn-ghost">استرجاع آخر بحث</button>
+      </header>
+      <div class="content">
+        <!-- Tabs -->
+        <div class="tabs">
+          <button class="tab" data-type="round" aria-pressed="true">ذهاب وعودة</button>
+          <button class="tab" data-type="oneway" aria-pressed="false">ذهاب فقط</button>
+        </div>
+
+        <!-- Form -->
+        <form id="flightForm" autocomplete="off">
+          <div class="grid">
+            <div class="form-group">
+              <label>الدولة الأصل</label>
+              <select id="originCountry"></select>
+            </div>
+            <div class="form-group">
+              <label>المدينة الأصل</label>
+              <select id="originCity" disabled></select>
+            </div>
+            <div class="form-group">
+              <label>مطار الانطلاق</label>
+              <select id="originAirport" disabled></select>
+            </div>
+            <div class="form-group">
+              <label>دولة الوجهة</label>
+              <select id="destinationCountry"></select>
+            </div>
+            <div class="form-group">
+              <label>المدينة الوجهة</label>
+              <select id="destinationCity" disabled></select>
+            </div>
+            <div class="form-group">
+              <label>مطار الوجهة</label>
+              <select id="destinationAirport" disabled></select>
+            </div>
+          </div>
+          <div class="grid" style="margin-top:12px">
+            <div class="form-group">
+              <label>تاريخ المغادرة</label>
+              <input type="date" id="departureDate" required>
+            </div>
+            <div class="form-group" id="returnGroup">
+              <label>تاريخ العودة</label>
+              <input type="date" id="returnDate">
+            </div>
+            <div class="form-group">
+              <label>المسافرون</label>
+              <select id="passengers">
+                <option value="1">1 مسافر</option>
+                <option value="2">2 مسافرين</option>
+                <option value="3">3 مسافرين</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>الفئة</label>
+              <select id="flightClass">
+                <option value="economy">اقتصادية</option>
+                <option value="business">رجال الأعمال</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+            <button type="button" id="searchBtn" class="btn btn-primary">بحث</button>
+            <button type="reset" id="resetBtn" class="btn btn-ghost">تفريغ</button>
+          </div>
+        </form>
+
+        <!-- Summary -->
+        <div id="resultArea" class="summary" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const CONTACT_PHONE = '967781333149'; // ضع رقم الواتساب
+    const tabs = document.querySelectorAll('.tab');
+    let tripType = 'round';
+
+    const originCountry=document.getElementById('originCountry');
+    const originCity=document.getElementById('originCity');
+    const originAirport=document.getElementById('originAirport');
+    const destinationCountry=document.getElementById('destinationCountry');
+    const destinationCity=document.getElementById('destinationCity');
+    const destinationAirport=document.getElementById('destinationAirport');
+    const departureDate=document.getElementById('departureDate');
+    const returnDate=document.getElementById('returnDate');
+    const returnGroup=document.getElementById('returnGroup');
+    const resultArea=document.getElementById('resultArea');
+    const toast=document.getElementById('toast');
+
+    let data=[];
+
+    // تحميل JSON
+    async function loadData(){
+      try{
+        const res=await fetch('airports.json');
+        data=await res.json();
+        populateCountries();
+      }catch(e){
+        showToast('فشل تحميل بيانات المطارات');
+      }
+    }
+
+    function populateCountries(){
+      [originCountry,destinationCountry].forEach(sel=>{
+        sel.innerHTML='<option value="">اختر الدولة</option>';
+        data.forEach((c,i)=>{
+          const opt=document.createElement('option');
+          opt.value=i; opt.textContent=c["الدولة"];
+          sel.appendChild(opt);
+        });
+      });
+    }
+
+    function updateCities(countrySel,citySel,airportSel){
+      citySel.innerHTML='<option value="">اختر المدينة</option>';
+      airportSel.innerHTML='<option value="">اختر المطار</option>';
+      airportSel.disabled=true; citySel.disabled=true;
+      if(!countrySel.value) return;
+      const country=data[countrySel.value];
+      country["مدن"].forEach((ct,ci)=>{
+        const opt=document.createElement('option');
+        opt.value=ci; opt.textContent=ct["المدينة"];
+        citySel.appendChild(opt);
+      });
+      citySel.disabled=false;
+    }
+
+    function updateAirports(countrySel,citySel,airportSel){
+      airportSel.innerHTML='<option value="">اختر المطار</option>';
+      airportSel.disabled=true;
+      if(!citySel.value) return;
+      const country=data[countrySel.value];
+      const city=country["مدن"][citySel.value];
+      city["المطارات"].forEach(ap=>{
+        const opt=document.createElement('option');
+        opt.value=ap["الرمز"];
+        opt.textContent=`${ap["الاسم"]} (${ap["الرمز"]})`;
+        airportSel.appendChild(opt);
+      });
+      airportSel.disabled=false;
+    }
+
+    originCountry.onchange=()=>updateCities(originCountry,originCity,originAirport);
+    originCity.onchange=()=>updateAirports(originCountry,originCity,originAirport);
+    destinationCountry.onchange=()=>updateCities(destinationCountry,destinationCity,destinationAirport);
+    destinationCity.onchange=()=>updateAirports(destinationCountry,destinationCity,destinationAirport);
+
+    tabs.forEach(t=>{
+      t.onclick=()=>{
+        tabs.forEach(x=>x.setAttribute('aria-pressed','false'));
+        t.setAttribute('aria-pressed','true');
+        tripType=t.dataset.type;
+        returnGroup.style.display= tripType==='oneway'?'none':'block';
+      };
+    });
+
+    document.getElementById('searchBtn').onclick=()=>{
+      const summary=`
+        <strong>نوع الرحلة:</strong> ${tripType==='oneway'?'ذهاب فقط':'ذهاب وعودة'}<br>
+        <strong>من:</strong> ${originAirport.value} (${originCity.selectedOptions[0]?.textContent})<br>
+        <strong>إلى:</strong> ${destinationAirport.value} (${destinationCity.selectedOptions[0]?.textContent})<br>
+        <strong>المغادرة:</strong> ${departureDate.value}<br>
+        ${tripType==='round'?`<strong>العودة:</strong> ${returnDate.value}<br>`:''}
+        <button class="btn btn-whatsapp" onclick="sendWhatsApp()">إرسال عبر واتساب</button>
+      `;
+      resultArea.innerHTML=summary;
+      resultArea.style.display='block';
+      localStorage.setItem('lastBooking',JSON.stringify({tripType,originAirport:originAirport.value,destinationAirport:destinationAirport.value}));
+    };
+
+    function sendWhatsApp(){
+      const payload=localStorage.getItem('lastBooking');
+      const msg=payload?payload:'طلب حجز جديد';
+      window.open(`https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(msg)}`,'_blank');
+    }
+
+    document.getElementById('open-demo').onclick=()=>{
+      const last=localStorage.getItem('lastBooking');
+      if(!last) return showToast('لا يوجد بحث محفوظ');
+      showToast('تم استرجاع آخر بحث');
+    };
+
+    function showToast(m){toast.textContent=m;toast.style.display='block';setTimeout(()=>toast.style.display='none',3000)}
+
+    loadData();
+  </script>
+</body>
+</html>

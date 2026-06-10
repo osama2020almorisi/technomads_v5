@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>نظام حجز الطيران — أمان للسفريات</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="" crossorigin="anonymous">
+
+  <style>
+    /* ===========================
+       متغيرات ونمط عام (RTL)
+       =========================== */
+    :root{
+      --bg1: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      --card:#fff;
+      --primary:#2563eb;
+      --accent:#f59e0b;
+      --muted:#64748b;
+      --success:#10b981;
+      --danger:#ef4444;
+      --glass: rgba(255,255,255,0.85);
+      --radius:12px;
+      --shadow: 0 10px 30px rgba(2,6,23,0.12);
+      --max-width:1100px;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;padding:28px;background:var(--bg1);-webkit-font-smoothing:antialiased;color:#0f172a;
+      -webkit-text-size-adjust:100%;
+    }
+
+    .wrap{max-width:var(--max-width);margin:0 auto}
+    .card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+
+    /* Header */
+    .hero{
+      padding:28px 28px 10px;background:linear-gradient(90deg,var(--primary),#7c3aed);color:#fff;
+      display:flex;gap:18px;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.4rem}
+    .brand i{font-size:1.8rem}
+    .hero p{margin:4px 0 0;color:rgba(255,255,255,0.9);font-weight:500}
+
+    /* content */
+    .content{padding:28px}
+
+    /* tabs */
+    .tabs{display:flex;background:#f1f5f9;border-radius:10px;padding:6px;gap:6px;margin-bottom:18px}
+    .tab{flex:1;padding:10px 14px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-weight:600}
+    .tab[aria-pressed="true"]{background:#fff;box-shadow:0 6px 18px rgba(2,6,23,0.06);color:var(--primary)}
+
+    /* layout grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+    .form-group{display:flex;flex-direction:column;gap:8px}
+    label{font-weight:600;color:#0f172a;display:flex;gap:8px;align-items:center}
+    select,input[type="date"],input[type="text"]{
+      padding:12px;border-radius:10px;border:1px solid #e6eefc;background:#fff;font-size:15px;
+      transition:box-shadow .15s,border-color .15s;
+    }
+    select:focus,input:focus{outline:none;border-color:var(--primary);box-shadow:0 6px 20px rgba(37,99,235,0.08)}
+    .helper{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center}
+
+    /* buttons */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 18px;border-radius:12px;border:none;font-weight:700;cursor:pointer;
+    }
+    .btn-primary{background:linear-gradient(90deg,var(--primary),#7c3aed);color:#fff}
+    .btn-whatsapp{background:linear-gradient(90deg,#25d366,#128c7e);color:#fff}
+    .btn-ghost{background:transparent;border:1px solid #e6eefc;color:#0f172a}
+
+    /* summary */
+    .summary{margin-top:18px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fbfbff,#f8fafc);border:1px solid #eef2ff}
+    .route{display:flex;align-items:center;gap:12px;position:relative;padding:12px;border-radius:10px;background:#fff;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+    .route .point{min-width:130px;text-align:center;padding:10px}
+    .route .code{font-weight:800;color:var(--primary);font-size:1.4rem}
+    .route .city{color:var(--muted);font-weight:600}
+    .route-line{height:6px;background:linear-gradient(90deg,var(--primary),#7c3aed);flex:1;border-radius:99px;margin:0 8px}
+
+    /* responsive & small tweaks */
+    @media (max-width:720px){
+      .hero{padding:16px}
+      .brand{font-size:1.1rem}
+      .grid{grid-template-columns:1fr}
+    }
+
+    /* toast */
+    .toast{position:fixed;left:20px;bottom:20px;background:#111;color:#fff;padding:12px 16px;border-radius:10px;box-shadow:0 8px 28px rgba(2,6,23,0.3);display:flex;gap:10px;align-items:center;z-index:9999}
+    .toast.hide{display:none}
+
+    /* tiny */
+    .muted{color:var(--muted);font-size:13px}
+    .error{color:var(--danger)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="application" aria-labelledby="appTitle">
+      <header class="hero">
+        <div>
+          <div id="appTitle" class="brand"><i class="fas fa-plane-departure"></i> نظام حجز الطيران — أمان للسفريات</div>
+          <p>واجهة احترافية، تحقّق من المدخلات، إرسال آمن عبر واتساب، وتخزين بحثك الأخير.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+          <small class="muted">جاهز للإتصال</small>
+          <button id="open-demo" class="btn btn-ghost" title="استعادة البحث الأخير">استعادة البحث الأخير</button>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- tabs -->
+        <div class="tabs" role="tablist" aria-label="أنواع الرحلات">
+          <button class="tab" role="tab" aria-pressed="true" data-type="round" id="tab-round">ذهاب وعودة</button>
+          <button class="tab" role="tab" aria-pressed="false" data-type="oneway" id="tab-one">ذهاب فقط</button>
+          <button class="tab" role="tab" aria-pressed="false" data-type="multi" id="tab-multi">متعددة المدن</button>
+        </div>
+
+        <!-- loading / error placeholders -->
+        <div id="loader" aria-live="polite" style="display:block;margin:14px 0">
+          <div style="display:flex;gap:12px;align-items:center">
+            <div style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center">
+              <i class="fas fa-spinner fa-spin" style="color:#fff"></i>
+            </div>
+            <div style="color:#fff">
+              <div style="font-weight:700">تحميل بيانات المطارات...</div>
+              <div class="muted">إذا لم ينته التحميل خلال ثوانٍ، اضغط إعادة تحميل الصفحة.</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="mainForm" style="display:none">
+          <form id="flightForm" autocomplete="off" novalidate>
+            <div class="grid" role="group" aria-label="معلومات الوجهة">
+              <div class="form-group">
+                <label for="originCountry"><i class="fas fa-flag"></i>&nbsp;الدولة الأصل</label>
+                <select id="originCountry" aria-label="دولة انطلاق"></select>
+                <div class="helper muted"><i class="fas fa-search"></i> يمكنك كتابة لفلترة (ابدأ بالضغط ثم الكتابة)</div>
+              </div>
+
+              <div class="form-group">
+                <label for="originCity"><i class="fas fa-city"></i>&nbsp;المدينة الأصل</label>
+                <select id="originCity" disabled aria-label="مدينة انطلاق"></select>
+              </div>
+
+              <div class="form-group">
+                <label for="originAirport"><i class="fas fa-plane-departure"></i>&nbsp;مطار الانطلاق</label>
+                <select id="originAirport" disabled aria-label="مطار انطلاق"></select>
+              </div>
+
+              <div class="form-group">
+                <label for="destinationCountry"><i class="fas fa-flag-checkered"></i>&nbsp;دولة الوصول</label>
+                <select id="destinationCountry" aria-label="دولة الوصول"></select>
+                <div class="helper muted">اختَر الدولة أو اكتب لفلترة</div>
+              </div>
+
+              <div class="form-group">
+                <label for="destinationCity"><i class="fas fa-city"></i>&nbsp;المدينة الوجهة</label>
+                <select id="destinationCity" disabled aria-label="مدينة الوصول"></select>
+              </div>
+
+              <div class="form-group">
+                <label for="destinationAirport"><i class="fas fa-plane-arrival"></i>&nbsp;مطار الوصول</label>
+                <select id="destinationAirport" disabled aria-label="مطار الوصول"></select>
+              </div>
+            </div>
+
+            <hr style="margin:18px 0;border:none;border-top:1px solid #eef2ff">
+
+            <div class="grid" role="group" aria-label="تواريخ وباقي الإعدادات">
+              <div class="form-group">
+                <label for="departureDate"><i class="fas fa-calendar-alt"></i>&nbsp;تاريخ المغادرة</label>
+                <input id="departureDate" type="date" required />
+              </div>
+
+              <div class="form-group" id="returnGroup">
+                <label for="returnDate"><i class="fas fa-calendar-check"></i>&nbsp;تاريخ العودة</label>
+                <input id="returnDate" type="date" />
+                <div class="helper muted">لا تنسَ أن تاريخ العودة يجب أن يكون بعد المغادرة</div>
+              </div>
+
+              <div class="form-group">
+                <label for="passengers"><i class="fas fa-users"></i>&nbsp;المسافرون</label>
+                <select id="passengers">
+                  <option value="1">1 مسافر</option>
+                  <option value="2">2 مسافرين</option>
+                  <option value="3">3 مسافرين</option>
+                  <option value="4">4 مسافرين</option>
+                  <option value="5">5 مسافرين</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="flightClass"><i class="fas fa-couch"></i>&nbsp;فئة السفر</label>
+                <select id="flightClass">
+                  <option value="economy">اقتصادية</option>
+                  <option value="premium">اقتصادية مميزة</option>
+                  <option value="business">رجال الأعمال</option>
+                  <option value="first">الدرجة الأولى</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+              <button type="button" id="searchBtn" class="btn btn-primary" aria-label="بحث عن رحلات"><i class="fas fa-search"></i> بحث</button>
+              <button type="button" id="resetBtn" class="btn btn-ghost" aria-label="تفريغ الحقول">تفريغ الحقول</button>
+            </div>
+          </form>
+
+          <!-- نتائج/ملخّص -->
+          <div id="resultArea" style="display:none" class="summary" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- toast -->
+  <div id="toast" class="toast hide" role="status" aria-live="polite"></div>
+
+  <script>
+  (function(){
+    'use strict';
+
+    /* =========================
+       إعدادات قابلة للتعديل
+       ========================= */
+    const AIRPORTS_JSON_PATH = 'airports.json'; // اسم الملف لو عندك واحد خارجي
+    const CONTACT_PHONE = '967781333149'; // ضع رقم واتساب هنا بدون "+"، مثال: 9677...
+    const DEMO_FALLBACK_DATA = {
+      countries:[
+        { code:'SA', name:'المملكة العربية السعودية', cities:[
+          { code:'RUH', name:'الرياض', airports:[{code:'RUH',name:'مطار الملك خالد الدولي'}]},
+          { code:'JED', name:'جدة', airports:[{code:'JED',name:'مطار الملك عبدالعزيز الدولي'}]},
+          { code:'DMM', name:'الالدمام', airports:[{code:'DMM',name:'مطار الملك فهد الدولي'}]}
+        ]},
+        { code:'AE', name:'الإمارات', cities:[
+          { code:'DXB', name:'دبي', airports:[{code:'DXB',name:'مطار دبي الدولي'}]},
+          { code:'AUH', name:'أبوظبي', airports:[{code:'AUH',name:'مطار أبوظبي الدولي'}]}
+        ]},
+        { code:'EG', name:'مصر', cities:[
+          { code:'CAI', name:'القاهرة', airports:[{code:'CAI',name:'مطار القاهرة الدولي'}]}
+        ]}
+      ]
+    };
+
+    /* ===== عناصر DOM ===== */
+    const loader = document.getElementById('loader');
+    const mainForm = document.getElementById('mainForm');
+    const originCountry = document.getElementById('originCountry');
+    const originCity = document.getElementById('originCity');
+    const originAirport = document.getElementById('originAirport');
+    const destinationCountry = document.getElementById('destinationCountry');
+    const destinationCity = document.getElementById('destinationCity');
+    const destinationAirport = document.getElementById('destinationAirport');
+    const departureDate = document.getElementById('departureDate');
+    const returnDate = document.getElementById('returnDate');
+    const returnGroup = document.getElementById('returnGroup');
+    const searchBtn = document.getElementById('searchBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const resultArea = document.getElementById('resultArea');
+    const toastEl = document.getElementById('toast');
+    const tabs = document.querySelectorAll('.tab');
+    const openDemo = document.getElementById('open-demo');
+
+    /* حالة التطبيق */
+    let airportsData = null;
+    let tripType = 'round'; // 'round' | 'oneway' | 'multi'
+
+    /* =========================
+       أدوات مساعدة
+       ========================= */
+    function showToast(message, ms = 3000){
+      toastEl.classList.remove('hide'); toastEl.textContent = message;
+      setTimeout(()=>{ toastEl.classList.add('hide'); }, ms);
+    }
+
+    function sanitizeText(s){
+      // منع حقن html بسيطة
+      return String(s).replace(/[<>]/g, '');
+    }
+
+    function formatDateForInput(date){
+      const y=date.getFullYear(), m=String(date.getMonth()+1).padStart(2,'0'), d=String(date.getDate()).padStart(2,'0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function formatDateForDisplay(date){
+      return new Date(date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+    }
+
+    function setMinDateConstraints(){
+      const today = new Date();
+      departureDate.min = formatDateForInput(today);
+      const tomorrow = new Date(today); tomorrow.setDate(today.getDate()+1);
+      returnDate.min = formatDateForInput(tomorrow);
+    }
+
+    function saveLastSearch(payload){
+      try{ localStorage.setItem('lastFlightSearch', JSON.stringify(payload)); }catch(e){}
+    }
+    function loadLastSearch(){
+      try{ const v=localStorage.getItem('lastFlightSearch'); return v?JSON.parse(v):null;}catch(e){return null}
+    }
+
+    /* =========================
+       تحميل بيانات المطارات (fetch مع fallback)
+       ========================= */
+    async function loadAirports(){
+      try{
+        const resp = await fetch(AIRPORTS_JSON_PATH, {cache:'no-store'});
+        if(!resp.ok) throw new Error('network');
+        const json = await resp.json();
+        // دعم الصيغة: إما object.countries أو نفس شكلنا demo
+        airportsData = json.countries ? json : json;
+      }catch(err){
+        // استخدم fallback مضمن
+        airportsData = DEMO_FALLBACK_DATA;
+        console.warn('فشل جلب airports.json — استخدام بيانات تجريبية مضمّنة.', err);
+        showToast('تم استخدام بيانات تجريبية محلياً. لتحميل قاعدة كاملة ضع airports.json في نفس المجلد.');
+      }finally{
+        loader.style.display='none'; mainForm.style.display='block';
+        populateCountrySelects(); attachEventHandlers(); setDefaultDates(); setMinDateConstraints();
+      }
+    }
+
+    /* =========================
+       تعبئة القوائم
+       ========================= */
+    function populateCountrySelects(){
+      [originCountry, destinationCountry].forEach(sel => {
+        sel.innerHTML = '<option value="">اختر الدولة</option>';
+        airportsData.countries.forEach(country => {
+          const opt = document.createElement('option');
+          opt.value = country.code; opt.textContent = country.name;
+          sel.appendChild(opt);
+        });
+      });
+    }
+
+    function updateCities(which){
+      const countrySel = (which==='origin')? originCountry : destinationCountry;
+      const citySel = (which==='origin')? originCity : destinationCity;
+      const airportSel = (which==='origin')? originAirport : destinationAirport;
+      citySel.innerHTML = '<option value="">اختر المدينة</option>';
+      airportSel.innerHTML = '<option value="">اختر المطار</option>';
+      citySel.disabled = true; airportSel.disabled = true;
+
+      if(!countrySel.value) return;
+      const country = airportsData.countries.find(c => c.code === countrySel.value);
+      if(!country) return;
+      country.cities.forEach(city => {
+        const opt = document.createElement('option');
+        opt.value = city.code; opt.textContent = city.name;
+        citySel.appendChild(opt);
+      });
+      citySel.disabled = false;
+      // تعيين listener للمدينة
+      citySel.onchange = ()=> updateAirports(which);
+    }
+
+    function updateAirports(which){
+      const countrySel = (which==='origin')? originCountry : destinationCountry;
+      const citySel = (which==='origin')? originCity : destinationCity;
+      const airportSel = (which==='origin')? originAirport : destinationAirport;
+      airportSel.innerHTML = '<option value="">اختر المطار</option>';
+      airportSel.disabled = true;
+      if(!countrySel.value || !citySel.value) return;
+      const country = airportsData.countries.find(c => c.code === countrySel.value);
+      if(!country) return;
+      const city = country.cities.find(ci => ci.code === citySel.value);
+      if(!city) return;
+      city.airports.forEach(ap => {
+        const opt = document.createElement('option');
+        opt.value = ap.code; opt.textContent = `${ap.name} (${ap.code})`;
+        airportSel.appendChild(opt);
+      });
+      airportSel.disabled = false;
+    }
+
+    /* =========================
+       تهيئة التواريخ والقيم الافتراضية
+       ========================= */
+    function setDefaultDates(){
+      const today = new Date();
+      const nextWeek = new Date(); nextWeek.setDate(today.getDate()+7);
+      departureDate.value = formatDateForInput(today);
+      returnDate.value = formatDateForInput(nextWeek);
+    }
+
+    /* =========================
+       التحقق من صحة النموذج
+       ========================= */
+    function validateForm(){
+      // تحقق الحقول الإلزامية
+      const required = [
+        {el: originCountry, name:'الدولة الأصل'},
+        {el: originCity, name:'مدينة الانطلاق'},
+        {el: originAirport, name:'مطار الانطلاق'},
+        {el: destinationCountry, name:'دولة الوجهة'},
+        {el: destinationCity, name:'مدينة الوجهة'},
+        {el: destinationAirport, name:'مطار الوجهة'},
+        {el: departureDate, name:'تاريخ المغادرة'}
+      ];
+      for(const f of required){
+        if(!f.el.value){
+          showToast(`يرجى تعبئة: ${f.name}`,4000);
+          f.el.focus();
+          return false;
+        }
+      }
+
+      // تحقق تواريخ
+      const dep = new Date(departureDate.value);
+      if(isNaN(dep.getTime())){ showToast('تأكد من صحة تاريخ المغادرة'); departureDate.focus(); return false; }
+      if(tripType !== 'oneway'){
+        if(!returnDate.value){ showToast('يرجى اختيار تاريخ العودة'); returnDate.focus(); return false; }
+        const ret = new Date(returnDate.value);
+        if(ret <= dep){ showToast('يجب أن تكون العودة بعد المغادرة'); returnDate.focus(); return false; }
+      }
+      return true;
+    }
+
+    /* =========================
+       عرض النتائج / ملخّص الرحلة
+       ========================= */
+    function renderSummary(){
+      const originAirportText = originAirport.options[originAirport.selectedIndex].text || originAirport.value;
+      const destinationAirportText = destinationAirport.options[destinationAirport.selectedIndex].text || destinationAirport.value;
+      const originCityText = originCity.options[originCity.selectedIndex].text || '';
+      const destinationCityText = destinationCity.options[destinationCity.selectedIndex].text || '';
+
+      const passengers = document.getElementById('passengers').value;
+      const flightClass = document.getElementById('flightClass').value;
+      const depDisplay = formatDateForDisplay(departureDate.value);
+      const retDisplay = (tripType === 'oneway') ? 'رحلة ذهاب فقط' : formatDateForDisplay(returnDate.value);
+
+      const html = `
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="min-width:220px">
+            <div style="font-weight:800">${sanitizeText(originAirport.value)} → ${sanitizeText(destinationAirport.value)}</div>
+            <div class="muted">${sanitizeText(originCityText)} — ${sanitizeText(destinationCityText)}</div>
+          </div>
+          <div style="text-align:left">
+            <div class="muted">المسافرون</div><div style="font-weight:700">${sanitizeText(passengers)} ركاب</div>
+            <div class="muted" style="margin-top:6px">الفئة</div><div style="font-weight:700">${sanitizeText(flightClass)}</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="route">
+          <div class="point">
+            <div class="code">${sanitizeText(originAirport.value)}</div>
+            <div class="city">${sanitizeText(originCityText)}</div>
+            <div class="muted">${depDisplay}</div>
+          </div>
+          <div class="route-line" aria-hidden="true"></div>
+          <div class="point">
+            <div class="code">${sanitizeText(destinationAirport.value)}</div>
+            <div class="city">${sanitizeText(destinationCityText)}</div>
+            <div class="muted">${retDisplay}</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+          <button id="editBtn" class="btn btn-ghost">تعديل</button>
+          <button id="whBtn" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> إرسال عبر واتساب</button>
+          <button id="exportJson" class="btn btn-ghost">تحميل JSON للحجز</button>
+        </div>
+      `;
+      resultArea.innerHTML = html;
+      resultArea.style.display = 'block';
+
+      // حفظ البحث
+      saveLastSearch({
+        originCountry: originCountry.value, originCity: originCity.value, originAirport: originAirport.value,
+        destinationCountry: destinationCountry.value, destinationCity: destinationCity.value, destinationAirport: destinationAirport.value,
+        departureDate: departureDate.value, returnDate: returnDate.value, passengers: document.getElementById('passengers').value,
+        flightClass: document.getElementById('flightClass').value, tripType
+      });
+
+      // ربط أزرار داخل الملخص
+      document.getElementById('editBtn').onclick = ()=> { resultArea.style.display='none'; };
+      document.getElementById('whBtn').onclick = sendWhatsApp;
+      document.getElementById('exportJson').onclick = exportAsJson;
+    }
+
+    function exportAsJson(){
+      const payload = loadLastSearch();
+      if(!payload){ showToast('لا توجد بيانات محفوظة للتصدير'); return; }
+      const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'booking.json'; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+      showToast('تم تنزيل ملف booking.json');
+    }
+
+    /* =========================
+       إرسال رسالة واتساب (آمن)
+       ========================= */
+    function sendWhatsApp(){
+      const payload = loadLastSearch();
+      if(!payload){ showToast('يرجى إنشاء ملخص قبل الإرسال'); return; }
+      // صياغة رسالة مقروءة بشكل آمن
+      const msgLines = [];
+      msgLines.push('طلب حجز جديد — تطبيق أمان للسفريات');
+      msgLines.push('');
+      msgLines.push(`نوع الرحلة: ${payload.tripType === 'oneway' ? 'ذهاب فقط' : payload.tripType === 'multi' ? 'متعددة' : 'ذهاب وعودة'}`);
+      msgLines.push(`من: ${payload.originAirport} (${payload.originCity})`);
+      msgLines.push(`إلى: ${payload.destinationAirport} (${payload.destinationCity})`);
+      msgLines.push(`المغادرة: ${formatDateForDisplay(payload.departureDate)}`);
+      if(payload.tripType !== 'oneway') msgLines.push(`العودة: ${formatDateForDisplay(payload.returnDate)}`);
+      msgLines.push(`المسافرون: ${payload.passengers}`);
+      msgLines.push(`الفئة: ${payload.flightClass}`);
+      msgLines.push('');
+      msgLines.push('— أرسل بواسطة نظام حجز الطيران');
+
+      const encoded = encodeURIComponent(msgLines.join('\\n'));
+      // رقم دون + كما هو مطلوب في wa.me
+      const url = `https://wa.me/${encodeURIComponent(CONTACT_PHONE)}?text=${encoded}`;
+      window.open(url,'_blank');
+    }
+
+    /* =========================
+       أحداث واجهة المستخدم
+       ========================= */
+    function attachEventHandlers(){
+      originCountry.onchange = ()=> updateCities('origin');
+      destinationCountry.onchange = ()=> updateCities('destination');
+
+      // تبويب الأنواع
+      tabs.forEach(t => {
+        t.addEventListener('click', () => {
+          tabs.forEach(x=> x.setAttribute('aria-pressed', 'false'));
+          t.setAttribute('aria-pressed','true');
+          tripType = t.dataset.type === 'oneway' ? 'oneway' : (t.dataset.type === 'multi' ? 'multi' : 'round');
+          // hide/show return
+          returnGroup.style.display = tripType === 'oneway' ? 'none' : 'block';
+        });
+        // دعم لوحة المفاتيح
+        t.addEventListener('keydown', (e)=> { if(e.key==='Enter' || e.key===' ') { e.preventDefault(); t.click(); }});
+      });
+
+      // البحث
+      searchBtn.onclick = function(){
+        if(!validateForm()) return;
+        renderSummary();
+        showToast('تم إنشاء ملخص الرحلة');
+      };
+
+      resetBtn.onclick = function(){
+        document.getElementById('flightForm').reset();
+        originCity.innerHTML = '<option value="">اختر المدينة</option>'; originCity.disabled = true;
+        originAirport.innerHTML = '<option value="">اختر المطار</option>'; originAirport.disabled = true;
+        destinationCity.innerHTML = '<option value="">اختر المدينة</option>'; destinationCity.disabled = true;
+        destinationAirport.innerHTML = '<option value="">اختر المطار</option>'; destinationAirport.disabled = true;
+        setDefaultDates(); showToast('تم تفريغ الحقول');
+      };
+
+      openDemo.onclick = function(){
+        const last = loadLastSearch();
+        if(!last){ showToast('لا توجد بيانات سابقة محفوظة'); return; }
+        // إعادة ملئ الحقول
+        originCountry.value = last.originCountry || '';
+        updateCities('origin'); originCity.value = last.originCity || '';
+        updateAirports('origin'); originAirport.value = last.originAirport || '';
+
+        destinationCountry.value = last.destinationCountry || '';
+        updateCities('destination'); destinationCity.value = last.destinationCity || '';
+        updateAirports('destination'); destinationAirport.value = last.destinationAirport || '';
+
+        departureDate.value = last.departureDate || departureDate.value;
+        returnDate.value = last.returnDate || returnDate.value;
+        document.getElementById('passengers').value = last.passengers || '1';
+        document.getElementById('flightClass').value = last.flightClass || 'economy';
+
+        // set tab
+        tabs.forEach(x => x.setAttribute('aria-pressed', x.dataset.type === (last.tripType === 'oneway' ? 'oneway' : last.tripType)));
+        showToast('تمت استعادة البحث الأخير');
+      };
+    }
+
+    /* =========================
+       تشغيل
+       ========================= */
+    document.addEventListener('DOMContentLoaded', loadAirports);
+
+  })();
+  </script>
+</body>
+</html>

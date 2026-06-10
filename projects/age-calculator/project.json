@@ -1,0 +1,22 @@
+{
+    "name": "حاسبة العمر المتطورة",
+    "description": "أداة متطورة لحساب العمر بدقة مع تفاصيل اليوم والشهر والسنة، وتنبيهات المناسبات",
+    "date": "2024-01-25",
+    "technologies": ["HTML5", "CSS3", "JavaScript", "LocalStorage"],
+    "mainLink": "age-calculator-app/index.html",
+    "hasVersions": true,
+    "versions": [
+        {
+            "name": "الإصدار 1.0 - الكلاسيكي",
+            "path": "age-calculator-app/index.html",
+            "date": "2024-01-20",
+            "icon": "fa-clock"
+        },
+        {
+            "name": "الإصدار 2.0 - المتطور",
+            "path": "age-calculator-app-v2/index.html",
+            "date": "2024-02-15",
+            "icon": "fa-chart-line"
+        }
+    ]
+}

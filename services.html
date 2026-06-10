@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>خدماتنا | TechNomads - حلول تقنية متكاملة</title>
+    <meta name="description" content="نقدم حلولاً تقنية شاملة من تطوير المواقع والتطبيقات إلى التسويق الرقمي والاستشارات التقنية">
+    <meta name="keywords" content="TechNomads, تطوير مواقع, تطبيقات جوال, UI/UX, تسويق رقمي">
+
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+
+    
+    
+    
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CM085HTNT0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CM085HTNT0');
+</script>
+    
+    <meta name="description" content="نقدم حلولاً تقنية شاملة: تطوير المواقع، تطبيقات الجوال، التسويق الرقمي، تصميم UI/UX، والاستشارات التقنية.">
+<meta name="keywords" content="تطوير مواقع, تطبيقات جوال, تسويق رقمي, تصميم UI/UX, استشارات تقنية, اليمن">
+    
+    <style>
+        /* ============================================
+           SERVICES PAGE STYLES
+           ============================================ */
+        
+        .services-hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #2A2D7C 0%, #4ECDC4 100%);
+            overflow: hidden;
+            padding: 120px 2rem 80px;
+        }
+
+        .services-hero .hero-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .services-hero .hero-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .services-hero .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: badgeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .services-hero .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #FFD700, #FF6B6B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .services-hero .hero-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #FFD700;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .hero-wave {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            line-height: 0;
+        }
+
+        .hero-wave svg {
+            width: 100%;
+            height: 60px;
+        }
+
+        /* Services Tabs */
+        .services-tabs-section {
+            padding: 4rem 0;
+            background: var(--bg-light);
+        }
+
+        .services-tabs-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .tabs-header {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid rgba(0,0,0,0.05);
+            padding-bottom: 1rem;
+        }
+
+        body.dark-mode .tabs-header {
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+
+        .tab-btn-service {
+            padding: 0.8rem 1.8rem;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn-service.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(42,45,124,0.3);
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Service Cards */
+        .service-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card-modern {
+            background: var(--card-bg-light);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .service-card-modern {
+            background: var(--card-bg-light);
+            border-color: rgba(255,255,255,0.05);
+        }
+
+        .service-card-modern:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            border-color: var(--accent);
+        }
+
+        .service-card-icon {
+            padding: 2rem 2rem 0;
+        }
+
+        .service-card-icon .icon-bg {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(78,205,196,0.1), rgba(255,107,107,0.1));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .service-card-modern:hover .service-card-icon .icon-bg {
+            background: var(--gradient-primary);
+            transform: scale(1.05);
+        }
+
+        .service-card-icon i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .service-card-modern:hover .service-card-icon i {
+            color: white;
+        }
+
+        .service-card-content {
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .service-card-content h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        body.dark-mode .service-card-content h3 {
+            color: var(--accent);
+        }
+
+        .service-card-content p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features-list li {
+            position: relative;
+            padding-right: 1.5rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .service-features-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        .service-price {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(78,205,196,0.1);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .service-link:hover {
+            gap: 0.8rem;
+            color: var(--secondary);
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        body.dark-mode .process-section {
+            background: #1a1a2e;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        body.dark-mode .section-title {
+            color: var(--accent);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 1rem auto 0;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .process-step {
+            text-align: center;
+        }
+
+        .process-step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 10px 20px rgba(42,45,124,0.2);
+        }
+
+        .process-step h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        body.dark-mode .process-step h3 {
+            color: var(--accent);
+        }
+
+        .process-step p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Technologies Section */
+        .technologies-section {
+            padding: 5rem 0;
+            background: var(--bg-light);
+        }
+
+        .tech-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg-light);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .tech-item {
+            border-color: rgba(255,255,255,0.05);
+        }
+
+        .tech-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .tech-item i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .tech-item h4 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        body.dark-mode .tech-item h4 {
+            color: var(--accent);
+        }
+
+        /* CTA Section */
+        .services-cta-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #2A2D7C 0%, #4ECDC4 100%);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .services-cta-section h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .services-cta-section p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .services-cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .services-cta-buttons .cta-button {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .services-cta-buttons .cta-button.primary {
+            background: #FF6B6B;
+            color: white;
+            box-shadow: 0 5px 20px rgba(255,107,107,0.3);
+        }
+
+        .services-cta-buttons .cta-button.primary:hover {
+            transform: translateY(-3px);
+        }
+
+        .services-cta-buttons .cta-button.secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .services-cta-buttons .cta-button.secondary:hover {
+            background: white;
+            color: #2A2D7C;
+        }
+
+        /* ============================================
+           MOBILE NAV FIX - الحل النهائي
+           ============================================ */
+        
+        /* إعادة تعيين وتأكيد أنماط القائمة */
+        .mobile-nav {
+            position: fixed !important;
+            top: 0 !important;
+            right: -100% !important;
+            width: 85% !important;
+            max-width: 320px !important;
+            height: 100vh !important;
+            background: var(--bg-light, #ffffff) !important;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1) !important;
+            z-index: 10000 !important;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow-y: auto !important;
+        }
+
+        body.dark-mode .mobile-nav {
+            background: #1e1e2e !important;
+        }
+
+        .mobile-nav.active {
+            right: 0 !important;
+        }
+
+        /* تأكيد ظهور زر الهامبرغر */
+        .hamburger {
+            display: block !important;
+            cursor: pointer !important;
+            z-index: 10001 !important;
+            position: relative !important;
+        }
+
+        /* للجوال فقط */
+        @media (max-width: 992px) {
+            .hamburger {
+                display: block !important;
+            }
+            .desktop-nav {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .services-hero {
+                padding: 100px 1rem 60px;
+            }
+            .services-hero .hero-title {
+                font-size: 1.6rem;
+            }
+            .hero-stats {
+                gap: 1rem;
+            }
+            .stat-card {
+                padding: 0.8rem 1rem;
+                min-width: 90px;
+            }
+            .tab-btn-service {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+            .service-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+            .services-cta-section h2 {
+                font-size: 1.6rem;
+            }
+            .services-cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         HEADER - الهيدر الذكي
+         ============================================ -->
+    <header class="smart-header" id="main-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-wrapper">
+                    <svg class="logo-svg" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2A2D7C"/>
+                                <stop offset="100%" stop-color="#4ECDC4"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8" class="logo-circle"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8" class="logo-triangle"/>
+                        <circle cx="100" cy="110" r="15" fill="url(#logoGrad)" class="logo-dot"/>
+                    </svg>
+                </div>
+                <span class="logo-text">TechNomads</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                    <li><a href="services.html" class="nav-link active"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
+                    <li><a href="team.html" class="nav-link"><i class="fas fa-users"></i><span>الفريق</span></a></li>
+                    <li><a href="portfolio.html" class="nav-link"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
+                    <li><a href="contact.html" class="nav-link cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="desktop-tools">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ar">عربي</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+            </div>
+
+            <!-- زر الهامبرغر -->
+            <button class="hamburger" id="hamburgerBtn" aria-label="القائمة">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+        </div>
+
+        <!-- القائمة الجوالة -->
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="mobile-logo-wrapper">
+                    <svg class="mobile-logo-svg" viewBox="0 0 200 200" width="40" height="40">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
+                        <circle cx="100" cy="110" r="15" fill="url(#logoGrad)"/>
+                    </svg>
+                </div>
+                <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <ul class="mobile-nav-list">
+                <li><a href="index.html" class="mobile-nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                <li><a href="services.html" class="mobile-nav-link active"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
+                <li><a href="team.html" class="mobile-nav-link"><i class="fas fa-users"></i><span>الفريق</span></a></li>
+                <li><a href="portfolio.html" class="mobile-nav-link"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
+                <li><a href="contact.html" class="mobile-nav-link cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
+            </ul>
+            <div class="mobile-nav-footer">
+                <div class="mobile-theme-toggle-wrapper">
+                    <span class="mobile-theme-label"><i class="fas fa-adjust"></i> الوضع</span>
+                    <button class="mobile-theme-toggle" id="mobileThemeToggle">
+                        <i class="fas fa-moon"></i>
+                        <span class="mobile-theme-text">داكن</span>
+                    </button>
+                </div>
+                <div class="mobile-language-switcher">
+                    <button class="mobile-lang-btn active" data-lang="ar">العربية</button>
+                    <button class="mobile-lang-btn" data-lang="en">English</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================
+         MAIN CONTENT
+         ============================================ -->
+    <main>
+
+        <!-- Hero Section -->
+        <section class="services-hero">
+            <div class="hero-container">
+                <div class="hero-content" data-aos="fade-up">
+                    <div class="hero-badge">
+                        <i class="fas fa-crown"></i>
+                        <span>حلول تقنية متكاملة</span>
+                    </div>
+                    <h1 class="hero-title">خدماتنا <span class="gradient-text">التقنية</span></h1>
+                    <p class="hero-subtitle">نقدم حلولاً رقمية مبتكرة تساعد عملك على النمو والتفوق في العصر الرقمي</p>
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <span class="stat-number" id="statProjects">0</span>
+                            <span class="stat-label">مشروع ناجح</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="statClients">0</span>
+                            <span class="stat-label">عميل سعيد</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="statExperts">0</span>
+                            <span class="stat-label">خبير تقني</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="statYears">0</span>
+                            <span class="stat-label">سنوات خبرة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-wave">
+                <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                    <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,58.7C1248,64,1344,64,1392,64L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" fill="var(--bg-light)"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Services Tabs Section -->
+        <section class="services-tabs-section">
+            <div class="services-tabs-container">
+                <div class="tabs-header" data-aos="fade-up">
+                    <button class="tab-btn-service active" data-service="web"><i class="fas fa-code"></i> تطوير المواقع</button>
+                    <button class="tab-btn-service" data-service="mobile"><i class="fas fa-mobile-alt"></i> تطبيقات الجوال</button>
+                    <button class="tab-btn-service" data-service="design"><i class="fas fa-paint-brush"></i> تصميم UI/UX</button>
+                    <button class="tab-btn-service" data-service="marketing"><i class="fas fa-bullhorn"></i> التسويق الرقمي</button>
+                    <button class="tab-btn-service" data-service="consulting"><i class="fas fa-chalkboard-user"></i> الاستشارات التقنية</button>
+                </div>
+
+                <!-- Web Tab -->
+                <div id="web-tab" class="tab-pane active">
+                    <div class="service-cards-grid">
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-store"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>متاجر إلكترونية</h3>
+                                <p>منصة تجارة إلكترونية متكاملة مع أنظمة دفع وشحن متطورة</p>
+                                <ul class="service-features-list">
+                                    <li>نظام إدارة منتجات متقدم</li>
+                                    <li>بوابات دفع متعددة</li>
+                                    <li>نظام شحن وتتبع</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 800$</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-building"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>مواقع الشركات</h3>
+                                <p>مواقع احترافية تعكس هوية شركتك</p>
+                                <ul class="service-features-list">
+                                    <li>تصميم مخصص حسب الهوية</li>
+                                    <li>نظام إدارة محتوى</li>
+                                    <li>تحسين لمحركات البحث</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 500$</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-graduation-cap"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>منصات تعليمية</h3>
+                                <p>أنظمة إدارة التعلم الإلكتروني</p>
+                                <ul class="service-features-list">
+                                    <li>نظام إدارة الدورات</li>
+                                    <li>شهادات إلكترونية</li>
+                                    <li>تقييم واختبارات</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 1000$</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Tab -->
+                <div id="mobile-tab" class="tab-pane">
+                    <div class="service-cards-grid">
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fab fa-android"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>تطبيقات Android</h3>
+                                <p>تطبيقات أندرويد احترافية</p>
+                                <ul class="service-features-list">
+                                    <li>تصميم متوافق مع Material Design</li>
+                                    <li>إشعارات فورية</li>
+                                    <li>نشر على Google Play</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 1000$</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fab fa-apple"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>تطبيقات iOS</h3>
+                                <p>تطبيقات iOS متطورة</p>
+                                <ul class="service-features-list">
+                                    <li>تصميم متوافق مع HIG</li>
+                                    <li>تكامل مع iCloud</li>
+                                    <li>نشر على App Store</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 1500$</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-cube"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>تطبيقات Flutter</h3>
+                                <p>تطبيقات متعددة المنصات</p>
+                                <ul class="service-features-list">
+                                    <li>أداء عالي على iOS و Android</li>
+                                    <li>تكامل مع Firebase</li>
+                                    <li>تطوير أسرع وتكلفة أقل</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 1200$</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Tab -->
+                <div id="design-tab" class="tab-pane">
+                    <div class="service-cards-grid">
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-palette"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>تصميم واجهات المستخدم</h3>
+                                <p>تصاميم جذابة وعصرية</p>
+                                <ul class="service-features-list">
+                                    <li>تصميم مخصص حسب الهوية</li>
+                                    <li>متجاوب مع جميع الأجهزة</li>
+                                    <li>نماذج تفاعلية</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 300$</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-users"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>تجربة المستخدم UX</h3>
+                                <p>تحسين تجربة المستخدم</p>
+                                <ul class="service-features-list">
+                                    <li>دراسة وتحليل الجمهور</li>
+                                    <li>خرائط تدفق المستخدم</li>
+                                    <li>اختبارات سهولة الاستخدام</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 400$</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-mobile-screen"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>تصميم تطبيقات</h3>
+                                <p>تصميم واجهات تطبيقات الجوال</p>
+                                <ul class="service-features-list">
+                                    <li>مواكبة أحدث اتجاهات التصميم</li>
+                                    <li>تطابق مع معايير iOS/Android</li>
+                                    <li>تسليم ملفات منظمة</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 500$</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketing Tab -->
+                <div id="marketing-tab" class="tab-pane">
+                    <div class="service-cards-grid">
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fab fa-facebook-f"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>إدارة وسائل التواصل</h3>
+                                <p>إدارة حسابات التواصل الاجتماعي</p>
+                                <ul class="service-features-list">
+                                    <li>إنشاء محتوى جذاب</li>
+                                    <li>جدولة المنشورات</li>
+                                    <li>تقارير أداء شهرية</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 200$/شهر</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fab fa-google"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>تحسين محركات البحث SEO</h3>
+                                <p>ظهور موقعك في الصفحات الأولى</p>
+                                <ul class="service-features-list">
+                                    <li>تحليل الكلمات المفتاحية</li>
+                                    <li>تحسين المحتوى والهيكل</li>
+                                    <li>تقارير تقدم شهرية</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 250$/شهر</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-chart-line"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>إعلانات مدفوعة</h3>
+                                <p>حملات إعلانية مصممة لتحقيق أعلى عائد</p>
+                                <ul class="service-features-list">
+                                    <li>إعلانات Google Ads</li>
+                                    <li>استهداف دقيق للجمهور</li>
+                                    <li>تحليل وتحسين مستمر</li>
+                                </ul>
+                                <div class="service-price">حسب الميزانية</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consulting Tab -->
+                <div id="consulting-tab" class="tab-pane">
+                    <div class="service-cards-grid">
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-chalkboard-user"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>استشارات تقنية</h3>
+                                <p>استشارات متخصصة لتحسين أداء عملك</p>
+                                <ul class="service-features-list">
+                                    <li>تحليل الاحتياجات التقنية</li>
+                                    <li>اختيار التقنيات المناسبة</li>
+                                    <li>خطط التطوير المستقبلية</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 150$/ساعة</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-shield-alt"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>أمن المعلومات</h3>
+                                <p>حماية بياناتك وأنظمتك</p>
+                                <ul class="service-features-list">
+                                    <li>اختبار اختراق وثغرات</li>
+                                    <li>تأمين المواقع والتطبيقات</li>
+                                    <li>تقييم المخاطر</li>
+                                </ul>
+                                <div class="service-price">بدءاً من 300$</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                        <div class="service-card-modern">
+                            <div class="service-card-icon"><div class="icon-bg"><i class="fas fa-cloud-upload-alt"></i></div></div>
+                            <div class="service-card-content">
+                                <h3>حلول السحابة</h3>
+                                <p>استضافة وحلول سحابية مرنة وآمنة</p>
+                                <ul class="service-features-list">
+                                    <li>استضافة مواقع وتطبيقات</li>
+                                    <li>نسخ احتياطي واستعادة</li>
+                                    <li>مراقبة وتحسين الأداء</li>
+                                </ul>
+                                <div class="service-price">حسب الاحتياج</div>
+                                <a href="contact.html" class="service-link">اطلب الخدمة <i class="fas fa-arrow-left"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="process-section">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">كيف نعمل</h2>
+                <p class="section-subtitle">من الفكرة إلى الإطلاق الناجح</p>
+            </div>
+            <div class="process-grid">
+                <div class="process-step"><div class="process-step-number">1</div><h3>دراسة الفكرة</h3><p>نستمع لاحتياجاتك ونحلل متطلبات المشروع بدقة</p></div>
+                <div class="process-step"><div class="process-step-number">2</div><h3>التخطيط والتصميم</h3><p>نضع خارطة طريق واضحة ونبدأ في تصميم النماذج الأولية</p></div>
+                <div class="process-step"><div class="process-step-number">3</div><h3>التطوير والبرمجة</h3><p>نستخدم أحدث التقنيات لتطوير حل متكامل واحترافي</p></div>
+                <div class="process-step"><div class="process-step-number">4</div><h3>الاختبار والإطلاق</h3><p>نختبر بدقة جميع الوظائف ثم نطلق المشروع رسمياً</p></div>
+            </div>
+        </section>
+
+        <!-- Technologies Section -->
+        <section class="technologies-section">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">التقنيات التي نستخدمها</h2>
+                <p class="section-subtitle">أحدث الأدوات والتقنيات لضمان الجودة العالية</p>
+            </div>
+            <div class="service-cards-grid" style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
+                <div class="tech-item"><i class="fab fa-react"></i><h4>React / Next.js</h4></div>
+                <div class="tech-item"><i class="fab fa-node-js"></i><h4>Node.js</h4></div>
+                <div class="tech-item"><i class="fab fa-python"></i><h4>Python / Django</h4></div>
+                <div class="tech-item"><i class="fab fa-flutter"></i><h4>Flutter</h4></div>
+                <div class="tech-item"><i class="fas fa-database"></i><h4>MongoDB / MySQL</h4></div>
+                <div class="tech-item"><i class="fab fa-figma"></i><h4>Figma</h4></div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="services-cta-section">
+            <div class="container">
+                <h2>هل لديك فكرة مشروع؟</h2>
+                <p>فريقنا جاهز لتحويل أفكارك إلى واقع رقمي متميز</p>
+                <div class="services-cta-buttons">
+                    <a href="contact.html" class="cta-button primary"><i class="fas fa-rocket"></i> ابدأ مشروعك الآن</a>
+                    <a href="portfolio.html" class="cta-button secondary"><i class="fas fa-briefcase"></i> شاهد أعمالنا</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="smart-footer">
+        <div class="footer-waves">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="var(--primary)" fill-opacity="1" d="M0,192L48,186.7C96,181,192,171,288,181.3C384,192,480,224,576,218.7C672,213,768,171,864,165.3C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
+        <div class="footer-container">
+            <div class="footer-section footer-brand">
+                <div class="footer-logo-wrapper">
+                    <svg class="footer-logo-svg" viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8" opacity="0.9"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="white" stroke-width="8"/>
+                        <circle cx="100" cy="110" r="15" fill="white"/>
+                    </svg>
+                </div>
+                <h3 class="footer-brand-title">TechNomads</h3>
+                <p class="footer-about">نصنع التقنية بإبداع، نقدم حلولاً رقمية متكاملة تلبي احتياجات عملائنا بأعلى معايير الجودة.</p>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="team.html"><i class="fas fa-users"></i> الفريق</a></li>
+                    <li><a href="services.html"><i class="fas fa-cogs"></i> الخدمات</a></li>
+                    <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> الأعمال</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">تواصل معنا</h3>
+                <div class="contact-info">
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>صنعاء، اليمن</span></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:+967770200970">+967770200970</a></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:2025ooss@gmail.com">2025ooss@gmail.com</a></div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">النشرة البريدية</h3>
+                <form class="newsletter-form" id="footerNewsletter">
+                    <div class="newsletter-input-wrapper">
+                        <i class="fas fa-envelope newsletter-icon"></i>
+                        <input type="email" placeholder="بريدك الإلكتروني" required>
+                    </div>
+                    <button type="submit" class="subscribe-btn">اشترك <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright-section">
+            <div class="copyright-content">
+                <p>© <span class="current-year">2024</span> TechNomads. جميع الحقوق محفوظة</p>
+                <div class="footer-links-inline"><a href="#">شروط الخدمة</a><span class="separator">|</span><a href="#">سياسة الخصوصية</a></div>
+            </div>
+            <div class="footer-bottom-bar"><span>صُنع بـ <i class="fas fa-heart"></i> في اليمن</span></div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true, offset: 100 });
+
+        // Update copyright year
+        document.querySelectorAll('.current-year').forEach(el => el.textContent = new Date().getFullYear());
+
+        // ============================================
+        // HAMBURGER MENU - الحل النهائي والمضمون
+        // ============================================
+        (function() {
+            // البحث عن العناصر
+            const hamburger = document.getElementById('hamburgerBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            const closeNavBtn = document.getElementById('closeNavBtn');
+            
+            console.log('Hamburger found:', hamburger);
+            console.log('Mobile Nav found:', mobileNav);
+            
+            if (hamburger && mobileNav) {
+                // دالة فتح وإغلاق القائمة
+                function toggleMenu() {
+                    mobileNav.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                    const isOpen = mobileNav.classList.contains('active');
+                    hamburger.setAttribute('aria-expanded', isOpen);
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                    console.log('Menu toggled, active:', isOpen);
+                }
+                
+                // عند الضغط على زر الهامبرغر
+                hamburger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleMenu();
+                });
+                
+                // عند الضغط على زر الإغلاق
+                if (closeNavBtn) {
+                    closeNavBtn.addEventListener('click', toggleMenu);
+                }
+                
+                // إغلاق القائمة عند الضغط خارجها
+                document.addEventListener('click', function(e) {
+                    if (mobileNav.classList.contains('active') && 
+                        !mobileNav.contains(e.target) && 
+                        !hamburger.contains(e.target)) {
+                        toggleMenu();
+                    }
+                });
+                
+                // إغلاق القائمة عند الضغط على ESC
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
+                
+                // إغلاق القائمة عند الضغط على رابط
+                mobileNav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', toggleMenu);
+                });
+                
+                // تأكيد ظهور القائمة عند التصغير
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 992) {
+                        if (mobileNav.classList.contains('active')) {
+                            toggleMenu();
+                        }
+                    }
+                });
+            } else {
+                console.error('Hamburger or Mobile Nav elements not found!');
+                console.log('hamburger:', hamburger);
+                console.log('mobileNav:', mobileNav);
+            }
+        })();
+
+        // Counter Animation
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 30);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const target = parseInt(element.getAttribute('data-target'));
+                    if (!isNaN(target)) animateCounter(element, target);
+                    observer.unobserve(element);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statProjects = document.getElementById('statProjects');
+        const statClients = document.getElementById('statClients');
+        const statExperts = document.getElementById('statExperts');
+        const statYears = document.getElementById('statYears');
+
+        if (statProjects) { statProjects.setAttribute('data-target', '120'); observer.observe(statProjects); }
+        if (statClients) { statClients.setAttribute('data-target', '85'); observer.observe(statClients); }
+        if (statExperts) { statExperts.setAttribute('data-target', '25'); observer.observe(statExperts); }
+        if (statYears) { statYears.setAttribute('data-target', '5'); observer.observe(statYears); }
+
+        // Tabs
+        const tabBtns = document.querySelectorAll('.tab-btn-service');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const serviceType = btn.getAttribute('data-service');
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                btn.classList.add('active');
+                const activePane = document.getElementById(`${serviceType}-tab`);
+                if (activePane) activePane.classList.add('active');
+            });
+        });
+
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+            window.addEventListener('scroll', () => {
+                backToTop.classList.toggle('visible', window.scrollY > 500);
+            });
+            backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+
+        // Newsletter
+        const footerNewsletter = document.getElementById('footerNewsletter');
+        if (footerNewsletter) {
+            footerNewsletter.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = footerNewsletter.querySelector('input');
+                if (input && input.value) {
+                    alert('شكراً للاشتراك في نشرتنا البريدية!');
+                    input.value = '';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

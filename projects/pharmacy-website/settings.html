@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>الإعدادات | نظام إدارة الصيدلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-prescription-bottle-medical"></i>
+                    <span>صيدليتي</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i><span>لوحة التحكم</span></a></li>
+                    <li><a href="medicines.html"><i class="fas fa-pills"></i><span>الأدوية</span></a></li>
+                    <li><a href="sales.html"><i class="fas fa-cash-register"></i><span>المبيعات</span></a></li>
+                    <li><a href="customers.html"><i class="fas fa-users"></i><span>العملاء</span></a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck"></i><span>الموردين</span></a></li>
+                    <li><a href="purchases.html"><i class="fas fa-shopping-cart"></i><span>المشتريات</span></a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i><span>التقارير</span></a></li>
+                    <li><a href="settings.html" class="active"><i class="fas fa-cog"></i><span>الإعدادات</span></a></li>
+                    <li><a href="profile.html"><i class="fas fa-user-circle"></i><span>الملف الشخصي</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <div class="user-name"></div>
+                        <div class="user-role"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="page-title">
+                    <h1>الإعدادات</h1>
+                    <p>إعدادات النظام والصيدلية</p>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" id="theme-toggle" title="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="header-btn" onclick="logout()" title="تسجيل الخروج">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <div class="form-grid">
+                    <!-- Pharmacy Settings -->
+                    <div class="form-card">
+                        <h3 class="form-card-title"><i class="fas fa-store"></i> بيانات الصيدلية</h3>
+                        <div class="form-group">
+                            <label class="form-label">اسم الصيدلية</label>
+                            <input type="text" class="form-input" id="pharmacyName" placeholder="اسم الصيدلية">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">العنوان</label>
+                            <input type="text" class="form-input" id="pharmacyAddress" placeholder="العنوان بالكامل">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">رقم الهاتف</label>
+                                <input type="tel" class="form-input" id="pharmacyPhone" placeholder="رقم الهاتف">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">البريد الإلكتروني</label>
+                                <input type="email" class="form-input" id="pharmacyEmail" placeholder="البريد الإلكتروني">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Financial Settings -->
+                    <div class="form-card">
+                        <h3 class="form-card-title"><i class="fas fa-coins"></i> الإعدادات المالية</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">نسبة الضريبة (%)</label>
+                                <input type="number" class="form-input" id="taxRate" min="0" max="100" step="0.5">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">العملة</label>
+                                <input type="text" class="form-input" id="currency" placeholder="ريال يمني">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alert Settings -->
+                    <div class="form-card">
+                        <h3 class="form-card-title"><i class="fas fa-bell"></i> إعدادات التنبيهات</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">حد تنبيه المخزون</label>
+                                <input type="number" class="form-input" id="lowStockThreshold" min="1" placeholder="20">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">تنبيه انتهاء الصلاحية (أيام)</label>
+                                <input type="number" class="form-input" id="expiryAlertDays" min="1" placeholder="30">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Receipt Settings -->
+                    <div class="form-card">
+                        <h3 class="form-card-title"><i class="fas fa-receipt"></i> إعدادات الفاتورة</h3>
+                        <div class="form-group">
+                            <label class="form-label">ترويسة الفاتورة</label>
+                            <input type="text" class="form-input" id="receiptHeader" placeholder="نص يظهر أعلى الفاتورة">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">تذييل الفاتورة</label>
+                            <input type="text" class="form-input" id="receiptFooter" placeholder="نص يظهر أسفل الفاتورة">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> حفظ جميع الإعدادات
+                    </button>
+                    <button class="btn btn-danger" onclick="resetSystem()">
+                        <i class="fas fa-trash-alt"></i> إعادة تعيين النظام
+                    </button>
+                </div>
+
+                <!-- Users Management -->
+                <div class="dashboard-card" style="margin-top: 2rem;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-users-cog"></i> إدارة المستخدمين</h3>
+                        <button class="btn btn-primary btn-sm" onclick="openModal('addUserModal')">
+                            <i class="fas fa-plus"></i> إضافة مستخدم
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>الاسم</th><th>البريد الإلكتروني</th><th>الدور</th><th>تاريخ الإنشاء</th><th>الإجراءات</th></tr>
+                            </thead>
+                            <tbody id="usersBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal-overlay" id="addUserModal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-user-plus"></i> إضافة مستخدم جديد</h3>
+                <button class="modal-close" onclick="closeModal('addUserModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="form-group">
+                        <label class="form-label">الاسم الكامل *</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">البريد الإلكتروني *</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">كلمة المرور *</label>
+                        <input type="password" class="form-input" name="password" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">الدور *</label>
+                        <select class="form-select" name="role" required>
+                            <option value="owner">صاحب صيدلية (صلاحية كاملة)</option>
+                            <option value="pharmacist">صيدلي (مبيعات وعملاء فقط)</option>
+                            <option value="stock">أمين مخزن (أدوية ومشتريات فقط)</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addUserModal')">إلغاء</button>
+                <button class="btn btn-primary" onclick="addUser()"><i class="fas fa-save"></i> إضافة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="modal-overlay" id="editUserModal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-user-edit"></i> تعديل المستخدم</h3>
+                <button class="modal-close" onclick="closeModal('editUserModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm">
+                    <input type="hidden" name="id">
+                    <div class="form-group">
+                        <label class="form-label">الاسم الكامل</label>
+                        <input type="text" class="form-input" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">الدور</label>
+                        <select class="form-select" name="role">
+                            <option value="owner">صاحب صيدلية (صلاحية كاملة)</option>
+                            <option value="pharmacist">صيدلي (مبيعات وعملاء فقط)</option>
+                            <option value="stock">أمين مخزن (أدوية ومشتريات فقط)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">كلمة المرور الجديدة (اتركها فارغة للتغيير)</label>
+                        <input type="password" class="form-input" name="password" placeholder="أدخل كلمة مرور جديدة لتغييرها">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('editUserModal')">إلغاء</button>
+                <button class="btn btn-primary" onclick="updateUser()"><i class="fas fa-save"></i> تحديث</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        function loadSettings() {
+            const settings = getSettings();
+            document.getElementById('pharmacyName').value = settings.pharmacyName || '';
+            document.getElementById('pharmacyAddress').value = settings.pharmacyAddress || '';
+            document.getElementById('pharmacyPhone').value = settings.pharmacyPhone || '';
+            document.getElementById('pharmacyEmail').value = settings.pharmacyEmail || '';
+            document.getElementById('taxRate').value = settings.taxRate || 5;
+            document.getElementById('currency').value = settings.currency || 'ريال يمني';
+            document.getElementById('lowStockThreshold').value = settings.lowStockThreshold || 20;
+            document.getElementById('expiryAlertDays').value = settings.expiryAlertDays || 30;
+            document.getElementById('receiptHeader').value = settings.receiptHeader || '';
+            document.getElementById('receiptFooter').value = settings.receiptFooter || '';
+            loadUsers();
+        }
+
+        function saveSettings() {
+            const settings = {
+                pharmacyName: document.getElementById('pharmacyName').value,
+                pharmacyAddress: document.getElementById('pharmacyAddress').value,
+                pharmacyPhone: document.getElementById('pharmacyPhone').value,
+                pharmacyEmail: document.getElementById('pharmacyEmail').value,
+                taxRate: parseFloat(document.getElementById('taxRate').value) || 5,
+                currency: document.getElementById('currency').value,
+                lowStockThreshold: parseInt(document.getElementById('lowStockThreshold').value) || 20,
+                expiryAlertDays: parseInt(document.getElementById('expiryAlertDays').value) || 30,
+                receiptHeader: document.getElementById('receiptHeader').value,
+                receiptFooter: document.getElementById('receiptFooter').value
+            };
+            updateSettings(settings);
+            showNotification('تم حفظ الإعدادات بنجاح', 'success');
+        }
+
+        function resetSystem() {
+            confirmDialog('تحذير مهم: سيتم حذف جميع البيانات نهائياً بما في ذلك الأدوية والمبيعات والعملاء والمستخدمين. لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد من إعادة تعيين النظام بالكامل؟', () => {
+                const allKeys = Object.keys(localStorage).filter(key => key.startsWith('pharmacy_'));
+                allKeys.forEach(key => localStorage.removeItem(key));
+                showNotification('تم إعادة تعيين النظام بنجاح. سيتم تحويلك إلى صفحة تسجيل الدخول...', 'success');
+                setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+            });
+        }
+
+        function loadUsers() {
+            const users = getAllUsers();
+            const tbody = document.getElementById('usersBody');
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td><strong>${u.name}</strong></td>
+                    <td>${u.email}</td>
+                    <td><span class="badge badge-info">${getRoleName(u.role)}</span></td>
+                    <td>${formatDate(u.createdAt) || '-'}</td>
+                    <td><div class="action-btns">
+                        <button class="action-btn edit" onclick="editUser(${u.id})" title="تعديل"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete" onclick="deleteUser(${u.id})" title="حذف"><i class="fas fa-trash"></i></button>
+                    </div></td>
+                </tr>
+            `).join('');
+        }
+
+        function addUser() {
+            const form = document.getElementById('addUserForm');
+            const formData = new FormData(form);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const password = formData.get('password');
+            const role = formData.get('role');
+
+            if (!name || !email || !password) {
+                showNotification('يرجى ملء جميع الحقول المطلوبة', 'error');
+                return;
+            }
+
+            const users = getAllUsers();
+            if (users.find(u => u.email === email)) {
+                showNotification('البريد الإلكتروني موجود بالفعل', 'error');
+                return;
+            }
+
+            const newUser = {
+                id: getNextId('user'),
+                name: name,
+                email: email,
+                password: password,
+                role: role,
+                createdAt: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            Storage.set('users', users);
+            showNotification('تم إضافة المستخدم بنجاح', 'success');
+            closeModal('addUserModal');
+            form.reset();
+            loadUsers();
+        }
+
+        function editUser(id) {
+            const user = getAllUsers().find(u => u.id === id);
+            if (!user) return;
+            const form = document.getElementById('editUserForm');
+            form.querySelector('[name="id"]').value = user.id;
+            form.querySelector('[name="name"]').value = user.name;
+            form.querySelector('[name="role"]').value = user.role;
+            form.querySelector('[name="password"]').value = '';
+            openModal('editUserModal');
+        }
+
+        function updateUser() {
+            const form = document.getElementById('editUserForm');
+            const id = parseInt(form.querySelector('[name="id"]').value);
+            const users = getAllUsers();
+            const index = users.findIndex(u => u.id === id);
+            if (index === -1) return;
+
+            const formData = new FormData(form);
+            const newPassword = formData.get('password');
+            
+            users[index].name = formData.get('name');
+            users[index].role = formData.get('role');
+            if (newPassword && newPassword.trim() !== '') {
+                users[index].password = newPassword;
+            }
+
+            Storage.set('users', users);
+            showNotification('تم تحديث المستخدم بنجاح', 'success');
+            closeModal('editUserModal');
+            loadUsers();
+        }
+
+        function deleteUser(id) {
+            const currentUser = getCurrentUser();
+            if (currentUser && currentUser.id === id) {
+                showNotification('لا يمكنك حذف حسابك الحالي', 'error');
+                return;
+            }
+            confirmDialog('هل أنت متأكد من حذف هذا المستخدم؟', () => {
+                let users = getAllUsers();
+                users = users.filter(u => u.id !== id);
+                Storage.set('users', users);
+                showNotification('تم حذف المستخدم بنجاح', 'success');
+                loadUsers();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSettings);
+    </script>
+</body>
+</html>

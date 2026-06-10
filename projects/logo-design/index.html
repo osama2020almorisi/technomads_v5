@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>هوية العلامة التجارية | TechNomads</title>
+    <meta name="description" content="تصميم هوية العلامة التجارية - شعارات، ألوان، خطوط، وبطاقات أعمال احترافية">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2A2D7C;
+            --primary-dark: #1e215c;
+            --secondary: #FF6B6B;
+            --accent: #4ECDC4;
+            --dark: #1a1a2e;
+            --light: #ffffff;
+            --gray: #6c757d;
+            --gray-light: #f5f5f5;
+            --gold: #FFD700;
+            --gradient: linear-gradient(135deg, #2A2D7C 0%, #4ECDC4 100%);
+            --gradient-red: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.15);
+            --radius: 20px;
+            --radius-sm: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body.dark {
+            background: #0f0f1a;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        body.dark .header {
+            background: rgba(15,15,26,0.98);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .header.scrolled {
+            padding: 0.7rem 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        body.dark .logo-text {
+            color: white;
+        }
+
+        .logo-text span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        body.dark .nav-links a {
+            color: white;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            background: rgba(0,0,0,0.05);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        body.dark .theme-toggle {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+            margin-top: 70px;
+            padding: 4rem 0;
+            overflow: hidden;
+        }
+
+        body.dark .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(78,205,196,0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-title span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .floating-icon {
+            position: absolute;
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .floating-icon:nth-child(1) {
+            top: -20px;
+            right: -20px;
+            animation-delay: 0s;
+        }
+        .floating-icon:nth-child(2) {
+            bottom: -20px;
+            left: -20px;
+            animation-delay: 1s;
+        }
+        .floating-icon:nth-child(3) {
+            top: 50%;
+            left: -30px;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* ============================================
+           SERVICES SECTION
+           ============================================ */
+        .services-section {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        body.dark .services-section {
+            background: #0f0f1a;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 3px;
+        }
+
+        .section-subtitle {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 1rem auto 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        body.dark .service-card {
+            background: #1a1a2e;
+            border-color: rgba(255,255,255,0.05);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(78,205,196,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            background: var(--gradient);
+        }
+
+        .service-icon img {
+            width: 40px;
+            height: 40px;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon img {
+            filter: brightness(0) invert(1);
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           PORTFOLIO SECTION
+           ============================================ */
+        .portfolio-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        body.dark .portfolio-section {
+            background: #1a1a2e;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(42,45,124,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-info {
+            text-align: center;
+            color: white;
+            padding: 1rem;
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ============================================
+           LOGO SHOWCASE
+           ============================================ */
+        .logo-showcase {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .logo-card {
+            padding: 2rem;
+            background: white;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        body.dark .logo-card {
+            background: #1a1a2e;
+        }
+
+        .logo-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo-card img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        .logo-card h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* ============================================
+           COLOR PALETTE
+           ============================================ */
+        .colors-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        body.dark .colors-section {
+            background: #1a1a2e;
+        }
+
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .color-card {
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .color-preview {
+            width: 100%;
+            height: 150px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .color-card:hover .color-preview {
+            transform: scale(1.05);
+            box-shadow: var(--shadow);
+        }
+
+        .color-code {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* ============================================
+           PRICING SECTION
+           ============================================ */
+        .pricing-section {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        body.dark .pricing-card {
+            background: #1a1a2e;
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 2px solid var(--accent);
+            z-index: 1;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 50%;
+            transform: translateX(50%);
+            background: var(--gradient);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--gray);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .pricing-features i {
+            color: var(--accent);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(42,45,124,0.3);
+        }
+
+        /* ============================================
+           TESTIMONIALS
+           ============================================ */
+        .testimonials-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        body.dark .testimonials-section {
+            background: #1a1a2e;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        body.dark .testimonial-card {
+            background: #0f0f1a;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+        }
+
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .testimonial-name {
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .testimonial-title {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* ============================================
+           FAQ SECTION
+           ============================================ */
+        .faq-section {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        body.dark .faq-item {
+            background: #1a1a2e;
+            border-color: rgba(255,255,255,0.05);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.2rem;
+            text-align: right;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        body.dark .faq-question {
+            color: white;
+        }
+
+        .faq-question i {
+            transition: var(--transition);
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.2rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 1.2rem 1.2rem;
+        }
+
+        /* ============================================
+           CTA SECTION
+           ============================================ */
+        .cta-section {
+            padding: 5rem 0;
+            background: var(--gradient);
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 3rem 0;
+        }
+
+        body.dark .footer {
+            background: #0a0a12;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo i {
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        .footer-logo span {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .footer-about {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 992px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .hero-image {
+                order: -1;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .services-grid,
+            .portfolio-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .hero-title {
+                font-size: 1.6rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="#" class="logo">
+                    <div class="logo-icon"><i class="fas fa-paint-brush"></i></div>
+                    <div class="logo-text">هوية <span>TechNomads</span></div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">الرئيسية</a></li>
+                    <li><a href="#services">الخدمات</a></li>
+                    <li><a href="#portfolio">أعمالنا</a></li>
+                    <li><a href="#pricing">الباقات</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-left">
+                    <div class="hero-badge">
+                        <i class="fas fa-crown"></i>
+                        <span>خبراء في تصميم الهوية</span>
+                    </div>
+                    <h1 class="hero-title">هوية علامتك التجارية <br><span>بإحترافية وإبداع</span></h1>
+                    <p class="hero-subtitle">نصنع هويات بصرية مميزة تعكس قيم علامتك التجارية وتترك انطباعاً لا يُنسى لدى جمهورك</p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number">500+</div>
+                            <div>هوية مصممة</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">98%</div>
+                            <div>رضا العملاء</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">15</div>
+                            <div>عام خبرة</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image" data-aos="fade-right">
+                    <img src="images/brand/hero-brand.svg" alt="هوية العلامة التجارية">
+                    <div class="floating-icon"><img src="images/brand/floating/palette.svg" alt="لوحة ألوان"></div>
+                    <div class="floating-icon"><img src="images/brand/floating/pen.svg" alt="قلم"></div>
+                    <div class="floating-icon"><img src="images/brand/floating/magic.svg" alt="سحر"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">خدمات تصميم الهوية</h2>
+                <p class="section-subtitle">نقدم حلولاً متكاملة لبناء هوية علامتك التجارية</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon"><img src="images/brand/icons/logo-icon.svg" alt="شعارات"></div>
+                    <h3>تصميم الشعارات</h3>
+                    <p>شعارات فريدة ومبتكرة تعبر عن هوية علامتك التجارية</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon"><img src="images/brand/icons/palette-icon.svg" alt="ألوان"></div>
+                    <h3>بالت الألوان</h3>
+                    <p>اختيار ألوان متناسقة تعكس شخصية علامتك التجارية</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon"><img src="images/brand/icons/font-icon.svg" alt="خطوط"></div>
+                    <h3>الخطوط التجارية</h3>
+                    <p>اختيار خطوط مميزة تناسب هوية علامتك التجارية</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon"><img src="images/brand/icons/card-icon.svg" alt="بطاقات"></div>
+                    <h3>بطاقات الأعمال</h3>
+                    <p>تصميم بطاقات أعمال احترافية تعكس هويتك</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-icon"><img src="images/brand/icons/stationery-icon.svg" alt="قرطاسية"></div>
+                    <h3>القرطاسية الرسمية</h3>
+                    <p>تصميم مطبوعات رسمية متناسقة مع هويتك</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-icon"><img src="images/brand/icons/digital-icon.svg" alt="رقمية"></div>
+                    <h3>هوية رقمية</h3>
+                    <p>تصميم هوية متكاملة للمنصات الرقمية والتطبيقات</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section" id="portfolio">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">أحدث أعمالنا</h2>
+                <p class="section-subtitle">نفخر بتقديم أفضل التصاميم لعملائنا</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-image"><img src="images/brand/portfolio/tech-logo.jpg" alt="شعار شركة تقنية"></div>
+                    <div class="portfolio-overlay"><div class="portfolio-info"><h3>شعار شركة التقنية</h3><p>تصميم شعار عصري</p></div></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-image"><img src="images/brand/portfolio/restaurant-brand.jpg" alt="هوية مطعم"></div>
+                    <div class="portfolio-overlay"><div class="portfolio-info"><h3>هوية مطعم</h3><p>هوية متكاملة لمطعم فاخر</p></div></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="portfolio-image"><img src="images/brand/portfolio/fashion-brand.jpg" alt="هوية متجر أزياء"></div>
+                    <div class="portfolio-overlay"><div class="portfolio-info"><h3>هوية علامة تجارية</h3><p>هوية متكاملة لمتجر أزياء</p></div></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="portfolio-image"><img src="images/brand/portfolio/education-logo.jpg" alt="شعار منصة تعليمية"></div>
+                    <div class="portfolio-overlay"><div class="portfolio-info"><h3>شعار منصة تعليمية</h3><p>تصميم شعار تعليمي مبتكر</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logo Showcase -->
+    <section class="logo-showcase">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">معرض الشعارات</h2>
+                <p class="section-subtitle">مجموعة من أحدث تصاميمنا</p>
+            </div>
+            <div class="logo-grid">
+                <div class="logo-card" data-aos="zoom-in" data-aos-delay="100"><img src="images/brand/logos/logo-tech.svg" alt="شعار تقني"><h4>شعار تقني</h4></div>
+                <div class="logo-card" data-aos="zoom-in" data-aos-delay="200"><img src="images/brand/logos/logo-sport.svg" alt="شعار رياضي"><h4>شعار رياضي</h4></div>
+                <div class="logo-card" data-aos="zoom-in" data-aos-delay="300"><img src="images/brand/logos/logo-medical.svg" alt="شعار طبي"><h4>شعار طبي</h4></div>
+                <div class="logo-card" data-aos="zoom-in" data-aos-delay="400"><img src="images/brand/logos/logo-edu.svg" alt="شعار تعليمي"><h4>شعار تعليمي</h4></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Color Palette Section -->
+    <section class="colors-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">بالت الألوان</h2>
+                <p class="section-subtitle">ألوان متناسقة تعكس شخصية علامتك التجارية</p>
+            </div>
+            <div class="colors-grid">
+                <div class="color-card" data-aos="flip-left" data-aos-delay="100"><div class="color-preview" style="background: #2A2D7C;"></div><h4>الأزرق الملكي</h4><p class="color-code">#2A2D7C</p></div>
+                <div class="color-card" data-aos="flip-left" data-aos-delay="200"><div class="color-preview" style="background: #4ECDC4;"></div><h4>الفيروزي</h4><p class="color-code">#4ECDC4</p></div>
+                <div class="color-card" data-aos="flip-left" data-aos-delay="300"><div class="color-preview" style="background: #FF6B6B;"></div><h4>المرجاني</h4><p class="color-code">#FF6B6B</p></div>
+                <div class="color-card" data-aos="flip-left" data-aos-delay="400"><div class="color-preview" style="background: #FFD700;"></div><h4>الذهبي</h4><p class="color-code">#FFD700</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">باقات تصميم الهوية</h2>
+                <p class="section-subtitle">اختر الباقة المناسبة لعلامتك التجارية</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3>باقة أساسية</h3>
+                    <div class="price">300$<span>/هوية</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> تصميم شعار أساسي</li>
+                        <li><i class="fas fa-check"></i> 3 اقتراحات أولية</li>
+                        <li><i class="fas fa-check"></i> ملفات PNG + JPG</li>
+                        <li><i class="fas fa-check"></i> دليل ألوان أساسي</li>
+                        <li><i class="fas fa-times"></i> بطاقات أعمال</li>
+                        <li><i class="fas fa-times"></i> هوية رقمية</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">طلب الخدمة</a>
+                </div>
+                <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="200">
+                    <div class="popular-badge">الأكثر طلباً</div>
+                    <h3>باقة احترافية</h3>
+                    <div class="price">600$<span>/هوية</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> تصميم شعار احترافي</li>
+                        <li><i class="fas fa-check"></i> 5 اقتراحات أولية</li>
+                        <li><i class="fas fa-check"></i> ملفات متعددة (AI, EPS, PNG, SVG)</li>
+                        <li><i class="fas fa-check"></i> دليل هوية متكامل</li>
+                        <li><i class="fas fa-check"></i> تصميم بطاقات أعمال</li>
+                        <li><i class="fas fa-check"></i> أيقونات وسائل التواصل</li>
+                        <li><i class="fas fa-times"></i> هوية رقمية متكاملة</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">طلب الخدمة</a>
+                </div>
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                    <h3>باقة شاملة</h3>
+                    <div class="price">1000$<span>/هوية</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> تصميم شعار متميز</li>
+                        <li><i class="fas fa-check"></i> 7 اقتراحات أولية</li>
+                        <li><i class="fas fa-check"></i> جميع الملفات المطلوبة</li>
+                        <li><i class="fas fa-check"></i> دليل هوية شامل</li>
+                        <li><i class="fas fa-check"></i> تصميم جميع المطبوعات</li>
+                        <li><i class="fas fa-check"></i> هوية رقمية متكاملة</li>
+                        <li><i class="fas fa-check"></i> دعم فني لمدة سنة</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">طلب الخدمة</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">آراء عملائنا</h2>
+                <p class="section-subtitle">ما يقوله عملاؤنا عن خدماتنا</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-avatar"><img src="images/brand/avatars/user1.jpg" alt="أحمد العمودي"></div>
+                    <p class="testimonial-text">"أفضل فريق عملت معهم، تصميم مميز واحترافية عالية. الهوية التي صمموها لنا غيرت نظرة عملائنا لعلامتنا التجارية."</p>
+                    <h4 class="testimonial-name">أحمد العمودي</h4>
+                    <p class="testimonial-title">مدير شركة التقنية الحديثة</p>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-avatar"><img src="images/brand/avatars/user2.jpg" alt="نورة السلمي"></div>
+                    <p class="testimonial-text">"شعار مميز وفريد، تعامل راقي وإلتزام بالمواعيد. سأعمل معهم مرة أخرى بالتأكيد."</p>
+                    <h4 class="testimonial-name">نورة السلمي</h4>
+                    <p class="testimonial-title">مؤسسة علامة تجارية</p>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-avatar"><img src="images/brand/avatars/user3.jpg" alt="سعد القحطاني"></div>
+                    <p class="testimonial-text">"دليل الهوية الذي سلموه كان متكاملاً وسهل الاستخدام، أنصح الجميع بالتعامل معهم."</p>
+                    <h4 class="testimonial-name">سعد القحطاني</h4>
+                    <p class="testimonial-title">مدير تسويق</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">الأسئلة الشائعة</h2>
+                <p class="section-subtitle">أجوبة على أكثر الأسئلة تكراراً</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <button class="faq-question"><span>كم تستغرق مدة تصميم الهوية؟</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>تستغرق مدة تصميم الهوية ما بين 2-4 أسابيع حسب الباقة المختارة ومدى تعقيد المشروع.</p></div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <button class="faq-question"><span>هل تقدمون تعديلات مجانية؟</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>نعم، نقدم عدد محدود من التعديلات المجانية حسب الباقة المختارة لضمان رضاك التام.</p></div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                    <button class="faq-question"><span>ما هي الملفات التي استلمها بعد التصميم؟</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>تختلف الملفات حسب الباقة، لكن عادة تشمل: PNG, JPG, AI, EPS, SVG, PDF.</p></div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                    <button class="faq-question"><span>هل يمكنني استخدام الشعار تجارياً؟</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>نعم، بعد استلام التصميم النهائي، تمتلك حقوق الاستخدام التجاري الكامل للشعار.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <h2 data-aos="fade-up">هل لديك فكرة لعلامتك التجارية؟</h2>
+            <p data-aos="fade-up" data-aos-delay="100">دعنا نساعدك في تحويلها إلى هوية مميزة تنال إعجاب جمهورك</p>
+            <a href="#" class="btn-white" data-aos="fade-up" data-aos-delay="200">احصل على استشارة مجانية</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo"><i class="fas fa-paint-brush"></i><span>هوية TechNomads</span></div>
+                    <p class="footer-about">نحن متخصصون في تصميم هويات العلامات التجارية التي تترك انطباعاً لا يُنسى</p>
+                </div>
+                <div class="footer-links">
+                    <h4>روابط سريعة</h4>
+                    <ul><li><a href="#home">الرئيسية</a></li><li><a href="#services">الخدمات</a></li><li><a href="#portfolio">أعمالنا</a></li><li><a href="#pricing">الباقات</a></li></ul>
+                </div>
+                <div class="footer-links">
+                    <h4>خدماتنا</h4>
+                    <ul><li><a href="#">تصميم شعارات</a></li><li><a href="#">هوية متكاملة</a></li><li><a href="#">بطاقات أعمال</a></li><li><a href="#">هوية رقمية</a></li></ul>
+                </div>
+                <div class="footer-links">
+                    <h4>تواصل معنا</h4>
+                    <ul><li><i class="fas fa-phone"></i> +967 770 200 970</li><li><i class="fas fa-envelope"></i> brand@technomads.com</li><li><i class="fas fa-map-marker-alt"></i> صنعاء، اليمن</li></ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2024 TechNomads. جميع الحقوق محفوظة</p></div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 100 });
+
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark')) {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+            themeToggle.querySelector('i').className = 'fas fa-sun';
+        }
+
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

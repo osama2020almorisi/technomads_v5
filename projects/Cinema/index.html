@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <meta name="description" content="منصة مشاهدة الأفلام - اكتشف آلاف الأفلام والمسلسلات">
+    <meta name="theme-color" content="#2A2D7C">
+    
+    <title>سينما TechNomads | آلاف الأفلام</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <div class="logo-text">
+                         <span class="accent">TechNomads</span>
+                    </div>
+                </a>
+                
+                <nav class="desktop-nav">
+                    <ul class="nav-links">
+                        <li><a href="#home" class="nav-link active">الرئيسية</a></li>
+                        <li><a href="#movies" class="nav-link">الأفلام</a></li>
+                        <li><a href="#popular" class="nav-link">الأكثر مشاهدة</a></li>
+                        <li><a href="#top-rated" class="nav-link">الأعلى تقييماً</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="nav-tools">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="hamburger" id="hamburgerBtn">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <div class="mobile-logo">
+                    <i class="fas fa-film"></i>
+                    <span>سينما <span>TechNomads</span></span>
+                </div>
+                <button class="close-menu" id="closeMenuBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <ul class="mobile-nav-links">
+                <li><a href="#home" class="mobile-nav-link active">
+                    <i class="fas fa-home"></i><span>الرئيسية</span>
+                </a></li>
+                <li><a href="#movies" class="mobile-nav-link">
+                    <i class="fas fa-film"></i><span>الأفلام</span>
+                </a></li>
+                <li><a href="#popular" class="mobile-nav-link">
+                    <i class="fas fa-fire"></i><span>الأكثر مشاهدة</span>
+                </a></li>
+                <li><a href="#top-rated" class="mobile-nav-link">
+                    <i class="fas fa-star"></i><span>الأعلى تقييماً</span>
+                </a></li>
+            </ul>
+            <div class="mobile-menu-footer">
+                <div class="mobile-theme-toggle">
+                    <button class="theme-toggle-mobile" id="mobileThemeToggle">
+                        <i class="fas fa-moon"></i>
+                        <span>الوضع الداكن</span>
+                    </button>
+                </div>
+                <div class="mobile-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge" data-aos="fade-down">
+                <i class="fas fa-crown"></i>
+                <span>أكثر من 50,000 فيلم</span>
+            </div>
+            <h1 class="hero-title" data-aos="fade-up">
+                اكتشف <span class="gradient">عالم السينما</span><br>
+                مع أفضل الأفلام
+            </h1>
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
+                شاهد آلاف الأفلام والمسلسلات المترجمة بجودة عالية - تحديث يومي
+            </p>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,58.7C1248,64,1344,64,1392,64L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" fill="var(--bg-light)"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <div class="search-section" data-aos="fade-up">
+        <div class="container">
+            <div class="input-container">
+                <input type="text" id="searchInput" placeholder="ابحث عن فيلم...">
+                <button id="searchButton">
+                    <i class="fas fa-search"></i>
+                    <span>بحث</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-section" data-aos="fade-up">
+        <div class="container">
+            <div class="wrapper">
+                <button id="nowPlayingButton" class="button1 active">
+                    <i class="fas fa-play-circle"></i>
+                    <span>معروض الآن</span>
+                </button>
+                <button id="topRatedButton" class="button1">
+                    <i class="fas fa-star"></i>
+                    <span>الأعلى تقييماً</span>
+                </button>
+                <button id="popularButton" class="button1">
+                    <i class="fas fa-fire"></i>
+                    <span>الأكثر مشاهدة</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <section class="results-section" id="movies">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-film"></i>
+                    <span id="sectionTitle">معروض الآن</span>
+                </h2>
+                <div class="results-stats">
+                    <div class="results-count" id="resultsCount">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>0</span> فيلم
+                    </div>
+                    <div class="results-page" id="resultsPage">
+                        <i class="fas fa-layer-group"></i>
+                        <span>الصفحة 1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="results" id="results">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>جاري تحميل الأفلام...</p>
+                </div>
+            </div>
+            
+            <!-- Load More Controls -->
+            <div class="load-more-container" id="loadMoreContainer">
+                <div class="load-more-info" id="loadMoreInfo">
+                    <span id="loadedCount">0</span>
+                    <span>فيلم معروض</span>
+                    <span class="separator">•</span>
+                    <span id="totalAvailable">...</span>
+                    <span>فيلم متاح</span>
+                </div>
+                <div class="load-more-buttons">
+                    <button id="loadMoreBtn" class="load-more-btn">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>تحميل المزيد</span>
+                    </button>
+                    <button id="loadAllBtn" class="load-all-btn">
+                        <i class="fas fa-infinity"></i>
+                        <span>تحميل الكل</span>
+                    </button>
+                    <button id="refreshBtn" class="refresh-btn">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>تحديث</span>
+                    </button>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+        <span>أعلى</span>
+    </button>
+
+    <!-- Movie Modal -->
+    <div class="modal" id="movieModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <div class="modal-poster">
+                    <img id="modalPoster" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modalTitle"></h2>
+                    <div class="modal-details">
+                        <span class="detail"><i class="fas fa-calendar"></i> <span id="modalDate"></span></span>
+                        <span class="detail"><i class="fas fa-star"></i> <span id="modalRating"></span>/10</span>
+                        <span class="detail"><i class="fas fa-clock"></i> <span id="modalRuntime"></span> دقيقة</span>
+                    </div>
+                    <p id="modalOverview"></p>
+                    <button class="watch-btn" id="watchTrailer">
+                        <i class="fab fa-youtube"></i> مشاهدة الإعلان
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div id="copyRight">
+                    <i class="far fa-copyright"></i> 2024 Osama Almurisi | TechNomads
+                </div>
+                <div id="lastFooter">
+                    <ul>
+                        <li><a href="#">عن الموقع</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                        <li><a href="#">الشروط</a></li>
+                        <li><a href="#">التراخيص</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 100 });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي - المحاسب المالي</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* تحسينات التصميم العام */
+        :root {
+            --transition-speed: 0.3s;
+            --sidebar-width: 280px;
+            --sidebar-collapsed-width: 80px;
+            --header-height: 70px;
+        }
+
+        .view-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .view-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .view-header h2 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .view-content {
+            padding: 2rem;
+        }
+
+        .view-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .view-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .view-section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .view-field {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .view-field label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .value {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.1);
+        }
+
+        .input-icon {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-icon input {
+            padding-right: 2.5rem;
+        }
+
+        .input-icon .toggle-password {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color var(--transition-speed) ease;
+        }
+
+        .input-icon .toggle-password:hover {
+            color: var(--primary-color);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        /* تحسينات رفع الصورة */
+        .avatar-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid var(--border-color);
+            position: relative;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .avatar-preview:hover {
+            border-color: var(--primary-color);
+        }
+
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+            font-size: 2.5rem;
+        }
+
+        .avatar-actions {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity var(--transition-speed) ease;
+        }
+
+        .avatar-preview:hover .avatar-actions {
+            opacity: 1;
+        }
+
+        .avatar-action-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .avatar-action-btn:hover {
+            transform: scale(1.1);
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        /* تحسينات التبديل */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            margin-left: 1rem;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .switch-label {
+            margin-right: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* تحسينات البطاقات الإحصائية */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .stat-icon.invoices { background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); }
+        .stat-icon.customers { background: linear-gradient(135deg, #2196F3 0%, #0D47A1 100%); }
+        .stat-icon.products { background: linear-gradient(135deg, #FF9800 0%, #E65100 100%); }
+        .stat-icon.expenses { background: linear-gradient(135deg, #F44336 0%, #B71C1C 100%); }
+        .stat-icon.member { background: linear-gradient(135deg, #9C27B0 0%, #4A148C 100%); }
+        .stat-icon.activity { background: linear-gradient(135deg, #607D8B 0%, #263238 100%); }
+
+        .stat-info h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .stat-info p {
+            margin: 0.25rem 0 0 0;
+            color: var(--text-muted);
+        }
+
+        /* تحسينات الوضع الليلي */
+        body.dark-mode {
+            --text-primary: #e2e8f0;
+            --text-secondary: #cbd5e0;
+            --text-muted: #a0aec0;
+            --text-light: #718096;
+            
+            --bg-primary: #1a202c;
+            --bg-secondary: #2d3748;
+            --bg-tertiary: #4a5568;
+            
+            --border-color: #4a5568;
+            --border-light: #2d3748;
+            --border-dark: #718096;
+        }
+
+        body.dark-mode .view-card {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .view-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #2d3748 100%);
+            border-bottom-color: var(--border-color);
+        }
+
+        body.dark-mode .view-section {
+            border-bottom-color: var(--border-color);
+        }
+
+        body.dark-mode .form-input,
+        body.dark-mode .form-select {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        body.dark-mode .form-input:focus,
+        body.dark-mode .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.3);
+        }
+
+        body.dark-mode .avatar-preview {
+            border-color: var(--border-color);
+        }
+
+        body.dark-mode .avatar-placeholder {
+            background: var(--bg-tertiary);
+            color: #a0aec0;
+        }
+
+        body.dark-mode .stat-card {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            border-color: var(--border-color);
+        }
+
+        /* تحسينات الاستجابة */
+        @media (max-width: 768px) {
+            .view-field {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .form-actions .btn {
+                width: 100%;
+            }
+            
+            .avatar-upload {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .avatar-actions {
+                opacity: 1; /* إظهار الأزرار دائماً على الجوال */
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* تحسينات التنبيهات */
+        .alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 300px;
+            max-width: 90%;
+            box-shadow: var(--shadow-lg);
+            animation: slideDown 0.3s ease;
+        }
+        
+        .alert-success { background-color: var(--success-color); }
+        .alert-error { background-color: var(--danger-color); }
+        .alert-warning { background-color: var(--warning-color); color: #000; }
+        .alert-info { background-color: var(--info-color); }
+        
+        .alert button {
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 18px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .alert button:hover {
+            transform: scale(1.1);
+        }
+        
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+        
+        @media (max-width: 480px) {
+            .alert {
+                min-width: auto;
+                left: 20px;
+                right: 20px;
+                transform: none;
+            }
+        }
+
+        /* تحسينات الرسوم المتحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .view-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* تحسينات التحميل */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* تحسينات الأداء */
+        .will-change {
+            will-change: transform, opacity;
+        }
+
+        /* تحسينات إضافية للواجهة */
+        .password-strength {
+            margin-top: 0.5rem;
+            height: 5px;
+            border-radius: 5px;
+            background: var(--bg-secondary);
+            overflow: hidden;
+        }
+
+        .password-strength-value {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .password-weak .password-strength-value { background: var(--danger-color); width: 33%; }
+        .password-medium .password-strength-value { background: var(--warning-color); width: 66%; }
+        .password-strong .password-strength-value { background: var(--success-color); width: 100%; }
+
+        .password-feedback {
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            color: var(--text-muted);
+        }
+
+        /* تحسينات التوافق مع المتصفحات */
+        .form-input:-webkit-autofill,
+        .form-input:-webkit-autofill:hover, 
+        .form-input:-webkit-autofill:focus {
+            -webkit-text-fill-color: var(--text-primary);
+            -webkit-box-shadow: 0 0 0px 1000px var(--bg-primary) inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        body.dark-mode .form-input:-webkit-autofill,
+        body.dark-mode .form-input:-webkit-autofill:hover, 
+        body.dark-mode .form-input:-webkit-autofill:focus {
+            -webkit-text-fill-color: #e2e8f0;
+            -webkit-box-shadow: 0 0 0px 1000px #2d3748 inset;
+        }
+
+        /* إصلاح شعار المحاسب المالي */
+        .logo img {
+            max-height: 40px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="تبديل القائمة الجانبية">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="شعار المحاسب المالي" id="headerLogo" onerror="handleLogoError(this)">
+                <span>المحاسب المالي</span>
+            </div>
+
+            <div class="header-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="بحث..." id="globalSearch">
+                </div>
+                
+                <div class="notifications">
+                    <button class="notification-btn" onclick="toggleNotifications()" aria-label="الإشعارات">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">0</span>
+                    </button>
+                </div>
+                
+                <div class="user-menu">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName"></span>
+                        <span class="user-role">مالك</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar" id="mainSidebar">
+        <nav class="sidebar-nav">
+            <div class="sidebar-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="بحث سريع..." id="sidebarSearch">
+            </div>
+            
+            <ul>
+                <li class="nav-item">
+                    <a href="../dashboard.html">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../invoices/list.html">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>الفواتير</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../customers/list.html">
+                        <i class="fas fa-users"></i>
+                        <span>العملاء</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../products/list.html">
+                        <i class="fas fa-box"></i>
+                        <span>المنتجات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../expenses/list.html">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>المصروفات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../reports/financial.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>التقارير</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>الملف الشخصي</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="company.html">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="system-status">
+                <div class="status-indicator"></div>
+                <span>حالة النظام</span>
+            </div>
+            <div class="app-version">الإصدار 1.2.0</div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>الملف الشخصي</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="window.history.back()">
+                    <i class="fas fa-arrow-right"></i> رجوع
+                </button>
+            </div>
+        </div>
+
+        <div class="view-card">
+            <div class="view-header">
+                <h2><i class="fas fa-user-circle"></i> معلومات المستخدم</h2>
+            </div>
+            
+            <div class="view-content">
+                <div class="view-section">
+                    <div class="view-field">
+                        <label>صورة الملف الشخصي</label>
+                        <div class="value">
+                            <div class="avatar-upload">
+                                <div class="avatar-preview" id="avatarPreview">
+                                    <div class="avatar-placeholder" id="avatarPlaceholder">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="avatar-actions">
+                                        <button type="button" class="avatar-action-btn" onclick="rotateAvatar(-90)" title="تدوير عكس عقارب الساعة">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                        <button type="button" class="avatar-action-btn" onclick="rotateAvatar(90)" title="تدوير مع عقارب الساعة">
+                                            <i class="fas fa-redo"></i>
+                                        </button>
+                                        <button type="button" class="avatar-action-btn" onclick="removeAvatar()" title="إزالة الصورة">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                                <button class="btn btn-sm btn-primary" onclick="document.getElementById('avatarInput').click()">
+                                    <i class="fas fa-upload"></i> تغيير الصورة
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view-section">
+                    <h3 class="view-section-header">
+                        <i class="fas fa-info-circle"></i>
+                        <span>المعلومات الأساسية</span>
+                    </h3>
+                    
+                    <div class="view-field">
+                        <label>الاسم الكامل</label>
+                        <div class="value">
+                            <input type="text" id="fullName" class="form-input" placeholder="أدخل الاسم الكامل">
+                        </div>
+                    </div>
+                    
+                    <div class="view-field">
+                        <label>البريد الإلكتروني</label>
+                        <div class="value">
+                            <input type="email" id="email" class="form-input" placeholder="أدخل البريد الإلكتروني">
+                        </div>
+                    </div>
+                    
+                    <div class="view-field">
+                        <label>رقم الهاتف</label>
+                        <div class="value">
+                            <input type="tel" id="phone" class="form-input" placeholder="أدخل رقم الهاتف">
+                        </div>
+                    </div>
+                    
+                    <div class="view-field">
+                        <label>الوظيفة</label>
+                        <div class="value">
+                            <input type="text" id="jobTitle" class="form-input" placeholder="أدخل المسمى الوظيفي">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view-section">
+                    <h3 class="view-section-header">
+                        <i class="fas fa-lock"></i>
+                        <span>الأمان</span>
+                    </h3>
+                    
+                    <div class="view-field">
+                        <label>كلمة المرور الحالية</label>
+                        <div class="value">
+                            <div class="input-icon">
+                                <input type="password" id="currentPassword" class="form-input" placeholder="أدخل كلمة المرور الحالية">
+                                <i class="fas fa-eye toggle-password" onclick="togglePassword('currentPassword')"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="view-field">
+                        <label>كلمة المرور الجديدة</label>
+                        <div class="value">
+                            <div class="input-icon">
+                                <input type="password" id="newPassword" class="form-input" placeholder="أدخل كلمة المرور الجديدة" oninput="checkPasswordStrength()">
+                                <i class="fas fa-eye toggle-password" onclick="togglePassword('newPassword')"></i>
+                            </div>
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="password-strength-value"></div>
+                            </div>
+                            <div class="password-feedback" id="passwordFeedback"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="view-field">
+                        <label>تأكيد كلمة المرور</label>
+                        <div class="value">
+                            <div class="input-icon">
+                                <input type="password" id="confirmPassword" class="form-input" placeholder="أكد كلمة المرور الجديدة">
+                                <i class="fas fa-eye toggle-password" onclick="togglePassword('confirmPassword')"></i>
+                            </div>
+                            <div class="password-feedback" id="confirmPasswordFeedback"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view-section">
+                    <h3 class="view-section-header">
+                        <i class="fas fa-bell"></i>
+                        <span>التفضيلات</span>
+                    </h3>
+                    
+                    <div class="view-field">
+                        <label>اللغة</label>
+                        <div class="value">
+                            <select id="language" class="form-select">
+                                <option value="ar" selected>العربية</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="view-field">
+                        <label>الوضع الليلي</label>
+                        <div class="value">
+                            <label class="switch">
+                                <input type="checkbox" id="darkModeToggle">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="switch-label" id="darkModeLabel">معطل</span>
+                        </div>
+                    </div>
+                    
+                    <div class="view-field">
+                        <label>الإشعارات</label>
+                        <div class="value">
+                            <label class="switch">
+                                <input type="checkbox" id="notificationsToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="switch-label" id="notificationsLabel">مفعل</span>
+                        </div>
+                    </div>
+
+                    <div class="view-field">
+                        <label>تنسيق التاريخ</label>
+                        <div class="value">
+                            <select id="dateFormat" class="form-select">
+                                <option value="dd/MM/yyyy">يوم/شهر/سنة (25/12/2023)</option>
+                                <option value="MM/dd/yyyy">شهر/يوم/سنة (12/25/2023)</option>
+                                <option value="yyyy-MM-dd">سنة-شهر-يوم (2023-12-25)</option>
+                                <option value="dd-MM-yyyy">يوم-شهر-سنة (25-12-2023)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-secondary" onclick="resetForm()">
+                        <i class="fas fa-times"></i> إلغاء
+                    </button>
+                    <button class="btn btn-primary" id="saveButton" onclick="saveProfile()">
+                        <i class="fas fa-save"></i> حفظ التغييرات
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- معلومات إضافية -->
+        <div class="stats-grid">
+            <div class="stat-card" onclick="navigateTo('invoices/list.html')">
+                <div class="stat-icon invoices">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="userInvoicesCount">0</h3>
+                    <p>الفواتير المنشأة</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" onclick="navigateTo('customers/list.html')">
+                <div class="stat-icon customers">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="userCustomersCount">0</h3>
+                    <p>العملاء المضافين</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" onclick="navigateTo('products/list.html')">
+                <div class="stat-icon products">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="userProductsCount">0</h3>
+                    <p>المنتجات المضافة</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" onclick="navigateTo('expenses/list.html')">
+                <div class="stat-icon expenses">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="userExpensesCount">0</h3>
+                    <p>المصروفات المسجلة</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon member">
+                    <i class="fas fa-calendar"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="memberSince">2024</h3>
+                    <p>عضو منذ</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon activity">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="lastActive">اليوم</h3>
+                    <p>آخر نشاط</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2024 المحاسب المالي. جميع الحقوق محفوظة.</p>
+            <div class="footer-links">
+                <a href="#">الشروط والأحكام</a>
+                <a href="#">سياسة الخصوصية</a>
+                <a href="#">الدعم</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- نافذة التحميل -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        // ===== دوال مساعدة الأداء =====
+        // تخزين العناصر المستخدمة بكثرة
+        const domCache = {};
+        
+        function getElement(id) {
+            if (!domCache[id]) {
+                domCache[id] = document.getElementById(id);
+            }
+            return domCache[id];
+        }
+
+        // ===== تهيئة الصفحة =====
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            loadUserStats();
+            initDarkModeToggle();
+            initAvatarUpload();
+            initPasswordValidation();
+            initFormValidation();
+            updateHeaderLogo();
+        });
+
+        // ===== إصلاح شعار المحاسب المالي =====
+        function handleLogoError(img) {
+            img.onerror = null;
+            // إنشاء شعار بديل باستخدام SVG
+            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzMzNjZjYyIgcng9IjgiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCI+562UPC90ZXh0Pjwvc3ZnPg==';
+        }
+
+        function updateHeaderLogo() {
+            const settings = JSON.parse(localStorage.getItem('financial_app_settings')) || {};
+            const headerLogo = getElement('headerLogo');
+            
+            if (settings.company_logo && headerLogo) {
+                headerLogo.src = settings.company_logo;
+                headerLogo.onerror = function() {
+                    handleLogoError(this);
+                };
+            } else if (headerLogo) {
+                headerLogo.onerror = function() {
+                    handleLogoError(this);
+                };
+            }
+        }
+
+        // ===== دوال إدارة الحالة =====
+        let avatarRotation = 0;
+        let avatarDataUrl = '';
+
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('financial_app_current_user')) || {};
+            const settings = JSON.parse(localStorage.getItem('financial_app_settings')) || {};
+            
+            // تعبئة البيانات
+            getElement('fullName').value = userData.fullName || 'محمد أحمد';
+            getElement('email').value = userData.email || 'mohamed@example.com';
+            getElement('phone').value = userData.phone || '+967712345678';
+            getElement('jobTitle').value = userData.jobTitle || 'مدير النظام';
+            getElement('language').value = userData.language || 'ar';
+            getElement('dateFormat').value = settings.date_format || 'dd/MM/yyyy';
+            
+            // تحميل صورة المستخدم
+            if (userData.avatar) {
+                avatarDataUrl = userData.avatar;
+                getElement('avatarPreview').innerHTML = `
+                    <img src="${userData.avatar}" alt="صورة المستخدم" style="width: 100%; height: 100%; object-fit: cover; transform: rotate(${avatarRotation}deg);">
+                    <div class="avatar-actions">
+                        <button type="button" class="avatar-action-btn" onclick="rotateAvatar(-90)" title="تدوير عكس عقارب الساعة">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button type="button" class="avatar-action-btn" onclick="rotateAvatar(90)" title="تدوير مع عقارب الساعة">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button type="button" class="avatar-action-btn" onclick="removeAvatar()" title="إزالة الصورة">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            }
+            
+            // تحديث الصورة في الهيدر
+            updateHeaderAvatar(userData);
+            
+            getElement('userName').textContent = userData.fullName || 'مستخدم';
+        }
+
+        function updateHeaderAvatar(userData) {
+            const userAvatar = getElement('userAvatar');
+            if (userAvatar && userData.fullName) {
+                if (userData.avatar) {
+                    userAvatar.innerHTML = `<img src="${userData.avatar}" alt="صورة المستخدم" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+                } else {
+                    userAvatar.textContent = getUserInitials(userData.fullName);
+                    userAvatar.style.backgroundColor = userData.avatarColor || getRandomColor();
+                }
+            }
+        }
+
+        function loadUserStats() {
+            const invoices = JSON.parse(localStorage.getItem('financial_app_invoices')) || [];
+            const customers = JSON.parse(localStorage.getItem('financial_app_customers')) || [];
+            const products = JSON.parse(localStorage.getItem('financial_app_products')) || [];
+            const expenses = JSON.parse(localStorage.getItem('financial_app_expenses')) || [];
+            const userData = JSON.parse(localStorage.getItem('financial_app_current_user')) || {};
+            
+            getElement('userInvoicesCount').textContent = invoices.length;
+            getElement('userCustomersCount').textContent = customers.length;
+            getElement('userProductsCount').textContent = products.length;
+            getElement('userExpensesCount').textContent = expenses.length;
+            
+            if (userData.createdAt) {
+                getElement('memberSince').textContent = new Date(userData.createdAt).getFullYear();
+            } else {
+                getElement('memberSince').textContent = new Date().getFullYear();
+            }
+            
+            getElement('lastActive').textContent = 'اليوم';
+        }
+
+        function initDarkModeToggle() {
+            const isDarkMode = localStorage.getItem('dark_mode') === 'true';
+            getElement('darkModeToggle').checked = isDarkMode;
+            getElement('darkModeLabel').textContent = isDarkMode ? 'مفعل' : 'معطل';
+            
+            getElement('darkModeToggle').addEventListener('change', function() {
+                document.body.classList.toggle('dark-mode', this.checked);
+                localStorage.setItem('dark_mode', this.checked);
+                getElement('darkModeLabel').textContent = this.checked ? 'مفعل' : 'معطل';
+            });
+
+            const notificationsEnabled = localStorage.getItem('notifications_enabled') !== 'false';
+            getElement('notificationsToggle').checked = notificationsEnabled;
+            getElement('notificationsLabel').textContent = notificationsEnabled ? 'مفعل' : 'معطل';
+            
+            getElement('notificationsToggle').addEventListener('change', function() {
+                localStorage.setItem('notifications_enabled', this.checked);
+                getElement('notificationsLabel').textContent = this.checked ? 'مفعل' : 'معطل';
+            });
+        }
+
+        function initAvatarUpload() {
+            const avatarInput = getElement('avatarInput');
+            avatarInput.addEventListener('change', async function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    try {
+                        // إظهار نافذة التحميل
+                        getElement('loadingOverlay').classList.add('active');
+                        
+                        const resizedImage = await resizeImage(file, 300, 300, 0.8);
+                        avatarDataUrl = resizedImage;
+                        avatarRotation = 0;
+                        
+                        getElement('avatarPreview').innerHTML = `
+                            <img src="${resizedImage}" alt="صورة المستخدم" style="width: 100%; height: 100%; object-fit: cover; transform: rotate(0deg);">
+                            <div class="avatar-actions">
+                                <button type="button" class="avatar-action-btn" onclick="rotateAvatar(-90)" title="تدوير عكس عقارب الساعة">
+                                    <i class="fas fa-undo"></i>
+                                </button>
+                                <button type="button" class="avatar-action-btn" onclick="rotateAvatar(90)" title="تدوير مع عقارب الساعة">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                                <button type="button" class="avatar-action-btn" onclick="removeAvatar()" title="إزالة الصورة">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                        
+                        // إخفاء نافذة التحميل
+                        getElement('loadingOverlay').classList.remove('active');
+                    } catch (error) {
+                        console.error('خطأ في معالجة الصورة:', error);
+                        getElement('loadingOverlay').classList.remove('active');
+                        showAlert('error', 'حدث خطأ أثناء معالجة الصورة');
+                    }
+                }
+            });
+        }
+
+        function rotateAvatar(degrees) {
+            avatarRotation += degrees;
+            const avatarImg = getElement('avatarPreview').querySelector('img');
+            if (avatarImg) {
+                avatarImg.style.transform = `rotate(${avatarRotation}deg)`;
+            }
+        }
+
+        function removeAvatar() {
+            if (confirm('هل تريد إزالة الصورة الحالية؟')) {
+                avatarDataUrl = '';
+                avatarRotation = 0;
+                getElement('avatarPreview').innerHTML = `
+                    <div class="avatar-placeholder" id="avatarPlaceholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="avatar-actions">
+                        <button type="button" class="avatar-action-btn" onclick="rotateAvatar(-90)" title="تدوير عكس عقارب الساعة">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button type="button" class="avatar-action-btn" onclick="rotateAvatar(90)" title="تدوير مع عقارب الساعة">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button type="button" class="avatar-action-btn" onclick="removeAvatar()" title="إزالة الصورة">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        async function resizeImage(file, maxWidth, maxHeight, quality) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        if (width > maxWidth) {
+                            height = (height * maxWidth) / width;
+                            width = maxWidth;
+                        }
+                        
+                        if (height > maxHeight) {
+                            width = (width * maxHeight) / height;
+                            height = maxHeight;
+                        }
+                        
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        const resizedImage = canvas.toDataURL('image/jpeg', quality);
+                        resolve(resizedImage);
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function togglePassword(inputId) {
+            const input = getElement(inputId);
+            const icon = input.parentNode.querySelector('.toggle-password');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function initPasswordValidation() {
+            getElement('newPassword').addEventListener('input', checkPasswordStrength);
+            getElement('confirmPassword').addEventListener('input', validatePasswordConfirmation);
+        }
+
+        function checkPasswordStrength() {
+            const password = getElement('newPassword').value;
+            const strengthBar = getElement('passwordStrength');
+            const feedback = getElement('passwordFeedback');
+            
+            // إعادة تعيين التصنيف
+            strengthBar.className = 'password-strength';
+            feedback.textContent = '';
+            
+            if (!password) return;
+            
+            let strength = 0;
+            let feedbackText = '';
+            
+            // التحقق من طول كلمة المرور
+            if (password.length >= 8) strength += 1;
+            else feedbackText = 'كلمة المرور قصيرة (8 أحرف على الأقل)';
+            
+            // التحقق من وجود أحرف كبيرة وصغيرة
+            if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1;
+            else if (!feedbackText) feedbackText = 'أضف أحرف كبيرة وصغيرة';
+            
+            // التحقق من وجود أرقام
+            if (password.match(/([0-9])/)) strength += 1;
+            else if (!feedbackText) feedbackText = 'أضف أرقاماً';
+            
+            // التحقق من وجود رموز خاصة
+            if (password.match(/([!,@,#,$,%,^,&,*,?,_,~])/)) strength += 1;
+            else if (!feedbackText) feedbackText = 'أضف رموزاً خاصة (!@#$%^&*)';
+            
+            // تحديث واجهة المستخدم بناء على قوة كلمة المرور
+            if (strength <= 1) {
+                strengthBar.classList.add('password-weak');
+                feedbackText = feedbackText || 'كلمة المرور ضعيفة';
+            } else if (strength <= 3) {
+                strengthBar.classList.add('password-medium');
+                feedbackText = feedbackText || 'كلمة المرور متوسطة';
+            } else {
+                strengthBar.classList.add('password-strong');
+                feedbackText = feedbackText || 'كلمة المرور قوية';
+            }
+            
+            feedback.textContent = feedbackText;
+        }
+
+        function validatePasswordConfirmation() {
+            const password = getElement('newPassword').value;
+            const confirmPassword = getElement('confirmPassword').value;
+            const feedback = getElement('confirmPasswordFeedback');
+            
+            if (!confirmPassword) {
+                feedback.textContent = '';
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                feedback.textContent = 'كلمة المرور غير متطابقة';
+                feedback.style.color = 'var(--danger-color)';
+            } else {
+                feedback.textContent = 'كلمة المرور متطابقة';
+                feedback.style.color = 'var(--success-color)';
+            }
+        }
+
+        function initFormValidation() {
+            const formFields = document.querySelectorAll('input, select');
+            formFields.forEach(field => {
+                field.addEventListener('blur', function() {
+                    validateField(this);
+                });
+                
+                // استخدام debounce للحقول النصية
+                if (field.type === 'text' || field.type === 'email' || field.type === 'tel') {
+                    field.addEventListener('input', debounce(function() {
+                        validateField(this);
+                    }, 500));
+                }
+            });
+        }
+
+        function validateField(field) {
+            const value = field.value.trim();
+            let isValid = true;
+            let errorMessage = '';
+            
+            switch (field.id) {
+                case 'fullName':
+                    if (!value) {
+                        isValid = false;
+                        errorMessage = 'الاسم الكامل مطلوب';
+                    } else if (value.length < 2) {
+                        isValid = false;
+                        errorMessage = 'الاسم الكامل يجب أن يكون على الأقل حرفين';
+                    }
+                    break;
+                    
+                case 'email':
+                    if (value && !/\S+@\S+\.\S+/.test(value)) {
+                        isValid = false;
+                        errorMessage = 'صيغة البريد الإلكتروني غير صحيحة';
+                    }
+                    break;
+                    
+                case 'phone':
+                    if (value && !/^[\+]?[0-9\s\-\(\)]{8,}$/.test(value)) {
+                        isValid = false;
+                        errorMessage = 'صيغة رقم الهاتف غير صحيحة';
+                    }
+                    break;
+                    
+                case 'newPassword':
+                    if (value && value.length < 8) {
+                        isValid = false;
+                        errorMessage = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+                    }
+                    break;
+            }
+            
+            // عرض أو إخفاء رسالة الخطأ
+            const errorElement = document.getElementById(field.id + 'Error');
+            if (errorElement) {
+                errorElement.textContent = errorMessage;
+                errorElement.style.display = isValid ? 'none' : 'block';
+            }
+            
+            field.classList.toggle('is-invalid', !isValid);
+            field.setAttribute('aria-invalid', !isValid);
+            
+            return isValid;
+        }
+
+        function validateForm() {
+            let isValid = true;
+            const fields = ['fullName', 'email', 'phone'];
+            
+            fields.forEach(fieldId => {
+                const field = getElement(fieldId);
+                if (field && !validateField(field)) {
+                    isValid = false;
+                }
+            });
+            
+            // التحقق من كلمة المرور إذا تم إدخالها
+            const newPassword = getElement('newPassword').value;
+            const confirmPassword = getElement('confirmPassword').value;
+            
+            if (newPassword) {
+                if (newPassword.length < 8) {
+                    isValid = false;
+                    showFieldError(getElement('newPassword'), 'كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+                }
+                
+                if (newPassword !== confirmPassword) {
+                    isValid = false;
+                    showFieldError(getElement('confirmPassword'), 'كلمة المرور غير متطابقة');
+                }
+            }
+            
+            return isValid;
+        }
+
+        function showFieldError(field, message) {
+            field.classList.add('is-invalid');
+            const errorElement = document.getElementById(field.id + 'Error');
+            if (!errorElement) {
+                const errorDiv = document.createElement('div');
+                errorDiv.id = field.id + 'Error';
+                errorDiv.className = 'invalid-feedback';
+                errorDiv.textContent = message;
+                field.parentNode.appendChild(errorDiv);
+            } else {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+            field.setAttribute('aria-invalid', 'true');
+        }
+
+        function saveProfile() {
+            if (!validateForm()) {
+                showAlert('error', 'يرجى تصحيح الأخطاء في النموذج');
+                return;
+            }
+            
+            const saveButton = getElement('saveButton');
+            saveButton.disabled = true;
+            saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+            
+            // إظهار نافذة التحميل
+            getElement('loadingOverlay').classList.add('active');
+            
+            const userData = {
+                fullName: getElement('fullName').value,
+                email: getElement('email').value,
+                phone: getElement('phone').value,
+                jobTitle: getElement('jobTitle').value,
+                language: getElement('language').value,
+                darkMode: getElement('darkModeToggle').checked,
+                notifications: getElement('notificationsToggle').checked,
+                lastUpdate: new Date().toISOString()
+            };
+
+            // حفظ كلمة المرور إذا تم تغييرها
+            const currentPassword = getElement('currentPassword').value;
+            const newPassword = getElement('newPassword').value;
+            const confirmPassword = getElement('confirmPassword').value;
+
+            if (newPassword) {
+                // التحقق من كلمة المرور الحالية إذا كانت موجودة
+                const existingUser = JSON.parse(localStorage.getItem('financial_app_current_user')) || {};
+                if (existingUser.password && existingUser.password !== currentPassword) {
+                    getElement('loadingOverlay').classList.remove('active');
+                    saveButton.disabled = false;
+                    saveButton.innerHTML = '<i class="fas fa-save"></i> حفظ التغييرات';
+                    showAlert('error', 'كلمة المرور الحالية غير صحيحة');
+                    return;
+                }
+                
+                userData.password = newPassword; // في الواقع يجب تشفيرها
+            }
+
+            // حفظ الصورة إذا تم تحميلها
+            if (avatarDataUrl) {
+                userData.avatar = avatarDataUrl;
+            }
+
+            // حفظ تنسيق التاريخ في الإعدادات العامة
+            const settings = JSON.parse(localStorage.getItem('financial_app_settings')) || {};
+            settings.date_format = getElement('dateFormat').value;
+            localStorage.setItem('financial_app_settings', JSON.stringify(settings));
+
+            // محاكاة عملية الحفظ
+            setTimeout(() => {
+                localStorage.setItem('financial_app_current_user', JSON.stringify(userData));
+                
+                // إخفاء نافذة التحميل
+                getElement('loadingOverlay').classList.remove('active');
+                
+                showAlert('success', 'تم حفظ التغييرات بنجاح');
+                
+                saveButton.disabled = false;
+                saveButton.innerHTML = '<i class="fas fa-save"></i> حفظ التغييرات';
+                
+                // تحديث واجهة المستخدم
+                updateHeaderAvatar(userData);
+            }, 1500);
+        }
+
+        function resetForm() {
+            if (confirm('هل تريد إلغاء التغييرات؟')) {
+                loadUserData();
+                getElement('currentPassword').value = '';
+                getElement('newPassword').value = '';
+                getElement('confirmPassword').value = '';
+                
+                // إخفاء رسائل الخطأ
+                document.querySelectorAll('.invalid-feedback').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.is-invalid').forEach(el => {
+                    el.classList.remove('is-invalid');
+                });
+            }
+        }
+
+        function getUserInitials(name) {
+            if (!name) return 'U';
+            return name.split(' ').map(word => word[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        function getRandomColor() {
+            const colors = ['#3366cc', '#dc3545', '#28a745', '#ffc107', '#17a2b8'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function toggleSidebar() {
+            getElement('mainSidebar').classList.toggle('show');
+        }
+
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+
+        // ===== دوال التنبيهات =====
+        function showAlert(type, message, duration = 5000) {
+            const existingAlert = document.querySelector('.alert');
+            if (existingAlert) {
+                existingAlert.remove();
+            }
+            
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.setAttribute('role', 'alert');
+            alert.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" aria-label="إغلاق التنبيه">×</button>
+            `;
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                if (alert.parentElement) {
+                    alert.remove();
+                }
+            }, duration);
+        }
+
+        // ===== دوال مساعدة =====
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // تحسين إدارة الذاكرة
+        window.addEventListener('beforeunload', function() {
+            // تنظيف الذاكرة المؤقتة
+            for (let key in domCache) {
+                domCache[key] = null;
+            }
+        });
+    </script>
+</body>
+</html>

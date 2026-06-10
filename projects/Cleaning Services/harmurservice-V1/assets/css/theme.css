@@ -1,0 +1,159 @@
+/* ملف: assets/css/theme.css */
+
+/* ============================================
+   THEME SWITCHER STYLES
+============================================ */
+
+.theme-switch-container {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.theme-switch {
+    width: 60px;
+    height: 30px;
+    background: #0066b3;
+    border-radius: 50px;
+    position: relative;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.theme-switch:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 102, 179, 0.5);
+}
+
+.theme-switch i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: white;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.theme-switch .fa-moon {
+    left: 10px;
+    opacity: 1;
+}
+
+.theme-switch .fa-sun {
+    right: 10px;
+    opacity: 0;
+}
+
+.theme-switch-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+/* Dark Mode Active */
+body.dark-mode .theme-switch {
+    background: #00a86b;
+}
+
+body.dark-mode .theme-switch .fa-moon {
+    opacity: 0;
+}
+
+body.dark-mode .theme-switch .fa-sun {
+    opacity: 1;
+}
+
+body.dark-mode .theme-switch-slider {
+    transform: translateX(30px);
+    background: #FFD700;
+}
+
+/* ============================================
+   DARK MODE VARIABLES
+============================================ */
+:root {
+    /* Light mode variables (default) */
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --card-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --primary-color: #0066b3;
+    --secondary-color: #00a86b;
+}
+
+.dark-mode {
+    /* Dark mode variables */
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --border-color: #2d2d2d;
+    --primary-color: #4d8bff;
+    --secondary-color: #00cc88;
+}
+
+/* Apply variables */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card, .feature-card, .service-card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+/* Specific dark mode styles */
+.dark-mode header {
+    background-color: #1e1e1e !important;
+    border-bottom: 1px solid #2d2d2d !important;
+}
+
+.dark-mode .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+}
+
+.dark-mode .hero-overlay {
+    background: linear-gradient(135deg, 
+        rgba(77, 139, 255, 0.7) 0%,
+        rgba(0, 204, 136, 0.6) 100%) !important;
+}
+
+.dark-mode footer {
+    background-color: #1e1e1e !important;
+    border-top: 1px solid #2d2d2d !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .theme-switch-container {
+        top: auto;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .theme-switch {
+        width: 50px;
+        height: 25px;
+    }
+    
+    .theme-switch-slider {
+        width: 19px;
+        height: 19px;
+    }
+    
+    .dark-mode .theme-switch-slider {
+        transform: translateX(25px);
+    }
+}

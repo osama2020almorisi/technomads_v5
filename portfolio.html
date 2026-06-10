@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="TechNomads - معرض أعمالنا المتميزة في التقنية والبرمجيات">
+    <meta name="theme-color" content="#2A2D7C">
+    
+    <title>معرض الأعمال | TechNomads</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/portfolio.css">
+    
+    
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CM085HTNT0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CM085HTNT0');
+</script>
+    
+    <meta name="description" content="استعرض أحدث مشاريع TechNomads: تطبيقات جوال، مواقع إلكترونية، أنظمة محاسبية، وأدوات تقنية مبتكرة.">
+<meta name="keywords" content="مشاريع تقنية, تطبيقات جوال, مواقع الكترونية, برمجة, تصميم, اليمن">
+    
+    <style>
+        body { opacity: 0; transition: opacity 0.3s ease; }
+        body.loaded { opacity: 1; }
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-light, #ffffff);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s;
+        }
+        .loader svg { width: 60px; height: 60px; }
+        @media (max-width: 768px) {
+            .loader svg { width: 45px; height: 45px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loader">
+        <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="90" fill="none" stroke="#2A2D7C" stroke-width="6" stroke-dasharray="565" stroke-dashoffset="565" stroke-linecap="round">
+                <animate attributeName="stroke-dashoffset" from="565" to="0" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="100" cy="100" r="60" fill="none" stroke="#4ECDC4" stroke-width="4" stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round">
+                <animate attributeName="stroke-dashoffset" from="377" to="0" dur="1.2s" repeatCount="indefinite"/>
+            </circle>
+        </svg>
+    </div>
+</div>
+
+<header class="smart-header" id="main-header">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <div class="logo-wrapper">
+                <svg class="logo-svg" viewBox="0 0 200 200">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#2A2D7C"/>
+                            <stop offset="100%" stop-color="#4ECDC4"/>
+                        </linearGradient>
+                        <linearGradient id="logoGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#4ECDC4"/>
+                            <stop offset="100%" stop-color="#FF6B6B"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8" class="logo-circle"/>
+                    <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="logo-triangle"/>
+                    <circle cx="100" cy="110" r="15" fill="url(#logoGrad)" class="logo-dot"/>
+                </svg>
+            </div>
+            <span class="logo-text">TechNomads</span>
+        </a>
+
+        <nav class="desktop-nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
+                <li><a href="team.html" class="nav-link"><i class="fas fa-users"></i><span>الفريق</span></a></li>
+                <li><a href="portfolio.html" class="nav-link active"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
+                <li><a href="contact.html" class="nav-link cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="desktop-tools">
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="ar">عربي</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+        </div>
+
+        <button class="hamburger" id="hamburgerBtn" aria-label="القائمة">
+            <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+        </button>
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <div class="mobile-logo-wrapper">
+                <svg class="mobile-logo-svg" viewBox="0 0 200 200" width="40" height="40">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
+                    <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
+                    <circle cx="100" cy="110" r="15" fill="url(#logoGrad)"/>
+                </svg>
+            </div>
+            <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="mobile-nav-list">
+            <li><a href="index.html" class="mobile-nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+            <li><a href="services.html" class="mobile-nav-link"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
+            <li><a href="team.html" class="mobile-nav-link"><i class="fas fa-users"></i><span>الفريق</span></a></li>
+            <li><a href="portfolio.html" class="mobile-nav-link active"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
+            <li><a href="contact.html" class="mobile-nav-link cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
+        </ul>
+        <div class="mobile-nav-footer">
+            <div class="mobile-theme-toggle-wrapper">
+                <span class="mobile-theme-label"><i class="fas fa-adjust"></i> الوضع</span>
+                <button class="mobile-theme-toggle" id="mobileThemeToggle">
+                    <i class="fas fa-moon"></i>
+                    <span class="mobile-theme-text">داكن</span>
+                </button>
+            </div>
+            <div class="mobile-language-switcher">
+                <button class="mobile-lang-btn active" data-lang="ar">العربية</button>
+                <button class="mobile-lang-btn" data-lang="en">English</button>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+
+    <section class="portfolio-hero">
+        <div class="hero-backdrop"></div>
+        <div class="hero-container">
+            <div class="hero-badge" data-aos="fade-down">
+                <i class="fas fa-crown"></i>
+                <span>معرض أعمالنا</span>
+            </div>
+            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+                مشاريع <span class="gradient-text">أبدعنا</span> في تقديمها
+            </h1>
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+                نفتخر بتقديم مجموعة من أفضل مشاريعنا التي تعكس خبرتنا وإبداعنا في مجال التقنية
+            </p>
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-card">
+                    <span class="stat-number" id="statTotal">0</span>
+                    <span class="stat-label">مشروع</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="statClients">0</span>
+                    <span class="stat-label">عميل</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="statTech">0</span>
+                    <span class="stat-label">تقنية</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,58.7C1248,64,1344,64,1392,64L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" fill="var(--bg-light)"/>
+            </svg>
+        </div>
+    </section>
+
+    <section class="portfolio-search-section">
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن مشروع...">
+                <button class="search-clear" id="searchClear"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-projects-section">
+        <div class="projects-container">
+            <div class="projects-header">
+                <div class="projects-count">
+                    <i class="fas fa-layer-group"></i>
+                    <span id="projectsCount">0</span>
+                    <span>مشروع</span>
+                </div>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <div class="skeleton-loader">
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+            </div>
+
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon"><i class="fas fa-folder-open"></i></div>
+                <h3>لا توجد مشاريع مطابقة</h3>
+                <p>جرب البحث بكلمات مختلفة</p>
+                <button class="reset-btn" id="resetSearchBtn"><i class="fas fa-sync-alt"></i> مسح البحث</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="project-modal" id="projectModal">
+        <div class="modal-container">
+            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            <div class="modal-content" id="modalContent"></div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="smart-footer">
+    <div class="footer-waves">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="var(--primary)" fill-opacity="1" d="M0,192L48,186.7C96,181,192,171,288,181.3C384,192,480,224,576,218.7C672,213,768,171,864,165.3C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+        </svg>
+    </div>
+    <div class="footer-container">
+        <div class="footer-section footer-brand">
+            <div class="footer-logo-wrapper">
+                <svg class="footer-logo-svg" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8" opacity="0.9"/>
+                    <path d="M60 140 L100 60 L140 140" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+                    <circle cx="100" cy="110" r="15" fill="white" opacity="0.9"/>
+                </svg>
+            </div>
+            <h3 class="footer-brand-title">TechNomads</h3>
+            <p class="footer-about">نصنع التقنية بإبداع، نقدم حلولاً رقمية متكاملة تلبي احتياجات عملائنا بأعلى معايير الجودة.</p>
+        </div>
+        <div class="footer-section">
+            <h3 class="footer-title">روابط سريعة</h3>
+            <ul class="footer-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                <li><a href="services.html"><i class="fas fa-cogs"></i> الخدمات</a></li>
+                <li><a href="team.html"><i class="fas fa-users"></i> فريق العمل</a></li>
+                <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> معرض الأعمال</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3 class="footer-title">تواصل معنا</h3>
+            <div class="contact-info">
+                <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>صنعاء، اليمن</span></div>
+                <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:+967770200970">+967770200970</a></div>
+                <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:2025ooss@gmail.com">2025ooss@gmail.com</a></div>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3 class="footer-title">النشرة البريدية</h3>
+            <form class="newsletter-form" id="newsletterForm">
+                <div class="newsletter-input-wrapper">
+                    <i class="fas fa-envelope newsletter-icon"></i>
+                    <input type="email" placeholder="بريدك الإلكتروني" required>
+                </div>
+                <button type="submit" class="subscribe-btn">اشترك <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="copyright-section">
+        <div class="copyright-content">
+            <p>© <span class="current-year">2024</span> TechNomads. جميع الحقوق محفوظة</p>
+            <div class="footer-links-inline">
+                <a href="#">شروط الخدمة</a><span class="separator">|</span><a href="#">سياسة الخصوصية</a>
+            </div>
+        </div>
+        <div class="footer-bottom-bar"><span>صُنع بـ <i class="fas fa-heart"></i> في اليمن</span></div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="js/main.js"></script>
+<script src="js/portfolio.js"></script>
+
+<script>
+    window.addEventListener('load', function() {
+        document.body.classList.add('loaded');
+        const overlay = document.getElementById('loadingOverlay');
+        if (overlay) {
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 500);
+        }
+    });
+    document.querySelectorAll('.current-year').forEach(el => el.textContent = new Date().getFullYear());
+    AOS.init({ duration: 800, once: true, offset: 100, easing: 'ease-out-cubic' });
+    
+    // Fix Hamburger Menu
+    (function() {
+        const hamburger = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const closeBtn = document.getElementById('closeNavBtn');
+        
+        if (hamburger && mobileNav) {
+            function toggleMenu() {
+                mobileNav.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                const isOpen = mobileNav.classList.contains('active');
+                hamburger.setAttribute('aria-expanded', isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            }
+            
+            hamburger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMenu();
+            });
+            
+            if (closeBtn) {
+                closeBtn.addEventListener('click', toggleMenu);
+            }
+            
+            // Close when clicking outside
+            document.addEventListener('click', function(e) {
+                if (mobileNav.classList.contains('active') && 
+                    !mobileNav.contains(e.target) && 
+                    !hamburger.contains(e.target)) {
+                    toggleMenu();
+                }
+            });
+            
+            // Close on escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+            
+            // Close on link click
+            mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', toggleMenu);
+            });
+        }
+    })();
+</script>
+</body>
+</html>

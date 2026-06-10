@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>الموردين | نظام إدارة الصيدلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-prescription-bottle-medical"></i>
+                    <span>صيدليتي</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i><span>لوحة التحكم</span></a></li>
+                    <li><a href="medicines.html"><i class="fas fa-pills"></i><span>الأدوية</span></a></li>
+                    <li><a href="sales.html"><i class="fas fa-cash-register"></i><span>المبيعات</span></a></li>
+                    <li><a href="customers.html"><i class="fas fa-users"></i><span>العملاء</span></a></li>
+                    <li><a href="suppliers.html" class="active"><i class="fas fa-truck"></i><span>الموردين</span></a></li>
+                    <li><a href="purchases.html"><i class="fas fa-shopping-cart"></i><span>المشتريات</span></a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i><span>التقارير</span></a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a></li>
+                    <li><a href="profile.html"><i class="fas fa-user-circle"></i><span>الملف الشخصي</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <div class="user-name"></div>
+                        <div class="user-role"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="page-title">
+                    <h1>الموردين</h1>
+                    <p>إدارة بيانات الموردين والمستودعات</p>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" id="theme-toggle" title="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="header-btn" onclick="logout()" title="تسجيل الخروج">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- Search and Add -->
+                <div class="search-filters">
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" id="searchSupplier" placeholder="البحث باسم المورد أو رقم الهاتف...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('addSupplierModal')" style="width: auto;">
+                        <i class="fas fa-plus"></i> إضافة مورد
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportSuppliers()" style="width: auto;">
+                        <i class="fas fa-file-export"></i> تصدير
+                    </button>
+                </div>
+
+                <!-- Suppliers Table -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-truck"></i> قائمة الموردين</h3>
+                        <span id="supplierCount" style="color: var(--text-muted); font-size: 0.85rem;"></span>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="suppliersTable">
+                            <thead>
+                                <tr>
+                                    <th>اسم المورد</th>
+                                    <th>الشخص المسؤول</th>
+                                    <th>رقم الهاتف</th>
+                                    <th>البريد الإلكتروني</th>
+                                    <th>العنوان</th>
+                                    <th>عدد المشتريات</th>
+                                    <th>إجمالي المشتريات</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="suppliersBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Supplier Modal -->
+    <div class="modal-overlay" id="addSupplierModal">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-plus-circle"></i> إضافة مورد جديد</h3>
+                <button class="modal-close" onclick="closeModal('addSupplierModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="addSupplierForm">
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">اسم الشركة/المورد *</label><input type="text" class="form-input" name="name" required></div>
+                        <div class="form-group"><label class="form-label">الشخص المسؤول</label><input type="text" class="form-input" name="contactPerson" placeholder="اسم جهة الاتصال"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">رقم الهاتف</label><input type="tel" class="form-input" name="phone" placeholder="مثال: 771234567"></div>
+                        <div class="form-group"><label class="form-label">البريد الإلكتروني</label><input type="email" class="form-input" name="email" placeholder="info@company.com"></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">العنوان</label><input type="text" class="form-input" name="address" placeholder="المدينة، المنطقة، الشارع"></div>
+                    <div class="form-group"><label class="form-label">ملاحظات إضافية</label><textarea class="form-textarea" name="notes" rows="2" placeholder="أي معلومات إضافية عن المورد..."></textarea></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addSupplierModal')">إلغاء</button>
+                <button class="btn btn-primary" onclick="saveSupplier()"><i class="fas fa-save"></i> حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Supplier Modal -->
+    <div class="modal-overlay" id="editSupplierModal">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-edit"></i> تعديل بيانات المورد</h3>
+                <button class="modal-close" onclick="closeModal('editSupplierModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="editSupplierForm">
+                    <input type="hidden" name="id">
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">اسم الشركة/المورد *</label><input type="text" class="form-input" name="name" required></div>
+                        <div class="form-group"><label class="form-label">الشخص المسؤول</label><input type="text" class="form-input" name="contactPerson"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">رقم الهاتف</label><input type="tel" class="form-input" name="phone"></div>
+                        <div class="form-group"><label class="form-label">البريد الإلكتروني</label><input type="email" class="form-input" name="email"></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">العنوان</label><input type="text" class="form-input" name="address"></div>
+                    <div class="form-group"><label class="form-label">ملاحظات إضافية</label><textarea class="form-textarea" name="notes" rows="2"></textarea></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('editSupplierModal')">إلغاء</button>
+                <button class="btn btn-primary" onclick="updateSupplier()"><i class="fas fa-save"></i> تحديث</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supplier Details Modal -->
+    <div class="modal-overlay" id="supplierDetailsModal">
+        <div class="modal" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-chart-line"></i> تقرير مشتريات المورد</h3>
+                <button class="modal-close" onclick="closeModal('supplierDetailsModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="supplierDetailsContent"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('supplierDetailsModal')">إغلاق</button>
+                <button class="btn btn-primary" onclick="printSupplierReport()"><i class="fas fa-print"></i> طباعة</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        let currentSuppliers = [];
+
+        function loadSuppliers() {
+            currentSuppliers = getAllSuppliers();
+            renderSuppliers(currentSuppliers);
+            document.getElementById('supplierCount').innerHTML = `إجمالي: ${currentSuppliers.length} مورد`;
+        }
+
+        function renderSuppliers(suppliers) {
+            const purchases = getAllPurchases();
+            const purchaseItems = Storage.get('purchaseItems') || [];
+            const tbody = document.getElementById('suppliersBody');
+            tbody.innerHTML = suppliers.map(s => {
+                const supplierPurchases = purchases.filter(p => p.supplierId === s.id);
+                const totalPurchases = supplierPurchases.reduce((sum, p) => sum + p.totalAmount, 0);
+                const purchaseCount = supplierPurchases.length;
+                return `<tr>
+                    <td><strong>${s.name}</strong>${s.notes ? `<br><small style="color: var(--text-muted);">${s.notes.substring(0, 30)}${s.notes.length > 30 ? '...' : ''}</small>` : ''}</td>
+                    <td>${s.contactPerson || '-'}</td>
+                    <td>${s.phone || '-'}</td>
+                    <td>${s.email || '-'}</td>
+                    <td>${s.address || '-'}</td>
+                    <td><span class="badge badge-info">${purchaseCount} فاتورة</span></td>
+                    <td><strong style="color: var(--primary);">${formatCurrency(totalPurchases)}</strong></td>
+                    <td><div class="action-btns">
+                        <button class="action-btn view" onclick="viewSupplierDetails(${s.id})" title="تقرير المشتريات"><i class="fas fa-chart-line"></i></button>
+                        <button class="action-btn edit" onclick="editSupplier(${s.id})" title="تعديل"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete" onclick="deleteSupplier(${s.id})" title="حذف"><i class="fas fa-trash"></i></button>
+                    </div></td>
+                </tr>`;
+            }).join('');
+        }
+
+        function saveSupplier() {
+            const form = document.getElementById('addSupplierForm');
+            const formData = new FormData(form);
+            const supplier = {
+                id: getNextId('supplier'),
+                name: formData.get('name'),
+                contactPerson: formData.get('contactPerson') || '',
+                phone: formData.get('phone') || '',
+                email: formData.get('email') || '',
+                address: formData.get('address') || '',
+                notes: formData.get('notes') || ''
+            };
+            if (!supplier.name) { showNotification('يرجى إدخال اسم المورد', 'error'); return; }
+            const suppliers = getAllSuppliers();
+            suppliers.push(supplier);
+            Storage.set('suppliers', suppliers);
+            showNotification('تم إضافة المورد بنجاح', 'success');
+            closeModal('addSupplierModal');
+            form.reset();
+            loadSuppliers();
+        }
+
+        function editSupplier(id) {
+            const supplier = getSupplierById(id);
+            if (!supplier) return;
+            const form = document.getElementById('editSupplierForm');
+            form.querySelector('[name="id"]').value = supplier.id;
+            form.querySelector('[name="name"]').value = supplier.name;
+            form.querySelector('[name="contactPerson"]').value = supplier.contactPerson || '';
+            form.querySelector('[name="phone"]').value = supplier.phone || '';
+            form.querySelector('[name="email"]').value = supplier.email || '';
+            form.querySelector('[name="address"]').value = supplier.address || '';
+            form.querySelector('[name="notes"]').value = supplier.notes || '';
+            openModal('editSupplierModal');
+        }
+
+        function updateSupplier() {
+            const form = document.getElementById('editSupplierForm');
+            const id = parseInt(form.querySelector('[name="id"]').value);
+            const suppliers = getAllSuppliers();
+            const index = suppliers.findIndex(s => s.id === id);
+            if (index === -1) return;
+            const formData = new FormData(form);
+            suppliers[index] = {
+                ...suppliers[index],
+                name: formData.get('name'),
+                contactPerson: formData.get('contactPerson') || '',
+                phone: formData.get('phone') || '',
+                email: formData.get('email') || '',
+                address: formData.get('address') || '',
+                notes: formData.get('notes') || ''
+            };
+            Storage.set('suppliers', suppliers);
+            showNotification('تم تحديث بيانات المورد بنجاح', 'success');
+            closeModal('editSupplierModal');
+            loadSuppliers();
+        }
+
+        function deleteSupplier(id) {
+            confirmDialog('هل أنت متأكد من حذف هذا المورد؟', () => {
+                deleteSupplier(id);
+                showNotification('تم حذف المورد بنجاح', 'success');
+                loadSuppliers();
+            });
+        }
+
+        function viewSupplierDetails(supplierId) {
+            const supplier = getSupplierById(supplierId);
+            if (!supplier) return;
+            const purchases = getAllPurchases();
+            const purchaseItems = Storage.get('purchaseItems') || [];
+            const medicines = getAllMedicines();
+            const supplierPurchases = purchases.filter(p => p.supplierId === supplierId);
+            const totalPurchases = supplierPurchases.reduce((sum, p) => sum + p.totalAmount, 0);
+            const totalPaid = supplierPurchases.reduce((sum, p) => sum + p.paidAmount, 0);
+            const totalRemaining = supplierPurchases.reduce((sum, p) => sum + p.remainingAmount, 0);
+
+            // Get purchased medicines from this supplier
+            const purchasedMedicines = {};
+            supplierPurchases.forEach(purchase => {
+                const items = purchaseItems.filter(pi => pi.purchaseId === purchase.id);
+                items.forEach(item => {
+                    const med = medicines.find(m => m.id === item.medicineId);
+                    if (med) {
+                        if (!purchasedMedicines[med.id]) purchasedMedicines[med.id] = { name: med.name, quantity: 0, total: 0 };
+                        purchasedMedicines[med.id].quantity += item.quantity;
+                        purchasedMedicines[med.id].total += item.total;
+                    }
+                });
+            });
+
+            const purchasesHTML = supplierPurchases.slice().reverse().map(p => 
+                `<tr><td><strong>${p.invoiceNumber}</strong></td><td>${formatDate(p.createdAt)}</span></td>
+                <td>${formatCurrency(p.totalAmount)}</span></td>
+                <td><span style="color: var(--secondary);">${formatCurrency(p.paidAmount)}</span></td>
+                <td style="color: ${p.remainingAmount > 0 ? 'var(--danger)' : 'var(--secondary)'};">${formatCurrency(p.remainingAmount)}</span></td>
+                <td><button class="action-btn view" onclick="location.href='purchases.html'"><i class="fas fa-eye"></i></button></td></tr>`
+            ).join('');
+
+            const medicinesHTML = Object.values(purchasedMedicines).map(m => 
+                `<tr><td><strong>${m.name}</strong></td><td>${m.quantity}</span></td><td>${formatCurrency(m.total)}</span></td>`
+            ).join('');
+
+            document.getElementById('supplierDetailsContent').innerHTML = `
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--primary);">${supplier.name}</h3>
+                    <p><i class="fas fa-user-tie"></i> ${supplier.contactPerson || 'لا يوجد'}</p>
+                    <p><i class="fas fa-phone"></i> ${supplier.phone || 'لا يوجد'}</p>
+                    <p><i class="fas fa-envelope"></i> ${supplier.email || 'لا يوجد'}</p>
+                    <p><i class="fas fa-map-marker-alt"></i> ${supplier.address || 'لا يوجد'}</p>
+                    <p><i class="fas fa-sticky-note"></i> ${supplier.notes || 'لا توجد ملاحظات'}</p>
+                </div>
+                <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 1.5rem;">
+                    <div class="stat-card" style="padding: 1rem;"><div class="stat-value" style="font-size: 1.3rem;">${supplierPurchases.length}</div><div class="stat-label">عدد فواتير الشراء</div></div>
+                    <div class="stat-card" style="padding: 1rem;"><div class="stat-value" style="font-size: 1.3rem;">${formatCurrency(totalPurchases)}</div><div class="stat-label">إجمالي المشتريات</div></div>
+                    <div class="stat-card" style="padding: 1rem;"><div class="stat-value" style="font-size: 1.3rem;">${formatCurrency(totalRemaining)}</div><div class="stat-label">المبلغ المتبقي</div></div>
+                </div>
+                <h4 style="margin: 1rem 0;"><i class="fas fa-receipt"></i> فواتير الشراء</h4>
+                <div class="table-container"><table class="data-table"><thead><tr><th>رقم الفاتورة</th><th>التاريخ</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th><th></th></tr></thead><tbody>${purchasesHTML || '<tr><td colspan="6" style="text-align: center;">لا توجد مشتريات</td></tr>'}</tbody></table></div>
+                <h4 style="margin: 1rem 0;"><i class="fas fa-pills"></i> الأدوية المستوردة من هذا المورد</h4>
+                <div class="table-container"><table class="data-table"><thead><tr><th>الدواء</th><th>الكمية المستوردة</th><th>إجمالي التكلفة</th></tr></thead><tbody>${medicinesHTML || '<td><td colspan="3" style="text-align: center;">لا توجد أدوية</td></tr>'}</tbody></table></div>
+            `;
+            openModal('supplierDetailsModal');
+        }
+
+        function exportSuppliers() {
+            const suppliers = getAllSuppliers();
+            const purchases = getAllPurchases();
+            const exportData = suppliers.map(s => {
+                const supplierPurchases = purchases.filter(p => p.supplierId === s.id);
+                const totalPurchases = supplierPurchases.reduce((sum, p) => sum + p.totalAmount, 0);
+                return { name: s.name, contact_person: s.contactPerson, phone: s.phone, email: s.email, address: s.address, total_purchases: totalPurchases, notes: s.notes };
+            });
+            exportToCSV(exportData, 'suppliers_report.csv');
+        }
+
+        function printSupplierReport() {
+            const content = document.getElementById('supplierDetailsContent').innerHTML;
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html dir="rtl">
+                <head><meta charset="UTF-8"><title>تقرير المورد</title>
+                <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+                <style>body{font-family:'Tajawal',sans-serif;padding:20px;}table{width:100%;border-collapse:collapse;}th,td{padding:8px;border:1px solid #ddd;text-align:right;}</style>
+                </head><body>${content}</body></html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        document.getElementById('searchSupplier').addEventListener('input', function() {
+            const term = this.value.toLowerCase();
+            const filtered = currentSuppliers.filter(s => s.name.toLowerCase().includes(term) || (s.phone && s.phone.includes(term)));
+            renderSuppliers(filtered);
+        });
+
+        document.addEventListener('DOMContentLoaded', loadSuppliers);
+    </script>
+</body>
+</html>

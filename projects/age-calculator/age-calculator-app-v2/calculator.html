@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة العمر الذكية</title>
+
+    <!-- الخطوط والأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- ملفات التنسيق -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/calculator.css">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-calculator"></i> حاسبة العمر الذكية</h1>
+
+        <!-- قائمة السجلات المحفوظة (تظهر فقط إذا كان هناك سجلات) -->
+        <div class="saved-section" id="savedSection" style="display: none;">
+            <label for="savedList"><i class="fas fa-database"></i> اختر من السجلات المحفوظة:</label>
+            <select id="savedList">
+                <option value="">-- اختر مولوداً --</option>
+            </select>
+        </div>
+
+        <!-- نموذج إدخال التاريخ والوقت -->
+        <div class="form">
+            <input type="date" id="birthDate" placeholder="تاريخ الميلاد">
+            <input type="time" id="birthTime" placeholder="الوقت (اختياري)" value="00:00">
+            <button onclick="calculateAgeUI()">
+                <i class="fas fa-magic"></i> احسب العمر
+            </button>
+        </div>
+
+        <!-- بطاقة النتيجة (تحتوي على الميلادي والهجري) -->
+        <div class="result-card" id="resultCard">
+            <!-- العمر الميلادي -->
+            <div class="age-section">
+                <h3><i class="fas fa-sun"></i> العمر الميلادي</h3>
+                <div class="age-detail">
+                    <span class="value" id="yearsValue">0</span> سنة
+                    <span class="value" id="monthsValue">0</span> شهر
+                    <span class="value" id="daysValue">0</span> يوم
+                </div>
+                <div class="extra-details">
+                    <p><i class="fas fa-calendar-day"></i> إجمالي الأيام: <span id="totalDays">0</span></p>
+                    <p><i class="fas fa-clock"></i> إجمالي الساعات: <span id="totalHours">0</span></p>
+                    <p><i class="fas fa-hourglass-half"></i> إجمالي الدقائق: <span id="totalMinutes">0</span></p>
+                </div>
+            </div>
+
+            <!-- العمر الهجري -->
+            <div class="age-section hijri-section">
+                <h3><i class="fas fa-moon"></i> العمر الهجري (تقريبي)</h3>
+                <div class="age-detail">
+                    <span class="value" id="hijriYears">0</span> سنة
+                    <span class="value" id="hijriMonths">0</span> شهر
+                    <span class="value" id="hijriDays">0</span> يوم
+                </div>
+                <p class="note"><i class="fas fa-info-circle"></i> تقريبي، قد يختلف عن الدقة المطلقة</p>
+            </div>
+        </div>
+
+        <!-- العداد الحي (لحظي) -->
+        <div id="liveCounter" class="live-counter">
+            <i class="fas fa-stopwatch"></i> <span id="counterSeconds">0</span> ثانية منذ الولادة
+        </div>
+
+        <!-- زر العودة للرئيسية -->
+        <div class="back-link">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+        </div>
+    </div>
+
+    <!-- ملفات الجافاسكريبت -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/calculator.js"></script>
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات - Pulse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/settings.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- شريط الهواتف العلوي -->
+        <div class="mobile-header">
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="mobile-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Pulse</span>
+            </div>
+            <div class="mobile-actions">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span class="logo-text">Pulse</span>
+                </div>
+                <button class="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>لوحة التحكم</span>
+                </a>
+                <a href="patients.html" class="nav-item">
+                    <i class="fas fa-user-injured"></i>
+                    <span>إدارة المرضى</span>
+                </a>
+                <a href="analysis.html" class="nav-item">
+                    <i class="fas fa-vial"></i>
+                    <span>تحليل التحاليل</span>
+                    <span class="badge new-tests">0</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>التقارير</span>
+                </a>
+                <a href="notifications.html" class="nav-item">
+                    <i class="fas fa-bell"></i>
+                    <span>التنبيهات</span>
+                    <span class="badge new-notifications">0</span>
+                </a>
+                <a href="settings.html" class="nav-item active">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+            </nav>
+
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name">د. أسامه منصور</span>
+                        <span class="user-role">طبيب استشاري</span>
+                    </div>
+                </div>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- الغطاء للهواتف -->
+        <div class="sidebar-overlay"></div>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط العنوان -->
+            <header class="content-header">
+                <div class="header-title">
+                    <h1>الإعدادات</h1>
+                    <p>إدارة إعدادات النظام والملف الشخصي</p>
+                </div>
+                <div class="header-actions">
+                    <div class="language-switcher">
+                        <button class="lang-btn">
+                            <i class="fas fa-globe"></i>
+                            <span>English</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- التنقل بين الأقسام -->
+            <nav class="settings-nav">
+                <button class="nav-btn active" data-section="profile">الملف الشخصي</button>
+                <button class="nav-btn" data-section="preferences">التفضيلات</button>
+                <button class="nav-btn" data-section="notifications">الإشعارات</button>
+                <button class="nav-btn" data-section="security">الأمان</button>
+                <button class="nav-btn" data-section="backup">النسخ الاحتياطي</button>
+                <button class="nav-btn" data-section="about">حول النظام</button>
+            </nav>
+
+            <!-- محتوى الإعدادات -->
+            <div class="settings-content">
+                <!-- قسم الملف الشخصي -->
+                <section id="profile-section" class="settings-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-user-circle"></i> الملف الشخصي</h2>
+                        <p>إدارة معلومات حسابك الشخصية</p>
+                    </div>
+
+                    <div class="profile-container">
+                        <div class="profile-sidebar">
+                            <div class="avatar-upload">
+                                <div class="avatar-preview">
+                                    <i class="fas fa-user-md"></i>
+                                </div>
+                                <button class="btn-secondary btn-sm">
+                                    <i class="fas fa-camera"></i>
+                                    تغيير الصورة
+                                </button>
+                            </div>
+                            <div class="profile-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">124</div>
+                                    <div class="stat-label">مريض</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">48</div>
+                                    <div class="stat-label">تحليل هذا الشهر</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">15</div>
+                                    <div class="stat-label">تقرير محفوظ</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-form">
+                            <form id="profileForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="user-name">الاسم الكامل</label>
+                                        <input type="text" id="user-name" value="أسامه منصور" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="user-email">البريد الإلكتروني</label>
+                                        <input type="email" id="user-email" value="ahmed@hospital.com" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="user-phone">رقم الهاتف</label>
+                                        <input type="tel" id="user-phone" value="+966500000000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="user-specialty">التخصص</label>
+                                        <input type="text" id="user-specialty" value="طبيب استشاري">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="user-clinic">العيادة / المستشفى</label>
+                                        <input type="text" id="user-clinic" value="مستشفى الملك فهد">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="user-license">رقم الترخيص</label>
+                                        <input type="text" id="user-license" value="MED-123456">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="user-bio">السيرة الذاتية</label>
+                                    <textarea id="user-bio" rows="4">طبيب استشاري متخصص في الأمراض الباطنية والتحاليل الطبية. حاصل على شهادة البورد العربي وعدد من الشهادات الدولية في مجال التحاليل الطبية والتشخيص.</textarea>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="reset" class="btn-secondary">إلغاء التغييرات</button>
+                                    <button type="submit" class="btn-primary">
+                                        <i class="fas fa-save"></i>
+                                        حفظ التغييرات
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- قسم التفضيلات -->
+                <section id="preferences-section" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-sliders-h"></i> التفضيلات</h2>
+                        <p>تخصيص إعدادات النظام حسب احتياجاتك</p>
+                    </div>
+
+                    <div class="preferences-grid">
+                        <div class="preference-card">
+                            <h3><i class="fas fa-language"></i> الإعدادات العامة</h3>
+                            <div class="preference-item">
+                                <label for="pref-language">اللغة الافتراضية</label>
+                                <select id="pref-language">
+                                    <option value="ar" selected>العربية</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                            <div class="preference-item">
+                                <label for="pref-theme">السمة</label>
+                                <select id="pref-theme">
+                                    <option value="light" selected>فاتح</option>
+                                    <option value="dark">داكن</option>
+                                    <option value="auto">تلقائي</option>
+                                </select>
+                            </div>
+                            <div class="preference-item">
+                                <label for="pref-timezone">المنطقة الزمنية</label>
+                                <select id="pref-timezone">
+                                    <option value="+3" selected>الرياض (UTC+3)</option>
+                                    <option value="+4">دبي (UTC+4)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="preference-card">
+                            <h3><i class="fas fa-desktop"></i> إعدادات العرض</h3>
+                            <div class="preference-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="pref-compact" checked>
+                                    <span class="checkmark"></span>
+                                    الوضع المدمج
+                                </label>
+                                <small>عرض البيانات بشكل مدمج لرؤية المزيد من المحتوى</small>
+                            </div>
+                            <div class="preference-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="pref-animations" checked>
+                                    <span class="checkmark"></span>
+                                    التأثيرات الحركية
+                                </label>
+                                <small>تفعيل الحركات والانتقالات في الواجهة</small>
+                            </div>
+                            <div class="preference-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="pref-highcontrast">
+                                    <span class="checkmark"></span>
+                                    التباين العالي
+                                </label>
+                                <small>تحسين الرؤية للأشخاص ذوي الإعاقة البصرية</small>
+                            </div>
+                        </div>
+
+                        <div class="preference-card">
+                            <h3><i class="fas fa-file-medical"></i> إعدادات العمل</h3>
+                            <div class="preference-item">
+                                <label for="pref-page-size">عدد العناصر في الصفحة</label>
+                                <select id="pref-page-size">
+                                    <option value="10">10 عناصر</option>
+                                    <option value="25" selected>25 عنصر</option>
+                                    <option value="50">50 عنصر</option>
+                                    <option value="100">100 عنصر</option>
+                                </select>
+                            </div>
+                            <div class="preference-item">
+                                <label for="pref-auto-save">الحفظ التلقائي</label>
+                                <select id="pref-auto-save">
+                                    <option value="1">كل دقيقة</option>
+                                    <option value="5" selected>كل 5 دقائق</option>
+                                    <option value="10">كل 10 دقائق</option>
+                                    <option value="0">معطل</option>
+                                </select>
+                            </div>
+                            <div class="preference-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="pref-auto-logout" checked>
+                                    <span class="checkmark"></span>
+                                    تسجيل الخروج التلقائي
+                                </label>
+                                <small>تسجيل الخروج بعد 30 دقيقة من عدم النشاط</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-secondary" onclick="settingsManager.resetPreferences()">
+                            <i class="fas fa-undo"></i>
+                            إعادة التعيين
+                        </button>
+                        <button class="btn-primary" onclick="settingsManager.savePreferences()">
+                            <i class="fas fa-save"></i>
+                            حفظ التفضيلات
+                        </button>
+                    </div>
+                </section>
+
+                <!-- قسم الإشعارات -->
+                <section id="notifications-section" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-bell"></i> إعدادات الإشعارات</h2>
+                        <p>التحكم في الإشعارات والتنبيهات التي تستقبلها</p>
+                    </div>
+
+                    <div class="notifications-grid">
+                        <div class="notification-category">
+                            <h3><i class="fas fa-user-injured"></i> إشعارات المرضى</h3>
+                            <div class="notification-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="notif-new-patient" checked>
+                                    <span class="checkmark"></span>
+                                    مرضى جدد
+                                </label>
+                                <small>إشعار عند إضافة مريض جديد</small>
+                            </div>
+                            <div class="notification-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="notif-patient-update" checked>
+                                    <span class="checkmark"></span>
+                                    تحديث بيانات المرضى
+                                </label>
+                                <small>إشعار عند تعديل بيانات المريض</small>
+                            </div>
+                        </div>
+
+                        <div class="notification-category">
+                            <h3><i class="fas fa-vial"></i> إشعارات التحاليل</h3>
+                            <div class="notification-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="notif-new-test" checked>
+                                    <span class="checkmark"></span>
+                                    تحاليل جديدة
+                                </label>
+                                <small>إشعار عند إضافة تحليل جديد</small>
+                            </div>
+                            <div class="notification-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="notif-critical-results" checked>
+                                    <span class="checkmark"></span>
+                                    نتائج حرجة
+                                </label>
+                                <small>إشعار فوري عند ظهور نتائج حرجة</small>
+                            </div>
+                            <div class="notification-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="notif-test-reminder">
+                                    <span class="checkmark"></span>
+                                    تذكير بالمواعيد
+                                </label>
+                                <small>تذكير بمواعيد التحاليل الدورية</small>
+                            </div>
+                        </div>
+
+                        <div class="notification-category">
+                            <h3><i class="fas fa-chart-line"></i> إشعارات النظام</h3>
+                            <div class="notification-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="notif-system-updates" checked>
+                                    <span class="checkmark"></span>
+                                    تحديثات النظام
+                                </label>
+                                <small>إشعار بالتحديثات والميزات الجديدة</small>
+                            </div>
+                            <div class="notification-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="notif-backup-reminder">
+                                    <span class="checkmark"></span>
+                                    تذكير النسخ الاحتياطي
+                                </label>
+                                <small>تذكير أسبوعي بعمل نسخة احتياطية</small>
+                            </div>
+                            <div class="notification-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="notif-security-alerts" checked>
+                                    <span class="checkmark"></span>
+                                    تنبيهات الأمان
+                                </label>
+                                <small>إشعار بمحاولات الدخول المشبوهة</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="notification-channels">
+                        <h3>قنوات الإشعارات</h3>
+                        <div class="channels-grid">
+                            <div class="channel-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="channel-email" checked>
+                                    <span class="checkmark"></span>
+                                    <i class="fas fa-envelope"></i>
+                                    البريد الإلكتروني
+                                </label>
+                            </div>
+                            <div class="channel-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="channel-browser" checked>
+                                    <span class="checkmark"></span>
+                                    <i class="fas fa-desktop"></i>
+                                    متصفح الويب
+                                </label>
+                            </div>
+                            <div class="channel-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="channel-sms">
+                                    <span class="checkmark"></span>
+                                    <i class="fas fa-sms"></i>
+                                    رسائل SMS
+                                </label>
+                            </div>
+                            <div class="channel-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="channel-push">
+                                    <span class="checkmark"></span>
+                                    <i class="fas fa-mobile-alt"></i>
+                                    إشعارات الهاتف
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-primary" onclick="settingsManager.saveNotificationSettings()">
+                            <i class="fas fa-save"></i>
+                            حفظ الإعدادات
+                        </button>
+                    </div>
+                </section>
+
+                <!-- قسم الأمان -->
+                <section id="security-section" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-shield-alt"></i> الأمان</h2>
+                        <p>إدارة أمان حسابك وكلمة المرور</p>
+                    </div>
+
+                    <div class="security-grid">
+                        <div class="security-card">
+                            <h3><i class="fas fa-key"></i> كلمة المرور</h3>
+                            <form id="passwordForm">
+                                <div class="form-group">
+                                    <label for="current-password">كلمة المرور الحالية</label>
+                                    <input type="password" id="current-password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-password">كلمة المرور الجديدة</label>
+                                    <input type="password" id="new-password" required>
+                                    <div class="password-strength">
+                                        <div class="strength-bar"></div>
+                                        <span class="strength-text">قوة كلمة المرور</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password">تأكيد كلمة المرور</label>
+                                    <input type="password" id="confirm-password" required>
+                                </div>
+                                <button type="submit" class="btn-primary">
+                                    <i class="fas fa-key"></i>
+                                    تغيير كلمة المرور
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="security-card">
+                            <h3><i class="fas fa-user-shield"></i> جلسات التسجيل</h3>
+                            <div class="sessions-list">
+                                <div class="session-item current">
+                                    <div class="session-info">
+                                        <div class="session-device">
+                                            <i class="fas fa-desktop"></i>
+                                            <span>جهاز الكمبيوتر - Windows</span>
+                                        </div>
+                                        <div class="session-meta">
+                                            <span>جلسة نشطة</span>
+                                            <span>الرياض، السعودية</span>
+                                        </div>
+                                    </div>
+                                    <div class="session-actions">
+                                        <span class="session-time">الآن</span>
+                                    </div>
+                                </div>
+                                <div class="session-item">
+                                    <div class="session-info">
+                                        <div class="session-device">
+                                            <i class="fas fa-mobile-alt"></i>
+                                            <span>هاتف iPhone - iOS</span>
+                                        </div>
+                                        <div class="session-meta">
+                                            <span>آخر نشاط: منذ يومين</span>
+                                            <span>جدة، السعودية</span>
+                                        </div>
+                                    </div>
+                                    <div class="session-actions">
+                                        <button class="btn-danger btn-sm" onclick="settingsManager.logoutSession('session_id')">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-secondary btn-block" onclick="settingsManager.logoutAllSessions()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                تسجيل الخروج من جميع الأجهزة
+                            </button>
+                        </div>
+
+                        <div class="security-card">
+                            <h3><i class="fas fa-history"></i> سجل النشاط</h3>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon success">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">تسجيل دخول ناجح</div>
+                                        <div class="activity-meta">جهاز الكمبيوتر - منذ 2 ساعة</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon info">
+                                        <i class="fas fa-user-edit"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">تحديث الملف الشخصي</div>
+                                        <div class="activity-meta">منذ 3 أيام</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon warning">
+                                        <i class="fas fa-key"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">محاولة تغيير كلمة المرور</div>
+                                        <div class="activity-meta">منذ أسبوع</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-secondary btn-block" onclick="settingsManager.viewFullActivity()">
+                                <i class="fas fa-list"></i>
+                                عرض السجل الكامل
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- قسم النسخ الاحتياطي -->
+                <section id="backup-section" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-database"></i> النسخ الاحتياطي</h2>
+                        <p>إدارة نسخ البيانات الاحتياطية والاستعادة</p>
+                    </div>
+
+                    <div class="backup-grid">
+                        <div class="backup-card">
+                            <h3><i class="fas fa-cloud-upload-alt"></i> النسخ الاحتياطي</h3>
+                            <div class="backup-info">
+                                <div class="backup-stat">
+                                    <div class="stat-label">آخر نسخة احتياطية</div>
+                                    <div class="stat-value">منذ 3 أيام</div>
+                                </div>
+                                <div class="backup-stat">
+                                    <div class="stat-label">حجم البيانات</div>
+                                    <div class="stat-value">24.5 MB</div>
+                                </div>
+                                <div class="backup-stat">
+                                    <div class="stat-label">عدد السجلات</div>
+                                    <div class="stat-value">172 سجل</div>
+                                </div>
+                            </div>
+                            <div class="backup-actions">
+                                <button class="btn-primary" onclick="settingsManager.createBackup()">
+                                    <i class="fas fa-plus"></i>
+                                    إنشاء نسخة احتياطية
+                                </button>
+                                <button class="btn-secondary" onclick="settingsManager.scheduleBackup()">
+                                    <i class="fas fa-clock"></i>
+                                    جدولة تلقائية
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="backup-card">
+                            <h3><i class="fas fa-cloud-download-alt"></i> الاستعادة</h3>
+                            <div class="restore-options">
+                                <div class="form-group">
+                                    <label>اختر النسخة للاستعادة</label>
+                                    <select id="backup-select">
+                                        <option value="">اختر نسخة احتياطية...</option>
+                                        <option value="backup_1">النسخة الاحتياطية - 15 نوفمبر 2023</option>
+                                        <option value="backup_2">النسخة الاحتياطية - 10 نوفمبر 2023</option>
+                                        <option value="backup_3">النسخة الاحتياطية - 5 نوفمبر 2023</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="restore-confirm">
+                                        <span class="checkmark"></span>
+                                        أنا أدرك أن الاستعادة ستحل محل البيانات الحالية
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn-warning btn-block" onclick="settingsManager.restoreBackup()" disabled>
+                                <i class="fas fa-redo"></i>
+                                استعادة النسخة الاحتياطية
+                            </button>
+                        </div>
+
+                        <div class="backup-card">
+                            <h3><i class="fas fa-cogs"></i> الإعدادات المتقدمة</h3>
+                            <div class="advanced-settings">
+                                <div class="preference-item">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="auto-backup" checked>
+                                        <span class="checkmark"></span>
+                                        النسخ الاحتياطي التلقائي
+                                    </label>
+                                    <small>إنشاء نسخة احتياطية تلقائية أسبوعياً</small>
+                                </div>
+                                <div class="preference-item">
+                                    <label for="backup-retention">فترة الاحتفاظ</label>
+                                    <select id="backup-retention">
+                                        <option value="7">أسبوع واحد</option>
+                                        <option value="30" selected>شهر واحد</option>
+                                        <option value="90">3 أشهر</option>
+                                        <option value="365">سنة واحدة</option>
+                                    </select>
+                                </div>
+                                <div class="preference-item">
+                                    <label for="backup-format">صيغة الملف</label>
+                                    <select id="backup-format">
+                                        <option value="json" selected>JSON</option>
+                                        <option value="csv">CSV</option>
+                                        <option value="xml">XML</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn-secondary btn-block" onclick="settingsManager.exportData()">
+                                <i class="fas fa-download"></i>
+                                تصدير جميع البيانات
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- قسم حول النظام -->
+                <section id="about-section" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-info-circle"></i> حول النظام</h2>
+                        <p>معلومات عن Pulse وإصدار النظام</p>
+                    </div>
+
+                    <div class="about-container">
+                        <div class="about-header">
+                            <div class="app-logo">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <div class="app-info">
+                                <h1>Pulse</h1>
+                                <p>نظام إدارة التحاليل الطبية الذكي</p>
+                                <div class="app-version">الإصدار 2.1.0</div>
+                            </div>
+                        </div>
+
+                        <div class="about-content">
+                            <div class="about-card">
+                                <h3><i class="fas fa-star"></i> مميزات النظام</h3>
+                                <ul class="features-list">
+                                    <li>إدارة كاملة لسجلات المرضى</li>
+                                    <li>تحليل ذكي للتحاليل الطبية</li>
+                                    <li>توصيات غذائية وصحية مخصصة</li>
+                                    <li>نظام تنبيهات وتذكيرات ذكي</li>
+                                    <li>تقارير وإحصائيات متقدمة</li>
+                                    <li>واجهة مستخدم متجاوبة وسهلة</li>
+                                </ul>
+                            </div>
+
+                            <div class="about-card">
+                                <h3><i class="fas fa-shield-alt"></i> الأمان والخصوصية</h3>
+                                <p>نحن نحرص على حماية بياناتك وخصوصيتك:</p>
+                                <ul class="security-list">
+                                    <li>تشفير البيانات أثناء التخزين والنقل</li>
+                                    <li>الامتثال لمعايير الخصوصية الطبية</li>
+                                    <li>نسخ احتياطية منتظمة للبيانات</li>
+                                    <li>مراقبة مستمرة لأمان النظام</li>
+                                </ul>
+                            </div>
+
+                            <div class="about-card">
+                                <h3><i class="fas fa-question-circle"></i> الدعم والمساعدة</h3>
+                                <div class="support-options">
+                                    <a href="#" class="support-link">
+                                        <i class="fas fa-book"></i>
+                                        دليل المستخدم
+                                    </a>
+                                    <a href="#" class="support-link">
+                                        <i class="fas fa-video"></i>
+                                        فيديوهات تعليمية
+                                    </a>
+                                    <a href="#" class="support-link">
+                                        <i class="fas fa-envelope"></i>
+                                        اتصل بالدعم
+                                    </a>
+                                    <a href="#" class="support-link">
+                                        <i class="fas fa-bug"></i>
+                                        الإبلاغ عن مشكلة
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="about-card">
+                                <h3><i class="fas fa-copyright"></i> المعلومات الفنية</h3>
+                                <div class="tech-info">
+                                    <div class="tech-item">
+                                        <span class="tech-label">إصدار النظام:</span>
+                                        <span class="tech-value">2.1.0 (Build 2023.11)</span>
+                                    </div>
+                                    <div class="tech-item">
+                                        <span class="tech-label">آخر تحديث:</span>
+                                        <span class="tech-value">15 نوفمبر 2023</span>
+                                    </div>
+                                    <div class="tech-item">
+                                        <span class="tech-label">ترخيص:</span>
+                                        <span class="tech-value">Pulse Medical v2</span>
+                                    </div>
+                                    <div class="tech-item">
+                                        <span class="tech-label">بيانات التخزين:</span>
+                                        <span class="tech-value">24.5 MB / 1 GB</span>
+                                    </div>
+                                </div>
+                                <button class="btn-secondary btn-block" onclick="settingsManager.checkForUpdates()">
+                                    <i class="fas fa-sync"></i>
+                                    التحقق من التحديثات
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- نموذج جدولة النسخ الاحتياطي -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content medium">
+            <div class="modal-header">
+                <h3>جدولة النسخ الاحتياطي</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="scheduleForm">
+                    <div class="form-group">
+                        <label for="schedule-frequency">التكرار</label>
+                        <select id="schedule-frequency">
+                            <option value="daily">يومي</option>
+                            <option value="weekly" selected>أسبوعي</option>
+                            <option value="monthly">شهري</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-day">اليوم</label>
+                        <select id="schedule-day">
+                            <option value="0">الأحد</option>
+                            <option value="1">الإثنين</option>
+                            <option value="2">الثلاثاء</option>
+                            <option value="3">الأربعاء</option>
+                            <option value="4">الخميس</option>
+                            <option value="5">الجمعة</option>
+                            <option value="6">السبت</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-time">الوقت</label>
+                        <input type="time" id="schedule-time" value="02:00">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary close-modal">إلغاء</button>
+                        <button type="submit" class="btn-primary">حفظ الجدولة</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

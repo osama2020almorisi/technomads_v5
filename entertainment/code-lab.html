@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>محرر الأكواد | TechNomads</title>
+    <meta name="description" content="محرر الأكواد - TechNomads الريادة التقنية اليمنية">
+
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="../css/main.css" as="style">
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+
+    <!-- ============================================
+         HEADER - الهيدر الذكي
+         ============================================ -->
+    <header class="smart-header" id="main-header">
+        <div class="nav-container">
+            <!-- الشعار -->
+            <a href="../index.html" class="logo" aria-label="TechNomads الرئيسية" data-aos="fade-right">
+                <div class="logo-wrapper">
+                    <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#2A2D7C;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#4ECDC4;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="logoGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4ECDC4;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#FF6B6B;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8" class="logo-circle"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="logo-triangle"/>
+                        <circle cx="100" cy="110" r="15" fill="url(#logoGrad)" class="logo-dot"/>
+                    </svg>
+                </div>
+                <span class="logo-text">TechNomads</span>
+            </a>
+
+            <!-- القائمة الرئيسية (سطح المكتب) -->
+            <nav class="desktop-nav" aria-label="القائمة الرئيسية">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="../index.html" class="nav-link  "><i class="fas fa-home nav-icon"></i><span class="nav-text">الرئيسية</span><span class="nav-underline"></span></a></li>
+                    <li class="nav-item"><a href="../services.html" class="nav-link  "><i class="fas fa-cogs nav-icon"></i><span class="nav-text">الخدمات</span><span class="nav-underline"></span></a></li>
+                    <li class="nav-item"><a href="../team.html" class="nav-link  "><i class="fas fa-info-circle nav-icon"></i><span class="nav-text">نبذة عنا</span><span class="nav-underline"></span></a></li>
+                    <li class="nav-item"><a href="../portfolio.html" class="nav-link  "><i class="fas fa-briefcase nav-icon"></i><span class="nav-text">الأعمال</span><span class="nav-underline"></span></a></li>
+                    <li class="nav-item"><a href="../entertainment/play.html" class="nav-link active "><i class="fas fa-gamepad nav-icon"></i><span class="nav-text">الترفيه</span><span class="nav-underline"></span></a></li>
+                    <li class="nav-item"><a href="../contact.html" class="nav-link  cta"><i class="fas fa-paper-plane nav-icon"></i><span class="nav-text">اتصل بنا</span><span class="nav-underline"></span></a></li>
+                </ul>
+            </nav>
+
+            <!-- أدوات التحكم (سطح المكتب) -->
+            <div class="desktop-tools">
+                <!-- مبدل اللغة -->
+                <div class="language-switcher" data-aos="fade-left">
+                    <button class="lang-btn active" data-lang="ar">العربية</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                </div>
+            </div>
+
+            <!-- قائمة الهامبرجر -->
+            <button class="hamburger" aria-label="قائمة التنقل" aria-expanded="false" id="hamburger-btn">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+        </div>
+
+        <!-- قائمة الجوال (الهامبرغر) -->
+        <nav class="mobile-nav" id="mobile-nav" aria-label="قائمة الجوال" aria-hidden="true">
+            <div class="mobile-nav-header">
+                <div class="mobile-logo-wrapper">
+                    <svg class="logo-svg mobile-logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8" class="logo-circle"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="logo-triangle"/>
+                        <circle cx="100" cy="110" r="15" fill="url(#logoGrad)" class="logo-dot"/>
+                    </svg>
+                </div>
+                <button class="close-nav" id="close-nav-btn" aria-label="إغلاق القائمة">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <ul class="mobile-nav-list">
+                <li class="mobile-nav-item"><a href="../index.html" class="mobile-nav-link  "><i class="fas fa-home mobile-nav-icon"></i><span>الرئيسية</span><div class="mobile-nav-indicator"></div></a></li>
+                <li class="mobile-nav-item"><a href="../services.html" class="mobile-nav-link  "><i class="fas fa-cogs mobile-nav-icon"></i><span>الخدمات</span><div class="mobile-nav-indicator"></div></a></li>
+                <li class="mobile-nav-item"><a href="../team.html" class="mobile-nav-link  "><i class="fas fa-info-circle mobile-nav-icon"></i><span>نبذة عنا</span><div class="mobile-nav-indicator"></div></a></li>
+                <li class="mobile-nav-item"><a href="../portfolio.html" class="mobile-nav-link  "><i class="fas fa-briefcase mobile-nav-icon"></i><span>الأعمال</span><div class="mobile-nav-indicator"></div></a></li>
+                <li class="mobile-nav-item"><a href="../entertainment/play.html" class="mobile-nav-link active "><i class="fas fa-gamepad mobile-nav-icon"></i><span>الترفيه</span><div class="mobile-nav-indicator"></div></a></li>
+                <li class="mobile-nav-item"><a href="../contact.html" class="mobile-nav-link  cta"><i class="fas fa-paper-plane mobile-nav-icon"></i><span>اتصل بنا</span><div class="mobile-nav-indicator"></div></a></li>
+            </ul>
+
+            <div class="mobile-nav-footer">
+                <!-- زر تبديل الوضع داخل القائمة الجوالة -->
+                <div class="mobile-theme-toggle-wrapper">
+                    <span class="mobile-theme-label">الوضع</span>
+                    <button class="mobile-theme-toggle" id="mobile-theme-toggle" aria-label="تبديل الوضع الداكن">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun"></i>
+                        <span class="mobile-theme-text">داكن</span>
+                    </button>
+                </div>
+                <div class="mobile-language-switcher">
+                    <button class="mobile-lang-btn active" data-lang="ar">العربية</button>
+                    <button class="mobile-lang-btn" data-lang="en">English</button>
+                </div>
+                <div class="mobile-social-links">
+                    <a href="https://www.facebook.com/share/1843Km6C4E/" target="_blank" rel="noopener noreferrer" aria-label="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="تويتر"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/in/9o--sa" target="_blank" rel="noopener noreferrer" aria-label="لينكد إن"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/9o__sa" target="_blank" rel="noopener noreferrer" aria-label="إنستغرام"><i class="fab fa-instagram"></i></a>
+                    <a href="https://github.com/osama2020almorisi/" target="_blank" rel="noopener noreferrer" aria-label="جيت هاب"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ============================================
+         MAIN CONTENT - محرر الأكواد
+         ============================================ -->
+    <main>
+        <div class="entertainment-page-wrapper">
+            <div class="entertainment-page">
+                <div class="page-icon" data-aos="zoom-in">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h1 data-aos="fade-up">محرر الأكواد</h1>
+                <p class="lead-text" data-aos="fade-up" data-aos-delay="100">محرر أكواد متكامل مع تنفيذ مباشر للنتائج</p>
+
+                <div class="coming-soon" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-tools"></i>
+                    <span>هذه الصفحة قيد التطوير. سيتم إطلاقها قريباً!</span>
+                </div>
+
+                <a href="play.html" class="cta-button primary" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-arrow-left"></i> العودة لمركز الترفيه
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================
+         FOOTER - الفوتر المتطور
+         ============================================ -->
+    <footer class="smart-footer">
+        <!-- موجات تصميمية علوية -->
+        <div class="footer-waves">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="var(--primary)" fill-opacity="1" 
+                      d="M0,192L48,186.7C96,181,192,171,288,181.3C384,192,480,224,576,218.7C672,213,768,171,864,165.3C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+                </path>
+            </svg>
+        </div>
+
+        <div class="footer-container">
+            <!-- قسم الشعار والنبذة -->
+            <div class="footer-section footer-brand" data-aos="fade-up">
+                <div class="footer-logo-wrapper">
+                    <svg class="footer-logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8" opacity="0.9"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+                        <circle cx="100" cy="110" r="15" fill="white" opacity="0.9"/>
+                    </svg>
+                </div>
+                <h3 class="footer-brand-title">TechNomads</h3>
+                <p class="footer-about">
+                    TechNomads شركة رائدة في تقديم الحلول التقنية والرقمية. نقدم خدمات متكاملة من تطوير المواقع والتطبيقات إلى التسويق الرقمي والاستشارات التقنية.
+                </p>
+            </div>
+
+            <!-- قسم الروابط السريعة -->
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="footer-title">روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="../team.html"><i class="fas fa-users"></i> من نحن</a></li>
+                    <li><a href="../services.html"><i class="fas fa-concierge-bell"></i> الخدمات</a></li>
+                    <li><a href="../portfolio.html"><i class="fas fa-briefcase"></i> معرض الأعمال</a></li>
+                    <li><a href="../contact.html"><i class="fas fa-envelope"></i> تواصل معنا</a></li>
+                </ul>
+            </div>
+
+            <!-- قسم معلومات الاتصال -->
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="footer-title">تواصل معنا</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>صنعاء، اليمن</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:+967770200970">+967770200970</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:2025ooss@gmail.com">2025ooss@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>الأحد - الخميس: 9 ص - 6 م</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- قسم النشرة البريدية -->
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="footer-title">اشترك في نشرتنا</h3>
+                <form class="newsletter-form">
+                    <div class="newsletter-input-wrapper">
+                        <i class="fas fa-envelope newsletter-icon"></i>
+                        <input type="email" placeholder="بريدك الإلكتروني" required aria-label="بريدك الإلكتروني">
+                    </div>
+                    <button type="submit" class="subscribe-btn">
+                        اشترك <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/1843Km6C4E/" target="_blank" rel="noopener noreferrer" aria-label="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="تويتر"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/in/9o--sa" target="_blank" rel="noopener noreferrer" aria-label="لينكد إن"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/9o__sa" target="_blank" rel="noopener noreferrer" aria-label="إنستغرام"><i class="fab fa-instagram"></i></a>
+                    <a href="https://github.com/osama2020almorisi/" target="_blank" rel="noopener noreferrer" aria-label="جيت هاب"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- حقوق النشر -->
+        <div class="copyright-section" data-aos="fade-up">
+            <div class="copyright-content">
+                <p>© <span class="current-year">2024</span> TechNomads. جميع الحقوق محفوظة</p>
+                <div class="footer-links-inline">
+                    <a href="#">شروط الخدمة</a>
+                    <span class="separator">|</span>
+                    <a href="#">سياسة الخصوصية</a>
+                </div>
+            </div>
+            <div class="footer-bottom-bar">
+                <span>صُنع بـ <i class="fas fa-heart"></i> في اليمن</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- زر العودة للأعلى -->
+    <button class="back-to-top" aria-label="العودة للأعلى">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ============================================
+         SCRIPTS
+         ============================================ -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

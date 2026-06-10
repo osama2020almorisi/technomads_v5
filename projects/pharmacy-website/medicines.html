@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>إدارة الأدوية | نظام إدارة الصيدلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-prescription-bottle-medical"></i>
+                    <span>صيدليتي</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i><span>لوحة التحكم</span></a></li>
+                    <li><a href="medicines.html" class="active"><i class="fas fa-pills"></i><span>الأدوية</span></a></li>
+                    <li><a href="sales.html"><i class="fas fa-cash-register"></i><span>المبيعات</span></a></li>
+                    <li><a href="customers.html"><i class="fas fa-users"></i><span>العملاء</span></a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck"></i><span>الموردين</span></a></li>
+                    <li><a href="purchases.html"><i class="fas fa-shopping-cart"></i><span>المشتريات</span></a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i><span>التقارير</span></a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a></li>
+                    <li><a href="profile.html"><i class="fas fa-user-circle"></i><span>الملف الشخصي</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <div class="user-name"></div>
+                        <div class="user-role"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="page-title">
+                    <h1>إدارة الأدوية</h1>
+                    <p>إدارة مخزون الأدوية والمنتجات</p>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" id="theme-toggle" title="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="header-btn" onclick="logout()" title="تسجيل الخروج">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- Search & Filters -->
+                <div class="search-filters">
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" id="searchMedicine" placeholder="البحث باسم الدواء، المادة الفعالة، أو الباركود...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <select class="form-select" id="filterCategory" style="width: 200px;">
+                        <option value="">جميع التصنيفات</option>
+                    </select>
+                    <select class="form-select" id="filterStatus" style="width: 200px;">
+                        <option value="">جميع الحالات</option>
+                        <option value="expired">منتهي الصلاحية</option>
+                        <option value="near_expiry">قريب من الانتهاء</option>
+                        <option value="low_stock">منخفض المخزون</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="openModal('addMedicineModal')" style="width: auto;">
+                        <i class="fas fa-plus"></i> إضافة دواء
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportMedicines()" style="width: auto;">
+                        <i class="fas fa-file-export"></i> تصدير
+                    </button>
+                </div>
+
+                <!-- Medicines Table -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-pills"></i> قائمة الأدوية</h3>
+                        <span id="medicineCount" style="color: var(--text-muted); font-size: 0.85rem;"></span>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="medicinesTable">
+                            <thead>
+                                <tr>
+                                    <th>الدواء</th>
+                                    <th>التصنيف</th>
+                                    <th>سعر البيع</th>
+                                    <th>الكمية</th>
+                                    <th>الصلاحية</th>
+                                    <th>وصفة طبية</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="medicinesBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Medicine Modal -->
+    <div class="modal-overlay" id="addMedicineModal">
+        <div class="modal" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-plus-circle"></i> إضافة دواء جديد</h3>
+                <button class="modal-close" onclick="closeModal('addMedicineModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="addMedicineForm">
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">اسم الدواء *</label><input type="text" class="form-input" name="name" required></div>
+                        <div class="form-group"><label class="form-label">الاسم التجاري</label><input type="text" class="form-input" name="tradeName"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">المادة الفعالة</label><input type="text" class="form-input" name="activeSubstance"></div>
+                        <div class="form-group"><label class="form-label">التصنيف *</label><select class="form-select" name="categoryId" required><option value="">اختر التصنيف</option></select></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">الشركة المصنعة</label><input type="text" class="form-input" name="manufacturer"></div>
+                        <div class="form-group"><label class="form-label">المورد *</label><select class="form-select" name="supplierId" required><option value="">اختر المورد</option></select></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">سعر الشراء *</label><input type="number" class="form-input" name="purchasePrice" required min="0"></div>
+                        <div class="form-group"><label class="form-label">سعر البيع *</label><input type="number" class="form-input" name="sellingPrice" required min="0"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">الكمية *</label><input type="number" class="form-input" name="quantity" required min="0"></div>
+                        <div class="form-group"><label class="form-label">الحد الأدنى للتنبيه</label><input type="number" class="form-input" name="lowStockAlert" value="20" min="1"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">تاريخ الإنتاج</label><input type="date" class="form-input" name="productionDate"></div>
+                        <div class="form-group"><label class="form-label">تاريخ الصلاحية *</label><input type="date" class="form-input" name="expiryDate" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">موقع التخزين</label><input type="text" class="form-input" name="location" placeholder="مثال: رف A1"></div>
+                        <div class="form-group"><label class="form-label">الباركود</label><input type="text" class="form-input" name="barcode" placeholder="اتركه فارغاً للتوليد التلقائي"></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">الوصف</label><textarea class="form-textarea" name="description" rows="3"></textarea></div>
+                    <div class="form-group"><label class="form-check"><input type="checkbox" class="form-check-input" name="needPrescription"> <span>يحتاج إلى وصفة طبية</span></label></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addMedicineModal')">إلغاء</button>
+                <button class="btn btn-primary" onclick="saveMedicine()"><i class="fas fa-save"></i> حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Medicine Modal -->
+    <div class="modal-overlay" id="editMedicineModal">
+        <div class="modal" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-edit"></i> تعديل دواء</h3>
+                <button class="modal-close" onclick="closeModal('editMedicineModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="editMedicineForm">
+                    <input type="hidden" name="id">
+                    <div class="form-row"><div class="form-group"><label class="form-label">اسم الدواء *</label><input type="text" class="form-input" name="name" required></div><div class="form-group"><label class="form-label">الاسم التجاري</label><input type="text" class="form-input" name="tradeName"></div></div>
+                    <div class="form-row"><div class="form-group"><label class="form-label">المادة الفعالة</label><input type="text" class="form-input" name="activeSubstance"></div><div class="form-group"><label class="form-label">التصنيف *</label><select class="form-select" name="categoryId" required><option value="">اختر التصنيف</option></select></div></div>
+                    <div class="form-row"><div class="form-group"><label class="form-label">الشركة المصنعة</label><input type="text" class="form-input" name="manufacturer"></div><div class="form-group"><label class="form-label">المورد *</label><select class="form-select" name="supplierId" required><option value="">اختر المورد</option></select></div></div>
+                    <div class="form-row"><div class="form-group"><label class="form-label">سعر الشراء *</label><input type="number" class="form-input" name="purchasePrice" required min="0"></div><div class="form-group"><label class="form-label">سعر البيع *</label><input type="number" class="form-input" name="sellingPrice" required min="0"></div></div>
+                    <div class="form-row"><div class="form-group"><label class="form-label">الكمية *</label><input type="number" class="form-input" name="quantity" required min="0"></div><div class="form-group"><label class="form-label">الحد الأدنى للتنبيه</label><input type="number" class="form-input" name="lowStockAlert" min="1"></div></div>
+                    <div class="form-row"><div class="form-group"><label class="form-label">تاريخ الإنتاج</label><input type="date" class="form-input" name="productionDate"></div><div class="form-group"><label class="form-label">تاريخ الصلاحية *</label><input type="date" class="form-input" name="expiryDate" required></div></div>
+                    <div class="form-row"><div class="form-group"><label class="form-label">موقع التخزين</label><input type="text" class="form-input" name="location"></div><div class="form-group"><label class="form-label">الباركود</label><input type="text" class="form-input" name="barcode"></div></div>
+                    <div class="form-group"><label class="form-label">الوصف</label><textarea class="form-textarea" name="description" rows="3"></textarea></div>
+                    <div class="form-group"><label class="form-check"><input type="checkbox" class="form-check-input" name="needPrescription"> <span>يحتاج إلى وصفة طبية</span></label></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('editMedicineModal')">إلغاء</button>
+                <button class="btn btn-primary" onclick="updateMedicine()"><i class="fas fa-save"></i> تحديث</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Medicine Modal -->
+    <div class="modal-overlay" id="viewMedicineModal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-info-circle"></i> تفاصيل الدواء</h3>
+                <button class="modal-close" onclick="closeModal('viewMedicineModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="viewMedicineContent"></div>
+            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('viewMedicineModal')">إغلاق</button></div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        let currentMedicines = [];
+
+        function loadMedicines() {
+            currentMedicines = getAllMedicines();
+            const categories = getAllCategories();
+            const suppliers = getAllSuppliers();
+
+            const categorySelect = document.getElementById('filterCategory');
+            const addCategorySelect = document.querySelector('#addMedicineForm select[name="categoryId"]');
+            const editCategorySelect = document.querySelector('#editMedicineForm select[name="categoryId"]');
+            const addSupplierSelect = document.querySelector('#addMedicineForm select[name="supplierId"]');
+            const editSupplierSelect = document.querySelector('#editMedicineForm select[name="supplierId"]');
+
+            categorySelect.innerHTML = '<option value="">جميع التصنيفات</option>';
+            addCategorySelect.innerHTML = '<option value="">اختر التصنيف</option>';
+            editCategorySelect.innerHTML = '<option value="">اختر التصنيف</option>';
+            addSupplierSelect.innerHTML = '<option value="">اختر المورد</option>';
+            editSupplierSelect.innerHTML = '<option value="">اختر المورد</option>';
+
+            categories.forEach(cat => {
+                categorySelect.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+                addCategorySelect.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+                editCategorySelect.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+            });
+
+            suppliers.forEach(sup => {
+                addSupplierSelect.innerHTML += `<option value="${sup.id}">${sup.name}</option>`;
+                editSupplierSelect.innerHTML += `<option value="${sup.id}">${sup.name}</option>`;
+            });
+
+            renderMedicines(currentMedicines);
+            document.getElementById('medicineCount').innerHTML = `إجمالي: ${currentMedicines.length} دواء`;
+        }
+
+        function renderMedicines(medicines) {
+            const categories = getAllCategories();
+            const tbody = document.getElementById('medicinesBody');
+            tbody.innerHTML = medicines.map(med => {
+                const category = categories.find(c => c.id === med.categoryId);
+                let statusBadge = '<span class="badge badge-success">صالح</span>';
+                if (isExpired(med.expiryDate)) statusBadge = '<span class="badge badge-danger">منتهي</span>';
+                else if (isNearExpiry(med.expiryDate)) statusBadge = '<span class="badge badge-warning">قريب من الانتهاء</span>';
+                const stockClass = med.quantity <= med.lowStockAlert ? 'style="color: var(--danger); font-weight: 700;"' : '';
+                return `<tr><td><strong>${med.name}</strong>${med.tradeName ? `<br><small style="color: var(--text-muted);">${med.tradeName}</small>` : ''}</td>
+                        <td>${category ? category.name : '-'}</td>
+                        <td><strong>${formatCurrency(med.sellingPrice)}</strong></td>
+                        <td ${stockClass}>${med.quantity}</td>
+                        <td>${formatDate(med.expiryDate)}<br>${statusBadge}</td>
+                        <td>${med.needPrescription ? '<span class="badge badge-info"><i class="fas fa-file-medical"></i> نعم</span>' : '<span class="badge badge-success">لا</span>'}</td>
+                        <td><div class="action-btns">
+                            <button class="action-btn view" onclick="viewMedicine(${med.id})" title="عرض"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit" onclick="editMedicine(${med.id})" title="تعديل"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" onclick="deleteMedicine(${med.id})" title="حذف"><i class="fas fa-trash"></i></button>
+                        </div></td>
+                    </tr>`;
+            }).join('');
+        }
+
+        function saveMedicine() {
+            const form = document.getElementById('addMedicineForm');
+            const formData = new FormData(form);
+            const barcode = formData.get('barcode') || generateBarcode();
+            const medicine = {
+                id: getNextId('medicine'), name: formData.get('name'), tradeName: formData.get('tradeName') || '',
+                activeSubstance: formData.get('activeSubstance') || '', categoryId: parseInt(formData.get('categoryId')),
+                manufacturer: formData.get('manufacturer') || '', supplierId: parseInt(formData.get('supplierId')),
+                purchasePrice: parseFloat(formData.get('purchasePrice')), sellingPrice: parseFloat(formData.get('sellingPrice')),
+                quantity: parseInt(formData.get('quantity')), productionDate: formData.get('productionDate') || '',
+                expiryDate: formData.get('expiryDate'), location: formData.get('location') || '', barcode: barcode,
+                image: '', description: formData.get('description') || '', needPrescription: formData.get('needPrescription') === 'on',
+                taxRate: 5, lowStockAlert: parseInt(formData.get('lowStockAlert')) || 20, createdAt: new Date().toISOString()
+            };
+            if (!isValidDates(medicine.productionDate, medicine.expiryDate)) {
+                showNotification('تاريخ الصلاحية يجب أن يكون بعد تاريخ الإنتاج', 'error');
+                return;
+            }
+            const medicines = getAllMedicines();
+            medicines.push(medicine);
+            Storage.set('medicines', medicines);
+            showNotification('تم إضافة الدواء بنجاح', 'success');
+            closeModal('addMedicineModal');
+            form.reset();
+            loadMedicines();
+        }
+
+        function editMedicine(id) {
+            const medicine = getMedicineById(id);
+            if (!medicine) return;
+            const form = document.getElementById('editMedicineForm');
+            form.querySelector('[name="id"]').value = medicine.id;
+            form.querySelector('[name="name"]').value = medicine.name;
+            form.querySelector('[name="tradeName"]').value = medicine.tradeName || '';
+            form.querySelector('[name="activeSubstance"]').value = medicine.activeSubstance || '';
+            form.querySelector('[name="categoryId"]').value = medicine.categoryId;
+            form.querySelector('[name="manufacturer"]').value = medicine.manufacturer || '';
+            form.querySelector('[name="supplierId"]').value = medicine.supplierId;
+            form.querySelector('[name="purchasePrice"]').value = medicine.purchasePrice;
+            form.querySelector('[name="sellingPrice"]').value = medicine.sellingPrice;
+            form.querySelector('[name="quantity"]').value = medicine.quantity;
+            form.querySelector('[name="lowStockAlert"]').value = medicine.lowStockAlert;
+            form.querySelector('[name="productionDate"]').value = medicine.productionDate || '';
+            form.querySelector('[name="expiryDate"]').value = medicine.expiryDate;
+            form.querySelector('[name="location"]').value = medicine.location || '';
+            form.querySelector('[name="barcode"]').value = medicine.barcode || '';
+            form.querySelector('[name="description"]').value = medicine.description || '';
+            form.querySelector('[name="needPrescription"]').checked = medicine.needPrescription;
+            openModal('editMedicineModal');
+        }
+
+        function updateMedicine() {
+            const form = document.getElementById('editMedicineForm');
+            const id = parseInt(form.querySelector('[name="id"]').value);
+            const medicines = getAllMedicines();
+            const index = medicines.findIndex(m => m.id === id);
+            if (index === -1) return;
+            const formData = new FormData(form);
+            medicines[index] = { ...medicines[index], name: formData.get('name'), tradeName: formData.get('tradeName') || '',
+                activeSubstance: formData.get('activeSubstance') || '', categoryId: parseInt(formData.get('categoryId')),
+                manufacturer: formData.get('manufacturer') || '', supplierId: parseInt(formData.get('supplierId')),
+                purchasePrice: parseFloat(formData.get('purchasePrice')), sellingPrice: parseFloat(formData.get('sellingPrice')),
+                quantity: parseInt(formData.get('quantity')), lowStockAlert: parseInt(formData.get('lowStockAlert')) || 20,
+                productionDate: formData.get('productionDate') || '', expiryDate: formData.get('expiryDate'),
+                location: formData.get('location') || '', barcode: formData.get('barcode') || '',
+                description: formData.get('description') || '', needPrescription: formData.get('needPrescription') === 'on' };
+            Storage.set('medicines', medicines);
+            showNotification('تم تحديث الدواء بنجاح', 'success');
+            closeModal('editMedicineModal');
+            loadMedicines();
+        }
+
+        function deleteMedicine(id) {
+            confirmDialog('هل أنت متأكد من حذف هذا الدواء؟', () => {
+                deleteMedicine(id);
+                showNotification('تم حذف الدواء بنجاح', 'success');
+                loadMedicines();
+            });
+        }
+
+        function viewMedicine(id) {
+            const med = getMedicineById(id);
+            if (!med) return;
+            const category = getAllCategories().find(c => c.id === med.categoryId);
+            const supplier = getAllSuppliers().find(s => s.id === med.supplierId);
+            document.getElementById('viewMedicineContent').innerHTML = `
+                <div style="line-height: 2;"><strong>الاسم:</strong> ${med.name}<br>
+                <strong>الاسم التجاري:</strong> ${med.tradeName || '-'}<br>
+                <strong>المادة الفعالة:</strong> ${med.activeSubstance || '-'}<br>
+                <strong>التصنيف:</strong> ${category ? category.name : '-'}<br>
+                <strong>الشركة المصنعة:</strong> ${med.manufacturer || '-'}<br>
+                <strong>المورد:</strong> ${supplier ? supplier.name : '-'}<br>
+                <strong>سعر الشراء:</strong> ${formatCurrency(med.purchasePrice)}<br>
+                <strong>سعر البيع:</strong> ${formatCurrency(med.sellingPrice)}<br>
+                <strong>الكمية:</strong> ${med.quantity}<br>
+                <strong>تاريخ الصلاحية:</strong> ${formatDate(med.expiryDate)}<br>
+                <strong>الباركود:</strong> ${med.barcode}<br>
+                <strong>الموقع:</strong> ${med.location || '-'}<br>
+                <strong>يحتاج وصفة طبية:</strong> ${med.needPrescription ? 'نعم' : 'لا'}<br>
+                <strong>الوصف:</strong> ${med.description || '-'}</div>
+            `;
+            openModal('viewMedicineModal');
+        }
+
+        function exportMedicines() {
+            const medicines = getAllMedicines();
+            exportToCSV(medicines, 'medicines.csv');
+        }
+
+        document.getElementById('searchMedicine').addEventListener('input', function() {
+            const term = this.value.toLowerCase();
+            const filtered = currentMedicines.filter(m => m.name.toLowerCase().includes(term) || m.activeSubstance.toLowerCase().includes(term) || m.barcode.includes(term));
+            renderMedicines(filtered);
+        });
+
+        document.getElementById('filterCategory').addEventListener('change', filterMedicines);
+        document.getElementById('filterStatus').addEventListener('change', filterMedicines);
+
+        function filterMedicines() {
+            const categoryId = document.getElementById('filterCategory').value;
+            const status = document.getElementById('filterStatus').value;
+            let filtered = [...currentMedicines];
+            if (categoryId) filtered = filtered.filter(m => m.categoryId === parseInt(categoryId));
+            if (status === 'expired') filtered = filtered.filter(m => isExpired(m.expiryDate));
+            else if (status === 'near_expiry') filtered = filtered.filter(m => isNearExpiry(m.expiryDate) && !isExpired(m.expiryDate));
+            else if (status === 'low_stock') filtered = filtered.filter(m => m.quantity <= m.lowStockAlert);
+            renderMedicines(filtered);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadMedicines);
+    </script>
+</body>
+</html>

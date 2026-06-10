@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>المشتريات | نظام إدارة الصيدلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-prescription-bottle-medical"></i>
+                    <span>صيدليتي</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i><span>لوحة التحكم</span></a></li>
+                    <li><a href="medicines.html"><i class="fas fa-pills"></i><span>الأدوية</span></a></li>
+                    <li><a href="sales.html"><i class="fas fa-cash-register"></i><span>المبيعات</span></a></li>
+                    <li><a href="customers.html"><i class="fas fa-users"></i><span>العملاء</span></a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck"></i><span>الموردين</span></a></li>
+                    <li><a href="purchases.html" class="active"><i class="fas fa-shopping-cart"></i><span>المشتريات</span></a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i><span>التقارير</span></a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a></li>
+                    <li><a href="profile.html"><i class="fas fa-user-circle"></i><span>الملف الشخصي</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <div class="user-name"></div>
+                        <div class="user-role"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="page-title">
+                    <h1>المشتريات</h1>
+                    <p>إدارة وصلات الشراء من الموردين</p>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" id="theme-toggle" title="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="header-btn" onclick="logout()" title="تسجيل الخروج">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- New Purchase Button -->
+                <div style="margin-bottom: 1.5rem;">
+                    <button class="btn btn-primary" onclick="openModal('newPurchaseModal')" style="width: auto;">
+                        <i class="fas fa-plus"></i> فاتورة شراء جديدة
+                    </button>
+                </div>
+
+                <!-- Purchases Table -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-file-invoice-dollar"></i> سجل المشتريات</h3>
+                        <div class="search-input-wrapper" style="width: 300px;">
+                            <input type="text" class="search-input" id="searchPurchase" placeholder="البحث برقم الفاتورة أو المورد...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="purchasesTable">
+                            <thead>
+                                <tr>
+                                    <th>رقم الفاتورة</th>
+                                    <th>المورد</th>
+                                    <th>تاريخ الشراء</th>
+                                    <th>إجمالي المشتريات</th>
+                                    <th>المدفوع</th>
+                                    <th>المتبقي</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="purchasesBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Purchase Modal -->
+    <div class="modal-overlay" id="newPurchaseModal">
+        <div class="modal" style="max-width: 900px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-file-invoice"></i> فاتورة شراء جديدة</h3>
+                <button class="modal-close" onclick="closeModal('newPurchaseModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">رقم الفاتورة</label><input type="text" class="form-input" id="purchaseInvoiceNumber" readonly></div>
+                    <div class="form-group"><label class="form-label">تاريخ الفاتورة</label><input type="date" class="form-input" id="purchaseDate"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">المورد *</label><select class="form-select" id="purchaseSupplier" required><option value="">اختر المورد</option></select></div>
+                    <div class="form-group"><label class="form-label">المبلغ المدفوع</label><input type="number" class="form-input" id="purchasePaid" value="0" min="0" oninput="calculatePurchaseTotal()"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">الأدوية المشتراة</label>
+                    <div id="purchaseItemsContainer">
+                        <div class="purchase-item">
+                            <div class="form-group" style="flex: 2;"><select class="form-select medicine-select"><option value="">اختر الدواء</option></select></div>
+                            <div class="form-group"><input type="number" class="form-input" placeholder="الكمية" min="1" value="1" oninput="calculatePurchaseTotal()"></div>
+                            <div class="form-group"><input type="number" class="form-input" placeholder="سعر الشراء" min="0" oninput="calculatePurchaseTotal()"></div>
+                            <button class="action-btn delete" onclick="removePurchaseItem(this)" title="إزالة"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="addPurchaseItem()" style="width: auto; margin-top: 0.5rem;">
+                        <i class="fas fa-plus"></i> إضافة صنف آخر
+                    </button>
+                </div>
+
+                <!-- Totals -->
+                <div class="totals-section">
+                    <div class="total-line grand"><span>الإجمالي:</span><span id="purchaseTotal">0 ريال</span></div>
+                </div>
+
+                <div class="form-group"><label class="form-label">ملاحظات</label><textarea class="form-textarea" id="purchaseNotes" rows="2" placeholder="أي ملاحظات إضافية عن هذه الفاتورة..."></textarea></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('newPurchaseModal')">إلغاء</button>
+                <button class="btn btn-primary" onclick="savePurchase()"><i class="fas fa-save"></i> حفظ الفاتورة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Purchase Modal -->
+    <div class="modal-overlay" id="viewPurchaseModal">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-file-invoice"></i> تفاصيل فاتورة الشراء</h3>
+                <button class="modal-close" onclick="closeModal('viewPurchaseModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="purchaseDetails"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('viewPurchaseModal')">إغلاق</button>
+                <button class="btn btn-primary" onclick="printPurchaseInvoice()"><i class="fas fa-print"></i> طباعة</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        let currentPurchases = [];
+
+        function loadPurchases() {
+            currentPurchases = getAllPurchases();
+            const suppliers = getAllSuppliers();
+            
+            // Populate supplier select
+            const supplierSelect = document.getElementById('purchaseSupplier');
+            supplierSelect.innerHTML = '<option value="">اختر المورد</option>';
+            suppliers.forEach(sup => { supplierSelect.innerHTML += `<option value="${sup.id}">${sup.name}</option>`; });
+            
+            // Set default date
+            document.getElementById('purchaseDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('purchaseInvoiceNumber').value = generateInvoiceNumber('purchase');
+            
+            // Populate medicine selects
+            populateMedicineSelects();
+            
+            renderPurchases(currentPurchases);
+        }
+
+        function populateMedicineSelects() {
+            const medicines = getAllMedicines();
+            document.querySelectorAll('.medicine-select').forEach(select => {
+                const currentValue = select.value;
+                select.innerHTML = '<option value="">اختر الدواء</option>';
+                medicines.forEach(med => {
+                    select.innerHTML += `<option value="${med.id}" data-price="${med.purchasePrice}">${med.name} - سعر الشراء: ${formatCurrency(med.purchasePrice)}</option>`;
+                });
+                if (currentValue) select.value = currentValue;
+            });
+        }
+
+        function addPurchaseItem() {
+            const container = document.getElementById('purchaseItemsContainer');
+            const newItem = document.createElement('div');
+            newItem.className = 'purchase-item';
+            newItem.innerHTML = `
+                <div class="form-group" style="flex: 2;"><select class="form-select medicine-select"><option value="">اختر الدواء</option></select></div>
+                <div class="form-group"><input type="number" class="form-input" placeholder="الكمية" min="1" value="1" oninput="calculatePurchaseTotal()"></div>
+                <div class="form-group"><input type="number" class="form-input" placeholder="سعر الشراء" min="0" oninput="calculatePurchaseTotal()"></div>
+                <button class="action-btn delete" onclick="removePurchaseItem(this)" title="إزالة"><i class="fas fa-times"></i></button>
+            `;
+            container.appendChild(newItem);
+            populateMedicineSelects();
+            
+            // Add event listener to new medicine select to auto-fill price
+            const newSelect = newItem.querySelector('.medicine-select');
+            newSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const price = selectedOption.getAttribute('data-price');
+                if (price) {
+                    const priceInput = this.closest('.purchase-item').querySelector('input[placeholder="سعر الشراء"]');
+                    if (priceInput && !priceInput.value) priceInput.value = price;
+                    calculatePurchaseTotal();
+                }
+            });
+        }
+
+        function removePurchaseItem(btn) {
+            const container = document.getElementById('purchaseItemsContainer');
+            if (container.children.length > 1) {
+                btn.closest('.purchase-item').remove();
+                calculatePurchaseTotal();
+            } else {
+                showNotification('لا يمكن حذف جميع الأصناف', 'warning');
+            }
+        }
+
+        function calculatePurchaseTotal() {
+            let total = 0;
+            document.querySelectorAll('.purchase-item').forEach(item => {
+                const quantity = parseFloat(item.querySelector('input[placeholder="الكمية"]').value) || 0;
+                const price = parseFloat(item.querySelector('input[placeholder="سعر الشراء"]').value) || 0;
+                total += quantity * price;
+            });
+            document.getElementById('purchaseTotal').textContent = formatCurrency(total);
+            return total;
+        }
+
+        function renderPurchases(purchases) {
+            const suppliers = getAllSuppliers();
+            const tbody = document.getElementById('purchasesBody');
+            tbody.innerHTML = purchases.slice().reverse().map(p => {
+                const supplier = suppliers.find(s => s.id === p.supplierId);
+                let statusBadge = '';
+                if (p.remainingAmount === 0) statusBadge = '<span class="badge badge-success">مدفوع بالكامل</span>';
+                else if (p.paidAmount === 0) statusBadge = '<span class="badge badge-danger">غير مدفوع</span>';
+                else statusBadge = '<span class="badge badge-warning">مدفوع جزئياً</span>';
+                return `<tr>
+                    <td><strong>${p.invoiceNumber}</strong></td>
+                    <td>${supplier ? supplier.name : '-'}</td>
+                    <td>${formatDate(p.createdAt)}</span></td>
+                    <td>${formatCurrency(p.totalAmount)}</span></td>
+                    <td>${formatCurrency(p.paidAmount)}</span></td>
+                    <td style="color: ${p.remainingAmount > 0 ? 'var(--danger)' : 'var(--secondary)'}; font-weight: 700;">${formatCurrency(p.remainingAmount)}</span></td>
+                    <td>${statusBadge}</span></td>
+                    <td><div class="action-btns">
+                        <button class="action-btn view" onclick="viewPurchase(${p.id})" title="عرض"><i class="fas fa-eye"></i></button>
+                        <button class="action-btn delete" onclick="deletePurchase(${p.id})" title="حذف"><i class="fas fa-trash"></i></button>
+                    </div></span>
+                </tr>`;
+            }).join('');
+        }
+
+        function savePurchase() {
+            const supplierId = document.getElementById('purchaseSupplier').value;
+            if (!supplierId) { showNotification('يرجى اختيار المورد', 'error'); return; }
+            
+            const items = [];
+            let hasValidItem = false;
+            document.querySelectorAll('.purchase-item').forEach(item => {
+                const medicineId = item.querySelector('.medicine-select').value;
+                const quantity = parseInt(item.querySelector('input[placeholder="الكمية"]').value) || 0;
+                const price = parseFloat(item.querySelector('input[placeholder="سعر الشراء"]').value) || 0;
+                if (medicineId && quantity > 0 && price > 0) {
+                    hasValidItem = true;
+                    items.push({ medicineId: parseInt(medicineId), quantity: quantity, purchasePrice: price, total: quantity * price });
+                }
+            });
+            
+            if (!hasValidItem) { showNotification('يرجى إضافة دواء واحد على الأقل مع كمية وسعر صحيحين', 'error'); return; }
+            
+            const total = calculatePurchaseTotal();
+            const paid = parseFloat(document.getElementById('purchasePaid').value) || 0;
+            const remaining = total - paid;
+            
+            const purchase = {
+                id: getNextId('purchase'),
+                invoiceNumber: document.getElementById('purchaseInvoiceNumber').value,
+                supplierId: parseInt(supplierId),
+                totalAmount: total,
+                paidAmount: paid,
+                remainingAmount: remaining,
+                notes: document.getElementById('purchaseNotes').value,
+                createdBy: getCurrentUser()?.name || 'مدير',
+                createdAt: new Date().toISOString()
+            };
+            
+            const purchases = getAllPurchases();
+            purchases.push(purchase);
+            Storage.set('purchases', purchases);
+            
+            // Save purchase items and update stock
+            const purchaseItems = Storage.get('purchaseItems') || [];
+            const medicines = getAllMedicines();
+            
+            items.forEach(item => {
+                purchaseItems.push({
+                    id: getNextId('purchaseItem'),
+                    purchaseId: purchase.id,
+                    medicineId: item.medicineId,
+                    quantity: item.quantity,
+                    purchasePrice: item.purchasePrice,
+                    total: item.total
+                });
+                
+                const med = medicines.find(m => m.id === item.medicineId);
+                if (med) {
+                    med.quantity += item.quantity;
+                    // Update purchase price if needed
+                    if (med.purchasePrice !== item.purchasePrice) {
+                        med.purchasePrice = item.purchasePrice;
+                    }
+                }
+            });
+            
+            Storage.set('purchaseItems', purchaseItems);
+            Storage.set('medicines', medicines);
+            
+            showNotification('تم حفظ فاتورة الشراء بنجاح', 'success');
+            closeModal('newPurchaseModal');
+            resetPurchaseForm();
+            loadPurchases();
+        }
+        
+        function resetPurchaseForm() {
+            document.getElementById('purchaseSupplier').value = '';
+            document.getElementById('purchasePaid').value = 0;
+            document.getElementById('purchaseNotes').value = '';
+            document.getElementById('purchaseInvoiceNumber').value = generateInvoiceNumber('purchase');
+            document.getElementById('purchaseDate').value = new Date().toISOString().split('T')[0];
+            
+            const container = document.getElementById('purchaseItemsContainer');
+            container.innerHTML = `
+                <div class="purchase-item">
+                    <div class="form-group" style="flex: 2;"><select class="form-select medicine-select"><option value="">اختر الدواء</option></select></div>
+                    <div class="form-group"><input type="number" class="form-input" placeholder="الكمية" min="1" value="1" oninput="calculatePurchaseTotal()"></div>
+                    <div class="form-group"><input type="number" class="form-input" placeholder="سعر الشراء" min="0" oninput="calculatePurchaseTotal()"></div>
+                    <button class="action-btn delete" onclick="removePurchaseItem(this)" title="إزالة"><i class="fas fa-times"></i></button>
+                </div>
+            `;
+            populateMedicineSelects();
+            calculatePurchaseTotal();
+        }
+        
+        function viewPurchase(purchaseId) {
+            const purchase = getPurchaseById(purchaseId);
+            if (!purchase) return;
+            const supplier = getSupplierById(purchase.supplierId);
+            const items = getPurchaseItems(purchaseId);
+            const medicines = getAllMedicines();
+            
+            const itemsHTML = items.map(item => {
+                const med = medicines.find(m => m.id === item.medicineId);
+                return `<tr>
+                    <td><strong>${med ? med.name : 'Unknown'}</strong></td>
+                    <td>${item.quantity}</span></td>
+                    <td>${formatCurrency(item.purchasePrice)}</span></td>
+                    <td>${formatCurrency(item.total)}</span></td>
+                </tr>`;
+            }).join('');
+            
+            document.getElementById('purchaseDetails').innerHTML = `
+                <div class="invoice-container">
+                    <div class="invoice-header">
+                        <div class="invoice-logo"><h2>فاتورة شراء</h2></div>
+                        <div class="invoice-info">
+                            <p><strong>رقم الفاتورة:</strong> ${purchase.invoiceNumber}</p>
+                            <p><strong>التاريخ:</strong> ${formatDateTime(purchase.createdAt)}</p>
+                            <p><strong>المورد:</strong> ${supplier ? supplier.name : '-'}</p>
+                        </div>
+                    </div>
+                    <div class="invoice-items">
+                        <table class="data-table">
+                            <thead><tr><th>الدواء</th><th>الكمية</th><th>سعر الشراء</th><th>الإجمالي</th></tr></thead>
+                            <tbody>${itemsHTML}</tbody>
+                        </table>
+                    </div>
+                    <div class="invoice-totals">
+                        <div class="total-line"><span>الإجمالي:</span><span>${formatCurrency(purchase.totalAmount)}</span></div>
+                        <div class="total-line"><span>المدفوع:</span><span>${formatCurrency(purchase.paidAmount)}</span></div>
+                        <div class="total-line grand-total"><span>المتبقي:</span><span>${formatCurrency(purchase.remainingAmount)}</span></div>
+                    </div>
+                    ${purchase.notes ? `<div class="total-line"><span>ملاحظات:</span><span>${purchase.notes}</span></div>` : ''}
+                </div>
+            `;
+            openModal('viewPurchaseModal');
+        }
+        
+        function deletePurchase(id) {
+            confirmDialog('هل أنت متأكد من حذف هذه الفاتورة؟', () => {
+                let purchases = getAllPurchases();
+                purchases = purchases.filter(p => p.id !== id);
+                Storage.set('purchases', purchases);
+                showNotification('تم حذف الفاتورة بنجاح', 'success');
+                loadPurchases();
+            });
+        }
+        
+        function printPurchaseInvoice() {
+            printElement('purchaseDetails');
+        }
+        
+        document.getElementById('searchPurchase').addEventListener('input', function() {
+            const term = this.value.toLowerCase();
+            const suppliers = getAllSuppliers();
+            const filtered = currentPurchases.filter(p => 
+                p.invoiceNumber.toLowerCase().includes(term) ||
+                (suppliers.find(s => s.id === p.supplierId)?.name.toLowerCase().includes(term))
+            );
+            renderPurchases(filtered);
+        });
+        
+        // Auto-fill price when medicine is selected
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('medicine-select')) {
+                const selectedOption = e.target.options[e.target.selectedIndex];
+                const price = selectedOption.getAttribute('data-price');
+                if (price) {
+                    const priceInput = e.target.closest('.purchase-item').querySelector('input[placeholder="سعر الشراء"]');
+                    if (priceInput && !priceInput.value) priceInput.value = price;
+                    calculatePurchaseTotal();
+                }
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', loadPurchases);
+    </script>
+</body>
+</html>

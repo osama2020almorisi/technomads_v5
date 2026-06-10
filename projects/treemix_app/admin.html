@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>لوحة الأدمن | Treemix Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+      color: #1e293b;
+      padding: 20px;
+      min-height: 100vh;
+      transition: all 0.3s ease;
+    }
+    body.dark {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #e2e8f0;
+    }
+    .admin-wrapper { max-width: 1400px; margin: 0 auto; }
+    .admin-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 32px;
+      padding: 20px 28px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+    }
+    body.dark .admin-header { background: rgba(30, 41, 59, 0.95); }
+    .admin-header h1 { font-size: 1.6rem; background: linear-gradient(135deg, #ef4444, #f97316); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .actions-bar { display: flex; flex-wrap: wrap; gap: 12px; }
+    button, .btn {
+      padding: 8px 18px;
+      border-radius: 60px;
+      border: none;
+      font-family: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      background: #f1f5f9;
+    }
+    body.dark button, body.dark .btn { background: #334155; color: #e2e8f0; }
+    button.primary { background: #3b82f6; color: white; }
+    button.success { background: #10b981; color: white; }
+    button.danger { background: #ef4444; color: white; }
+    button.warning { background: #f59e0b; color: white; }
+    button.info { background: #8b5cf6; color: white; }
+    button:hover { transform: scale(0.96); }
+    .search-filter-bar {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 60px;
+      padding: 12px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    body.dark .search-filter-bar { background: rgba(30, 41, 59, 0.9); }
+    .search-box-admin { position: relative; flex: 2; min-width: 200px; }
+    .search-box-admin i { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+    .search-box-admin input { width: 100%; padding: 10px 40px 10px 16px; border-radius: 60px; border: none; background: #f1f5f9; font-family: inherit; font-size: 0.9rem; }
+    body.dark .search-box-admin input { background: #334155; color: #e2e8f0; }
+    .search-box-admin input:focus { outline: none; box-shadow: 0 0 0 2px #3b82f6; }
+    .filter-select { padding: 8px 18px; border-radius: 60px; border: none; background: #f1f5f9; font-family: inherit; }
+    body.dark .filter-select { background: #334155; color: #e2e8f0; }
+    .tool-admin-card {
+      background: white;
+      border-radius: 28px;
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.08);
+    }
+    body.dark .tool-admin-card { background: #1e293b; }
+    .tool-admin-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    body.dark .tool-admin-header { border-bottom-color: #334155; }
+    .tool-title { font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .commands-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .commands-table th, .commands-table td { padding: 12px 8px; text-align: right; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+    body.dark .commands-table th, body.dark .commands-table td { border-bottom-color: #334155; }
+    .commands-table th { background: #f8fafc; font-weight: 700; }
+    body.dark .commands-table th { background: #0f172a; }
+    .cmd-syntax-preview { font-family: monospace; font-size: 0.7rem; background: #f1f5f9; padding: 6px 10px; border-radius: 16px; word-break: break-all; max-width: 280px; }
+    body.dark .cmd-syntax-preview { background: #0f172a; }
+    .action-icons { display: flex; gap: 8px; }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: white;
+      padding: 28px;
+      border-radius: 32px;
+      width: 90%;
+      max-width: 520px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    body.dark .modal-content { background: #1e293b; }
+    .modal-content input, .modal-content select, .modal-content textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 24px;
+      font-family: inherit;
+    }
+    body.dark .modal-content input, body.dark .modal-content select, body.dark .modal-content textarea {
+      background: #334155;
+      border-color: #475569;
+      color: #e2e8f0;
+    }
+    .stats-area { background: white; border-radius: 28px; padding: 24px; margin-top: 20px; }
+    body.dark .stats-area { background: #1e293b; }
+    .stats-grid { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 16px; }
+    .stat-item { background: #f8fafc; padding: 18px; border-radius: 24px; flex: 1; text-align: center; min-width: 130px; }
+    body.dark .stat-item { background: #0f172a; }
+    .stat-number { font-size: 2.2rem; font-weight: 800; color: #3b82f6; }
+    .toast-admin {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 60px;
+      z-index: 1100;
+      opacity: 0;
+      transition: 0.2s;
+      pointer-events: none;
+    }
+    @media (max-width: 768px) {
+      body { padding: 12px; }
+      .admin-header { flex-direction: column; align-items: stretch; }
+      .search-filter-bar { flex-direction: column; align-items: stretch; }
+      .commands-table, .commands-table thead, .commands-table tbody, .commands-table tr, .commands-table td { display: block; }
+      .commands-table thead { display: none; }
+      .commands-table td { position: relative; padding-right: 45% !important; border-bottom: 1px solid #e2e8f0; }
+      .commands-table td::before { content: attr(data-label); position: absolute; right: 12px; width: 40%; font-weight: bold; color: #3b82f6; }
+      .cmd-syntax-preview { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="admin-wrapper">
+  <div class="admin-header">
+    <h1><i class="fa-solid fa-shield-haltered"></i> لوحة التحكم - الأدمن</h1>
+    <div class="actions-bar">
+      <button id="darkModeAdminBtn"><i class="fa-solid fa-moon"></i> داكن</button>
+      <button id="backToUserBtn" class="btn"><i class="fa-solid fa-arrow-right"></i> العودة</button>
+      <button id="exportDataBtn" class="btn success"><i class="fa-solid fa-download"></i> تصدير</button>
+      <label for="mergeFileInput" class="btn info"><i class="fa-solid fa-code-merge"></i> دمج JSON</label>
+      <input type="file" id="mergeFileInput" accept=".json" style="display:none">
+      <label for="replaceFileInput" class="btn warning"><i class="fa-solid fa-repeat"></i> استبدال JSON</label>
+      <input type="file" id="replaceFileInput" accept=".json" style="display:none">
+      <button id="addMainToolBtn" class="btn primary"><i class="fa-solid fa-plus"></i> أداة جديدة</button>
+    </div>
+  </div>
+
+  <div class="search-filter-bar">
+    <div class="search-box-admin">
+      <i class="fa-solid fa-search"></i>
+      <input type="text" id="adminSearchInput" placeholder="🔍 بحث في الأوامر (اسم، وصف، صيغة)...">
+    </div>
+    <select id="adminDifficultyFilter" class="filter-select">
+      <option value="">🎯 كل المستويات</option>
+      <option value="مبتدئ">🌱 مبتدئ</option>
+      <option value="متوسط">⚡ متوسط</option>
+      <option value="متقدم">🔥 متقدم</option>
+    </select>
+  </div>
+
+  <div id="toolsAdminList"></div>
+
+  <div class="stats-area">
+    <h3><i class="fa-solid fa-chart-line"></i> إحصائيات سريعة</h3>
+    <div class="stats-grid" id="statsContainer"></div>
+  </div>
+</div>
+
+<div id="commandModal" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle">➕ إضافة أمر جديد</h3>
+    <input type="hidden" id="modalToolId">
+    <input type="hidden" id="modalCmdId">
+    <input type="text" id="cmdName" placeholder="اسم الأمر *">
+    <textarea id="cmdDesc" placeholder="وصف الأمر" rows="2"></textarea>
+    <input type="text" id="cmdSyntax" placeholder="الصيغة *">
+    <select id="cmdDifficulty">
+      <option value="مبتدئ">🌱 مبتدئ</option>
+      <option value="متوسط">⚡ متوسط</option>
+      <option value="متقدم">🔥 متقدم</option>
+    </select>
+    <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 10px;">
+      <button id="saveCmdBtn" class="success">💾 حفظ</button>
+      <button id="closeModalBtn" class="danger">❌ إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<div id="toastAdminMsg" class="toast-admin"></div>
+
+<script>
+  let toolsData = [];
+
+  function loadAdminData() {
+    const stored = localStorage.getItem('treemix_pro_tools');
+    if(stored) {
+      toolsData = JSON.parse(stored);
+    } else {
+      toolsData = [];
+    }
+    saveToLocal();
+    const darkMode = localStorage.getItem('treemix_admin_dark');
+    if(darkMode === 'true') document.body.classList.add('dark');
+  }
+
+  function saveToLocal() { localStorage.setItem('treemix_pro_tools', JSON.stringify(toolsData)); }
+
+  function showToast(msg, isErr = false) {
+    const t = document.getElementById('toastAdminMsg');
+    t.innerText = msg;
+    t.style.background = isErr ? '#ef4444' : '#1e293b';
+    t.style.opacity = '1';
+    setTimeout(() => t.style.opacity = '0', 2000);
+  }
+
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); }
+
+  // دالة دمج البيانات (إضافة بدون تكرار)
+  function mergeTools(newTools) {
+    let addedCount = 0;
+    let mergedCount = 0;
+    
+    newTools.forEach(newTool => {
+      const existingTool = toolsData.find(t => t.id === newTool.id);
+      
+      if(existingTool) {
+        // الأداة موجودة: دمج الأوامر الجديدة فقط
+        const existingCmdIds = new Set(existingTool.commands.map(c => c.id));
+        const newCommands = newTool.commands.filter(cmd => !existingCmdIds.has(cmd.id));
+        if(newCommands.length > 0) {
+          existingTool.commands.push(...newCommands);
+          mergedCount += newCommands.length;
+        }
+      } else {
+        // أداة جديدة: أضفها كاملة
+        toolsData.push(newTool);
+        addedCount++;
+      }
+    });
+    
+    saveToLocal();
+    return { addedCount, mergedCount };
+  }
+
+  // استيراد (دمج)
+  function importMerge(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if(Array.isArray(imported) && imported.every(item => item.id && item.name && Array.isArray(item.commands))) {
+          const result = mergeTools(imported);
+          renderAdminTools();
+          showToast(`✅ تم الدمج: ${result.addedCount} أداة جديدة، ${result.mergedCount} أمر جديد`);
+        } else {
+          alert('❌ الملف غير صالح: يجب أن يكون مصفوفة أدوات بالهيكل: [{id, name, commands:[]}]');
+        }
+      } catch(err) { alert('خطأ في الملف: ' + err.message); }
+    };
+    reader.readAsText(file);
+  }
+
+  // استيراد (استبدال كامل)
+  function importReplace(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if(Array.isArray(imported) && imported.every(item => item.id && item.name && Array.isArray(item.commands))) {
+          if(confirm('⚠️ تحذير: الاستبدال سيحذف جميع البيانات الحالية نهائياً! هل أنت متأكد؟')) {
+            toolsData = imported;
+            saveToLocal();
+            renderAdminTools();
+            showToast('🔄 تم استبدال البيانات بالكامل');
+          }
+        } else {
+          alert('❌ الملف غير صالح: يجب أن يكون مصفوفة أدوات بالهيكل المطلوب');
+        }
+      } catch(err) { alert('خطأ في الملف: ' + err.message); }
+    };
+    reader.readAsText(file);
+  }
+
+  function renderAdminTools() {
+    const container = document.getElementById('toolsAdminList');
+    if(!container) return;
+    container.innerHTML = '';
+    const searchTerm = document.getElementById('adminSearchInput').value.toLowerCase();
+    const diffFilter = document.getElementById('adminDifficultyFilter').value;
+
+    if(toolsData.length === 0) {
+      container.innerHTML = '<div style="background:white; border-radius:28px; padding:30px; text-align:center;">✨ لا توجد أدوات، أضف أداة جديدة أو استورد JSON</div>';
+      updateStats();
+      return;
+    }
+
+    toolsData.forEach((tool) => {
+      let filteredCommands = tool.commands.filter(cmd => {
+        const matchSearch = !searchTerm || 
+          cmd.name.toLowerCase().includes(searchTerm) || 
+          (cmd.description && cmd.description.toLowerCase().includes(searchTerm)) ||
+          cmd.syntax.toLowerCase().includes(searchTerm);
+        const matchDiff = !diffFilter || cmd.difficulty === diffFilter;
+        return matchSearch && matchDiff;
+      });
+
+      const toolDiv = document.createElement('div');
+      toolDiv.className = 'tool-admin-card';
+      toolDiv.innerHTML = `
+        <div class="tool-admin-header">
+          <div class="tool-title"><i class="fa-solid fa-cube"></i> ${escapeHtml(tool.name)} <span style="font-size:0.7rem; background:#e2e8f0; padding:2px 12px; border-radius:30px;">${filteredCommands.length} / ${tool.commands.length} أوامر</span></div>
+          <div class="action-icons">
+            <button class="edit-tool-btn" data-id="${tool.id}"><i class="fa-regular fa-pen-to-square"></i> تعديل</button>
+            <button class="delete-tool-btn" data-id="${tool.id}"><i class="fa-regular fa-trash-can"></i> حذف</button>
+            <button class="add-cmd-to-tool" data-id="${tool.id}"><i class="fa-solid fa-plus"></i> أمر جديد</button>
+          </div>
+        </div>
+        <table class="commands-table">
+          <thead><tr><th>الاسم</th><th>الوصف</th><th>الصيغة</th><th>الصعوبة</th><th>الاستخدام</th><th>إجراءات</th></tr></thead>
+          <tbody id="tool-body-${tool.id}"></tbody>
+        </table>
+      `;
+      container.appendChild(toolDiv);
+      const tbody = document.getElementById(`tool-body-${tool.id}`);
+      tbody.innerHTML = '';
+      if(filteredCommands.length === 0) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="6" style="text-align:center;">📭 لا توجد أوامر تطابق البحث</td>';
+        tbody.appendChild(tr);
+      } else {
+        filteredCommands.forEach(cmd => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td data-label="الاسم">${escapeHtml(cmd.name)}</td>
+            <td data-label="الوصف">${escapeHtml(cmd.description || '')}</td>
+            <td data-label="الصيغة"><div class="cmd-syntax-preview">${escapeHtml(cmd.syntax)}</div></td>
+            <td data-label="الصعوبة">${escapeHtml(cmd.difficulty)}</td>
+            <td data-label="الاستخدام">${cmd.usageCount || 0}</td>
+            <td data-label="إجراءات">
+              <div class="action-icons">
+                <button class="edit-cmd" data-toolid="${tool.id}" data-cmdid="${cmd.id}"><i class="fa-regular fa-pen-to-square"></i></button>
+                <button class="delete-cmd" data-toolid="${tool.id}" data-cmdid="${cmd.id}"><i class="fa-regular fa-trash-can"></i></button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    });
+    attachToolButtons();
+    attachCmdButtons();
+    updateStats();
+  }
+
+  function attachToolButtons() {
+    document.querySelectorAll('.edit-tool-btn').forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute('data-id');
+        const tool = toolsData.find(t => t.id === id);
+        if(tool) {
+          const newName = prompt('✏️ تعديل اسم الأداة', tool.name);
+          if(newName?.trim()) { tool.name = newName.trim(); saveToLocal(); renderAdminTools(); showToast('✅ تم التعديل'); }
+        }
+      };
+    });
+    document.querySelectorAll('.delete-tool-btn').forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute('data-id');
+        if(confirm('⚠️ حذف الأداة سيحذف جميع أوامرها. متأكد؟')) {
+          toolsData = toolsData.filter(t => t.id !== id);
+          saveToLocal();
+          renderAdminTools();
+          showToast('🗑️ تم الحذف');
+        }
+      };
+    });
+    document.querySelectorAll('.add-cmd-to-tool').forEach(btn => {
+      btn.onclick = () => openCommandModal(btn.getAttribute('data-id'), null);
+    });
+  }
+
+  function attachCmdButtons() {
+    document.querySelectorAll('.edit-cmd').forEach(btn => {
+      btn.onclick = () => {
+        const toolId = btn.getAttribute('data-toolid');
+        const cmdId = btn.getAttribute('data-cmdid');
+        openCommandModal(toolId, cmdId);
+      };
+    });
+    document.querySelectorAll('.delete-cmd').forEach(btn => {
+      btn.onclick = () => {
+        const toolId = btn.getAttribute('data-toolid');
+        const cmdId = btn.getAttribute('data-cmdid');
+        if(confirm('🗑️ حذف الأمر نهائياً؟')) {
+          const tool = toolsData.find(t => t.id === toolId);
+          if(tool) { tool.commands = tool.commands.filter(c => c.id !== cmdId); saveToLocal(); renderAdminTools(); showToast('✅ تم حذف الأمر'); }
+        }
+      };
+    });
+  }
+
+  let currentModalTool = null, currentModalCmd = null;
+  function openCommandModal(toolId, cmdId) {
+    currentModalTool = toolId;
+    currentModalCmd = cmdId;
+    const modal = document.getElementById('commandModal');
+    const title = document.getElementById('modalTitle');
+    const tool = toolsData.find(t => t.id === toolId);
+    if(!tool) return;
+    if(cmdId) {
+      const cmd = tool.commands.find(c => c.id === cmdId);
+      if(cmd) {
+        title.innerText = '✏️ تعديل الأمر';
+        document.getElementById('cmdName').value = cmd.name;
+        document.getElementById('cmdDesc').value = cmd.description || '';
+        document.getElementById('cmdSyntax').value = cmd.syntax;
+        document.getElementById('cmdDifficulty').value = cmd.difficulty;
+      }
+    } else {
+      title.innerText = '➕ إضافة أمر جديد';
+      document.getElementById('cmdName').value = '';
+      document.getElementById('cmdDesc').value = '';
+      document.getElementById('cmdSyntax').value = '';
+      document.getElementById('cmdDifficulty').value = 'متوسط';
+    }
+    modal.style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('commandModal').style.display = 'none';
+    currentModalTool = null;
+    currentModalCmd = null;
+  }
+
+  function saveCurrentCommand() {
+    const name = document.getElementById('cmdName').value.trim();
+    const desc = document.getElementById('cmdDesc').value.trim();
+    const syntax = document.getElementById('cmdSyntax').value.trim();
+    const difficulty = document.getElementById('cmdDifficulty').value;
+    if(!name || !syntax) { alert('⚠️ اسم الأمر والصيغة مطلوبة'); return; }
+    const tool = toolsData.find(t => t.id === currentModalTool);
+    if(!tool) return;
+    if(currentModalCmd) {
+      const cmd = tool.commands.find(c => c.id === currentModalCmd);
+      if(cmd) { cmd.name = name; cmd.description = desc; cmd.syntax = syntax; cmd.difficulty = difficulty; showToast('✅ تم التعديل'); }
+    } else {
+      const newCmd = { id: 'cmd_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), name, description: desc, syntax, difficulty, usageCount: 0 };
+      tool.commands.push(newCmd);
+      showToast('✨ تم إضافة الأمر');
+    }
+    saveToLocal();
+    renderAdminTools();
+    closeModal();
+  }
+
+  function updateStats() {
+    const totalTools = toolsData.length;
+    let totalCmds = 0, totalUsage = 0;
+    toolsData.forEach(t => { totalCmds += t.commands.length; t.commands.forEach(c => totalUsage += (c.usageCount || 0)); });
+    document.getElementById('statsContainer').innerHTML = `
+      <div class="stat-item"><div class="stat-number">${totalTools}</div><div>📦 أدوات</div></div>
+      <div class="stat-item"><div class="stat-number">${totalCmds}</div><div>⚙️ أوامر</div></div>
+      <div class="stat-item"><div class="stat-number">${totalUsage}</div><div>📋 نسخ</div></div>
+    `;
+  }
+
+  function exportJSON() {
+    const dataStr = JSON.stringify(toolsData, null, 2);
+    const blob = new Blob([dataStr], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `treemix_backup_${new Date().toISOString().slice(0,19)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('📁 تم تصدير JSON');
+  }
+
+  function addNewTool() {
+    const toolName = prompt('📦 اسم الأداة الجديدة:');
+    if(toolName?.trim()) {
+      const newTool = { id: 'tool_' + Date.now(), name: toolName.trim(), commands: [] };
+      toolsData.push(newTool);
+      saveToLocal();
+      renderAdminTools();
+      showToast(`✅ تم إضافة الأداة: ${newTool.name}`);
+    }
+  }
+
+  document.getElementById('backToUserBtn').onclick = () => window.location.href = 'index.html';
+  document.getElementById('exportDataBtn').onclick = exportJSON;
+  document.getElementById('mergeFileInput').onchange = (e) => { if(e.target.files.length) importMerge(e.target.files[0]); e.target.value = ''; };
+  document.getElementById('replaceFileInput').onchange = (e) => { if(e.target.files.length) importReplace(e.target.files[0]); e.target.value = ''; };
+  document.getElementById('addMainToolBtn').onclick = addNewTool;
+  document.getElementById('saveCmdBtn').onclick = saveCurrentCommand;
+  document.getElementById('closeModalBtn').onclick = closeModal;
+  document.getElementById('darkModeAdminBtn').onclick = () => {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('treemix_admin_dark', document.body.classList.contains('dark'));
+  };
+  document.getElementById('adminSearchInput').addEventListener('input', () => renderAdminTools());
+  document.getElementById('adminDifficultyFilter').addEventListener('change', () => renderAdminTools());
+  window.onclick = (e) => { if(e.target === document.getElementById('commandModal')) closeModal(); };
+
+  loadAdminData();
+  renderAdminTools();
+</script>
+</body>
+</html>

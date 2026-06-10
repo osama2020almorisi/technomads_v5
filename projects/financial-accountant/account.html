@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعدادات الحساب - المحاسب المالي</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="تبديل القائمة الجانبية">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="شعار المحاسب المالي" id="headerLogo" onerror="handleLogoError(this)">
+                <span>المحاسب المالي</span>
+            </div>
+
+            <div class="header-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="بحث..." id="globalSearch">
+                </div>
+                
+                <div class="notifications">
+                    <button class="notification-btn" onclick="toggleNotifications()" aria-label="الإشعارات">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">0</span>
+                    </button>
+                </div>
+                
+                <div class="user-menu">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName"></span>
+                        <span class="user-role">مالك</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar" id="mainSidebar">
+        <nav class="sidebar-nav">
+            <div class="sidebar-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="بحث سريع..." id="sidebarSearch">
+            </div>
+            
+            <ul>
+                <li class="nav-item">
+                    <a href="dashboard.html">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="invoices/list.html">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>الفواتير</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="customers/list.html">
+                        <i class="fas fa-users"></i>
+                        <span>العملاء</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="products/list.html">
+                        <i class="fas fa-box"></i>
+                        <span>المنتجات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="expenses/list.html">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>المصروفات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="reports/financial.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>التقارير</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>الملف الشخصي</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="account.html">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="system-status">
+                <div class="status-indicator"></div>
+                <span>حالة النظام</span>
+            </div>
+            <div class="app-version">الإصدار 1.2.0</div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>إعدادات الحساب</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="window.history.back()">
+                    <i class="fas fa-arrow-right"></i> رجوع
+                </button>
+            </div>
+        </div>
+
+        <div class="settings-tabs">
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="openTab('company-tab')">
+                    <i class="fas fa-building"></i> معلومات الشركة
+                </button>
+                <button class="tab-btn" onclick="openTab('financial-tab')">
+                    <i class="fas fa-money-bill"></i> الإعدادات المالية
+                </button>
+                <button class="tab-btn" onclick="openTab('system-tab')">
+                    <i class="fas fa-cogs"></i> إعدادات النظام
+                </button>
+                <button class="tab-btn" onclick="openTab('backup-tab')">
+                    <i class="fas fa-database"></i> النسخ الاحتياطي
+                </button>
+            </div>
+
+            <!-- تبويب معلومات الشركة -->
+            <div id="company-tab" class="tab-content active">
+                <div class="module-form-container">
+                    <div class="module-form-header">
+                        <h2><i class="fas fa-building"></i> معلومات الشركة</h2>
+                    </div>
+                    
+                    <div class="module-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>اسم الشركة <span class="required">*</span></label>
+                                <input type="text" id="companyName" placeholder="أدخل اسم الشركة" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>الشعار</label>
+                                <div class="logo-upload">
+                                    <div class="logo-preview" id="logoPreview">
+                                        <img src="" alt="شعار الشركة" style="max-width: 100px; max-height: 100px;">
+                                    </div>
+                                    <input type="file" id="logoInput" accept="image/*" style="display: none;">
+                                    <button class="btn btn-sm btn-primary" onclick="document.getElementById('logoInput').click()">
+                                        <i class="fas fa-upload"></i> تحميل الشعار
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>رقم السجل التجاري</label>
+                                <input type="text" id="commercialNumber" placeholder="رقم السجل التجاري">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>رقم الضريبي</label>
+                                <input type="text" id="taxNumber" placeholder="الرقم الضريبي">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>عنوان الشركة</label>
+                            <textarea id="companyAddress" rows="3" placeholder="العنوان الكامل للشركة"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>رقم الهاتف</label>
+                                <input type="tel" id="companyPhone" placeholder="رقم الهاتف">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>البريد الإلكتروني</label>
+                                <input type="email" id="companyEmail" placeholder="البريد الإلكتروني">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>الموقع الإلكتروني</label>
+                                <input type="url" id="companyWebsite" placeholder="https://example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>مجال العمل</label>
+                                <select id="businessType">
+                                    <option value="retail">تجارة التجزئة</option>
+                                    <option value="wholesale">تجارة الجملة</option>
+                                    <option value="services">خدمات</option>
+                                    <option value="manufacturing">تصنيع</option>
+                                    <option value="other">أخرى</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-secondary" onclick="resetCompanyForm()">
+                                <i class="fas fa-times"></i> إلغاء
+                            </button>
+                            <button class="btn btn-primary" onclick="saveCompanySettings()">
+                                <i class="fas fa-save"></i> حفظ الإعدادات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تبويب الإعدادات المالية -->
+            <div id="financial-tab" class="tab-content">
+                <div class="module-form-container">
+                    <div class="module-form-header">
+                        <h2><i class="fas fa-money-bill"></i> الإعدادات المالية</h2>
+                    </div>
+                    
+                    <div class="module-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>العملة الأساسية <span class="required">*</span></label>
+                                <select id="currency" required>
+                                    <option value="YER">الريال اليمني (ر.ي)</option>
+                                    <option value="SAR">الريال السعودي (ر.س)</option>
+                                    <option value="USD">الدولار الأمريكي ($)</option>
+                                    <option value="EUR">اليورو (€)</option>
+                                    <option value="AED">الدرهم الإماراتي (د.إ)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>رمز العملة</label>
+                                <input type="text" id="currencySymbol" placeholder="رمز العملة" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>ضريبة القيمة المضافة (%)</label>
+                                <input type="number" id="taxRate" min="0" max="100" step="0.1" placeholder="0.0">
+                                <div class="help-text">اتركه 0 إذا لم تكن الضريبة مطبقة</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>خصم الأفتراضى (%)</label>
+                                <input type="number" id="defaultDiscount" min="0" max="100" step="0.1" placeholder="0.0">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>بادئة رقم الفاتورة</label>
+                                <input type="text" id="invoicePrefix" placeholder="INV-">
+                                <div class="help-text">سيتم إضافة رقم تلقائي بعد البادئة</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>رقم الفاتورة التالي</label>
+                                <input type="number" id="nextInvoiceNumber" min="1" placeholder="1">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>شروط الدفع</label>
+                            <textarea id="paymentTerms" rows="3" placeholder="شروط الدفع الافتراضية"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>ملاحظات الفاتورة</label>
+                            <textarea id="invoiceNotes" rows="3" placeholder="ملاحظات تظهر في أسفل الفاتورة"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-secondary" onclick="resetFinancialForm()">
+                                <i class="fas fa-times"></i> إلغاء
+                            </button>
+                            <button class="btn btn-primary" onclick="saveFinancialSettings()">
+                                <i class="fas fa-save"></i> حفظ الإعدادات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تبويب إعدادات النظام -->
+            <div id="system-tab" class="tab-content">
+                <div class="module-form-container">
+                    <div class="module-form-header">
+                        <h2><i class="fas fa-cogs"></i> إعدادات النظام</h2>
+                    </div>
+                    
+                    <div class="module-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>لغة النظام</label>
+                                <select id="systemLanguage">
+                                    <option value="ar" selected>العربية</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>التاريخ والوقت</label>
+                                <select id="dateFormat">
+                                    <option value="dd/MM/yyyy">يوم/شهر/سنة (25/12/2024)</option>
+                                    <option value="MM/dd/yyyy">شهر/يوم/سنة (12/25/2024)</option>
+                                    <option value="yyyy-MM-dd">سنة-شهر-يوم (2024-12-25)</option>
+                                    <option value="dd-MM-yyyy">يوم-شهر-سنة (25-12-2024)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>تنسيق الأرقام</label>
+                                <select id="numberFormat">
+                                    <option value="1,234.56">1,234.56 (إنكليزي)</option>
+                                    <option value="1.234,56">1.234,56 (أوروبي)</option>
+                                    <option value="1 234,56">1 234,56 (فرنسي)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>المنطقة الزمنية</label>
+                                <select id="timezone">
+                                    <option value="Asia/Aden">Asia/Aden (اليمن)</option>
+                                    <option value="Asia/Riyadh">Asia/Riyadh (السعودية)</option>
+                                    <option value="Asia/Dubai">Asia/Dubai (الإمارات)</option>
+                                    <option value="UTC">UTC</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>إعدادات الأمان</label>
+                            <div class="security-settings">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="autoLogout"> تسجيل الخروج التلقائي بعد 30 دقيقة من الخمول
+                                </label>
+                                
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="passwordComplexity"> требовать كلمة مرور قوية
+                                </label>
+                                
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="twoFactorAuth"> المصادقة الثنائية (2FA)
+                                </label>
+                                
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="loginNotifications"> إشعارات تسجيل الدخول
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>إعدادات الإشعارات</label>
+                            <div class="notification-settings">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="emailNotifications" checked> الإشعارات عبر البريد الإلكتروني
+                                </label>
+                                
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="invoiceNotifications" checked> إشعارات الفواتير
+                                </label>
+                                
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="paymentNotifications" checked> إشعارات المدفوعات
+                                </label>
+                                
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="systemNotifications" checked> إشعارات النظام
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-secondary" onclick="resetSystemForm()">
+                                <i class="fas fa-times"></i> إلغاء
+                            </button>
+                            <button class="btn btn-primary" onclick="saveSystemSettings()">
+                                <i class="fas fa-save"></i> حفظ الإعدادات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تبويب النسخ الاحتياطي -->
+            <div id="backup-tab" class="tab-content">
+                <div class="module-form-container">
+                    <div class="module-form-header">
+                        <h2><i class="fas fa-database"></i> النسخ الاحتياطي والاستعادة</h2>
+                    </div>
+                    
+                    <div class="module-form">
+                        <div class="backup-info">
+                            <div class="info-card">
+                                <i class="fas fa-database"></i>
+                                <h3>حالة البيانات</h3>
+                                <p>إجمالي حجم البيانات: <span id="totalDataSize">0 KB</span></p>
+                                <p>آخر نسخة احتياطية: <span id="lastBackupDate">لم يتم بعد</span></p>
+                                <p>حالة التخزين: <span class="status-good">جيدة</span></p>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <h4><i class="fas fa-download"></i> إنشاء نسخة احتياطية</h4>
+                                <p>احفظ نسخة من جميع بياناتك في ملف يمكن استعادته لاحقاً.</p>
+                                <button class="btn btn-primary" onclick="createBackup()">
+                                    <i class="fas fa-download"></i> إنشاء نسخة احتياطية
+                                </button>
+                            </div>
+                            
+                            <div class="form-group">
+                                <h4><i class="fas fa-upload"></i> استعادة نسخة احتياطية</h4>
+                                <p>استعد البيانات من ملف نسخة احتياطية سابقة.</p>
+                                <input type="file" id="restoreFile" accept=".json" style="display: none;">
+                                <button class="btn btn-warning" onclick="document.getElementById('restoreFile').click()">
+                                    <i class="fas fa-upload"></i> اختيار ملف الاستعادة
+                                </button>
+                                <div class="help-text">ملاحظة: سيتم استبدال جميع البيانات الحالية</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h4><i class="fas fa-trash"></i> إدارة البيانات</h4>
+                            <div class="danger-zone">
+                                <p>الإجراءات التالية لا يمكن التراجع عنها:</p>
+                                <button class="btn btn-danger" onclick="clearAllData()">
+                                    <i class="fas fa-trash"></i> حذف جميع البيانات
+                                </button>
+                                <button class="btn btn-danger" onclick="resetSettings()">
+                                    <i class="fas fa-cog"></i> إعادة ضبط الإعدادات
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-info" onclick="checkDataIntegrity()">
+                                <i class="fas fa-check-circle"></i> فحص سلامة البيانات
+                            </button>
+                            <button class="btn btn-secondary" onclick="exportData()">
+                                <i class="fas fa-file-export"></i> تصدير البيانات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2024 المحاسب المالي. جميع الحقوق محفوظة.</p>
+            <div class="footer-links">
+                <a href="#">الشروط والأحكام</a>
+                <a href="#">سياسة الخصوصية</a>
+                <a href="#">الدعم</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            loadSettings();
+            initLogoUpload();
+            initCurrencySymbol();
+            initRestoreFile();
+        });
+
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('financial_app_current_user')) || {};
+            document.getElementById('userName').textContent = userData.fullName || 'مستخدم';
+            
+            const userAvatar = document.getElementById('userAvatar');
+            if (userAvatar && userData.fullName) {
+                userAvatar.textContent = getUserInitials(userData.fullName);
+                userAvatar.style.backgroundColor = userData.avatarColor || getRandomColor();
+            }
+        }
+
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('financial_app_settings')) || {};
+            
+            // تعبئة إعدادات الشركة
+            document.getElementById('companyName').value = settings.companyName || '';
+            document.getElementById('commercialNumber').value = settings.commercialNumber || '';
+            document.getElementById('taxNumber').value = settings.taxNumber || '';
+            document.getElementById('companyAddress').value = settings.companyAddress || '';
+            document.getElementById('companyPhone').value = settings.companyPhone || '';
+            document.getElementById('companyEmail').value = settings.companyEmail || '';
+            document.getElementById('companyWebsite').value = settings.companyWebsite || '';
+            document.getElementById('businessType').value = settings.businessType || 'retail';
+            
+            // تحميل الشعار إذا موجود
+            if (settings.companyLogo) {
+                document.getElementById('logoPreview').innerHTML = `
+                    <img src="${settings.companyLogo}" alt="شعار الشركة" style="max-width: 100px; max-height: 100px;">
+                `;
+            }
+            
+            // تعبئة الإعدادات المالية
+            document.getElementById('currency').value = settings.currency || 'YER';
+            document.getElementById('taxRate').value = settings.taxRate || '0';
+            document.getElementById('defaultDiscount').value = settings.defaultDiscount || '0';
+            document.getElementById('invoicePrefix').value = settings.invoicePrefix || 'INV-';
+            document.getElementById('nextInvoiceNumber').value = settings.nextInvoiceNumber || '1';
+            document.getElementById('paymentTerms').value = settings.paymentTerms || '';
+            document.getElementById('invoiceNotes').value = settings.invoiceNotes || '';
+            
+            // تعبئة إعدادات النظام
+            document.getElementById('systemLanguage').value = settings.systemLanguage || 'ar';
+            document.getElementById('dateFormat').value = settings.dateFormat || 'dd/MM/yyyy';
+            document.getElementById('numberFormat').value = settings.numberFormat || '1,234.56';
+            document.getElementById('timezone').value = settings.timezone || 'Asia/Aden';
+            
+            document.getElementById('autoLogout').checked = settings.autoLogout || false;
+            document.getElementById('passwordComplexity').checked = settings.passwordComplexity || false;
+            document.getElementById('twoFactorAuth').checked = settings.twoFactorAuth || false;
+            document.getElementById('loginNotifications').checked = settings.loginNotifications || false;
+            
+            document.getElementById('emailNotifications').checked = settings.emailNotifications !== false;
+            document.getElementById('invoiceNotifications').checked = settings.invoiceNotifications !== false;
+            document.getElementById('paymentNotifications').checked = settings.paymentNotifications !== false;
+            document.getElementById('systemNotifications').checked = settings.systemNotifications !== false;
+            
+            // تحديث معلومات النسخ الاحتياطي
+            updateBackupInfo();
+        }
+
+        function initLogoUpload() {
+            const logoInput = document.getElementById('logoInput');
+            logoInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('logoPreview').innerHTML = `
+                            <img src="${e.target.result}" alt="شعار الشركة" style="max-width: 100px; max-height: 100px;">
+                        `;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        function initCurrencySymbol() {
+            const currencySelect = document.getElementById('currency');
+            const currencySymbol = document.getElementById('currencySymbol');
+            
+            const symbols = {
+                'YER': 'ر.ي',
+                'SAR': 'ر.س',
+                'USD': '$',
+                'EUR': '€',
+                'AED': 'د.إ'
+            };
+            
+            currencySelect.addEventListener('change', function() {
+                currencySymbol.value = symbols[this.value] || '';
+            });
+            
+            // تعيين القيمة الأولية
+            currencySymbol.value = symbols[currencySelect.value] || '';
+        }
+
+        function initRestoreFile() {
+            const restoreFile = document.getElementById('restoreFile');
+            restoreFile.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    if (confirm('هل أنت متأكد من استعادة النسخة الاحتياطية؟ سيتم استبدال جميع البيانات الحالية.')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            try {
+                                const backup = JSON.parse(e.target.result);
+                                restoreBackup(backup);
+                            } catch (error) {
+                                alert('خطأ في تحميل ملف النسخة الاحتياطية');
+                                console.error('Restore error:', error);
+                            }
+                        };
+                        reader.readAsText(file);
+                    }
+                }
+            });
+        }
+
+        function openTab(tabId) {
+            // إخفاء جميع المحتويات
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // إلغاء تنشيط جميع الأزرار
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // عرض المحتوى المحدد
+            document.getElementById(tabId).classList.add('active');
+            
+            // تنشيط الزر المحدد
+            event.currentTarget.classList.add('active');
+        }
+
+        function saveCompanySettings() {
+            const settings = JSON.parse(localStorage.getItem('financial_app_settings')) || {};
+            
+            settings.companyName = document.getElementById('companyName').value;
+            settings.commercialNumber = document.getElementById('commercialNumber').value;
+            settings.taxNumber = document.getElementById('taxNumber').value;
+            settings.companyAddress = document.getElementById('companyAddress').value;
+            settings.companyPhone = document.getElementById('companyPhone').value;
+            settings.companyEmail = document.getElementById('companyEmail').value;
+            settings.companyWebsite = document.getElementById('companyWebsite').value;
+            settings.businessType = document.getElementById('businessType').value;
+            
+            // حفظ الشعار إذا تم تحميله
+            const logoImg = document.querySelector('#logoPreview img');
+            if (logoImg) {
+                settings.companyLogo = logoImg.src;
+            }
+            
+            localStorage.setItem('financial_app_settings', JSON.stringify(settings));
+            alert('تم حفظ إعدادات الشركة بنجاح');
+        }
+
+        function saveFinancialSettings() {
+            const settings = JSON.parse(localStorage.getItem('financial_app_settings')) || {};
+            
+            settings.currency = document.getElementById('currency').value;
+            settings.taxRate = document.getElementById('taxRate').value;
+            settings.defaultDiscount = document.getElementById('defaultDiscount').value;
+            settings.invoicePrefix = document.getElementById('invoicePrefix').value;
+            settings.nextInvoiceNumber = document.getElementById('nextInvoiceNumber').value;
+            settings.paymentTerms = document.getElementById('paymentTerms').value;
+            settings.invoiceNotes = document.getElementById('invoiceNotes').value;
+            
+            localStorage.setItem('financial_app_settings', JSON.stringify(settings));
+            alert('تم حفظ الإعدادات المالية بنجاح');
+        }
+
+        function saveSystemSettings() {
+            const settings = JSON.parse(localStorage.getItem('financial_app_settings')) || {};
+            
+            settings.systemLanguage = document.getElementById('systemLanguage').value;
+            settings.dateFormat = document.getElementById('dateFormat').value;
+            settings.numberFormat = document.getElementById('numberFormat').value;
+            settings.timezone = document.getElementById('timezone').value;
+            
+            settings.autoLogout = document.getElementById('autoLogout').checked;
+            settings.passwordComplexity = document.getElementById('passwordComplexity').checked;
+            settings.twoFactorAuth = document.getElementById('twoFactorAuth').checked;
+            settings.loginNotifications = document.getElementById('loginNotifications').checked;
+            
+            settings.emailNotifications = document.getElementById('emailNotifications').checked;
+            settings.invoiceNotifications = document.getElementById('invoiceNotifications').checked;
+            settings.paymentNotifications = document.getElementById('paymentNotifications').checked;
+            settings.systemNotifications = document.getElementById('systemNotifications').checked;
+            
+            localStorage.setItem('financial_app_settings', JSON.stringify(settings));
+            alert('تم حفظ إعدادات النظام بنجاح');
+        }
+
+        function createBackup() {
+            const backup = {
+                financial_app_users: JSON.parse(localStorage.getItem('financial_app_users') || '[]'),
+                financial_app_customers: JSON.parse(localStorage.getItem('financial_app_customers') || '[]'),
+                financial_app_products: JSON.parse(localStorage.getItem('financial_app_products') || '[]'),
+                financial_app_invoices: JSON.parse(localStorage.getItem('financial_app_invoices') || '[]'),
+                financial_app_expenses: JSON.parse(localStorage.getItem('financial_app_expenses') || '[]'),
+                financial_app_settings: JSON.parse(localStorage.getItem('financial_app_settings') || '{}'),
+                backup_date: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(backup, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `backup_${new Date().toISOString().split('T')[0]}.json`;
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            localStorage.setItem('last_backup_date', new Date().toISOString());
+            updateBackupInfo();
+            alert('تم إنشاء نسخة احتياطية بنجاح');
+        }
+
+        function restoreBackup(backup) {
+            try {
+                for (const key in backup) {
+                    if (backup.hasOwnProperty(key) && key.startsWith('financial_app_')) {
+                        localStorage.setItem(key, JSON.stringify(backup[key]));
+                    }
+                }
+                alert('تم استعادة النسخة الاحتياطية بنجاح');
+                setTimeout(() => location.reload(), 1000);
+            } catch (error) {
+                alert('خطأ في استعادة النسخة الاحتياطية');
+                console.error('Restore error:', error);
+            }
+        }
+
+        function updateBackupInfo() {
+            let totalSize = 0;
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    totalSize += localStorage[key].length;
+                }
+            }
+            
+            document.getElementById('totalDataSize').textContent = Math.round(totalSize / 1024) + ' KB';
+            
+            const lastBackup = localStorage.getItem('last_backup_date');
+            if (lastBackup) {
+                document.getElementById('lastBackupDate').textContent = new Date(lastBackup).toLocaleDateString('ar-SA');
+            }
+        }
+
+        function clearAllData() {
+            if (confirm('هل أنت متأكد من حذف جميع البيانات؟ هذا الإجراء لا يمكن التراجع عنه.')) {
+                const keysToKeep = ['financial_app_settings', 'financial_app_current_user'];
+                
+                for (let key in localStorage) {
+                    if (localStorage.hasOwnProperty(key) && !keysToKeep.includes(key)) {
+                        localStorage.removeItem(key);
+                    }
+                }
+                
+                alert('تم حذف جميع البيانات');
+                updateBackupInfo();
+            }
+        }
+
+        function resetSettings() {
+            if (confirm('هل أنت متأكد من إعادة ضبط الإعدادات؟ سيتم فقدان جميع التخصيصات.')) {
+                localStorage.removeItem('financial_app_settings');
+                alert('تم إعادة ضبط الإعدادات');
+                setTimeout(() => location.reload(), 1000);
+            }
+        }
+
+        function checkDataIntegrity() {
+            // فحص سلامة البيانات الأساسية
+            const datasets = [
+                'financial_app_customers',
+                'financial_app_products', 
+                'financial_app_invoices',
+                'financial_app_expenses'
+            ];
+            
+            let errors = 0;
+            datasets.forEach(key => {
+                try {
+                    JSON.parse(localStorage.getItem(key) || '[]');
+                } catch (e) {
+                    errors++;
+                    console.error(`Error in ${key}:`, e);
+                }
+            });
+            
+            if (errors === 0) {
+                alert('✓ جميع البيانات سليمة ولا توجد أخطاء');
+            } else {
+                alert(`⚠ تم اكتشاف ${errors} أخطاء في البيانات. راجع console للتفاصيل.`);
+            }
+        }
+
+        function exportData() {
+            alert('ميزة التصدير قيد التطوير');
+        }
+
+        function resetCompanyForm() {
+            if (confirm('هل تريد إلغاء التغييرات؟')) {
+                loadSettings();
+            }
+        }
+
+        function resetFinancialForm() {
+            if (confirm('هل تريد إلغاء التغييرات؟')) {
+                loadSettings();
+            }
+        }
+
+        function resetSystemForm() {
+            if (confirm('هل تريد إلغاء التغييرات؟')) {
+                loadSettings();
+            }
+        }
+
+        function getUserInitials(name) {
+            return name ? name.split(' ').map(word => word[0]).join('').toUpperCase().substring(0, 2) : 'U';
+        }
+
+        function getRandomColor() {
+            const colors = ['#3366cc', '#dc3545', '#28a745', '#ffc107', '#17a2b8'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function toggleSidebar() {
+            document.getElementById('mainSidebar').classList.toggle('show');
+        }
+    </script>
+
+    <style>
+        /* أنماط خاصة بصفحة الإعدادات */
+        .settings-tabs {
+            margin-top: 2rem;
+        }
+
+        .tabs-header {
+            display: flex;
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            overflow-x: auto;
+            margin-bottom: 0;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary-color);
+            background: var(--bg-secondary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            background: var(--bg-secondary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .logo-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .logo-preview {
+            width: 100px;
+            height: 100px;
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+
+        .logo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .security-settings,
+        .notification-settings {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--radius-md);
+            transition: background 0.3s ease;
+        }
+
+        .checkbox-label:hover {
+            background: var(--bg-secondary);
+        }
+
+        .backup-info {
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .info-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .info-card h3 {
+            margin: 0 0 1rem 0;
+            color: var(--text-primary);
+        }
+
+        .info-card p {
+            margin: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .status-good {
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .danger-zone {
+            background: rgba(220, 53, 69, 0.1);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--danger-color);
+        }
+
+        .danger-zone p {
+            margin: 0 0 1rem 0;
+            color: var(--danger-color);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .tabs-header {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                border-bottom: 1px solid var(--border-color);
+                border-left: 3px solid transparent;
+            }
+            
+            .tab-btn.active {
+                border-bottom-color: var(--border-color);
+                border-left-color: var(--primary-color);
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

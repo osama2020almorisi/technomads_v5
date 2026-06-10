@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="تواصل معنا - TechNomads الريادة التقنية اليمنية">
+
+    <title>تواصل معنا | TechNomads</title>
+
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+
+    
+    
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CM085HTNT0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CM085HTNT0');
+</script>
+    
+    
+    <meta name="description" content="تواصل مع فريق TechNomads للاستفسارات وطلبات الخدمة والدعم الفني.">
+<meta name="keywords" content="اتصل بنا, TechNomads, استفسار, دعم فني, طلب خدمة">
+    
+    
+    <style>
+        /* ============================================
+           CONTACT PAGE CUSTOM STYLES
+           ============================================ */
+        
+        /* Hero Section */
+        .contact-hero {
+            position: relative;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #2A2D7C 0%, #4ECDC4 100%);
+            overflow: hidden;
+            padding: 120px 2rem 80px;
+        }
+        
+        .contact-hero .hero-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .contact-hero .hero-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .contact-hero .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-hero .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #FFD700, #FF6B6B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .contact-hero .hero-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .contact-methods {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .contact-method {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-method.phone {
+            background: #FF6B6B;
+            color: white;
+            box-shadow: 0 5px 20px rgba(255,107,107,0.3);
+        }
+        
+        .contact-method.whatsapp {
+            background: #25D366;
+            color: white;
+            box-shadow: 0 5px 20px rgba(37,211,102,0.3);
+        }
+        
+        .contact-method.email {
+            background: white;
+            color: #2A2D7C;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .contact-method:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .hero-wave {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            line-height: 0;
+        }
+        
+        .hero-wave svg {
+            width: 100%;
+            height: 60px;
+        }
+        
+        /* Contact Form Section */
+        .contact-form-section {
+            padding: 5rem 0;
+            background: var(--bg-light);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 3px;
+        }
+        
+        body.dark-mode .section-title {
+            color: var(--accent);
+        }
+        
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 1rem auto 0;
+        }
+        
+        /* Form Tabs */
+        .form-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(0,0,0,0.05);
+            padding-bottom: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        body.dark-mode .form-tabs {
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.8rem;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+        }
+        
+        .tab-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(42,45,124,0.3);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Contact Form Wrapper */
+        .contact-form-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg-light);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        body.dark-mode .contact-form-wrapper {
+            background: var(--card-bg-light);
+            border-color: rgba(255,255,255,0.05);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        body.dark-mode .form-group label {
+            color: var(--accent);
+        }
+        
+        .form-group label .required {
+            color: #FF6B6B;
+            margin-right: 3px;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+            color: var(--text-dark);
+        }
+        
+        body.dark-mode .form-group input,
+        body.dark-mode .form-group textarea,
+        body.dark-mode .form-group select {
+            border-color: rgba(255,255,255,0.1);
+            background: var(--card-bg-light);
+            color: var(--text-light);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(78,205,196,0.2);
+        }
+        
+        /* Service Grid */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.03);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        body.dark-mode .service-option {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .service-option:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-option.active {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        .service-option i {
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+        
+        .service-option.active i {
+            color: white;
+        }
+        
+        .service-option span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        /* File Upload */
+        .file-upload {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .file-upload input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .upload-area {
+            border: 2px dashed rgba(0,0,0,0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(0,0,0,0.02);
+        }
+        
+        body.dark-mode .upload-area {
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .file-upload.dragover .upload-area {
+            border-color: var(--accent);
+            background: rgba(78,205,196,0.05);
+        }
+        
+        .upload-area i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-area p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .upload-area p span {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+        
+        .upload-area small {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+        
+        .checkbox-group a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(42,45,124,0.3);
+        }
+        
+        /* Error Messages */
+        .error-message {
+            color: #FF6B6B;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        /* Send Options Modal */
+        .contact-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: var(--bg-light);
+            border-radius: 24px;
+            padding: 2rem;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-modal.active .modal-content {
+            transform: scale(1);
+        }
+        
+        body.dark-mode .modal-content {
+            background: #1e1e2e;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 36px;
+            height: 36px;
+            background: rgba(0,0,0,0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        body.dark-mode .modal-title {
+            color: var(--accent);
+        }
+        
+        .modal-message {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            padding: 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-option.whatsapp-option {
+            background: #25D366;
+            color: white;
+        }
+        
+        .contact-option.email-option {
+            background: #2A2D7C;
+            color: white;
+        }
+        
+        .contact-option.phone-option {
+            background: #FF6B6B;
+            color: white;
+        }
+        
+        .contact-option.copy-option {
+            background: var(--accent);
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .contact-option:hover {
+            transform: translateY(-3px);
+        }
+        
+        .modal-footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* Map Section */
+        .map-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+        
+        body.dark-mode .map-section {
+            background: #1a1a2e;
+        }
+        
+        .map-wrapper {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .map-wrapper iframe {
+            width: 100%;
+            height: 400px;
+            border: 0;
+            border-radius: 24px;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            padding: 5rem 0;
+            background: var(--bg-light);
+        }
+        
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .faq-item {
+            background: var(--card-bg-light);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        body.dark-mode .faq-item {
+            border-color: rgba(255,255,255,0.05);
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            background: none;
+            border: none;
+            text-align: right;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .faq-question {
+            color: var(--accent);
+        }
+        
+        .faq-question:hover {
+            background: rgba(78,205,196,0.05);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding: 0 1.5rem;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 1.5rem 1.2rem;
+        }
+        
+        .faq-answer p,
+        .faq-answer ul {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        
+        .faq-answer ul {
+            margin-right: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .faq-answer li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Floating Buttons */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 999;
+        }
+        
+        .floating-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+        
+        .floating-btn.whatsapp {
+            background: #25D366;
+        }
+        
+        .floating-btn.phone {
+            background: #FF6B6B;
+        }
+        
+        .floating-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+        
+        /* Mobile Nav Fix */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            background: var(--bg-light);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 1050;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        
+        body.dark-mode .mobile-nav {
+            background: var(--bg-light);
+        }
+        
+        .mobile-nav.active {
+            right: 0;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            background: white;
+            color: #333;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            z-index: 10001;
+            transform: translateX(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        body.dark-mode .notification {
+            background: #1e1e2e;
+            color: white;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .notification.success {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .notification.error {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .notification.info {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .contact-hero .hero-title {
+                font-size: 2rem;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .contact-hero {
+                padding: 100px 1rem 60px;
+            }
+            .contact-hero .hero-title {
+                font-size: 1.6rem;
+            }
+            .contact-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+            .contact-method {
+                width: 100%;
+                justify-content: center;
+            }
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-form-wrapper {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+            .form-tabs {
+                gap: 0.3rem;
+            }
+            .tab-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+            .map-wrapper iframe {
+                height: 300px;
+            }
+            .floating-buttons {
+                bottom: 20px;
+                left: 20px;
+            }
+            .floating-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         HEADER
+         ============================================ -->
+    <header class="smart-header" id="main-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-wrapper">
+                    <svg class="logo-svg" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2A2D7C"/>
+                                <stop offset="100%" stop-color="#4ECDC4"/>
+                            </linearGradient>
+                            <linearGradient id="logoGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#4ECDC4"/>
+                                <stop offset="100%" stop-color="#FF6B6B"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8" class="logo-circle"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="logo-triangle"/>
+                        <circle cx="100" cy="110" r="15" fill="url(#logoGrad)" class="logo-dot"/>
+                    </svg>
+                </div>
+                <span class="logo-text">TechNomads</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                    <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
+                    <li><a href="team.html" class="nav-link"><i class="fas fa-users"></i><span>الفريق</span></a></li>
+                    <li><a href="portfolio.html" class="nav-link"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
+                    <li><a href="contact.html" class="nav-link active cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="desktop-tools">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ar">عربي</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+            </div>
+
+            <button class="hamburger" id="hamburgerBtn" aria-label="القائمة">
+                <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+            </button>
+        </div>
+
+        <nav class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="mobile-logo-wrapper">
+                    <svg class="mobile-logo-svg" viewBox="0 0 200 200" width="40" height="40">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
+                        <circle cx="100" cy="110" r="15" fill="url(#logoGrad)"/>
+                    </svg>
+                </div>
+                <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <ul class="mobile-nav-list">
+                <li><a href="index.html" class="mobile-nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                <li><a href="services.html" class="mobile-nav-link"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
+                <li><a href="team.html" class="mobile-nav-link"><i class="fas fa-users"></i><span>الفريق</span></a></li>
+                <li><a href="portfolio.html" class="mobile-nav-link"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
+                <li><a href="contact.html" class="mobile-nav-link active cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
+            </ul>
+            <div class="mobile-nav-footer">
+                <div class="mobile-theme-toggle-wrapper">
+                    <span class="mobile-theme-label"><i class="fas fa-adjust"></i> الوضع</span>
+                    <button class="mobile-theme-toggle" id="mobileThemeToggle">
+                        <i class="fas fa-moon"></i>
+                        <span class="mobile-theme-text">داكن</span>
+                    </button>
+                </div>
+                <div class="mobile-language-switcher">
+                    <button class="mobile-lang-btn active" data-lang="ar">العربية</button>
+                    <button class="mobile-lang-btn" data-lang="en">English</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ============================================
+         MAIN CONTENT
+         ============================================ -->
+    <main>
+
+        <!-- Hero Section -->
+        <section class="contact-hero">
+            <div class="hero-container">
+                <div class="hero-content" data-aos="fade-up">
+                    <div class="hero-badge">
+                        <i class="fas fa-comments"></i>
+                        <span>نحن هنا لمساعدتك</span>
+                    </div>
+                    <h1 class="hero-title">تواصل <span class="gradient-text">معنا</span></h1>
+                    <p class="hero-subtitle">فريقنا متخصص في الرد على استفساراتك وتقديم الدعم اللازم. اختر طريقة التواصل المناسبة لك وسنكون سعداء بخدمتك.</p>
+                    <div class="contact-methods">
+                        <a href="tel:+967770200970" class="contact-method phone">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>اتصل بنا</span>
+                        </a>
+                        <a href="https://wa.me/967770200970" class="contact-method whatsapp" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>واتساب</span>
+                        </a>
+                        <a href="mailto:2025ooss@gmail.com" class="contact-method email">
+                            <i class="fas fa-envelope"></i>
+                            <span>البريد الإلكتروني</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-wave">
+                <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                    <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,58.7C1248,64,1344,64,1392,64L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" fill="var(--bg-light)"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact-form-section">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">أرسل رسالتك</h2>
+                <p class="section-subtitle">نحن في انتظار رسالتك، فريقنا سيرد عليك في أقرب وقت</p>
+            </div>
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <div class="form-tabs">
+                    <button class="tab-btn active" data-tab="request">طلب خدمة</button>
+                    <button class="tab-btn" data-tab="inquiry">استفسار عام</button>
+                    <button class="tab-btn" data-tab="support">دعم فني</button>
+                </div>
+
+                <!-- نموذج طلب خدمة -->
+                <div id="request-tab" class="tab-content active">
+                    <form id="serviceRequestForm" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>الاسم الكامل <span class="required">*</span></label>
+                                <input type="text" id="reqFullName" placeholder="أدخل اسمك الكامل">
+                                <div class="error-message" id="reqNameError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>البريد الإلكتروني <span class="required">*</span></label>
+                                <input type="email" id="reqEmail" placeholder="example@domain.com">
+                                <div class="error-message" id="reqEmailError"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>رقم الهاتف <span class="required">*</span></label>
+                                <input type="tel" id="reqPhone" placeholder="+967XXXXXXXXX">
+                                <div class="error-message" id="reqPhoneError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>اسم الشركة</label>
+                                <input type="text" id="reqCompany" placeholder="اسم الشركة (اختياري)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>نوع الخدمة <span class="required">*</span></label>
+                            <div class="service-grid" id="serviceGrid">
+                                <div class="service-option" data-value="موقع إلكتروني احترافي">
+                                    <i class="fas fa-globe"></i>
+                                    <span>موقع إلكتروني</span>
+                                </div>
+                                <div class="service-option" data-value="تطبيق جوال مخصص">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>تطبيق جوال</span>
+                                </div>
+                                <div class="service-option" data-value="تصميم هوية وشعار">
+                                    <i class="fas fa-paint-brush"></i>
+                                    <span>تصميم هوية</span>
+                                </div>
+                                <div class="service-option" data-value="استراتيجية تسويق رقمي">
+                                    <i class="fas fa-bullhorn"></i>
+                                    <span>تسويق رقمي</span>
+                                </div>
+                                <div class="service-option" data-value="التحول الرقمي والاستشارات">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span>استشارات تقنية</span>
+                                </div>
+                                <div class="service-option" data-value="خدمات أخرى">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                    <span>خدمات أخرى</span>
+                                </div>
+                            </div>
+                            <input type="hidden" id="selectedService">
+                            <div class="error-message" id="serviceError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>تفاصيل المشروع <span class="required">*</span></label>
+                            <textarea id="reqMessage" rows="5" placeholder="يرجى وصف احتياجاتك بالتفصيل، الميزانية المتوقعة، والجدول الزمني المطلوب..."></textarea>
+                            <div class="error-message" id="reqMessageError"></div>
+                        </div>
+                        <div class="file-upload">
+                            <input type="file" id="reqAttachment" accept=".pdf,.doc,.docx,.jpg,.png">
+                            <div class="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>اسحب وأسقط الملفات هنا أو <span>اختر ملف</span></p>
+                                <small>الحد الأقصى 5MB (PDF, DOC, JPG, PNG)</small>
+                            </div>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="agreeTerms">
+                            <label>أوافق على <a href="#">شروط الخدمة</a> و <a href="#">سياسة الخصوصية</a> <span class="required">*</span></label>
+                            <div class="error-message" id="termsError"></div>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            إرسال الطلب
+                        </button>
+                    </form>
+                </div>
+
+                <!-- نموذج استفسار عام -->
+                <div id="inquiry-tab" class="tab-content">
+                    <form id="generalInquiryForm" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>الاسم الكامل <span class="required">*</span></label>
+                                <input type="text" id="inqFullName" placeholder="أدخل اسمك الكامل">
+                                <div class="error-message" id="inqNameError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>البريد الإلكتروني <span class="required">*</span></label>
+                                <input type="email" id="inqEmail" placeholder="example@domain.com">
+                                <div class="error-message" id="inqEmailError"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>رقم الهاتف</label>
+                            <input type="tel" id="inqPhone" placeholder="+967XXXXXXXXX (اختياري)">
+                        </div>
+                        <div class="form-group">
+                            <label>الموضوع <span class="required">*</span></label>
+                            <input type="text" id="inqSubject" placeholder="موضوع الاستفسار">
+                            <div class="error-message" id="inqSubjectError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>الرسالة <span class="required">*</span></label>
+                            <textarea id="inqMessage" rows="5" placeholder="اكتب استفسارك هنا..."></textarea>
+                            <div class="error-message" id="inqMessageError"></div>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            إرسال الاستفسار
+                        </button>
+                    </form>
+                </div>
+
+                <!-- نموذج دعم فني -->
+                <div id="support-tab" class="tab-content">
+                    <form id="techSupportForm" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>الاسم الكامل <span class="required">*</span></label>
+                                <input type="text" id="supFullName" placeholder="أدخل اسمك الكامل">
+                                <div class="error-message" id="supNameError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>البريد الإلكتروني <span class="required">*</span></label>
+                                <input type="email" id="supEmail" placeholder="example@domain.com">
+                                <div class="error-message" id="supEmailError"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>رقم الهاتف <span class="required">*</span></label>
+                                <input type="tel" id="supPhone" placeholder="+967XXXXXXXXX">
+                                <div class="error-message" id="supPhoneError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>رقم الطلب (إن وجد)</label>
+                                <input type="text" id="supTicket" placeholder="رقم تذكرة الدعم">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>نوع المشكلة <span class="required">*</span></label>
+                            <select id="supType">
+                                <option value="">اختر نوع المشكلة</option>
+                                <option value="مشكلة تقنية">مشكلة تقنية</option>
+                                <option value="مشكلة في الفواتير">مشكلة في الفواتير</option>
+                                <option value="مشكلة في الحساب">مشكلة في الحساب</option>
+                                <option value="أخرى">أخرى</option>
+                            </select>
+                            <div class="error-message" id="supTypeError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>وصف المشكلة <span class="required">*</span></label>
+                            <textarea id="supMessage" rows="5" placeholder="صف المشكلة بالتفصيل، وإذا كان هناك رسالة خطأ يرجى إرفاقها..."></textarea>
+                            <div class="error-message" id="supMessageError"></div>
+                        </div>
+                        <div class="file-upload">
+                            <input type="file" id="supAttachment" accept=".pdf,.doc,.docx,.jpg,.png">
+                            <div class="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>اسحب وأسقط الملفات هنا أو <span>اختر ملف</span></p>
+                                <small>الحد الأقصى 5MB (PDF, DOC, JPG, PNG)</small>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            إرسال طلب الدعم
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">موقعنا على الخريطة</h2>
+                <p class="section-subtitle">كيف تصل إلينا</p>
+            </div>
+            <div class="map-wrapper" data-aos="fade-up">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24480.123456789!2d44.1234567!3d15.1234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDA3JzI0LjQiTiA0NMKwMDcnMjguNiJF!5e0!3m2!1sen!2sye!4v1234567890123!5m2!1sen!2sye" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    title="خريطة موقع TechNomads">
+                </iframe>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">الأسئلة الشائعة</h2>
+                <p class="section-subtitle">أجوبة على أكثر الأسئلة تكراراً</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item" data-aos="fade-up">
+                    <button class="faq-question">
+                        <span>ما هي طرق الدفع المتاحة؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>نقبل عدة طرق للدفع لتسهيل التعامل مع عملائنا:</p>
+                        <ul>
+                            <li>التحويل البنكي المباشر</li>
+                            <li>بطاقات الائتمان والخصم (Visa, MasterCard)</li>
+                            <li>المحافظ الإلكترونية</li>
+                            <li>الدفع نقداً في مقر الشركة</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <button class="faq-question">
+                        <span>كم تستغرق مدة تنفيذ المشروع؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>تختلف مدة التنفيذ حسب نوع وحجم المشروع:</p>
+                        <ul>
+                            <li>المواقع الإلكترونية البسيطة: 2-4 أسابيع</li>
+                            <li>المواقع المتوسطة: 4-8 أسابيع</li>
+                            <li>المواقع المعقدة والتطبيقات: 8-16 أسبوع</li>
+                            <li>تصاميم الهوية: 1-3 أسابيع</li>
+                        </ul>
+                        <p>سيتم تحديد جدول زمني دقيق بعد دراسة متطلبات المشروع.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <button class="faq-question">
+                        <span>هل تقدمون دعمًا فنيًا بعد التسليم؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>نعم، نقدم حزم دعم فني متنوعة حسب احتياجات العميل:</p>
+                        <ul>
+                            <li>دعم مجاني لمدة 30 يوم بعد التسليم</li>
+                            <li>باقات دعم شهري أو سنوي</li>
+                            <li>دعم على مدار الساعة للمشاريع الكبيرة</li>
+                            <li>صيانة دورية وتحديثات</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                    <button class="faq-question">
+                        <span>كيف يمكنني تتبع تقدم المشروع؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>نوفر عدة قنوات لمتابعة المشروع:</p>
+                        <ul>
+                            <li>نظام متابعة إلكتروني خاص بالعملاء</li>
+                            <li>تقارير أسبوعية عن التقدم</li>
+                            <li>اجتماعات دورية (حضورية أو عن بعد)</li>
+                            <li>قناة اتصال مباشر مع مدير المشروع</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="smart-footer">
+        <div class="footer-waves">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="var(--primary)" fill-opacity="1" d="M0,192L48,186.7C96,181,192,171,288,181.3C384,192,480,224,576,218.7C672,213,768,171,864,165.3C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
+        <div class="footer-container">
+            <div class="footer-section footer-brand">
+                <div class="footer-logo-wrapper">
+                    <svg class="footer-logo-svg" viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8" opacity="0.9"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+                        <circle cx="100" cy="110" r="15" fill="white" opacity="0.9"/>
+                    </svg>
+                </div>
+                <h3 class="footer-brand-title">TechNomads</h3>
+                <p class="footer-about">نصنع التقنية بإبداع، نقدم حلولاً رقمية متكاملة تلبي احتياجات عملائنا بأعلى معايير الجودة.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="services.html"><i class="fas fa-cogs"></i> الخدمات</a></li>
+                    <li><a href="team.html"><i class="fas fa-users"></i> فريق العمل</a></li>
+                    <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> معرض الأعمال</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">تواصل معنا</h3>
+                <div class="contact-info">
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>صنعاء، اليمن</span></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:+967770200970">+967770200970</a></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:2025ooss@gmail.com">2025ooss@gmail.com</a></div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">النشرة البريدية</h3>
+                <form class="newsletter-form" id="footerNewsletter">
+                    <div class="newsletter-input-wrapper">
+                        <i class="fas fa-envelope newsletter-icon"></i>
+                        <input type="email" placeholder="بريدك الإلكتروني" required>
+                    </div>
+                    <button type="submit" class="subscribe-btn">اشترك <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright-section">
+            <div class="copyright-content">
+                <p>© <span class="current-year">2024</span> TechNomads. جميع الحقوق محفوظة</p>
+                <div class="footer-links-inline">
+                    <a href="#">شروط الخدمة</a><span class="separator">|</span><a href="#">سياسة الخصوصية</a>
+                </div>
+            </div>
+            <div class="footer-bottom-bar"><span>صُنع بـ <i class="fas fa-heart"></i> في اليمن</span></div>
+        </div>
+    </footer>
+
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        <a href="https://wa.me/967770200970" class="floating-btn whatsapp" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="tel:+967770200970" class="floating-btn phone">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+    </div>
+
+    <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Send Data Modal (كما في الصفحة القديمة) -->
+    <div class="contact-modal" id="sendDataModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSendModal()"><i class="fas fa-times"></i></button>
+            <h3 class="modal-title">اختر طريقة الإرسال</h3>
+            <p class="modal-message">كيف تفضل إرسال بيانات الطلب؟</p>
+            <div class="contact-options" id="dataSendOptions"></div>
+            <div class="modal-footer">
+                <button class="contact-option copy-option" onclick="closeSendModal()" style="background:#95a5a6;">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true, offset: 100 });
+        
+        // Update copyright year
+        document.querySelectorAll('.current-year').forEach(el => el.textContent = new Date().getFullYear());
+
+        // ============================================
+        // HAMBURGER MENU FIX
+        // ============================================
+        (function() {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            const closeNavBtn = document.getElementById('closeNavBtn');
+            
+            if (hamburger && mobileNav) {
+                function toggleMenu() {
+                    mobileNav.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                    const isOpen = mobileNav.classList.contains('active');
+                    hamburger.setAttribute('aria-expanded', isOpen);
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                }
+                
+                hamburger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleMenu();
+                });
+                
+                if (closeNavBtn) {
+                    closeNavBtn.addEventListener('click', toggleMenu);
+                }
+                
+                document.addEventListener('click', function(e) {
+                    if (mobileNav.classList.contains('active') && 
+                        !mobileNav.contains(e.target) && 
+                        !hamburger.contains(e.target)) {
+                        toggleMenu();
+                    }
+                });
+                
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
+                
+                mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
+                    link.addEventListener('click', toggleMenu);
+                });
+            }
+        })();
+
+        // Tab switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab') + '-tab';
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Service selection
+        const serviceOptions = document.querySelectorAll('.service-option');
+        const selectedService = document.getElementById('selectedService');
+        
+        serviceOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                serviceOptions.forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
+                selectedService.value = opt.getAttribute('data-value');
+                document.getElementById('serviceError')?.classList.remove('show');
+            });
+        });
+
+        // File upload handlers
+        function setupFileUpload(fileInputId, uploadAreaSelector) {
+            const fileInput = document.getElementById(fileInputId);
+            const uploadArea = document.querySelector(uploadAreaSelector);
+            
+            if (!fileInput || !uploadArea) return;
+            
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    uploadArea.innerHTML = `
+                        <i class="fas fa-check-circle"></i>
+                        <p>تم اختيار الملف: <span>${this.files[0].name}</span></p>
+                        <small>انقر لتغيير الملف</small>
+                    `;
+                }
+            });
+            
+            uploadArea.addEventListener('click', () => fileInput.click());
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.parentElement.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.parentElement.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.parentElement.classList.remove('dragover');
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    const event = new Event('change');
+                    fileInput.dispatchEvent(event);
+                }
+            });
+        }
+        
+        setupFileUpload('reqAttachment', '#request-tab .upload-area');
+        setupFileUpload('supAttachment', '#support-tab .upload-area');
+
+        // Form validation helpers
+        function showError(elementId, message) {
+            const errorEl = document.getElementById(elementId);
+            if (errorEl) {
+                errorEl.textContent = message;
+                errorEl.classList.add('show');
+            }
+        }
+        
+        function hideErrors(formIdPrefix) {
+            document.querySelectorAll(`.error-message`).forEach(el => {
+                el.classList.remove('show');
+                el.textContent = '';
+            });
+        }
+        
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        function validatePhone(phone) {
+            return /^[\d\s\+-]{8,}$/.test(phone);
+        }
+        
+        // دالة إنشاء الرسالة المنسقة (كما في الصفحة القديمة)
+        function formatMessage(data, type) {
+            const date = new Date().toLocaleString('ar-SA');
+            let message = `📋 *طلب جديد من موقع TechNomads*\n`;
+            message += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            message += `📅 *التاريخ:* ${date}\n`;
+            message += `📌 *نوع الطلب:* ${type}\n`;
+            message += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            message += `👤 *الاسم:* ${data.name}\n`;
+            message += `📧 *البريد الإلكتروني:* ${data.email}\n`;
+            message += `📞 *رقم الهاتف:* ${data.phone}\n`;
+            
+            if (data.company) message += `🏢 *الشركة:* ${data.company}\n`;
+            
+            if (type === 'طلب خدمة') {
+                message += `🛠️ *الخدمة المطلوبة:* ${data.service}\n`;
+                message += `📝 *تفاصيل المشروع:*\n${data.message}\n`;
+                if (data.fileName) message += `📎 *الملف المرفق:* ${data.fileName}\n`;
+            } else if (type === 'استفسار عام') {
+                message += `📌 *الموضوع:* ${data.subject}\n`;
+                message += `💬 *الرسالة:*\n${data.message}\n`;
+            } else if (type === 'دعم فني') {
+                message += `🔧 *نوع المشكلة:* ${data.problemType}\n`;
+                if (data.ticketNumber) message += `🎫 *رقم الطلب:* ${data.ticketNumber}\n`;
+                message += `⚠️ *وصف المشكلة:*\n${data.message}\n`;
+                if (data.fileName) message += `📎 *الملف المرفق:* ${data.fileName}\n`;
+            }
+            
+            message += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            message += `🔗 *تم الإرسال من:* TechNomads\n`;
+            return message;
+        }
+        
+        // دالة عرض خيارات الإرسال
+        let currentFormData = null;
+        let currentMessageType = '';
+        
+        function showSendOptions(data, type) {
+            currentFormData = data;
+            currentMessageType = type;
+            
+            const formattedMessage = formatMessage(data, type);
+            const encodedMessage = encodeURIComponent(formattedMessage);
+            const subject = encodeURIComponent(`${type} من ${data.name}`);
+            
+            const optionsContainer = document.getElementById('dataSendOptions');
+            optionsContainer.innerHTML = `
+                <a href="https://wa.me/967770200970?text=${encodedMessage}" 
+                   class="contact-option whatsapp-option" 
+                   target="_blank"
+                   onclick="closeSendModal()">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>إرسال عبر واتساب</span>
+                </a>
+                <a href="mailto:2025ooss@gmail.com?subject=${subject}&body=${encodedMessage}" 
+                   class="contact-option email-option"
+                   onclick="closeSendModal()">
+                    <i class="fas fa-envelope"></i>
+                    <span>إرسال عبر البريد الإلكتروني</span>
+                </a>
+                <button class="contact-option copy-option" onclick="copyToClipboard('${encodedMessage.replace(/'/g, "\\'")}')">
+                    <i class="fas fa-copy"></i>
+                    <span>نسخ النص</span>
+                </button>
+            `;
+            
+            document.getElementById('sendDataModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeSendModal() {
+            document.getElementById('sendDataModal').classList.remove('active');
+            document.body.style.overflow = '';
+            currentFormData = null;
+        }
+        
+        function copyToClipboard(encodedText) {
+            const decodedText = decodeURIComponent(encodedText);
+            navigator.clipboard.writeText(decodedText).then(() => {
+                showNotification('تم نسخ النص بنجاح!', 'success');
+            }).catch(() => {
+                showNotification('فشل في نسخ النص', 'error');
+            });
+        }
+        
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i> ${message}`;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.classList.add('show'), 10);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        window.closeSendModal = closeSendModal;
+        window.copyToClipboard = copyToClipboard;
+        
+        // ============================================
+        // نموذج طلب خدمة
+        // ============================================
+        const serviceForm = document.getElementById('serviceRequestForm');
+        if (serviceForm) {
+            serviceForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                hideErrors();
+                
+                let isValid = true;
+                
+                const name = document.getElementById('reqFullName').value.trim();
+                const email = document.getElementById('reqEmail').value.trim();
+                const phone = document.getElementById('reqPhone').value.trim();
+                const company = document.getElementById('reqCompany').value.trim();
+                const service = selectedService.value;
+                const message = document.getElementById('reqMessage').value.trim();
+                const terms = document.getElementById('agreeTerms').checked;
+                const fileInput = document.getElementById('reqAttachment');
+                const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : null;
+                
+                if (!name) { showError('reqNameError', 'الاسم الكامل مطلوب'); isValid = false; }
+                if (!email) { showError('reqEmailError', 'البريد الإلكتروني مطلوب'); isValid = false; }
+                else if (!validateEmail(email)) { showError('reqEmailError', 'البريد الإلكتروني غير صالح'); isValid = false; }
+                if (!phone) { showError('reqPhoneError', 'رقم الهاتف مطلوب'); isValid = false; }
+                else if (!validatePhone(phone)) { showError('reqPhoneError', 'رقم الهاتف غير صالح'); isValid = false; }
+                if (!service) { showError('serviceError', 'يرجى اختيار نوع الخدمة'); isValid = false; }
+                if (!message) { showError('reqMessageError', 'تفاصيل المشروع مطلوبة'); isValid = false; }
+                else if (message.length < 20) { showError('reqMessageError', 'يرجى إدخال تفاصيل كافية (20 حرف على الأقل)'); isValid = false; }
+                if (!terms) { showError('termsError', 'يجب الموافقة على الشروط والأحكام'); isValid = false; }
+                
+                if (isValid) {
+                    const formData = {
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        company: company,
+                        service: service,
+                        message: message,
+                        fileName: fileName
+                    };
+                    showSendOptions(formData, 'طلب خدمة');
+                }
+            });
+        }
+        
+        // ============================================
+        // نموذج استفسار عام
+        // ============================================
+        const inquiryForm = document.getElementById('generalInquiryForm');
+        if (inquiryForm) {
+            inquiryForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                hideErrors();
+                
+                let isValid = true;
+                
+                const name = document.getElementById('inqFullName').value.trim();
+                const email = document.getElementById('inqEmail').value.trim();
+                const phone = document.getElementById('inqPhone').value.trim();
+                const subject = document.getElementById('inqSubject').value.trim();
+                const message = document.getElementById('inqMessage').value.trim();
+                
+                if (!name) { showError('inqNameError', 'الاسم الكامل مطلوب'); isValid = false; }
+                if (!email) { showError('inqEmailError', 'البريد الإلكتروني مطلوب'); isValid = false; }
+                else if (!validateEmail(email)) { showError('inqEmailError', 'البريد الإلكتروني غير صالح'); isValid = false; }
+                if (!subject) { showError('inqSubjectError', 'الموضوع مطلوب'); isValid = false; }
+                if (!message) { showError('inqMessageError', 'الرسالة مطلوبة'); isValid = false; }
+                
+                if (isValid) {
+                    const formData = {
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        subject: subject,
+                        message: message
+                    };
+                    showSendOptions(formData, 'استفسار عام');
+                }
+            });
+        }
+        
+        // ============================================
+        // نموذج دعم فني
+        // ============================================
+        const supportForm = document.getElementById('techSupportForm');
+        if (supportForm) {
+            supportForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                hideErrors();
+                
+                let isValid = true;
+                
+                const name = document.getElementById('supFullName').value.trim();
+                const email = document.getElementById('supEmail').value.trim();
+                const phone = document.getElementById('supPhone').value.trim();
+                const ticketNumber = document.getElementById('supTicket').value.trim();
+                const problemType = document.getElementById('supType').value;
+                const message = document.getElementById('supMessage').value.trim();
+                const fileInput = document.getElementById('supAttachment');
+                const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : null;
+                
+                if (!name) { showError('supNameError', 'الاسم الكامل مطلوب'); isValid = false; }
+                if (!email) { showError('supEmailError', 'البريد الإلكتروني مطلوب'); isValid = false; }
+                else if (!validateEmail(email)) { showError('supEmailError', 'البريد الإلكتروني غير صالح'); isValid = false; }
+                if (!phone) { showError('supPhoneError', 'رقم الهاتف مطلوب'); isValid = false; }
+                else if (!validatePhone(phone)) { showError('supPhoneError', 'رقم الهاتف غير صالح'); isValid = false; }
+                if (!problemType) { showError('supTypeError', 'يرجى اختيار نوع المشكلة'); isValid = false; }
+                if (!message) { showError('supMessageError', 'وصف المشكلة مطلوب'); isValid = false; }
+                
+                if (isValid) {
+                    const formData = {
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        ticketNumber: ticketNumber,
+                        problemType: problemType,
+                        message: message,
+                        fileName: fileName
+                    };
+                    showSendOptions(formData, 'دعم فني');
+                }
+            });
+        }
+        
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+        
+        // Close modal on escape and click outside
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeSendModal();
+        });
+        
+        const modal = document.getElementById('sendDataModal');
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeSendModal();
+            });
+        }
+        
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+        
+        // Newsletter form
+        const footerNewsletter = document.getElementById('footerNewsletter');
+        if (footerNewsletter) {
+            footerNewsletter.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = footerNewsletter.querySelector('input');
+                if (input && input.value) {
+                    showNotification('شكراً للاشتراك في نشرتنا البريدية!', 'success');
+                    input.value = '';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقارير المالية - المحاسب المالي</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/modules.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* تحسينات التصميم */
+        .report-tabs {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .report-tab {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex: 1;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .report-tab:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .report-tab.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .report-tab i {
+            font-size: 1.2rem;
+        }
+
+        /* تحسينات البطاقات الإحصائية */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            padding: 2rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            color: var(--primary-color);
+        }
+
+        .stat-info h3 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-info p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        /* تحسينات الرسوم البيانية */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .chart-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .chart-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .chart-header h3 {
+            margin: 0;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .chart-container {
+            height: 350px;
+            position: relative;
+        }
+
+        /* تحسينات المعاملات الحديثة */
+        .recent-activity {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .activity-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .activity-header h3 {
+            margin: 0;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .activity-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .transaction-item:hover {
+            background: var(--bg-secondary);
+            transform: translateX(5px);
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-info {
+            flex: 1;
+        }
+
+        .transaction-desc {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .transaction-type {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .transaction-amount {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 0 1rem;
+        }
+
+        .transaction-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            min-width: 100px;
+            text-align: left;
+        }
+
+        .text-success {
+            color: var(--success-color) !important;
+        }
+
+        .text-danger {
+            color: var(--danger-color) !important;
+        }
+
+        /* تحسينات الفلاتر */
+        .search-filter {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* تحسينات الاستجابة */
+        @media (max-width: 1200px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .report-tabs {
+                flex-direction: column;
+            }
+            
+            .report-tab {
+                min-width: auto;
+                justify-content: flex-start;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .transaction-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .transaction-amount {
+                margin: 0;
+                font-size: 1.2rem;
+            }
+            
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stat-card {
+                padding: 1.5rem;
+            }
+            
+            .stat-info h3 {
+                font-size: 1.8rem;
+            }
+            
+            .chart-card {
+                padding: 1.5rem;
+            }
+            
+            .chart-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        /* تحسينات الشعار */
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* تحسينات الطباعة */
+        @media print {
+            .header-actions,
+            .sidebar-toggle,
+            .search-filter,
+            .report-tabs {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin: 0 !important;
+                padding: 1rem !important;
+            }
+            
+            .stat-card,
+            .chart-card,
+            .recent-activity {
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* تحسينات التمرير */
+        .activity-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .activity-list::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 3px;
+        }
+
+        .activity-list::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .activity-list::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* تحسينات الرسوم المتحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-card,
+        .chart-card,
+        .recent-activity {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+    
+        /* تحسينات الوضع الليلي */
+        body.dark-mode {
+            --text-primary: #e2e8f0;
+            --text-secondary: #cbd5e0;
+            --text-muted: #a0aec0;
+            --text-light: #718096;
+            
+            --bg-primary: #1a202c;
+            --bg-secondary: #2d3748;
+            --bg-tertiary: #4a5568;
+            
+            --border-color: #4a5568;
+            --border-light: #2d3748;
+            --border-dark: #718096;
+        }
+
+        body.dark-mode .main-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #2d3748 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        body.dark-mode .search-box input {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        body.dark-mode .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        body.dark-mode .main-sidebar {
+            background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
+            border-left-color: var(--border-color);
+        }
+
+        body.dark-mode .sidebar-search input {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        body.dark-mode .nav-item a {
+            color: var(--text-secondary);
+        }
+
+        body.dark-mode .nav-item a:hover,
+        body.dark-mode .nav-item.active a {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+        }
+
+        body.dark-mode .sidebar-footer {
+            background: var(--bg-secondary);
+            border-top-color: var(--border-color);
+        }
+
+        body.dark-mode .main-content {
+            background: var(--bg-primary);
+        }
+
+        body.dark-mode .main-footer {
+            background: var(--bg-primary);
+            border-top-color: var(--border-color);
+        }
+
+        body.dark-mode .notification-dropdown {
+            background: var(--bg-primary);
+            border-color: var(--border-color);
+        }
+
+        body.dark-mode .notification-header {
+            background: var(--bg-secondary);
+            border-bottom-color: var(--border-color);
+        }
+
+        body.dark-mode .notification-item {
+            border-bottom-color: var(--border-color);
+        }
+
+        body.dark-mode .dropdown-menu {
+            background: var(--bg-primary);
+            border-color: var(--border-color);
+        }
+
+        body.dark-mode .dropdown-item {
+            color: var(--text-primary);
+        }
+
+        body.dark-mode .dropdown-item:hover {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+        }
+
+        body.dark-mode .stat-card,
+        body.dark-mode .chart-card,
+        body.dark-mode .recent-activity,
+        body.dark-mode .search-filter {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .stat-info h3,
+        body.dark-mode .chart-header h3,
+        body.dark-mode .activity-header h3 {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .stat-info p,
+        body.dark-mode .transaction-type,
+        body.dark-mode .transaction-date {
+            color: #a0aec0;
+        }
+
+        body.dark-mode .transaction-item:hover {
+            background: rgba(66, 153, 225, 0.1);
+        }
+
+        body.dark-mode .form-group label {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode #dateFrom,
+        body.dark-mode #dateTo {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        body.dark-mode #dateFrom:focus,
+        body.dark-mode #dateTo:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.3);
+        }
+
+        /* تحسينات المخططات في الوضع الليلي */
+        body.dark-mode .apexcharts-gridline {
+            stroke: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body.dark-mode .apexcharts-text {
+            fill: #e2e8f0 !important;
+        }
+
+        body.dark-mode .apexcharts-legend-text {
+            color: #e2e8f0 !important;
+        }
+
+        body.dark-mode .apexcharts-tooltip {
+            background: #2d3748 !important;
+            border-color: #4a5568 !important;
+        }
+
+        body.dark-mode .apexcharts-tooltip-title {
+            background: #1a202c !important;
+            border-bottom-color: #4a5568 !important;
+            color: #e2e8f0 !important;
+        }
+
+        body.dark-mode .apexcharts-tooltip-text {
+            color: #e2e8f0 !important;
+        }
+
+        /* تحسينات Chart.js في الوضع الليلي */
+        body.dark-mode .chartjs-render-monitor {
+            filter: brightness(0.9) contrast(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="تبديل القائمة الجانبية">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="شعار المحاسب المالي" id="headerLogo" onerror="handleLogoError(this)">
+                <span>المحاسب المالي</span>
+            </div>
+
+            <div class="header-actions">
+                <div class="user-menu">
+                    <div class="user-avatar" id="userAvatar" role="img" aria-label="صورة المستخدم"></div>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle" aria-label="قائمة المستخدم">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item" onclick="toggleDarkMode()">
+                                <i class="fas fa-moon"></i> الوضع الليلي
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar" id="mainSidebar">
+        <nav class="sidebar-nav" aria-label="القائمة الرئيسية">
+            <ul>
+                <li class="nav-item">
+                    <a href="../dashboard.html">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../invoices/list.html">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>الفواتير</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../customers/list.html">
+                        <i class="fas fa-users"></i>
+                        <span>العملاء</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../products/list.html">
+                        <i class="fas fa-box"></i>
+                        <span>المنتجات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../expenses/list.html">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>المصروفات</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="financial.html" aria-current="page">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>التقارير</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../settings/company.html">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <div class="page-header">
+            <h1>التقارير المالية</h1>
+            <div class="header-actions">
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle">
+                        <i class="fas fa-download"></i> تصدير
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item" onclick="exportReportToPDF('financial')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                        <button class="dropdown-item" onclick="exportReportToExcel('financial')">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </button>
+                    </div>
+                </div>
+                <button class="btn btn-info" onclick="printReport()">
+                    <i class="fas fa-print"></i> طباعة
+                </button>
+            </div>
+        </div>
+
+        <!-- Report Tabs -->
+        <div class="report-tabs">
+            <a href="financial.html" class="report-tab active">
+                <i class="fas fa-chart-line"></i> التقارير المالية
+            </a>
+            <a href="sales.html" class="report-tab">
+                <i class="fas fa-shopping-cart"></i> تقارير المبيعات
+            </a>
+            <a href="tax.html" class="report-tab">
+                <i class="fas fa-receipt"></i> تقارير الضرائب
+            </a>
+        </div>
+
+        <!-- Date Filter -->
+        <div class="search-filter">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dateFrom">من تاريخ</label>
+                    <input type="date" id="dateFrom" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="dateTo">إلى تاريخ</label>
+                    <input type="date" id="dateTo" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary" onclick="updateReports()">
+                        <i class="fas fa-filter"></i> تطبيق الفلتر
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Reports Section -->
+        <div class="report-section active" id="financial-reports">
+            <!-- الإحصائيات السريعة -->
+            <div class="stats-grid">
+                <div class="stat-card" id="totalRevenue">
+                    <div class="stat-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>0.00</h3>
+                        <p>إجمالي الإيرادات</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card" id="totalExpenses">
+                    <div class="stat-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>0.00</h3>
+                        <p>إجمالي المصروفات</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card" id="netProfit">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>0.00</h3>
+                        <p>صافي الربح</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card" id="profitMargin">
+                    <div class="stat-icon">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>0%</h3>
+                        <p>هامش الربح</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الرسوم البيانية -->
+            <div class="charts-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>الإيرادات والمصروفات</h3>
+                        <div class="chart-legend">
+                            <span class="legend-item" style="color: #28a745;">
+                                <i class="fas fa-square"></i> الإيرادات
+                            </span>
+                            <span class="legend-item" style="color: #dc3545;">
+                                <i class="fas fa-square"></i> المصروفات
+                            </span>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueExpensesChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>صافي الربح الشهري</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="profitChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- آخر المعاملات -->
+            <div class="recent-activity">
+                <div class="activity-header">
+                    <h3>آخر المعاملات</h3>
+                    <span class="badge bg-primary" id="transactionsCount">0 معاملة</span>
+                </div>
+                <div class="activity-list" id="recentTransactions">
+                    <div class="empty-state">
+                        <i class="fas fa-receipt"></i>
+                        <p>لا توجد معاملات حديثة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ===== دوال الوضع الليلي =====
+        function toggleDarkMode() {
+            const isDarkMode = !document.body.classList.contains('dark-mode');
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('dark_mode', isDarkMode);
+            
+            showAlert('success', `تم ${isDarkMode ? 'تفعيل' : 'تعطيل'} الوضع الليلي`);
+            
+            // إعادة تحميل المخططات لتطبيق التغييرات
+            setTimeout(() => {
+                loadFinancialReports();
+            }, 300);
+        }
+
+        function applyDarkMode() {
+            const isDarkMode = localStorage.getItem('dark_mode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+
+        // ===== دوال المصادقة =====
+        function isLoggedIn() {
+            return getCurrentUser() !== null;
+        }
+
+        function getCurrentUser() {
+            try {
+                return JSON.parse(localStorage.getItem('financial_app_current_user')) || null;
+            } catch (error) {
+                console.error('خطأ في تحميل بيانات المستخدم:', error);
+                return null;
+            }
+        }
+
+        function logout() {
+            if (confirm('هل تريد تسجيل الخروج؟')) {
+                localStorage.removeItem('financial_app_current_user');
+                window.location.href = '../index.html';
+            }
+        }
+
+        // ===== دوال التنبيهات =====
+        function showAlert(type, message, duration = 5000) {
+            const existingAlert = document.querySelector('.alert');
+            if (existingAlert) {
+                existingAlert.remove();
+            }
+            
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.setAttribute('role', 'alert');
+            alert.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" aria-label="إغلاق التنبيه">×</button>
+            `;
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                if (alert.parentElement) {
+                    alert.remove();
+                }
+            }, duration);
+        }
+
+        // ===== دوال بيانات المستخدم =====
+        function loadUserData() {
+            const user = getCurrentUser();
+            if (!user) return;
+            
+            const userAvatarElement = document.getElementById('userAvatar');
+            if (userAvatarElement) {
+                updateUserAvatar(userAvatarElement, user);
+            }
+        }
+
+        function updateUserAvatar(element, userData) {
+            element.innerHTML = '';
+            
+            if (userData.avatar) {
+                const img = document.createElement('img');
+                img.src = userData.avatar;
+                img.alt = "صورة المستخدم";
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                img.style.borderRadius = '50%';
+                element.appendChild(img);
+            } else {
+                const initials = getUserInitials(userData.fullName);
+                const randomColor = userData.avatarColor || getRandomColor();
+                
+                const initialsDiv = document.createElement('div');
+                initialsDiv.textContent = initials;
+                initialsDiv.style.display = 'flex';
+                initialsDiv.style.alignItems = 'center';
+                initialsDiv.style.justifyContent = 'center';
+                initialsDiv.style.width = '100%';
+                initialsDiv.style.height = '100%';
+                initialsDiv.style.backgroundColor = randomColor;
+                initialsDiv.style.color = 'white';
+                initialsDiv.style.fontWeight = '600';
+                initialsDiv.style.borderRadius = '50%';
+                element.appendChild(initialsDiv);
+            }
+        }
+
+        function getUserInitials(name) {
+            if (!name) return 'U';
+            return name.split(' ').map(word => word[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        function getRandomColor() {
+            const colors = [
+                '#3366cc', '#dc3545', '#28a745', '#ffc107', 
+                '#17a2b8', '#6f42c1', '#fd7e14', '#20c997'
+            ];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // ===== دوال التخزين =====
+        function initializeStorage() {
+            const isInitialized = localStorage.getItem('financial_app_initialized');
+            
+            if (!isInitialized) {
+                try {
+                    const defaultSettings = {
+                        currency: 'ريال يمني',
+                        currency_code: 'ر.ي',
+                        tax_rate: 15,
+                        company_name: 'شركتي',
+                        company_logo: '',
+                        company_tax_number: '',
+                        company_address: '',
+                        company_phone: '',
+                        company_email: '',
+                        invoice_prefix: 'INV-',
+                        language: 'ar'
+                    };
+                    
+                    if (!localStorage.getItem('financial_app_users')) {
+                        localStorage.setItem('financial_app_users', JSON.stringify([]));
+                    }
+                    
+                    if (!localStorage.getItem('financial_app_customers')) {
+                        localStorage.setItem('financial_app_customers', JSON.stringify([]));
+                    }
+                    
+                    if (!localStorage.getItem('financial_app_products')) {
+                        localStorage.setItem('financial_app_products', JSON.stringify([]));
+                    }
+                    
+                    if (!localStorage.getItem('financial_app_invoices')) {
+                        localStorage.setItem('financial_app_invoices', JSON.stringify([]));
+                    }
+                    
+                    if (!localStorage.getItem('financial_app_expenses')) {
+                        localStorage.setItem('financial_app_expenses', JSON.stringify([]));
+                    }
+                    
+                    if (!localStorage.getItem('financial_app_settings')) {
+                        localStorage.setItem('financial_app_settings', JSON.stringify(defaultSettings));
+                    }
+                    
+                    localStorage.setItem('financial_app_initialized', 'true');
+                } catch (error) {
+                    console.error('خطأ في تهيئة التخزين:', error);
+                }
+            }
+        }
+
+        function getData(key) {
+            try {
+                const itemName = `financial_app_${key}`;
+                const data = localStorage.getItem(itemName);
+                
+                if (!data) {
+                    console.warn(`البيانات لـ ${itemName} غير موجودة`);
+                    return key === 'settings' ? {} : [];
+                }
+                
+                return JSON.parse(data);
+                
+            } catch (error) {
+                console.error(`خطأ في تحميل البيانات لـ ${key}:`, error);
+                return key === 'settings' ? {} : [];
+            }
+        }
+
+        // ===== دوال الإعدادات =====
+        function getSettings() {
+            const settings = getData('settings');
+            return {
+                currency: 'ريال يمني',
+                currency_code: 'ر.ي',
+                tax_rate: 15,
+                company_name: 'شركتي',
+                company_logo: '',
+                company_tax_number: '',
+                company_address: '',
+                company_phone: '',
+                company_email: '',
+                invoice_prefix: 'INV-',
+                language: 'ar',
+                ...settings
+            };
+        }
+
+        function getCurrencySymbol() {
+            const settings = getSettings();
+            return settings.currency_code || 'ر.ي';
+        }
+
+        function formatCurrency(amount) {
+            const symbol = getCurrencySymbol();
+            
+            if (amount === undefined || amount === null || isNaN(amount)) {
+                return `0.00 ${symbol}`;
+            }
+            
+            const formattedAmount = parseFloat(amount).toLocaleString('ar-EG', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            
+            return `${formattedAmount} ${symbol}`;
+        }
+
+        // ===== دوال الشعار =====
+        function handleLogoError(img) {
+            img.onerror = null;
+            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzMzNjZjYyIgcng9IjgiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCI+562UPC90ZXh0Pjwvc3ZnPg==';
+        }
+
+        function updateHeaderLogo() {
+            const settings = getSettings();
+            const headerLogo = document.getElementById('headerLogo');
+            
+            if (settings.company_logo && headerLogo) {
+                headerLogo.src = settings.company_logo;
+                headerLogo.onerror = function() {
+                    handleLogoError(this);
+                };
+            }
+        }
+
+        // ===== دوال التاريخ =====
+        function formatGregorianDate(dateString) {
+            if (!dateString) return 'غير محدد';
+            
+            try {
+                const date = new Date(dateString);
+                
+                if (!isValidDate(date)) {
+                    return 'تاريخ غير صحيح';
+                }
+                
+                const options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    calendar: 'gregory',
+                    timeZone: 'Asia/Riyadh'
+                };
+                
+                let formattedDate;
+                
+                try {
+                    formattedDate = new Intl.DateTimeFormat('ar-SA', options).format(date);
+                } catch (e) {
+                    formattedDate = date.toLocaleDateString('ar-SA', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        timeZone: 'Asia/Riyadh'
+                    });
+                }
+                
+                const yearMatch = formattedDate.match(/\d{4}/);
+                if (yearMatch) {
+                    const year = parseInt(yearMatch[0]);
+                    if (year > 1900 && year < 2100) {
+                        return formattedDate;
+                    }
+                }
+                
+                return date.toISOString().split('T')[0].split('-').reverse().join('/');
+                
+            } catch (e) {
+                console.error('خطأ في تنسيق التاريخ:', e);
+                return 'غير محدد';
+            }
+        }
+
+        function isValidDate(date) {
+            return date instanceof Date && !isNaN(date);
+        }
+
+        // ===== دوال التقارير =====
+        function loadFinancialReports() {
+            try {
+                const invoices = getData('invoices');
+                const expenses = getData('expenses');
+                
+                const dateFrom = document.getElementById('dateFrom').value;
+                const dateTo = document.getElementById('dateTo').value;
+                
+                // تصفية البيانات حسب التاريخ
+                let filteredInvoices = invoices;
+                let filteredExpenses = expenses;
+                
+                if (dateFrom) {
+                    filteredInvoices = filteredInvoices.filter(inv => 
+                        !inv.invoiceDate || new Date(inv.invoiceDate) >= new Date(dateFrom)
+                    );
+                    filteredExpenses = filteredExpenses.filter(exp => 
+                        !exp.date || new Date(exp.date) >= new Date(dateFrom)
+                    );
+                }
+                
+                if (dateTo) {
+                    filteredInvoices = filteredInvoices.filter(inv => 
+                        !inv.invoiceDate || new Date(inv.invoiceDate) <= new Date(dateTo)
+                    );
+                    filteredExpenses = filteredExpenses.filter(exp => 
+                        !exp.date || new Date(exp.date) <= new Date(dateTo)
+                    );
+                }
+                
+                // حساب الإحصائيات
+                const totalRevenue = filteredInvoices.reduce((total, invoice) => 
+                    total + (parseFloat(invoice.totalAmount) || 0), 0);
+                
+                const totalExpenses = filteredExpenses.reduce((total, expense) => 
+                    total + (parseFloat(expense.amount) || 0), 0);
+                
+                const netProfit = totalRevenue - totalExpenses;
+                const profitMargin = totalRevenue > 0 ? (netProfit / totalRevenue * 100) : 0;
+                
+                // تحديث البطاقات الإحصائية
+                updateReportCard('totalRevenue', totalRevenue, 'إجمالي الإيرادات');
+                updateReportCard('totalExpenses', totalExpenses, 'إجمالي المصروفات');
+                updateReportCard('netProfit', netProfit, 'صافي الربح');
+                updateReportCard('profitMargin', profitMargin, 'هامش الربح (%)');
+                
+                // تحميل الرسوم البيانية
+                loadFinancialCharts(filteredInvoices, filteredExpenses);
+                loadRecentTransactions(filteredInvoices, filteredExpenses);
+                
+            } catch (error) {
+                console.error('خطأ في تحميل التقارير:', error);
+                showAlert('error', 'حدث خطأ في تحميل البيانات');
+            }
+        }
+
+        function updateReportCard(elementId, value, label) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const valueElement = element.querySelector('h3');
+            if (!valueElement) return;
+            
+            if (label.includes('%')) {
+                valueElement.textContent = `${value.toFixed(2)}%`;
+            } else {
+                valueElement.textContent = formatCurrency(value);
+            }
+        }
+
+        function loadFinancialCharts(invoices, expenses) {
+            // تجميع البيانات الشهرية
+            const monthlyData = {};
+            const currentYear = new Date().getFullYear();
+            
+            // تهيئة الأشهر للعام الحالي
+            for (let month = 1; month <= 12; month++) {
+                const monthKey = `${currentYear}-${month.toString().padStart(2, '0')}`;
+                monthlyData[monthKey] = { revenue: 0, expenses: 0, profit: 0 };
+            }
+            
+            // معالجة الفواتير
+            invoices.forEach(invoice => {
+                if (invoice.invoiceDate) {
+                    const date = new Date(invoice.invoiceDate);
+                    const monthKey = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+                    
+                    if (monthlyData[monthKey]) {
+                        monthlyData[monthKey].revenue += parseFloat(invoice.totalAmount) || 0;
+                        monthlyData[monthKey].profit += parseFloat(invoice.totalAmount) || 0;
+                    }
+                }
+            });
+            
+            // معالجة المصروفات
+            expenses.forEach(expense => {
+                if (expense.date) {
+                    const date = new Date(expense.date);
+                    const monthKey = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+                    
+                    if (monthlyData[monthKey]) {
+                        monthlyData[monthKey].expenses += parseFloat(expense.amount) || 0;
+                        monthlyData[monthKey].profit -= parseFloat(expense.amount) || 0;
+                    }
+                }
+            });
+            
+            // إعداد البيانات للرسم البياني
+            const labels = Object.keys(monthlyData).map(key => {
+                const [year, month] = key.split('-');
+                const monthNames = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 
+                                  'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+                return `${monthNames[parseInt(month) - 1]}`;
+            });
+            
+            const revenueData = Object.values(monthlyData).map(data => data.revenue);
+            const expensesData = Object.values(monthlyData).map(data => data.expenses);
+            const profitData = Object.values(monthlyData).map(data => data.profit);
+            
+            // رسم المخططات
+            renderFinancialChart('revenueExpensesChart', labels, revenueData, expensesData);
+            renderProfitChart('profitChart', labels, profitData);
+        }
+
+        function renderFinancialChart(canvasId, labels, revenueData, expensesData) {
+            const ctx = document.getElementById(canvasId);
+            if (!ctx) return;
+            
+            // تدمير المخطط القديم إذا موجود
+            if (ctx.chart) {
+                ctx.chart.destroy();
+            }
+            
+            // تحديد الألوان بناءً على الوضع
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            const textColor = isDarkMode ? '#e2e8f0' : '#666';
+            
+            ctx.chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'الإيرادات',
+                            data: revenueData,
+                            backgroundColor: 'rgba(40, 167, 69, 0.7)',
+                            borderColor: 'rgba(40, 167, 69, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'المصروفات',
+                            data: expensesData,
+                            backgroundColor: 'rgba(220, 53, 69, 0.7)',
+                            borderColor: 'rgba(220, 53, 69, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            rtl: true,
+                            labels: {
+                                color: textColor
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${formatCurrency(context.raw)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: textColor,
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: textColor
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderProfitChart(canvasId, labels, profitData) {
+            const ctx = document.getElementById(canvasId);
+            if (!ctx) return;
+            
+            // تدمير المخطط القديم إذا موجود
+            if (ctx.chart) {
+                ctx.chart.destroy();
+            }
+            
+            // تحديد الألوان بناءً على الوضع
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            const textColor = isDarkMode ? '#e2e8f0' : '#666';
+            
+            ctx.chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'صافي الربح',
+                        data: profitData,
+                        backgroundColor: 'rgba(23, 162, 184, 0.2)',
+                        borderColor: 'rgba(23, 162, 184, 1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            rtl: true,
+                            labels: {
+                                color: textColor
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `صافي الربح: ${formatCurrency(context.raw)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: textColor,
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: textColor
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadRecentTransactions(invoices, expenses) {
+            const transactions = [];
+            
+            // إضافة الفواتير
+            invoices.slice(0, 10).forEach(invoice => {
+                transactions.push({
+                    type: 'إيراد',
+                    description: `فاتورة ${invoice.invoiceNumber || 'غير معروف'}`,
+                    amount: parseFloat(invoice.totalAmount) || 0,
+                    date: invoice.invoiceDate,
+                    className: 'text-success'
+                });
+            });
+            
+            // إضافة المصروفات
+            expenses.slice(0, 10).forEach(expense => {
+                transactions.push({
+                    type: 'مصروف',
+                    description: expense.description || 'مصروف غير معروف',
+                    amount: -(parseFloat(expense.amount) || 0),
+                    date: expense.date,
+                    className: 'text-danger'
+                });
+            });
+            
+            // ترتيب حسب التاريخ
+            transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // عرض المعاملات
+            const container = document.getElementById('recentTransactions');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (transactions.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-receipt"></i>
+                        <p>لا توجد معاملات في الفترة المحددة</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            transactions.forEach(transaction => {
+                const row = document.createElement('div');
+                row.className = 'transaction-item';
+                row.innerHTML = `
+                    <div class="transaction-info">
+                        <div class="transaction-desc">${transaction.description}</div>
+                        <div class="transaction-type">${transaction.type}</div>
+                    </div>
+                    <div class="transaction-amount ${transaction.className}">
+                        ${formatCurrency(transaction.amount)}
+                    </div>
+                    <div class="transaction-date">
+                        ${formatGregorianDate(transaction.date)}
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+            
+            // تحديث العداد
+            document.getElementById('transactionsCount').textContent = `${transactions.length} معاملة`;
+        }
+
+        function exportReportToPDF(reportType) {
+            showAlert('info', 'جاري تحضير التقرير للتحميل...');
+            
+            setTimeout(() => {
+                const fileName = `تقرير_${reportType}_${new Date().toISOString().split('T')[0]}.pdf`;
+                showAlert('success', `تم تحضير التقرير: ${fileName}`);
+            }, 1500);
+        }
+
+        function exportReportToExcel(reportType) {
+            showAlert('info', 'جاري تحضير التقرير للتحميل...');
+            
+            setTimeout(() => {
+                const fileName = `تقرير_${reportType}_${new Date().toISOString().split('T')[0]}.xlsx`;
+                showAlert('success', `تم تحضير التقرير: ${fileName}`);
+            }, 1500);
+        }
+
+        function initDateFilters() {
+            const dateFrom = document.getElementById('dateFrom');
+            const dateTo = document.getElementById('dateTo');
+            
+            if (dateFrom && dateTo) {
+                // تعيين التاريخ الافتراضي (آخر 30 يوم)
+                const today = new Date();
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(today.getDate() - 30);
+                
+                dateFrom.value = thirtyDaysAgo.toISOString().split('T')[0];
+                dateTo.value = today.toISOString().split('T')[0];
+            }
+        }
+
+        function updateReports() {
+            loadFinancialReports();
+            showAlert('success', 'تم تحديث التقارير بنجاح');
+        }
+
+        function printReport() {
+            window.print();
+        }
+
+        // ===== دوال مساعدة =====
+        function checkAuth() {
+            const allowedPages = ['index.html', 'auth/', 'login.html'];
+            const currentPath = window.location.pathname;
+            
+            if (!isLoggedIn() && !allowedPages.some(page => currentPath.includes(page))) {
+                window.location.href = '../index.html';
+                return false;
+            }
+            return true;
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mainSidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('show');
+            }
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // ===== تهيئة التطبيق =====
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('تهيئة صفحة التقارير...');
+            
+            initializeStorage();
+            
+            if (!checkAuth()) return;
+            
+            // تطبيق الوضع الليلي أولاً
+            applyDarkMode();
+            
+            loadUserData();
+            updateHeaderLogo();
+            
+            // تهيئة الفلاتر والتقارير
+            initDateFilters();
+            loadFinancialReports();
+            
+            // إضافة event listeners
+            document.getElementById('dateFrom').addEventListener('change', debounce(loadFinancialReports, 300));
+            document.getElementById('dateTo').addEventListener('change', debounce(loadFinancialReports, 300));
+            
+            // إدارة القوائم المنسدلة
+            document.addEventListener('click', function(e) {
+                const dropdowns = document.querySelectorAll('.dropdown');
+                dropdowns.forEach(dropdown => {
+                    if (!dropdown.contains(e.target)) {
+                        const menu = dropdown.querySelector('.dropdown-menu');
+                        if (menu) {
+                            menu.classList.remove('show');
+                        }
+                    }
+                });
+                
+                if (e.target.classList.contains('dropdown-toggle')) {
+                    const menu = e.target.closest('.dropdown').querySelector('.dropdown-menu');
+                    if (menu) {
+                        menu.classList.toggle('show');
+                    }
+                }
+            });
+            
+            // إغلاق القائمة الجانبية عند النقر خارجها
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth < 768) {
+                    const sidebar = document.getElementById('mainSidebar');
+                    const toggleBtn = document.querySelector('.sidebar-toggle');
+                    
+                    if (sidebar && sidebar.classList.contains('show') && 
+                        !sidebar.contains(e.target) && 
+                        !toggleBtn.contains(e.target)) {
+                        sidebar.classList.remove('show');
+                    }
+                }
+            });
+            
+            console.log('تم تهيئة صفحة التقارير بنجاح');
+        });
+    </script>
+</body>
+</html>

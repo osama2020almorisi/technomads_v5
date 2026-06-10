@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفع الملفات إلى GitHub</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>منصة رفع الملفات إلى GitHub</h1>
+        
+        <div class="upload-area" id="uploadArea">
+            <span>اسحب وأسقط الملفات هنا أو</span>
+            <input type="file" id="fileInput" multiple>
+            <label for="fileInput">اختر الملفات</label>
+        </div>
+        
+        <div class="folder-input">
+            <label for="targetFolder">المجلد الهدف:</label>
+            <input type="text" id="targetFolder" placeholder="uploads" value="uploads">
+        </div>
+        
+        <div id="fileList"></div>
+        
+        <button id="uploadBtn" disabled>رفع الملفات</button>
+        
+        <div id="progressContainer" class="hidden">
+            <progress id="uploadProgress" value="0" max="100"></progress>
+            <span id="progressText">0%</span>
+        </div>
+        
+        <div id="statusMessage"></div>
+    </div>
+
+    <script src="assets/js/upload.js"></script>
+</body>
+</html>

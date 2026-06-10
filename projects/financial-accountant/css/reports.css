@@ -1,0 +1,152 @@
+/* css/reports.css */
+.report-summary {
+    margin-bottom: 1.5rem;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.summary-item {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.summary-item .label {
+    display: block;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.summary-item .value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.summary-item .value.positive {
+    color: var(--success-color);
+}
+
+.summary-item .value.negative {
+    color: var(--danger-color);
+}
+
+.summary-item .change {
+    display: block;
+    font-size: 0.875rem;
+}
+
+.summary-item .change.positive {
+    color: var(--success-color);
+}
+
+.summary-item .change.negative {
+    color: var(--danger-color);
+}
+
+.report-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.report-section {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+
+.financial-table {
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+.financial-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.financial-table th,
+.financial-table td {
+    padding: 0.75rem;
+    text-align: right;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.financial-table th {
+    background-color: #f8f9fa;
+    font-weight: 700;
+}
+
+.financial-table .header {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.financial-table .header td {
+    font-weight: 700;
+    border-bottom: none;
+}
+
+.financial-table .total {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.financial-table .total.profit {
+    background-color: rgba(76, 201, 240, 0.1);
+    color: var(--success-color);
+}
+
+.charts-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.chart-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+
+.chart-card h4 {
+    margin-bottom: 1rem;
+    color: var(--dark-color);
+}
+
+.chart-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.trends-section {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+
+.trends-section h4 {
+    margin-bottom: 1rem;
+    color: var(--dark-color);
+}
+
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.date-range input {
+    flex: 1;
+}

@@ -1,0 +1,226 @@
+/* assets/css/forms.css - نسخة محسنة ومتوافقة مع dark mode */
+
+:root {
+    --primary-color: #4361ee;
+    --primary-light: #4895ef;
+    --secondary-color: #f8f9fa;
+    --text-color: #2b2d42;
+    --text-light: #6c757d;
+    --danger-color: #ef476f;
+    --success-color: #06d6a0;
+    --warning-color: #ffd166;
+    --border-radius: 20px;
+    --box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* الصندوق الرئيسي للنموذج */
+.formBox {
+    background: var(--card-bg, rgba(255, 255, 255, 0.98));
+    backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: var(--transition);
+    color: var(--text-color);
+}
+
+.formBox:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    border-radius: 2px;
+}
+
+/* مجموعات الإدخال */
+.input-group {
+    margin-bottom: 1.2rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.input-group label i {
+    margin-left: 0.3rem;
+    color: var(--primary-color);
+}
+
+.required {
+    color: var(--danger-color);
+    font-size: 1.2rem;
+    margin-right: 0.2rem;
+}
+
+/* الحقول */
+input, select, textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1rem;
+    transition: var(--transition);
+    box-sizing: border-box;
+    background-color: var(--card-bg, white);
+    color: var(--text-color);
+}
+
+input:hover, select:hover, textarea:hover {
+    border-color: var(--primary-light);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+/* checkbox مخصص */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+/* معاينة الصورة */
+.image-preview {
+    margin-top: 0.8rem;
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 12px;
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* النص المساعد */
+.help-text {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 0.3rem;
+    display: block;
+}
+
+/* أزرار النموذج */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.form-actions button,
+.form-actions .cancel-btn {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+}
+
+.cancel-btn {
+    display: inline-block;
+    padding: 1rem;
+    background: #e0e0e0;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: var(--transition);
+    border: 1px solid transparent;
+}
+
+.cancel-btn:hover {
+    background: #d0d0d0;
+    transform: translateY(-2px);
+}
+
+.cancel-btn i {
+    margin-left: 0.3rem;
+}
+
+/* تصميم متجاوب */
+@media (max-width: 600px) {
+    .formBox {
+        padding: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    input, select, textarea, button, .cancel-btn {
+        padding: 0.9rem;
+        font-size: 0.95rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 380px) {
+    .formBox {
+        padding: 1rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}

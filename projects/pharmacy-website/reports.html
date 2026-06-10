@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>التقارير | نظام إدارة الصيدلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+    /* إصلاح عرض المخططات في صفحة التقارير */
+    #dailySalesChart, #categoryChart {
+        width: 100% !important;
+        height: 300px !important;
+    }
+    
+    @media (max-width: 768px) {
+        #dailySalesChart, #categoryChart {
+            height: 250px !important;
+        }
+    }
+    
+    /* إصلاح عرض الجداول */
+    #topMedicinesBody td, #expiredMedicinesBody td, #lowStockReportBody td {
+        white-space: nowrap;
+    }
+</style>
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-prescription-bottle-medical"></i>
+                    <span>صيدليتي</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i><span>لوحة التحكم</span></a></li>
+                    <li><a href="medicines.html"><i class="fas fa-pills"></i><span>الأدوية</span></a></li>
+                    <li><a href="sales.html"><i class="fas fa-cash-register"></i><span>المبيعات</span></a></li>
+                    <li><a href="customers.html"><i class="fas fa-users"></i><span>العملاء</span></a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck"></i><span>الموردين</span></a></li>
+                    <li><a href="purchases.html"><i class="fas fa-shopping-cart"></i><span>المشتريات</span></a></li>
+                    <li><a href="reports.html" class="active"><i class="fas fa-chart-bar"></i><span>التقارير</span></a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a></li>
+                    <li><a href="profile.html"><i class="fas fa-user-circle"></i><span>الملف الشخصي</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <div class="user-name"></div>
+                        <div class="user-role"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="page-title">
+                    <h1>التقارير والإحصائيات</h1>
+                    <p>تحليل أداء الصيدلية والأرباح والخسائر</p>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" id="theme-toggle" title="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="header-btn" onclick="logout()" title="تسجيل الخروج">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- Report Filters -->
+                <div class="search-filters">
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">من تاريخ</label>
+                        <input type="date" class="form-input" id="reportFromDate">
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">إلى تاريخ</label>
+                        <input type="date" class="form-input" id="reportToDate">
+                    </div>
+                    <div class="form-group" style="margin: 0; min-width: 150px;">
+                        <label class="form-label">نوع التقرير</label>
+                        <select class="form-select" id="reportType">
+                            <option value="sales">تقرير المبيعات</option>
+                            <option value="profit">تقرير الأرباح والخسائر</option>
+                            <option value="inventory">تقرير المخزون</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="generateReport()" style="width: auto;">
+                        <i class="fas fa-filter"></i> تصفية
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportReport()" style="width: auto;">
+                        <i class="fas fa-file-export"></i> تصدير
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid" id="reportStats"></div>
+
+                <!-- Charts Row -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-chart-line"></i> المبيعات اليومية</h3>
+                        </div>
+                        <canvas id="dailySalesChart" style="height: 300px;"></canvas>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-chart-pie"></i> توزيع المبيعات حسب التصنيف</h3>
+                        </div>
+                        <canvas id="categoryChart" style="height: 300px;"></canvas>
+                    </div>
+                </div>
+
+                <!-- Profit/Loss Section (Dynamic) -->
+                <div class="dashboard-card" id="profitLossSection" style="margin-top: 1.5rem; display: none;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-chart-line"></i> تحليل الأرباح والخسائر</h3>
+                    </div>
+                    <div class="stats-grid" id="profitLossStats" style="grid-template-columns: repeat(4, 1fr);"></div>
+                </div>
+
+                <!-- Top Medicines -->
+                <div class="dashboard-card" style="margin-top: 1.5rem;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-trophy"></i> أكثر الأدوية مبيعاً</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead><tr><th>الدواء</th><th>عدد مرات البيع</th><th>إجمالي الكمية</th><th>إجمالي المبيعات</th></tr></thead>
+                            <tbody id="topMedicinesBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Expired Medicines Report -->
+                <div class="dashboard-card" style="margin-top: 1.5rem;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-calendar-times"></i> الأدوية منتهية الصلاحية والقريبة من الانتهاء</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead><tr><th>الدواء</th><th>تاريخ الصلاحية</th><th>الأيام المتبقية</th><th>الكمية</th><th>الحالة</th></tr></thead>
+                            <tbody id="expiredMedicinesBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Low Stock Report -->
+                <div class="dashboard-card" style="margin-top: 1.5rem;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> الأدوية منخفضة المخزون</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead><tr><th>الدواء</th><th>الكمية المتاحة</th><th>الحد الأدنى</th><th>نسبة الخطر</th><th>الإجراء المطلوب</th></tr></thead>
+                            <tbody id="lowStockReportBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        let dailySalesChart = null;
+        let categoryChart = null;
+        let currentReportData = { sales: [], profitLoss: null };
+
+        function loadReports() {
+            const toDate = new Date();
+            const fromDate = new Date();
+            fromDate.setDate(fromDate.getDate() - 30);
+            document.getElementById('reportToDate').value = toDate.toISOString().split('T')[0];
+            document.getElementById('reportFromDate').value = fromDate.toISOString().split('T')[0];
+            generateReport();
+        }
+
+        function generateReport() {
+            const fromDate = document.getElementById('reportFromDate').value;
+            const toDate = document.getElementById('reportToDate').value;
+            const reportType = document.getElementById('reportType').value;
+            
+            const sales = getAllSales();
+            const saleItems = Storage.get('saleItems') || [];
+            const medicines = getAllMedicines();
+            const categories = getAllCategories();
+
+            // Filter sales by date
+            let filteredSales = sales;
+            if (fromDate || toDate) {
+                filteredSales = sales.filter(s => {
+                    const saleDate = new Date(s.createdAt);
+                    return (!fromDate || saleDate >= new Date(fromDate)) && (!toDate || saleDate <= new Date(toDate));
+                });
+            }
+
+            // Calculate stats
+            const totalSales = filteredSales.length;
+            const totalRevenue = filteredSales.reduce((sum, s) => sum + s.grandTotal, 0);
+            const totalDiscount = filteredSales.reduce((sum, s) => sum + s.discount, 0);
+            const totalTax = filteredSales.reduce((sum, s) => sum + s.tax, 0);
+            
+            // Calculate profit/loss
+            let totalCost = 0;
+            filteredSales.forEach(sale => {
+                const items = saleItems.filter(si => si.saleId === sale.id);
+                items.forEach(item => {
+                    const medicine = medicines.find(m => m.id === item.medicineId);
+                    if (medicine) totalCost += medicine.purchasePrice * item.quantity;
+                });
+            });
+            const totalProfit = totalRevenue - totalCost;
+            const profitMargin = totalRevenue > 0 ? (totalProfit / totalRevenue) * 100 : 0;
+
+            // Update stats display based on report type
+            if (reportType === 'sales') {
+                document.getElementById('reportStats').innerHTML = `
+                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-receipt"></i></div><div class="stat-value">${totalSales}</div><div class="stat-label">عدد الفواتير</div></div>
+                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-money-bill-wave"></i></div><div class="stat-value">${formatCurrency(totalRevenue)}</div><div class="stat-label">إجمالي المبيعات</div></div>
+                    <div class="stat-card"><div class="stat-icon orange"><i class="fas fa-tag"></i></div><div class="stat-value">${formatCurrency(totalDiscount)}</div><div class="stat-label">إجمالي الخصومات</div></div>
+                    <div class="stat-card"><div class="stat-icon teal"><i class="fas fa-percentage"></i></div><div class="stat-value">${formatCurrency(totalTax)}</div><div class="stat-label">إجمالي الضريبة</div></div>
+                `;
+                document.getElementById('profitLossSection').style.display = 'none';
+            } else if (reportType === 'profit') {
+                document.getElementById('profitLossSection').style.display = 'block';
+                document.getElementById('profitLossStats').innerHTML = `
+                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-chart-line"></i></div><div class="stat-value">${formatCurrency(totalRevenue)}</div><div class="stat-label">إجمالي الإيرادات</div></div>
+                    <div class="stat-card"><div class="stat-icon red"><i class="fas fa-chart-line"></i></div><div class="stat-value">${formatCurrency(totalCost)}</div><div class="stat-label">إجمالي التكاليف</div></div>
+                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-chart-line"></i></div><div class="stat-value">${formatCurrency(totalProfit)}</div><div class="stat-label">صافي الربح</div></div>
+                    <div class="stat-card"><div class="stat-icon orange"><i class="fas fa-percentage"></i></div><div class="stat-value">${profitMargin.toFixed(2)}%</div><div class="stat-label">هامش الربح</div></div>
+                `;
+                document.getElementById('reportStats').innerHTML = `
+                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-receipt"></i></div><div class="stat-value">${totalSales}</div><div class="stat-label">عدد الفواتير</div></div>
+                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-money-bill-wave"></i></div><div class="stat-value">${formatCurrency(totalRevenue)}</div><div class="stat-label">إجمالي المبيعات</div></div>
+                    <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-chart-line"></i></div><div class="stat-value">${formatCurrency(totalProfit)}</div><div class="stat-label">صافي الربح</div></div>
+                    <div class="stat-card"><div class="stat-icon teal"><i class="fas fa-percentage"></i></div><div class="stat-value">${profitMargin.toFixed(2)}%</div><div class="stat-label">هامش الربح</div></div>
+                `;
+            } else {
+                document.getElementById('reportStats').innerHTML = `
+                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-pills"></i></div><div class="stat-value">${medicines.length}</div><div class="stat-label">إجمالي الأدوية</div></div>
+                    <div class="stat-card"><div class="stat-icon red"><i class="fas fa-calendar-times"></i></div><div class="stat-value">${medicines.filter(m => isExpired(m.expiryDate)).length}</div><div class="stat-label">منتهية الصلاحية</div></div>
+                    <div class="stat-card"><div class="stat-icon orange"><i class="fas fa-exclamation-circle"></i></div><div class="stat-value">${medicines.filter(m => m.quantity <= m.lowStockAlert).length}</div><div class="stat-label">منخفضة المخزون</div></div>
+                    <div class="stat-card"><div class="stat-icon teal"><i class="fas fa-dollar-sign"></i></div><div class="stat-value">${formatCurrency(medicines.reduce((sum, m) => sum + (m.purchasePrice * m.quantity), 0))}</div><div class="stat-label">قيمة المخزون</div></div>
+                `;
+                document.getElementById('profitLossSection').style.display = 'none';
+            }
+
+            // Daily sales chart
+            const salesByDate = {};
+            filteredSales.forEach(sale => {
+                const date = new Date(sale.createdAt).toLocaleDateString('ar-SA', { month: 'short', day: 'numeric' });
+                salesByDate[date] = (salesByDate[date] || 0) + sale.grandTotal;
+            });
+
+            const ctx1 = document.getElementById('dailySalesChart');
+            if (dailySalesChart) dailySalesChart.destroy();
+            dailySalesChart = new Chart(ctx1, {
+                type: 'bar',
+                data: { labels: Object.keys(salesByDate), datasets: [{ label: 'المبيعات (ريال)', data: Object.values(salesByDate), backgroundColor: 'rgba(42,92,138,0.8)', borderRadius: 5 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { callback: v => formatNumber(v) } } } }
+            });
+
+            // Category chart
+            const salesByCategory = {};
+            filteredSales.forEach(sale => {
+                const items = saleItems.filter(si => si.saleId === sale.id);
+                items.forEach(item => {
+                    const med = medicines.find(m => m.id === item.medicineId);
+                    if (med) {
+                        const cat = categories.find(c => c.id === med.categoryId);
+                        const catName = cat ? cat.name : 'أخرى';
+                        salesByCategory[catName] = (salesByCategory[catName] || 0) + item.total;
+                    }
+                });
+            });
+
+            const ctx2 = document.getElementById('categoryChart');
+            if (categoryChart) categoryChart.destroy();
+            categoryChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: { labels: Object.keys(salesByCategory), datasets: [{ data: Object.values(salesByCategory), backgroundColor: ['#2A5C8A', '#27AE60', '#F39C12', '#E74C3C', '#4ECDC4', '#9b59b6'] }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+            });
+
+            // Top medicines
+            const medicineSales = {};
+            filteredSales.forEach(sale => {
+                const items = saleItems.filter(si => si.saleId === sale.id);
+                items.forEach(item => {
+                    if (!medicineSales[item.medicineId]) medicineSales[item.medicineId] = { count: 0, quantity: 0, total: 0 };
+                    medicineSales[item.medicineId].count++;
+                    medicineSales[item.medicineId].quantity += item.quantity;
+                    medicineSales[item.medicineId].total += item.total;
+                });
+            });
+
+            const sortedMedicines = Object.entries(medicineSales).sort((a, b) => b[1].total - a[1].total).slice(0, 10);
+            document.getElementById('topMedicinesBody').innerHTML = sortedMedicines.map(([medId, stats]) => {
+                const med = medicines.find(m => m.id === parseInt(medId));
+                return `<tr><td><strong>${med ? med.name : 'Unknown'}</strong></td><td>${stats.count}</td><td>${stats.quantity}</td><td><strong style="color: var(--secondary);">${formatCurrency(stats.total)}</strong></td></tr>`;
+            }).join('');
+
+            // Expired and near expiry medicines
+            const allMedicines = medicines;
+            const expiryReport = allMedicines.map(med => {
+                const days = daysUntilExpiry(med.expiryDate);
+                let status = '';
+                if (days <= 0) status = '<span class="badge badge-danger">منتهي</span>';
+                else if (days <= 30) status = '<span class="badge badge-warning">قريب من الانتهاء</span>';
+                else status = '<span class="badge badge-success">صالح</span>';
+                return `<tr><td><strong>${med.name}</strong></td><td>${formatDate(med.expiryDate)}</td><td>${days <= 0 ? 'منتهي' : days + ' يوم'}</td><td>${med.quantity}</td><td>${status}</td></tr>`;
+            }).join('');
+            document.getElementById('expiredMedicinesBody').innerHTML = expiryReport;
+
+            // Low stock report
+            const lowStockMeds = medicines.filter(m => m.quantity <= m.lowStockAlert);
+            document.getElementById('lowStockReportBody').innerHTML = lowStockMeds.map(med => {
+                const percentage = ((med.lowStockAlert - med.quantity) / med.lowStockAlert) * 100;
+                let urgency = percentage > 50 ? '<span class="badge badge-danger">حرج</span>' : '<span class="badge badge-warning">منخفض</span>';
+                return `<tr><td><strong>${med.name}</strong></td><td><span style="color: var(--danger); font-weight: 700;">${med.quantity}</span></td><td>${med.lowStockAlert}</td><td>${Math.min(100, Math.max(0, Math.floor(percentage)))}%</td><td>${urgency}</td></tr>`;
+            }).join('');
+        }
+
+        function exportReport() {
+            const fromDate = document.getElementById('reportFromDate').value;
+            const toDate = document.getElementById('reportToDate').value;
+            const reportType = document.getElementById('reportType').value;
+            
+            const sales = getAllSales();
+            let filteredSales = sales;
+            if (fromDate || toDate) {
+                filteredSales = sales.filter(s => {
+                    const saleDate = new Date(s.createdAt);
+                    return (!fromDate || saleDate >= new Date(fromDate)) && (!toDate || saleDate <= new Date(toDate));
+                });
+            }
+            
+            if (reportType === 'sales') {
+                const exportData = filteredSales.map(s => ({ invoice_number: s.invoiceNumber, total: s.totalAmount, discount: s.discount, tax: s.tax, grand_total: s.grandTotal, date: formatDate(s.createdAt) }));
+                exportToCSV(exportData, `sales_report_${fromDate}_to_${toDate}.csv`);
+            } else if (reportType === 'profit') {
+                const medicines = getAllMedicines();
+                const saleItems = Storage.get('saleItems') || [];
+                let totalRevenue = 0, totalCost = 0;
+                filteredSales.forEach(sale => {
+                    totalRevenue += sale.grandTotal;
+                    const items = saleItems.filter(si => si.saleId === sale.id);
+                    items.forEach(item => {
+                        const med = medicines.find(m => m.id === item.medicineId);
+                        if (med) totalCost += med.purchasePrice * item.quantity;
+                    });
+                });
+                const profitData = [{ metric: 'إجمالي الإيرادات', value: totalRevenue }, { metric: 'إجمالي التكاليف', value: totalCost }, { metric: 'صافي الربح', value: totalRevenue - totalCost }];
+                exportToCSV(profitData, `profit_report_${fromDate}_to_${toDate}.csv`);
+            } else {
+                const medicines = getAllMedicines();
+                const exportData = medicines.map(m => ({ name: m.name, quantity: m.quantity, purchase_price: m.purchasePrice, selling_price: m.sellingPrice, expiry_date: m.expiryDate, status: isExpired(m.expiryDate) ? 'منتهي' : (isNearExpiry(m.expiryDate) ? 'قريب من الانتهاء' : 'صالح') }));
+                exportToCSV(exportData, `inventory_report.csv`);
+            }
+        }
+
+        document.getElementById('reportType').addEventListener('change', generateReport);
+        document.addEventListener('DOMContentLoaded', loadReports);
+    </script>
+</body>
+</html>

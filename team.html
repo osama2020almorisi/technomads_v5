@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>فريقنا | TechNomads - نخبة من الخبراء التقنيين</title>
+    <meta name="description" content="تعرف على فريق TechNomads المتميز - خبراء في التطوير والتصميم والتسويق الرقمي">
+    <meta name="keywords" content="TechNomads, فريق العمل, مطورين, مصممين, اليمن">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="فريق TechNomads | نخبة من الخبراء التقنيين">
+    <meta property="og:description" content="تعرف على فريقنا المحترف الذي يجمع بين الخبرة التقنية العميقة والإبداع">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_YE">
+    <meta property="og:image" content="images/og-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <!-- Preconnect & Preload -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="css/main.css" as="style">
+    <link rel="preload" href="js/main.js" as="script">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/main.css">
+
+    
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CM085HTNT0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CM085HTNT0');
+</script>
+    
+    
+    
+    
+    <meta name="description" content="تعرف على فريق TechNomads المتميز من المطورين والمصممين والخبراء التقنيين.">
+<meta name="keywords" content="فريق TechNomads, مطورين, مصممين, خبراء تقنيين, اليمن">
+    
+    
+    <!-- Team Page Styles -->
+    <style>
+        /* ============================================
+           TEAM PAGE - صفحة الفريق المتطورة
+           ============================================ */
+        
+        /* Hero Section */
+        .team-hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #2A2D7C 0%, #4ECDC4 100%);
+            overflow: hidden;
+            padding: 120px 2rem 80px;
+        }
+
+        .team-hero .hero-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .team-hero .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .team-hero .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: badgeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .team-hero .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #FFD700, #FF6B6B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .team-hero .hero-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #FFD700;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .hero-wave {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            line-height: 0;
+        }
+
+        .hero-wave svg {
+            width: 100%;
+            height: 60px;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 5rem 0;
+            background: var(--bg-light);
+        }
+
+        .about-section .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        body.dark-mode .about-content h2 {
+            color: var(--accent);
+        }
+
+        .about-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .about-content p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .about-features {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .about-features li {
+            position: relative;
+            padding-right: 1.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .about-features li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        /* Team Members Section */
+        .team-members-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        body.dark-mode .team-members-section {
+            background: #1a1a2e;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        body.dark-mode .section-title {
+            color: var(--accent);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 1rem auto 0;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .team-card {
+            background: var(--card-bg-light);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        body.dark-mode .team-card {
+            background: var(--card-bg-light);
+            border-color: rgba(255,255,255,0.05);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            border-color: var(--accent);
+        }
+
+        .team-card.leader {
+            border: 2px solid var(--accent);
+        }
+
+        .leader-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .team-image {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(42,45,124,0.1), rgba(78,205,196,0.1));
+        }
+
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .team-card:hover .team-image img {
+            transform: scale(1.08);
+        }
+
+        .team-social {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover .team-social {
+            transform: translateY(0);
+        }
+
+        .team-social a {
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .team-social a:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .team-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .team-info h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        body.dark-mode .team-info h3 {
+            color: var(--accent);
+        }
+
+        .team-role {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: rgba(78,205,196,0.1);
+            border-radius: 20px;
+        }
+
+        .team-bio {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* Values Section */
+        .values-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #2A2D7C 0%, #4ECDC4 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .values-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        .values-section .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .values-section .section-title,
+        .values-section .section-subtitle {
+            color: white;
+        }
+
+        .values-section .section-title::after {
+            background: linear-gradient(135deg, #FFD700, #FF6B6B);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.4s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .value-card i {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .value-card p {
+            color: rgba(255,255,255,0.85);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .team-cta-section {
+            padding: 5rem 0;
+            background: var(--bg-light);
+            text-align: center;
+        }
+
+        .team-cta-section h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        body.dark-mode .team-cta-section h2 {
+            color: var(--accent);
+        }
+
+        .team-cta-section p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button.primary {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255,107,107,0.3);
+        }
+
+        .cta-button.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        body.dark-mode .cta-button.secondary {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        body.dark-mode .cta-button.secondary:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* Mobile Nav Fix */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            background: var(--bg-light);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 1050;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        body.dark-mode .mobile-nav {
+            background: var(--bg-light);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .team-hero .hero-title {
+                font-size: 2rem;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .about-image {
+                order: -1;
+                max-height: 400px;
+            }
+            .team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .team-hero {
+                padding: 100px 1rem 60px;
+            }
+            .team-hero .hero-title {
+                font-size: 1.6rem;
+            }
+            .hero-stats {
+                gap: 1rem;
+            }
+            .stat-card {
+                padding: 0.8rem 1rem;
+                min-width: 90px;
+            }
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .team-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .team-image {
+                height: 250px;
+            }
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            .team-cta-section h2 {
+                font-size: 1.6rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .cta-button {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-info {
+                padding: 1.2rem;
+            }
+            .team-info h3 {
+                font-size: 1.1rem;
+            }
+            .value-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         HEADER
+         ============================================ -->
+    <header class="smart-header" id="main-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-wrapper">
+                    <svg class="logo-svg" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2A2D7C"/>
+                                <stop offset="100%" stop-color="#4ECDC4"/>
+                            </linearGradient>
+                            <linearGradient id="logoGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#4ECDC4"/>
+                                <stop offset="100%" stop-color="#FF6B6B"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8" class="logo-circle"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="logo-triangle"/>
+                        <circle cx="100" cy="110" r="15" fill="url(#logoGrad)" class="logo-dot"/>
+                    </svg>
+                </div>
+                <span class="logo-text">TechNomads</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                    <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
+                    <li><a href="team.html" class="nav-link active"><i class="fas fa-users"></i><span>الفريق</span></a></li>
+                    <li><a href="portfolio.html" class="nav-link"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
+                    <li><a href="contact.html" class="nav-link cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="desktop-tools">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ar">عربي</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+            </div>
+
+            <button class="hamburger" id="hamburgerBtn" aria-label="القائمة">
+                <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+            </button>
+        </div>
+
+        <nav class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="mobile-logo-wrapper">
+                    <svg class="mobile-logo-svg" viewBox="0 0 200 200" width="40" height="40">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
+                        <circle cx="100" cy="110" r="15" fill="url(#logoGrad)"/>
+                    </svg>
+                </div>
+                <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <ul class="mobile-nav-list">
+                <li><a href="index.html" class="mobile-nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                <li><a href="services.html" class="mobile-nav-link"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
+                <li><a href="team.html" class="mobile-nav-link active"><i class="fas fa-users"></i><span>الفريق</span></a></li>
+                <li><a href="portfolio.html" class="mobile-nav-link"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
+                <li><a href="contact.html" class="mobile-nav-link cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
+            </ul>
+            <div class="mobile-nav-footer">
+                <div class="mobile-theme-toggle-wrapper">
+                    <span class="mobile-theme-label"><i class="fas fa-adjust"></i> الوضع</span>
+                    <button class="mobile-theme-toggle" id="mobileThemeToggle">
+                        <i class="fas fa-moon"></i>
+                        <span class="mobile-theme-text">داكن</span>
+                    </button>
+                </div>
+                <div class="mobile-language-switcher">
+                    <button class="mobile-lang-btn active" data-lang="ar">العربية</button>
+                    <button class="mobile-lang-btn" data-lang="en">English</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ============================================
+         MAIN CONTENT
+         ============================================ -->
+    <main>
+
+        <!-- Hero Section -->
+        <section class="team-hero">
+            <div class="hero-container">
+                <div class="hero-content" data-aos="fade-up">
+                    <div class="hero-badge">
+                        <i class="fas fa-users"></i>
+                        <span>نخبة من الخبراء</span>
+                    </div>
+                    <h1 class="hero-title">فريق <span class="gradient-text">TechNomads</span></h1>
+                    <p class="hero-subtitle">نفتخر بفريقنا المحترف الذي يجمع بين الخبرة التقنية العميقة والإبداع في تقديم الحلول</p>
+                    <div class="hero-stats">
+                        <div class="stat-card"><span class="stat-number" id="statMembers">0</span><span class="stat-label">أعضاء الفريق</span></div>
+                        <div class="stat-card"><span class="stat-number" id="statExperience">0</span><span class="stat-label">سنوات خبرة</span></div>
+                        <div class="stat-card"><span class="stat-number" id="statClients">0</span><span class="stat-label">عميل سعيد</span></div>
+                        <div class="stat-card"><span class="stat-number" id="statProjects">0</span><span class="stat-label">مشروع منجز</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-wave">
+                <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                    <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,58.7C1248,64,1344,64,1392,64L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" fill="var(--bg-light)"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-content" data-aos="fade-right">
+                        <h2>من نحن</h2>
+                        <p>
+                            TechNomads شركة رائدة في تقديم الحلول التقنية والرقمية في اليمن. نقدم خدمات متكاملة من تطوير المواقع والتطبيقات إلى التسويق الرقمي والاستشارات التقنية.
+                        </p>
+                        <p>
+                            نؤمن بأن التكنولوجيا هي المستقبل، ونسعى جاهدين لنكون الشريك المثالي لكل من يسعى للتميز الرقمي. فريقنا يجمع بين الشباب والخبرة، بين الإبداع والاحترافية.
+                        </p>
+                        <ul class="about-features">
+                            <li>فريق متخصص ومحترف في مختلف المجالات التقنية</li>
+                            <li>نهج مبتكر في حل المشكلات وتقديم الحلول</li>
+                            <li>التزام تام بمعايير الجودة والأمان</li>
+                            <li>دعم فني مستمر وتواصل فعال مع العملاء</li>
+                            <li>أسعار تنافسية مع أفضل قيمة مقابل التكلفة</li>
+                        </ul>
+                    </div>
+                    <div class="about-image" data-aos="fade-left">
+                        <img src="images/team/about-team.jpg" alt="فريق TechNomads" loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/600x500/2A2D7C/FFFFFF?text=TechNomads+Team'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Members Section -->
+        <section class="team-members-section">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">تعرف على فريقنا</h2>
+                <p class="section-subtitle">نخبة من الخبراء والمبدعين يعملون معاً لتحقيق رؤيتك الرقمية</p>
+            </div>
+            <div class="team-grid">
+                <!-- Member 1 - Leader -->
+                <div class="team-card leader" data-aos="fade-up" data-aos-delay="100">
+                    <div class="leader-badge"><i class="fas fa-crown"></i> قائد الفريق</div>
+                    <div class="team-image">
+                        <img src="images/team/osama.jpg" alt="أسامة منصور المريسي" loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/400x400/2A2D7C/FFFFFF?text=Osama+Almorisi'">
+                        <div class="team-social">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="cv/index.html" aria-label="السيرة الذاتية"><i class="fas fa-file-alt"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>أسامة منصور المريسي</h3>
+                        <span class="team-role">مدير الفريق - مطور Full Stack</span>
+                        <p class="team-bio">خبير تقني بأكثر من 10 سنوات خبرة في تطوير الويب وإدارة المشاريع. يتمتع بمهارات قيادية وقدرة على تحفيز الفريق لتحقيق الأهداف.</p>
+                    </div>
+                </div>
+
+                <!-- Member 2 -->
+                <div class="team-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="team-image">
+                        <img src="images/team/zakaria.jpg" alt="زكريا ناجي المريسي" loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/400x400/4ECDC4/FFFFFF?text=Zakaria+Almorisi'">
+                        <div class="team-social">
+                            <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                            <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>زكريا ناجي المريسي</h3>
+                        <span class="team-role">مصمم UI/UX</span>
+                        <p class="team-bio">مصمم واجهات مستخدم مبدع، متخصص في تجربة المستخدم وتصميم الواجهات التفاعلية الجذابة والسهلة الاستخدام.</p>
+                    </div>
+                </div>
+
+                <!-- Member 3 -->
+                <div class="team-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-image">
+                        <img src="images/team/abdo.jpg" alt="عبده ثابت المريسي" loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=Abdo+Almorisi'">
+                        <div class="team-social">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="Stack Overflow"><i class="fab fa-stack-overflow"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>عبده ثابت المريسي</h3>
+                        <span class="team-role">مطور Backend</span>
+                        <p class="team-bio">خبير في أنظمة قواعد البيانات وتطوير APIs، يتمتع بمهارات عالية في حل المشكلات المعقدة وبناء أنظمة آمنة.</p>
+                    </div>
+                </div>
+
+                <!-- Member 4 -->
+                <div class="team-card" data-aos="fade-up" data-aos-delay="250">
+                    <div class="team-image">
+                        <img src="images/team/abdurahman.jpg" alt="عبدالرحمن المريسي" loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/400x400/2A2D7C/FFFFFF?text=Abdurahman+Almorisi'">
+                        <div class="team-social">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="CodePen"><i class="fab fa-codepen"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>عبدالرحمن المريسي</h3>
+                        <span class="team-role">مطور Frontend</span>
+                        <p class="team-bio">متخصص في تقنيات الويب الحديثة مثل React و Vue.js، يهتم بأدق التفاصيل لضمان تجربة مستخدم مميزة.</p>
+                    </div>
+                </div>
+
+                <!-- Member 5 -->
+                <div class="team-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="team-image">
+                        <img src="images/team/ahmed1.jpg" alt="أحمد الجوفي" loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/400x400/4ECDC4/FFFFFF?text=Ahmed+Aljawfi'">
+                        <div class="team-social">
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>أحمد الجوفي</h3>
+                        <span class="team-role">خبير أمن معلومات</span>
+                        <p class="team-bio">متخصص في أمن المعلومات واختبار الاختراق، يضمن حماية الأنظمة والبيانات من التهديدات الأمنية المحتملة.</p>
+                    </div>
+                </div>
+
+                <!-- Member 6 -->
+                <div class="team-card" data-aos="fade-up" data-aos-delay="350">
+                    <div class="team-image">
+                        <img src="images/team/ahmed2.jpg" alt="أحمد الوجيه" loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=Ahmed+Alwajih'">
+                        <div class="team-social">
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>أحمد الوجيه</h3>
+                        <span class="team-role">مسوق رقمي</span>
+                        <p class="team-bio">خبير في التسويق الرقمي وتحليل البيانات، يطور استراتيجيات تسويقية فعالة لزيادة الوصول والتفاعل مع الجمهور المستهدف.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section class="values-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title">قيمنا</h2>
+                    <p class="section-subtitle">المبادئ التي توجهنا في كل ما نقوم به</p>
+                </div>
+                <div class="values-grid">
+                    <div class="value-card" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>الإبداع</h3>
+                        <p>نؤمن بأن الإبداع هو أساس التميز. نبحث دائماً عن حلول مبتكرة تتجاوز التوقعات.</p>
+                    </div>
+                    <div class="value-card" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-handshake"></i>
+                        <h3>الشفافية</h3>
+                        <p>نبني علاقاتنا مع العملاء على الثقة والصدق من خلال التواصل الواضح والشفاف.</p>
+                    </div>
+                    <div class="value-card" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-award"></i>
+                        <h3>الجودة</h3>
+                        <p>لا نساوم على الجودة. كل مشروع نقدمه يخضع لأعلى معايير الجودة والاختبار.</p>
+                    </div>
+                    <div class="value-card" data-aos="fade-up" data-aos-delay="400">
+                        <i class="fas fa-users"></i>
+                        <h3>العمل الجماعي</h3>
+                        <p>نؤمن بقوة العمل الجماعي. نجاحنا نابع من تآزر جهود الفريق وروح التعاون.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="team-cta-section">
+            <div class="container">
+                <h2 data-aos="fade-up">هل تريد الانضمام إلى فريقنا؟</h2>
+                <p data-aos="fade-up" data-aos-delay="100">نحن دائماً نبحث عن مواهب متميزة للانضمام إلى عائلتنا. إذا كنت تعتقد أنك الشخص المناسب، تواصل معنا!</p>
+                <div class="cta-buttons" data-aos="fade-up" data-aos-delay="200">
+                    <a href="contact.html" class="cta-button primary"><i class="fas fa-envelope"></i> تواصل معنا</a>
+                    <a href="services.html" class="cta-button secondary"><i class="fas fa-cogs"></i> اكتشف خدماتنا</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="smart-footer">
+        <div class="footer-waves">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="var(--primary)" fill-opacity="1" d="M0,192L48,186.7C96,181,192,171,288,181.3C384,192,480,224,576,218.7C672,213,768,171,864,165.3C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
+        <div class="footer-container">
+            <div class="footer-section footer-brand">
+                <div class="footer-logo-wrapper">
+                    <svg class="footer-logo-svg" viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8" opacity="0.9"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="white" stroke-width="8"/>
+                        <circle cx="100" cy="110" r="15" fill="white"/>
+                    </svg>
+                </div>
+                <h3 class="footer-brand-title">TechNomads</h3>
+                <p class="footer-about">نصنع التقنية بإبداع، نقدم حلولاً رقمية متكاملة تلبي احتياجات عملائنا بأعلى معايير الجودة.</p>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="team.html"><i class="fas fa-users"></i> من نحن</a></li>
+                    <li><a href="services.html"><i class="fas fa-concierge-bell"></i> الخدمات</a></li>
+                    <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> معرض الأعمال</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> تواصل معنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">خدماتنا</h3>
+                <ul class="footer-links">
+                    <li><a href="services.html"><i class="fas fa-code"></i> تطوير المواقع</a></li>
+                    <li><a href="services.html"><i class="fas fa-mobile-alt"></i> تطبيقات الجوال</a></li>
+                    <li><a href="services.html"><i class="fas fa-paint-brush"></i> تصميم UI/UX</a></li>
+                    <li><a href="services.html"><i class="fas fa-bullseye"></i> التسويق الرقمي</a></li>
+                    <li><a href="contact.html"><i class="fas fa-comments"></i> الاستشارات التقنية</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">تواصل معنا</h3>
+                <div class="contact-info">
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>صنعاء، اليمن</span></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:+967770200970">+967770200970</a></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:2025ooss@gmail.com">2025ooss@gmail.com</a></div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">النشرة البريدية</h3>
+                <form class="newsletter-form" id="footerNewsletter">
+                    <div class="newsletter-input-wrapper">
+                        <i class="fas fa-envelope newsletter-icon"></i>
+                        <input type="email" placeholder="بريدك الإلكتروني" required>
+                    </div>
+                    <button type="submit" class="subscribe-btn">اشترك <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright-section">
+            <div class="copyright-content">
+                <p>© <span class="current-year">2024</span> TechNomads. جميع الحقوق محفوظة</p>
+                <div class="footer-links-inline"><a href="#">شروط الخدمة</a><span class="separator">|</span><a href="#">سياسة الخصوصية</a></div>
+            </div>
+            <div class="footer-bottom-bar"><span>صُنع بـ <i class="fas fa-heart"></i> في اليمن</span></div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true, offset: 100 });
+
+        // Update copyright year
+        document.querySelectorAll('.current-year').forEach(el => el.textContent = new Date().getFullYear());
+
+        // ============================================
+        // HAMBURGER MENU FIX
+        // ============================================
+        (function() {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            const closeNavBtn = document.getElementById('closeNavBtn');
+            
+            if (hamburger && mobileNav) {
+                function toggleMenu() {
+                    mobileNav.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                    const isOpen = mobileNav.classList.contains('active');
+                    hamburger.setAttribute('aria-expanded', isOpen);
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                }
+                
+                hamburger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleMenu();
+                });
+                
+                if (closeNavBtn) {
+                    closeNavBtn.addEventListener('click', toggleMenu);
+                }
+                
+                document.addEventListener('click', function(e) {
+                    if (mobileNav.classList.contains('active') && 
+                        !mobileNav.contains(e.target) && 
+                        !hamburger.contains(e.target)) {
+                        toggleMenu();
+                    }
+                });
+                
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
+                
+                mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
+                    link.addEventListener('click', toggleMenu);
+                });
+            }
+        })();
+
+        // ============================================
+        // COUNTER ANIMATION
+        // ============================================
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 30);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const target = parseInt(element.getAttribute('data-target'));
+                    if (!isNaN(target)) animateCounter(element, target);
+                    observer.unobserve(element);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statMembers = document.getElementById('statMembers');
+        const statExperience = document.getElementById('statExperience');
+        const statClients = document.getElementById('statClients');
+        const statProjects = document.getElementById('statProjects');
+
+        if (statMembers) { statMembers.setAttribute('data-target', '6'); observer.observe(statMembers); }
+        if (statExperience) { statExperience.setAttribute('data-target', '10'); observer.observe(statExperience); }
+        if (statClients) { statClients.setAttribute('data-target', '50'); observer.observe(statClients); }
+        if (statProjects) { statProjects.setAttribute('data-target', '150'); observer.observe(statProjects); }
+
+        // ============================================
+        // BACK TO TOP
+        // ============================================
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+            window.addEventListener('scroll', () => {
+                backToTop.classList.toggle('visible', window.scrollY > 500);
+            });
+            backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+
+        // ============================================
+        // NEWSLETTER FORM
+        // ============================================
+        const footerNewsletter = document.getElementById('footerNewsletter');
+        if (footerNewsletter) {
+            footerNewsletter.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = footerNewsletter.querySelector('input');
+                if (input && input.value) {
+                    alert('شكراً للاشتراك في نشرتنا البريدية!');
+                    input.value = '';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

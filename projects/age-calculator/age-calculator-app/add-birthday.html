@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="إضافة أو تعديل سجل ميلاد - حاسبة العمر المتكاملة">
+    <title>إضافة مولود جديد - حاسبة العمر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* ========== نفس المتغيرات والأنماط الأساسية ========== */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --primary-light: #4895ef;
+            --accent: #f72585;
+            --dark: #14213d;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #ef233c;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            border-radius: 50px;
+            background: var(--light);
+            transition: var(--transition);
+        }
+
+        .back-home:hover {
+            background: var(--gray-light);
+            transform: translateX(-5px);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 16px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 15px;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: white;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .input-field select,
+        .input-field input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: white;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .custom-type-input {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .custom-type-input.show {
+            display: block;
+        }
+
+        .btn {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-top: 0;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-light);
+            color: var(--gray);
+            font-size: 14px;
+            padding: 15px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons .btn {
+            flex: 1;
+            margin-top: 0;
+        }
+
+        .required:after {
+            content: " *";
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 13px;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .input-row { flex-direction: column; }
+            .header h1 { font-size: 28px; }
+            .content { padding: 20px; }
+            .action-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-plus-circle"></i> <span id="formTitle">إضافة مولود جديد</span></h1>
+            <p>أدخل بيانات المولود (شخص، حيوان، أو أي شيء) لحفظها في التخزين المحلي</p>
+        </div>
+
+        <div class="content">
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+
+            <form id="birthdayForm">
+                <!-- الاسم -->
+                <div class="form-group">
+                    <label class="required">الاسم</label>
+                    <input type="text" id="name" class="form-control" placeholder="أدخل الاسم" maxlength="100" required>
+                </div>
+
+                <!-- نوع المولود -->
+                <div class="form-group">
+                    <label class="required">نوع المولود</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="type" value="human" checked> <i class="fas fa-user"></i> إنسان
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="type" value="animal"> <i class="fas fa-paw"></i> حيوان
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="type" value="other"> <i class="fas fa-robot"></i> آخر
+                        </label>
+                    </div>
+                    <div id="customTypeContainer" class="custom-type-input">
+                        <input type="text" id="customType" class="form-control" placeholder="أدخل النوع (مثلاً: نبات، جماد، ...)">
+                    </div>
+                </div>
+
+                <!-- تاريخ الميلاد -->
+                <div class="form-group">
+                    <label class="required">تاريخ الميلاد <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">أدخل تاريخ الميلاد باليوم والشهر والسنة</span></span></label>
+                    <div class="input-row">
+                        <div class="input-field">
+                            <select id="year" required>
+                                <option value="">السنة</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <select id="month" required>
+                                <option value="">الشهر</option>
+                                <option value="1">يناير</option>
+                                <option value="2">فبراير</option>
+                                <option value="3">مارس</option>
+                                <option value="4">أبريل</option>
+                                <option value="5">مايو</option>
+                                <option value="6">يونيو</option>
+                                <option value="7">يوليو</option>
+                                <option value="8">أغسطس</option>
+                                <option value="9">سبتمبر</option>
+                                <option value="10">أكتوبر</option>
+                                <option value="11">نوفمبر</option>
+                                <option value="12">ديسمبر</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <select id="day" required>
+                                <option value="">اليوم</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- وقت الميلاد (اختياري) -->
+                <div class="form-group">
+                    <label>وقت الميلاد <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">اختياري، يساعد في الحساب الدقيق للعمر</span></span></label>
+                    <div class="input-row">
+                        <div class="input-field">
+                            <select id="hour">
+                                <option value="">الساعة</option>
+                                <option value="0">12 صباحاً</option>
+                                <option value="1">1 صباحاً</option>
+                                <option value="2">2 صباحاً</option>
+                                <option value="3">3 صباحاً</option>
+                                <option value="4">4 صباحاً</option>
+                                <option value="5">5 صباحاً</option>
+                                <option value="6">6 صباحاً</option>
+                                <option value="7">7 صباحاً</option>
+                                <option value="8">8 صباحاً</option>
+                                <option value="9">9 صباحاً</option>
+                                <option value="10">10 صباحاً</option>
+                                <option value="11">11 صباحاً</option>
+                                <option value="12">12 ظهراً</option>
+                                <option value="13">1 مساءً</option>
+                                <option value="14">2 مساءً</option>
+                                <option value="15">3 مساءً</option>
+                                <option value="16">4 مساءً</option>
+                                <option value="17">5 مساءً</option>
+                                <option value="18">6 مساءً</option>
+                                <option value="19">7 مساءً</option>
+                                <option value="20">8 مساءً</option>
+                                <option value="21">9 مساءً</option>
+                                <option value="22">10 مساءً</option>
+                                <option value="23">11 مساءً</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <select id="minute">
+                                <option value="">الدقائق</option>
+                                <option value="0">00</option>
+                                <option value="5">05</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ملاحظات إضافية -->
+                <div class="form-group">
+                    <label>ملاحظات (اختياري)</label>
+                    <textarea id="notes" class="form-control" rows="3" placeholder="أي ملاحظات إضافية..."></textarea>
+                </div>
+
+                <!-- أزرار الإجراءات -->
+                <div class="action-buttons">
+                    <button type="submit" class="btn"><i class="fas fa-save"></i> حفظ</button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn"><i class="fas fa-times"></i> إلغاء</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="footer">
+            <p>تم التطوير بدقة وعناية | &copy; <span id="current-year"></span> حاسبة العمر المتكاملة</p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ========== الثوابت ==========
+            const STORAGE_KEY = 'birthday_app_data';
+            const URL_PARAMS = new URLSearchParams(window.location.search);
+            const EDIT_ID = URL_PARAMS.get('id');           // للتعديل
+            const DATE_PARAM = URL_PARAMS.get('date');       // تاريخ من الحاسبة (بدون حفظ)
+            const DATA_PARAM = URL_PARAMS.get('data');       // كائن كامل من الحاسبة (للحفظ المباشر)
+
+            // عناصر DOM
+            const form = document.getElementById('birthdayForm');
+            const formTitle = document.getElementById('formTitle');
+            const nameInput = document.getElementById('name');
+            const typeRadios = document.querySelectorAll('input[name="type"]');
+            const customTypeContainer = document.getElementById('customTypeContainer');
+            const customTypeInput = document.getElementById('customType');
+            const yearSelect = document.getElementById('year');
+            const monthSelect = document.getElementById('month');
+            const daySelect = document.getElementById('day');
+            const hourSelect = document.getElementById('hour');
+            const minuteSelect = document.getElementById('minute');
+            const notesInput = document.getElementById('notes');
+            const cancelBtn = document.getElementById('cancelBtn');
+
+            // ========== تهيئة القوائم ==========
+            function populateYears() {
+                const currentYear = new Date().getFullYear();
+                for (let year = currentYear; year >= 1900; year--) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    yearSelect.appendChild(option);
+                }
+            }
+            populateYears();
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // تحديث أيام الشهر
+            function updateDays() {
+                daySelect.innerHTML = '<option value="">اليوم</option>';
+                const month = monthSelect.value;
+                const year = yearSelect.value;
+                if (month && year) {
+                    const daysInMonth = new Date(year, month, 0).getDate();
+                    for (let day = 1; day <= daysInMonth; day++) {
+                        const option = document.createElement('option');
+                        option.value = day;
+                        option.textContent = day;
+                        daySelect.appendChild(option);
+                    }
+                }
+            }
+            monthSelect.addEventListener('change', updateDays);
+            yearSelect.addEventListener('change', updateDays);
+
+            // ========== إظهار/إخفاء حقل النوع المخصص ==========
+            function toggleCustomType() {
+                const selectedType = document.querySelector('input[name="type"]:checked').value;
+                if (selectedType === 'other') {
+                    customTypeContainer.classList.add('show');
+                    customTypeInput.setAttribute('required', 'required');
+                } else {
+                    customTypeContainer.classList.remove('show');
+                    customTypeInput.removeAttribute('required');
+                    customTypeInput.value = '';
+                }
+            }
+            typeRadios.forEach(radio => radio.addEventListener('change', toggleCustomType));
+            toggleCustomType(); // للتأكد من الحالة الابتدائية
+
+            // ========== تحميل البيانات من localStorage ==========
+            function loadBirthdays() {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                return stored ? JSON.parse(stored) : [];
+            }
+
+            function saveBirthdays(data) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            }
+
+            // ========== تعبئة النموذج للتحرير ==========
+            function loadDataForEdit(id) {
+                const birthdays = loadBirthdays();
+                const item = birthdays.find(b => b.id === id);
+                if (!item) return false;
+
+                // تعبئة الحقول
+                nameInput.value = item.name || '';
+
+                // تحديد النوع
+                const type = item.type || 'other';
+                document.querySelector(`input[name="type"][value="${type}"]`).checked = true;
+                if (type === 'other' && item.typeCustom) {
+                    customTypeInput.value = item.typeCustom;
+                }
+                toggleCustomType();
+
+                // تعبئة التاريخ والوقت
+                if (item.birthDate) {
+                    const bd = new Date(item.birthDate);
+                    if (!isNaN(bd)) {
+                        yearSelect.value = bd.getFullYear();
+                        monthSelect.value = bd.getMonth() + 1;
+                        // تأخير لتحديث الأيام
+                        setTimeout(() => {
+                            daySelect.value = bd.getDate();
+                        }, 100);
+                        hourSelect.value = bd.getHours();
+                        minuteSelect.value = bd.getMinutes();
+                    }
+                }
+
+                notesInput.value = item.notes || '';
+
+                return true;
+            }
+
+            // ========== تعبئة التاريخ فقط من المعامل date ==========
+            function loadDateFromParam(dateStr) {
+                try {
+                    const bd = new Date(dateStr);
+                    if (!isNaN(bd)) {
+                        yearSelect.value = bd.getFullYear();
+                        monthSelect.value = bd.getMonth() + 1;
+                        setTimeout(() => {
+                            daySelect.value = bd.getDate();
+                        }, 100);
+                        hourSelect.value = bd.getHours();
+                        minuteSelect.value = bd.getMinutes();
+                        return true;
+                    }
+                } catch (e) {}
+                return false;
+            }
+
+            // ========== تعبئة البيانات الكاملة من data ==========
+            function loadDataFromDataParam(dataStr) {
+                try {
+                    const item = JSON.parse(decodeURIComponent(dataStr));
+                    nameInput.value = item.name || '';
+                    if (item.type) {
+                        document.querySelector(`input[name="type"][value="${item.type}"]`).checked = true;
+                        if (item.type === 'other' && item.typeCustom) {
+                            customTypeInput.value = item.typeCustom;
+                        }
+                        toggleCustomType();
+                    }
+                    if (item.birthDate) {
+                        const bd = new Date(item.birthDate);
+                        if (!isNaN(bd)) {
+                            yearSelect.value = bd.getFullYear();
+                            monthSelect.value = bd.getMonth() + 1;
+                            setTimeout(() => {
+                                daySelect.value = bd.getDate();
+                            }, 100);
+                            hourSelect.value = bd.getHours();
+                            minuteSelect.value = bd.getMinutes();
+                        }
+                    }
+                    notesInput.value = item.notes || '';
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            // ========== التحقق من صحة النموذج ==========
+            function validateForm() {
+                if (!nameInput.value.trim()) {
+                    Swal.fire({ icon: 'error', title: 'الاسم مطلوب', text: 'يرجى إدخال الاسم' });
+                    nameInput.focus();
+                    return false;
+                }
+
+                const type = document.querySelector('input[name="type"]:checked').value;
+                if (type === 'other' && !customTypeInput.value.trim()) {
+                    Swal.fire({ icon: 'error', title: 'النوع المخصص مطلوب', text: 'يرجى إدخال النوع عند اختيار "آخر"' });
+                    customTypeInput.focus();
+                    return false;
+                }
+
+                if (!yearSelect.value || !monthSelect.value || !daySelect.value) {
+                    Swal.fire({ icon: 'error', title: 'تاريخ الميلاد ناقص', text: 'يرجى إدخال اليوم والشهر والسنة' });
+                    return false;
+                }
+
+                const birthDate = new Date(yearSelect.value, monthSelect.value - 1, daySelect.value, hourSelect.value || 0, minuteSelect.value || 0);
+                if (birthDate > new Date()) {
+                    Swal.fire({ icon: 'error', title: 'تاريخ غير صحيح', text: 'تاريخ الميلاد لا يمكن أن يكون في المستقبل' });
+                    return false;
+                }
+
+                return true;
+            }
+
+            // ========== حفظ البيانات ==========
+            function saveFormData() {
+                if (!validateForm()) return;
+
+                const type = document.querySelector('input[name="type"]:checked').value;
+                const typeCustom = type === 'other' ? customTypeInput.value.trim() : '';
+
+                const year = yearSelect.value;
+                const month = monthSelect.value.padStart(2, '0');
+                const day = daySelect.value.padStart(2, '0');
+                const hour = hourSelect.value ? hourSelect.value.padStart(2, '0') : '00';
+                const minute = minuteSelect.value ? minuteSelect.value.padStart(2, '0') : '00';
+
+                const birthDateString = `${year}-${month}-${day}T${hour}:${minute}`;
+
+                const newItem = {
+                    id: EDIT_ID || Date.now().toString(),
+                    name: nameInput.value.trim(),
+                    type: type,
+                    typeCustom: typeCustom,
+                    birthDate: birthDateString,
+                    notes: notesInput.value.trim(),
+                    createdAt: EDIT_ID ? undefined : Date.now() // نحتفظ بتاريخ الإنشاء الأصلي إذا كان تعديلاً
+                };
+
+                const birthdays = loadBirthdays();
+                if (EDIT_ID) {
+                    // تعديل: نبحث عن العنصر ونحدثه
+                    const index = birthdays.findIndex(b => b.id === EDIT_ID);
+                    if (index !== -1) {
+                        // احتفظ ب history أو أنشئ حقلاً للتعديل
+                        newItem.createdAt = birthdays[index].createdAt; // نحتفظ بتاريخ الإنشاء الأصلي
+                        birthdays[index] = newItem;
+                    } else {
+                        // إذا لم يوجد (غريب) نضيفه كجديد
+                        birthdays.push(newItem);
+                    }
+                } else {
+                    // إضافة جديدة
+                    birthdays.push(newItem);
+                }
+
+                saveBirthdays(birthdays);
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تم الحفظ',
+                    text: EDIT_ID ? 'تم تحديث البيانات بنجاح' : 'تمت إضافة المولود الجديد',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // ========== أحداث ==========
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveFormData();
+            });
+
+            cancelBtn.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+
+            // ========== التهيئة حسب المعاملات ==========
+            if (EDIT_ID) {
+                formTitle.textContent = 'تعديل بيانات مولود';
+                const found = loadDataForEdit(EDIT_ID);
+                if (!found) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'خطأ',
+                        text: 'لم يتم العثور على السجل المطلوب',
+                    }).then(() => {
+                        window.location.href = 'index.html';
+                    });
+                }
+            } else if (DATA_PARAM) {
+                // حفظ من الحاسبة (بيانات كاملة)
+                loadDataFromDataParam(DATA_PARAM);
+            } else if (DATE_PARAM) {
+                // فقط تاريخ من الحاسبة
+                loadDateFromParam(DATE_PARAM);
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - المحاسب المالي</title>
+    
+    <!-- تحسين تحميل الخطوط -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- تحسين تحميل أيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* إعادة ضبط CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #3366cc;
+            --primary-dark: #254e9c;
+            --secondary-color: #ff6b6b;
+            --success-color: #38a169;
+            --warning-color: #d69e2e;
+            --danger-color: #e53e3e;
+            --light-color: #f8f9fa;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-gray: #e2e8f0;
+            --border-color: #e2e8f0;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            direction: rtl;
+        }
+        
+        .auth-container {
+            width: 100%;
+            max-width: 520px;
+        }
+        
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-top: 0.5rem;
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: var(--gray-color);
+            font-size: 1.2rem;
+            text-decoration: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .back-button:hover {
+            background: var(--light-gray);
+            color: var(--dark-color);
+        }
+        
+        .auth-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .auth-header p {
+            color: var(--gray-color);
+            font-size: 1rem;
+        }
+        
+        .auth-form {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+        }
+        
+        .input-icon {
+            position: relative;
+        }
+        
+        .input-icon i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+        }
+        
+        .input-icon input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .input-icon input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.1);
+        }
+        
+        .password-strength {
+            margin-top: 0.5rem;
+            height: 5px;
+            background: var(--light-gray);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+        
+        .password-strength.weak .password-strength-bar {
+            width: 33%;
+            background: var(--danger-color);
+        }
+        
+        .password-strength.medium .password-strength-bar {
+            width: 66%;
+            background: var(--warning-color);
+        }
+        
+        .password-strength.strong .password-strength-bar {
+            width: 100%;
+            background: var(--success-color);
+        }
+        
+        .password-strength-text {
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            color: var(--gray-color);
+        }
+        
+        /* تحميل الصور */
+        .image-upload-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .image-upload-card {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            text-align: center;
+            background: var(--light-color);
+        }
+        
+        .image-upload-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .image-upload-card.active {
+            border-color: var(--primary-color);
+            border-style: solid;
+        }
+        
+        .image-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-gray);
+            position: relative;
+            border: 2px solid var(--border-color);
+        }
+        
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-preview i {
+            font-size: 2.5rem;
+            color: var(--gray-color);
+        }
+        
+        .image-upload-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .image-upload-text {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+        }
+        
+        .image-actions {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-upload {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 8px 16px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-upload:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-action {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .btn-action:hover {
+            transform: scale(1.1);
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .upload-progress {
+            margin-top: 0.5rem;
+            height: 5px;
+            background: var(--light-gray);
+            border-radius: 3px;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .upload-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-block {
+            display: flex;
+            width: 100%;
+        }
+        
+        .auth-links {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .auth-links p {
+            color: var(--gray-color);
+            margin-bottom: 0;
+        }
+        
+        .auth-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        /* تحسينات للجوال */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .auth-card {
+                padding: 1.5rem;
+            }
+            
+            .auth-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .back-button {
+                top: -10px;
+                left: -10px;
+            }
+            
+            .image-upload-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 1.2rem;
+            }
+            
+            .auth-header h1 {
+                font-size: 1.3rem;
+            }
+            
+            .input-icon input {
+                padding: 10px 40px 10px 12px;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+                font-size: 1.5rem;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* حالة التحميل */
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* إشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 300px;
+            box-shadow: var(--box-shadow);
+            animation: slideDown 0.3s ease;
+        }
+        
+        .notification.success {
+            background-color: var(--success-color);
+        }
+        
+        .notification.error {
+            background-color: var(--danger-color);
+        }
+        
+        .notification button {
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 18px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- شعار بديل -->
+            <div class="logo-container">
+                <div class="logo">م</div>
+                <div class="logo-text">المحاسب المالي</div>
+            </div>
+            
+            <div class="auth-header">
+                <a href="../index.html" class="back-button">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <h1>إنشاء حساب جديد</h1>
+                <p>املأ البيانات التالية لإنشاء حسابك</p>
+            </div>
+
+            <form class="auth-form" id="registerForm">
+                <!-- قسم تحميل الصور -->
+                <div class="image-upload-container">
+                    <!-- تحميل شعار الشركة -->
+                    <div class="image-upload-card" id="logoCard">
+                        <div class="image-preview" id="logoPreview">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <span class="image-upload-label">شعار الشركة</span>
+                        <p class="image-upload-text">الحجم الأمثل: 300×100 بكسل</p>
+                        
+                        <input type="file" id="logoUpload" accept="image/*" style="display: none;">
+                        <button type="button" class="btn-upload" onclick="document.getElementById('logoUpload').click()">
+                            <i class="fas fa-upload"></i> رفع الشعار
+                        </button>
+                        
+                        <div class="image-actions" id="logoActions" style="display: none;">
+                            <button type="button" class="btn-action" onclick="rotateImage('logoPreview', -90)" title="تدوير عكس عقارب الساعة">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                            <button type="button" class="btn-action" onclick="rotateImage('logoPreview', 90)" title="تدوير مع عقارب الساعة">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            <button type="button" class="btn-action" onclick="removeImage('logoPreview', 'logoUpload', 'logoCard', 'logoActions')" title="إزالة الصورة">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="upload-progress" id="logoUploadProgress">
+                            <div class="upload-progress-bar"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- تحميل صورة الملف الشخصي -->
+                    <div class="image-upload-card" id="avatarCard">
+                        <div class="image-preview" id="avatarPreview">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="image-upload-label">صورة الملف الشخصي</span>
+                        <p class="image-upload-text">الحجم الأمثل: 200×200 بكسل</p>
+                        
+                        <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+                        <button type="button" class="btn-upload" onclick="document.getElementById('avatarUpload').click()">
+                            <i class="fas fa-upload"></i> رفع الصورة
+                        </button>
+                        
+                        <div class="image-actions" id="avatarActions" style="display: none;">
+                            <button type="button" class="btn-action" onclick="rotateImage('avatarPreview', -90)" title="تدوير عكس عقارب الساعة">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                            <button type="button" class="btn-action" onclick="rotateImage('avatarPreview', 90)" title="تدوير مع عقارب الساعة">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            <button type="button" class="btn-action" onclick="removeImage('avatarPreview', 'avatarUpload', 'avatarCard', 'avatarActions')" title="إزالة الصورة">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="upload-progress" id="avatarUploadProgress">
+                            <div class="upload-progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fullName">الاسم الكامل</label>
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="fullName" name="fullName" required placeholder="أدخل اسمك الكامل">
+                    </div>
+                    <div class="error-message" id="fullNameError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
+                    </div>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" required placeholder="اختر كلمة مرور قوية">
+                    </div>
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="password-strength-bar"></div>
+                    </div>
+                    <div class="password-strength-text" id="passwordStrengthText"></div>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">تأكيد كلمة المرور</label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="أعد إدخال كلمة المرور">
+                    </div>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyName">اسم الشركة (اختياري)</label>
+                    <div class="input-icon">
+                        <i class="fas fa-building"></i>
+                        <input type="text" id="companyName" name="companyName" placeholder="اسم الشركة أو المحل">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="registerBtn">
+                    <i class="fas fa-user-plus"></i> إنشاء حساب
+                </button>
+
+                <div class="auth-links">
+                    <p>لديك حساب already؟ <a href="login.html">تسجيل الدخول</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // متغيرات لتخزين الصور
+        let logoDataUrl = '';
+        let avatarDataUrl = '';
+        let logoRotation = 0;
+        let avatarRotation = 0;
+        
+        // دالة للتحقق من تسجيل الدخول
+        function isLoggedIn() {
+            try {
+                return localStorage.getItem('financial_app_current_user') !== null;
+            } catch (e) {
+                console.error('خطأ في الوصول إلى localStorage:', e);
+                return false;
+            }
+        }
+        
+        // دالة للتحقق من صحة البريد الإلكتروني
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // دالة للتحقق من قوة كلمة المرور
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/\d/)) strength++;
+            if (password.match(/[^a-zA-Z\d]/)) strength++;
+            
+            return strength;
+        }
+        
+        // دالة لعرض الإشعارات
+        function showNotification(message, type) {
+            // إزالة أي إشعارات سابقة
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // إزالة الإشعار تلقائياً بعد 5 ثواني
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+        
+        // دالة لتحميل الصور
+        function handleImageUpload(event, previewId, progressId, cardId, actionsId, type) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // التحقق من نوع الملف
+            if (!file.type.match('image.*')) {
+                showNotification('الملف المحدد ليس صورة', 'error');
+                return;
+            }
+            
+            // إظهار شريط التقدم
+            const progressBar = document.getElementById(progressId);
+            progressBar.style.display = 'block';
+            
+            // تفعيل حالة البطاقة
+            document.getElementById(cardId).classList.add('active');
+            
+            // إظهار أزرار التحكم
+            document.getElementById(actionsId).style.display = 'flex';
+            
+            // محاكاة التقدم
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                progressBar.querySelector('.upload-progress-bar').style.width = `${progress}%`;
+                if (progress >= 70) clearInterval(progressInterval);
+            }, 100);
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // إخفاء شريط التقدم
+                clearInterval(progressInterval);
+                progressBar.querySelector('.upload-progress-bar').style.width = '100%';
+                
+                setTimeout(() => {
+                    progressBar.style.display = 'none';
+                    
+                    // حفظ الصورة وعرضها
+                    if (type === 'logo') {
+                        logoDataUrl = e.target.result;
+                        logoRotation = 0;
+                    } else {
+                        avatarDataUrl = e.target.result;
+                        avatarRotation = 0;
+                    }
+                    
+                    const preview = document.getElementById(previewId);
+                    preview.innerHTML = `<img src="${e.target.result}" alt="${type}" style="transform: rotate(0deg);">`;
+                    
+                    showNotification('تم تحميل الصورة بنجاح', 'success');
+                }, 500);
+            };
+            
+            reader.onerror = function() {
+                clearInterval(progressInterval);
+                progressBar.style.display = 'none';
+                showNotification('حدث خطأ أثناء تحميل الصورة', 'error');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // دالة لتدوير الصورة
+        function rotateImage(previewId, degrees) {
+            const preview = document.getElementById(previewId);
+            const img = preview.querySelector('img');
+            
+            if (!img) {
+                showNotification('لا توجد صورة لتدويرها', 'error');
+                return;
+            }
+            
+            if (previewId === 'logoPreview') {
+                logoRotation += degrees;
+                img.style.transform = `rotate(${logoRotation}deg)`;
+            } else {
+                avatarRotation += degrees;
+                img.style.transform = `rotate(${avatarRotation}deg)`;
+            }
+        }
+        
+        // دالة لإزالة الصورة
+        function removeImage(previewId, uploadId, cardId, actionsId) {
+            const preview = document.getElementById(previewId);
+            const upload = document.getElementById(uploadId);
+            
+            if (previewId === 'logoPreview') {
+                logoDataUrl = '';
+                logoRotation = 0;
+            } else {
+                avatarDataUrl = '';
+                avatarRotation = 0;
+            }
+            
+            preview.innerHTML = `<i class="fas fa-${previewId === 'logoPreview' ? 'building' : 'user'}"></i>`;
+            upload.value = '';
+            
+            // إلغاء تفعيل البطاقة
+            document.getElementById(cardId).classList.remove('active');
+            
+            // إخفاء أزرار التحكم
+            document.getElementById(actionsId).style.display = 'none';
+            
+            showNotification('تم إزالة الصورة', 'success');
+        }
+        
+        // دالة لضغط الصورة
+        function resizeImage(imageDataUrl, maxWidth, maxHeight, quality) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = function() {
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    // حساب الأبعاد الجديدة مع الحفاظ على التناسب
+                    if (width > maxWidth) {
+                        height = (height * maxWidth) / width;
+                        width = maxWidth;
+                    }
+                    
+                    if (height > maxHeight) {
+                        width = (width * maxHeight) / height;
+                        height = maxHeight;
+                    }
+                    
+                    // إنشاء canvas لرسم الصورة المضغوطة
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    // الحصول على الصورة المضغوطة
+                    const resizedImage = canvas.toDataURL('image/jpeg', quality);
+                    resolve(resizedImage);
+                };
+                img.src = imageDataUrl;
+            });
+        }
+        
+        // دالة تسجيل المستخدم
+        async function registerUser(fullName, email, password, confirmPassword, companyName) {
+            const registerBtn = document.getElementById('registerBtn');
+            registerBtn.classList.add('loading');
+            
+            // محاكاة عملية التسجيل (في التطبيق الحقيقي يجب الاتصال بالخادم)
+            setTimeout(async () => {
+                try {
+                    // التحقق من تطابق كلمات المرور
+                    if (password !== confirmPassword) {
+                        showNotification('كلمات المرور غير متطابقة', 'error');
+                        document.getElementById('confirmPasswordError').textContent = 'كلمات المرور غير متطابقة';
+                        document.getElementById('confirmPasswordError').style.display = 'block';
+                        registerBtn.classList.remove('loading');
+                        return;
+                    }
+                    
+                    // التحقق من قوة كلمة المرور
+                    const passwordStrength = checkPasswordStrength(password);
+                    if (passwordStrength < 3) {
+                        showNotification('كلمة المرور ضعيفة. يجب أن تحتوي على 8 أحرف على الأقل، وحروف كبيرة وصغيرة، وأرقام', 'error');
+                        registerBtn.classList.remove('loading');
+                        return;
+                    }
+                    
+                    // تحميل المستخدمين الحاليين
+                    const users = JSON.parse(localStorage.getItem('financial_app_users') || '[]');
+                    
+                    // التحقق إذا كان البريد الإلكتروني مسجلاً already
+                    if (users.some(user => user.email === email)) {
+                        showNotification('البريد الإلكتروني مسجل already', 'error');
+                        document.getElementById('emailError').textContent = 'البريد الإلكتروني مسجل already';
+                        document.getElementById('emailError').style.display = 'block';
+                        registerBtn.classList.remove('loading');
+                        return;
+                    }
+                    
+                    // ضغط الصور إذا كانت موجودة
+                    let compressedLogo = '';
+                    let compressedAvatar = '';
+                    
+                    if (logoDataUrl) {
+                        compressedLogo = await resizeImage(logoDataUrl, 300, 100, 0.8);
+                    }
+                    
+                    if (avatarDataUrl) {
+                        compressedAvatar = await resizeImage(avatarDataUrl, 200, 200, 0.8);
+                    }
+                    
+                    // إنشاء مستخدم جديد
+                    const newUser = {
+                        id: Date.now(),
+                        fullName,
+                        email,
+                        password, // في التطبيق الحقيقي يجب تشفير كلمة المرور
+                        companyName: companyName || '',
+                        avatar: compressedAvatar,
+                        createdAt: new Date().toISOString(),
+                        role: 'owner'
+                    };
+                    
+                    // إضافة المستخدم إلى القائمة
+                    users.push(newUser);
+                    localStorage.setItem('financial_app_users', JSON.stringify(users));
+                    
+                    // حفظ إعدادات الشركة إذا تم تحميل شعار
+                    if (compressedLogo) {
+                        const settings = JSON.parse(localStorage.getItem('financial_app_settings') || '{}');
+                        settings.company_name = companyName || '';
+                        settings.company_logo = compressedLogo;
+                        localStorage.setItem('financial_app_settings', JSON.stringify(settings));
+                    }
+                    
+                    // تسجيل الدخول تلقائياً
+                    localStorage.setItem('financial_app_current_user', JSON.stringify(newUser));
+                    
+                    showNotification('تم إنشاء الحساب بنجاح! يتم توجيهك الآن إلى لوحة التحكم', 'success');
+                    
+                    // توجيه إلى لوحة التحكم بعد ثانيتين
+                    setTimeout(() => {
+                        window.location.href = '../dashboard.html';
+                    }, 2000);
+                    
+                } catch (error) {
+                    console.error('خطأ في عملية التسجيل:', error);
+                    showNotification('حدث خطأ أثناء إنشاء الحساب. يرجى المحاولة مرة أخرى.', 'error');
+                    registerBtn.classList.remove('loading');
+                }
+            }, 1000);
+        }
+        
+        // تهيئة التطبيق عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('صفحة التسجيل تم تحميلها بنجاح');
+            
+            // التحقق إذا كان المستخدم مسجلاً بالفعل
+            if (isLoggedIn()) {
+                window.location.href = '../dashboard.html';
+                return;
+            }
+            
+            // إضافة event listeners لتحميل الصور
+            document.getElementById('logoUpload').addEventListener('change', (e) => {
+                handleImageUpload(e, 'logoPreview', 'logoUploadProgress', 'logoCard', 'logoActions', 'logo');
+            });
+            
+            document.getElementById('avatarUpload').addEventListener('change', (e) => {
+                handleImageUpload(e, 'avatarPreview', 'avatarUploadProgress', 'avatarCard', 'avatarActions', 'avatar');
+            });
+            
+            // إضافة event listener للنموذج
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // إخفاء رسائل الخطأ
+                    document.querySelectorAll('.error-message').forEach(el => {
+                        el.style.display = 'none';
+                    });
+                    
+                    const fullName = document.getElementById('fullName').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+                    const companyName = document.getElementById('companyName').value.trim();
+                    
+                    // التحقق من الحقول المطلوبة
+                    if (!fullName) {
+                        document.getElementById('fullNameError').textContent = 'الاسم الكامل مطلوب';
+                        document.getElementById('fullNameError').style.display = 'block';
+                        return;
+                    }
+                    
+                    if (!email) {
+                        document.getElementById('emailError').textContent = 'البريد الإلكتروني مطلوب';
+                        document.getElementById('emailError').style.display = 'block';
+                        return;
+                    }
+                    
+                    if (!isValidEmail(email)) {
+                        document.getElementById('emailError').textContent = 'البريد الإلكتروني غير صحيح';
+                        document.getElementById('emailError').style.display = 'block';
+                        return;
+                    }
+                    
+                    if (!password) {
+                        document.getElementById('passwordError').textContent = 'كلمة المرور مطلوبة';
+                        document.getElementById('passwordError').style.display = 'block';
+                        return;
+                    }
+                    
+                    if (!confirmPassword) {
+                        document.getElementById('confirmPasswordError').textContent = 'تأكيد كلمة المرور مطلوب';
+                        document.getElementById('confirmPasswordError').style.display = 'block';
+                        return;
+                    }
+                    
+                    registerUser(fullName, email, password, confirmPassword, companyName);
+                });
+            }
+            
+            // إضافة تحقق من قوة كلمة المرور أثناء الكتابة
+            const passwordInput = document.getElementById('password');
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    const password = this.value;
+                    const strength = checkPasswordStrength(password);
+                    const strengthElement = document.getElementById('passwordStrength');
+                    const strengthTextElement = document.getElementById('passwordStrengthText');
+                    
+                    strengthElement.className = 'password-strength';
+                    strengthTextElement.textContent = '';
+                    
+                    if (password.length > 0) {
+                        if (strength < 2) {
+                            strengthElement.classList.add('weak');
+                            strengthTextElement.textContent = 'كلمة مرور ضعيفة';
+                            strengthTextElement.style.color = 'var(--danger-color)';
+                        } else if (strength < 4) {
+                            strengthElement.classList.add('medium');
+                            strengthTextElement.textContent = 'كلمة مرور متوسطة';
+                            strengthTextElement.style.color = 'var(--warning-color)';
+                        } else {
+                            strengthElement.classList.add('strong');
+                            strengthTextElement.textContent = 'كلمة مرور قوية';
+                            strengthTextElement.style.color = 'var(--success-color)';
+                        }
+                    }
+                });
+            }
+            
+            // اختبار localStorage
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+            } catch (e) {
+                console.error('localStorage غير متاح:', e);
+                showNotification('المتصفح لا يدعم تخزين البيانات المحلي. يرجى تمكين cookies.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt – HarMur Service Gebäudereinigung München | Jetzt Angebot anfordern</title>
+    <meta name="description" content="Kontaktieren Sie HarMur Service für professionelle Gebäudereinigung in München. Kostenloses Angebot, Beratung unter 0155 6651 9979.">
+    
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/logo/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo/logo.svg" alt="HarMur Service Logo">
+                <span class="logo-text">HarMur Service</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Startseite</a></li>
+                <li><a href="about.html">Über Uns</a></li>
+                <li><a href="services.html">Leistungen</a></li>
+                <li><a href="contact.html" class="active">Kontakt</a></li>
+                <li><a href="tel:+4915566519979" class="nav-phone">
+                    <i class="fas fa-phone"></i> 0155 6651 9979
+                </a></li>
+            </ul>
+            
+            <button class="nav-toggle" aria-label="Menü öffnen">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+        
+<div class="theme-switch-container">
+    <button class="theme-switch" id="theme-toggle" aria-label="Wechseln zwischen Dark und Light Mode">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+        <span class="theme-switch-slider"></span>
+    </button>
+</div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1>Kontaktieren Sie uns</h1>
+                <p class="page-subtitle">Wir beraten Sie gerne persönlich zu Ihren Reinigungsbedürfnissen</p>
+                <nav class="breadcrumb">
+                    <a href="index.html">Startseite</a> / <span>Kontakt</span>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Contact Bar -->
+    <section class="quick-contact-bar">
+        <div class="container">
+            <div class="quick-contact-items">
+                <div class="quick-contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h4>Telefonisch erreichen</h4>
+                        <a href="tel:+4915566519979">0155 6651 9979</a>
+                    </div>
+                </div>
+                
+                <div class="quick-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Per E-Mail</h4>
+                        <a href="mailto:harmurservices@gmail.com">harmurservices@gmail.com</a>
+                    </div>
+                </div>
+                
+                <div class="quick-contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>
+                        <h4>WhatsApp</h4>
+                        <a href="https://wa.me/4915566519979" target="_blank">Nachricht senden</a>
+                    </div>
+                </div>
+                
+                <div class="quick-contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h4>Erreichbarkeit</h4>
+                        <span>Mo-Fr: 7:00-19:00 Uhr</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Contact Section -->
+    <section class="main-contact">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <div class="form-header">
+                        <h2><i class="fas fa-file-signature"></i> Kostenloses Angebot anfordern</h2>
+                        <p>Füllen Sie das Formular aus und wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+                    </div>
+                    
+                    <form id="contact-form" class="harmur-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-name" class="form-label required">Ihr Name *</label>
+                                <input type="text" id="contact-name" name="name" class="form-control" required
+                                       placeholder="Vor- und Nachname">
+                                <div class="form-help"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-company" class="form-label">Firma (optional)</label>
+                                <input type="text" id="contact-company" name="company" class="form-control"
+                                       placeholder="Firmenname">
+                                <div class="form-help"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-email" class="form-label required">E-Mail-Adresse *</label>
+                                <input type="email" id="contact-email" name="email" class="form-control" required
+                                       placeholder="ihre@email.de">
+                                <div class="form-help"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-phone" class="form-label required">Telefonnummer *</label>
+                                <input type="tel" id="contact-phone" name="phone" class="form-control" required
+                                       placeholder="0155 6651 9979">
+                                <div class="form-help"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-service" class="form-label required">Gewünschte Leistung *</label>
+                            <select id="contact-service" name="service" class="form-control form-select" required>
+                                <option value="" disabled selected>Bitte auswählen</option>
+                                <option value="office">Büro- & Praxisreinigung</option>
+                                <option value="hotel">Hotelreinigung</option>
+                                <option value="staircase">Treppenhausreinigung</option>
+                                <option value="maintenance">Unterhaltsreinigung (Gewerbe)</option>
+                                <option value="grundreinigung">Grundreinigung / Frühjahrsputz</option>
+                                <option value="fenster">Fensterreinigung</option>
+                                <option value="teppich">Teppichreinigung</option>
+                                <option value="other">Andere Leistung</option>
+                            </select>
+                            <div class="form-help"></div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-area" class="form-label">Fläche (m²)</label>
+                                <input type="number" id="contact-area" name="area" class="form-control"
+                                       placeholder="z.B. 150" min="10" step="10">
+                                <div class="form-help">Grobe Schätzung genügt</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-frequency" class="form-label">Gewünschte Häufigkeit</label>
+                                <select id="contact-frequency" name="frequency" class="form-control form-select">
+                                    <option value="" selected>Bitte auswählen</option>
+                                    <option value="daily">Täglich</option>
+                                    <option value="weekly">Wöchentlich</option>
+                                    <option value="biweekly">14-tägig</option>
+                                    <option value="monthly">Monatlich</option>
+                                    <option value="onetime">Einmalig</option>
+                                </select>
+                                <div class="form-help"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-message" class="form-label">Ihre Nachricht / Besonderheiten</label>
+                            <textarea id="contact-message" name="message" class="form-control" rows="5"
+                                      placeholder="Beschreiben Sie kurz Ihr Reinigungsvorhaben, Besonderheiten oder Terminwünsche..."></textarea>
+                            <div class="form-help">Max. 2000 Zeichen</div>
+                            <div class="char-counter" id="message-counter">0/2000</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-privacy" class="form-check">
+                                <input type="checkbox" id="contact-privacy" name="privacy" class="form-check-input" required>
+                                <span class="form-check-label">
+                                    Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a> gelesen und stimme zu *
+                                </span>
+                            </label>
+                            <div class="form-help"></div>
+                        </div>
+                        
+                        <!-- Honeypot Field (Spam Protection) -->
+                        <div class="honeypot">
+                            <label for="contact-website">Website</label>
+                            <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
+                        
+                        <div class="form-submit">
+                            <button type="submit" class="btn-primary btn-lg">
+                                <i class="fas fa-paper-plane"></i> Angebot anfordern
+                            </button>
+                            <p class="form-note">
+                                <i class="fas fa-shield-alt"></i> Ihre Daten werden verschlüsselt übertragen und vertraulich behandelt.
+                            </p>
+                        </div>
+                    </form>
+                    
+                    <div class="form-success" id="form-success" style="display: none;">
+                        <div class="success-content">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Vielen Dank für Ihre Anfrage!</h3>
+                            <p>Wir haben Ihre Nachricht erhalten und melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+                            <p><strong>Ihre Referenznummer: <span id="reference-number"></span></strong></p>
+                            <button class="btn-secondary" onclick="resetForm()">
+                                <i class="fas fa-plus"></i> Neue Anfrage
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="contact-info-container">
+                    <div class="contact-info-card">
+                        <h3><i class="fas fa-info-circle"></i> Kontaktinformationen</h3>
+                        
+                        <div class="contact-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="detail-content">
+                                <h4>Telefon</h4>
+                                <a href="tel:+4915566519979">0155 6651 9979</a>
+                                <p>Kostenlose Beratung</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="detail-content">
+                                <h4>E-Mail</h4>
+                                <a href="mailto:harmurservices@gmail.com">harmurservices@gmail.com</a>
+                                <p>Antwort innerhalb 24h</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-detail">
+                            <div class="detail-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="detail-content">
+                                <h4>WhatsApp</h4>
+                                <a href="https://wa.me/4915566519979" target="_blank">Nachricht senden</a>
+                                <p>Schnelle Antwort</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="detail-content">
+                                <h4>Einsatzgebiet</h4>
+                                <p>München und Umgebung</p>
+                                <p>bis 50km Umkreis</p>
+                            </div>
+                        </div>
+                        
+                        <div class="business-hours">
+                            <h4><i class="fas fa-clock"></i> Geschäftszeiten</h4>
+                            <div class="hours-grid">
+                                <div class="hours-day">
+                                    <span>Montag - Freitag</span>
+                                    <span>7:00 - 19:00 Uhr</span>
+                                </div>
+                                <div class="hours-day">
+                                    <span>Samstag</span>
+                                    <span>8:00 - 16:00 Uhr</span>
+                                </div>
+                                <div class="hours-day">
+                                    <span>Sonntag</span>
+                                    <span>8:00 - 14:00 Uhr</span>
+                                </div>
+                            </div>
+                            <p class="emergency-note">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Notfallservice auch außerhalb der Geschäftszeiten verfügbar
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Why Contact Us -->
+                    <div class="why-contact-card">
+                        <h3><i class="fas fa-star"></i> Warum uns kontaktieren?</h3>
+                        <ul class="why-list">
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <strong>Kostenlose Beratung</strong> – Vor-Ort-Besichtigung inklusive
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <strong>Transparente Preise</strong> – Keine versteckten Kosten
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <strong>Schnelle Reaktion</strong> – Angebot innerhalb 24-48h
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <strong>Erfahrenes Team</strong> – Feste, geschulte Mitarbeiter
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <strong>Flexible Termine</strong> – Auch am Wochenende möglich
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Download Brochure -->
+                    <div class="brochure-card">
+                        <h3><i class="fas fa-download"></i> Infomaterial</h3>
+                        <p>Laden Sie unseren Service-Katalog herunter für detaillierte Informationen.</p>
+                        <a href="#" class="btn-secondary">
+                            <i class="fas fa-file-pdf"></i> Service-Katalog (PDF)
+                        </a>
+                        <a href="#" class="btn-secondary">
+                            <i class="fas fa-file-contract"></i> Mustervertrag (PDF)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- Service Areas Map -->
+    <!--
+    <section class="service-areas">
+        <div class="container"> 
+            <div class="section-header">
+                <h2>Unser Einsatzgebiet</h2>
+                <p class="section-subtitle">Wir bedienen München und das gesamte Umland</p>
+            </div>
+            
+            <div class="areas-container">
+                <div class="areas-map" id="service-map">
+                    <!-- Map will be loaded via JavaScript -->
+ <!--                    <div class="map-placeholder">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Karte wird geladen...</p>
+                    </div>
+                </div>
+                
+                <div class="areas-list">
+                    <h3>Wir bedienen folgende Gebiete:</h3>
+                    <div class="areas-grid">
+                        <div class="area-group">
+                            <h4>München Stadt</h4>
+                            <ul>
+                                <li>Altstadt-Lehel</li>
+                                <li>Ludwigsvorstadt-Isarvorstadt</li>
+                                <li>Maxvorstadt</li>
+                                <li>Schwabing</li>
+                                <li>Au-Haidhausen</li>
+                                <li>Sendling</li>
+                                <li>Sendling-Westpark</li>
+                                <li>Schwanthalerhöhe</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="area-group">
+                            <h4>München Umland Nord</h4>
+                            <ul>
+                                <li>Garching</li>
+                                <li>Unterschleißheim</li>
+                                <li>Oberschleißheim</li>
+                                <li>Garching bei München</li>
+                                <li>Ismaning</li>
+                                <li>Unterföhring</li>
+                                <li>Aschheim</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="area-group">
+                            <h4>München Umland Süd</h4>
+                            <ul>
+                                <li>Grünwald</li>
+                                <li>Unterhaching</li>
+                                <li>Taufkirchen</li>
+                                <li>Ottobrunn</li>
+                                <li>Neubiberg</li>
+                                <li>Hohenbrunn</li>
+                                <li>Brunnthal</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="area-group">
+                            <h4>Weitere Städte</h4>
+                            <ul>
+                                <li>Germering</li>
+                                <li>Gauting</li>
+                                <li>Starnberg</li>
+                                <li>Gilching</li>
+                                <li>Weßling</li>
+                                <li>Planegg</li>
+                                <li>Gräfelfing</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="areas-note">
+                        <p><i class="fas fa-info-circle"></i> Für Gebiete außerhalb von 50km Umkreis berechnen wir eine Anfahrtskostenpauschale.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ -->
+    <!-- FAQ Contact -->
+    <section class="contact-faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Häufige Fragen zum Kontakt</h2>
+                <p class="section-subtitle">Antworten auf häufige Fragen unserer Kunden</p>
+            </div>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Wie schnell erhalte ich ein Angebot? <i class="fas fa-chevron-down"></i></h3>
+                    <div class="faq-answer">
+                        <p>In der Regel senden wir Ihnen innerhalb von 24-48 Stunden nach Ihrer Anfrage ein detailliertes Angebot zu. Bei dringenden Anfragen auch schneller.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Kostet die Besichtigung etwas? <i class="fas fa-chevron-down"></i></h3>
+                    <div class="faq-answer">
+                        <p>Nein, die Vor-Ort-Besichtigung und Beratung sind für Sie komplett kostenlos und unverbindlich.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Kann ich auch kurzfristig einen Termin vereinbaren? <i class="fas fa-chevron-down"></i></h3>
+                    <div class="faq-answer">
+                        <p>Ja, wir bieten auch kurzfristige Termine an. Rufen Sie uns einfach an unter 0155 6651 9979.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Gibt es eine Mindestvertragslaufzeit? <i class="fas fa-chevron-down"></i></h3>
+                    <div class="faq-answer">
+                        <p>Nein, alle unsere Verträge sind monatlich kündbar. Wir arbeiten ohne lange Bindungsfristen.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Was passiert nach dem Absenden des Formulars? <i class="fas fa-chevron-down"></i></h3>
+                    <div class="faq-answer">
+                        <p>Sie erhalten eine automatische Bestätigungs-E-Mail. Ein Mitarbeiter kontaktiert Sie innerhalb von 24 Stunden zur Terminvereinbarung für eine kostenlose Besichtigung.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Kann ich auch außerhalb der Geschäftszeiten anrufen? <i class="fas fa-chevron-down"></i></h3>
+                    <div class="faq-answer">
+                        <p>Ja, für Notfälle sind wir auch außerhalb der Geschäftszeiten erreichbar. Hinterlassen Sie eine Nachricht auf dem Anrufbeantworter, wir rufen zurück.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Signals -->
+    <section class="trust-signals">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <i class="fas fa-lock"></i>
+                    <h3>Sichere Datenübertragung</h3>
+                    <p>Ihre Daten werden verschlüsselt übertragen und vertraulich behandelt.</p>
+                </div>
+                
+                <div class="trust-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>DSGVO-konform</h3>
+                    <p>Wir halten uns strikt an die Datenschutzgrundverordnung.</p>
+                </div>
+                
+                <div class="trust-item">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Keine Weitergabe an Dritte</h3>
+                    <p>Ihre Daten werden nicht an Dritte weitergegeben oder verkauft.</p>
+                </div>
+                
+                <div class="trust-item">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Zertifizierte Reinigung</h3>
+                    <p>Alle Reinigungen nach zertifizierten Qualitätsstandards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Contact -->
+    <section class="emergency-contact">
+        <div class="container">
+            <div class="emergency-content">
+                <div class="emergency-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="emergency-text">
+                    <h2>Notfall-Reinigung benötigt?</h2>
+                    <p>Bei Wasserschäden, Einbrüchen oder anderen Notfällen sind wir auch kurzfristig für Sie da.</p>
+                </div>
+                <div class="emergency-action">
+                    <a href="tel:+4915566519979" class="btn-primary btn-lg">
+                        <i class="fas fa-phone"></i> Jetzt Notfall anrufen: 0155 6651 9979
+                    </a>
+                    <p class="emergency-note">24/7 Notfallservice verfügbar</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo/logo.svg" alt="HarMur Service Logo">
+                        <h3>HarMur Service</h3>
+                    </div>
+                    <p>Professionelle Gebäudereinigung in München und Umgebung.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/4915566519979" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Leistungen</h4>
+                    <ul class="footer-links">
+                        <li><a href="services.html#office">Büroreinigung</a></li>
+                        <li><a href="services.html#hotel">Hotelreinigung</a></li>
+                        <li><a href="services.html#staircase">Treppenhausreinigung</a></li>
+                        <li><a href="services.html#maintenance">Unterhaltsreinigung</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Kontakt</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-phone"></i> 0155 6651 9979</li>
+                        <li><i class="fas fa-envelope"></i> harmurservices@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> München & Umgebung</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Rechtliches</h4>
+                    <ul class="footer-links">
+                        <li><a href="impressum.html">Impressum</a></li>
+                        <li><a href="datenschutz.html">Datenschutz</a></li>
+                        <li><a href="contact.html">Kontakt</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+         
+                      <div class="footer-bottom">
+                <p>&copy; 2026 HarMur Service – Professionelle Gebäudereinigung München. Alle Rechte vorbehalten.</p>
+                <p class="legal-footer-note">
+                    <a href="impressum.html">Impressum</a> | 
+                    <a href="datenschutz.html">Datenschutz</a> | 
+                    <a href="contact.html">Kontakt</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/contact-form.js"></script>
+    <script src="assets/js/main.js"></script><!-- بعد سطور JavaScript الأخرى -->
+<script src="assets/js/theme.js"></script>
+    
+    <!-- Leaflet JS for Map -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Contact Page Specific JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Map
+            function initMap() {
+                const mapElement = document.getElementById('service-map');
+                if (!mapElement) return;
+                
+                // Remove placeholder
+                const placeholder = mapElement.querySelector('.map-placeholder');
+                if (placeholder) placeholder.remove();
+                
+                // Create map centered on Munich
+                const map = L.map('service-map').setView([48.1351, 11.5820], 11);
+                
+                // Add OpenStreetMap tiles
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    maxZoom: 18,
+                }).addTo(map);
+                
+                // Add service area circle (50km radius)
+                L.circle([48.1351, 11.5820], {
+                    color: '#0066b3',
+                    fillColor: '#0066b3',
+                    fillOpacity: 0.1,
+                    radius: 50000 // 50km in meters
+                }).addTo(map).bindPopup('Unser Servicegebiet (50km Umkreis)');
+                
+                // Add marker for Munich center
+                L.marker([48.1351, 11.5820]).addTo(map)
+                    .bindPopup('<b>HarMur Service</b><br>München Zentrum')
+                    .openPopup();
+                
+                // Add some district markers
+                const districts = [
+                    { name: "Schwabing", coords: [48.1580, 11.5750] },
+                    { name: "Haidhausen", coords: [48.1330, 11.6000] },
+                    { name: "Sendling", coords: [48.1150, 11.5500] },
+                    { name: "Pasing", coords: [48.1500, 11.4600] },
+                    { name: "Garching", coords: [48.2480, 11.6510] },
+                    { name: "Unterhaching", coords: [48.0650, 11.6150] }
+                ];
+                
+                districts.forEach(district => {
+                    L.marker(district.coords).addTo(map)
+                        .bindPopup(`<b>${district.name}</b><br>Bedient durch HarMur Service`);
+                });
+                
+                // Fit bounds to show all markers
+                const bounds = L.latLngBounds(districts.map(d => d.coords));
+                map.fitBounds(bounds.pad(0.1));
+            }
+            
+            // Initialize map when in viewport
+            const mapObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        initMap();
+                        mapObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            const mapContainer = document.getElementById('service-map');
+            if (mapContainer) {
+                mapObserver.observe(mapContainer);
+            }
+            
+            // Character counter for message field
+            const messageField = document.getElementById('contact-message');
+            const counterElement = document.getElementById('message-counter');
+            
+            if (messageField && counterElement) {
+                messageField.addEventListener('input', function() {
+                    const length = this.value.length;
+                    counterElement.textContent = `${length}/2000`;
+                    
+                    if (length > 1900) {
+                        counterElement.style.color = '#dc3545';
+                    } else if (length > 1500) {
+                        counterElement.style.color = '#ffc107';
+                    } else {
+                        counterElement.style.color = '#6c757d';
+                    }
+                });
+                
+                // Initial count
+                counterElement.textContent = `${messageField.value.length}/2000`;
+            }
+            
+            // Form URL parameter handling
+            function getUrlParameter(name) {
+                name = name.replace(/[\[\]]/g, '\\$&');
+                const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+                const results = regex.exec(window.location.search);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+            
+            // Pre-fill form based on URL parameters
+            const serviceParam = getUrlParameter('service');
+            if (serviceParam) {
+                const serviceSelect = document.getElementById('contact-service');
+                if (serviceSelect) {
+                    const option = Array.from(serviceSelect.options).find(opt => 
+                        opt.value === serviceParam || 
+                        opt.text.toLowerCase().includes(serviceParam)
+                    );
+                    if (option) {
+                        serviceSelect.value = option.value;
+                    }
+                }
+            }
+            
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('h3');
+                const answer = item.querySelector('.faq-answer');
+                
+                question.addEventListener('click', function() {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                        }
+                    });
+                    
+                    // Toggle current item
+                    if (!isActive) {
+                        item.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    } else {
+                        item.classList.remove('active');
+                        answer.style.maxHeight = null;
+                    }
+                });
+            });
+            
+            // Form success reset function (global scope)
+            window.resetForm = function() {
+                const form = document.getElementById('contact-form');
+                const successMessage = document.getElementById('form-success');
+                
+                if (form && successMessage) {
+                    form.reset();
+                    successMessage.style.display = 'none';
+                    form.style.display = 'block';
+                    
+                    // Reset character counter
+                    if (counterElement) {
+                        counterElement.textContent = '0/2000';
+                        counterElement.style.color = '#6c757d';
+                    }
+                    
+                    // Scroll to form
+                    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+            
+            // Enhanced form submission handling
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    // Let the contact-form.js handle validation and submission
+                    // This is just for additional contact-page specific logic
+                    
+                    // Generate reference number
+                    const refNumber = 'HM-' + Date.now().toString().slice(-8);
+                    document.getElementById('reference-number').textContent = refNumber;
+                    
+                    // Store in session for potential follow-up
+                    sessionStorage.setItem('lastReference', refNumber);
+                });
+            }
+            
+            // Auto-save form data
+            function autoSaveForm() {
+                const form = document.getElementById('contact-form');
+                if (!form) return;
+                
+                const formData = new FormData(form);
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+                
+                localStorage.setItem('harmur_contact_form_draft', JSON.stringify(data));
+                localStorage.setItem('harmur_contact_form_time', Date.now());
+            }
+            
+            // Load saved form data
+            function loadSavedFormData() {
+                const savedData = localStorage.getItem('harmur_contact_form_draft');
+                const savedTime = localStorage.getItem('harmur_contact_form_time');
+                
+                if (savedData && savedTime) {
+                    const data = JSON.parse(savedData);
+                    const age = Date.now() - parseInt(savedTime);
+                    
+                    // Only load data less than 1 hour old
+                    if (age < 60 * 60 * 1000) {
+                        Object.keys(data).forEach(key => {
+                            const element = document.querySelector(`[name="${key}"]`);
+                            if (element) {
+                                if (element.type === 'checkbox') {
+                                    element.checked = data[key] === 'true';
+                                } else {
+                                    element.value = data[key];
+                                }
+                            }
+                        });
+                        
+                        // Show restore notification
+                        const notification = document.createElement('div');
+                        notification.className = 'restore-notification';
+                        notification.innerHTML = `
+                            <p>Gespeicherte Eingaben wurden wiederhergestellt. 
+                            <button onclick="this.parentElement.remove()">Schließen</button></p>
+                        `;
+                        notification.style.cssText = `
+                            background: #e7f3ff;
+                            padding: 10px;
+                            border-radius: 5px;
+                            margin-bottom: 20px;
+                            font-size: 0.9em;
+                        `;
+                        
+                        const formHeader = document.querySelector('.form-header');
+                        if (formHeader) {
+                            formHeader.parentNode.insertBefore(notification, formHeader.nextSibling);
+                        }
+                    } else {
+                        // Clear old data
+                        localStorage.removeItem('harmur_contact_form_draft');
+                        localStorage.removeItem('harmur_contact_form_time');
+                    }
+                }
+            }
+            
+            // Set up auto-save
+            const formInputs = contactForm ? contactForm.querySelectorAll('input, textarea, select') : [];
+            formInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    setTimeout(autoSaveForm, 500);
+                });
+                input.addEventListener('change', autoSaveForm);
+            });
+            
+            // Load saved data on page load
+            loadSavedFormData();
+            
+            // Clear saved data on successful submission
+            if (typeof window.HarMurContactForm !== 'undefined') {
+                document.addEventListener('form:submitted', () => {
+                    localStorage.removeItem('harmur_contact_form_draft');
+                    localStorage.removeItem('harmur_contact_form_time');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

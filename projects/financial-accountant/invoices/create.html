@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء فاتورة - المحاسب المالي</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/modules.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .invoice-number-display {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            background: var(--light-bg);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+        }
+        
+        .customer-info-card {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .customer-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .customer-balance {
+            font-weight: bold;
+        }
+        
+        .balance-positive {
+            color: var(--success-color);
+        }
+        
+        .balance-negative {
+            color: var(--danger-color);
+        }
+        
+        .item-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: var(--border-radius);
+            align-items: end;
+        }
+        
+        .summary-section {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0;
+        }
+        
+        .summary-row.total {
+            border-top: 2px solid var(--border-color);
+            font-weight: bold;
+            font-size: 1.25rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .items-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+        }
+        
+        .empty-items {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray-color);
+        }
+        
+        .empty-items i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--border-color);
+        }
+
+        /* إصلاح تنسيق الصورة */
+        .logo img {
+            max-width: 150px;
+            max-height: 60px;
+            object-fit: contain;
+        }
+        
+        @media (max-width: 1024px) {
+            .item-row {
+                grid-template-columns: 1fr 1fr;
+                grid-template-areas: 
+                    "product product"
+                    "quantity price"
+                    "total actions";
+                gap: 0.75rem;
+            }
+            
+            .item-row .form-group:nth-child(1) { grid-area: product; }
+            .item-row .form-group:nth-child(2) { grid-area: quantity; }
+            .item-row .form-group:nth-child(3) { grid-area: price; }
+            .item-row .form-group:nth-child(4) { grid-area: total; }
+            .item-row .form-group:nth-child(5) { grid-area: actions; }
+        }
+        
+        @media (max-width: 768px) {
+            .invoice-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .customer-info-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .item-row {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "product"
+                    "quantity"
+                    "price"
+                    "total"
+                    "actions";
+            }
+            
+            .summary-row {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .logo img {
+                max-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <button class="sidebar-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="شعار المحاسب المالي" id="headerLogo" onerror="handleLogoError(this)">
+                <span>المحاسب المالي</span>
+            </div>
+
+            <div class="header-actions">
+                <div class="user-menu">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar" id="mainSidebar">
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="nav-item">
+                    <a href="../dashboard.html">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="list.html">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>الفواتير</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../customers/list.html">
+                        <i class="fas fa-users"></i>
+                        <span>العملاء</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../products/list.html">
+                        <i class="fas fa-box"></i>
+                        <span>المنتجات</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>إنشاء فاتورة جديدة</h1>
+            <div class="header-actions">
+                <a href="list.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-right"></i> رجوع
+                </a>
+            </div>
+        </div>
+
+        <!-- Invoice Form -->
+        <form class="module-form" id="invoiceForm">
+            <!-- معلومات الأساسية -->
+            <div class="form-section">
+                <h3><i class="fas fa-info-circle"></i> المعلومات الأساسية</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerId">العميل *</label>
+                        <select id="customerId" name="customerId" required onchange="updateCustomerInfo()">
+                            <option value="">اختر العميل</option>
+                            <!-- سيتم ملؤه بالجافاسكريبت -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="invoiceDate">تاريخ الفاتورة *</label>
+                        <input type="date" id="invoiceDate" name="invoiceDate" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dueDate">تاريخ الاستحقاق *</label>
+                        <input type="date" id="dueDate" name="dueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taxRate">نسبة الضريبة (%)</label>
+                        <input type="number" id="taxRate" name="taxRate" min="0" max="100" step="0.1" value="15">
+                    </div>
+                </div>
+            </div>
+
+            <!-- معلومات العميل -->
+            <div class="customer-info-card" id="customerInfoCard">
+                <div class="customer-info-header">
+                    <h4 id="customerNameDisplay">معلومات العميل</h4>
+                    <div class="customer-balance" id="customerBalanceDisplay"></div>
+                </div>
+                <div class="info-grid" id="customerInfoDetails">
+                    <!-- سيتم ملؤه بالجافاسكريبت -->
+                </div>
+            </div>
+
+            <!-- عناصر الفاتورة -->
+            <div class="form-section">
+                <h3><i class="fas fa-list"></i> عناصر الفاتورة</h3>
+                <div class="items-container" id="itemsContainer">
+                    <div class="empty-items" id="emptyItemsMessage">
+                        <i class="fas fa-cart-plus"></i>
+                        <p>لا توجد عناصر في الفاتورة</p>
+                        <button type="button" class="btn btn-primary" onclick="addItem()">
+                            <i class="fas fa-plus"></i> إضافة أول عنصر
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn btn-secondary" onclick="addItem()">
+                    <i class="fas fa-plus"></i> إضافة عنصر
+                </button>
+            </div>
+
+            <!-- الملخص -->
+            <div class="summary-section">
+                <div class="summary-row">
+                    <span>المجموع الفرعي:</span>
+                    <span id="subtotal">0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>الضريبة (<span id="taxRateValue">15</span>%):</span>
+                    <span id="taxAmount">0.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>الإجمالي:</span>
+                    <span id="totalAmount">0.00</span>
+                </div>
+            </div>
+
+            <!-- ملاحظات -->
+            <div class="form-section">
+                <h3><i class="fas fa-sticky-note"></i> ملاحظات</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="notes">ملاحظات الفاتورة</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="ملاحظات إضافية تظهر في الفاتورة..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='list.html'">
+                    إلغاء
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveInvoice()">
+                    <i class="fas fa-save"></i> حفظ الفاتورة
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        // ===== دوال المصادقة والتهيئة =====
+        
+        function checkAuth() {
+            const currentUser = localStorage.getItem('financial_app_current_user');
+            if (!currentUser) {
+                window.location.href = '../index.html';
+                return false;
+            }
+            return true;
+        }
+
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('financial_app_current_user') || '{}');
+            
+            // Create user avatar
+            const userAvatarElement = document.getElementById('userAvatar');
+            if (userAvatarElement && userData.fullName) {
+                const initials = getUserInitials(userData.fullName);
+                const randomColor = getRandomColor();
+                
+                userAvatarElement.innerHTML = initials;
+                userAvatarElement.style.backgroundColor = randomColor;
+                userAvatarElement.style.display = 'flex';
+                userAvatarElement.style.alignItems = 'center';
+                userAvatarElement.style.justifyContent = 'center';
+                userAvatarElement.style.color = 'white';
+                userAvatarElement.style.fontWeight = '600';
+                userAvatarElement.style.width = '40px';
+                userAvatarElement.style.height = '40px';
+                userAvatarElement.style.borderRadius = '50%';
+            }
+        }
+
+        function logout() {
+            if (confirm('هل تريد تسجيل الخروج؟')) {
+                localStorage.removeItem('financial_app_current_user');
+                window.location.href = '../index.html';
+            }
+        }
+
+        // ===== إصلاح صورة الشعار =====
+        function handleLogoError(img) {
+            console.log('تم اكتشاف خطأ في تحميل الصورة، استخدام صورة بديلة');
+            img.onerror = null; // منع التكرار اللانهائي في حالة فشل الصورة البديلة أيضًا
+            
+            // إنشاء صورة بديلة باستخدام SVG مع البيانات المضمنة
+            const svg = `
+                <svg width="150" height="60" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100%" height="100%" fill="#3366cc"/>
+                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" 
+                          fill="white" font-family="Tahoma, Arial" font-size="16" font-weight="bold">
+                        المحاسب المالي
+                    </text>
+                </svg>
+            `;
+            
+            img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+        }
+
+        // تحميل شعار من الإعدادات إذا موجود
+        function loadLogoFromSettings() {
+            try {
+                const settings = JSON.parse(localStorage.getItem('financial_app_settings') || '{}');
+                const headerLogo = document.getElementById('headerLogo');
+                
+                if (settings.company_logo && headerLogo) {
+                    headerLogo.src = settings.company_logo;
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الشعار من الإعدادات:', error);
+            }
+        }
+
+        // ===== دوال إدارة البيانات =====
+
+        function getData(key) {
+            try {
+                const data = localStorage.getItem(`financial_app_${key}`);
+                return data ? JSON.parse(data) : [];
+            } catch (error) {
+                console.error(`خطأ في تحميل البيانات لـ ${key}:`, error);
+                return [];
+            }
+        }
+
+        function saveData(key, data) {
+            try {
+                localStorage.setItem(`financial_app_${key}`, JSON.stringify(data));
+                return true;
+            } catch (error) {
+                console.error(`خطأ في حفظ البيانات لـ ${key}:`, error);
+                showAlert('error', `خطأ في حفظ البيانات`);
+                return false;
+            }
+        }
+
+        function getNextId(key) {
+            const data = getData(key);
+            if (data.length === 0) return 1;
+            const maxId = Math.max(...data.map(item => item.id || 0));
+            return maxId + 1;
+        }
+
+        // ===== دوال مساعدة =====
+
+        function getUserInitials(name) {
+            if (!name) return 'U';
+            return name.split(' ').map(word => word[0]).join('').toUpperCase();
+        }
+
+        function getRandomColor() {
+            const colors = ['#3366cc', '#dc3545', '#28a745', '#ffc107', '#17a2b8', '#6f42c1', '#fd7e14', '#20c997'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function formatCurrency(amount) {
+            if (amount === undefined || amount === null || isNaN(amount)) {
+                return '0.00 ريال';
+            }
+            
+            const num = parseFloat(amount);
+            if (isNaN(num)) {
+                return '0.00 ريال';
+            }
+            
+            return new Intl.NumberFormat('ar-SA', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(num) + ' ريال';
+        }
+
+        function showAlert(type, message) {
+            // Remove any existing alerts
+            const existingAlert = document.querySelector('.alert');
+            if (existingAlert) {
+                existingAlert.remove();
+            }
+            
+            // Create alert element
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            // Add styles if not already added
+            if (!document.querySelector('#alert-styles')) {
+                const styles = document.createElement('style');
+                styles.id = 'alert-styles';
+                styles.textContent = `
+                    .alert {
+                        position: fixed;
+                        top: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        padding: 12px 20px;
+                        border-radius: 8px;
+                        color: white;
+                        font-weight: 500;
+                        z-index: 1000;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        min-width: 300px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                        animation: slideDown 0.3s ease;
+                    }
+                    
+                    .alert-success { background-color: #28a745; }
+                    .alert-error { background-color: #dc3545; }
+                    .alert-warning { background-color: #ffc107; color: #000; }
+                    
+                    .alert button {
+                        background: none;
+                        border: none;
+                        color: inherit;
+                        font-size: 18px;
+                        cursor: pointer;
+                        margin-right: 10px;
+                    }
+                    
+                    @keyframes slideDown {
+                        from { transform: translate(-50%, -100%); opacity: 0; }
+                        to { transform: translate(-50%, 0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(styles);
+            }
+            
+            document.body.appendChild(alert);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (alert.parentElement) {
+                    alert.remove();
+                }
+            }, 5000);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mainSidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('show');
+            }
+        }
+
+        // ===== دوال إدارة الفواتير =====
+
+        // Generate invoice number
+        function generateInvoiceNumber() {
+            const invoices = getData('invoices');
+            const year = new Date().getFullYear();
+            const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+            const count = invoices.filter(i => {
+                const invoiceDate = new Date(i.createdAt);
+                return invoiceDate.getFullYear() === year && 
+                       invoiceDate.getMonth() + 1 === parseInt(month);
+            }).length + 1;
+            
+            return `INV-${year}${month}-${count.toString().padStart(4, '0')}`;
+        }
+
+        // Calculate invoice totals
+        function calculateInvoiceTotals(items, taxRate = 0) {
+            const subtotal = items.reduce((total, item) => {
+                return total + (item.price * item.quantity);
+            }, 0);
+            
+            const taxAmount = subtotal * (taxRate / 100);
+            const totalAmount = subtotal + taxAmount;
+            
+            return {
+                subtotal: Math.round(subtotal * 100) / 100,
+                taxAmount: Math.round(taxAmount * 100) / 100,
+                totalAmount: Math.round(totalAmount * 100) / 100
+            };
+        }
+
+        // Save invoice (create or update)
+        function saveInvoice() {
+            // التحقق من صحة البيانات الأساسية
+            const customerId = document.getElementById('customerId').value;
+            const invoiceDate = document.getElementById('invoiceDate').value;
+            const dueDate = document.getElementById('dueDate').value;
+            const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+            const notes = document.getElementById('notes').value;
+            
+            if (!customerId) {
+                showAlert('error', 'يرجى اختيار العميل');
+                return;
+            }
+            
+            if (!invoiceDate || !dueDate) {
+                showAlert('error', 'يرجى تعيين تاريخ الفاتورة وتاريخ الاستحقاق');
+                return;
+            }
+            
+            // جمع عناصر الفاتورة
+            const items = [];
+            const itemRows = document.querySelectorAll('.item-row');
+            let hasValidItems = false;
+            
+            itemRows.forEach(row => {
+                const productSelect = row.querySelector('.product-select');
+                const productId = productSelect.value;
+                const productText = productSelect.options[productSelect.selectedIndex].text;
+                const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+                const price = parseFloat(row.querySelector('.price').value) || 0;
+                
+                if (productId && quantity > 0 && price > 0) {
+                    items.push({
+                        productId: parseInt(productId),
+                        productName: productText.split(' - ')[0],
+                        description: productText,
+                        quantity: quantity,
+                        price: price,
+                        total: quantity * price
+                    });
+                    hasValidItems = true;
+                }
+            });
+            
+            if (!hasValidItems) {
+                showAlert('error', 'يرجى إضافة عناصر صحيحة إلى الفاتورة');
+                return;
+            }
+            
+            // الحصول على اسم العميل
+            const customers = getData('customers');
+            const customer = customers.find(c => c.id === parseInt(customerId));
+            
+            const invoiceData = {
+                customerId: parseInt(customerId),
+                customerName: customer ? customer.name : 'عميل',
+                invoiceDate: invoiceDate,
+                dueDate: dueDate,
+                taxRate: taxRate,
+                items: items,
+                notes: notes
+            };
+            
+            // Calculate totals
+            const totals = calculateInvoiceTotals(invoiceData.items, invoiceData.taxRate);
+            
+            const invoices = getData('invoices');
+            
+            // Create new invoice
+            const newInvoice = {
+                id: getNextId('invoices'),
+                invoiceNumber: generateInvoiceNumber(),
+                status: 'pending',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                ...invoiceData,
+                subtotal: totals.subtotal,
+                taxAmount: totals.taxAmount,
+                totalAmount: totals.totalAmount
+            };
+            
+            invoices.push(newInvoice);
+            
+            if (saveData('invoices', invoices)) {
+                // Update customer balance
+                updateCustomerBalance(invoiceData.customerId, totals.totalAmount);
+                
+                showAlert('success', 'تم إنشاء الفاتورة بنجاح');
+                
+                setTimeout(() => {
+                    window.location.href = 'list.html';
+                }, 1500);
+            } else {
+                showAlert('error', 'حدث خطأ أثناء حفظ الفاتورة');
+            }
+        }
+
+        // Update customer balance
+        function updateCustomerBalance(customerId, amount) {
+            if (!customerId) return;
+            
+            const customers = getData('customers');
+            const customerIndex = customers.findIndex(c => c.id === customerId);
+            
+            if (customerIndex !== -1) {
+                customers[customerIndex].balance = (customers[customerIndex].balance || 0) + amount;
+                customers[customerIndex].updatedAt = new Date().toISOString();
+                saveData('customers', customers);
+            }
+        }
+
+        // ===== دوال إدارة عناصر الفاتورة =====
+        
+        // تحميل العملاء والمنتجات
+        function loadCustomersAndProducts() {
+            const customers = getData('customers');
+            const products = getData('products');
+            
+            // تحميل العملاء في select
+            const customerSelect = document.getElementById('customerId');
+            customerSelect.innerHTML = '<option value="">اختر العميل</option>';
+            
+            customers.forEach(customer => {
+                const option = document.createElement('option');
+                option.value = customer.id;
+                option.textContent = customer.name;
+                customerSelect.appendChild(option);
+            });
+            
+            // تعيين تاريخ الفاتورة (اليوم)
+            document.getElementById('invoiceDate').value = new Date().toISOString().split('T')[0];
+            
+            // تعيين تاريخ الاستحقاق (7 أيام من الآن)
+            const dueDate = new Date();
+            dueDate.setDate(dueDate.getDate() + 7);
+            document.getElementById('dueDate').value = dueDate.toISOString().split('T')[0];
+        }
+        
+        // تحديث معلومات العميل
+        function updateCustomerInfo() {
+            const customerId = document.getElementById('customerId').value;
+            const customerInfoCard = document.getElementById('customerInfoCard');
+            
+            if (!customerId) {
+                customerInfoCard.style.display = 'none';
+                return;
+            }
+            
+            const customers = getData('customers');
+            const customer = customers.find(c => c.id === parseInt(customerId));
+            
+            if (customer) {
+                customerInfoCard.style.display = 'block';
+                document.getElementById('customerNameDisplay').textContent = customer.name;
+                
+                // تحديد لون الرصيد
+                let balanceClass = 'balance-zero';
+                if (customer.balance > 0) balanceClass = 'balance-positive';
+                if (customer.balance < 0) balanceClass = 'balance-negative';
+                
+                document.getElementById('customerBalanceDisplay').innerHTML = 
+                    `<span class="${balanceClass}">الرصيد: ${formatCurrency(customer.balance || 0)}</span>`;
+                
+                // تحديث تفاصيل العميل
+                const customerInfoDetails = document.getElementById('customerInfoDetails');
+                customerInfoDetails.innerHTML = `
+                    <div class="info-item">
+                        <span class="info-label">البريد الإلكتروني:</span>
+                        <span class="info-value">${customer.email || 'غير متوفر'}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">الهاتف:</span>
+                        <span class="info-value">${customer.phone || 'غير متوفر'}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">العنوان:</span>
+                        <span class="info-value">${customer.address || 'غير متوفر'}</span>
+                    </div>
+                `;
+            } else {
+                customerInfoCard.style.display = 'none';
+            }
+        }
+        
+        // تحديث سعر العنصر
+        function updateItemPrice(select) {
+            const selectedOption = select.options[select.selectedIndex];
+            const priceInput = select.closest('.item-row').querySelector('.price');
+            
+            if (selectedOption && selectedOption.dataset.price) {
+                priceInput.value = selectedOption.dataset.price;
+                calculateItemTotal(priceInput);
+            }
+        }
+        
+        // حساب مجموع العنصر
+        function calculateItemTotal(input) {
+            const row = input.closest('.item-row');
+            const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+            const price = parseFloat(row.querySelector('.price').value) || 0;
+            const total = quantity * price;
+            
+            row.querySelector('.total').value = formatCurrency(total);
+            calculateTotals();
+        }
+        
+        // حساب الإجماليات
+        function calculateTotals() {
+            const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+            const items = document.querySelectorAll('.item-row');
+            
+            let subtotal = 0;
+            items.forEach(item => {
+                const totalInput = item.querySelector('.total');
+                const totalValue = totalInput.value.replace(/[^\d.]/g, '');
+                const total = parseFloat(totalValue) || 0;
+                subtotal += total;
+            });
+            
+            const taxAmount = subtotal * (taxRate / 100);
+            const totalAmount = subtotal + taxAmount;
+            
+            document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('taxRateValue').textContent = taxRate;
+            document.getElementById('taxAmount').textContent = formatCurrency(taxAmount);
+            document.getElementById('totalAmount').textContent = formatCurrency(totalAmount);
+        }
+        
+        // إضافة عنصر جديد
+        function addItem() {
+            const itemsContainer = document.getElementById('itemsContainer');
+            const emptyItemsMessage = document.getElementById('emptyItemsMessage');
+            const products = getData('products');
+            
+            // إخفاء رسالة عدم وجود عناصر
+            if (emptyItemsMessage) {
+                emptyItemsMessage.style.display = 'none';
+            }
+            
+            const newItem = document.createElement('div');
+            newItem.className = 'item-row';
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>المنتج/الخدمة</label>
+                    <select class="product-select" onchange="updateItemPrice(this)">
+                        <option value="">اختر منتج/خدمة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الكمية</label>
+                    <input type="number" class="quantity" min="1" value="1" onchange="calculateItemTotal(this)" oninput="calculateItemTotal(this)">
+                </div>
+                <div class="form-group">
+                    <label>السعر</label>
+                    <input type="number" class="price" min="0" step="0.01" onchange="calculateItemTotal(this)" oninput="calculateItemTotal(this)">
+                </div>
+                <div class="form-group">
+                    <label>المجموع</label>
+                    <input type="text" class="total" readonly>
+                </div>
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-danger" onclick="removeItem(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            itemsContainer.appendChild(newItem);
+            
+            // تحميل المنتجات في select الجديد
+            const productSelect = newItem.querySelector('.product-select');
+            products.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = `${product.name} - ${formatCurrency(product.price)}`;
+                option.dataset.price = product.price;
+                productSelect.appendChild(option);
+            });
+            
+            calculateTotals();
+        }
+        
+        // إزالة عنصر
+        function removeItem(button) {
+            const items = document.querySelectorAll('.item-row');
+            const itemsContainer = document.getElementById('itemsContainer');
+            const emptyItemsMessage = document.getElementById('emptyItemsMessage');
+            
+            if (items.length > 1) {
+                button.closest('.item-row').remove();
+                calculateTotals();
+                
+                // إظهار رسالة عدم وجود عناصر إذا لم يتبق أي عنصر
+                if (items.length === 1) {
+                    emptyItemsMessage.style.display = 'block';
+                }
+            } else {
+                showAlert('error', 'يجب أن تحتوي الفاتورة على عنصر واحد على الأقل');
+            }
+        }
+
+        // ===== تهيئة الصفحة =====
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkAuth()) return;
+            
+            loadUserData();
+            loadLogoFromSettings(); // تحميل الشعار من الإعدادات
+            
+            // Initialize dropdowns
+            document.addEventListener('click', function(e) {
+                const dropdowns = document.querySelectorAll('.dropdown');
+                dropdowns.forEach(dropdown => {
+                    if (!dropdown.contains(e.target)) {
+                        dropdown.querySelector('.dropdown-menu').classList.remove('show');
+                    }
+                });
+                
+                if (e.target.classList.contains('dropdown-toggle')) {
+                    const menu = e.target.parentElement.querySelector('.dropdown-menu');
+                    menu.classList.toggle('show');
+                }
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth < 768) {
+                    const sidebar = document.getElementById('mainSidebar');
+                    const toggleBtn = document.querySelector('.sidebar-toggle');
+                    
+                    if (sidebar.classList.contains('show') && 
+                        !sidebar.contains(e.target) && 
+                        !toggleBtn.contains(e.target)) {
+                        sidebar.classList.remove('show');
+                    }
+                }
+            });
+            
+            // Load customers and products
+            loadCustomersAndProducts();
+            calculateTotals();
+            
+            // تحديث الحسابات عند تغيير نسبة الضريبة
+            document.getElementById('taxRate').addEventListener('input', calculateTotals);
+        });
+
+    </script>
+</body>
+</html>

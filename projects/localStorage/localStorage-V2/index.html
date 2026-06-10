@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>مدير الملفات الشامل | وصول كامل وسريع</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #06b6d4;
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --danger: #ef4444;
+      --success: #10b981;
+      --radius: 1.25rem;
+    }
+
+    [data-theme="dark"] {
+      --primary: #818cf8;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #f1f5f9;
+      --text-muted: #cbd5e1;
+      --border: #334155;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: all 0.2s;
+      overflow-x: hidden;
+      padding-bottom: 100px;
+    }
+
+    /* الهيدر */
+    .header {
+      background: var(--surface);
+      padding: 0.8rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .logo h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .icon-btn {
+      background: rgba(99, 102, 241, 0.12);
+      border: none;
+      padding: 0.5rem 0.9rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    /* شريط البحث */
+    .search-bar {
+      background: var(--surface);
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+    .search-input {
+      flex: 2;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3rem;
+      padding: 0.6rem 1rem;
+      display: flex;
+      gap: 0.6rem;
+    }
+    .search-input input {
+      background: transparent;
+      border: none;
+      outline: none;
+      width: 100%;
+      color: var(--text);
+    }
+    .sort-chip {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.9rem;
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .sort-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* بطاقة التخزين */
+    .storage-panel {
+      background: var(--surface);
+      margin: 0.7rem 1rem;
+      padding: 1rem;
+      border-radius: 1.5rem;
+      border: 1px solid var(--border);
+    }
+    .progress {
+      background: var(--border);
+      height: 8px;
+      border-radius: 8px;
+      margin: 0.5rem 0;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      width: 0%;
+      height: 100%;
+      border-radius: 8px;
+    }
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+    }
+    .stat-pill {
+      background: var(--bg);
+      padding: 0.2rem 0.7rem;
+      border-radius: 2rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* مسار التنقل */
+    .breadcrumb {
+      padding: 0.5rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .crumb {
+      background: var(--bg);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* شبكة الملفات */
+    .grid-view {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .file-card {
+      background: var(--surface);
+      border-radius: 1.2rem;
+      padding: 0.7rem 0.4rem;
+      text-align: center;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: 0.1s;
+    }
+    .file-card.selected { border: 2px solid var(--primary); background: rgba(99,102,241,0.1); }
+    .thumb-icon { font-size: 3rem; height: 80px; display: flex; align-items: center; justify-content: center; }
+    .thumb-icon img, .thumb-icon video { width: 70px; height: 70px; object-fit: cover; border-radius: 1rem; }
+    .file-name {
+      font-weight: 600;
+      font-size: 0.75rem;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* الأزرار السفلية - مسافات كبيرة */
+    .bottom-actions {
+      position: fixed;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      z-index: 200;
+    }
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 60px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+      min-width: 110px;
+      justify-content: center;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-outline { background: #334155; }
+
+    /* شريط التحديد */
+    .selection-toolbar {
+      position: fixed;
+      bottom: 85px;
+      left: 12px;
+      right: 12px;
+      background: var(--surface);
+      border-radius: 60px;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid var(--border);
+      z-index: 210;
+      transform: translateY(150%);
+      transition: 0.2s;
+    }
+    .selection-toolbar.active { transform: translateY(0); }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s;
+      padding: 1rem;
+    }
+    .modal.active { visibility: visible; opacity: 1; }
+    .modal-card {
+      background: var(--surface);
+      border-radius: 2rem;
+      max-width: 90vw;
+      width: 480px;
+      max-height: 80vh;
+      overflow: auto;
+      padding: 1.5rem;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 110px;
+      left: 16px;
+      right: 16px;
+      background: var(--surface);
+      color: var(--text);
+      text-align: center;
+      padding: 10px;
+      border-radius: 60px;
+      z-index: 1100;
+      transform: translateY(200%);
+      transition: 0.2s;
+      font-weight: 600;
+    }
+    .toast-msg.show { transform: translateY(0); }
+
+    @media (max-width: 550px) {
+      .btn span { font-size: 0.8rem; }
+      .btn { padding: 12px 14px; min-width: 85px; }
+      .grid-view { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="logo"><h2><i class="fas fa-database"></i> Ultimate FileX</h2></div>
+    <div><button class="icon-btn" id="themeBtn"><i class="fas fa-moon"></i> ثيم</button>
+    <button class="icon-btn" id="analyticsBtn"><i class="fas fa-chart-simple"></i> تحليل</button></div>
+  </div>
+
+  <div class="search-bar">
+    <div class="search-input"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="بحث سريع..."></div>
+    <div style="display: flex; gap: 0.4rem;" id="sortGroup">
+      <button data-sort="name" class="sort-chip active">الاسم</button>
+      <button data-sort="date" class="sort-chip">التاريخ</button>
+      <button data-sort="size" class="sort-chip">الحجم</button>
+      <button data-sort="type" class="sort-chip">النوع</button>
+    </div>
+  </div>
+
+  <div class="storage-panel" id="storagePanel">
+    <div style="display: flex; justify-content: space-between;"><span><i class="fas fa-chart-line"></i> المستخدم</span><strong id="usedSpaceSpan">0</strong></div>
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="stats-row" id="statsRow"></div>
+  </div>
+
+  <div class="breadcrumb" id="breadcrumbContainer"></div>
+  <div id="fileContainer"><div class="grid-view" id="fileGridView"></div></div>
+
+  <div class="bottom-actions">
+    <button class="btn" id="openStorageBtn"><i class="fas fa-folder-open"></i><span> فتح التخزين</span></button>
+    <button class="btn btn-outline" id="newFolderBtn"><i class="fas fa-plus-circle"></i><span> مجلد</span></button>
+    <button class="btn btn-outline" id="uploadFileBtn"><i class="fas fa-cloud-upload-alt"></i><span> رفع</span></button>
+    <button class="btn btn-outline" id="backBtn" disabled><i class="fas fa-arrow-right"></i><span> رجوع</span></button>
+  </div>
+
+  <div class="selection-toolbar" id="selectionBar">
+    <span><i class="fas fa-check-circle"></i> <span id="selectedCount">0</span></span>
+    <div><button class="icon-btn" id="downloadSelectedBtn" style="background: var(--success); color:white;">تحميل</button>
+    <button class="icon-btn" id="deleteSelectedBtn" style="background: var(--danger); color:white;">حذف</button>
+    <button class="icon-btn" id="clearSelectionBtn">إلغاء</button></div>
+  </div>
+
+  <div class="modal" id="infoModal"><div class="modal-card" id="modalContent"></div></div>
+  <div class="toast-msg" id="toastMessage"></div>
+</div>
+
+<script>
+  // --------------------- المتغيرات الأساسية ---------------------
+  let currentDirHandle = null;        // المقبض الحقيقي للمجلد المفتوح
+  let pathStack = [];                 // مصفوفة المقابض للمسار الحالي
+  let historyBack = [];
+  let historyForward = [];
+  let filesArray = [];                // الملفات والمجلدات في المجلد الحالي
+  let filteredArray = [];
+  let sortBy = "name", sortAscending = true;
+  let searchWord = "";
+  let selectedHandlesSet = new Set();
+  let totalBytesUsed = 0;
+  let statsCount = { folders:0, images:0, videos:0, docs:0, audio:0, archives:0, other:0 };
+  let currentTheme = localStorage.getItem("theme") || "light";
+
+  // عناصر DOM
+  const gridContainer = document.getElementById("fileGridView");
+  const breadcrumbDiv = document.getElementById("breadcrumbContainer");
+  const progressFill = document.getElementById("progressFill");
+  const usedSpaceSpan = document.getElementById("usedSpaceSpan");
+  const statsRowDiv = document.getElementById("statsRow");
+  const selectionBarDiv = document.getElementById("selectionBar");
+  const selectedCountSpan = document.getElementById("selectedCount");
+  const toastDiv = document.getElementById("toastMessage");
+  const modalDiv = document.getElementById("infoModal");
+  const modalContentDiv = document.getElementById("modalContent");
+  const searchInput = document.getElementById("searchInput");
+
+  // دوال مساعدة
+  function showMessage(msg, isError = false) {
+    toastDiv.innerText = msg;
+    toastDiv.classList.add("show");
+    setTimeout(() => toastDiv.classList.remove("show"), 2200);
+  }
+
+  function formatSize(bytes) {
+    if (bytes === 0) return "0 B";
+    const k = 1024;
+    const sizes = ["B", "KB", "MB", "GB"];
+    let i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+  }
+
+  function getType(name, isDir) {
+    if (isDir) return "folder";
+    let ext = name.split('.').pop().toLowerCase();
+    if (['jpg','jpeg','png','gif','webp','bmp','svg','ico'].includes(ext)) return "image";
+    if (['mp4','webm','mov','avi','mkv','flv','m4v'].includes(ext)) return "video";
+    if (['mp3','wav','ogg','flac','m4a','aac'].includes(ext)) return "audio";
+    if (['pdf','doc','docx','xls','xlsx','ppt','pptx','txt','odt','rtf'].includes(ext)) return "document";
+    if (['zip','rar','7z','tar','gz','bz2'].includes(ext)) return "archive";
+    return "other";
+  }
+
+  function getIconClass(type) {
+    const map = { folder:"fa-folder", image:"fa-image", video:"fa-video", audio:"fa-music", document:"fa-file-alt", archive:"fa-file-archive", other:"fa-file" };
+    return map[type] || "fa-file";
+  }
+
+  // تحميل محتوى المجلد الحالي
+  async function loadCurrentDirectory(dirHandle) {
+    try {
+      let items = [];
+      let stats = { folders:0, images:0, videos:0, docs:0, audio:0, archives:0, other:0 };
+      let totalSize = 0;
+      for await (let entry of dirHandle.values()) {
+        let isDir = entry.kind === "directory";
+        let type = getType(entry.name, isDir);
+        let fileObj = { name: entry.name, handle: entry, isDir, type, size: 0, modDate: "", preview: null };
+        if (!isDir) {
+          let file = await entry.getFile();
+          fileObj.size = file.size;
+          totalSize += file.size;
+          fileObj.modDate = new Date(file.lastModified).toLocaleDateString('ar-EG');
+          if (file.type.startsWith("image/")) { fileObj.preview = URL.createObjectURL(file); stats.images++; }
+          else if (file.type.startsWith("video/")) { fileObj.preview = URL.createObjectURL(file); stats.videos++; }
+          else if (type === "document") stats.docs++;
+          else if (type === "archive") stats.archives++;
+          else if (type === "audio") stats.audio++;
+          else stats.other++;
+        } else { stats.folders++; }
+        items.push(fileObj);
+      }
+      filesArray = items;
+      totalBytesUsed = totalSize;
+      statsCount = stats;
+      updateStorageUI();
+      applyFilterAndSort();
+    } catch (err) {
+      showMessage("خطأ في قراءة المجلد: " + err.message, true);
+    }
+  }
+
+  function updateStorageUI() {
+    if (totalBytesUsed === 0) progressFill.style.width = "0%";
+    else {
+      let estimatedTotal = Math.max(totalBytesUsed * 1.5, 300 * 1024 * 1024);
+      let percent = Math.min(100, (totalBytesUsed / estimatedTotal) * 100);
+      progressFill.style.width = percent + "%";
+    }
+    usedSpaceSpan.innerText = formatSize(totalBytesUsed);
+    statsRowDiv.innerHTML = `
+      <span class="stat-pill"><i class="fas fa-folder"></i> ${statsCount.folders}</span>
+      <span class="stat-pill"><i class="fas fa-image"></i> ${statsCount.images}</span>
+      <span class="stat-pill"><i class="fas fa-video"></i> ${statsCount.videos}</span>
+      <span class="stat-pill"><i class="fas fa-file-alt"></i> ${statsCount.docs}</span>
+      <span class="stat-pill"><i class="fas fa-headphones"></i> ${statsCount.audio}</span>
+      <span class="stat-pill"><i class="fas fa-file-archive"></i> ${statsCount.archives}</span>
+    `;
+  }
+
+  function applyFilterAndSort() {
+    let list = [...filesArray];
+    if (searchWord.trim() !== "") list = list.filter(f => f.name.toLowerCase().includes(searchWord.toLowerCase()));
+    list.sort((a, b) => {
+      let val = 0;
+      if (sortBy === "name") val = a.name.localeCompare(b.name);
+      else if (sortBy === "date") val = (a.modDate || "").localeCompare(b.modDate || "");
+      else if (sortBy === "size") val = (a.size || 0) - (b.size || 0);
+      else if (sortBy === "type") val = (a.type || "").localeCompare(b.type || "");
+      return sortAscending ? val : -val;
+    });
+    filteredArray = list;
+    renderGrid(list);
+  }
+
+  function renderGrid(items) {
+    gridContainer.innerHTML = "";
+    if (items.length === 0) { gridContainer.innerHTML = `<div style="text-align:center;padding:3rem;"><i class="fas fa-folder-open fa-3x"></i><p>📭 المجلد فارغ أو لا توجد نتائج</p></div>`; return; }
+    for (let item of items) {
+      let card = document.createElement("div");
+      card.className = "file-card";
+      if (selectedHandlesSet.has(item.handle)) card.classList.add("selected");
+      let thumbHtml = `<div class="thumb-icon">`;
+      if (item.preview && (item.type === "image" || item.type === "video")) {
+        if (item.type === "image") thumbHtml += `<img src="${item.preview}" loading="lazy">`;
+        else thumbHtml += `<video src="${item.preview}" muted></video>`;
+      } else thumbHtml += `<i class="fas ${getIconClass(item.type)}" style="font-size:2.8rem; color:var(--primary);"></i>`;
+      thumbHtml += `</div>`;
+      card.innerHTML = thumbHtml + `<div class="file-name">${item.name}</div><div style="font-size:0.65rem; color:var(--text-muted);">${item.isDir ? "مجلد" : formatSize(item.size)}</div>`;
+      card.addEventListener("click", async (e) => { if (e.ctrlKey || e.metaKey) toggleSelection(item, card); else await openFileOrFolder(item, card); });
+      card.addEventListener("contextmenu", (e) => { e.preventDefault(); toggleSelection(item, card); showMessage(`✅ ${item.name} محدد`); });
+      gridContainer.appendChild(card);
+    }
+  }
+
+  function toggleSelection(item, card) {
+    if (selectedHandlesSet.has(item.handle)) { selectedHandlesSet.delete(item.handle); card.classList.remove("selected"); }
+    else { selectedHandlesSet.add(item.handle); card.classList.add("selected"); }
+    updateSelectionBar();
+  }
+
+  function updateSelectionBar() {
+    let count = selectedHandlesSet.size;
+    selectedCountSpan.innerText = count;
+    if (count > 0) selectionBarDiv.classList.add("active");
+    else selectionBarDiv.classList.remove("active");
+  }
+
+  function clearAllSelection() { selectedHandlesSet.clear(); renderGrid(filteredArray); updateSelectionBar(); }
+
+  async function openFileOrFolder(item, card) {
+    if (item.isDir) {
+      // حفظ التاريخ
+      historyBack.push({ dir: currentDirHandle, path: [...pathStack] });
+      historyForward = [];
+      currentDirHandle = item.handle;
+      pathStack.push(item.handle);
+      await loadCurrentDirectory(currentDirHandle);
+      updateBreadcrumb();
+      updateBackButton();
+      clearAllSelection();
+    } else {
+      // معاينة
+      let innerHtml = `<div style="text-align:center;"><h3>${item.name}</h3>`;
+      if (item.type === "image") innerHtml += `<img src="${item.preview}" style="max-width:100%; max-height:55vh; border-radius:16px; margin:1rem 0;">`;
+      else if (item.type === "video") innerHtml += `<video controls autoplay style="max-width:100%; max-height:50vh;" src="${item.preview}"></video>`;
+      else innerHtml += `<i class="fas fa-file fa-4x" style="margin:1rem;"></i><p>معاينة غير متاحة</p>`;
+      innerHtml += `<div style="margin:0.5rem 0;">الحجم: ${formatSize(item.size)} | التعديل: ${item.modDate}</div><button class="btn" id="closeModalBtn" style="margin-top:1rem;">إغلاق</button></div>`;
+      modalContentDiv.innerHTML = innerHtml;
+      modalDiv.classList.add("active");
+      document.getElementById("closeModalBtn")?.addEventListener("click", () => modalDiv.classList.remove("active"));
+    }
+  }
+
+  function updateBreadcrumb() {
+    breadcrumbDiv.innerHTML = `<div class="crumb" id="rootCrumb"><i class="fas fa-hard-drive"></i> الجذر</div>`;
+    for (let i = 0; i < pathStack.length; i++) {
+      let sep = document.createElement("span"); sep.innerText = "›";
+      let crumb = document.createElement("div"); crumb.className = "crumb"; crumb.innerText = pathStack[i].name;
+      crumb.onclick = (async () => { let newPath = pathStack.slice(0, i+1); await navigateToPath(newPath[newPath.length-1], newPath); });
+      breadcrumbDiv.appendChild(sep); breadcrumbDiv.appendChild(crumb);
+    }
+    document.getElementById("rootCrumb")?.addEventListener("click", async () => { if (pathStack.length) await navigateToPath(pathStack[0], [pathStack[0]]); else openStorageRoot(); });
+  }
+
+  async function navigateToPath(handle, fullPath) {
+    historyBack.push({ dir: currentDirHandle, path: [...pathStack] });
+    historyForward = [];
+    currentDirHandle = handle;
+    pathStack = fullPath;
+    await loadCurrentDirectory(currentDirHandle);
+    updateBreadcrumb();
+    updateBackButton();
+    clearAllSelection();
+  }
+
+  function updateBackButton() { document.getElementById("backBtn").disabled = (historyBack.length === 0); }
+  async function goBack() {
+    if (historyBack.length) {
+      let last = historyBack.pop();
+      historyForward.push({ dir: currentDirHandle, path: [...pathStack] });
+      currentDirHandle = last.dir;
+      pathStack = last.path;
+      await loadCurrentDirectory(currentDirHandle);
+      updateBreadcrumb();
+      updateBackButton();
+      clearAllSelection();
+    }
+  }
+
+  // فتح التخزين - الطريقة الصحيحة
+  async function openStorageRoot() {
+    try {
+      // نستخدم showDirectoryPicker لفتح أي مجلد يختاره المستخدم (بما في ذلك جذر التخزين)
+      const selectedDir = await window.showDirectoryPicker();
+      currentDirHandle = selectedDir;
+      pathStack = [selectedDir];
+      historyBack = [];
+      historyForward = [];
+      await loadCurrentDirectory(currentDirHandle);
+      updateBreadcrumb();
+      updateBackButton();
+      clearAllSelection();
+      showMessage(`✅ تم فتح: ${selectedDir.name}`);
+    } catch (err) {
+      if (err.name !== 'AbortError') showMessage("لم يتم اختيار مجلد أو الخطأ: " + err.message, true);
+      else showMessage("تم إلغاء الاختيار", false);
+    }
+  }
+
+  async function createNewFolderAction() {
+    if (!currentDirHandle) { showMessage("افتح مجلد أولاً باستخدام زر فتح التخزين", true); return; }
+    let name = prompt("أدخل اسم المجلد الجديد:");
+    if (name) {
+      await currentDirHandle.getDirectoryHandle(name, { create: true });
+      await loadCurrentDirectory(currentDirHandle);
+      showMessage(`مجلد "${name}" تم إنشاؤه`);
+    }
+  }
+
+  async function uploadFilesAction() {
+    if (!currentDirHandle) { showMessage("افتح مجلداً أولاً", true); return; }
+    let input = document.createElement("input"); input.type = "file"; input.multiple = true;
+    input.onchange = async (e) => {
+      for (let file of e.target.files) {
+        let fileHandle = await currentDirHandle.getFileHandle(file.name, { create: true });
+        let writable = await fileHandle.createWritable();
+        await writable.write(file);
+        await writable.close();
+      }
+      await loadCurrentDirectory(currentDirHandle);
+      showMessage(`تم رفع ${e.target.files.length} ملفات`);
+    };
+    input.click();
+  }
+
+  async function downloadSelectedAction() {
+    for (let handle of selectedHandlesSet) {
+      if (handle.kind !== "directory") {
+        let file = await handle.getFile();
+        let a = document.createElement("a"); a.href = URL.createObjectURL(file); a.download = file.name; a.click();
+      }
+    }
+    showMessage(`تم تحميل ${selectedHandlesSet.size} ملف`);
+  }
+
+  async function deleteSelectedAction() {
+    if (!currentDirHandle) return;
+    if (confirm(`⚠️ حذف ${selectedHandlesSet.size} عنصر بشكل دائم؟`)) {
+      for (let handle of selectedHandlesSet) {
+        try { await currentDirHandle.removeEntry(handle.name, { recursive: true }); } catch(e) {}
+      }
+      await loadCurrentDirectory(currentDirHandle);
+      clearAllSelection();
+      showMessage("تم الحذف");
+    }
+  }
+
+  function showAdvancedStats() {
+    let totalFilesCount = filesArray.filter(f => !f.isDir).length;
+    modalContentDiv.innerHTML = `<h2><i class="fas fa-chart-pie"></i> إحصائيات متقدمة</h2>
+      <div style="margin:1rem 0;"><canvas id="statCanvas" width="260" height="180"></canvas></div>
+      <p>📁 مجلدات: ${statsCount.folders}</p><p>🖼 صور: ${statsCount.images}</p><p>🎬 فيديوهات: ${statsCount.videos}</p>
+      <p>📄 مستندات: ${statsCount.docs}</p><p>🎵 صوتيات: ${statsCount.audio}</p><p>🗜 أرشيف: ${statsCount.archives}</p>
+      <p>💾 إجمالي الملفات: ${totalFilesCount}</p><p>⚖️ المساحة: ${formatSize(totalBytesUsed)}</p>
+      <button class="btn" id="closeStatBtn">إغلاق</button>`;
+    modalDiv.classList.add("active");
+    setTimeout(() => {
+      let ctx = document.getElementById("statCanvas")?.getContext("2d");
+      if (ctx) new Chart(ctx, { type: 'pie', data: { labels: ['صور','فيديو','مستندات','صوتيات','أرشيف','أخرى'], datasets: [{ data: [statsCount.images, statsCount.videos, statsCount.docs, statsCount.audio, statsCount.archives, statsCount.other], backgroundColor: ['#8b5cf6','#ec4899','#14b8a6','#f97316','#f59e0b','#94a3b8'] }] }, options: { responsive: true } });
+    }, 50);
+    document.getElementById("closeStatBtn")?.addEventListener("click", () => modalDiv.classList.remove("active"));
+  }
+
+  function toggleTheme() {
+    currentTheme = currentTheme === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", currentTheme);
+    localStorage.setItem("theme", currentTheme);
+  }
+
+  // ربط الأحداث
+  document.getElementById("openStorageBtn").addEventListener("click", openStorageRoot);
+  document.getElementById("newFolderBtn").addEventListener("click", createNewFolderAction);
+  document.getElementById("uploadFileBtn").addEventListener("click", uploadFilesAction);
+  document.getElementById("backBtn").addEventListener("click", goBack);
+  document.getElementById("downloadSelectedBtn").addEventListener("click", downloadSelectedAction);
+  document.getElementById("deleteSelectedBtn").addEventListener("click", deleteSelectedAction);
+  document.getElementById("clearSelectionBtn").addEventListener("click", clearAllSelection);
+  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+  document.getElementById("analyticsBtn").addEventListener("click", showAdvancedStats);
+  searchInput.addEventListener("input", (e) => { searchWord = e.target.value; applyFilterAndSort(); });
+  document.querySelectorAll(".sort-chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      let method = btn.dataset.sort;
+      if (sortBy === method) sortAscending = !sortAscending;
+      else { sortBy = method; sortAscending = true; }
+      document.querySelectorAll(".sort-chip").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      applyFilterAndSort();
+    });
+  });
+
+  document.documentElement.setAttribute("data-theme", currentTheme);
+  showMessage("✅ جاهز! اضغط على 'فتح التخزين' واختر أي مجلد (مثل 'Downloads' أو 'DCIM') للبدء");
+</script>
+</body>
+</html>

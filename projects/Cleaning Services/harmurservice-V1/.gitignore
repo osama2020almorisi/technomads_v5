@@ -1,0 +1,31 @@
+# ملفات النظام
+.DS_Store
+Thumbs.db
+*.bak
+*.backup
+*.tmp
+
+# ملفات السجل
+*.log
+npm-debug.log*
+
+# مجلدات النظام
+node_modules/
+.env
+.env.local
+.vscode/
+.idea/
+
+# ملفات التجميع
+dist/
+build/
+/temp/
+
+# ملفات النسخ الاحتياطي
+*.backup
+*.old
+
+# ملفات الوسائط الكبيرة (يمكن رفعها لاحقاً)
+# *.mp4
+# *.zip
+# *.rar

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاسب المالي - نظام إدارة الفواتير والمحاسبة</title>
+    
+    <!-- تحسين تحميل الخطوط -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- تحسين تحميل أيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* إعادة ضبط CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #3366cc;
+            --primary-dark: #254e9c;
+            --secondary-color: #ff6b6b;
+            --success-color: #38a169;
+            --warning-color: #d69e2e;
+            --danger-color: #e53e3e;
+            --light-color: #f8f9fa;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-gray: #e2e8f0;
+            --border-color: #e2e8f0;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            direction: rtl;
+        }
+        
+        .auth-container {
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .auth-header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .auth-header p {
+            color: var(--gray-color);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .auth-form {
+            margin-bottom: 2.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+        }
+        
+        .input-icon {
+            position: relative;
+        }
+        
+        .input-icon i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+            z-index: 2;
+        }
+        
+        .input-icon input {
+            width: 100%;
+            padding: 14px 50px 14px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+            font-family: 'Tajawal', sans-serif;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .input-icon input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.1);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 14px 28px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+        }
+        
+        .btn-block {
+            display: flex;
+            width: 100%;
+        }
+        
+        .auth-links {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        
+        .auth-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .auth-links a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+            gap: 0.7rem;
+        }
+        
+        .auth-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: rgba(51, 102, 204, 0.05);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(51, 102, 204, 0.1);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .feature i {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+        
+        .feature:hover i {
+            transform: scale(1.1);
+        }
+        
+        .feature h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .feature p {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        /* حالة التحميل */
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* إشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 14px 24px;
+            border-radius: var(--border-radius);
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 320px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            animation: slideDown 0.4s ease;
+        }
+        
+        .notification.success {
+            background: linear-gradient(135deg, var(--success-color) 0%, #2f855a 100%);
+        }
+        
+        .notification.error {
+            background: linear-gradient(135deg, var(--danger-color) 0%, #c53030 100%);
+        }
+        
+        .notification button {
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 10px;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .notification button:hover {
+            opacity: 1;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+        
+        /* تحسينات للجوال */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .auth-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .auth-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .auth-header p {
+                font-size: 1rem;
+            }
+            
+            .logo {
+                width: 85px;
+                height: 85px;
+                font-size: 2rem;
+            }
+            
+            .auth-features {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+            
+            .feature {
+                padding: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 1.5rem;
+            }
+            
+            .auth-header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .input-icon input {
+                padding: 12px 45px 12px 12px;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+            
+            .logo {
+                width: 75px;
+                height: 75px;
+                font-size: 1.8rem;
+            }
+            
+            .feature i {
+                font-size: 1.8rem;
+            }
+            
+            .feature h3 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <!-- شعار بديل مع fallback -->
+                <div class="logo" id="mainLogo">م</div>
+                <h1>المحاسب المالي</h1>
+                <p>نظام متكامل لإدارة الفواتير والحسابات</p>
+            </div>
+
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" required placeholder="أدخل كلمة المرور">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                </button>
+
+                <div class="auth-links">
+                    <a href="auth/register.html">
+                        <i class="fas fa-user-plus"></i> إنشاء حساب جديد
+                    </a>
+                </div>
+            </form>
+
+            <div class="auth-features">
+                <div class="feature">
+                    <i class="fas fa-file-invoice"></i>
+                    <h3>فواتير احترافية</h3>
+                    <p>أنشئ فواتيرك بسهولة وبشكل احترافي</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>تقارير مفصلة</h3>
+                    <p>احصل على تقارير مالية دقيقة وشاملة</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>مع الجوال</h3>
+                    <p>ادعم حساباتك من أي مكان وفي أي وقت</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // دالة للتحقق من تسجيل الدخول
+        function isLoggedIn() {
+            try {
+                return localStorage.getItem('financial_app_current_user') !== null;
+            } catch (e) {
+                console.error('خطأ في الوصول إلى localStorage:', e);
+                return false;
+            }
+        }
+        
+        // دالة للتحقق من صحة البريد الإلكتروني
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // دالة لعرض الإشعارات
+        function showNotification(message, type) {
+            // إزالة أي إشعارات سابقة
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // إزالة الإشعار تلقائياً بعد 5 ثواني
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+        
+        // دالة تسجيل الدخول
+        function loginUser(email, password) {
+            const loginBtn = document.getElementById('loginBtn');
+            loginBtn.classList.add('loading');
+            
+            // محاكاة عملية تسجيل الدخول (في التطبيق الحقيقي يجب الاتصال بالخادم)
+            setTimeout(() => {
+                try {
+                    // محاولة تحميل بيانات المستخدمين
+                    const users = JSON.parse(localStorage.getItem('financial_app_users') || '[]');
+                    const user = users.find(u => u.email === email && u.password === password);
+                    
+                    if (user) {
+                        // حفظ بيانات المستخدم
+                        localStorage.setItem('financial_app_current_user', JSON.stringify(user));
+                        
+                        showNotification('تم تسجيل الدخول بنجاح! يتم توجيهك الآن إلى لوحة التحكم', 'success');
+                        
+                        // توجيه إلى صفحة الرئيسية بعد ثانيتين
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 2000);
+                    } else {
+                        showNotification('البريد الإلكتروني أو كلمة المرور غير صحيحة', 'error');
+                        loginBtn.classList.remove('loading');
+                    }
+                } catch (error) {
+                    console.error('خطأ في عملية تسجيل الدخول:', error);
+                    showNotification('حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.', 'error');
+                    loginBtn.classList.remove('loading');
+                }
+            }, 1000);
+        }
+        
+        // تهيئة التطبيق عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('الصفحة الرئيسية تم تحميلها بنجاح');
+            
+            // التحقق إذا كان المستخدم مسجلاً بالفعل
+            if (isLoggedIn()) {
+                window.location.href = 'dashboard.html';
+                return;
+            }
+            
+            // محاولة تحميل صورة الشعار
+            const logo = new Image();
+            logo.onload = function() {
+                // إذا تم تحميل الصورة بنجاح، استبدال العنصر النائب
+                document.getElementById('mainLogo').style.backgroundImage = `url(${logo.src})`;
+                document.getElementById('mainLogo').innerHTML = '';
+                document.getElementById('mainLogo').style.backgroundSize = 'cover';
+                document.getElementById('mainLogo').style.backgroundPosition = 'center';
+            };
+            logo.onerror = function() {
+                // إذا فشل تحميل الصورة، ابق على العنصر النائب
+                console.log('لم يتم العثور على صورة الشعار، استخدام العنصر النائب');
+            };
+            logo.src = 'assets/images/logo.png';
+            
+            // إضافة event listener للنموذج
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('email').value.trim();
+                    const password = document.getElementById('password').value;
+                    
+                    if (!email || !password) {
+                        showNotification('يرجى ملء جميع الحقول', 'error');
+                        return;
+                    }
+                    
+                    if (!isValidEmail(email)) {
+                        showNotification('يرجى إدخال بريد إلكتروني صحيح', 'error');
+                        return;
+                    }
+                    
+                    loginUser(email, password);
+                });
+            }
+            
+            // اختبار localStorage
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+            } catch (e) {
+                console.error('localStorage غير متاح:', e);
+                showNotification('المتصفح لا يدعم تخزين البيانات المحلي. يرجى تمكين cookies.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>تسجيل الدخول | نظام إدارة الصيدلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .login-page::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .login-container {
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 450px;
+            padding: 2.5rem;
+            position: relative;
+            z-index: 1;
+            margin: 1rem;
+        }
+        .login-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .login-logo i {
+            font-size: 4rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        .login-logo h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .login-logo p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .demo-accounts {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--light-secondary);
+        }
+        .demo-accounts h3 {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .demo-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            background: var(--light-secondary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border: 2px solid transparent;
+            margin-bottom: 0.5rem;
+        }
+        .demo-item:hover {
+            border-color: var(--primary);
+            background: rgba(42,92,138,0.05);
+            transform: translateX(-5px);
+        }
+        .demo-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            width: 35px;
+            text-align: center;
+        }
+        .demo-info strong {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+        .demo-info span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .login-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-secondary);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        @media (max-width: 480px) {
+            .login-container { padding: 1.5rem; margin: 1rem; }
+            .login-logo i { font-size: 3rem; }
+            .login-logo h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-prescription-bottle-medical"></i>
+                <h1>نظام إدارة الصيدلية</h1>
+                <p>تسجيل الدخول إلى لوحة التحكم</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">البريد الإلكتروني</label>
+                    <div class="form-input-wrapper">
+                        <input type="email" class="form-input" id="email" placeholder="أدخل البريد الإلكتروني" required autocomplete="email">
+                        <i class="fas fa-envelope form-input-icon"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">كلمة المرور</label>
+                    <div class="form-input-wrapper">
+                        <input type="password" class="form-input" id="password" placeholder="أدخل كلمة المرور" required autocomplete="current-password">
+                        <i class="fas fa-lock form-input-icon"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                </button>
+            </form>
+
+            <div class="demo-accounts">
+                <h3><i class="fas fa-users"></i> حسابات تجريبية</h3>
+                <div class="demo-item" onclick="fillLogin('admin@pharmacy.com', 'admin123')">
+                    <i class="fas fa-user-shield"></i>
+                    <div class="demo-info">
+                        <strong>صاحب الصيدلية</strong>
+                        <span>admin@pharmacy.com / admin123</span>
+                    </div>
+                </div>
+                <div class="demo-item" onclick="fillLogin('pharmacist@pharmacy.com', 'pharma123')">
+                    <i class="fas fa-user-md"></i>
+                    <div class="demo-info">
+                        <strong>الصيدلي</strong>
+                        <span>pharmacist@pharmacy.com / pharma123</span>
+                    </div>
+                </div>
+                <div class="demo-item" onclick="fillLogin('stock@pharmacy.com', 'stock123')">
+                    <i class="fas fa-boxes"></i>
+                    <div class="demo-info">
+                        <strong>أمين المخزن</strong>
+                        <span>stock@pharmacy.com / stock123</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-footer">
+                <p>© 2026 TechNomads. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        function fillLogin(email, password) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const result = login(email, password);
+
+            if (result.success) {
+                showNotification('تم تسجيل الدخول بنجاح، جاري التحويل...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 500);
+            } else {
+                showNotification(result.message, 'error');
+            }
+        });
+    </script>
+</body>
+</html>

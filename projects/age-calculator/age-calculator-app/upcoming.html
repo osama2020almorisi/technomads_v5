@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="أعياد الميلاد القادمة - حاسبة العمر المتكاملة">
+    <title>الأعياد القادمة - حاسبة العمر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* ========== المتغيرات العامة ========== */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --primary-light: #4895ef;
+            --accent: #f72585;
+            --dark: #14213d;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #ef233c;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .app-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 30px 25px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-content h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-content h1 i {
+            color: var(--accent);
+            filter: drop-shadow(0 0 10px rgba(247, 37, 133, 0.5));
+        }
+
+        .header-content p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .header-actions {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+            color: var(--primary-dark);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(247, 37, 133, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .back-home:hover {
+            transform: translateX(-5px);
+            color: var(--primary);
+        }
+
+        /* ========== بطاقات الإحصائيات ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .stat-info h3 {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* ========== شريط التصفية ========== */
+        .filter-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 12px 24px;
+            border-radius: 50px;
+            background: var(--light);
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .filter-tab:hover:not(.active) {
+            background: var(--gray-light);
+        }
+
+        .view-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            background: var(--light);
+            color: var(--gray);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ========== عرض الشبكة ========== */
+        .birthday-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .birthday-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .birthday-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 3px 10px rgba(247, 37, 133, 0.3);
+        }
+
+        .countdown-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--warning);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 3px 10px rgba(248, 150, 30, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+
+        .card-title h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--light);
+            color: var(--gray);
+        }
+
+        .card-info {
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--gray-light);
+        }
+
+        .info-label {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .progress-container {
+            margin: 15px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: var(--gray);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--gray-light);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--success), var(--primary));
+            border-radius: 10px;
+            width: 0%;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 14px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+        }
+
+        /* ========== عرض القائمة ========== */
+        .birthday-list {
+            display: none;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 40px;
+        }
+
+        .list-header, .list-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1.5fr;
+            padding: 18px 25px;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .list-header {
+            background: var(--primary-dark);
+            color: white;
+            font-weight: 700;
+        }
+
+        .list-row {
+            border-bottom: 1px solid var(--gray-light);
+            transition: var(--transition);
+        }
+
+        .list-row:hover {
+            background: var(--light);
+        }
+
+        .list-row:last-child {
+            border-bottom: none;
+        }
+
+        .days-left {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* ========== رسالة فارغة ========== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .empty-state i {
+            font-size: 70px;
+            color: var(--gray-light);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        /* ========== الفوتر ========== */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            color: var(--gray);
+        }
+
+        /* ========== التجاوب ========== */
+        @media (max-width: 768px) {
+            .header { flex-direction: column; text-align: center; }
+            .header-content h1 { justify-content: center; }
+            .filter-section { flex-direction: column; align-items: stretch; }
+            .list-header { display: none; }
+            .list-row { grid-template-columns: 1fr; gap: 10px; padding: 20px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); margin-bottom: 10px; background: white; }
+            .list-row::before { content: attr(data-label); font-weight: 700; color: var(--primary); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- الهيدر -->
+        <header class="header">
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-gift"></i>
+                    أعياد الميلاد القادمة
+                </h1>
+                <p>تعرف على الأعياد القريبة واستعد للاحتفال</p>
+            </div>
+            <div class="header-actions">
+                <a href="index.html" class="btn btn-outline"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="calculator.html" class="btn btn-outline"><i class="fas fa-calculator"></i> الحاسبة</a>
+                <a href="add-birthday.html" class="btn btn-primary"><i class="fas fa-plus-circle"></i> إضافة جديد</a>
+            </div>
+        </header>
+
+        <!-- إحصائيات سريعة -->
+        <div class="stats-grid" id="statsContainer">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                <div class="stat-info">
+                    <h3>إجمالي الأعياد القادمة</h3>
+                    <div class="stat-number" id="totalUpcoming">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <h3>أقرب عيد</h3>
+                    <div class="stat-number" id="closestName">-</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-calendar-week"></i></div>
+                <div class="stat-info">
+                    <h3>خلال 7 أيام</h3>
+                    <div class="stat-number" id="within7">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                <div class="stat-info">
+                    <h3>خلال 30 يوم</h3>
+                    <div class="stat-number" id="within30">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- شريط التصفية -->
+        <div class="filter-section">
+            <div class="filter-tabs">
+                <span class="filter-tab active" data-days="30">خلال 30 يوم</span>
+                <span class="filter-tab" data-days="7">خلال 7 أيام</span>
+                <span class="filter-tab" data-days="90">خلال 90 يوم</span>
+                <span class="filter-tab" data-days="365">خلال سنة</span>
+                <span class="filter-tab" data-days="all">الكل</span>
+            </div>
+            <div class="view-options">
+                <button class="view-btn active" id="gridViewBtn" title="عرض شبكي"><i class="fas fa-th-large"></i></button>
+                <button class="view-btn" id="listViewBtn" title="عرض قائمة"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+
+        <!-- عرض الشبكة (افتراضي) -->
+        <div id="birthdayGrid" class="birthday-grid"></div>
+
+        <!-- عرض القائمة (مخفي) -->
+        <div id="birthdayList" class="birthday-list">
+            <div class="list-header">
+                <span>الاسم</span>
+                <span>النوع</span>
+                <span>تاريخ الميلاد</span>
+                <span>العمر القادم</span>
+                <span>الأيام المتبقية</span>
+                <span>الإجراءات</span>
+            </div>
+            <div id="listContainer"></div>
+        </div>
+
+        <!-- الفوتر -->
+        <footer class="footer">
+            <p>© <span id="current-year"></span> حاسبة العمر المتكاملة - جميع الحقوق محفوظة</p>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            // ========== الثوابت ==========
+            const STORAGE_KEY = 'birthday_app_data';
+            let birthdays = [];
+            let filteredBirthdays = [];
+            let currentDaysFilter = 30;
+            let currentView = 'grid';
+
+            // العناصر
+            const gridEl = document.getElementById('birthdayGrid');
+            const listEl = document.getElementById('birthdayList');
+            const listContainer = document.getElementById('listContainer');
+            const gridViewBtn = document.getElementById('gridViewBtn');
+            const listViewBtn = document.getElementById('listViewBtn');
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            const stats = {
+                totalUpcoming: document.getElementById('totalUpcoming'),
+                closestName: document.getElementById('closestName'),
+                within7: document.getElementById('within7'),
+                within30: document.getElementById('within30')
+            };
+
+            // ========== تحميل البيانات ==========
+            function loadBirthdays() {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    try {
+                        birthdays = JSON.parse(stored);
+                    } catch (e) {
+                        birthdays = [];
+                    }
+                } else {
+                    birthdays = [];
+                }
+            }
+
+            // ========== حساب الأيام المتبقية لعيد الميلاد القادم ==========
+            function getDaysUntilNextBirthday(birthDateStr) {
+                const today = new Date();
+                const birth = new Date(birthDateStr);
+                
+                // تعيين السنة الحالية
+                let nextBirthday = new Date(today.getFullYear(), birth.getMonth(), birth.getDate(), 0, 0, 0);
+                
+                // إذا كان قد مضى، نأخذ السنة القادمة
+                if (nextBirthday < today) {
+                    nextBirthday.setFullYear(today.getFullYear() + 1);
+                }
+                
+                const diffMs = nextBirthday - today;
+                const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+                return diffDays;
+            }
+
+            // ========== حساب العمر الذي سيتم ==========
+            function getNextAge(birthDateStr) {
+                const today = new Date();
+                const birth = new Date(birthDateStr);
+                let age = today.getFullYear() - birth.getFullYear();
+                const m = today.getMonth() - birth.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+                    age--;
+                }
+                return age + 1; // العمر القادم
+            }
+
+            // ========== تصفية البيانات حسب الأيام ==========
+            function filterByDays(days) {
+                currentDaysFilter = days;
+                const today = new Date();
+                
+                filteredBirthdays = birthdays.filter(b => {
+                    const daysUntil = getDaysUntilNextBirthday(b.birthDate);
+                    if (days === 'all') return true;
+                    return daysUntil <= days;
+                });
+
+                // ترتيب حسب الأيام المتبقية (الأقرب أولاً)
+                filteredBirthdays.sort((a, b) => {
+                    const daysA = getDaysUntilNextBirthday(a.birthDate);
+                    const daysB = getDaysUntilNextBirthday(b.birthDate);
+                    return daysA - daysB;
+                });
+
+                updateStats();
+                renderAll();
+            }
+
+            // ========== تحديث الإحصائيات ==========
+            function updateStats() {
+                const total = filteredBirthdays.length;
+                stats.totalUpcoming.textContent = total;
+
+                // أقرب عيد
+                if (total > 0) {
+                    const closest = filteredBirthdays[0];
+                    stats.closestName.textContent = closest.name;
+                } else {
+                    stats.closestName.textContent = '-';
+                }
+
+                // خلال 7 أيام
+                const within7 = filteredBirthdays.filter(b => getDaysUntilNextBirthday(b.birthDate) <= 7).length;
+                stats.within7.textContent = within7;
+
+                // خلال 30 يوم (من المجموع الكلي)
+                const within30 = birthdays.filter(b => getDaysUntilNextBirthday(b.birthDate) <= 30).length;
+                stats.within30.textContent = within30;
+            }
+
+            // ========== عرض الشبكة ==========
+            function renderGrid(items) {
+                if (items.length === 0) {
+                    gridEl.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-calendar-times"></i>
+                            <h3>لا توجد أعياد قادمة</h3>
+                            <p>لم نعثر على أي عيد ميلاد في الفترة المحددة.</p>
+                            <a href="add-birthday.html" class="btn btn-primary"><i class="fas fa-plus-circle"></i> أضف مولوداً الآن</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                items.forEach(item => {
+                    const daysLeft = getDaysUntilNextBirthday(item.birthDate);
+                    const nextAge = getNextAge(item.birthDate);
+                    const birthDate = new Date(item.birthDate);
+                    const birthFormatted = birthDate.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                    
+                    // أيقونة النوع
+                    let typeIcon = '';
+                    let typeLabel = '';
+                    if (item.type === 'human') {
+                        typeIcon = '<i class="fas fa-user"></i>';
+                        typeLabel = 'إنسان';
+                    } else if (item.type === 'animal') {
+                        typeIcon = '<i class="fas fa-paw"></i>';
+                        typeLabel = 'حيوان';
+                    } else {
+                        typeIcon = '<i class="fas fa-tag"></i>';
+                        typeLabel = item.typeCustom || 'آخر';
+                    }
+
+                    // حساب نسبة التقدم (كم مضى من السنة الحالية حتى العيد)
+                    const today = new Date();
+                    const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+                    if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
+                    const startOfYear = new Date(today.getFullYear(), 0, 1);
+                    const endOfYear = new Date(today.getFullYear(), 11, 31);
+                    const progress = ((nextBirthday - startOfYear) / (endOfYear - startOfYear)) * 100;
+
+                    html += `
+                        <div class="birthday-card">
+                            <span class="card-badge"><i class="fas fa-birthday-cake"></i> ${typeLabel}</span>
+                            <span class="countdown-badge"><i class="fas fa-hourglass-half"></i> ${daysLeft} يوم</span>
+                            <div class="card-header">
+                                <div class="card-avatar">${typeIcon}</div>
+                                <div class="card-title">
+                                    <h3>${item.name}</h3>
+                                    <span class="type-badge">${typeLabel}</span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <div class="info-row">
+                                    <span class="info-label">تاريخ الميلاد:</span>
+                                    <span class="info-value">${birthFormatted}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">العمر القادم:</span>
+                                    <span class="info-value">${nextAge} سنة</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">تاريخ العيد:</span>
+                                    <span class="info-value">${nextBirthday.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-label">
+                                    <span>التقدم نحو العيد</span>
+                                    <span>${Math.round(progress)}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${progress}%;"></div>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <a href="calculator.html?id=${item.id}" class="action-btn"><i class="fas fa-calculator"></i> احسب</a>
+                                <a href="add-birthday.html?id=${item.id}" class="action-btn" style="background: var(--warning);"><i class="fas fa-edit"></i> تعديل</a>
+                            </div>
+                        </div>
+                    `;
+                });
+                gridEl.innerHTML = html;
+            }
+
+            // ========== عرض القائمة ==========
+            function renderList(items) {
+                if (items.length === 0) {
+                    listContainer.innerHTML = `
+                        <div class="empty-state" style="grid-column:span 6;">
+                            <i class="fas fa-calendar-times"></i>
+                            <h3>لا توجد أعياد قادمة</h3>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let rows = '';
+                items.forEach(item => {
+                    const daysLeft = getDaysUntilNextBirthday(item.birthDate);
+                    const nextAge = getNextAge(item.birthDate);
+                    const birthDate = new Date(item.birthDate);
+                    const birthFormatted = birthDate.toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' });
+                    
+                    let typeLabel = '';
+                    if (item.type === 'human') typeLabel = 'إنسان';
+                    else if (item.type === 'animal') typeLabel = 'حيوان';
+                    else typeLabel = item.typeCustom || 'آخر';
+
+                    rows += `
+                        <div class="list-row" data-label="الاسم">
+                            <span>${item.name}</span>
+                            <span>${typeLabel}</span>
+                            <span>${birthFormatted}</span>
+                            <span>${nextAge} سنة</span>
+                            <span class="days-left">${daysLeft} يوم</span>
+                            <span>
+                                <a href="calculator.html?id=${item.id}" class="action-btn" style="display:inline-block; padding:6px 12px; width:auto;"><i class="fas fa-calculator"></i></a>
+                                <a href="add-birthday.html?id=${item.id}" class="action-btn" style="display:inline-block; padding:6px 12px; width:auto; background:var(--warning);"><i class="fas fa-edit"></i></a>
+                            </span>
+                        </div>
+                    `;
+                });
+                listContainer.innerHTML = rows;
+            }
+
+            // ========== التبديل بين العرض ==========
+            function setView(view) {
+                currentView = view;
+                if (view === 'grid') {
+                    gridEl.style.display = 'grid';
+                    listEl.style.display = 'none';
+                    gridViewBtn.classList.add('active');
+                    listViewBtn.classList.remove('active');
+                } else {
+                    gridEl.style.display = 'none';
+                    listEl.style.display = 'block';
+                    listViewBtn.classList.add('active');
+                    gridViewBtn.classList.remove('active');
+                }
+                renderAll();
+            }
+
+            function renderAll() {
+                if (currentView === 'grid') {
+                    renderGrid(filteredBirthdays);
+                } else {
+                    renderList(filteredBirthdays);
+                }
+            }
+
+            // ========== أحداث ==========
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const days = tab.dataset.days === 'all' ? 'all' : parseInt(tab.dataset.days);
+                    filterByDays(days);
+                });
+            });
+
+            gridViewBtn.addEventListener('click', () => setView('grid'));
+            listViewBtn.addEventListener('click', () => setView('list'));
+
+            // ========== تهيئة ==========
+            loadBirthdays();
+            filterByDays(30); // افتراضي 30 يوم
+            setView('grid');
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        })();
+    </script>
+</body>
+</html>

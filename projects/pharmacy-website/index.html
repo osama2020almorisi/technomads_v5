@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>لوحة التحكم | نظام إدارة الصيدلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+    /* ضمان عرض الجدول بشكل صحيح */
+    #recentSalesBody td, #lowStockBody td {
+        white-space: nowrap;
+    }
+    
+    /* ضمان عرض الرسم البياني بشكل صحيح */
+    #salesChart {
+        width: 100% !important;
+        height: 300px !important;
+    }
+    
+    @media (max-width: 768px) {
+        #salesChart {
+            height: 250px !important;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-prescription-bottle-medical"></i>
+                    <span>صيدليتي</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" class="active"><i class="fas fa-home"></i><span>لوحة التحكم</span></a></li>
+                    <li><a href="medicines.html"><i class="fas fa-pills"></i><span>الأدوية</span></a></li>
+                    <li><a href="sales.html"><i class="fas fa-cash-register"></i><span>المبيعات</span></a></li>
+                    <li><a href="customers.html"><i class="fas fa-users"></i><span>العملاء</span></a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck"></i><span>الموردين</span></a></li>
+                    <li><a href="purchases.html"><i class="fas fa-shopping-cart"></i><span>المشتريات</span></a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i><span>التقارير</span></a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a></li>
+                    <li><a href="profile.html"><i class="fas fa-user-circle"></i><span>الملف الشخصي</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <div class="user-name"></div>
+                        <div class="user-role"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+ <header class="top-header">
+    <div class="page-title">
+        <h1><i class="fas fa-home"></i> لوحة التحكم</h1>
+        <p>نظرة عامة على أداء الصيدلية</p>
+        <div class="breadcrumb">
+            <a href="index.html">الرئيسية</a>
+            <i class="fas fa-chevron-left"></i>
+            <span>لوحة التحكم</span>
+        </div>
+    </div>
+    <div class="header-actions">
+        <button class="header-btn" id="theme-toggle" title="تبديل الوضع الليلي/النهاري">
+            <i class="fas fa-moon"></i>
+        </button>
+        <div class="user-menu" id="userMenu">
+            <div class="user-menu-trigger" onclick="toggleUserMenu()">
+                <div class="user-avatar-small" id="headerUserAvatar"></div>
+                <span id="headerUserName"></span>
+                <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+            </div>
+            <div class="user-menu-dropdown">
+                <a href="profile.html"><i class="fas fa-user-circle"></i> الملف الشخصي</a>
+                <a href="settings.html"><i class="fas fa-cog"></i> الإعدادات</a>
+                <a href="backup.html"><i class="fas fa-database"></i> النسخ الاحتياطي</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logout(); return false;"><i class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span style="color: var(--danger);">تسجيل الخروج</span></a>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <div class="content-area">
+                <!-- Stats Grid -->
+                <div class="stats-grid" id="statsGrid"></div>
+
+                <!-- Alerts Section -->
+                <div class="alerts-section">
+                    <h2 style="margin-bottom: 1rem; color: var(--primary);">
+                        <i class="fas fa-bell"></i> التنبيهات
+                    </h2>
+                    <div id="alertsContainer"></div>
+                </div>
+
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-chart-line"></i> المبيعات</h3>
+                            <a href="reports.html" class="card-action">عرض الكل</a>
+                        </div>
+                        <canvas id="salesChart" style="height: 300px; width: 100%;"></canvas>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-receipt"></i> آخر المبيعات</h3>
+                            <a href="sales.html" class="card-action">عرض الكل</a>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>رقم الفاتورة</th><th>العميل</th><th>المبلغ</th><th>التاريخ</th></tr>
+                                </thead>
+                                <tbody id="recentSalesBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Low Stock Medicines -->
+                <div class="dashboard-card" style="margin-top: 1.5rem;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> أدوية منخفضة المخزون</h3>
+                        <a href="medicines.html" class="card-action">عرض الكل</a>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead><tr><th>الدواء</th><th>الكمية المتاحة</th><th>الحد الأدنى</th><th>الحالة</th></tr></thead>
+                            <tbody id="lowStockBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        let salesChartInstance = null;
+
+        function loadDashboard() {
+            const medicines = getAllMedicines();
+            const sales = getAllSales();
+            const customers = getAllCustomers();
+            const suppliers = getAllSuppliers();
+            const settings = getSettings();
+
+            const totalMedicines = medicines.length;
+            const expiredMedicines = medicines.filter(m => isExpired(m.expiryDate)).length;
+            const lowStockMedicines = medicines.filter(m => m.quantity <= m.lowStockAlert).length;
+            const today = new Date().toDateString();
+            const todaySales = sales.filter(s => new Date(s.createdAt).toDateString() === today);
+            const todayRevenue = todaySales.reduce((sum, s) => sum + s.grandTotal, 0);
+            const totalCustomers = customers.length;
+            const totalSuppliers = suppliers.length;
+
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-pills"></i></div><div class="stat-value">${totalMedicines}</div><div class="stat-label">إجمالي الأدوية</div></div>
+                <div class="stat-card"><div class="stat-icon green"><i class="fas fa-money-bill-wave"></i></div><div class="stat-value">${formatCurrency(todayRevenue)}</div><div class="stat-label">مبيعات اليوم</div></div>
+                <div class="stat-card"><div class="stat-icon red"><i class="fas fa-calendar-times"></i></div><div class="stat-value">${expiredMedicines}</div><div class="stat-label">منتهية الصلاحية</div></div>
+                <div class="stat-card"><div class="stat-icon orange"><i class="fas fa-exclamation-circle"></i></div><div class="stat-value">${lowStockMedicines}</div><div class="stat-label">منخفضة المخزون</div></div>
+                <div class="stat-card"><div class="stat-icon teal"><i class="fas fa-users"></i></div><div class="stat-value">${totalCustomers}</div><div class="stat-label">العملاء</div></div>
+                <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-truck"></i></div><div class="stat-value">${totalSuppliers}</div><div class="stat-label">الموردين</div></div>
+            `;
+
+            loadAlerts();
+            loadRecentSales();
+            loadLowStock();
+            initSalesChart();
+        }
+
+        function loadAlerts() {
+            const medicines = getAllMedicines();
+            const settings = getSettings();
+            const alertDays = settings.expiryAlertDays || 30;
+            let alertsHTML = '';
+
+            const expired = medicines.filter(m => isExpired(m.expiryDate));
+            if (expired.length > 0) {
+                alertsHTML += `<div class="alert-card danger"><div class="alert-icon danger"><i class="fas fa-times-circle"></i></div><div class="alert-content"><h4>${expired.length} دواء منتهي الصلاحية</h4><p>يجب إزالة الأدوية منتهية الصلاحية من المخزون فوراً</p></div></div>`;
+            }
+
+            const nearExpiry = medicines.filter(m => isNearExpiry(m.expiryDate, alertDays) && !isExpired(m.expiryDate));
+            if (nearExpiry.length > 0) {
+                alertsHTML += `<div class="alert-card warning"><div class="alert-icon warning"><i class="fas fa-clock"></i></div><div class="alert-content"><h4>${nearExpiry.length} دواء قريب من الانتهاء</h4><p>سينتهي صلاحية هذه الأدوية خلال ${alertDays} يوم</p></div></div>`;
+            }
+
+            const lowStock = medicines.filter(m => m.quantity <= m.lowStockAlert);
+            if (lowStock.length > 0) {
+                alertsHTML += `<div class="alert-card warning"><div class="alert-icon warning"><i class="fas fa-box-open"></i></div><div class="alert-content"><h4>${lowStock.length} دواء منخفض المخزون</h4><p>الكمية المتاحة أقل من الحد الأدنى المسموح</p></div></div>`;
+            }
+
+            if (alertsHTML === '') {
+                alertsHTML = `<div class="alert-card success"><div class="alert-icon success"><i class="fas fa-check-circle"></i></div><div class="alert-content"><h4>لا توجد تنبيهات</h4><p>كل شيء على ما يرام! لا توجد مشاكل في المخزون</p></div></div>`;
+            }
+
+            document.getElementById('alertsContainer').innerHTML = alertsHTML;
+        }
+
+        function loadRecentSales() {
+            const sales = getAllSales();
+            const customers = getAllCustomers();
+            const recentSales = [...sales].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0,5);
+
+            document.getElementById('recentSalesBody').innerHTML = recentSales.map(sale => {
+                const customer = customers.find(c => c.id === sale.customerId);
+                return `<tr><td><strong>${sale.invoiceNumber}</strong></td><td>${customer ? customer.name : 'عميل نقدي'}</td><td><strong style="color: var(--secondary);">${formatCurrency(sale.grandTotal)}</strong></td><td>${formatDate(sale.createdAt)}</td></tr>`;
+            }).join('');
+        }
+
+        function loadLowStock() {
+            const medicines = getAllMedicines();
+            const lowStock = medicines.filter(m => m.quantity <= m.lowStockAlert).slice(0,5);
+            document.getElementById('lowStockBody').innerHTML = lowStock.map(med => `<tr><td><strong>${med.name}</strong></td><td><span style="color: var(--danger); font-weight: 700;">${med.quantity}</span></td><td>${med.lowStockAlert}</td><td><span class="badge badge-danger">منخفض</span></td></tr>`).join('');
+        }
+
+        function initSalesChart() {
+            const sales = getAllSales();
+            const salesByDate = {};
+            sales.forEach(sale => {
+                const date = new Date(sale.createdAt).toLocaleDateString('ar-SA');
+                salesByDate[date] = (salesByDate[date] || 0) + sale.grandTotal;
+            });
+
+            const ctx = document.getElementById('salesChart');
+            if (ctx) {
+                if (salesChartInstance) salesChartInstance.destroy();
+                salesChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: Object.keys(salesByDate),
+                        datasets: [{
+                            label: 'المبيعات (ريال)',
+                            data: Object.values(salesByDate),
+                            borderColor: '#2A5C8A',
+                            backgroundColor: 'rgba(42,92,138,0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, ticks: { callback: v => formatNumber(v) } } }
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDashboard);
+    </script>
+</body>
+</html>

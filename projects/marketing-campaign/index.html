@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>حملة التسويق الرقمي | TechNomads</title>
+    <meta name="description" content="لوحة تحكم متكاملة لإدارة الحملات التسويقية وتحليل الأداء مع عروض وأسعار تنافسية">
+
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2A2D7C;
+            --primary-light: #3d41a0;
+            --secondary: #FF6B6B;
+            --secondary-light: #ff8585;
+            --accent: #4ECDC4;
+            --accent-dark: #3bb3ab;
+            --dark: #1A1A1A;
+            --light: #F8F9FA;
+            --text-dark: #333;
+            --text-muted: #6c757d;
+            --card-bg-light: #ffffff;
+            --card-bg-dark: #1e1e2e;
+            --shadow-sm: 0 4px 15px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.15);
+            --radius: 16px;
+            --radius-lg: 24px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, #2A2D7C 0%, #4ECDC4 100%);
+            --gradient-secondary: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            --light: #121212;
+            --text-dark: #f5f5f5;
+            --text-muted: #a0a0a0;
+            --card-bg-light: #1e1e2e;
+            background: #121212;
+        }
+
+        /* ============================================
+           BACK LINK
+           ============================================ */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.5rem 2rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        body.dark-mode .back-link {
+            color: var(--accent);
+        }
+        .back-link:hover {
+            gap: 1rem;
+            color: var(--secondary);
+        }
+
+        /* ============================================
+           PROJECT HEADER
+           ============================================ */
+        .project-header {
+            background: var(--gradient-primary);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+        .project-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .project-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* ============================================
+           STATS CARDS
+           ============================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: -2rem auto 2rem;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        .stat-card {
+            background: var(--card-bg-light);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(78,205,196,0.1), rgba(255,107,107,0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            transition: var(--transition);
+        }
+        .stat-card:hover .stat-icon {
+            background: var(--gradient-primary);
+            transform: scale(1.05);
+        }
+        .stat-icon i {
+            font-size: 2rem;
+            color: var(--accent);
+            transition: var(--transition);
+        }
+        .stat-card:hover .stat-icon i {
+            color: white;
+        }
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        body.dark-mode .stat-number {
+            color: var(--accent);
+        }
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+        .stat-change {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+        }
+        .stat-change.positive {
+            background: rgba(39,174,96,0.1);
+            color: #27AE60;
+        }
+
+        /* ============================================
+           PRICE SECTION - الأسعار المتغيرة
+           ============================================ */
+        .price-section {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .price-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .price-header h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        body.dark-mode .price-header h2 {
+            color: var(--accent);
+        }
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .price-card {
+            background: var(--card-bg-light);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }
+        body.dark-mode .price-card {
+            border-color: rgba(255,255,255,0.05);
+        }
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+        .price-card.featured {
+            border: 2px solid var(--accent);
+            transform: scale(1.02);
+        }
+        .price-card.featured:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+        .price-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+        .price-header-card {
+            background: var(--gradient-primary);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+        .price-header-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-top: 0.5rem;
+        }
+        .price-amount small {
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+        .price-features {
+            padding: 1.5rem;
+            list-style: none;
+        }
+        .price-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .price-features li i {
+            color: var(--accent);
+            font-size: 1rem;
+        }
+        .price-btn {
+            display: block;
+            text-align: center;
+            padding: 0.8rem;
+            margin: 0 1.5rem 1.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+        .price-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(42,45,124,0.3);
+        }
+
+        /* ============================================
+           CAMPAIGN GRID
+           ============================================ */
+        .campaign-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .campaign-card {
+            background: var(--card-bg-light);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        .campaign-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid rgba(78,205,196,0.2);
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        body.dark-mode .card-title {
+            color: var(--accent);
+        }
+        .campaign-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .campaign-table th,
+        .campaign-table td {
+            padding: 0.8rem 0;
+            text-align: right;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        body.dark-mode .campaign-table th,
+        body.dark-mode .campaign-table td {
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 3px;
+        }
+        .channel-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .channel-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .channel-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .channel-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(78,205,196,0.1), rgba(255,107,107,0.1));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .channel-icon i {
+            font-size: 1.3rem;
+            color: var(--accent);
+        }
+        .channel-name {
+            font-weight: 600;
+        }
+        .channel-number {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        body.dark-mode .channel-number {
+            color: var(--accent);
+        }
+        .chart-container {
+            height: 250px;
+            margin-top: 1rem;
+        }
+        .upcoming-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .campaign-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .campaign-badge.pending {
+            background: rgba(243,156,18,0.1);
+            color: #F39C12;
+        }
+
+        /* ============================================
+           CTA SECTION
+           ============================================ */
+        .cta-section {
+            background: var(--gradient-secondary);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .cta-section h2 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        .cta-section p {
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .cta-btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .cta-btn.primary {
+            background: white;
+            color: var(--primary);
+        }
+        .cta-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .cta-btn.secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        .cta-btn.secondary:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* ============================================
+           THEME TOGGLE
+           ============================================ */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 992px) {
+            .campaign-grid {
+                grid-template-columns: 1fr;
+            }
+            .price-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .project-header h1 {
+                font-size: 1.8rem;
+            }
+            .stats-grid {
+                margin-top: -1rem;
+            }
+            .price-grid {
+                grid-template-columns: 1fr;
+            }
+            .price-card.featured {
+                transform: scale(1);
+            }
+            .price-card.featured:hover {
+                transform: translateY(-10px);
+            }
+            .cta-section h2 {
+                font-size: 1.5rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .cta-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="../../portfolio.html" class="back-link" data-aos="fade-right">
+        <i class="fas fa-arrow-right"></i> العودة إلى معرض الأعمال
+    </a>
+
+    <!-- Header Section -->
+    <div class="project-header" data-aos="fade-up">
+        <div class="hero-badge">
+            <i class="fas fa-chart-line"></i>
+            <span>حملة تسويقية متكاملة</span>
+        </div>
+        <h1>حملة التسويق الرقمي</h1>
+        <p>لوحة تحكم متكاملة لإدارة الحملات وتحليل الأداء مع أفضل الأسعار التنافسية</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid" data-aos="fade-up">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="stat-number" id="impressionsCount">1.2M</div>
+            <div class="stat-label">مرات الظهور</div>
+            <div class="stat-change positive"><i class="fas fa-arrow-up"></i> +12.5%</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-mouse-pointer"></i></div>
+            <div class="stat-number" id="clicksCount">45.2K</div>
+            <div class="stat-label">النقرات</div>
+            <div class="stat-change positive"><i class="fas fa-arrow-up"></i> +8.2%</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-chart-simple"></i></div>
+            <div class="stat-number">3.8<span style="font-size:1rem;">%</span></div>
+            <div class="stat-label">نسبة التحويل</div>
+            <div class="stat-change positive"><i class="fas fa-arrow-up"></i> +3.1%</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+            <div class="stat-number" id="revenueCount">$28.5K</div>
+            <div class="stat-label">الإيرادات المحققة</div>
+            <div class="stat-change positive"><i class="fas fa-arrow-up"></i> +15.3%</div>
+        </div>
+    </div>
+
+    <!-- Price Section - الأسعار القابلة للتعديل -->
+    <div class="price-section" data-aos="fade-up">
+        <div class="price-header">
+            <h2>باقات التسويق الرقمي</h2>
+            <p>اختر الباقة المناسبة لاحتياجاتك واستهدف جمهورك بدقة</p>
+        </div>
+        <div class="price-grid">
+            <!-- الباقة الأساسية -->
+            <div class="price-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="price-header-card" style="background: linear-gradient(135deg, #2A2D7C, #3d41a0);">
+                    <h3>الباقة الأساسية</h3>
+                    <div class="price-amount">$299 <small>/شهرياً</small></div>
+                </div>
+                <ul class="price-features">
+                    <li><i class="fas fa-check-circle"></i> إنشاء وإدارة 3 حملات إعلانية</li>
+                    <li><i class="fas fa-check-circle"></i> استهداف جمهور يصل إلى 50,000</li>
+                    <li><i class="fas fa-check-circle"></i> تقارير أداء أسبوعية</li>
+                    <li><i class="fas fa-check-circle"></i> تحليل المنافسين الأساسي</li>
+                    <li><i class="fas fa-times-circle" style="color: #FF6B6B;"></i> دعم مباشر</li>
+                </ul>
+                <a href="../../contact.html" class="price-btn">اختر الباقة <i class="fas fa-arrow-left"></i></a>
+            </div>
+
+            <!-- الباقة المتقدمة (المميزة) -->
+            <div class="price-card featured" data-aos="fade-up" data-aos-delay="200">
+                <div class="price-badge"><i class="fas fa-star"></i> الأكثر طلباً</div>
+                <div class="price-header-card" style="background: linear-gradient(135deg, #FF6B6B, #4ECDC4);">
+                    <h3>الباقة المتقدمة</h3>
+                    <div class="price-amount">$599 <small>/شهرياً</small></div>
+                </div>
+                <ul class="price-features">
+                    <li><i class="fas fa-check-circle"></i> إنشاء وإدارة 10 حملات إعلانية</li>
+                    <li><i class="fas fa-check-circle"></i> استهداف جمهور غير محدود</li>
+                    <li><i class="fas fa-check-circle"></i> تقارير أداء يومية وتحليلات متقدمة</li>
+                    <li><i class="fas fa-check-circle"></i> تحليل المنافسين الكامل</li>
+                    <li><i class="fas fa-check-circle"></i> دعم مباشر 24/7</li>
+                </ul>
+                <a href="../../contact.html" class="price-btn">اختر الباقة <i class="fas fa-arrow-left"></i></a>
+            </div>
+
+            <!-- الباقة الاحترافية -->
+            <div class="price-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="price-header-card" style="background: linear-gradient(135deg, #4ECDC4, #3bb3ab);">
+                    <h3>الباقة الاحترافية</h3>
+                    <div class="price-amount">$999 <small>/شهرياً</small></div>
+                </div>
+                <ul class="price-features">
+                    <li><i class="fas fa-check-circle"></i> حملات غير محدودة</li>
+                    <li><i class="fas fa-check-circle"></i> استهداف متقدم وتجزئة الجمهور</li>
+                    <li><i class="fas fa-check-circle"></i> لوحة تحكم مخصصة</li>
+                    <li><i class="fas fa-check-circle"></i> فريق تسويق مخصص لحملتك</li>
+                    <li><i class="fas fa-check-circle"></i> استشارات أسبوعية مباشرة</li>
+                </ul>
+                <a href="../../contact.html" class="price-btn">اختر الباقة <i class="fas fa-arrow-left"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Campaign Analytics Grid -->
+    <div class="campaign-grid">
+        <div class="campaign-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-bullhorn"></i> الحملات النشطة</h3>
+                <a href="#" style="color: var(--accent); font-size: 0.85rem;">إدارة <i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="campaign-table">
+                    <thead>
+                        <tr><th>اسم الحملة</th><th>الميزانية</th><th>الإنفاق</th><th>المتبقي</th><th>الأداء</th></tr>
+                    </thead>
+                    <tbody id="campaignsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="campaign-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-chart-pie"></i> توزيع الميزانية</h3>
+            </div>
+            <div class="chart-container">
+                <canvas id="budgetChart"></canvas>
+            </div>
+            <div class="card-header" style="margin-top: 1.5rem;">
+                <h3 class="card-title"><i class="fab fa-facebook"></i> أداء قنوات التواصل</h3>
+            </div>
+            <div class="channel-list" id="channelsList"></div>
+        </div>
+
+        <div class="campaign-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-chart-line"></i> أداء الحملات الأسبوعي</h3>
+            </div>
+            <div class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </div>
+
+        <div class="campaign-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-calendar-week"></i> الحملات القادمة</h3>
+                <a href="#" style="color: var(--accent); font-size: 0.85rem;">إنشاء <i class="fas fa-plus"></i></a>
+            </div>
+            <div id="upcomingCampaigns"></div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section" data-aos="fade-up">
+        <h2>هل أنت مستعد لبدء حملتك؟</h2>
+        <p>دعنا نساعدك في الوصول إلى جمهورك المستهدف وتحقيق أهدافك التسويقية</p>
+        <div class="cta-buttons">
+            <a href="../../contact.html" class="cta-btn primary"><i class="fas fa-rocket"></i> اطلب استشارة مجانية</a>
+            <a href="../../portfolio.html" class="cta-btn secondary"><i class="fas fa-briefcase"></i> شاهد أعمالنا</a>
+        </div>
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true, offset: 100 });
+
+        // Dark Mode Toggle
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('#themeToggle i').classList.remove('fa-moon');
+            document.querySelector('#themeToggle i').classList.add('fa-sun');
+        }
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('#themeToggle i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Campaigns Data
+        const campaigns = [
+            { name: "إعلانات جوجل", budget: 5000, spent: 3200, left: 1800, progress: 64 },
+            { name: "فيسبوك ميديا", budget: 8000, spent: 4500, left: 3500, progress: 56 },
+            { name: "إنستغرام ستوريز", budget: 3000, spent: 2100, left: 900, progress: 70 },
+            { name: "تويتر إعلانات", budget: 2000, spent: 800, left: 1200, progress: 40 }
+        ];
+
+        const tbody = document.getElementById('campaignsTable');
+        campaigns.forEach(c => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${c.name}</td>
+                    <td>$${c.budget}</td>
+                    <td>$${c.spent}</td>
+                    <td>$${c.left}</td>
+                    <td>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${c.progress}%"></div>
+                        </div>
+                        <span style="font-size: 0.7rem;">${c.progress}%</span>
+                    </td>
+                </tr>
+            `;
+        });
+
+        // Budget Chart (Doughnut)
+        new Chart(document.getElementById("budgetChart"), {
+            type: "doughnut",
+            data: {
+                labels: campaigns.map(c => c.name),
+                datasets: [{
+                    data: campaigns.map(c => c.budget),
+                    backgroundColor: ["#2A2D7C", "#4ECDC4", "#FF6B6B", "#F39C12"],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { position: "bottom", labels: { font: { family: "Tajawal", size: 11 } } }
+                }
+            }
+        });
+
+        // Performance Chart (Line)
+        new Chart(document.getElementById("performanceChart"), {
+            type: "line",
+            data: {
+                labels: ["أسبوع 1", "أسبوع 2", "أسبوع 3", "أسبوع 4"],
+                datasets: [
+                    { label: "نسبة النقر (CTR%)", data: [2.5, 3.1, 3.8, 4.2], borderColor: "#4ECDC4", tension: 0.4, fill: false },
+                    { label: "نسبة التحويل (CR%)", data: [1.2, 1.5, 1.9, 2.3], borderColor: "#2A2D7C", tension: 0.4, fill: false }
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+
+        // Channels Data
+        const channels = [
+            { name: "فيسبوك", icon: "fab fa-facebook-f", reach: "124K", engagement: "8.2%" },
+            { name: "إنستغرام", icon: "fab fa-instagram", reach: "89K", engagement: "12.5%" },
+            { name: "تويتر", icon: "fab fa-twitter", reach: "45K", engagement: "5.3%" },
+            { name: "لينكد إن", icon: "fab fa-linkedin-in", reach: "32K", engagement: "3.8%" }
+        ];
+
+        const channelsDiv = document.getElementById("channelsList");
+        channels.forEach(ch => {
+            channelsDiv.innerHTML += `
+                <div class="channel-item">
+                    <div class="channel-info">
+                        <div class="channel-icon"><i class="${ch.icon}"></i></div>
+                        <div>
+                            <div class="channel-name">${ch.name}</div>
+                            <div style="font-size: 0.7rem; color: var(--text-muted);">الوصول: ${ch.reach}</div>
+                        </div>
+                    </div>
+                    <div class="channel-stats">
+                        <div class="channel-number">${ch.engagement}</div>
+                        <div style="font-size: 0.7rem;">مشاركة</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Upcoming Campaigns
+        const upcoming = [
+            "حملة العودة للمدارس - 15 سبتمبر",
+            "حملة الجمعة البيضاء - 25 نوفمبر",
+            "حملة رأس السنة - 30 ديسمبر"
+        ];
+        const upcomingDiv = document.getElementById("upcomingCampaigns");
+        upcoming.forEach(u => {
+            upcomingDiv.innerHTML += `
+                <div class="upcoming-item">
+                    <span><i class="fas fa-calendar-alt"></i> ${u}</span>
+                    <span class="campaign-badge pending">قادمة</span>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

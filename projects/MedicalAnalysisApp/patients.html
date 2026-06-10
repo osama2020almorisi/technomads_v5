@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="patients_title">إدارة المرضى - Pulse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/patients.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- شريط الهواتف العلوي -->
+        <div class="mobile-header">
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="mobile-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Pulse</span>
+            </div>
+            <div class="mobile-actions">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span class="logo-text">Pulse</span>
+                </div>
+                <button class="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="sidebar_dashboard">لوحة التحكم</span>
+                </a>
+                <a href="patients.html" class="nav-item active">
+                    <i class="fas fa-user-injured"></i>
+                    <span data-i18n="sidebar_patients">إدارة المرضى</span>
+                </a>
+                <a href="analysis.html" class="nav-item">
+                    <i class="fas fa-vial"></i>
+                    <span data-i18n="sidebar_analysis">تحليل التحاليل</span>
+                    <span class="badge new-tests">0</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span data-i18n="sidebar_reports">التقارير</span>
+                </a>
+                <a href="notifications.html" class="nav-item">
+                    <i class="fas fa-bell"></i>
+                    <span data-i18n="sidebar_notifications">التنبيهات</span>
+                    <span class="badge new-notifications">0</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span data-i18n="sidebar_settings">الإعدادات</span>
+                </a>
+            </nav>
+
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="user-display-name">د. أحمد محمد</span>
+                        <span class="user-role" id="user-specialty">طبيب استشاري</span>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span data-i18n="sidebar_logout">تسجيل الخروج</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- الغطاء للهواتف -->
+        <div class="sidebar-overlay"></div>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط العنوان -->
+            <header class="content-header">
+                <div class="header-title">
+                    <h1 data-i18n="patients_title">إدارة المرضى</h1>
+                    <p data-i18n="patients_subtitle">إدارة سجلات المرضى والبيانات الطبية</p>
+                </div>
+                <div class="header-actions">
+                    <div class="language-switcher">
+                        <button class="lang-btn" id="langToggle">
+                            <i class="fas fa-globe"></i>
+                            <span data-i18n="nav_language">English</span>
+                        </button>
+                    </div>
+                    <button class="btn-primary" onclick="patientsManager.showPatientModal()">
+                        <i class="fas fa-user-plus"></i>
+                        <span data-i18n="add_patient_button">إضافة مريض جديد</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- أدوات البحث والتصفية -->
+            <section class="tools-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="patient-search" data-i18n-ph="search_patients_placeholder" placeholder="ابحث بالاسم أو الرقم الطبي...">
+                        <button class="search-clear" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="filter-actions">
+                    <div class="filter-group">
+                        <label for="gender-filter" data-i18n="filter_gender_label">التصنيف:</label>
+                        <select id="gender-filter">
+                            <option value="" data-i18n="filter_all_patients">جميع المرضى</option>
+                            <option value="ذكر" data-i18n="filter_male">ذكور فقط</option>
+                            <option value="أنثى" data-i18n="filter_female">إناث فقط</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="sort-by" data-i18n="sort_by_label">الترتيب:</label>
+                        <select id="sort-by">
+                            <option value="newest" data-i18n="sort_newest">الأحدث أولاً</option>
+                            <option value="oldest" data-i18n="sort_oldest">الأقدم أولاً</option>
+                            <option value="name" data-i18n="sort_name">حسب الاسم</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-secondary" id="export-btn">
+                        <i class="fas fa-download"></i>
+                        <span data-i18n="export_data_button">تصدير البيانات</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- إحصائيات المرضى -->
+            <section class="patients-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="total-patients-count">0</div>
+                    <div class="stat-label" data-i18n="stat_total_patients">إجمالي المرضى</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="male-patients-count">0</div>
+                    <div class="stat-label" data-i18n="stat_male_patients">مرضى ذكور</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="female-patients-count">0</div>
+                    <div class="stat-label" data-i18n="stat_female_patients">مرضى إناث</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="recent-patients-count">0</div>
+                    <div class="stat-label" data-i18n="stat_this_month">مضافين هذا الشهر</div>
+                </div>
+            </section>
+
+            <!-- قائمة المرضى -->
+            <section class="patients-section">
+                <div class="section-header">
+                    <h2 data-i18n="patients_list_title">قائمة المرضى</h2>
+                    <div class="view-actions">
+                        <button class="view-btn active" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="patients-container grid-view" id="patients-container">
+                    <!-- سيتم ملؤها بالبيانات الحقيقية -->
+                    <div class="empty-state">
+                        <i class="fas fa-user-plus"></i>
+                        <h3 data-i18n="no_patients_title">لا يوجد مرضى مسجلين بعد</h3>
+                        <p data-i18n="no_patients_description">ابدأ بإضافة أول مريض إلى النظام</p>
+                        <button class="btn-primary" onclick="patientsManager.showPatientModal()" data-i18n="add_first_patient">إضافة أول مريض</button>
+                    </div>
+                </div>
+
+                <!-- تذييل التصفح -->
+                <div class="pagination-footer" style="display: none;">
+                    <div class="pagination-info">
+                        <span data-i18n="showing_patients">عرض</span>
+                        <span id="current-count">0</span>
+                        <span data-i18n="of_patients">من</span>
+                        <span id="total-count">0</span>
+                        <span data-i18n="patient">مريض</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prev-btn" disabled>
+                            <i class="fas fa-chevron-right"></i>
+                            <span data-i18n="pagination_previous">السابق</span>
+                        </button>
+                        <div class="page-numbers">
+                            <span class="page-number active">1</span>
+                        </div>
+                        <button class="pagination-btn" id="next-btn">
+                            <span data-i18n="pagination_next">التالي</span>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- نموذج إضافة/تعديل المريض -->
+    <div id="patientModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="patient-modal-title" data-i18n="add_patient_modal_title">إضافة مريض جديد</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="patientForm">
+                    <input type="hidden" id="patient-id">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patient-name" data-i18n="patient_name_label">الاسم الكامل *</label>
+                            <input type="text" id="patient-name" required data-i18n-ph="patient_name_placeholder">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-medical-id" data-i18n="medical_id_label">الرقم الطبي *</label>
+                            <input type="text" id="patient-medical-id" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patient-gender" data-i18n="gender_label">الجنس *</label>
+                            <select id="patient-gender" required>
+                                <option value="" data-i18n="select_gender">اختر الجنس</option>
+                                <option value="ذكر" data-i18n="gender_male">ذكر</option>
+                                <option value="أنثى" data-i18n="gender_female">أنثى</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-birthdate" data-i18n="birthdate_label">تاريخ الميلاد *</label>
+                            <input type="date" id="patient-birthdate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patient-email" data-i18n="email_label">البريد الإلكتروني</label>
+                            <input type="email" id="patient-email" data-i18n-ph="email_placeholder">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-phone" data-i18n="phone_label">رقم الهاتف</label>
+                            <input type="tel" id="patient-phone" data-i18n-ph="phone_placeholder">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patient-height" data-i18n="height_label">الطول (سم)</label>
+                            <input type="number" id="patient-height" min="100" max="250" data-i18n-ph="height_placeholder">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-weight" data-i18n="weight_label">الوزن (كجم)</label>
+                            <input type="number" id="patient-weight" min="20" max="300" data-i18n-ph="weight_placeholder">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-blood-type" data-i18n="blood_type_label">فصيلة الدم</label>
+                            <select id="patient-blood-type">
+                                <option value="" data-i18n="select_blood_type">اختر فصيلة الدم</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-address" data-i18n="address_label">العنوان</label>
+                        <textarea id="patient-address" rows="3" data-i18n-ph="address_placeholder"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-notes" data-i18n="medical_notes_label">ملاحظات طبية</label>
+                        <textarea id="patient-notes" rows="4" data-i18n-ph="medical_notes_placeholder" placeholder="أي معلومات طبية إضافية..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary close-modal" data-i18n="cancel_button">إلغاء</button>
+                        <button type="submit" class="btn-primary">
+                            <span id="submit-btn-text" data-i18n="add_patient_button">إضافة المريض</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- نموذج تأكيد الحذف -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3 data-i18n="delete_modal_title">تأكيد الحذف</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="delete-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p data-i18n="delete_confirmation_message">هل أنت متأكد من رغبتك في حذف هذا المريض؟</p>
+                    <p class="warning-text" data-i18n="delete_warning_message">سيتم حذف جميع البيانات المرتبطة بهذا المريض ولا يمكن التراجع عن هذه العملية.</p>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary close-modal" data-i18n="cancel_button">إلغاء</button>
+                    <button type="button" class="btn-danger" id="confirm-delete" data-i18n="delete_patient_button">حذف المريض</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/language.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/patients.js"></script>
+</body>
+</html>

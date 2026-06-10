@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Treemix Pro | إدارة أوامر تريمكس</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+      color: #1e293b;
+      padding: 20px;
+      transition: all 0.3s ease;
+      min-height: 100vh;
+    }
+
+    body.dark {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #e2e8f0;
+    }
+
+    .app {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* هيدر بخلفية صورة وتأثير زجاجي */
+    .header {
+      position: relative;
+      border-radius: 32px;
+      margin-bottom: 28px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* صورة الخلفية للهيدر */
+    .header-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /*
+      background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop');
+      */
+      background-image: url('@9o__sa.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    /* طبقة شفافة فوق الصورة */
+    .header-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 1;
+    }
+
+    body.dark .header-overlay {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(3px);
+    }
+
+    /* محتوى الهيدر */
+    .header-content {
+      position: relative;
+      z-index: 2;
+      padding: 20px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #e0e7ff, #c7d2fe);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .logo p {
+      font-size: 0.75rem;
+      color: #e2e8f0;
+      margin-top: 4px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    body.dark .logo p {
+      color: #cbd5e1;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-wrapper i {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+    }
+
+    .search-wrapper input {
+      padding: 10px 40px 10px 16px;
+      border-radius: 60px;
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      width: 240px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    body.dark .search-wrapper input {
+      background: rgba(30, 41, 59, 0.9);
+      color: #e2e8f0;
+    }
+
+    .search-wrapper input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #3b82f6;
+      width: 280px;
+      background: white;
+    }
+
+    body.dark .search-wrapper input:focus {
+      background: #334155;
+    }
+
+    select, button {
+      padding: 8px 18px;
+      border-radius: 60px;
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      font-family: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+
+    body.dark select, body.dark button {
+      background: rgba(30, 41, 59, 0.9);
+      color: #e2e8f0;
+    }
+
+    button:hover, select:hover {
+      transform: scale(0.96);
+      background: white;
+    }
+
+    body.dark button:hover, body.dark select:hover {
+      background: #334155;
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+    }
+
+    button.primary:hover {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      transform: scale(0.96);
+    }
+
+    .fav-active {
+      background: #f59e0b;
+      color: #1e293b;
+    }
+
+    /* قسم الأدوات */
+    .main-layout {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    /* الشريط الجانبي */
+    .tools-panel {
+      flex: 1;
+      min-width: 250px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 28px;
+      padding: 20px;
+      height: fit-content;
+      box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    body.dark .tools-panel {
+      background: rgba(30, 41, 59, 0.9);
+    }
+
+    .tools-panel h3 {
+      margin-bottom: 18px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* بطاقة الأداة */
+    .tool-card-item {
+      background: #f8fafc;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* الأداة الأولى مميزة */
+    .tool-card-item.special-tool {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: #e2e8f0;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+    }
+
+    .tool-card-item.special-tool::before {
+      content: "📖";
+      position: absolute;
+      left: -20px;
+      top: -10px;
+      font-size: 60px;
+      opacity: 0.1;
+      transform: rotate(-15deg);
+      pointer-events: none;
+    }
+
+    body.dark .tool-card-item.special-tool {
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      color: white;
+    }
+
+    body.dark .tool-card-item {
+      background: #0f172a;
+    }
+
+    .tool-card-item.active {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .tool-card-item .tool-count {
+      background: #e2e8f0;
+      padding: 2px 10px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+
+    body.dark .tool-card-item .tool-count {
+      background: #334155;
+    }
+
+    .tool-card-item.active .tool-count {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    /* منطقة الأوامر */
+    .commands-panel {
+      flex: 3;
+      min-width: 280px;
+    }
+
+    .commands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 22px;
+    }
+
+    /* بطاقة الأمر */
+    .cmd-card {
+      background: white;
+      border-radius: 24px;
+      padding: 18px;
+      transition: all 0.25s;
+      border: 1px solid #eef2ff;
+      box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.05);
+    }
+
+    body.dark .cmd-card {
+      background: #1e293b;
+      border-color: #334155;
+    }
+
+    .cmd-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+    }
+
+    .cmd-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .cmd-name {
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .difficulty-badge {
+      background: #e2e8f0;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+
+    .difficulty-easy { background: #10b981; color: white; }
+    .difficulty-medium { background: #f59e0b; color: white; }
+    .difficulty-hard { background: #ef4444; color: white; }
+
+    .cmd-desc {
+      font-size: 0.85rem;
+      color: #475569;
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+
+    body.dark .cmd-desc {
+      color: #cbd5e1;
+    }
+
+    .syntax-area {
+      background: #f1f5f9;
+      padding: 12px;
+      border-radius: 18px;
+      font-family: monospace;
+      font-size: 0.7rem;
+      direction: ltr;
+      text-align: left;
+      margin-bottom: 14px;
+      word-break: break-all;
+      transition: 0.1s;
+      cursor: pointer;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+
+    body.dark .syntax-area {
+      background: #0f172a;
+    }
+
+    .syntax-area.copied {
+      background: #bbf7d0;
+      color: #166534;
+    }
+
+    body.dark .syntax-area.copied {
+      background: #14532d;
+      color: #bbf7d0;
+    }
+
+    .cmd-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .copy-btn {
+      background: #3b82f6;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+    }
+
+    .fav-btn {
+      background: transparent;
+      font-size: 1.3rem;
+      padding: 4px 10px;
+    }
+
+    .usage {
+      font-size: 0.7rem;
+      color: #64748b;
+    }
+
+    /* توست */
+    .toast-msg {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-size: 0.9rem;
+      z-index: 1000;
+      opacity: 0;
+      transition: 0.2s;
+      pointer-events: none;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    /* متجاوب */
+    @media (max-width: 700px) {
+      body { padding: 12px; }
+      .header-content { flex-direction: column; align-items: stretch; }
+      .search-wrapper input { width: 100%; }
+      .search-wrapper input:focus { width: 100%; }
+      .controls { justify-content: center; }
+      .commands-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="header-bg"></div>
+    <div class="header-overlay"></div>
+    <div class="header-content">
+      <div class="logo">
+        <h1><i class="fa-solid fa-terminal"></i> Treemix Pro</h1>
+        <p>إدارة أوامر تريمكس بكل سلاسة</p>
+      </div>
+      <div class="controls">
+        <div class="search-wrapper">
+          <i class="fa-solid fa-search"></i>
+          <input type="text" id="searchInput" placeholder="ابحث في الأدوات أو الأوامر...">
+        </div>
+        <select id="difficultySelect">
+          <option value="">🎯 كل المستويات</option>
+          <option value="مبتدئ">🌱 مبتدئ</option>
+          <option value="متوسط">⚡ متوسط</option>
+          <option value="متقدم">🔥 متقدم</option>
+        </select>
+        <button id="favToggleBtn"><i class="fa-regular fa-star"></i> المفضلة</button>
+        <button id="darkToggleBtn"><i class="fa-solid fa-moon"></i></button>
+        <button id="adminEnterBtn" class="primary"><i class="fa-solid fa-lock"></i> أدمن</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <div class="tools-panel">
+      <h3><i class="fa-solid fa-cubes"></i> الأدوات</h3>
+      <div id="toolsContainer"></div>
+    </div>
+    <div class="commands-panel">
+      <div id="commandsContainer" class="commands-grid"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toastEl" class="toast-msg"></div>
+
+<script>
+  let tools = [];
+  let favorites = new Set();
+  let currentToolId = null;
+  let favOnly = false;
+
+  function loadAllData() {
+    const stored = localStorage.getItem('treemix_pro_tools');
+    if(stored) {
+      tools = JSON.parse(stored);
+    } else {
+      tools = [];
+    }
+    const favs = localStorage.getItem('treemix_pro_favs');
+    if(favs) favorites = new Set(JSON.parse(favs));
+    const dark = localStorage.getItem('treemix_pro_dark');
+    if(dark === 'true') document.body.classList.add('dark');
+    if(tools.length) currentToolId = tools[0].id;
+  }
+
+  function saveTools() { localStorage.setItem('treemix_pro_tools', JSON.stringify(tools)); }
+  function saveFavs() { localStorage.setItem('treemix_pro_favs', JSON.stringify([...favorites])); }
+
+  function showToast(msg, isError = false) {
+    const t = document.getElementById('toastEl');
+    t.innerText = msg;
+    t.style.background = isError ? '#ef4444' : '#1e293b';
+    t.style.opacity = '1';
+    setTimeout(() => t.style.opacity = '0', 2000);
+  }
+
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); }
+
+  function renderToolsSidebar() {
+    const container = document.getElementById('toolsContainer');
+    if(!container) return;
+    container.innerHTML = '';
+    if(tools.length === 0) {
+      container.innerHTML = '<p style="color:gray;">✨ لا توجد أدوات، استورد من الأدمن</p>';
+      return;
+    }
+    tools.forEach((tool, index) => {
+      const div = document.createElement('div');
+      let specialClass = '';
+      if(tool.name.includes('دليل Termux') || tool.name.includes('تعليمي') || index === 0) {
+        specialClass = 'special-tool';
+      }
+      div.className = `tool-card-item ${specialClass} ${currentToolId === tool.id ? 'active' : ''}`;
+      div.innerHTML = `<span><i class="fa-regular fa-folder"></i> ${escapeHtml(tool.name)}</span><span class="tool-count">${tool.commands.length}</span>`;
+      div.onclick = () => { currentToolId = tool.id; renderToolsSidebar(); renderCommands(); };
+      container.appendChild(div);
+    });
+  }
+
+  function renderCommands() {
+    const container = document.getElementById('commandsContainer');
+    if(!container) return;
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const diff = document.getElementById('difficultySelect').value;
+
+    let results = [];
+
+    if(searchTerm === '') {
+      if(!currentToolId && tools.length) currentToolId = tools[0].id;
+      const tool = tools.find(t => t.id === currentToolId);
+      if(!tool) { container.innerHTML = '<p>✨ اختر أداة من القائمة</p>'; return; }
+      let cmds = [...tool.commands];
+      if(favOnly) cmds = cmds.filter(c => favorites.has(c.id));
+      if(diff) cmds = cmds.filter(c => c.difficulty === diff);
+      cmds.forEach(c => results.push({ toolName: tool.name, cmd: c }));
+    } else {
+      tools.forEach(tool => {
+        const toolMatch = tool.name.toLowerCase().includes(searchTerm);
+        tool.commands.forEach(cmd => {
+          const cmdMatch = cmd.name.toLowerCase().includes(searchTerm) ||
+                           (cmd.description && cmd.description.toLowerCase().includes(searchTerm)) ||
+                           cmd.syntax.toLowerCase().includes(searchTerm);
+          const passDiff = !diff || cmd.difficulty === diff;
+          const passFav = !favOnly || favorites.has(cmd.id);
+          if((toolMatch || cmdMatch) && passDiff && passFav) {
+            results.push({ toolName: tool.name, cmd: cmd });
+          }
+        });
+      });
+    }
+
+    if(results.length === 0) { container.innerHTML = '<p style="text-align:center;">✨ لا توجد نتائج</p>'; return; }
+
+    container.innerHTML = '';
+    results.forEach(({ toolName, cmd }) => {
+      const isFav = favorites.has(cmd.id);
+      const card = document.createElement('div');
+      card.className = 'cmd-card';
+      let diffClass = '';
+      if(cmd.difficulty === 'مبتدئ') diffClass = 'difficulty-easy';
+      else if(cmd.difficulty === 'متوسط') diffClass = 'difficulty-medium';
+      else if(cmd.difficulty === 'متقدم') diffClass = 'difficulty-hard';
+      card.innerHTML = `
+        <div class="cmd-header">
+          <span class="cmd-name">${escapeHtml(cmd.name)}</span>
+          <div style="display:flex; gap:6px;">
+            <span class="difficulty-badge ${diffClass}">${escapeHtml(cmd.difficulty)}</span>
+            <span class="difficulty-badge" style="background:#8b5cf6;">${escapeHtml(toolName)}</span>
+          </div>
+        </div>
+        <div class="cmd-desc">${escapeHtml(cmd.description || 'لا يوجد وصف')}</div>
+        <div class="syntax-area" id="syntax-${cmd.id}">${escapeHtml(cmd.syntax)}</div>
+        <div class="cmd-footer">
+          <button class="copy-btn" data-id="${cmd.id}" data-toolname="${escapeHtml(toolName)}"><i class="fa-regular fa-copy"></i> نسخ</button>
+          <button class="fav-btn" data-id="${cmd.id}"><i class="fa-${isFav ? 'solid' : 'regular'} fa-star"></i></button>
+          <span class="usage"><i class="fa-regular fa-eye"></i> ${cmd.usageCount || 0}</span>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const cmdId = btn.getAttribute('data-id');
+        let foundCmd = null;
+        for(const tool of tools) {
+          const c = tool.commands.find(cmd => cmd.id === cmdId);
+          if(c) { foundCmd = c; break; }
+        }
+        if(foundCmd) {
+          await navigator.clipboard.writeText(foundCmd.syntax);
+          foundCmd.usageCount = (foundCmd.usageCount || 0) + 1;
+          saveTools();
+          const syntaxDiv = document.getElementById(`syntax-${cmdId}`);
+          if(syntaxDiv) {
+            syntaxDiv.classList.add('copied');
+            setTimeout(() => syntaxDiv.classList.remove('copied'), 400);
+          }
+          showToast(`✅ تم نسخ: ${foundCmd.name}`);
+          renderCommands();
+        }
+      });
+    });
+
+    document.querySelectorAll('.fav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cmdId = btn.getAttribute('data-id');
+        if(favorites.has(cmdId)) favorites.delete(cmdId);
+        else favorites.add(cmdId);
+        saveFavs();
+        renderCommands();
+        showToast(favorites.has(cmdId) ? '⭐ أُضيف للمفضلة' : '🗑️ أُزيل من المفضلة');
+      });
+    });
+  }
+
+  document.getElementById('darkToggleBtn')?.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('treemix_pro_dark', document.body.classList.contains('dark'));
+  });
+  const favBtn = document.getElementById('favToggleBtn');
+  favBtn?.addEventListener('click', () => {
+    favOnly = !favOnly;
+    favBtn.classList.toggle('fav-active', favOnly);
+    renderCommands();
+  });
+  document.getElementById('searchInput')?.addEventListener('input', () => renderCommands());
+  document.getElementById('difficultySelect')?.addEventListener('change', () => renderCommands());
+  document.getElementById('adminEnterBtn')?.addEventListener('click', () => {
+    const pwd = prompt('🔐 كلمة مرور الأدمن:');
+    if(pwd === 'admin123') window.location.href = 'admin.html';
+    else showToast('❌ كلمة مرور خاطئة', true);
+  });
+
+  loadAllData();
+  renderToolsSidebar();
+  renderCommands();
+</script>
+</body>
+</html>

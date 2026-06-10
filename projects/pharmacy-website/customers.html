@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>العملاء | نظام إدارة الصيدلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-prescription-bottle-medical"></i>
+                    <span>صيدليتي</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i><span>لوحة التحكم</span></a></li>
+                    <li><a href="medicines.html"><i class="fas fa-pills"></i><span>الأدوية</span></a></li>
+                    <li><a href="sales.html"><i class="fas fa-cash-register"></i><span>المبيعات</span></a></li>
+                    <li><a href="customers.html" class="active"><i class="fas fa-users"></i><span>العملاء</span></a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck"></i><span>الموردين</span></a></li>
+                    <li><a href="purchases.html"><i class="fas fa-shopping-cart"></i><span>المشتريات</span></a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i><span>التقارير</span></a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a></li>
+                    <li><a href="profile.html"><i class="fas fa-user-circle"></i><span>الملف الشخصي</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <div class="user-name"></div>
+                        <div class="user-role"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="page-title">
+                    <h1>العملاء</h1>
+                    <p>إدارة بيانات العملاء</p>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" id="theme-toggle" title="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="header-btn" onclick="logout()" title="تسجيل الخروج">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- Search and Add -->
+                <div class="search-filters">
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" id="searchCustomer" placeholder="البحث باسم العميل أو الهاتف...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('addCustomerModal')" style="width: auto;">
+                        <i class="fas fa-plus"></i> إضافة عميل
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportCustomers()" style="width: auto;">
+                        <i class="fas fa-file-export"></i> تصدير
+                    </button>
+                </div>
+
+                <!-- Customers Table -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-users"></i> قائمة العملاء</h3>
+                        <span id="customerCount" style="color: var(--text-muted); font-size: 0.85rem;"></span>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="customersTable">
+                            <thead>
+                                <tr><th>الاسم</th><th>الهاتف</th><th>البريد الإلكتروني</th><th>العنوان</th><th>عدد المشتريات</th><th>إجمالي المشتريات</th><th>الإجراءات</th></tr>
+                            </thead>
+                            <tbody id="customersBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Customer Modal -->
+    <div class="modal-overlay" id="addCustomerModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-user-plus"></i> إضافة عميل جديد</h3>
+                <button class="modal-close" onclick="closeModal('addCustomerModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="addCustomerForm">
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">الاسم *</label><input type="text" class="form-input" name="name" required></div>
+                        <div class="form-group"><label class="form-label">رقم الهاتف</label><input type="tel" class="form-input" name="phone" placeholder="مثال: 771234567"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">البريد الإلكتروني</label><input type="email" class="form-input" name="email" placeholder="example@mail.com"></div>
+                        <div class="form-group"><label class="form-label">العنوان</label><input type="text" class="form-input" name="address" placeholder="المدينة، المنطقة"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addCustomerModal')">إلغاء</button>
+                <button class="btn btn-primary" onclick="saveCustomer()"><i class="fas fa-save"></i> حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Details Modal -->
+    <div class="modal-overlay" id="customerDetailsModal">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-chart-line"></i> تقرير مشتريات العميل</h3>
+                <button class="modal-close" onclick="closeModal('customerDetailsModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="customerDetailsContent"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('customerDetailsModal')">إغلاق</button>
+                <button class="btn btn-primary" onclick="printCustomerReport()"><i class="fas fa-print"></i> طباعة</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        let currentCustomers = [];
+
+        function loadCustomers() {
+            currentCustomers = getAllCustomers();
+            renderCustomers(currentCustomers);
+            document.getElementById('customerCount').innerHTML = `إجمالي: ${currentCustomers.length} عميل`;
+        }
+
+        function renderCustomers(customers) {
+            const sales = getAllSales();
+            const tbody = document.getElementById('customersBody');
+            tbody.innerHTML = customers.map(c => {
+                const customerSales = sales.filter(s => s.customerId === c.id);
+                const totalSpent = customerSales.reduce((sum, s) => sum + s.grandTotal, 0);
+                const purchaseCount = customerSales.length;
+                return `<tr>
+                    <td><strong>${c.name}</strong></td>
+                    <td>${c.phone || '-'}</td>
+                    <td>${c.email || '-'}</td>
+                    <td>${c.address || '-'}</td>
+                    <td><span class="badge badge-info">${purchaseCount} فاتورة</span></td>
+                    <td><strong style="color: var(--primary);">${formatCurrency(totalSpent)}</strong></td>
+                    <td><div class="action-btns">
+                        <button class="action-btn view" onclick="viewCustomerDetails(${c.id})" title="تقرير المشتريات"><i class="fas fa-chart-line"></i></button>
+                        <button class="action-btn delete" onclick="deleteCustomer(${c.id})" title="حذف"><i class="fas fa-trash"></i></button>
+                    </div></td>
+                </tr>`;
+            }).join('');
+        }
+
+        function saveCustomer() {
+            const form = document.getElementById('addCustomerForm');
+            const formData = new FormData(form);
+            const customer = {
+                id: getNextId('customer'),
+                name: formData.get('name'),
+                phone: formData.get('phone') || '',
+                email: formData.get('email') || '',
+                address: formData.get('address') || ''
+            };
+            if (!customer.name) { showNotification('يرجى إدخال اسم العميل', 'error'); return; }
+            const customers = getAllCustomers();
+            customers.push(customer);
+            Storage.set('customers', customers);
+            showNotification('تم إضافة العميل بنجاح', 'success');
+            closeModal('addCustomerModal');
+            form.reset();
+            loadCustomers();
+        }
+
+        function deleteCustomer(id) {
+            confirmDialog('هل أنت متأكد من حذف هذا العميل؟', () => {
+                deleteCustomer(id);
+                showNotification('تم حذف العميل بنجاح', 'success');
+                loadCustomers();
+            });
+        }
+
+        function viewCustomerDetails(customerId) {
+            const customer = getCustomerById(customerId);
+            if (!customer) return;
+            const sales = getAllSales();
+            const saleItems = Storage.get('saleItems') || [];
+            const medicines = getAllMedicines();
+            const customerSales = sales.filter(s => s.customerId === customerId);
+            const totalSpent = customerSales.reduce((sum, s) => sum + s.grandTotal, 0);
+            const totalDiscount = customerSales.reduce((sum, s) => sum + s.discount, 0);
+            
+            // Get purchased medicines
+            const purchasedMedicines = {};
+            customerSales.forEach(sale => {
+                const items = saleItems.filter(si => si.saleId === sale.id);
+                items.forEach(item => {
+                    const med = medicines.find(m => m.id === item.medicineId);
+                    if (med) {
+                        if (!purchasedMedicines[med.id]) purchasedMedicines[med.id] = { name: med.name, quantity: 0, total: 0 };
+                        purchasedMedicines[med.id].quantity += item.quantity;
+                        purchasedMedicines[med.id].total += item.total;
+                    }
+                });
+            });
+            
+            const medicinesHTML = Object.values(purchasedMedicines).map(m => 
+                `<tr><td><strong>${m.name}</strong></td><td>${m.quantity}</td><td>${formatCurrency(m.total)}</td></tr>`
+            ).join('');
+            
+            document.getElementById('customerDetailsContent').innerHTML = `
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--primary);">${customer.name}</h3>
+                    <p><i class="fas fa-phone"></i> ${customer.phone || 'لا يوجد'}</p>
+                    <p><i class="fas fa-envelope"></i> ${customer.email || 'لا يوجد'}</p>
+                    <p><i class="fas fa-map-marker-alt"></i> ${customer.address || 'لا يوجد'}</p>
+                </div>
+                <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 1.5rem;">
+                    <div class="stat-card" style="padding: 1rem;"><div class="stat-value" style="font-size: 1.3rem;">${customerSales.length}</div><div class="stat-label">عدد الفواتير</div></div>
+                    <div class="stat-card" style="padding: 1rem;"><div class="stat-value" style="font-size: 1.3rem;">${formatCurrency(totalSpent)}</div><div class="stat-label">إجمالي المشتريات</div></div>
+                    <div class="stat-card" style="padding: 1rem;"><div class="stat-value" style="font-size: 1.3rem;">${formatCurrency(totalDiscount)}</div><div class="stat-label">إجمالي الخصومات</div></div>
+                </div>
+                <h4 style="margin: 1rem 0;"><i class="fas fa-pills"></i> الأدوية المشتراة</h4>
+                <div class="table-container"><table class="data-table"><thead><tr><th>الدواء</th><th>الكمية</th><th>الإجمالي</th></tr></thead><tbody>${medicinesHTML || '<tr><td colspan="3" style="text-align: center;">لا توجد مشتريات</td></tr>'}</tbody></table></div>
+            `;
+            openModal('customerDetailsModal');
+        }
+
+        function exportCustomers() {
+            const customers = getAllCustomers();
+            const sales = getAllSales();
+            const exportData = customers.map(c => {
+                const customerSales = sales.filter(s => s.customerId === c.id);
+                const totalSpent = customerSales.reduce((sum, s) => sum + s.grandTotal, 0);
+                return { name: c.name, phone: c.phone, email: c.email, address: c.address, total_purchases: totalSpent, invoices_count: customerSales.length };
+            });
+            exportToCSV(exportData, 'customers_report.csv');
+        }
+
+        function printCustomerReport() {
+            const content = document.getElementById('customerDetailsContent').innerHTML;
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html dir="rtl">
+                <head><meta charset="UTF-8"><title>تقرير العميل</title>
+                <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+                <style>body{font-family:'Tajawal',sans-serif;padding:20px;}table{width:100%;border-collapse:collapse;}th,td{padding:8px;border:1px solid #ddd;text-align:right;}</style>
+                </head><body>${content}</body></html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        document.getElementById('searchCustomer').addEventListener('input', function() {
+            const term = this.value.toLowerCase();
+            const filtered = currentCustomers.filter(c => c.name.toLowerCase().includes(term) || (c.phone && c.phone.includes(term)));
+            renderCustomers(filtered);
+        });
+
+        document.addEventListener('DOMContentLoaded', loadCustomers);
+    </script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التنبيهات - Pulse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/notifications.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- شريط الهواتف العلوي -->
+        <div class="mobile-header">
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="mobile-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Pulse</span>
+            </div>
+            <div class="mobile-actions">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span class="logo-text">Pulse</span>
+                </div>
+                <button class="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>لوحة التحكم</span>
+                </a>
+                <a href="patients.html" class="nav-item">
+                    <i class="fas fa-user-injured"></i>
+                    <span>إدارة المرضى</span>
+                </a>
+                <a href="analysis.html" class="nav-item">
+                    <i class="fas fa-vial"></i>
+                    <span>تحليل التحاليل</span>
+                    <span class="badge new-tests">0</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>التقارير</span>
+                </a>
+                <a href="notifications.html" class="nav-item active">
+                    <i class="fas fa-bell"></i>
+                    <span>التنبيهات</span>
+                    <span class="badge new-notifications">0</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+            </nav>
+
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name">د. أحمد محمد</span>
+                        <span class="user-role">طبيب استشاري</span>
+                    </div>
+                </div>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- الغطاء للهواتف -->
+        <div class="sidebar-overlay"></div>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط العنوان -->
+            <header class="content-header">
+                <div class="header-title">
+                    <h1>التنبيهات والإشعارات</h1>
+                    <p>إدارة جميع الإشعارات والتنبيهات في نظامك</p>
+                </div>
+                <div class="header-actions">
+                    <div class="language-switcher">
+                        <button class="lang-btn">
+                            <i class="fas fa-globe"></i>
+                            <span>English</span>
+                        </button>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-secondary" onclick="notificationsManager.markAllAsRead()">
+                            <i class="fas fa-check-double"></i>
+                            تعليم الكل كمقروء
+                        </button>
+                        <button class="btn-danger" onclick="notificationsManager.clearAll()">
+                            <i class="fas fa-trash"></i>
+                            حذف الكل
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- إحصائيات سريعة -->
+            <section class="notifications-stats">
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-notifications">0</h3>
+                        <p>إجمالي الإشعارات</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="unread-notifications">0</h3>
+                        <p>غير مقروء</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon danger">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="critical-notifications">0</h3>
+                        <p>حرجة</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon success">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="today-notifications">0</h3>
+                        <p>اليوم</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- أدوات التصفية -->
+            <section class="filters-section">
+                <div class="filter-group">
+                    <label for="status-filter">الحالة:</label>
+                    <select id="status-filter">
+                        <option value="all">جميع الإشعارات</option>
+                        <option value="unread">غير مقروء فقط</option>
+                        <option value="read">مقروء فقط</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="type-filter">النوع:</label>
+                    <select id="type-filter">
+                        <option value="all">جميع الأنواع</option>
+                        <option value="critical">حرجة</option>
+                        <option value="warning">تحذير</option>
+                        <option value="info">معلومات</option>
+                        <option value="success">نجاح</option>
+                        <option value="reminder">تذكير</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="date-filter">الفترة:</label>
+                    <select id="date-filter">
+                        <option value="all">جميع الفترات</option>
+                        <option value="today">اليوم</option>
+                        <option value="week">أسبوع</option>
+                        <option value="month">شهر</option>
+                    </select>
+                </div>
+
+                <div class="filter-actions">
+                    <button class="btn-secondary" onclick="notificationsManager.applyFilters()">
+                        <i class="fas fa-filter"></i>
+                        تطبيق التصفية
+                    </button>
+                    <button class="btn-secondary" onclick="notificationsManager.resetFilters()">
+                        <i class="fas fa-redo"></i>
+                        إعادة التعيين
+                    </button>
+                </div>
+            </section>
+
+            <!-- قائمة الإشعارات -->
+            <section class="notifications-section">
+                <div class="section-header">
+                    <h2>الإشعارات</h2>
+                    <div class="view-actions">
+                        <button class="view-btn active" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                        <button class="view-btn" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="notifications-container" id="notifications-container">
+                    <!-- سيتم ملؤها بالبيانات الحقيقية -->
+                    <div class="empty-state">
+                        <i class="fas fa-bell-slash"></i>
+                        <h3>لا توجد إشعارات</h3>
+                        <p>ستظهر هنا جميع الإشعارات والتنبيهات الخاصة بنظامك</p>
+                    </div>
+                </div>
+
+                <!-- تذييل التصفح -->
+                <div class="pagination-footer" style="display: none;">
+                    <div class="pagination-info">
+                        عرض <span id="current-count">0</span> من <span id="total-count">0</span> إشعار
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prev-btn" disabled>
+                            <i class="fas fa-chevron-right"></i>
+                            السابق
+                        </button>
+                        <div class="page-numbers">
+                            <span class="page-number active">1</span>
+                        </div>
+                        <button class="pagination-btn" id="next-btn">
+                            التالي
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- نموذج إعدادات الإشعارات -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>إعدادات الإشعارات</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-tabs">
+                    <button class="tab-btn active" data-tab="preferences">التفضيلات</button>
+                    <button class="tab-btn" data-tab="channels">قنوات الإرسال</button>
+                    <button class="tab-btn" data-tab="quiet-hours">ساعات الهدوء</button>
+                </div>
+
+                <div class="tab-content">
+                    <div id="preferences-tab" class="tab-pane active">
+                        <div class="preferences-grid">
+                            <div class="preference-category">
+                                <h4><i class="fas fa-user-injured"></i> إشعارات المرضى</h4>
+                                <div class="preference-item">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="pref-new-patient" checked>
+                                        <span class="checkmark"></span>
+                                        مرضى جدد
+                                    </label>
+                                    <small>إشعار عند إضافة مريض جديد</small>
+                                </div>
+                                <div class="preference-item">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="pref-patient-update" checked>
+                                        <span class="checkmark"></span>
+                                        تحديث بيانات المرضى
+                                    </label>
+                                    <small>إشعار عند تعديل بيانات المريض</small>
+                                </div>
+                            </div>
+
+                            <div class="preference-category">
+                                <h4><i class="fas fa-vial"></i> إشعارات التحاليل</h4>
+                                <div class="preference-item">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="pref-new-test" checked>
+                                        <span class="checkmark"></span>
+                                        تحاليل جديدة
+                                    </label>
+                                    <small>إشعار عند إضافة تحليل جديد</small>
+                                </div>
+                                <div class="preference-item">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="pref-critical-results" checked>
+                                        <span class="checkmark"></span>
+                                        نتائج حرجة
+                                    </label>
+                                    <small>إشعار فوري عند ظهور نتائج حرجة</small>
+                                </div>
+                                <div class="preference-item">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="pref-test-reminder">
+                                        <span class="checkmark"></span>
+                                        تذكير بالمواعيد
+                                    </label>
+                                    <small>تذكير بمواعيد التحاليل الدورية</small>
+                                </div>
+                            </div>
+
+                            <div class="preference-category">
+                                <h4><i class="fas fa-chart-line"></i> إشعارات النظام</h4>
+                                <div class="preference-item">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="pref-system-updates" checked>
+                                        <span class="checkmark"></span>
+                                        تحديثات النظام
+                                    </label>
+                                    <small>إشعار بالتحديثات والميزات الجديدة</small>
+                                </div>
+                                <div class="preference-item">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="pref-backup-reminder">
+                                        <span class="checkmark"></span>
+                                        تذكير النسخ الاحتياطي
+                                    </label>
+                                    <small>تذكير أسبوعي بعمل نسخة احتياطية</small>
+                                </div>
+                                <div class="preference-item">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="pref-security-alerts" checked>
+                                        <span class="checkmark"></span>
+                                        تنبيهات الأمان
+                                    </label>
+                                    <small>إشعار بمحاولات الدخول المشبوهة</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="channels-tab" class="tab-pane">
+                        <div class="channels-grid">
+                            <div class="channel-card">
+                                <div class="channel-header">
+                                    <i class="fas fa-envelope"></i>
+                                    <h4>البريد الإلكتروني</h4>
+                                </div>
+                                <div class="channel-body">
+                                    <p>إرسال الإشعارات إلى بريدك الإلكتروني</p>
+                                    <div class="channel-status">
+                                        <span class="status-badge active">مفعل</span>
+                                        <span class="email-address">ahmed@hospital.com</span>
+                                    </div>
+                                </div>
+                                <div class="channel-actions">
+                                    <button class="btn-secondary">تغيير</button>
+                                </div>
+                            </div>
+
+                            <div class="channel-card">
+                                <div class="channel-header">
+                                    <i class="fas fa-desktop"></i>
+                                    <h4>متصفح الويب</h4>
+                                </div>
+                                <div class="channel-body">
+                                    <p>عرض الإشعارات في متصفح الويب</p>
+                                    <div class="channel-status">
+                                        <span class="status-badge active">مفعل</span>
+                                    </div>
+                                </div>
+                                <div class="channel-actions">
+                                    <button class="btn-secondary">إختبار</button>
+                                </div>
+                            </div>
+
+                            <div class="channel-card">
+                                <div class="channel-header">
+                                    <i class="fas fa-sms"></i>
+                                    <h4>رسائل SMS</h4>
+                                </div>
+                                <div class="channel-body">
+                                    <p>إرسال رسائل نصية للتنبيهات المهمة</p>
+                                    <div class="channel-status">
+                                        <span class="status-badge inactive">غير مفعل</span>
+                                    </div>
+                                </div>
+                                <div class="channel-actions">
+                                    <button class="btn-primary">تفعيل</button>
+                                </div>
+                            </div>
+
+                            <div class="channel-card">
+                                <div class="channel-header">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <h4>إشعارات الهاتف</h4>
+                                </div>
+                                <div class="channel-body">
+                                    <p>إشعارات push notification للتطبيق</p>
+                                    <div class="channel-status">
+                                        <span class="status-badge inactive">غير مفعل</span>
+                                    </div>
+                                </div>
+                                <div class="channel-actions">
+                                    <button class="btn-primary">تفعيل</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="quiet-hours-tab" class="tab-pane">
+                        <div class="quiet-hours-settings">
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="quiet-hours-enabled">
+                                    <span class="checkmark"></span>
+                                    تفعيل ساعات الهدوء
+                                </label>
+                                <small>تعطيل الإشعارات غير الضرورية خلال أوقات محددة</small>
+                            </div>
+
+                            <div class="time-range">
+                                <div class="form-group">
+                                    <label for="quiet-start">من</label>
+                                    <input type="time" id="quiet-start" value="22:00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="quiet-end">إلى</label>
+                                    <input type="time" id="quiet-end" value="07:00">
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="quiet-critical" checked>
+                                    <span class="checkmark"></span>
+                                    استثناء الإشعارات الحرجة
+                                </label>
+                                <small>استمرار إرسال الإشعارات الحرجة خلال ساعات الهدوء</small>
+                            </div>
+
+                            <div class="days-selector">
+                                <label>أيام التطبيق:</label>
+                                <div class="days-grid">
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" checked> الأحد
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" checked> الإثنين
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" checked> الثلاثاء
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" checked> الأربعاء
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" checked> الخميس
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" checked> الجمعة
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" checked> السبت
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary close-modal">إلغاء</button>
+                    <button type="button" class="btn-primary" onclick="notificationsManager.saveSettings()">
+                        <i class="fas fa-save"></i>
+                        حفظ الإعدادات
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نموذج تفاصيل الإشعار -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content medium">
+            <div class="modal-header">
+                <h3 id="notification-title">تفاصيل الإشعار</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="notification-detail" id="notification-detail">
+                    <!-- سيتم ملؤها ديناميكياً -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/notifications.js"></script>
+</body>
+</html>

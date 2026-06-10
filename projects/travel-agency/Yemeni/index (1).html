@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متطلبات السفر - الخطوط الجوية اليمنية</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌍 متطلبات السفر الدولي</h1>
+            <p>الخطوط الجوية اليمنية - تأكد من متطلبات سفرك قبل المغادرة</p>
+        </header>
+
+        <div class="search-section">
+            <div class="form-group">
+                <label for="nationality">الجنسية:</label>
+                <select id="nationality">
+                    <option value="">-- اختر الجنسية --</option>
+                    <option value="يمني">يمني</option>
+                    <option value="سعودي">سعودي</option>
+                    <option value="أردني">أردني</option>
+                    <option value="مصري">مصري</option>
+                    <option value="سوداني">سوداني</option>
+                    <option value="سوري">سوري</option>
+                    <option value="إماراتي">إماراتي</option>
+                    <option value="كويتي">كويتي</option>
+                    <option value="هندي">هندي</option>
+                    <option value="ماليزي">ماليزي</option>
+                    <option value="إثيوبي">إثيوبي</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destination">الوجهة:</label>
+                <select id="destination">
+                    <option value="">-- اختر الوجهة --</option>
+                    <!-- الدول ستأتي تلقائياً من ملف JSON -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="city">المدينة:</label>
+                <select id="city">
+                    <option value="">-- اختر المدينة --</option>
+                    <!-- المدن ستأتي تلقائياً من ملف JSON -->
+                </select>
+            </div>
+
+            <button id="searchBtn">ابحث عن المتطلبات</button>
+        </div>
+
+        <div id="results" class="results-section" style="display: none;">
+            <div class="requirements-card">
+                <!-- المحتوى سيأتي تلقائياً من ملف JSON -->
+            </div>
+        </div>
+
+        <div id="generalInfo" class="general-info">
+            <h2>📜 التعليمات العامة</h2>
+            <div id="generalInstructions"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

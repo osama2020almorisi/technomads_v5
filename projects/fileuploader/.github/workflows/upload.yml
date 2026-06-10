@@ -1,0 +1,32 @@
+# GitHub Actions workflow for file upload
+name: Process File Uploads
+
+on:
+  repository_dispatch:
+    types: [file_upload_request]
+
+jobs:
+  handle_upload:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Create target directory
+      run: |
+        mkdir -p ${{ github.event.client_payload.files[0].path || 'uploads' }}
+        
+    - name: Save uploaded files
+      env:
+        FILES_JSON: ${{ toJson(github.event.client_payload.files) }}
+      run: |
+        echo "$FILES_JSON" > files.json
+        jq -r '.[] | "echo \(.content) | base64 -d > \(.path)/\(.name)"' files.json | bash
+        
+    - name: Commit changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add .
+        git commit -m "رفع ملفات جديدة إلى ${{ github.event.client_payload.files[0].path || 'uploads' }} [skip ci]"
+        git push

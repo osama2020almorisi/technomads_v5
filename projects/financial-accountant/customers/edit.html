@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعديل العميل - المحاسب المالي</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/modules.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* تحسينات التنسيق الإضافية */
+        .customer-info-card {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .customer-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .customer-balance {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        
+        .balance-positive {
+            color: var(--success-color);
+        }
+        
+        .balance-negative {
+            color: var(--danger-color);
+        }
+        
+        .balance-zero {
+            color: var(--gray-color);
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .customer-info-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="فتح أو إغلاق القائمة الجانبية" aria-expanded="false" aria-controls="mainSidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="شعار المحاسب المالي" id="headerLogo" onerror="handleLogoError(this)">
+                <span>المحاسب المالي</span>
+            </div>
+
+            <div class="header-actions">
+                <div class="user-menu">
+                    <div class="user-avatar" id="userAvatar" role="img" aria-label="صورة المستخدم"></div>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle" aria-label="قائمة المستخدم" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <a href="#" class="dropdown-item" onclick="logout()" role="menuitem">
+                                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar" id="mainSidebar">
+        <nav class="sidebar-nav" aria-label="القائمة الرئيسية">
+            <ul>
+                <li class="nav-item">
+                    <a href="../dashboard.html">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../invoices/list.html">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>الفواتير</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="list.html" aria-current="page">
+                        <i class="fas fa-users"></i>
+                        <span>العملاء</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../products/list.html">
+                        <i class="fas fa-box"></i>
+                        <span>المنتجات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../expenses/list.html">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>المصروفات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../reports/financial.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>التقارير</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../settings/company.html">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <div class="page-header">
+            <h1>تعديل العميل</h1>
+            <div class="header-actions">
+                <a href="list.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-right"></i> رجوع
+                </a>
+            </div>
+        </div>
+
+        <!-- Customer Info Card -->
+        <div class="customer-info-card" id="customerInfoCard" style="display: none;">
+            <div class="customer-info-header">
+                <h3 id="customerNameTitle">معلومات العميل</h3>
+                <div class="customer-balance" id="customerBalanceDisplay"></div>
+            </div>
+            <div class="customer-info-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">رقم العميل:</span>
+                        <span class="info-value" id="customerIdDisplay"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">تاريخ الإضافة:</span>
+                        <span class="info-value" id="customerCreatedAtDisplay"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">آخر تحديث:</span>
+                        <span class="info-value" id="customerUpdatedAtDisplay"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Form -->
+        <form class="module-form" id="customerForm" novalidate>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">اسم العميل *</label>
+                    <input type="text" id="name" name="name" required aria-describedby="nameHelp">
+                    <small id="nameHelp" class="form-help">الاسم الكامل للعميل كما سيظهر في الفواتير</small>
+                    <div class="invalid-feedback" id="nameError">يرجى إدخال اسم العميل</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" aria-describedby="emailHelp">
+                    <small id="emailHelp" class="form-help">البريد الإلكتروني للتواصل مع العميل</small>
+                    <div class="invalid-feedback" id="emailError">صيغة البريد الإلكتروني غير صحيحة</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">رقم الهاتف</label>
+                    <input type="tel" id="phone" name="phone" pattern="[0-9+()-]*" aria-describedby="phoneHelp">
+                    <small id="phoneHelp" class="form-help">رقم الهاتف بالصيغة الدولية أو المحلية</small>
+                    <div class="invalid-feedback" id="phoneError">صيغة رقم الهاتف غير صحيحة</div>
+                </div>
+                <div class="form-group">
+                    <label for="taxNumber">الرقم الضريبي</label>
+                    <input type="text" id="taxNumber" name="taxNumber" pattern="[0-9]*" aria-describedby="taxNumberHelp">
+                    <small id="taxNumberHelp" class="form-help">الرقم الضريبي المسجل للعميل (إن وجد)</small>
+                    <div class="invalid-feedback" id="taxNumberError">يجب أن يحتوي الرقم الضريبي على أرقام فقط</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="address">العنوان</label>
+                    <textarea id="address" name="address" rows="3" aria-describedby="addressHelp"></textarea>
+                    <small id="addressHelp" class="form-help">العنوان الكامل للعميل</small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="isActive">حالة العميل</label>
+                    <select id="isActive" name="isActive" aria-describedby="statusHelp">
+                        <option value="true">نشط</option>
+                        <option value="false">غير نشط</option>
+                    </select>
+                    <small id="statusHelp" class="form-help">حالة العميل في النظام</small>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='list.html'">
+                    إلغاء
+                </button>
+                <button type="submit" class="btn btn-primary" id="saveButton">
+                    <i class="fas fa-save"></i> حفظ التعديلات
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        // ===== Authentication Functions =====
+        function isLoggedIn() {
+            return getCurrentUser() !== null;
+        }
+
+        function getCurrentUser() {
+            try {
+                return JSON.parse(localStorage.getItem('financial_app_current_user')) || null;
+            } catch (error) {
+                console.error('خطأ في تحميل بيانات المستخدم:', error);
+                return null;
+            }
+        }
+
+        function logout() {
+            if (confirm('هل تريد تسجيل الخروج؟')) {
+                localStorage.removeItem('financial_app_current_user');
+                window.location.href = '../index.html';
+            }
+        }
+
+        // ===== Alert Function =====
+        function showAlert(type, message, duration = 5000) {
+            // Remove any existing alerts
+            const existingAlert = document.querySelector('.alert');
+            if (existingAlert) {
+                existingAlert.remove();
+            }
+            
+            // Create alert element
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.setAttribute('role', 'alert');
+            alert.setAttribute('aria-live', 'assertive');
+            alert.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" aria-label="إغلاق التنبيه">×</button>
+            `;
+            
+            // Add styles if not already added
+            if (!document.querySelector('#alert-styles')) {
+                const styles = document.createElement('style');
+                styles.id = 'alert-styles';
+                styles.textContent = `
+                    .alert {
+                        position: fixed;
+                        top: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        padding: 12px 20px;
+                        border-radius: 8px;
+                        color: white;
+                        font-weight: 500;
+                        z-index: 1000;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        min-width: 300px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                        animation: slideDown 0.3s ease;
+                    }
+                    
+                    .alert-success { background-color: #28a745; }
+                    .alert-error { background-color: #dc3545; }
+                    .alert-warning { background-color: #ffc107; color: #000; }
+                    
+                    .alert button {
+                        background: none;
+                        border: none;
+                        color: inherit;
+                        font-size: 18px;
+                        cursor: pointer;
+                        margin-right: 10px;
+                    }
+                    
+                    @keyframes slideDown {
+                        from { transform: translate(-50%, -100%); opacity: 0; }
+                        to { transform: translate(-50%, 0); opacity: 1; }
+                    }
+                    
+                    @media (max-width: 480px) {
+                        .alert {
+                            min-width: auto;
+                            left: 20px;
+                            right: 20px;
+                            transform: none;
+                        }
+                    }
+                `;
+                document.head.appendChild(styles);
+            }
+            
+            document.body.appendChild(alert);
+            
+            // Auto remove after duration
+            setTimeout(() => {
+                if (alert.parentElement) {
+                    alert.remove();
+                }
+            }, duration);
+        }
+
+        // ===== User Data Functions =====
+        function loadUserData() {
+            const user = getCurrentUser();
+            if (!user) return;
+            
+            // Create user avatar
+            const userAvatarElement = document.getElementById('userAvatar');
+            if (userAvatarElement) {
+                const initials = getUserInitials(user.fullName);
+                const randomColor = getRandomColor();
+                
+                userAvatarElement.innerHTML = initials;
+                userAvatarElement.style.backgroundColor = randomColor;
+                userAvatarElement.style.display = 'flex';
+                userAvatarElement.style.alignItems = 'center';
+                userAvatarElement.style.justifyContent = 'center';
+                userAvatarElement.style.color = 'white';
+                userAvatarElement.style.fontWeight = '600';
+                userAvatarElement.style.borderRadius = '50%';
+                userAvatarElement.style.width = '40px';
+                userAvatarElement.style.height = '40px';
+            }
+        }
+
+        function getUserInitials(name) {
+            if (!name) return 'U';
+            return name.split(' ').map(word => word[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        function getRandomColor() {
+            const colors = [
+                '#3366cc', '#dc3545', '#28a745', '#ffc107', 
+                '#17a2b8', '#6f42c1', '#fd7e14', '#20c997'
+            ];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // ===== Storage Functions =====
+        function initializeStorage() {
+            // Check if storage is already initialized
+            const isInitialized = localStorage.getItem('financial_app_initialized');
+            
+            if (!isInitialized) {
+                try {
+                    if (!localStorage.getItem('financial_app_users')) {
+                        localStorage.setItem('financial_app_users', JSON.stringify([]));
+                    }
+                    
+                    if (!localStorage.getItem('financial_app_customers')) {
+                        localStorage.setItem('financial_app_customers', JSON.stringify([]));
+                    }
+                    
+                    if (!localStorage.getItem('financial_app_products')) {
+                        localStorage.setItem('financial_app_products', JSON.stringify([]));
+                    }
+                    
+                    if (!localStorage.getItem('financial_app_invoices')) {
+                        localStorage.setItem('financial_app_invoices', JSON.stringify([]));
+                    }
+                    
+                    if (!localStorage.getItem('financial_app_expenses')) {
+                        localStorage.setItem('financial_app_expenses', JSON.stringify([]));
+                    }
+                    
+                    if (!localStorage.getItem('financial_app_settings')) {
+                        localStorage.setItem('financial_app_settings', JSON.stringify({
+                            currency: 'ريال يمني',
+                            currency_code: 'ر.ي',
+                            tax_rate: 15,
+                            company_name: 'شركتي',
+                            company_logo: '',
+                            company_tax_number: '',
+                            company_address: '',
+                            company_phone: '',
+                            company_email: '',
+                            invoice_prefix: 'INV-',
+                            language: 'ar'
+                        }));
+                    }
+                    
+                    localStorage.setItem('financial_app_initialized', 'true');
+                } catch (error) {
+                    console.error('خطأ في تهيئة التخزين المحلي:', error);
+                    showAlert('error', 'حدث خطأ في تهيئة النظام. يرجى تحديث الصفحة.');
+                }
+            }
+        }
+
+        function getData(key) {
+            try {
+                const itemName = `financial_app_${key}`;
+                const data = localStorage.getItem(itemName);
+                
+                if (!data) {
+                    console.warn(`البيانات لـ ${itemName} غير موجودة`);
+                    return key === 'settings' ? {} : [];
+                }
+                
+                return JSON.parse(data);
+                
+            } catch (error) {
+                console.error(`خطأ في تحميل البيانات لـ ${key}:`, error);
+                showAlert('error', `خطأ في تحميل البيانات لـ ${key}`);
+                return key === 'settings' ? {} : [];
+            }
+        }
+
+        function saveData(key, data) {
+            try {
+                localStorage.setItem(`financial_app_${key}`, JSON.stringify(data));
+                return true;
+            } catch (error) {
+                console.error(`خطأ في حفظ البيانات لـ ${key}:`, error);
+                showAlert('error', `خطأ في حفظ البيانات لـ ${key}`);
+                return false;
+            }
+        }
+
+        // ===== Settings Functions =====
+        function getSettings() {
+            const settings = getData('settings');
+            return {
+                currency: 'ريال يمني',
+                currency_code: 'ر.ي',
+                tax_rate: 15,
+                company_name: 'شركتي',
+                company_logo: '',
+                company_tax_number: '',
+                company_address: '',
+                company_phone: '',
+                company_email: '',
+                invoice_prefix: 'INV-',
+                language: 'ar',
+                ...settings
+            };
+        }
+
+        function getCurrencySymbol() {
+            const settings = getSettings();
+            return settings.currency_code || 'ر.ي';
+        }
+
+        function formatCurrency(amount) {
+            const symbol = getCurrencySymbol();
+            
+            // تنسيق الرقم مع فواصل الآلاف
+            const formattedAmount = parseFloat(amount || 0).toLocaleString('ar-EG');
+            
+            return `${formattedAmount} ${symbol}`;
+        }
+
+        // ===== Logo Functions =====
+        function handleLogoError(img) {
+            img.onerror = null;
+            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg�IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzMzNjZjYyIgLz48dGV4dCB4PSI5MCUiIHk9IjUwJSIgZHk9Ii4zNWVmIiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiPuetlDwvdGV4dD48L3N2Zz4=';
+        }
+
+        // ===== Customer Functions =====
+        let currentCustomer = null;
+
+        function loadCustomerData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const customerId = parseInt(urlParams.get('id'));
+            
+            if (!customerId) {
+                showAlert('error', 'معرف العميل غير صحيح');
+                setTimeout(() => window.location.href = 'list.html', 2000);
+                return null;
+            }
+            
+            const customers = getData('customers');
+            const customer = customers.find(c => c.id === customerId);
+            
+            if (!customer) {
+                showAlert('error', 'العميل غير موجود');
+                setTimeout(() => window.location.href = 'list.html', 2000);
+                return null;
+            }
+            
+            return customer;
+        }
+
+        function loadCustomerForEdit() {
+            const customer = loadCustomerData();
+            if (!customer) return;
+            
+            currentCustomer = customer;
+            
+            // Fill form with customer data
+            document.getElementById('name').value = customer.name || '';
+            document.getElementById('email').value = customer.email || '';
+            document.getElementById('phone').value = customer.phone || '';
+            document.getElementById('taxNumber').value = customer.taxNumber || '';
+            document.getElementById('address').value = customer.address || '';
+            document.getElementById('isActive').value = customer.isActive !== false ? 'true' : 'false';
+            
+            // Update customer info card
+            updateCustomerInfoCard(customer);
+        }
+
+        function updateCustomerInfoCard(customer) {
+            const card = document.getElementById('customerInfoCard');
+            const nameTitle = document.getElementById('customerNameTitle');
+            const balanceDisplay = document.getElementById('customerBalanceDisplay');
+            const idDisplay = document.getElementById('customerIdDisplay');
+            const createdAtDisplay = document.getElementById('customerCreatedAtDisplay');
+            const updatedAtDisplay = document.getElementById('customerUpdatedAtDisplay');
+            
+            if (card && customer) {
+                card.style.display = 'block';
+                nameTitle.textContent = `تعديل العميل: ${customer.name || 'غير محدد'}`;
+                
+                // تحديد لون الرصيد
+                let balanceClass = 'balance-zero';
+                if (customer.balance > 0) balanceClass = 'balance-positive';
+                if (customer.balance < 0) balanceClass = 'balance-negative';
+                
+                balanceDisplay.innerHTML = `<span class="${balanceClass}">الرصيد: ${formatCurrency(customer.balance || 0)}</span>`;
+                idDisplay.textContent = `#${customer.id}`;
+                createdAtDisplay.textContent = formatDate(customer.createdAt);
+                updatedAtDisplay.textContent = formatDate(customer.updatedAt || customer.createdAt);
+            }
+        }
+
+        function validateCustomerForm() {
+            let isValid = true;
+            const form = document.getElementById('customerForm');
+            
+            // اسم العميل (مطلوب)
+            const name = document.getElementById('name');
+            if (!name.value.trim()) {
+                showFieldError(name, 'يرجى إدخال اسم العميل');
+                isValid = false;
+            } else {
+                clearFieldError(name);
+            }
+            
+            // البريد الإلكتروني (صيغة صحيحة)
+            const email = document.getElementById('email');
+            if (email.value && !isValidEmail(email.value)) {
+                showFieldError(email, 'صيغة البريد الإلكتروني غير صحيحة');
+                isValid = false;
+            } else {
+                clearFieldError(email);
+            }
+            
+            // الهاتف (صيغة صحيحة)
+            const phone = document.getElementById('phone');
+            if (phone.value && !/^[0-9+()-\s]*$/.test(phone.value)) {
+                showFieldError(phone, 'صيغة رقم الهاتف غير صحيحة');
+                isValid = false;
+            } else {
+                clearFieldError(phone);
+            }
+            
+            // الرقم الضريبي (أرقام فقط)
+            const taxNumber = document.getElementById('taxNumber');
+            if (taxNumber.value && !/^\d*$/.test(taxNumber.value)) {
+                showFieldError(taxNumber, 'يجب أن يحتوي الرقم الضريبي على أرقام فقط');
+                isValid = false;
+            } else {
+                clearFieldError(taxNumber);
+            }
+            
+            return isValid;
+        }
+
+        function showFieldError(field, message) {
+            field.classList.add('is-invalid');
+            const errorElement = document.getElementById(field.id + 'Error');
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+            field.setAttribute('aria-invalid', 'true');
+        }
+
+        function clearFieldError(field) {
+            field.classList.remove('is-invalid');
+            const errorElement = document.getElementById(field.id + 'Error');
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+            field.setAttribute('aria-invalid', 'false');
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function updateCustomerForm(event) {
+            if (event) event.preventDefault();
+            
+            if (!validateCustomerForm()) {
+                showAlert('error', 'يرجى تصحيح الأخطاء في النموذج');
+                return;
+            }
+            
+            if (!currentCustomer) {
+                showAlert('error', 'لم يتم تحميل بيانات العميل');
+                return;
+            }
+            
+            // تعطيل زر الحفظ أثناء المعالجة
+            const saveButton = document.getElementById('saveButton');
+            saveButton.disabled = true;
+            saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+            
+            const formData = {
+                id: currentCustomer.id,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                taxNumber: document.getElementById('taxNumber').value,
+                address: document.getElementById('address').value,
+                isActive: document.getElementById('isActive').value === 'true',
+                balance: currentCustomer.balance || 0,
+                createdAt: currentCustomer.createdAt,
+                updatedAt: new Date().toISOString()
+            };
+            
+            // محاكاة عملية غير متزامنة
+            setTimeout(() => {
+                saveCustomer(formData, true);
+                
+                // إعادة تمكين زر الحفظ
+                saveButton.disabled = false;
+                saveButton.innerHTML = '<i class="fas fa-save"></i> حفظ التعديلات';
+            }, 1000);
+        }
+
+        function saveCustomer(customerData, isEdit = false) {
+            const customers = getData('customers');
+            
+            if (isEdit) {
+                // Update existing customer
+                const index = customers.findIndex(c => c.id === customerData.id);
+                if (index !== -1) {
+                    customers[index] = {
+                        ...customers[index],
+                        ...customerData
+                    };
+                    
+                    if (saveData('customers', customers)) {
+                        showAlert('success', 'تم تحديث العميل بنجاح');
+                        
+                        setTimeout(() => {
+                            window.location.href = 'list.html';
+                        }, 1500);
+                    } else {
+                        showAlert('error', 'حدث خطأ أثناء حفظ التعديلات');
+                    }
+                } else {
+                    showAlert('error', 'العميل غير موجود في النظام');
+                }
+            }
+        }
+
+        // ===== Helper Functions =====
+        function formatDate(dateString) {
+            if (!dateString) return 'غير محدد';
+            try {
+                const date = new Date(dateString);
+                return new Intl.DateTimeFormat('ar-SA', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }).format(date);
+            } catch (e) {
+                return dateString;
+            }
+        }
+
+        function checkAuth() {
+            const allowedPages = ['index.html', 'auth/', 'login.html'];
+            const currentPath = window.location.pathname;
+            
+            if (!isLoggedIn() && !allowedPages.some(page => currentPath.includes(page))) {
+                window.location.href = '../index.html';
+                return false;
+            }
+            return true;
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mainSidebar');
+            const toggleButton = document.querySelector('.sidebar-toggle');
+            
+            if (sidebar) {
+                const isExpanded = sidebar.classList.toggle('show');
+                toggleButton.setAttribute('aria-expanded', isExpanded);
+                
+                // إضافة overlay على المحتوى الرئيسي عند فتح القائمة على الجوال
+                const mainContent = document.getElementById('mainContent');
+                if (window.innerWidth < 768) {
+                    if (isExpanded) {
+                        const overlay = document.createElement('div');
+                        overlay.className = 'sidebar-overlay';
+                        overlay.onclick = toggleSidebar;
+                        document.body.appendChild(overlay);
+                    } else {
+                        const overlay = document.querySelector('.sidebar-overlay');
+                        if (overlay) overlay.remove();
+                    }
+                }
+            }
+        }
+
+        // Update logo in header
+        function updateHeaderLogo() {
+            const settings = getSettings();
+            const headerLogo = document.getElementById('headerLogo');
+            
+            if (settings.company_logo && headerLogo) {
+                headerLogo.src = settings.company_logo;
+            }
+        }
+
+        // ===== Initialize Application =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeStorage();
+            
+            if (!checkAuth()) return;
+            
+            loadUserData();
+            updateHeaderLogo();
+            loadCustomerForEdit();
+            
+            // إضافة أحداث التحقق أثناء الكتابة
+            const formFields = document.querySelectorAll('input, select, textarea');
+            formFields.forEach(field => {
+                field.addEventListener('blur', function() {
+                    validateCustomerForm();
+                });
+            });
+            
+            // إضافة حدث للنموذج
+            document.getElementById('customerForm').addEventListener('submit', updateCustomerForm);
+            
+            // Initialize dropdowns
+            document.addEventListener('click', function(e) {
+                const dropdowns = document.querySelectorAll('.dropdown');
+                dropdowns.forEach(dropdown => {
+                    if (!dropdown.contains(e.target)) {
+                        const menu = dropdown.querySelector('.dropdown-menu');
+                        if (menu) {
+                            menu.classList.remove('show');
+                            dropdown.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                });
+                
+                if (e.target.classList.contains('dropdown-toggle')) {
+                    const menu = e.target.closest('.dropdown').querySelector('.dropdown-menu');
+                    if (menu) {
+                        const isExpanded = menu.classList.toggle('show');
+                        e.target.setAttribute('aria-expanded', isExpanded);
+                    }
+                }
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth < 768) {
+                    const sidebar = document.getElementById('mainSidebar');
+                    const toggleBtn = document.querySelector('.sidebar-toggle');
+                    
+                    if (sidebar && sidebar.classList.contains('show') && 
+                        !sidebar.contains(e.target) && 
+                        !toggleBtn.contains(e.target)) {
+                        toggleSidebar();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

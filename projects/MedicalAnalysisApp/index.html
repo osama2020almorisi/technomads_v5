@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="system_name">Pulse - النظام الصحي الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="index-page">
+    <!-- شاشة التحميل -->
+    <div class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-heartbeat pulse-animation"></i>
+            </div>
+            <h3>Pulse Health System</h3>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p data-i18n="loading_system">جاري تحميل النظام الصحي...</p>
+        </div>
+    </div>
+
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <span class="logo-text">Pulse</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#features" class="nav-link" data-i18n="nav_features">المميزات</a>
+                <a href="#about" class="nav-link" data-i18n="nav_about">عن النظام</a>
+                <a href="#contact" class="nav-link" data-i18n="nav_contact">اتصل بنا</a>
+                
+                <!-- مبدل اللغة -->
+                <div class="language-switcher">
+                    <button class="lang-btn" id="langToggle">
+                        <i class="fas fa-globe"></i>
+                        <span data-i18n="nav_language">English</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown">
+                        <button class="lang-option" data-lang="ar">
+                            <i class="fas fa-language"></i>
+                            <span data-i18n="arabic">العربية</span>
+                        </button>
+                        <button class="lang-option" data-lang="en">
+                            <i class="fas fa-language"></i>
+                            <span data-i18n="english">English</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <a href="login.html" class="nav-link login-btn" data-i18n="nav_login">تسجيل الدخول</a>
+                <a href="register.html" class="nav-link primary-btn" data-i18n="nav_register">إنشاء حساب</a>
+            </div>
+            
+            <div class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- القسم الرئيسي -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title" data-i18n="hero_title">
+                    النظام الصحي الذكي
+                    <span class="highlight" data-i18n="hero_highlight">لتحليل التحاليل الطبية</span>
+                </h1>
+                <p class="hero-description" data-i18n="hero_description">
+                    نظام متكامل لإدارة المرضى وتحليل التحاليل الطبية وتقديم توصيات ذكية مخصصة. 
+                    سجل الآن وتمتع بأحدث أدوات الرعاية الصحية.
+                </p>
+                <div class="hero-actions">
+                    <a href="register.html" class="btn btn-primary pulse-animation">
+                        <i class="fas fa-rocket"></i>
+                        <span data-i18n="hero_get_started">ابدأ مجاناً</span>
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        <i class="fas fa-play-circle"></i>
+                        <span data-i18n="hero_watch_demo">شاهد الفيديو</span>
+                    </a>
+                </div>
+                
+    
+            </div>
+            
+            <div class="hero-image">
+                <div class="dashboard-preview">
+                    <div class="preview-content">
+                        <div class="preview-header">
+                            <div class="preview-logo">
+                                <i class="fas fa-heartbeat"></i>
+                                <span>Pulse</span>
+                            </div>
+                            <div class="preview-nav">
+                                <span class="nav-item active" data-i18n="preview_dashboard">لوحة التحكم</span>
+                                <span class="nav-item" data-i18n="preview_patients">المرضى</span>
+                                <span class="nav-item" data-i18n="preview_analysis">التحاليل</span>
+                            </div>
+                        </div>
+                        <div class="preview-stats">
+                            <div class="preview-stat">
+                                <i class="fas fa-user-injured"></i>
+                                <div>
+                                    <div class="preview-stat-number" data-i18n="preview_patients_count">٠</div>
+                                    <div class="preview-stat-label" data-i18n="preview_total_patients">إجمالي المرضى</div>
+                                </div>
+                            </div>
+                            <div class="preview-stat">
+                                <i class="fas fa-vial"></i>
+                                <div>
+                                    <div class="preview-stat-number" data-i18n="preview_tests_count">٠</div>
+                                    <div class="preview-stat-label" data-i18n="preview_tests_today">تحليل اليوم</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-chart">
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-line"></i>
+                                <p data-i18n="preview_live_system">عرض حي للنظام</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المميزات -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="features_title">مميزات النظام</h2>
+                <p data-i18n="features_subtitle">اكتشف القوة الكاملة لنظام Pulse الصحي</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-injured"></i>
+                    </div>
+                    <h3 data-i18n="feature1_title">إدارة المرضى</h3>
+                    <p data-i18n="feature1_desc">نظام متكامل لإدارة سجلات المرضى ومعلوماتهم الطبية بشكل آمن ومنظم</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                    <h3 data-i18n="feature2_title">تحليل التحاليل</h3>
+                    <p data-i18n="feature2_desc">تحليل ذكي للتحاليل الطبية مع تقديم توصيات مخصصة حسب حالة كل مريض</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 data-i18n="feature3_title">التنبيهات الذكية</h3>
+                    <p data-i18n="feature3_desc">نظام تنبيهات ذكي للإشعارات المهمة والنتائج الحرجة التي تحتاج متابعة</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 data-i18n="feature4_title">التقارير والإحصائيات</h3>
+                    <p data-i18n="feature4_desc">تقارير شاملة وإحصائيات تفصيلية لمتابعة تطور الحالات الصحية</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 data-i18n="feature5_title">واجهة متجاوبة</h3>
+                    <p data-i18n="feature5_desc">تصميم متكامل يعمل على جميع الأجهزة من حواسيب وهواتف وأجهزة لوحية</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 data-i18n="feature6_title">أمان وحماية</h3>
+                    <p data-i18n="feature6_desc">نظام أمان متكامل يحمي بيانات المرضى ويضمن الخصوصية التامة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم كيفية العمل -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="how_it_works_title">كيف يعمل النظام؟</h2>
+                <p data-i18n="how_it_works_subtitle">3 خطوات بسيطة لبدء استخدام Pulse</p>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 data-i18n="step1_title">أنشئ حسابك</h3>
+                        <p data-i18n="step1_desc">سجل في النظام خلال دقائق باستخدام بريدك الإلكتروني</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 data-i18n="step2_title">أضف مرضاك</h3>
+                        <p data-i18n="step2_desc">ابدأ بإضافة مرضاك وإنشاء سجلاتهم الطبية</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 data-i18n="step3_title">حلل النتائج</h3>
+                        <p data-i18n="step3_desc">استخدم أدوات التحليل الذكية للحصول على توصيات مخصصة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الدعوة للعمل -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 data-i18n="cta_title">جاهز للبدء؟</h2>
+                <p data-i18n="cta_subtitle">انضم إلى آلاف الأطباء الذين يثقون في Pulse لإدارة عياداتهم</p>
+                <a href="register.html" class="btn btn-primary btn-large pulse-animation">
+                    <i class="fas fa-user-plus"></i>
+                    <span data-i18n="cta_create_account">أنشئ حسابك المجاني الآن</span>
+                </a>
+                <div class="cta-note">
+                    <i class="fas fa-clock"></i>
+                    <span data-i18n="cta_signup_time">يسغرق التسجيل أقل من دقيقتين</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>Pulse</span>
+                    </div>
+                    <p data-i18n="footer_description">نظام طبي ذكي متكامل لتحليل التحاليل الطبية وإدارة الرعاية الصحية</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+    
+                
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">&copy; 2025 Pulse.جميع الحقوق محفوظة اسماء عبدالله.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/language.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
