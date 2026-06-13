@@ -1,14 +1,15 @@
-# TechNomads V3 - الريادة التقنية اليمنية
+# TechNomads V4 - الريادة التقنية اليمنية
 
-[![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](https://technomads-v3.vercel.app)
+[![Version](https://img.shields.io/badge/version-4.0.0-blue.svg)](https://te-2026.netlify.app)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![PWA](https://img.shields.io/badge/PWA-Ready-orange.svg)](https://technomads-v3.vercel.app)
+[![PWA](https://img.shields.io/badge/PWA-Ready-orange.svg)](https://te-2026.netlify.app)
+[![Netlify](https://img.shields.io/badge/Netlify-Deployed-brightgreen.svg)](https://te-2026.netlify.app)
 
 ## 🚀 نظرة عامة
 
 TechNomads هي شركة رائدة في تقديم الحلول التقنية والرقمية في اليمن. هذا المستودع يحتوي على الموقع الرسمي للشركة - منصة متكاملة تعرض خدماتنا، أعمالنا، وفريقنا.
 
-**الرابط المباشر:** [https://technomads-v3.vercel.app](https://technomads-v3.vercel.app)
+**الرابط المباشر:** [https://te-2026.netlify.app](https://te-2026.netlify.app)
 
 ## ✨ المميزات
 
@@ -16,30 +17,37 @@ TechNomads هي شركة رائدة في تقديم الحلول التقنية 
 - 🌙 **وضع داكن/فاتح** - مع التبديل التلقائي حسب تفضيل النظام
 - ⚡ **PWA** - يمكن تثبيته كتطبيق على الجوال
 - 🎨 **رسوم متحركة** - AOS animations و particles.js
-- 🔍 **SEO محسن** - Schema.org, Open Graph, Twitter Cards
+- 🔍 **SEO محسن** - Schema.org, Open Graph, Twitter Cards، خرائط موقع متعددة
 - 🌐 **RTL كامل** - دعم كامل للغة العربية
 - 🚀 **أداء عالي** - lazy loading, preconnect, compression
+- 🗺️ **خريطة موقع شاملة** - تغطي جميع صفحات المشاريع الداخلية
 
 ## 📁 هيكل المشروع
 
 ```
-technomads-v3/
+
+technomads_v4/
 ├── index.html              # الصفحة الرئيسية
 ├── services.html           # صفحة الخدمات
 ├── portfolio.html          # معرض الأعمال
 ├── team.html               # صفحة الفريق
 ├── contact.html            # صفحة التواصل
-├── entertainment/
-│   └── play.html           # صفحة الترفيه/التطبيقات
-├── cv/
-│   └── index.html          # السيرة الذاتية
+├── entertainment/          # صفحات الترفيه
+│   ├── play.html
+│   ├── memory-game.html
+│   ├── the-age.html
+│   ├── code-lab.html
+│   ├── color-generator.html
+│   ├── image-editor.html
+│   └── quiz-game.html
 ├── css/
-│   ├── main.css            # الأنماط الرئيسية
-│   └── portfolio.css       # أنماط معرض الأعمال
+│   ├── main.css
+│   ├── portfolio.css
+│   └── fontawesome/
 ├── js/
-│   ├── main.js             # الجافاسكريبت الرئيسي
-│   └── portfolio.js        # نظام معرض الأعمال
-├── projects/               # مجلد المشاريع
+│   ├── main.js
+│   └── portfolio.js
+├── projects/               # جميع المشاريع (30+ مشروع)
 │   ├── ecommerce-website/
 │   ├── pharmacy-website/
 │   ├── booking-system/
@@ -71,10 +79,15 @@ technomads-v3/
 ├── images/                 # الصور والأيقونات
 ├── manifest.json           # PWA manifest
 ├── service-worker.js       # Service Worker للـ PWA
-├── sitemap.xml             # خريطة الموقع
+├── sitemap.xml             # خريطة الموقع الرئيسية
+├── sitemap-pages.xml       # خريطة الصفحات الرئيسية
+├── sitemap-entertainment.xml # خريطة صفحات الترفيه
+├── sitemap-projects.xml    # خريطة جميع المشاريع (أكثر من 200 صفحة)
 ├── robots.txt              # إرشادات محركات البحث
 ├── .htaccess               # إعدادات Apache
+├── netlify.toml            # إعدادات Netlify
 └── vercel.json             # إعدادات Vercel
+
 ```
 
 ## 🛠️ التقنيات المستخدمة
@@ -93,12 +106,14 @@ technomads-v3/
 - Mobile-first responsive design
 - RTL support
 
-### الأداء
+### الأداء و SEO
 - Lazy loading للصور
 - Preconnect للموارد الخارجية
 - Service Worker للـ offline
 - Browser caching
 - Gzip compression
+- 4 خرائط موقع متصلة ببعضها
+- Schema.org markup
 
 ## 🚀 التشغيل المحلي
 
@@ -109,10 +124,10 @@ technomads-v3/
 ### الخطوات
 ```bash
 # 1. استنساخ المستودع
-git clone https://github.com/osama2020almorisi/technomads-v3.git
+git clone https://github.com/osama2020almorisi/technomads_v5.git
 
 # 2. الانتقال للمجلد
-cd technomads-v3
+cd technomads_v5
 
 # 3. تشغيل خادم محلي (مثال باستخدام Python)
 python -m http.server 8000
@@ -121,9 +136,16 @@ python -m http.server 8000
 # http://localhost:8000
 ```
 
-## 📦 النشر (Deployment)
+📦 النشر (Deployment)
 
-### على Vercel (الموصى به)
+على Netlify (الموصى به - المستخدم حالياً)
+
+· اسحب وأفلت مجلد المشروع في Netlify Drop
+· أو اربط مستودع GitHub
+· الموقع منشور على: https://te-2026.netlify.app
+
+على Vercel
+
 ```bash
 # 1. تثبيت Vercel CLI
 npm i -g vercel
@@ -135,25 +157,36 @@ vercel login
 vercel --prod
 ```
 
-### على Netlify
-- اسحب وأفلت المجلد في [Netlify Drop](https://app.netlify.com/drop)
-- أو اربط مستودع GitHub
+على Apache/cPanel
 
-### على Apache/cPanel
 1. ارفع الملفات عبر FTP
 2. تأكد من تفعيل mod_rewrite
-3. ملف `.htaccess` جاهز للاستخدام
+3. ملف .htaccess جاهز للاستخدام
 
-## 🔧 الإعدادات
+🗺️ خرائط الموقع (Sitemaps)
 
-### تغيير معلومات الشركة
-في `js/main.js` و `index.html`:
-- رقم الهاتف: `+967770200970`
-- البريد الإلكتروني: `2025ooss@gmail.com`
-- العنوان: صنعاء، اليمن
+تم إنشاء 4 خرائط موقع لضمان فهرسة جميع الصفحات:
 
-### تغيير روابط السوشيال ميديا
+الملف المحتوى
+sitemap.xml رئيسي - يربط الخرائط الأخرى
+sitemap-pages.xml الصفحات الرئيسية (7 صفحات)
+sitemap-entertainment.xml صفحات الترفيه (7 صفحات)
+sitemap-projects.xml جميع صفحات المشاريع (200+ صفحة)
+
+🔧 الإعدادات
+
+تغيير معلومات الشركة
+
+في js/main.js و index.html:
+
+· رقم الهاتف: +967770200970
+· البريد الإلكتروني: 2025ooss@gmail.com
+· العنوان: صنعاء، اليمن
+
+تغيير روابط السوشيال ميديا
+
 في جميع الصفحات، ابحث عن:
+
 ```html
 <a href="https://www.facebook.com/share/1843Km6C4E/">...
 <a href="https://www.linkedin.com/in/9o--sa">...
@@ -161,8 +194,10 @@ vercel --prod
 <a href="https://github.com/osama2020almorisi/">...
 ```
 
-### إضافة مشروع جديد
-في `js/portfolio.js`، أضف إلى `PROJECTS_DB`:
+إضافة مشروع جديد
+
+في js/portfolio.js، أضف إلى PROJECTS_DB:
+
 ```javascript
 { 
   id: 'project-id', 
@@ -175,32 +210,34 @@ vercel --prod
 }
 ```
 
-## 📝 SEO Checklist
+ثم أضف مجلد المشروع في projects/ وحدّث sitemap-projects.xml.
 
-- [x] عنوان فريد لكل صفحة
-- [x] Meta description
-- [x] Open Graph tags
-- [x] Twitter Cards
-- [x] Schema.org JSON-LD
-- [x] Canonical URLs
-- [x] Sitemap.xml
-- [x] Robots.txt
-- [x] Semantic HTML
-- [x] Alt text للصور
-- [x] Lazy loading
-- [x] Responsive design
+📝 SEO Checklist
 
-## 🔒 الأمان
+· عنوان فريد لكل صفحة
+· Meta description
+· Open Graph tags
+· Twitter Cards
+· Schema.org JSON-LD
+· Canonical URLs
+· Sitemap.xml (رئيسي + 3 فرعية)
+· Robots.txt
+· Semantic HTML
+· Alt text للصور
+· Lazy loading
+· Responsive design
 
-- [x] HTTPS forced
-- [x] Security headers (XSS, CSRF, Clickjacking)
-- [x] Content Security Policy
-- [x] Input validation
-- [x] Sanitized output
+🔒 الأمان
 
-## 📊 التحليلات
+· HTTPS forced (Netlify)
+· Security headers
+· Content Security Policy
+· Input validation
 
-Google Analytics 4 مدمج. استبدل `G-XXXXXXXXXX` في `index.html` بـ Measurement ID الخاص بك:
+📊 التحليلات
+
+Google Analytics 4 مدمج. استبدل G-XXXXXXXXXX في index.html بـ Measurement ID الخاص بك:
+
 ```html
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR-ID"></script>
 <script>
@@ -208,41 +245,42 @@ Google Analytics 4 مدمج. استبدل `G-XXXXXXXXXX` في `index.html` بـ 
 </script>
 ```
 
-## 🤝 المساهمة
+🤝 المساهمة
 
 نرحب بمساهماتكم! للمساهمة:
+
 1. Fork المستودع
-2. أنشئ فرع جديد (`git checkout -b feature/amazing-feature`)
-3. Commit التغييرات (`git commit -m 'Add amazing feature'`)
-4. Push للفرع (`git push origin feature/amazing-feature`)
+2. أنشئ فرع جديد (git checkout -b feature/amazing-feature)
+3. Commit التغييرات (git commit -m 'Add amazing feature')
+4. Push للفرع (git push origin feature/amazing-feature)
 5. افتح Pull Request
 
-## 📄 الترخيص
+📄 الترخيص
 
-هذا المشروع مرخص بموجب [MIT License](LICENSE).
+هذا المشروع مرخص بموجب MIT License.
 
-## 👥 الفريق
+👥 الفريق
 
-- **أسامة منصور المريسي** - مدير الفريق ومطور Full Stack
-- **زكريا ناجي المريسي** - مصمم UI/UX
-- **عبده ثابت المريسي** - مطور Backend
-- **عبدالرحمن المريسي** - مطور Frontend
-- **أحمد الجوفي** - خبير أمن معلومات
-- **أحمد الوجيه** - مسوق رقمي
+· أسامة منصور المريسي - مدير الفريق ومطور Full Stack
+· زكريا ناجي المريسي - مصمم UI/UX
+· عبده ثابت المريسي - مطور Backend
+· عبدالرحمن المريسي - مطور Frontend
+· أحمد الجوفي - خبير أمن معلومات
+· أحمد الوجيه - مسوق رقمي
 
-## 📞 التواصل
+📞 التواصل
 
-- 📧 البريد: [2025ooss@gmail.com](mailto:2025ooss@gmail.com)
-- 📱 الهاتف: [+967770200970](tel:+967770200970)
-- 🌐 الموقع: [https://technomads-v3.vercel.app](https://technomads-v3.vercel.app)
-- 📍 العنوان: صنعاء، الجمهورية اليمنية
+· 📧 البريد: 2025ooss@gmail.com
+· 📱 الهاتف: +967770200970
+· 🌐 الموقع: https://te-2026.netlify.app
+· 📍 العنوان: صنعاء، الجمهورية اليمنية
 
 ---
 
 <p align="center">
   صُنع بـ ❤️ في اليمن
 </p>
-'''
+```
 
 with open('/mnt/agents/output/README.md', 'w', encoding='utf-8') as f:
     f.write(readme)
