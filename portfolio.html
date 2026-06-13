@@ -21,19 +21,17 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/portfolio.css">
     
-    
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CM085HTNT0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-CM085HTNT0');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CM085HTNT0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-CM085HTNT0');
+    </script>
     
     <meta name="description" content="استعرض أحدث مشاريع TechNomads: تطبيقات جوال، مواقع إلكترونية، أنظمة محاسبية، وأدوات تقنية مبتكرة.">
-<meta name="keywords" content="مشاريع تقنية, تطبيقات جوال, مواقع الكترونية, برمجة, تصميم, اليمن">
+    <meta name="keywords" content="مشاريع تقنية, تطبيقات جوال, مواقع الكترونية, برمجة, تصميم, اليمن">
     
     <style>
         body { opacity: 0; transition: opacity 0.3s ease; }
@@ -208,15 +206,237 @@
                 </div>
             </div>
 
+            <!-- ============================================
+                 STATIC PROJECTS GRID - مشاريع ثابتة لجوجل
+                 هذا هو المكان الصحيح للمحتوى (داخل <main> وبعد الـ header)
+            ============================================ -->
             <div class="projects-grid" id="projectsGrid">
-                <div class="skeleton-loader">
-                    <div class="skeleton-card"></div>
-                    <div class="skeleton-card"></div>
-                    <div class="skeleton-card"></div>
-                    <div class="skeleton-card"></div>
-                    <div class="skeleton-card"></div>
-                    <div class="skeleton-card"></div>
-                </div>
+                
+                <!-- ========== مشاريع الويب ========== -->
+                <article class="project-card" data-project-id="ecommerce-website">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/20/800/600" alt="متجر إلكتروني متكامل - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-globe"></i> مواقع ويب</span>
+                        <span class="project-featured"><i class="fas fa-star"></i> مميز</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">متجر إلكتروني متكامل</h3>
+                        <p class="project-card-description">منصة تجارة إلكترونية متطورة مع نظام إدارة متكامل للمنتجات والطلبات</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> يناير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project-id="pharmacy-website">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/24/800/600" alt="نظام إدارة الصيدلية - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-globe"></i> مواقع ويب</span>
+                        <span class="project-featured"><i class="fas fa-star"></i> مميز</span>
+                        <span class="project-version-badge"><i class="fas fa-code-branch"></i> إصدارات</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">نظام إدارة الصيدلية</h3>
+                        <p class="project-card-description">نظام متكامل لإدارة الصيدليات والمخزون والطلبات والوصفات الطبية</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> فبراير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project-id="booking-system">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/28/800/600" alt="نظام الحجز الإلكتروني - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-globe"></i> مواقع ويب</span>
+                        <span class="project-featured"><i class="fas fa-star"></i> مميز</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">نظام الحجز الإلكتروني</h3>
+                        <p class="project-card-description">نظام حجز متكامل للفنادق والمنتجعات مع لوحة تحكم متطورة</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> ديسمبر 2023</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project-id="financial-accountant">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/32/800/600" alt="النظام المالي والمحاسبي - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-globe"></i> مواقع ويب</span>
+                        <span class="project-featured"><i class="fas fa-star"></i> مميز</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">النظام المالي والمحاسبي</h3>
+                        <p class="project-card-description">نظام محاسبي متكامل لإدارة الحسابات والفواتير والميزانيات</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> مارس 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project-id="health-system">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/36/800/600" alt="نظام إدارة المستشفيات - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-globe"></i> مواقع ويب</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">نظام إدارة المستشفيات</h3>
+                        <p class="project-card-description">نظام متكامل لإدارة المستشفيات والمواعيد والمرضى والسجلات الطبية</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> يناير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project-id="travel-agency">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/44/800/600" alt="نظام وكالة السفر - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-globe"></i> مواقع ويب</span>
+                        <span class="project-version-badge"><i class="fas fa-code-branch"></i> إصدارات</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">نظام وكالة السفر</h3>
+                        <p class="project-card-description">نظام متكامل لحجز الرحلات والفنادق وتأشيرات السفر</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> فبراير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project-id="Cleaning Services">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/64/800/600" alt="خدمات التنظيف المتكاملة - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-globe"></i> مواقع ويب</span>
+                        <span class="project-featured"><i class="fas fa-star"></i> مميز</span>
+                        <span class="project-version-badge"><i class="fas fa-code-branch"></i> إصدارات</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">خدمات التنظيف المتكاملة</h3>
+                        <p class="project-card-description">منصة متكاملة لخدمات التنظيف مع نظام حجز وتتبع وتقييم الخدمات</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> فبراير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ========== التطبيقات ========== -->
+                <article class="project-card" data-project-id="delivery-app">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/68/800/600" alt="تطبيق التوصيل الذكي - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-mobile-alt"></i> تطبيقات</span>
+                        <span class="project-featured"><i class="fas fa-star"></i> مميز</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">تطبيق التوصيل الذكي</h3>
+                        <p class="project-card-description">تطبيق متكامل لتوصيل الطلبات مع تتبع مباشر للمندوبين</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> يناير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project-id="MedicalAnalysisApp">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/76/800/600" alt="تحليل البيانات الطبية - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-mobile-alt"></i> تطبيقات</span>
+                        <span class="project-version-badge"><i class="fas fa-code-branch"></i> إصدارات</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">تحليل البيانات الطبية</h3>
+                        <p class="project-card-description">تطبيق متخصص لتحليل البيانات الطبية وإنشاء التقارير</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> فبراير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ========== التصميم ========== -->
+                <article class="project-card" data-project-id="brand-identity">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/84/800/600" alt="هوية العلامة التجارية - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-paint-brush"></i> تصميم</span>
+                        <span class="project-featured"><i class="fas fa-star"></i> مميز</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">هوية العلامة التجارية</h3>
+                        <p class="project-card-description">تصميم هوية بصرية متكاملة لعلامة تجارية تشمل الشعار والألوان والخطوط</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> يناير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ========== الأدوات ========== -->
+                <article class="project-card" data-project-id="age-calculator">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/92/800/600" alt="حاسبة العمر المتطورة - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-tools"></i> أدوات</span>
+                        <span class="project-version-badge"><i class="fas fa-code-branch"></i> إصدارات</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">حاسبة العمر المتطورة</h3>
+                        <p class="project-card-description">أداة متطورة لحساب العمر بدقة مع تفاصيل اليوم والشهر والسنة</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> يناير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project-id="image-editor">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/104/800/600" alt="محرر الصور المتقدم - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-tools"></i> أدوات</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">محرر الصور المتقدم</h3>
+                        <p class="project-card-description">تحرير الصور وتطبيق الفلاتر والتأثيرات بجودة عالية</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> فبراير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ========== الألعاب ========== -->
+                <article class="project-card" data-project-id="memory-game">
+                    <div class="project-card-media">
+                        <img src="https://picsum.photos/id/124/800/600" alt="لعبة الذاكرة - مشروع TechNomads" class="project-card-image" loading="lazy">
+                        <div class="project-card-overlay"><button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button></div>
+                        <span class="project-category-badge"><i class="fas fa-gamepad"></i> ألعاب</span>
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">لعبة الذاكرة</h3>
+                        <p class="project-card-description">لعبة ممتعة لتنشيط الذاكرة والتركيز مع مستويات متعددة</p>
+                        <div class="project-card-footer">
+                            <span class="project-date"><i class="far fa-calendar-alt"></i> يناير 2024</span>
+                            <div class="project-links"><button class="project-link"><i class="fas fa-arrow-left"></i></button></div>
+                        </div>
+                    </div>
+                </article>
+                
             </div>
 
             <div class="empty-state" id="emptyState" style="display: none;">
@@ -345,7 +565,6 @@
                 closeBtn.addEventListener('click', toggleMenu);
             }
             
-            // Close when clicking outside
             document.addEventListener('click', function(e) {
                 if (mobileNav.classList.contains('active') && 
                     !mobileNav.contains(e.target) && 
@@ -354,14 +573,12 @@
                 }
             });
             
-            // Close on escape
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
                     toggleMenu();
                 }
             });
             
-            // Close on link click
             mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
                 link.addEventListener('click', toggleMenu);
             });
