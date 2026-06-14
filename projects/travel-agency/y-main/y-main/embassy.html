@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>السفارات والقنصليات - أمان للسفريات</title>
+  <meta name="description" content="دليل شامل لمواقع وتفاصيل السفارات والقنصليات حول العالم">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #3a4bdc;
+      --secondary-color: #5f2caa;
+      --accent-color: #ff6b35;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+      --border-radius: 12px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Tajawal', sans-serif;
+      margin: 0;
+      background: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      padding-bottom: 80px; /* مساحة للشريط السفلي */
+    }
+    
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 20px;
+      color: white;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo i {
+      margin-left: 10px;
+    }
+    
+    .back-button {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+    
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .back-button i {
+      margin-right: 5px;
+    }
+    
+    /* Search Section */
+    .search-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+    
+    .search-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 20px;
+      position: relative;
+      top: -20px;
+    }
+    
+    .search-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 15px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #555;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(58, 75, 220, 0.1);
+    }
+    
+    .search-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      align-self: flex-end;
+    }
+    
+    .search-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(58, 75, 220, 0.2);
+    }
+    
+    .search-btn i {
+      margin-left: 8px;
+    }
+    
+    /* Embassies List */
+    .embassies-container {
+      max-width: 1200px;
+      margin: 0 auto 100px;
+      padding: 0 15px;
+    }
+    
+    .embassy-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 20px;
+      transition: var(--transition);
+      overflow: hidden;
+    }
+    
+    .embassy-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .embassy-header {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+    
+    .embassy-flag {
+      width: 40px;
+      height: 25px;
+      object-fit: cover;
+      border-radius: 3px;
+      margin-left: 15px;
+    }
+    
+    .embassy-country {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    
+    .embassy-type {
+      margin-right: auto;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    
+    .embassy-body {
+      padding: 20px;
+    }
+    
+    .embassy-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    
+    .embassy-info {
+      display: flex;
+      margin-bottom: 15px;
+    }
+    
+    .info-icon {
+      margin-left: 10px;
+      color: var(--primary-color);
+      font-size: 20px;
+      min-width: 25px;
+    }
+    
+    .info-text {
+      flex: 1;
+    }
+    
+    .info-title {
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+    
+    .info-details {
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .embassy-services {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .service-tag {
+      background: #f5f5f5;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .service-tag i {
+      margin-left: 5px;
+      color: var(--primary-color);
+    }
+    
+    /* Embassy Details Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: var(--border-radius);
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1;
+    }
+    
+    /* Footer Navigation - UPDATED */
+    footer {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+      max-width: 500px;
+      padding: 0;
+      z-index: 100;
+    }
+    
+    footer .nav-item {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      border-radius: 50%;
+      transition: var(--transition);
+      cursor: pointer;
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      width: 60px;
+      height: 60px;
+      justify-content: center;
+    }
+    
+    footer .nav-item:hover {
+      color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(58, 75, 220, 0.25);
+    }
+    
+    footer .nav-item.active {
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(58, 75, 220, 0.3);
+    }
+    
+    footer .nav-item i {
+      font-size: 22px;
+      margin-bottom: 0;
+      transition: var(--transition);
+    }
+    
+    footer .nav-item.active i {
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    footer .nav-item span {
+      display: none;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .search-form {
+        grid-template-columns: 1fr;
+      }
+      
+      .search-btn {
+        width: 100%;
+      }
+      
+      .embassy-info {
+        flex-direction: column;
+      }
+      
+      .info-icon {
+        margin-left: 0;
+        margin-bottom: 5px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .embassy-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .embassy-flag {
+        margin-left: 0;
+        margin-bottom: 10px;
+      }
+      
+      .embassy-type {
+        margin-right: 0;
+        margin-top: 10px;
+      }
+      
+      footer {
+        width: 95%;
+        bottom: 15px;
+      }
+      
+      footer .nav-item {
+        width: 55px;
+        height: 55px;
+        padding: 12px;
+      }
+      
+      footer .nav-item i {
+        font-size: 20px;
+      }
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background-color: #f9f9f9;
+      margin: 10px;
+      line-height: 1.8;
+      direction: rtl;
+    }
+
+    .main-title, h2 {
+      font-family: 'Amiri', 'Scheherazade', serif;
+      font-size: 28px;
+      color: #000;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <button class="back-button" onclick="window.history.back()">
+      <i class="fas fa-arrow-right"></i>
+      رجوع
+    </button>
+    <div class="logo">
+      <i class="fas fa-landmark"></i>
+      السفارات والقنصليات
+    </div>
+    <div></div> <!-- Empty div for balance -->
+  </div>
+</header>
+
+<div class="search-container">
+  <div class="search-card">
+    <form class="search-form">
+      <div class="form-group">
+        <label for="search">ابحث عن سفارة أو قنصلية</label>
+        <input type="text" id="search" class="form-control" placeholder="اسم الدولة أو المدينة">
+      </div>
+      <button type="submit" class="search-btn">
+        بحث
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="embassies-container">
+  <div class="embassy-card" onclick="showEmbassyModal()">
+    <div class="embassy-header">
+      <img src="https://flagcdn.com/w80/us.png" alt="الولايات المتحدة" class="embassy-flag">
+      <div class="embassy-country">الولايات المتحدة الأمريكية</div>
+      <div class="embassy-type">سفارة</div>
+    </div>
+    <div class="embassy-body">
+      <h3 class="embassy-name">سفارة الولايات المتحدة في الرياض</h3>
+      
+      <div class="embassy-info">
+        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="info-text">
+          <div class="info-title">العنوان</div>
+          <div class="info-details">حي السفارات، الرياض 11693، المملكة العربية السعودية</div>
+        </div>
+      </div>
+      
+      <div class="embassy-info">
+        <div class="info-icon"><i class="fas fa-phone"></i></div>
+        <div class="info-text">
+          <div class="info-title">الهاتف</div>
+          <div class="info-details">+966 11 488 3800</div>
+        </div>
+      </div>
+      
+      <div class="embassy-info">
+        <div class="info-icon"><i class="fas fa-clock"></i></div>
+        <div class="info-text">
+          <div class="info-title">ساعات العمل</div>
+          <div class="info-details">الأحد - الخميس: 8:00 ص - 5:00 م</div>
+        </div>
+      </div>
+      
+      <div class="embassy-services">
+        <div class="service-tag"><i class="fas fa-passport"></i> تجديد جواز السفر</div>
+        <div class="service-tag"><i class="fas fa-file-alt"></i> تأشيرات</div>
+        <div class="service-tag"><i class="fas fa-users"></i> خدمات المواطنين</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="embassy-card" onclick="showEmbassyModal()">
+    <div class="embassy-header">
+      <img src="https://flagcdn.com/w80/gb.png" alt="بريطانيا" class="embassy-flag">
+      <div class="embassy-country">المملكة المتحدة</div>
+      <div class="embassy-type">سفارة</div>
+    </div>
+    <div class="embassy-body">
+      <h3 class="embassy-name">سفارة المملكة المتحدة في الرياض</h3>
+      
+      <div class="embassy-info">
+        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="info-text">
+          <div class="info-title">العنوان</div>
+          <div class="info-details">حي السفارات، طريق الملك فهد، الرياض 11693</div>
+        </div>
+      </div>
+      
+      <div class="embassy-info">
+        <div class="info-icon"><i class="fas fa-phone"></i></div>
+        <div class="info-text">
+          <div class="info-title">الهاتف</div>
+          <div class="info-details">+966 11 481 9100</div>
+        </div>
+      </div>
+      
+      <div class="embassy-info">
+        <div class="info-icon"><i class="fas fa-clock"></i></div>
+        <div class="info-text">
+          <div class="info-title">ساعات العمل</div>
+          <div class="info-details">الأحد - الخميس: 8:00 ص - 4:00 م</div>
+        </div>
+      </div>
+      
+      <div class="embassy-services">
+        <div class="service-tag"><i class="fas fa-passport"></i> تجديد جواز السفر</div>
+        <div class="service-tag"><i class="fas fa-file-alt"></i> تأشيرات</div>
+        <div class="service-tag"><i class="fas fa-certificate"></i> توثيق</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="embassy-card" onclick="showEmbassyModal()">
+    <div class="embassy-header">
+      <img src="https://flagcdn.com/w80/ae.png" alt="الإمارات" class="embassy-flag">
+      <div class="embassy-country">الإمارات العربية المتحدة</div>
+      <div class="embassy-type">قنصلية</div>
+    </div>
+    <div class="embassy-body">
+      <h3 class="embassy-name">القنصلية الإماراتية في جدة</h3>
+      
+      <div class="embassy-info">
+        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="info-text">
+          <div class="info-title">العنوان</div>
+          <div class="info-details">حي الشرفية، شارع الأمير سلطان، جدة 23442</div>
+        </div>
+      </div>
+      
+      <div class="embassy-info">
+        <div class="info-icon"><i class="fas fa-phone"></i></div>
+        <div class="info-text">
+          <div class="info-title"> الهاتف</div>
+          <div class="info-details">+966 12 665 2424</div>
+        </div>
+      </div>
+      
+      <div class="embassy-info">
+        <div class="info-icon"><i class="fas fa-clock"></i></div>
+        <div class="info-text">
+          <div class="info-title">ساعات العمل</div>
+          <div class="info-details">الأحد - الخميس: 9:00 ص - 3:00 م</div>
+        </div>
+      </div>
+      
+      <div class="embassy-services">
+        <div class="service-tag"><i class="fas fa-file-alt"></i> تأشيرات</div>
+        <div class="service-tag"><i class="fas fa-users"></i> خدمات المواطنين</div>
+        <div class="service-tag"><i class="fas fa-handshake"></i> شؤون تجارية</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Embassy Details Modal -->
+<div class="modal-overlay" id="embassyModal">
+  <div class="modal-content">
+    <div class="modal-close" onclick="closeEmbassyModal()">
+      <i class="fas fa-times"></i>
+    </div>
+    
+    <!-- Modal content would be loaded dynamically in a real app -->
+    <div style="padding: 20px;">
+      <h2>تفاصيل السفارة/القنصلية</h2>
+      <p>هذه صفحة تفاصيل السفارة التي ستظهر عند النقر على أي سفارة. في التطبيق الحقيقي، سيتم تحميل هذه البيانات بشكل ديناميكي بناءً على السفارة المحددة.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer with only two icons -->
+<footer>
+  <div class="nav-item" id="homeButton" onclick="goToHomePage()">
+    <i class="fas fa-home"></i>
+    <span>الرئيسية</span>
+  </div>
+  <div class="nav-item active" id="pageButton">
+    <i class="fas fa-landmark"></i>
+    <span>السفارات</span>
+  </div>
+</footer>
+
+<script>
+  
+  
+  
+  
+  // Embassy Modal Functions
+  function showEmbassyModal() {
+    document.getElementById('embassyModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeEmbassyModal() {
+    document.getElementById('embassyModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+  
+  // Close modal when clicking outside
+  document.getElementById('embassyModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeEmbassyModal();
+    }
+  });
+  
+  // Function to navigate to home page
+  function goToHomePage() {
+    window.location.href = 'index.html';
+  }
+  
+  // Add animation effect to buttons
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      // Remove active class from all items
+      document.querySelectorAll('.nav-item').forEach(i => {
+        i.classList.remove('active');
+      });
+      
+      // Add active class to clicked item
+      this.classList.add('active');
+      
+      // Add pulse animation
+      this.style.animation = 'pulse 0.5s';
+      setTimeout(() => {
+        this.style.animation = '';
+      }, 500);
+    });
+  });
+</script>
+<!-- في نهاية body بعد كل الكود الحالي -->
+<script src="preferences.js"></script>
+</body>
+</html>

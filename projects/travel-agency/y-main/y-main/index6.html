@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>حجز رحلة</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f4f7fb;margin:0}
+    .container{width:100%;max-width:520px;background:#fff;padding:20px;border-radius:10px;box-shadow:0 8px 24px rgba(20,20,40,0.07);direction:rtl}
+    h1{text-align:center;margin:0 0 16px}
+    label{display:block;margin-top:12px;font-size:14px;color:#333}
+    select,input,textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;margin-top:6px;font-size:14px}
+    textarea{min-height:80px;resize:vertical}
+    .actions{display:flex;gap:10px;margin-top:14px}
+    button{flex:1;padding:10px;border:0;border-radius:8px;background:#0b79ff;color:#fff;font-weight:600;cursor:pointer}
+    button:active{transform:translateY(1px)}
+    .summary{background:#f8f9fb;border:1px dashed #dfe7fb;padding:10px;margin-top:12px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>نموذج حجز رحلة</h1>
+
+    <label>الدولة</label>
+    <select id="countrySelect">
+      <option value="">اختر الدولة...</option>
+    </select>
+
+    <label>المدينة</label>
+    <select id="citySelect" disabled>
+      <option value="">اختر المدينة...</option>
+    </select>
+
+    <label>المطار</label>
+    <select id="airportSelect" disabled>
+      <option value="">اختر المطار...</option>
+    </select>
+
+    <label>الاسم الكامل</label>
+    <input id="name" type="text" placeholder="اسم المسافر" />
+
+    <label>الهاتف (مع رمز الدولة بدون +)</label>
+    <input id="phone" type="tel" placeholder="9665XXXXXXXX" />
+
+    <label>تاريخ الرحلة</label>
+    <input id="date" type="date" />
+
+    <label>ملاحظات</label>
+    <textarea id="notes" placeholder="ملاحظات إضافية"></textarea>
+
+    <div class="actions">
+      <button id="previewBtn">عرض الملخص</button>
+      <button id="sendBtn">إرسال عبر واتساب</button>
+    </div>
+
+    <pre id="summary" class="summary" aria-live="polite"></pre>
+  </div>
+
+  <script>
+    let data = [];
+
+    const countrySelect = document.getElementById('countrySelect');
+    const citySelect = document.getElementById('citySelect');
+    const airportSelect = document.getElementById('airportSelect');
+    const nameInput = document.getElementById('name');
+    const phoneInput = document.getElementById('phone');
+    const dateInput = document.getElementById('date');
+    const notesInput = document.getElementById('notes');
+    const previewBtn = document.getElementById('previewBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    const summaryPre = document.getElementById('summary');
+
+    async function loadData() {
+      try {
+        const res = await fetch('airports.json');
+        data = await res.json();
+        populateCountries();
+      } catch (e) {
+        console.error(e);
+        summaryPre.textContent = 'خطأ في تحميل بيانات المطارات. تأكد من وجود ملف airports.json.';
+      }
+    }
+
+    function populateCountries() {
+      countrySelect.innerHTML = '<option value="">اختر الدولة...</option>';
+      data.forEach((c, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = c["الدولة"];
+        countrySelect.appendChild(opt);
+      });
+    }
+
+    countrySelect.addEventListener('change', () => {
+      const idx = countrySelect.value;
+      citySelect.innerHTML = '<option value="">اختر المدينة...</option>';
+      airportSelect.innerHTML = '<option value="">اختر المطار...</option>';
+      airportSelect.disabled = true;
+      if (idx === '') { citySelect.disabled = true; return; }
+      const cities = data[idx]["مدن"] || [];
+      cities.forEach((ct, cidx) => {
+        const opt = document.createElement('option');
+        opt.value = `${idx}|${cidx}`;
+        opt.textContent = ct["المدينة"];
+        citySelect.appendChild(opt);
+      });
+      citySelect.disabled = false;
+    });
+
+    citySelect.addEventListener('change', () => {
+      const val = citySelect.value;
+      airportSelect.innerHTML = '<option value="">اختر المطار...</option>';
+      if (!val) { airportSelect.disabled = true; return; }
+      const [cidx, cidx2] = val.split('|').map(Number);
+      const airports = (data[cidx]["مدن"][cidx2]["المطارات"]) || [];
+      airports.forEach((a, aidx) => {
+        const opt = document.createElement('option');
+        opt.value = a["الرمز"] || a["الاسم"] || aidx;
+        opt.textContent = `${a["الاسم"]} (${a["الرمز"] || ''})`;
+        airportSelect.appendChild(opt);
+      });
+      airportSelect.disabled = false;
+    });
+
+    function buildSummary() {
+      const country = countrySelect.selectedOptions[0]?.textContent || '';
+      const city = citySelect.selectedOptions[0]?.textContent || '';
+      const airport = airportSelect.selectedOptions[0]?.textContent || '';
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const date = dateInput.value;
+      const notes = notesInput.value.trim();
+
+      return [
+        `اسم المسافر: ${name || '-'}`,
+        `الهاتف: ${phone || '-'}`,
+        `الدولة: ${country || '-'}`,
+        `المدينة: ${city || '-'}`,
+        `المطار: ${airport || '-'}`,
+        `تاريخ الرحلة: ${date || '-'}`,
+        `ملاحظات: ${notes || '-'}`
+      ].join('\\n');
+    }
+
+    previewBtn.addEventListener('click', () => {
+      summaryPre.textContent = buildSummary();
+    });
+
+    sendBtn.addEventListener('click', () => {
+      const phone = phoneInput.value.trim();
+      if (!phone) { alert('يرجى إدخال رقم الهاتف لإرسال رسالة واتساب.'); return; }
+      const text = encodeURIComponent(buildSummary());
+      const url = `https://wa.me/${phone}?text=${text}`;
+      window.open(url, '_blank');
+    });
+
+    loadData();
+  </script>
+</body>
+</html>

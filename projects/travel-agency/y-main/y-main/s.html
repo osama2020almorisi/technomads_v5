@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>برنامج سياحي إلى سقطر - أمان للسفريات</title>
+  <meta name="description" content="اكتشف جمال جزيرة سقطر الساحرة مع برامجنا السياحية المميزة">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #a64fbe;
+      --secondary-color: #a03ba4;
+      --accent-color: #ff9f43;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --success-color: #a728a5;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+      --border-radius: 12px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Tajawal', sans-serif;
+      margin: 0;
+      background: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 20px;
+      color: white;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo i {
+      margin-left: 10px;
+    }
+    
+    .back-button {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+    
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .back-button i {
+      margin-right: 5px;
+    }
+    
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 85vh;
+      min-height: 600px;
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding: 0 20px;
+    }
+    
+    .hero-content {
+      max-width: 900px;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    .hero h1 {
+      font-size: 52px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+      line-height: 1.2;
+    }
+    
+    .hero p {
+      font-size: 22px;
+      margin-bottom: 35px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .cta-button {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 15px 35px;
+      border-radius: 30px;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 5px 15px rgba(255, 159, 67, 0.4);
+    }
+    
+    .cta-button:hover {
+      background: #ff8c1a;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(255, 159, 67, 0.6);
+    }
+    
+    .cta-button i {
+      margin-right: 10px;
+    }
+    
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: var(--border-radius);
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      animation: slideUp 0.4s ease;
+    }
+    
+    .modal-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .modal-header h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .close-modal:hover {
+      transform: scale(1.2);
+    }
+    
+    .modal-body {
+      padding: 30px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--secondary-color);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(42, 125, 46, 0.2);
+    }
+    
+    .submit-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .submit-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+    
+    .submit-btn i {
+      margin-right: 10px;
+    }
+    
+    /* Gallery Section */
+    .gallery-section {
+      padding: 80px 0;
+      background: #f9f9f9;
+    }
+    
+    .gallery-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 50px;
+      color: var(--secondary-color);
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 100px;
+      height: 4px;
+      background: var(--accent-color);
+    }
+    
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+    
+    .gallery-item {
+      position: relative;
+      height: 300px;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+    
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+      color: white;
+      padding: 20px;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    
+    .gallery-item:hover .gallery-overlay {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .gallery-overlay h3 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    
+    /* Programs Container */
+    .programs-container {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 15px;
+    }
+    
+    /* Programs Grid */
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+    
+    .program-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    .program-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .program-image {
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .program-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: var(--accent-color);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      z-index: 2;
+    }
+    
+    .program-content {
+      padding: 25px;
+    }
+    
+    .program-title {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: var(--secondary-color);
+    }
+    
+    .program-duration {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      color: #666;
+    }
+    
+    .program-duration i {
+      margin-left: 8px;
+    }
+    
+    .program-features {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+    
+    .program-features li {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .program-features i {
+      color: var(--primary-color);
+      margin-left: 10px;
+    }
+    
+    .program-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .price-amount {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .price-person {
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .book-button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .book-button:hover {
+      background: var(--secondary-color);
+      transform: scale(1.05);
+    }
+    
+    /* Adventure Section */
+    .adventure-section {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+    }
+    
+    .adventure-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    
+    .adventure-title {
+      font-size: 42px;
+      margin-bottom: 20px;
+    }
+    
+    .adventure-subtitle {
+      font-size: 22px;
+      margin-bottom: 40px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .adventure-features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-top: 50px;
+    }
+    
+    .adventure-feature {
+      text-align: center;
+    }
+    
+    .adventure-icon {
+      font-size: 40px;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+    }
+    
+    .adventure-feature h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    
+    /* Testimonials Section */
+    .testimonials-section {
+      padding: 80px 0;
+      background: #f9f9f9;
+    }
+    
+    .testimonials-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+    
+    .testimonial-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+      transition: var(--transition);
+    }
+    
+    .testimonial-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.8;
+      position: relative;
+    }
+    
+    .testimonial-text::before {
+      content: """;
+      font-size: 60px;
+      color: var(--primary-color);
+      opacity: 0.2;
+      position: absolute;
+      top: -20px;
+      right: -10px;
+      font-family: Georgia, serif;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .author-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #ddd;
+      margin-left: 15px;
+      overflow: hidden;
+      border: 3px solid var(--primary-color);
+    }
+    
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .author-info h4 {
+      margin-bottom: 5px;
+      color: var(--secondary-color);
+    }
+    
+    .author-info p {
+      color: #666;
+      font-size: 14px;
+    }
+    
+    /* Footer Navigation */
+    footer {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+      max-width: 500px;
+      padding: 0;
+      z-index: 100;
+    }
+    
+    footer .nav-item {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      border-radius: 50%;
+      transition: var(--transition);
+      cursor: pointer;
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      width: 60px;
+      height: 60px;
+      justify-content: center;
+    }
+    
+    footer .nav-item:hover {
+      color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(42, 125, 46, 0.25);
+    }
+    
+    footer .nav-item.active {
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(42, 125, 46, 0.3);
+    }
+    
+    footer .nav-item i {
+      font-size: 22px;
+      margin-bottom: 0;
+      transition: var(--transition);
+    }
+    
+    footer .nav-item.active i {
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    footer .nav-item span {
+      display: none;
+    }
+    
+    /* Add space at the bottom of the body for the footer */
+    body {
+      padding-bottom: 80px;
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .adventure-features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 38px;
+      }
+      
+      .hero p {
+        font-size: 18px;
+      }
+      
+      .programs-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .adventure-features {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero {
+        height: 70vh;
+        min-height: 500px;
+      }
+      
+      .hero h1 {
+        font-size: 30px;
+      }
+      
+      .hero p {
+        font-size: 16px;
+      }
+      
+      .section-title {
+        font-size: 28px;
+      }
+      
+      footer {
+        width: 95%;
+        bottom: 15px;
+      }
+      
+      footer .nav-item {
+        width: 55px;
+        height: 55px;
+        padding: 12px;
+      }
+      
+      footer .nav-item i {
+        font-size: 20px;
+      }
+    }
+    
+    /* Animation for buttons */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <button class="back-button" onclick="window.history.back()">
+      <i class="fas fa-arrow-right"></i>
+      رجوع
+    </button>
+    <div class="logo">
+      <i class="fas fa-map-marked-alt"></i>
+      رحلات سقطر
+    </div>
+    <div></div> <!-- Empty div for balance -->
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>اكتشف جمال جزيرة سقطر الأسطورية</h1>
+    <p>انطلق في رحلة استثنائية إلى واحدة من أجمل الجزر في العالم، حيث الطبيعة البكر والمناظر الخلابة التي لا مثيل لها</p>
+    <button class="cta-button" id="openModalBtn">
+      ابدأ مغامرتك الآن
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Booking Modal -->
+<div class="modal" id="bookingModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button class="close-modal" id="closeModalBtn">&times;</button>
+      <h2>ابدأ رحلتك إلى سقطر</h2>
+    </div>
+    <div class="modal-body">
+      <form id="bookingForm">
+        <div class="form-group">
+          <label for="residence">مكان الإقامة الحالي</label>
+          <input type="text" id="residence" class="form-control" placeholder="أدخل مدينتك أو بلدك" required>
+        </div>
+        <button type="submit" class="submit-btn">
+          <i class="fab fa-whatsapp"></i>
+           ارسل عبر واتساب
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="gallery-section">
+  <div class="gallery-container">
+    <h2 class="section-title">استمتع بجمال سقطر الساحر</h2>
+    
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="شواطئ سقطر">
+        <div class="gallery-overlay">
+          <h3>شواطئ البكر</h3>
+          <p>استمتع بالشواطئ الذهبية والمياه الفيروزية</p>
+        </div>
+      </div>
+      
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="أشجار دم الأخوين">
+        <div class="gallery-overlay">
+          <h3>أشجار دم الأخوين</h3>
+          <p>شاهد الأشجار النادرة التي لا توجد إلا في سقطر</p>
+        </div>
+      </div>
+      
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="جبال سقطر">
+        <div class="gallery-overlay">
+          <h3>الجبال الشامخة</h3>
+          <p>تسلق القمم الشاهقة واستمتع بمناظر خلابة</p>
+        </div>
+      </div>
+      
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="كهوف سقطر">
+        <div class="gallery-overlay">
+          <h3>الكهوف العجيبة</h3>
+          <p>استكشف الكهوف الطبيعية ذات التكوينات الفريدة</p>
+        </div>
+      </div>
+      
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="الطبيعة في سقطر">
+        <div class="gallery-overlay">
+          <h3>الطبيعة البكر</h3>
+          <p>تنفس هواءً نقيًا في بيئة لم تمسها يد الإنسان</p>
+        </div>
+      </div>
+      
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="غروب الشمس في سقطر">
+        <div class="gallery-overlay">
+          <h3>غروب لا ينسى</h3>
+          <p>شاهد أجمل غروب للشمس في حياتك</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="programs-container">
+  <h2 class="section-title">برامجنا السياحية المميزة</h2>
+  
+  <div class="programs-grid">
+    <!-- Program 1 -->
+    <div class="program-card">
+      <div class="program-image" style="background-image: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80')">
+        <div class="program-badge">الأكثر طلباً</div>
+      </div>
+      <div class="program-content">
+        <h3 class="program-title">رحلة استكشاف سقطر الكلاسيكية</h3>
+        <div class="program-duration">
+          <i class="far fa-calendar-alt"></i>
+          <span>7 أيام / 6 ليالي</span>
+        </div>
+        <ul class="program-features">
+          <li><i class="fas fa-check"></i> زيارة أشجار دم الأخوين</li>
+          <li><i class="fas fa-check"></i> شاطئ ديحمري وخلجان سقطر</li>
+          <li><i class="fas fa-check"></i> كهوف هوك ودهاريز</li>
+          <li><i class="fas fa-check"></i> رحلة بحرية إلى جزيرة سمحة</li>
+        </ul>
+        <div class="program-price">
+          <div>
+            <div class="price-amount">$850</div>
+            <div class="price-person">للشخص</div>
+          </div>
+          <button class="book-button">احجز الآن</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Program 2 -->
+    <div class="program-card">
+      <div class="program-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80')">
+        <div class="program-badge">مغامرة</div>
+      </div>
+      <div class="program-content">
+        <h3 class="program-title">مغامرة سقطر البرية والبحرية</h3>
+        <div class="program-duration">
+          <i class="far fa-calendar-alt"></i>
+          <span>5 أيام / 4 ليالي</span>
+        </div>
+        <ul class="program-features">
+          <li><i class="fas fa-check"></i> تخييم في صحراء سقطر</li>
+          <li><i class="fas fa-check"></i> رحلات بحرية للغوص والسباحة</li>
+          <li><i class="fas fa-check"></i> تسلق الجبال والمرتفعات</li>
+          <li><i class="fas fa-check"></i> زيارة كهوف وعيون المياه</li>
+        </ul>
+        <div class="program-price">
+          <div>
+            <div class="price-amount">$650</div>
+            <div class="price-person">للشخص</div>
+          </div>
+          <button class="book-button">احجز الآن</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Program 3 -->
+    <div class="program-card">
+      <div class="program-image" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80')">
+        <div class="program-badge">عائلية</div>
+      </div>
+      <div class="program-content">
+        <h3 class="program-title">رحلة عائلية إلى سقطر</h3>
+        <div class="program-duration">
+          <i class="far fa-calendar-alt"></i>
+          <span>8 أيام / 7 ليالي</span>
+        </div>
+        <ul class="program-features">
+          <li><i class="fas fa-check"></i> إقامة في فنادق مناسبة للعائلات</li>
+          <li><i class="fas fa-check"></i> أنشطة ترفيهية للأطفال</li>
+          <li><i class="fas fa-check"></i> زيارة المعالم السياحية المناسبة</li>
+          <li><i class="fas fa-check"></i> جولات بحرية آمنة</li>
+        </ul>
+        <div class="program-price">
+          <div>
+            <div class="price-amount">$950</div>
+            <div class="price-person">للشخص</div>
+          </div>
+          <button class="book-button">احجز الآن</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="adventure-section">
+  <div class="adventure-container">
+    <h2 class="adventure-title">مغامرة العمر في انتظارك!</h2>
+    <p class="adventure-subtitle">سقطر ليست مجرد وجهة سياحية، بل هي تجربة فريدة تلامس روحك وتغير منظورك للحياة</p>
+    
+    <div class="adventure-features">
+      <div class="adventure-feature">
+        <div class="adventure-icon">
+          <i class="fas fa-tree"></i>
+        </div>
+        <h3>طبيعة فريدة</h3>
+        <p>37% من نباتات الجزيرة لا توجد في أي مكان آخر في العالم</p>
+      </div>
+      
+      <div class="adventure-feature">
+        <div class="adventure-icon">
+          <i class="fas fa-water"></i>
+        </div>
+        <h3>شواطئ بكر</h3>
+        <p>أجمل الشواطئ ذات الرمال البيضاء والمياه الفيروزية</p>
+      </div>
+      
+      <div class="adventure-feature">
+        <div class="adventure-icon">
+          <i class="fas fa-mountain"></i>
+        </div>
+        <h3>جبال ساحرة</h3>
+        <p>تضاريس جبلية خلابة ومنحدرات صخرية مذهلة</p>
+      </div>
+      
+      <div class="adventure-feature">
+        <div class="adventure-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>تراث ثقافي</h3>
+        <p>اكتشف ثقافة فريدة وتقاليد عريقة لسكان الجزيرة</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="testimonials-section">
+  <div class="testimonials-container">
+    <h2 class="section-title">آراء زوارنا</h2>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text">"رحلة لا تنسى إلى واحدة من أجمل الجزر في العالم. الطبيعة الخلابة والخدمات المميزة جعلت الرحلة استثنائية. أنصح الجميع بزيارة سقطر مع هذه الشركة."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="صورة الزائر">
+          </div>
+          <div class="author-info">
+            <h4>أحمد السعدي</h4>
+            <p>من السعودية</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <p class="testimonial-text">"لم أتخيل أن هناك مكانًا بهذا الجمال على وجه الأرض. سقطر تجمع بين البحر والجبال والصحراء بطريقة ساحرة. شكرًا لفريق العمل على التنظيم الرائع."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="صورة الزائرة">
+          </div>
+          <div class="author-info">
+            <h4>فاطمة العلي</h4>
+            <p>من الإمارات</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <p class="testimonial-text">"أفضل رحلة قمت بها في حياتي! التنظيم كان ممتازًا والمرشدين السياحيين كانوا محترفين. سأعود مرة أخرى لا محالة."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="صورة الزائر">
+          </div>
+          <div class="author-info">
+            <h4>خالد المري</h4>
+            <p>من قطر</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer with only two icons -->
+<footer>
+  <div class="nav-item active" id="homeButton" onclick="goToHomePage()">
+    <i class="fas fa-home"></i>
+    <span>الرئيسية</span>
+  </div>
+  <div class="nav-item" id="pageButton" onclick="goToItineraryPage()">
+    <i class="fas fa-route"></i>
+    <span>خط سير الرحلة</span>
+  </div>
+</footer>
+
+<script>
+  // Modal functionality
+  const modal = document.getElementById('bookingModal');
+  const openModalBtn = document.getElementById('openModalBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const bookingForm = document.getElementById('bookingForm');
+
+  // Open modal
+  openModalBtn.addEventListener('click', function() {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+
+  // Close modal
+  closeModalBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  });
+
+  // Close modal when clicking outside
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  // Form submission
+  bookingForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const residence = document.getElementById('residence').value;
+    
+    if (residence.trim() === '') {
+      alert('يرجى إدخال مكان الإقامة');
+      return;
+    }
+    
+    // Create WhatsApp message
+    const message = `مرحباً، أرغب في حجز رحلة إلى سقطر. مكان إقامتي الحالي هو: ${residence}. أود الاستفسار عن البرامج السياحية المتاحة والتفاصيل.`;
+    
+    // Encode message for URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // WhatsApp number
+    const phoneNumber = '781333149';
+    
+    // Create WhatsApp URL
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    
+    // Open WhatsApp in new tab
+    window.open(whatsappURL, '_blank');
+    
+    // Close modal
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    
+    // Reset form
+    bookingForm.reset();
+  });
+
+  // Function to navigate to home page
+  function goToHomePage() {
+    window.location.href = 'index.html';
+  }
+  
+  // Function to navigate to itinerary page
+  function goToItineraryPage() {
+    window.location.href = 'itinerary.html';
+  }
+
+  // Add animation effect to buttons
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      // Remove active class from all items
+      document.querySelectorAll('.nav-item').forEach(i => {
+        i.classList.remove('active');
+      });
+      
+      // Add active class to clicked item
+      this.classList.add('active');
+      
+      // Add pulse animation
+      this.style.animation = 'pulse 0.5s';
+      setTimeout(() => {
+        this.style.animation = '';
+      }, 500);
+    });
+  });
+  
+  // Add functionality for buttons (in a real app these would have actual functions)
+  document.querySelectorAll('.book-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  
+  // Add scroll animations
+  window.addEventListener('scroll', function() {
+    const elements = document.querySelectorAll('.program-card, .gallery-item, .testimonial-card');
+    
+    elements.forEach(element => {
+      const position = element.getBoundingClientRect().top;
+      const screenPosition = window.innerHeight / 1.2;
+      
+      if(position < screenPosition) {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+      }
+    });
+  });
+  
+  // Initialize elements for animation
+  document.addEventListener('DOMContentLoaded', function() {
+    const elements = document.querySelectorAll('.program-card, .gallery-item, .testimonial-card');
+    
+    elements.forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    });
+  });
+</script>
+
+</body>
+</html>

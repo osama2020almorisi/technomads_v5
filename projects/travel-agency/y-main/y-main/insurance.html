@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تأمين السفر - أمان للسفريات</title>
+  <meta name="description" content="احصل على أفضل وثائق تأمين السفر لتغطية جميع احتياجاتك أثناء رحلاتك الدولية">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #3a4bdc;
+      --secondary-color: #5f2caa;
+      --accent-color: #ff6b35;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+      --border-radius: 12px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Tajawal', sans-serif;
+      margin: 0;
+      background: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+    
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 20px;
+      color: white;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo i {
+      margin-left: 10px;
+    }
+    
+    .back-button {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+    
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .back-button i {
+      margin-right: 5px;
+    }
+    
+    /* Page Title */
+    .page-title {
+      text-align: center;
+      margin: 30px 0;
+      position: relative;
+    }
+    
+    .page-title h1 {
+      font-size: 28px;
+      color: var(--dark-color);
+      margin-bottom: 10px;
+    }
+    
+    .page-title p {
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .page-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+      margin: 20px auto;
+      border-radius: 2px;
+    }
+    
+    /* Insurance Calculator */
+    .insurance-calculator {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 25px;
+      margin: 0 auto 30px;
+      max-width: 800px;
+    }
+    
+    .calculator-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      position: relative;
+    }
+    
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1;
+    }
+    
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 8px;
+      transition: var(--transition);
+    }
+    
+    .step.active .step-number {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+    
+    .step.completed .step-number {
+      background: var(--success-color);
+      color: white;
+    }
+    
+    .step.completed .step-number::after {
+      content: '\f00c';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+    }
+    
+    .step-label {
+      font-size: 14px;
+      color: #777;
+    }
+    
+    .step.active .step-label {
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+    
+    .calculator-steps::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: #eee;
+      z-index: 0;
+    }
+    
+    /* Calculator Form */
+    .calculator-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #555;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(58, 75, 220, 0.1);
+    }
+    
+    .date-input-group {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .date-input-group .form-control {
+      flex: 1;
+    }
+    
+    .btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(58, 75, 220, 0.2);
+    }
+    
+    .btn i {
+      margin-left: 8px;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+    
+    /* Insurance Plans */
+    .insurance-plans {
+      max-width: 1200px;
+      margin: 0 auto 100px;
+      padding: 0 15px;
+    }
+    
+    .plans-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    
+    .plan-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      border: 1px solid #eee;
+    }
+    
+    .plan-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .plan-header {
+      padding: 20px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+    
+    .plan-header h3 {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+    
+    .plan-header .price {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    
+    .plan-header .price span {
+      font-size: 16px;
+      font-weight: normal;
+    }
+    
+    .plan-body {
+      padding: 20px;
+    }
+    
+    .plan-features {
+      list-style: none;
+      margin-bottom: 25px;
+    }
+    
+    .plan-features li {
+      padding: 8px 0;
+      border-bottom: 1px dashed #eee;
+      display: flex;
+      align-items: center;
+    }
+    
+    .plan-features li:last-child {
+      border-bottom: none;
+    }
+    
+    .plan-features li i {
+      margin-left: 10px;
+      color: var(--success-color);
+    }
+    
+    .plan-recommended {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--accent-color);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .plan-card.recommended {
+      border: 2px solid var(--accent-color);
+      position: relative;
+    }
+    
+    /* Coverage Details */
+    .coverage-details {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 25px;
+      margin: 30px auto;
+      max-width: 1000px;
+    }
+    
+    .coverage-details h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: var(--primary-color);
+    }
+    
+    .coverage-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    
+    .coverage-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+    
+    .coverage-item i {
+      margin-left: 10px;
+      color: var(--primary-color);
+      font-size: 20px;
+      margin-top: 2px;
+    }
+    
+    /* FAQ Section */
+    .faq-section {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 0 15px;
+    }
+    
+    .faq-item {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+    
+    .faq-question {
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    .faq-question:hover {
+      background: #f9f9f9;
+    }
+    
+    .faq-question i {
+      transition: var(--transition);
+    }
+    
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    
+    .faq-item.active .faq-question {
+      background: #f9f9f9;
+    }
+    
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+    
+    .faq-item.active .faq-answer {
+      padding: 0 20px 20px;
+      max-height: 500px;
+    }
+    
+
+/* Footer Navigation - UPDATED */
+footer {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 500px;
+  padding: 0;
+  z-index: 100;
+}
+
+footer .nav-item {
+  text-align: center;
+  font-size: 13px;
+  color: #777;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border-radius: 50%;
+  transition: var(--transition);
+  cursor: pointer;
+  background: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  width: 60px;
+  height: 60px;
+  justify-content: center;
+}
+
+footer .nav-item:hover {
+  color: var(--primary-color);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(58, 75, 220, 0.25);
+}
+
+footer .nav-item.active {
+  color: white;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(58, 75, 220, 0.3);
+}
+
+footer .nav-item i {
+  font-size: 22px;
+  margin-bottom: 0;
+  transition: var(--transition);
+}
+
+footer .nav-item.active i {
+  color: white;
+  transform: scale(1.1);
+}
+
+footer .nav-item span {
+  display: none;
+}
+
+/* Add space at the bottom of the body for the footer */
+body {
+  padding-bottom: 80px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  footer {
+    width: 95%;
+    bottom: 15px;
+  }
+  
+  footer .nav-item {
+    width: 55px;
+    height: 55px;
+    padding: 12px;
+  }
+  
+  footer .nav-item i {
+    font-size: 20px;
+  }
+}
+
+/* Animation for buttons */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+    .main-title, h2 {
+      font-family: 'Amiri', 'Scheherazade', serif;
+      font-size: 28px;
+      color: #000;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <button class="back-button" onclick="window.history.back()">
+      <i class="fas fa-arrow-right"></i>
+      رجوع
+    </button>
+    <div class="logo">
+      <i class="fas fa-umbrella"></i>
+      تأمين السفر
+    </div>
+    <div></div> <!-- Empty div for balance -->
+  </div>
+</header>
+
+<div class="page-title">
+  <h1>تأمين السفر الشامل</h1>
+  <p>احصل على أفضل تغطية تأمينية لرحلتك لتطمئن أثناء سفرك</p>
+</div>
+
+<div class="insurance-calculator">
+  <div class="calculator-steps">
+    <div class="step active">
+      <div class="step-number">1</div>
+      <div class="step-label">معلومات الرحلة</div>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-label">المسافرون</div>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-label">الدفع</div>
+    </div>
+  </div>
+  
+  <form class="calculator-form">
+    <div class="form-group">
+      <label for="destination">وجهة السفر</label>
+      <select id="destination" class="form-control">
+        <option value="">اختر الوجهة</option>
+        <option value="europe">أوروبا</option>
+        <option value="usa">أمريكا الشمالية</option>
+        <option value="asia">آسيا</option>
+        <option value="africa">أفريقيا</option>
+        <option value="other">وجهات أخرى</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="trip-type">نوع الرحلة</label>
+      <select id="trip-type" class="form-control">
+        <option value="">اختر نوع الرحلة</option>
+        <option value="individual">فردية</option>
+        <option value="family">عائلية</option>
+        <option value="group">جماعية</option>
+      </select>
+    </div>
+    
+    <div class="form-group full-width">
+      <label>مدة الرحلة</label>
+      <div class="date-input-group">
+        <input type="date" class="form-control" placeholder="تاريخ المغادرة">
+        <input type="date" class="form-control" placeholder="تاريخ العودة">
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="travelers">عدد المسافرين</label>
+      <select id="travelers" class="form-control">
+        <option value="1">1 مسافر</option>
+        <option value="2">2 مسافرين</option>
+        <option value="3">3 مسافرين</option>
+        <option value="4">4 مسافرين</option>
+        <option value="5+">5+ مسافرين</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="age">العمر</label>
+      <select id="age" class="form-control">
+        <option value="18-30">18-30 سنة</option>
+        <option value="31-50">31-50 سنة</option>
+        <option value="51-65">51-65 سنة</option>
+        <option value="65+">65+ سنة</option>
+      </select>
+    </div>
+    
+    <div class="form-group full-width" style="text-align: center;">
+      <button type="submit" class="btn">
+        احسب السعر
+        <i class="fas fa-calculator"></i>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="insurance-plans">
+  <h2 class="section-title" style="text-align: center;">
+    <i class="fas fa-shield-alt"></i>
+    باقات التأمين المتاحة
+  </h2>
+  
+  <div class="plans-container">
+    <div class="plan-card">
+      <div class="plan-header">
+        <h3>الباقة الأساسية</h3>
+        <div class="price">75 <span>ريال/شخص</span></div>
+      </div>
+      <div class="plan-body">
+        <ul class="plan-features">
+          <li><i class="fas fa-check"></i> تغطية طبية حتى 100,000 ريال</li>
+          <li><i class="fas fa-check"></i> تأمين ضد الحوادث</li>
+          <li><i class="fas fa-check"></i> تأمين تأخير الأمتعة</li>
+          <li><i class="fas fa-check"></i> تأمين فقدان الأمتعة</li>
+          <li><i class="fas fa-check"></i> مساعدة طبية طارئة</li>
+        </ul>
+        <button class="btn btn-outline" style="width: 100%;">
+          اختر الباقة
+          <i class="fas fa-shopping-cart"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="plan-card recommended">
+      <div class="plan-recommended">موصى به</div>
+      <div class="plan-header">
+        <h3>الباقة الممتازة</h3>
+        <div class="price">120 <span>ريال/شخص</span></div>
+      </div>
+      <div class="plan-body">
+        <ul class="plan-features">
+          <li><i class="fas fa-check"></i> تغطية طبية حتى 250,000 ريال</li>
+          <li><i class="fas fa-check"></i> تأمين ضد الحوادث</li>
+          <li><i class="fas fa-check"></i> تأمين تأخير الأمتعة</li>
+          <li><i class="fas fa-check"></i> تأمين فقدان الأمتعة</li>
+          <li><i class="fas fa-check"></i> مساعدة طبية طارئة</li>
+          <li><i class="fas fa-check"></i> تغطية إلغاء الرحلة</li>
+          <li><i class="fas fa-check"></i> تأمين المسؤولية المدنية</li>
+        </ul>
+        <button class="btn" style="width: 100%;">
+          اختر الباقة
+          <i class="fas fa-shopping-cart"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="plan-card">
+      <div class="plan-header">
+        <h3>الباقة الشاملة</h3>
+        <div class="price">180 <span>ريال/شخص</span></div>
+      </div>
+      <div class="plan-body">
+        <ul class="plan-features">
+          <li><i class="fas fa-check"></i> تغطية طبية حتى 500,000 ريال</li>
+          <li><i class="fas fa-check"></i> تأمين ضد الحوادث</li>
+          <li><i class="fas fa-check"></i> تأمين تأخير الأمتعة</li>
+          <li><i class="fas fa-check"></i> تأمين فقدان الأمتعة</li>
+          <li><i class="fas fa-check"></i> مساعدة طبية طارئة</li>
+          <li><i class="fas fa-check"></i> تغطية إلغاء الرحلة</li>
+          <li><i class="fas fa-check"></i> تأمين المسؤولية المدنية</li>
+          <li><i class="fas fa-check"></i> تغطية الرياضات الخطرة</li>
+          <li><i class="fas fa-check"></i> خدمة الإجلاء الطبي</li>
+        </ul>
+        <button class="btn btn-outline" style="width: 100%;">
+          اختر الباقة
+          <i class="fas fa-shopping-cart"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="coverage-details">
+  <h2>تفاصيل التغطية التأمينية</h2>
+  <div class="coverage-items">
+    <div class="coverage-item">
+      <i class="fas fa-briefcase-medical"></i>
+      <div>
+        <h4>التغطية الطبية</h4>
+        <p>تغطية نفقات العلاج الطبي في الخارج في حالة المرض أو الحوادث</p>
+      </div>
+    </div>
+    <div class="coverage-item">
+      <i class="fas fa-plane"></i>
+      <div>
+        <h4>تأخير الرحلة</h4>
+        <p>تعويض عن تأخير الرحلة بعد فترة انتظار محددة</p>
+      </div>
+    </div>
+    <div class="coverage-item">
+      <i class="fas fa-suitcase"></i>
+      <div>
+        <h4>فقدان الأمتعة</h4>
+        <p>تعويض عن فقدان الأمتعة أو تلفها أثناء السفر</p>
+      </div>
+    </div>
+    <div class="coverage-item">
+      <i class="fas fa-user-injured"></i>
+      <div>
+        <h4>الحوادث الشخصية</h4>
+        <p>تغطية الوفاة أو العجز الدائم بسبب الحوادث</p>
+      </div>
+    </div>
+    <div class="coverage-item">
+      <i class="fas fa-procedures"></i>
+      <div>
+        <h4>الإجلاء الطبي</h4>
+        <p>ترتيب ونفقات الإجلاء الطبي في الحالات الحرجة</p>
+      </div>
+    </div>
+    <div class="coverage-item">
+      <i class="fas fa-home"></i>
+      <div>
+        <h4>العودة المبكرة</h4>
+        <p>تغطية تكاليف العودة المبكرة بسبب طارئ عائلي</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="faq-section">
+  <h2 class="section-title" style="text-align: center;">
+    <i class="fas fa-question-circle"></i>
+    الأسئلة الشائعة
+  </h2>
+  
+  <div class="faq-item">
+    <div class="faq-question">
+      ما هي مدة صلاحية وثيقة تأمين السفر؟
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="faq-answer">
+      <p>تكون وثيقة تأمين السفر سارية المفعول طوال مدة الرحلة المحددة في الوثيقة. يمكنك اختيار مدة التغطية حسب احتياجاتك بدءًا من يوم واحد وحتى سنة كاملة للرحلات المتعددة.</p>
+    </div>
+  </div>
+  
+  <div class="faq-item">
+    <div class="faq-question">
+      هل يشمل التأمين الأمراض الموجودة مسبقًا؟
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="faq-answer">
+      <p>التغطية للأمراض الموجودة مسبقًا تختلف حسب الباقة المختارة. الباقة الأساسية لا تغطيها عادةً، بينما الباقات الأعلى قد توفر تغطية محدودة بشروط معينة. يرجى قراءة شروط الوثيقة بعناية.</p>
+    </div>
+  </div>
+  
+  <div class="faq-item">
+    <div class="faq-question">
+      كيف يمكنني تقديم مطالبة تأمينية؟
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="faq-answer">
+      <p>يمكنك تقديم المطالبة عبر تطبيق أمان للسفريات أو الموقع الإلكتروني. ستحتاج إلى تقديم الوثائق الداعمة مثل الفواتير الطبية أو تقارير الشرطة حسب نوع المطالبة. يوجد رقم طوارئ متاح 24/7 للمساعدة في الحالات الطارئة.</p>
+    </div>
+  </div>
+  
+  <div class="faq-item">
+    <div class="faq-question">
+      هل التأمين يغطي الرحلات الداخلية؟
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="faq-answer">
+      <p>تأمين السفر مصمم للرحلات الدولية. للرحلات الداخلية، ننصح بشراء تأمين سفر محلي أو التأكد من أن تأمينك الصحي الحالي يغطي احتياجاتك في مختلف مناطق البلاد.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer with only two icons -->
+<footer>
+  <div class="nav-item" id="homeButton" onclick="goToHomePage()">
+    <i class="fas fa-home"></i>
+    <span>الرئيسية</span>
+  </div>
+  <div class="nav-item active" id="pageButton">
+    <!-- غيّر الأيقونة والنص حسب الصفحة -->
+    <i class="fas fa-umbrella"></i>
+    <span>تأمين السفر</span>
+  </div>
+</footer>
+
+<script>
+  
+  // Function to navigate to home page
+function goToHomePage() {
+  window.location.href = 'index.html';
+}
+
+// Add animation effect to buttons
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    // Remove active class from all items
+    document.querySelectorAll('.nav-item').forEach(i => {
+      i.classList.remove('active');
+    });
+    
+    // Add active class to clicked item
+    this.classList.add('active');
+    
+    // Add pulse animation
+    this.style.animation = 'pulse 0.5s';
+    setTimeout(() => {
+      this.style.animation = '';
+    }, 500);
+  });
+});
+  
+  // FAQ Toggle Functionality
+  document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+      const item = question.parentElement;
+      item.classList.toggle('active');
+      
+      // Close other open items
+      document.querySelectorAll('.faq-item').forEach(otherItem => {
+        if (otherItem !== item && otherItem.classList.contains('active')) {
+          otherItem.classList.remove('active');
+        }
+      });
+    });
+  });
+  
+  // Form Submission
+  document.querySelector('.calculator-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('جارٍ حساب أفضل العروض لك...');
+    // In a real app, you would submit the form data and show the results
+  });
+</script>
+
+</body>
+</html>

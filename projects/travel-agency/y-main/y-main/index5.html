@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>نظام حجز الطيران — احترافي</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+  --bg: linear-gradient(135deg,#667eea 0%,#7c3aed 100%);
+  --card:#fff; --primary:#2563eb; --accent:#f59e0b; --muted:#64748b;
+  --radius:12px; --shadow:0 12px 32px rgba(2,6,23,0.12);
+  font-family: 'Tajawal', sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;padding:28px;background:var(--bg);color:#0f172a;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto}
+.app-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;color:#fff}
+.brand{font-weight:800;font-size:1.25rem;display:flex;gap:12px;align-items:center}
+.subtitle{opacity:0.9}
+.card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.controls{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid #f1f5f9;gap:12px}
+.tabs{display:flex;gap:6px}
+.tab{background:transparent;border:none;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700;color:var(--muted)}
+.tab.active{background:#fff;color:var(--primary);box-shadow:0 8px 20px rgba(2,6,23,0.06)}
+.actions{display:flex;gap:8px}
+.btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700;display:inline-flex;gap:8px;align-items:center}
+.btn.primary{background:linear-gradient(90deg,var(--primary),#7c3aed);color:#fff}
+.btn.ghost{background:transparent;border:1px solid #eef2ff;color:#0f172a}
+.btn.small{padding:6px 8px;font-size:0.9rem;border-radius:8px}
+.segments{padding:18px;display:flex;flex-direction:column;gap:14px}
+.segment{border:1px solid #eef2ff;padding:14px;border-radius:12px;background:#fff}
+.seg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.seg-title{margin:0;font-size:1.05rem;display:flex;gap:10px;align-items:center}
+.seg-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:8px}
+.label{font-weight:700;display:flex;gap:8px;align-items:center}
+.input{padding:10px;border-radius:10px;border:1px solid #e6eefc;font-size:15px}
+.dates{grid-column:1/-1;display:flex;gap:12px}
+.date-field{flex:1;display:flex;flex-direction:column;gap:8px}
+.return-field{max-width:320px}
+.autocomplete{position:relative}
+.ac-list{position:absolute;z-index:30;left:0;right:0;top:46px;background:#fff;border-radius:8px;box-shadow:0 8px 30px rgba(2,6,23,0.08);max-height:240px;overflow:auto;padding:6px 0;list-style:none;margin:0;border:1px solid #eef2ff}
+.ac-list li{padding:8px 12px;display:flex;gap:10px;align-items:center;cursor:pointer}
+.ac-list li .meta{display:flex;flex-direction:column}
+.ac-list li:hover{background:linear-gradient(90deg,rgba(37,99,235,0.05),rgba(124,58,237,0.03))}
+.ac-icon{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,var(--primary),#7c3aed);color:#fff;font-weight:800}
+.bottom{display:flex;justify-content:space-between;align-items:center;padding:18px}
+.footer{text-align:center;padding:14px;color:#94a3b8}
+.summary{margin:18px;padding:16px;border-radius:12px;background:linear-gradient(180deg,#fbfbff,#f8fafc);border:1px solid #eef2ff}
+.hidden{display:none}
+@media(max-width:760px){
+  .dates{flex-direction:column}
+  .return-field{max-width:100%}
+  .seg-body{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<main class="app wrap">
+  <header class="app-header">
+    <div class="brand"><i class="fas fa-plane-departure"></i> نظام حجز الطيران — احترافي</div>
+    <div class="subtitle">واجهة عربية متقدمة — بحث ذكي — رحلات متعددة</div>
+  </header>
+
+  <section class="card">
+    <div class="controls">
+      <div class="tabs">
+        <button class="tab active" data-type="round"><i class="fas fa-exchange-alt"></i> ذهاب وعودة</button>
+        <button class="tab" data-type="oneway"><i class="fas fa-arrow-right"></i> ذهاب فقط</button>
+        <button class="tab" data-type="multi"><i class="fas fa-route"></i> متعددة المقاطع</button>
+      </div>
+      <div class="actions">
+        <button id="addSegmentBtn" class="btn ghost"><i class="fas fa-plus"></i> إضافة مقطع</button>
+        <button id="clearBtn" class="btn ghost"><i class="fas fa-eraser"></i> تفريغ</button>
+      </div>
+    </div>
+
+    <form id="bookingForm" autocomplete="off">
+      <div id="segments" class="segments"></div>
+      <div class="form-row bottom">
+        <div class="left">
+          <label class="label"><i class="fas fa-users"></i> المسافرون</label>
+          <select id="passengers" class="input"><option>1</option><option>2</option><option>3</option></select>
+        </div>
+        <div class="right">
+          <label class="label"><i class="fas fa-couch"></i> الفئة</label>
+          <select id="cabin" class="input"><option value="economy">اقتصادية</option><option value="business">رجال أعمال</option></select>
+        </div>
+      </div>
+      <div class="form-row actions-row" style="padding:18px;">
+        <button type="button" id="searchBtn" class="btn primary"><i class="fas fa-search"></i> عرض الملخص</button>
+      </div>
+    </form>
+
+    <div id="summary" class="summary hidden"></div>
+  </section>
+
+  <footer class="footer">نسخة احترافية — HTML واحد فقط</footer>
+</main>
+
+<template id="segmentTpl">
+  <div class="segment" data-index="0">
+    <div class="seg-header">
+      <h3 class="seg-title"><i class="fas fa-plane"></i> مقطع <span class="seg-num">1</span></h3>
+      <div class="seg-controls"><button type="button" class="btn small remove-seg"><i class="fas fa-trash"></i></button></div>
+    </div>
+    <div class="seg-body">
+      <div class="field">
+        <label class="label"><i class="fas fa-location-dot"></i> من</label>
+        <div class="autocomplete">
+          <input type="text" class="input ac-input from-input" placeholder="مدينة أو مطار" />
+          <ul class="ac-list hidden"></ul>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label"><i class="fas fa-location-check"></i> إلى</label>
+        <div class="autocomplete">
+          <input type="text" class="input ac-input to-input" placeholder="مدينة أو مطار" />
+          <ul class="ac-list hidden"></ul>
+        </div>
+      </div>
+      <div class="field dates">
+        <div class="date-field">
+          <label class="label"><i class="fas fa-calendar-day"></i> المغادرة</label>
+          <input type="date" class="input depart" required />
+        </div>
+        <div class="date-field return-field">
+          <label class="label"><i class="fas fa-calendar-check"></i> العودة</label>
+          <input type="date" class="input return" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+(() => {
+  const CONTACT_PHONE = '967781333149';
+  const airports = [
+    {code:"RUH", city:"الرياض", country:"السعودية", name:"مطار الملك خالد الدولي"},
+    {code:"JED", city:"جدة", country:"السعودية", name:"مطار الملك عبدالعزيز"},
+    {code:"DXB", city:"دبي", country:"الإمارات", name:"مطار دبي الدولي"},
+    {code:"CAI", city:"القاهرة", country:"مصر", name:"مطار القاهرة الدولي"}
+  ];
+  const segmentsEl=document.getElementById('segments'),tpl=document.getElementById('segmentTpl');
+  const tabs=document.querySelectorAll('.tab'); let tripType="round";
+  function addSegment(){
+    const node=document.importNode(tpl.content,true);
+    const seg=node.querySelector('.segment');
+    seg.querySelector('.remove-seg').onclick=()=>{seg.remove();};
+    setupAutocomplete(seg,'.from-input');setupAutocomplete(seg,'.to-input');
+    segmentsEl.appendChild(seg); updateReturnFields();
+  }
+  function updateReturnFields(){
+    const segs=segmentsEl.querySelectorAll('.segment');
+    segs.forEach((s,i)=>{
+      const rf=s.querySelector('.return-field');
+      if(tripType==="oneway"||tripType==="multi") rf.style.display="none";
+      else rf.style.display=i===0?"block":"none";
+    });
+  }
+  function setupAutocomplete(seg,sel){
+    const input=seg.querySelector(sel),list=seg.querySelector('.ac-list');
+    input.addEventListener('input',()=>{
+      const q=input.value.trim().toLowerCase();
+      if(!q){list.innerHTML="";list.classList.add('hidden');return;}
+      const results=airports.filter(a=> (a.code+a.city+a.country+a.name).toLowerCase().includes(q));
+      list.innerHTML=results.map(r=>`<li><div class="ac-icon">${r.code}</div><div class="meta"><strong>${r.city} - ${r.country}</strong><small>${r.name}</small></div></li>`).join("");
+      list.classList.remove('hidden');
+      list.querySelectorAll('li').forEach((li,i)=>li.onclick=()=>{input.value=`${results[i].city} (${results[i].code})`;list.classList.add('hidden');});
+    });
+  }
+  function renderSummary(segs){
+    let html="<h3>ملخص الحجز</h3>";
+    segs.forEach((s,i)=>{html+=`<p><b>مقطع ${i+1}:</b> ${s.from} → ${s.to} <br> ${s.depart}${s.return? " — عودة: "+s.return:""}</p>`});
+    html+=`<button onclick="window.location.reload()" class="btn ghost">تعديل</button>`;
+    document.getElementById('summary').innerHTML=html;
+    document.getElementById('summary').classList.remove('hidden');
+  }
+  document.getElementById('addSegmentBtn').onclick=()=>addSegment();
+  document.getElementById('clearBtn').onclick=()=>{segmentsEl.innerHTML="";addSegment();};
+  tabs.forEach(t=>t.onclick=()=>{tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');tripType=t.dataset.type;updateReturnFields();});
+  document.getElementById('searchBtn').onclick=()=>{
+    const segs=[...segmentsEl.querySelectorAll('.segment')].map(s=>({
+      from:s.querySelector('.from-input').value,
+      to:s.querySelector('.to-input').value,
+      depart:s.querySelector('.depart').value,
+      return:s.querySelector('.return')?s.querySelector('.return').value:""
+    }));
+    renderSummary(segs);
+  };
+  addSegment();
+})();
+</script>
+</body>
+</html>

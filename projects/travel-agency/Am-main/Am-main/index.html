@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>أمان - لوحة التحكم الرئيسية</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary: #2c5aa0;
+      --primary-light: #3a6bc0;
+      --primary-dark: #1e3d72;
+      --secondary: #f8a31b;
+      --secondary-light: #f9b84d;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --info: #17a2b8;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --gray: #6c757d;
+      --gray-light: #e9ecef;
+      --border-radius: 10px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf1 100%);
+      color: var(--dark);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    .topbar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 18px;
+    }
+
+    .logo-text h1 {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .logo-text span {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 4px;
+      transition: var(--transition);
+    }
+
+    .mobile-menu-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-container {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .topbar-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .topbar-nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      font-weight: 500;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .topbar-nav a:hover, .topbar-nav a.active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h2 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 20px;
+      border-bottom: 2px solid var(--gray-light);
+      padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card h2 i {
+      background: var(--primary);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .main-grid {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    .actions-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .backup-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .stat-card {
+      background: var(--light);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      transition: var(--transition);
+      border-left: 4px solid var(--primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card i {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: rgba(44, 90, 160, 0.1);
+      font-size: 40px;
+    }
+
+    .stat-card span {
+      display: block;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 10px;
+    }
+
+    .stat-card small {
+      color: var(--gray);
+      font-size: 12px;
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .alert-warning {
+      background: #fff3cd;
+      border-left: 4px solid var(--warning);
+      color: #856404;
+    }
+
+    .alert-danger {
+      background: #f8d7da;
+      border-left: 4px solid var(--danger);
+      color: #721c24;
+    }
+
+    .alert-info {
+      background: #d1ecf1;
+      border-left: 4px solid var(--info);
+      color: #0c5460;
+    }
+
+    .alert-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .notification-item {
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 12px;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      border-left: 4px solid var(--warning);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .notification-item.urgent {
+      border-left-color: var(--danger);
+      animation: pulse 2s infinite;
+    }
+
+    .notification-item.info {
+      border-left-color: var(--info);
+    }
+
+    .notification-item.success {
+      border-left-color: var(--success);
+    }
+
+    .notification-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .notification-content h4 {
+      margin-bottom: 5px;
+      color: var(--dark);
+      font-size: 15px;
+    }
+
+    .notification-content p {
+      color: var(--gray);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .notification-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .notification-time {
+      font-size: 11px;
+      color: var(--gray);
+      white-space: nowrap;
+    }
+
+    .notification-actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-warning {
+      background: var(--warning);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-info {
+      background: var(--info);
+      color: white;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .btn-icon {
+      padding: 8px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .chart-container {
+      height: 250px;
+      position: relative;
+    }
+
+    .backup-card {
+      background: var(--light);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      border: 1px solid var(--gray-light);
+      transition: var(--transition);
+    }
+
+    .backup-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .backup-card h3 {
+      margin-bottom: 10px;
+      color: var(--primary);
+      font-size: 16px;
+    }
+
+    .backup-card p {
+      margin-bottom: 15px;
+      color: var(--gray);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .file-input-container {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .file-input-container input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .file-input-label {
+      display: block;
+      padding: 10px 15px;
+      background: var(--primary);
+      color: white;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 13px;
+    }
+
+    .file-input-label:hover {
+      background: var(--primary-light);
+    }
+
+    .list {
+      list-style: none;
+    }
+
+    .list li {
+      padding: 12px 15px;
+      border-bottom: 1px solid var(--gray-light);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .list li:last-child {
+      border-bottom: none;
+    }
+
+    .list li i {
+      color: var(--primary);
+      width: 16px;
+      flex-shrink: 0;
+    }
+
+    .list-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .list-time {
+      font-size: 11px;
+      color: var(--gray);
+      white-space: nowrap;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: var(--gray-light);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .progress {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .loading-spinner {
+      display: none;
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(44, 90, 160, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s ease-in-out infinite;
+      margin: 15px auto;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+      70% { box-shadow: 0 0 0 8px rgba(220, 53, 69, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .ripple {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ripple:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform .5s, opacity 1s;
+    }
+
+    .ripple:active:after {
+      transform: scale(0, 0);
+      opacity: .2;
+      transition: 0s;
+    }
+
+    .message {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 15px 20px;
+      border-radius: var(--border-radius);
+      color: white;
+      font-weight: 600;
+      z-index: 10000;
+      box-shadow: var(--shadow);
+      animation: slideIn 0.3s ease;
+      max-width: calc(100vw - 40px);
+    }
+
+    .message.success {
+      background: var(--success);
+    }
+
+    .message.error {
+      background: var(--danger);
+    }
+
+    .message.info {
+      background: var(--info);
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(-100%); opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .topbar-content {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .logo-section {
+        justify-content: space-between;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav-container {
+        display: none;
+        margin-top: 10px;
+      }
+      
+      .nav-container.active {
+        display: block;
+        animation: slideDown 0.3s ease;
+      }
+      
+      .topbar-nav {
+        flex-direction: column;
+        gap: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: var(--border-radius);
+        padding: 10px;
+      }
+      
+      .topbar-nav a {
+        text-align: right;
+        padding: 12px 15px;
+        border-radius: 6px;
+      }
+      
+      .topbar-nav a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      
+      .container {
+        margin: 15px auto;
+        padding: 0 10px;
+      }
+      
+      .card {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      
+      .main-grid, .actions-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .backup-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .stat-card {
+        padding: 15px 10px;
+      }
+      
+      .stat-card span {
+        font-size: 24px;
+      }
+      
+      .chart-container {
+        height: 200px;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .notification-item {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .notification-meta {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stat-card {
+        padding: 15px;
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- الهيدر المحسّن -->
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="logo-section">
+        <div class="logo-icon">
+          <i class="fas fa-plane"></i>
+        </div>
+        <div class="logo-text">
+          <h1>أمان للسفريات</h1>
+          <span>لوحة التحكم الرئيسية</span>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      
+      <div class="nav-container" id="navContainer">
+        <nav class="topbar-nav">
+          <a href="index.html" class="active"><i class="fas fa-home"></i> الرئيسية</a>
+          <a href="clients.html"><i class="fas fa-users"></i> العملاء</a>
+          <a href="flights.html"><i class="fas fa-ticket-alt"></i> التذاكر</a>
+          <a href="visas.html"><i class="fas fa-passport"></i> التأشيرات</a>
+          <a href="umrah.html"><i class="fas fa-kaaba"></i> العمرة</a>
+          <a href="notifications.html"><i class="fas fa-bell"></i> الإشعارات</a>
+          <a href="backup.html"><i class="fas fa-database"></i> النسخ الاحتياطي</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- التنبيهات العاجلة -->
+    <div class="alert alert-warning">
+      <div class="alert-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <div>
+        <strong>تنبيه!</strong> هناك <span id="urgentCount">0</span> عميل لديهم رحلات خلال الأيام القادمة. تأكد من إرسال التذكيرات.
+      </div>
+    </div>
+
+    <!-- الإحصائيات -->
+    <section class="card">
+      <h2><i class="fas fa-chart-bar"></i> نظرة عامة</h2>
+      <div class="grid stats-grid">
+        <div class="stat-card">
+          <i class="fas fa-users"></i>
+          العملاء
+          <span id="stat-clients">0</span>
+          <small>إجمالي المسجلين</small>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-ticket-alt"></i>
+          التذاكر
+          <span id="stat-flights">0</span>
+          <small>تم إصدارها</small>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-passport"></i>
+          التأشيرات
+          <span id="stat-visas">0</span>
+          <small>طلبات نشطة</small>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-kaaba"></i>
+          العمرة
+          <span id="stat-umrah">0</span>
+          <small>حجوزات نشطة</small>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-bell"></i>
+          الإشعارات
+          <span id="stat-notifs">0</span>
+          <small>غير مقروءة</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="grid main-grid">
+      <!-- المخطط والنشاطات -->
+      <div>
+        <section class="card">
+          <h2><i class="fas fa-chart-line"></i> أداء المبيعات</h2>
+          <div class="chart-container">
+            <canvas id="salesChart"></canvas>
+          </div>
+        </section>
+        
+        <section class="card">
+          <h2><i class="fas fa-history"></i> النشاطات الحديثة</h2>
+          <ul id="activityList" class="list"></ul>
+        </section>
+      </div>
+
+      <!-- الإشعارات والإجراءات -->
+      <div>
+        <section class="card">
+          <h2><i class="fas fa-bell"></i> الإشعارات العاجلة</h2>
+          <div id="urgentNotifications">
+            <!-- سيتم ملؤها بالجافاسكريبت -->
+          </div>
+        </section>
+
+        <section class="card">
+          <h2><i class="fas fa-bolt"></i> إجراءات سريعة</h2>
+          <div class="action-buttons">
+            <button class="btn btn-primary ripple btn-block" id="createNotificationBtn">
+              <i class="fas fa-bell"></i> إنشاء إشعار
+            </button>
+            <button class="btn btn-success ripple btn-block" id="backupNowBtn">
+              <i class="fas fa-download"></i> نسخ احتياطي
+            </button>
+            <button class="btn btn-outline ripple btn-block" id="refreshDataBtn">
+              <i class="fas fa-sync-alt"></i> تحديث البيانات
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- النسخ الاحتياطي -->
+    <section class="card">
+      <h2><i class="fas fa-database"></i> النسخ الاحتياطي والاستعادة</h2>
+      <div class="grid backup-grid">
+        <div class="backup-card">
+          <h3><i class="fas fa-file-export"></i> تصدير البيانات</h3>
+          <p>حفظ نسخة احتياطية من جميع البيانات</p>
+          <button class="btn btn-primary ripple btn-block" id="exportJsonBtn">
+            <i class="fas fa-file-code"></i> تصدير JSON
+          </button>
+        </div>
+
+        <div class="backup-card">
+          <h3><i class="fas fa-file-import"></i> استيراد البيانات</h3>
+          <p>استعادة البيانات من ملف احتياطي</p>
+          <div class="file-input-container">
+            <button class="file-input-label">
+              <i class="fas fa-file-code"></i> اختيار ملف JSON
+            </button>
+            <input type="file" id="importJsonInput" accept=".json">
+          </div>
+        </div>
+
+        <div class="backup-card">
+          <h3><i class="fas fa-code-merge"></i> دمج البيانات</h3>
+          <p>دمج البيانات من ملف مع البيانات الحالية</p>
+          <div class="file-input-container">
+            <button class="file-input-label">
+              <i class="fas fa-layer-group"></i> دمج من ملف
+            </button>
+            <input type="file" id="mergeDataInput" accept=".json">
+          </div>
+          <div class="progress-bar">
+            <div class="progress" id="mergeProgress"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- مؤشر التحميل -->
+  <div class="loading-spinner" id="loadingSpinner"></div>
+
+  <script>
+    // نظام جمع البيانات من جميع الأنظمة
+    class DataCollector {
+        static getAllClients() {
+            try {
+                const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{"clients": []}');
+                return amanDB.clients || [];
+            } catch (e) {
+                console.error('خطأ في قراءة بيانات العملاء:', e);
+                return [];
+            }
+        }
+
+        static getAllFlights() {
+            try {
+                const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{"flights": []}');
+                return amanDB.flights || [];
+            } catch (e) {
+                console.error('خطأ في قراءة بيانات التذاكر:', e);
+                return [];
+            }
+        }
+
+        static getAllVisas() {
+            try {
+                const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{"visas": []}');
+                return amanDB.visas || [];
+            } catch (e) {
+                console.error('خطأ في قراءة بيانات التأشيرات:', e);
+                return [];
+            }
+        }
+
+        static getAllUmrahBookings() {
+            try {
+                const umrahDB = JSON.parse(localStorage.getItem('umrah_database') || '{"bookings": []}');
+                return umrahDB.bookings || [];
+            } catch (e) {
+                console.error('خطأ في قراءة بيانات العمرة:', e);
+                return [];
+            }
+        }
+
+        static getAllNotifications() {
+            try {
+                // جمع الإشعارات من جميع المصادر
+                const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{"notifications": []}');
+                const umrahDB = JSON.parse(localStorage.getItem('umrah_database') || '{"notifications": []}');
+                const notificationDB = JSON.parse(localStorage.getItem('notification_database') || '{"notifications": []}');
+                
+                const allNotifications = [
+                    ...(amanDB.notifications || []),
+                    ...(umrahDB.notifications || []),
+                    ...(notificationDB.notifications || [])
+                ];
+                
+                return allNotifications.filter(notif => !notif.read);
+            } catch (e) {
+                console.error('خطأ في قراءة الإشعارات:', e);
+                return [];
+            }
+        }
+
+        static getSystemActivity() {
+            try {
+                const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{"activity": []}');
+                return amanDB.activity || [];
+            } catch (e) {
+                console.error('خطأ في قراءة النشاطات:', e);
+                return [];
+            }
+        }
+
+        // دالة مساعدة لإنشاء بيانات تجريبية إذا لم تكن موجودة
+        static createSampleData() {
+            // بيانات تجريبية للعملاء
+            const sampleClients = [
+                {
+                    id: 1,
+                    name: "أحمد محمد",
+                    phone: "0512345678",
+                    email: "ahmed@example.com",
+                    travelDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    destination: "دبي"
+                },
+                {
+                    id: 2,
+                    name: "فاطمة علي",
+                    phone: "0587654321",
+                    email: "fatima@example.com",
+                    travelDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    destination: "اسطنبول"
+                }
+            ];
+
+            // بيانات تجريبية للتذاكر
+            const sampleFlights = [
+                {
+                    id: 1,
+                    clientName: "أحمد محمد",
+                    flightNumber: "SV123",
+                    departure: "الرياض",
+                    destination: "دبي",
+                    date: new Date().toISOString().split('T')[0]
+                }
+            ];
+
+            // بيانات تجريبية للتأشيرات
+            const sampleVisas = [
+                {
+                    id: 1,
+                    clientName: "فاطمة علي",
+                    type: "سياحية",
+                    expiryDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+                }
+            ];
+
+            // بيانات تجريبية للعمرة
+            const sampleUmrah = [
+                {
+                    id: 1,
+                    clientName: "سالم عبدالله",
+                    travelDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    status: "confirmed"
+                }
+            ];
+
+            // حفظ البيانات إذا لم تكن موجودة
+            if (this.getAllClients().length === 0) {
+                const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{}');
+                amanDB.clients = sampleClients;
+                amanDB.flights = sampleFlights;
+                amanDB.visas = sampleVisas;
+                amanDB.activity = [
+                    { text: "تم إنشاء بيانات تجريبية", when: "الآن" },
+                    { text: "نظام النسخ الاحتياطي جاهز للعمل", when: "الآن" }
+                ];
+                localStorage.setItem('aman_database', JSON.stringify(amanDB));
+            }
+
+            if (this.getAllUmrahBookings().length === 0) {
+                const umrahDB = JSON.parse(localStorage.getItem('umrah_database') || '{}');
+                umrahDB.bookings = sampleUmrah;
+                localStorage.setItem('umrah_database', JSON.stringify(umrahDB));
+            }
+        }
+    }
+
+    // نظام الإشعارات الذكي
+    class SmartNotificationSystem {
+        static checkUpcomingTrips() {
+            const clients = DataCollector.getAllClients();
+            const today = new Date();
+            const notifications = [];
+            
+            clients.forEach(client => {
+                if (client.travelDate) {
+                    const travelDate = new Date(client.travelDate);
+                    const diffTime = travelDate - today;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDays > 0 && diffDays <= 7) {
+                        notifications.push({
+                            id: Date.now() + Math.random(),
+                            title: diffDays <= 2 ? 'رحلة عاجلة!' : 'رحلة قريبة',
+                            message: `رحلة العميل ${client.name || client.clientName || 'غير معروف'} إلى ${client.destination || 'غير معروف'} بعد ${diffDays} يوم`,
+                            type: diffDays <= 2 ? 'urgent' : 'warning',
+                            priority: diffDays <= 2 ? 'high' : 'medium',
+                            createdAt: new Date().toISOString()
+                        });
+                    }
+                }
+            });
+            
+            return notifications;
+        }
+
+        static checkUpcomingUmrah() {
+            const umrahBookings = DataCollector.getAllUmrahBookings();
+            const today = new Date();
+            const notifications = [];
+            
+            umrahBookings.forEach(booking => {
+                if (booking.travelDate && (booking.status === 'confirmed' || !booking.status)) {
+                    const travelDate = new Date(booking.travelDate);
+                    const diffTime = travelDate - today;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDays > 0 && diffDays <= 7) {
+                        notifications.push({
+                            id: Date.now() + Math.random(),
+                            title: diffDays <= 2 ? 'عمرة عاجلة!' : 'عمرة قريبة',
+                            message: `عمرة المعتمر ${booking.clientName} بعد ${diffDays} يوم`,
+                            type: diffDays <= 2 ? 'urgent' : 'warning',
+                            priority: diffDays <= 2 ? 'high' : 'medium',
+                            createdAt: new Date().toISOString()
+                        });
+                    }
+                }
+            });
+            
+            return notifications;
+        }
+
+        static checkExpiringDocuments() {
+            const today = new Date();
+            const notifications = [];
+            
+            // التأشيرات المنتهية
+            const visas = DataCollector.getAllVisas();
+            visas.forEach(visa => {
+                if (visa.expiryDate) {
+                    const expiryDate = new Date(visa.expiryDate);
+                    const diffTime = expiryDate - today;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDays > 0 && diffDays <= 30) {
+                        notifications.push({
+                            id: Date.now() + Math.random(),
+                            title: diffDays <= 7 ? 'تأشيرة تنتهي قريباً!' : 'تأشيرة تنتهي',
+                            message: `تأشيرة ${visa.type || 'غير معروف'} للعميل ${visa.clientName} تنتهي بعد ${diffDays} يوم`,
+                            type: diffDays <= 7 ? 'urgent' : 'warning',
+                            priority: diffDays <= 7 ? 'high' : 'medium',
+                            createdAt: new Date().toISOString()
+                        });
+                    }
+                }
+            });
+
+            // تأشيرات العمرة المنتهية
+            const umrahBookings = DataCollector.getAllUmrahBookings();
+            umrahBookings.forEach(booking => {
+                if (booking.expiryDate && booking.status !== 'completed' && booking.status !== 'cancelled') {
+                    const expiryDate = new Date(booking.expiryDate);
+                    const diffTime = expiryDate - today;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDays > 0 && diffDays <= 30) {
+                        notifications.push({
+                            id: Date.now() + Math.random(),
+                            title: diffDays <= 7 ? 'عمرة تنتهي قريباً!' : 'عمرة تنتهي',
+                            message: `عمرة المعتمر ${booking.clientName} تنتهي بعد ${diffDays} يوم`,
+                            type: diffDays <= 7 ? 'urgent' : 'warning',
+                            priority: diffDays <= 7 ? 'high' : 'medium',
+                            createdAt: new Date().toISOString()
+                        });
+                    }
+                }
+            });
+            
+            return notifications;
+        }
+
+        static getAllUrgentNotifications() {
+            const tripNotifications = this.checkUpcomingTrips();
+            const umrahNotifications = this.checkUpcomingUmrah();
+            const documentNotifications = this.checkExpiringDocuments();
+            
+            return [...tripNotifications, ...umrahNotifications, ...documentNotifications]
+                .sort((a, b) => {
+                    const priorityOrder = { 'high': 3, 'medium': 2, 'low': 1 };
+                    return priorityOrder[b.priority] - priorityOrder[a.priority];
+                });
+        }
+    }
+
+    // نظام النسخ الاحتياطي والاستعادة - محسّن
+    class BackupSystem {
+        static exportData() {
+            try {
+                const data = {
+                    clients: DataCollector.getAllClients(),
+                    flights: DataCollector.getAllFlights(),
+                    visas: DataCollector.getAllVisas(),
+                    umrahBookings: DataCollector.getAllUmrahBookings(),
+                    exportDate: new Date().toISOString(),
+                    version: '1.0',
+                    totalRecords: DataCollector.getAllClients().length + 
+                                 DataCollector.getAllFlights().length + 
+                                 DataCollector.getAllVisas().length + 
+                                 DataCollector.getAllUmrahBookings().length
+                };
+
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `aman_backup_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                console.log('تم تصدير البيانات بنجاح:', data);
+                return true;
+            } catch (error) {
+                console.error('خطأ في تصدير البيانات:', error);
+                return false;
+            }
+        }
+
+        static importData(file) {
+            return new Promise((resolve, reject) => {
+                if (!file) {
+                    reject(new Error('لم يتم اختيار ملف'));
+                    return;
+                }
+
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        
+                        // التحقق من صحة البيانات
+                        if (!this.validateBackupData(data)) {
+                            reject(new Error('الملف غير صالح أو تالف'));
+                            return;
+                        }
+                        
+                        // استيراد البيانات إلى التخزين المحلي
+                        this.saveImportedData(data);
+                        resolve({
+                            success: true,
+                            message: `تم استيراد ${data.totalRecords || 0} سجل بنجاح`,
+                            data: data
+                        });
+                    } catch (error) {
+                        reject(new Error('خطأ في قراءة الملف: ' + error.message));
+                    }
+                };
+                
+                reader.onerror = () => {
+                    reject(new Error('خطأ في قراءة الملف'));
+                };
+                
+                reader.readAsText(file);
+            });
+        }
+
+        static mergeData(file) {
+            return new Promise((resolve, reject) => {
+                if (!file) {
+                    reject(new Error('لم يتم اختيار ملف'));
+                    return;
+                }
+
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        
+                        // التحقق من صحة البيانات
+                        if (!this.validateBackupData(data)) {
+                            reject(new Error('الملف غير صالح أو تالف'));
+                            return;
+                        }
+                        
+                        // دمج البيانات مع البيانات الحالية
+                        const result = this.mergeWithExistingData(data);
+                        resolve({
+                            success: true,
+                            message: `تم دمج ${result.addedRecords} سجل جديد`,
+                            data: result
+                        });
+                    } catch (error) {
+                        reject(new Error('خطأ في قراءة الملف: ' + error.message));
+                    }
+                };
+                
+                reader.onerror = () => {
+                    reject(new Error('خطأ في قراءة الملف'));
+                };
+                
+                reader.readAsText(file);
+            });
+        }
+
+        static validateBackupData(data) {
+            // التحقق من أن البيانات تحتوي على الهيكل الأساسي
+            return data && 
+                   typeof data === 'object' && 
+                   (Array.isArray(data.clients) || 
+                    Array.isArray(data.flights) || 
+                    Array.isArray(data.visas) || 
+                    Array.isArray(data.umrahBookings));
+        }
+
+        static saveImportedData(data) {
+            try {
+                // حفظ البيانات في التخزين المحلي
+                if (data.clients && data.clients.length > 0) {
+                    const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{}');
+                    amanDB.clients = data.clients;
+                    localStorage.setItem('aman_database', JSON.stringify(amanDB));
+                }
+                
+                if (data.flights && data.flights.length > 0) {
+                    const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{}');
+                    amanDB.flights = data.flights;
+                    localStorage.setItem('aman_database', JSON.stringify(amanDB));
+                }
+                
+                if (data.visas && data.visas.length > 0) {
+                    const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{}');
+                    amanDB.visas = data.visas;
+                    localStorage.setItem('aman_database', JSON.stringify(amanDB));
+                }
+                
+                if (data.umrahBookings && data.umrahBookings.length > 0) {
+                    const umrahDB = JSON.parse(localStorage.getItem('umrah_database') || '{}');
+                    umrahDB.bookings = data.umrahBookings;
+                    localStorage.setItem('umrah_database', JSON.stringify(umrahDB));
+                }
+
+                // إضافة نشاط الاستيراد
+                this.addActivity('تم استيراد بيانات النسخ الاحتياطي');
+                
+                return true;
+            } catch (error) {
+                console.error('خطأ في حفظ البيانات المستوردة:', error);
+                return false;
+            }
+        }
+
+        static mergeWithExistingData(data) {
+            let addedRecords = 0;
+            
+            try {
+                // دمج العملاء
+                if (data.clients && data.clients.length > 0) {
+                    const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{}');
+                    const existingClients = amanDB.clients || [];
+                    const initialCount = existingClients.length;
+                    
+                    // دمج العملاء مع تجنب التكرار (بناءً على المعرف)
+                    data.clients.forEach(newClient => {
+                        const exists = existingClients.some(client => client.id === newClient.id);
+                        if (!exists) {
+                            existingClients.push(newClient);
+                            addedRecords++;
+                        }
+                    });
+                    
+                    amanDB.clients = existingClients;
+                    localStorage.setItem('aman_database', JSON.stringify(amanDB));
+                }
+                
+                // دمج التذاكر
+                if (data.flights && data.flights.length > 0) {
+                    const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{}');
+                    const existingFlights = amanDB.flights || [];
+                    
+                    data.flights.forEach(newFlight => {
+                        const exists = existingFlights.some(flight => flight.id === newFlight.id);
+                        if (!exists) {
+                            existingFlights.push(newFlight);
+                            addedRecords++;
+                        }
+                    });
+                    
+                    amanDB.flights = existingFlights;
+                    localStorage.setItem('aman_database', JSON.stringify(amanDB));
+                }
+                
+                // دمج التأشيرات
+                if (data.visas && data.visas.length > 0) {
+                    const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{}');
+                    const existingVisas = amanDB.visas || [];
+                    
+                    data.visas.forEach(newVisa => {
+                        const exists = existingVisas.some(visa => visa.id === newVisa.id);
+                        if (!exists) {
+                            existingVisas.push(newVisa);
+                            addedRecords++;
+                        }
+                    });
+                    
+                    amanDB.visas = existingVisas;
+                    localStorage.setItem('aman_database', JSON.stringify(amanDB));
+                }
+                
+                // دمج حجوزات العمرة
+                if (data.umrahBookings && data.umrahBookings.length > 0) {
+                    const umrahDB = JSON.parse(localStorage.getItem('umrah_database') || '{}');
+                    const existingBookings = umrahDB.bookings || [];
+                    
+                    data.umrahBookings.forEach(newBooking => {
+                        const exists = existingBookings.some(booking => booking.id === newBooking.id);
+                        if (!exists) {
+                            existingBookings.push(newBooking);
+                            addedRecords++;
+                        }
+                    });
+                    
+                    umrahDB.bookings = existingBookings;
+                    localStorage.setItem('umrah_database', JSON.stringify(umrahDB));
+                }
+
+                // إضافة نشاط الدمج
+                this.addActivity(`تم دمج ${addedRecords} سجل جديد`);
+
+                return { addedRecords };
+            } catch (error) {
+                console.error('خطأ في دمج البيانات:', error);
+                return { addedRecords: 0, error: error.message };
+            }
+        }
+
+        static addActivity(message) {
+            try {
+                const amanDB = JSON.parse(localStorage.getItem('aman_database') || '{}');
+                if (!amanDB.activity) {
+                    amanDB.activity = [];
+                }
+                amanDB.activity.push({
+                    text: message,
+                    when: new Date().toLocaleTimeString('ar-SA')
+                });
+                // الاحتفاظ بآخر 50 نشاط فقط
+                if (amanDB.activity.length > 50) {
+                    amanDB.activity = amanDB.activity.slice(-50);
+                }
+                localStorage.setItem('aman_database', JSON.stringify(amanDB));
+            } catch (error) {
+                console.error('خطأ في إضافة النشاط:', error);
+            }
+        }
+    }
+
+    // نظام لوحة التحكم الرئيسية
+    class DashboardManager {
+        static init() {
+            this.setupMobileMenu();
+            this.setupEventListeners();
+            // إنشاء بيانات تجريبية إذا لزم الأمر
+            DataCollector.createSampleData();
+            this.refreshAllData();
+        }
+
+        static setupMobileMenu() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const navContainer = document.getElementById('navContainer');
+            
+            if (menuBtn && navContainer) {
+                menuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isActive = navContainer.classList.contains('active');
+                    
+                    if (isActive) {
+                        navContainer.classList.remove('active');
+                        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    } else {
+                        navContainer.classList.add('active');
+                        menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    }
+                });
+
+                // إغلاق القائمة عند النقر خارجها
+                document.addEventListener('click', function(e) {
+                    if (!navContainer.contains(e.target) && !menuBtn.contains(e.target)) {
+                        navContainer.classList.remove('active');
+                        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+
+                // إغلاق القائمة عند النقر على رابط
+                navContainer.addEventListener('click', function(e) {
+                    if (e.target.tagName === 'A') {
+                        navContainer.classList.remove('active');
+                        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+            }
+        }
+
+        static refreshAllData() {
+            this.refreshStats();
+            this.refreshNotifications();
+            this.refreshActivity();
+            this.refreshCharts();
+        }
+
+        static refreshStats() {
+            const clients = DataCollector.getAllClients().length;
+            const flights = DataCollector.getAllFlights().length;
+            const visas = DataCollector.getAllVisas().length;
+            const umrah = DataCollector.getAllUmrahBookings().length;
+            const notifications = DataCollector.getAllNotifications().length;
+
+            document.getElementById('stat-clients').textContent = clients;
+            document.getElementById('stat-flights').textContent = flights;
+            document.getElementById('stat-visas').textContent = visas;
+            document.getElementById('stat-umrah').textContent = umrah;
+            document.getElementById('stat-notifs').textContent = notifications;
+        }
+
+        static refreshNotifications() {
+            const urgentNotifications = SmartNotificationSystem.getAllUrgentNotifications();
+            const container = document.getElementById('urgentNotifications');
+            const urgentCount = urgentNotifications.filter(n => n.priority === 'high').length;
+
+            document.getElementById('urgentCount').textContent = urgentCount;
+
+            if (urgentNotifications.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--gray); padding: 20px;"><i class="fas fa-bell-slash" style="font-size: 24px; margin-bottom: 10px; display: block;"></i>لا توجد إشعارات عاجلة</div>';
+                return;
+            }
+
+            container.innerHTML = urgentNotifications.slice(0, 3).map(notif => `
+                <div class="notification-item ${notif.type}">
+                    <div class="notification-content">
+                        <h4>${notif.title}</h4>
+                        <p>${notif.message}</p>
+                    </div>
+                    <div class="notification-meta">
+                        <span class="notification-time">الآن</span>
+                        <div class="notification-actions">
+                            <button class="btn btn-sm btn-outline" onclick="DashboardManager.viewDetails('${notif.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="DashboardManager.dismissNotification('${notif.id}')">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        static refreshActivity() {
+            const activities = DataCollector.getSystemActivity();
+            const list = document.getElementById('activityList');
+            
+            if (activities.length === 0) {
+                list.innerHTML = '<li style="text-align: center; color: var(--gray); padding: 20px;"><i class="fas fa-inbox" style="font-size: 24px; margin-bottom: 10px; display: block;"></i>لا توجد نشاطات مسجلة</li>';
+                return;
+            }
+            
+            list.innerHTML = activities.slice().reverse().slice(0, 5).map(activity => `
+                <li>
+                    <i class="fas fa-circle" style="color: var(--success); font-size: 8px;"></i>
+                    <div class="list-content">${activity.text}</div>
+                    <div class="list-time">${activity.when}</div>
+                </li>
+            `).join('');
+        }
+
+        static refreshCharts() {
+            const flights = DataCollector.getAllFlights();
+            const umrahBookings = DataCollector.getAllUmrahBookings();
+            
+            // بيانات شهرية تجريبية (يمكن استبدالها ببيانات حقيقية)
+            const monthlyData = [12, 19, 8, 15, 12, 18];
+            
+            const ctx = document.getElementById('salesChart').getContext('2d');
+            
+            if (window.salesChart) {
+                window.salesChart.destroy();
+            }
+            
+            window.salesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
+                    datasets: [{
+                        label: 'إجمالي الحجوزات',
+                        data: monthlyData,
+                        backgroundColor: 'rgba(44, 90, 160, 0.7)',
+                        borderColor: 'rgba(44, 90, 160, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            rtl: true
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 5
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        static setupEventListeners() {
+            // إنشاء إشعار
+            document.getElementById('createNotificationBtn').addEventListener('click', () => {
+                this.showMessage('تم إنشاء إشعار تجريبي', 'success');
+                this.refreshAllData();
+            });
+
+            // نسخ احتياطي
+            document.getElementById('backupNowBtn').addEventListener('click', () => {
+                this.performBackup();
+            });
+
+            // تحديث البيانات
+            document.getElementById('refreshDataBtn').addEventListener('click', () => {
+                this.refreshAllData();
+                this.showMessage('تم تحديث البيانات', 'success');
+            });
+
+            // تصدير JSON
+            document.getElementById('exportJsonBtn').addEventListener('click', () => {
+                this.exportData();
+            });
+
+            // استيراد JSON
+            document.getElementById('importJsonInput').addEventListener('change', (e) => {
+                this.importData(e.target.files[0]);
+                // إعادة تعيين حقل الإدخال للسماح باختيار نفس الملف مرة أخرى
+                e.target.value = '';
+            });
+
+            // دمج البيانات
+            document.getElementById('mergeDataInput').addEventListener('change', (e) => {
+                this.mergeData(e.target.files[0]);
+                // إعادة تعيين حقل الإدخال للسماح باختيار نفس الملف مرة أخرى
+                e.target.value = '';
+            });
+        }
+
+        static viewDetails(notificationId) {
+            this.showMessage('عرض تفاصيل الإشعار', 'info');
+        }
+
+        static dismissNotification(notificationId) {
+            this.showMessage('تم تجاهل الإشعار', 'success');
+            this.refreshNotifications();
+        }
+
+        static performBackup() {
+            this.showLoading(true);
+            setTimeout(() => {
+                const success = BackupSystem.exportData();
+                if (success) {
+                    this.showMessage('تم إنشاء نسخة احتياطية بنجاح', 'success');
+                } else {
+                    this.showMessage('حدث خطأ أثناء إنشاء النسخة الاحتياطية', 'error');
+                }
+                this.showLoading(false);
+            }, 500);
+        }
+
+        static exportData() {
+            try {
+                const success = BackupSystem.exportData();
+                if (success) {
+                    this.showMessage('تم تصدير البيانات بنجاح', 'success');
+                    return true;
+                } else {
+                    this.showMessage('حدث خطأ أثناء التصدير', 'error');
+                    return false;
+                }
+            } catch (error) {
+                this.showMessage('حدث خطأ غير متوقع أثناء التصدير: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        static importData(file) {
+            if (!file) return;
+            
+            this.showLoading(true);
+            
+            BackupSystem.importData(file)
+                .then(result => {
+                    this.showMessage(result.message, 'success');
+                    this.refreshAllData();
+                })
+                .catch(error => {
+                    this.showMessage('حدث خطأ في استيراد البيانات: ' + error.message, 'error');
+                })
+                .finally(() => {
+                    this.showLoading(false);
+                });
+        }
+
+        static mergeData(file) {
+            if (!file) return;
+            
+            this.showLoading(true);
+            const progressBar = document.getElementById('mergeProgress');
+            progressBar.style.width = '0%';
+            
+            // محاكاة تقدم العملية
+            setTimeout(() => progressBar.style.width = '30%', 100);
+            setTimeout(() => progressBar.style.width = '60%', 300);
+            setTimeout(() => progressBar.style.width = '90%', 500);
+            
+            BackupSystem.mergeData(file)
+                .then(result => {
+                    progressBar.style.width = '100%';
+                    this.showMessage(result.message, 'success');
+                    this.refreshAllData();
+                })
+                .catch(error => {
+                    this.showMessage('حدث خطأ في دمج البيانات: ' + error.message, 'error');
+                })
+                .finally(() => {
+                    this.showLoading(false);
+                    setTimeout(() => progressBar.style.width = '0%', 1000);
+                });
+        }
+
+        static showLoading(show) {
+            document.getElementById('loadingSpinner').style.display = show ? 'block' : 'none';
+        }
+
+        static showMessage(message, type) {
+            // إزالة أي رسائل سابقة
+            const existingMessages = document.querySelectorAll('.message');
+            existingMessages.forEach(msg => msg.remove());
+            
+            const messageEl = document.createElement('div');
+            messageEl.textContent = message;
+            messageEl.className = `message ${type}`;
+            
+            document.body.appendChild(messageEl);
+            
+            setTimeout(() => {
+                messageEl.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (messageEl.parentNode) {
+                        messageEl.parentNode.removeChild(messageEl);
+                    }
+                }, 300);
+            }, 4000);
+        }
+    }
+
+    // تهيئة النظام عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+        DashboardManager.init();
+        DashboardManager.showMessage('تم تحميل لوحة التحكم بنجاح!', 'success');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1893 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>نظام حجز الطيران — أمان للسفريات</title>
+
+  <!-- خطوط وأيقونات -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg1: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+      --bg2: linear-gradient(135deg, #3730a3 0%, #1e3a8a 100%);
+      --card: #fff; 
+      --primary: #2563eb; 
+      --primary-light: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --accent: #f59e0b; 
+      --accent-light: #fbbf24;
+      --accent-dark: #d97706;
+      --muted: #64748b;
+      --muted-light: #94a3b8;
+      --muted-lighter: #e2e8f0;
+      --success: #10b981; 
+      --danger: #ef4444; 
+      --radius: 16px; 
+      --shadow: 0 10px 30px rgba(2,6,23,0.12);
+      --shadow-hover: 0 15px 40px rgba(2,6,23,0.2);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      font-family: 'Tajawal', sans-serif;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body{
+      margin:0;
+      padding:20px;
+      background:var(--bg1);
+      color:#0f172a;
+      min-height:100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+      background-size: cover;
+      z-index: -1;
+    }
+    
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      animation: fadeInUp 0.8s ease;
+    }
+    
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      transition:var(--transition);
+      position: relative;
+    }
+    
+    .card:hover{
+      box-shadow:var(--shadow-hover);
+      transform:translateY(-5px);
+    }
+    
+    .hero{
+      padding: 25px 30px;
+      background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+      color:#fff;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      position:relative;
+      overflow:hidden;
+    }
+    
+    .hero::before{
+      content:'';
+      position:absolute;
+      top:0;
+      right:0;
+      width:100%;
+      height:100%;
+      background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+      background-size:cover;
+    }
+    
+    .brand{
+      font-weight:700;
+      font-size:1.5rem;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      z-index:1;
+    }
+    
+    .brand i {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .content{
+      padding:30px;
+    }
+    
+    .tabs{
+      display:flex;
+      background:#f1f5f9;
+      border-radius:12px;
+      padding:8px;
+      gap:8px;
+      margin-bottom:24px;
+      position: relative;
+    }
+    
+    .tab{
+      flex:1;
+      padding:14px 18px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+      transition:var(--transition);
+      position:relative;
+      overflow:hidden;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    
+    .tab::after{
+      content:'';
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:5px;
+      height:5px;
+      background:rgba(255,255,255,0.5);
+      opacity:0;
+      border-radius:100%;
+      transform:scale(1,1) translate(-50%);
+      transform-origin:50% 50%;
+    }
+    
+    .tab:active::after{
+      animation:ripple 1s ease-out;
+    }
+    
+    .tab[aria-pressed="true"]{
+      background:#fff;
+      box-shadow:0 6px 18px rgba(2,6,23,0.1);
+      color:var(--primary);
+      transform: translateY(-2px);
+    }
+    
+    .tab[aria-pressed="true"] i {
+      color: var(--primary);
+    }
+    
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:20px;
+    }
+    
+    .form-group{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      position: relative;
+    }
+    
+    label{
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color: var(--muted);
+      transition: var(--transition);
+      font-size: 0.95rem;
+    }
+    
+    .form-group:focus-within label {
+      color: var(--primary);
+    }
+    
+    select, input{
+      padding:14px;
+      border-radius:12px;
+      border:1px solid #e2e8f0;
+      font-family:inherit;
+      transition:var(--transition);
+      background: white;
+      font-size: 1rem;
+      width: 100%;
+    }
+    
+    select:focus, input:focus{
+      outline:none;
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(37, 99, 235, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .select-wrapper{
+      position:relative;
+    }
+    
+    .select-wrapper i{
+      position:absolute;
+      left:16px;
+      top:50%;
+      transform:translateY(-50%);
+      color:var(--muted);
+      transition: var(--transition);
+    }
+    
+    .select-wrapper:focus-within i {
+      color: var(--primary);
+    }
+    
+    .select-wrapper select{
+      padding-right:14px;
+      padding-left:50px;
+      width:100%;
+      cursor: pointer;
+    }
+    
+    .search-box{
+      position:relative;
+      margin-bottom:16px;
+    }
+    
+    .search-box input{
+      width:100%;
+      padding:14px 50px 14px 14px;
+      border-radius:10px;
+      border:1px solid #e2e8f0;
+    }
+    
+    .search-box i{
+      position:absolute;
+      left:16px;
+      top:50%;
+      transform:translateY(-50%);
+      color:var(--muted);
+    }
+    
+    .btn{
+      padding:14px 20px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:700;
+      border:none;
+      transition:var(--transition);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      position:relative;
+      overflow:hidden;
+      font-size: 1rem;
+      flex: 1;
+      min-width: 140px;
+    }
+    
+    .btn::after{
+      content:'';
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:5px;
+      height:5px;
+      background:rgba(255,255,255,0.5);
+      opacity:0;
+      border-radius:100%;
+      transform:scale(1,1) translate(-50%);
+      transform-origin:50% 50%;
+    }
+    
+    .btn:active::after{
+      animation:ripple 1s ease-out;
+    }
+    
+    .btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 6px 16px rgba(0,0,0,0.15);
+    }
+    
+    .btn-primary{
+      background:linear-gradient(90deg, var(--primary-dark), var(--primary));
+      color:#fff;
+    }
+    
+    .btn-whatsapp{
+      background:linear-gradient(90deg, #25d366, #128c7e);
+      color:#fff;
+    }
+    
+    .btn-ghost{
+      background:#fff;
+      border:1px solid #e2e8f0;
+      color: var(--muted);
+    }
+    
+    .btn-ghost:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .summary{
+      margin-top:24px;
+      padding:24px;
+      background:#f8fafc;
+      border-radius:14px;
+      border:1px solid #eef2ff;
+      display:none;
+      animation:fadeIn 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+    }
+    
+    .summary-content{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    
+    .summary-row{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+    
+    .summary-row i{
+      color:var(--primary);
+      font-size:1.3rem;
+      width: 24px;
+    }
+    
+    .flight-direction{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin:12px 0;
+      padding:14px;
+      background:rgba(255,255,255,0.7);
+      border-radius:12px;
+      border-right:4px solid var(--accent);
+      animation: slideInRight 0.5s ease;
+    }
+    
+    .flight-direction i{
+      color:var(--accent);
+      font-size:1.5rem;
+    }
+    
+    .toast{
+      position:fixed;
+      left:20px;
+      bottom:20px;
+      background:#111;
+      color:#fff;
+      padding:16px 20px;
+      border-radius:12px;
+      box-shadow:0 8px 28px rgba(2,6,23,0.3);
+      display:none;
+      z-index:1000;
+      animation:slideInLeft 0.3s ease, slideOutLeft 0.3s ease 2.7s;
+      max-width: 350px;
+    }
+    
+    .option-with-icon{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    
+    .option-with-icon i{
+      color:var(--muted);
+    }
+    
+    .recent-searches{
+      margin-top:24px;
+      padding:20px;
+      background:#f8fafc;
+      border-radius:14px;
+      border:1px solid #eef2ff;
+      animation:fadeIn 0.5s ease;
+    }
+    
+    .recent-title{
+      font-weight:600;
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color: var(--muted);
+    }
+    
+    .recent-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    
+    .recent-item{
+      background:#fff;
+      border:1px solid #e2e8f0;
+      border-radius:10px;
+      padding:10px 16px;
+      cursor:pointer;
+      transition:var(--transition);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size: 0.9rem;
+    }
+    
+    .recent-item:hover{
+      background:#f1f5f9;
+      border-color:var(--primary);
+      transform:translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    }
+    
+    .recent-item i{
+      color:var(--primary);
+    }
+    
+    .loading-overlay{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.8);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:2000;
+      backdrop-filter: blur(5px);
+    }
+    
+    .loading-plane{
+      font-size:4rem;
+      color:#fff;
+      animation:fly 2s infinite;
+    }
+    
+    .flight-path{
+      position:relative;
+      height:6px;
+      background:#e2e8f0;
+      border-radius:3px;
+      margin:24px 0;
+      overflow:hidden;
+    }
+    
+    .flight-path::before{
+      content:'';
+      position:absolute;
+      top:0;
+      right:0;
+      height:100%;
+      width:30%;
+      background:var(--primary);
+      border-radius:3px;
+      animation:travel 3s infinite;
+    }
+    
+    .flight-timeline{
+      display:flex;
+      justify-content:space-between;
+      margin-top:12px;
+    }
+    
+    .timeline-point{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+    
+    .point{
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:#e2e8f0;
+      transition: var(--transition);
+    }
+    
+    .point.active{
+      background:var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+    }
+    
+    .timeline-label{
+      font-size:0.85rem;
+      color:var(--muted);
+      font-weight: 500;
+      text-align: center;
+    }
+    
+    .confetti{
+      position:fixed;
+      width:12px;
+      height:12px;
+      background:var(--primary);
+      opacity:0;
+      z-index:3000;
+      border-radius: 2px;
+    }
+    
+    .pulse{
+      animation:pulse 2s infinite;
+    }
+    
+    /* تحسينات القوائم المنسدلة */
+    .custom-select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    
+    .custom-select {
+      width: 100%;
+      padding: 14px 50px 14px 14px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background-color: white;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition);
+      min-height: 52px;
+      font-size: 1rem;
+    }
+    
+    .custom-select:hover {
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
+    }
+    
+    .custom-select.open {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    .custom-select i {
+      color: var(--muted);
+      transition: transform 0.3s;
+    }
+    
+    .custom-select.open i {
+      transform: rotate(180deg);
+      color: var(--primary);
+    }
+    
+    .custom-select-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-top: none;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      max-height: 240px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      animation: dropdownSlide 0.3s ease;
+    }
+    
+    .custom-select-dropdown.open {
+      display: block;
+    }
+    
+    .custom-select-search {
+      padding: 12px;
+      border-bottom: 1px solid #f1f5f9;
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 10;
+    }
+    
+    .custom-select-search input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.95rem;
+    }
+    
+    .custom-select-options {
+      max-height: 180px;
+      overflow-y: auto;
+    }
+    
+    .custom-select-option {
+      padding: 12px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition);
+      border-bottom: 1px solid #f8fafc;
+      font-size: 0.95rem;
+    }
+    
+    .custom-select-option:last-child {
+      border-bottom: none;
+    }
+    
+    .custom-select-option:hover {
+      background: #f8fafc;
+      padding-right: 20px;
+    }
+    
+    .custom-select-option.selected {
+      background: #eef2ff;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .custom-select-option.disabled {
+      color: #94a3b8;
+      cursor: not-allowed;
+    }
+    
+    .custom-select-option.disabled:hover {
+      background: transparent;
+      padding-right: 16px;
+    }
+    
+    .country-list{
+      max-height:200px;
+      overflow-y:auto;
+      border:1px solid #e2e8f0;
+      border-radius:10px;
+      margin-top:5px;
+      display:none;
+      position:absolute;
+      width:100%;
+      background:white;
+      z-index:100;
+      box-shadow:0 6px 20px rgba(0,0,0,0.1);
+    }
+    
+    .country-item{
+      padding:12px;
+      cursor:pointer;
+      border-bottom:1px solid #f1f5f9;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      transition: var(--transition);
+    }
+    
+    .country-item:hover{
+      background:#f8fafc;
+      padding-right: 16px;
+    }
+    
+    .country-item:last-child{
+      border-bottom:none;
+    }
+    
+    /* تحسينات للزر العائم */
+    .floating-action {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+      cursor: pointer;
+      z-index: 100;
+      transition: var(--transition);
+      animation: pulse 2s infinite;
+    }
+    
+    .floating-action:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.5);
+    }
+    
+    /* تحسينات للرسوم المتحركة */
+    @keyframes ripple{
+      0%{transform:scale(0, 0);opacity:1;}
+      20%{transform:scale(25, 25);opacity:1;}
+      100%{opacity:0;transform:scale(40, 40);}
+    }
+    
+    @keyframes fadeIn{
+      from{opacity:0;}
+      to{opacity:1;}
+    }
+    
+    @keyframes fadeInUp{
+      from{opacity:0; transform:translateY(30px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+    
+    @keyframes slideInLeft{
+      from{transform:translateX(-100%);opacity:0;}
+      to{transform:translateX(0);opacity:1;}
+    }
+    
+    @keyframes slideInRight{
+      from{transform:translateX(100%);opacity:0;}
+      to{transform:translateX(0);opacity:1;}
+    }
+    
+    @keyframes slideOutLeft{
+      from{transform:translateX(0);opacity:1;}
+      to{transform:translateX(-100%);opacity:0;}
+    }
+    
+    @keyframes fly{
+      0%{transform:translateX(-50px) rotate(0deg);}
+      50%{transform:translateX(50px) rotate(10deg);}
+      100%{transform:translateX(-50px) rotate(0deg);}
+    }
+    
+    @keyframes travel{
+      0%{right:100%;}
+      100%{right:0;}
+    }
+    
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 0 rgba(37, 99, 235, 0.7);}
+      70%{box-shadow:0 0 0 12px rgba(37, 99, 235, 0);}
+      100%{box-shadow:0 0 0 0 rgba(37, 99, 235, 0);}
+    }
+    
+    @keyframes confettiFall{
+      0%{transform:translateY(-100px) rotate(0deg);opacity:1;}
+      100%{transform:translateY(1000px) rotate(360deg);opacity:0;}
+    }
+    
+    @keyframes float{
+      0%{transform:translateY(0px);}
+      50%{transform:translateY(-10px);}
+      100%{transform:translateY(0px);}
+    }
+    
+    @keyframes dropdownSlide{
+      from{opacity:0; transform:translateY(-10px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+    
+    /* تحسينات للهواتف */
+    @media (max-width: 768px) {
+      body{padding:15px;}
+      .hero{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+        padding: 20px;
+      }
+      .tabs{flex-direction:column;}
+      .grid{grid-template-columns:1fr;}
+      .country-list{position:relative;width:calc(100% - 2px)}
+      .floating-action {
+        bottom: 20px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+      }
+      .content {
+        padding: 20px;
+      }
+      .btn {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        min-width: 120px;
+      }
+      .btn-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .brand {
+        font-size: 1.3rem;
+      }
+      .hero .btn {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .brand {
+        font-size: 1.2rem;
+      }
+      .hero {
+        padding: 15px;
+      }
+      .content {
+        padding: 15px;
+      }
+      .custom-select {
+        padding: 12px 45px 12px 12px;
+        min-height: 48px;
+        font-size: 0.95rem;
+      }
+      .form-group label, .tab {
+        font-size: 0.9rem;
+      }
+      .recent-item {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+      }
+    }
+    
+    /* تحسينات إضافية للشاشات الصغيرة جداً */
+    @media (max-width: 360px) {
+      body {
+        padding: 10px;
+      }
+      .content {
+        padding: 12px;
+      }
+      .hero {
+        padding: 12px;
+      }
+      .brand {
+        font-size: 1.1rem;
+      }
+      .btn {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+      }
+      .custom-select {
+        padding: 10px 40px 10px 10px;
+        min-height: 44px;
+      }
+    }
+    
+    /* تحسينات لشاشات كبيرة */
+    @media (min-width: 1200px) {
+      .wrap {
+        max-width: 1200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header class="hero">
+        <div class="brand"><i class="fas fa-plane-departure"></i> نظام حجز الطيران — أمان للسفريات</div>
+        <button id="open-demo" class="btn btn-ghost"><i class="fas fa-history"></i> استرجاع آخر بحث</button>
+      </header>
+      <div class="content">
+        <!-- Tabs -->
+        <div class="tabs">
+          <button class="tab" data-type="round" aria-pressed="true"><i class="fas fa-exchange-alt"></i> ذهاب وعودة</button>
+          <button class="tab" data-type="oneway" aria-pressed="false"><i class="fas fa-long-arrow-alt-right"></i> ذهاب فقط</button>
+        </div>
+
+        <!-- Form -->
+        <form id="flightForm" autocomplete="off">
+          <!-- Origin Section -->
+          <div class="grid">
+            <div class="form-group">
+              <label><i class="fas fa-globe-asia"></i> الدولة الأصل</label>
+              <div class="custom-select-wrapper" id="originCountryWrapper">
+                <div class="custom-select" id="originCountrySelect">
+                  <span id="originCountryText">اختر الدولة</span>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="custom-select-dropdown" id="originCountryDropdown">
+                  <div class="custom-select-search">
+                    <input type="text" id="originCountrySearch" placeholder="ابحث عن الدولة الأصل...">
+                  </div>
+                  <div class="custom-select-options" id="originCountryOptions">
+                    <!-- سيتم تعبئة الخيارات بالجافاسكريبت -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-city"></i> المدينة الأصل</label>
+              <div class="custom-select-wrapper" id="originCityWrapper">
+                <div class="custom-select" id="originCitySelect">
+                  <span id="originCityText">اختر المدينة</span>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="custom-select-dropdown" id="originCityDropdown">
+                  <div class="custom-select-search">
+                    <input type="text" id="originCitySearch" placeholder="ابحث عن المدينة الأصل...">
+                  </div>
+                  <div class="custom-select-options" id="originCityOptions">
+                    <div class="custom-select-option disabled">يرجى اختيار الدولة أولاً</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-plane-departure"></i> مطار الانطلاق</label>
+              <div class="custom-select-wrapper" id="originAirportWrapper">
+                <div class="custom-select" id="originAirportSelect">
+                  <span id="originAirportText">اختر المطار</span>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="custom-select-dropdown" id="originAirportDropdown">
+                  <div class="custom-select-search">
+                    <input type="text" id="originAirportSearch" placeholder="ابحث عن المطار...">
+                  </div>
+                  <div class="custom-select-options" id="originAirportOptions">
+                    <div class="custom-select-option disabled">يرجى اختيار المدينة أولاً</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Destination Section -->
+          <div class="grid" style="margin-top:20px">
+            <div class="form-group">
+              <label><i class="fas fa-globe-asia"></i> دولة الوجهة</label>
+              <div class="custom-select-wrapper" id="destinationCountryWrapper">
+                <div class="custom-select" id="destinationCountrySelect">
+                  <span id="destinationCountryText">اختر الدولة</span>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="custom-select-dropdown" id="destinationCountryDropdown">
+                  <div class="custom-select-search">
+                    <input type="text" id="destinationCountrySearch" placeholder="ابحث عن دولة الوجهة...">
+                  </div>
+                  <div class="custom-select-options" id="destinationCountryOptions">
+                    <!-- سيتم تعبئة الخيارات بالجافاسكريبت -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-city"></i> المدينة الوجهة</label>
+              <div class="custom-select-wrapper" id="destinationCityWrapper">
+                <div class="custom-select" id="destinationCitySelect">
+                  <span id="destinationCityText">اختر المدينة</span>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="custom-select-dropdown" id="destinationCityDropdown">
+                  <div class="custom-select-search">
+                    <input type="text" id="destinationCitySearch" placeholder="ابحث عن المدينة الوجهة...">
+                  </div>
+                  <div class="custom-select-options" id="destinationCityOptions">
+                    <div class="custom-select-option disabled">يرجى اختيار الدولة أولاً</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-plane-arrival"></i> مطار الوجهة</label>
+              <div class="custom-select-wrapper" id="destinationAirportWrapper">
+                <div class="custom-select" id="destinationAirportSelect">
+                  <span id="destinationAirportText">اختر المطار</span>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="custom-select-dropdown" id="destinationAirportDropdown">
+                  <div class="custom-select-search">
+                    <input type="text" id="destinationAirportSearch" placeholder="ابحث عن المطار...">
+                  </div>
+                  <div class="custom-select-options" id="destinationAirportOptions">
+                    <div class="custom-select-option disabled">يرجى اختيار المدينة أولاً</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Date & Options -->
+          <div class="grid" style="margin-top:20px">
+            <div class="form-group">
+              <label><i class="fas fa-calendar-alt"></i> تاريخ المغادرة</label>
+              <input type="date" id="departureDate" required>
+            </div>
+            <div class="form-group" id="returnGroup">
+              <label><i class="fas fa-calendar-check"></i> تاريخ العودة</label>
+              <input type="date" id="returnDate">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-users"></i> المسافرون</label>
+              <div class="select-wrapper">
+                <i class="fas fa-user"></i>
+                <select id="passengers">
+                  <option value="1">1 مسافر</option>
+                  <option value="2">2 مسافرين</option>
+                  <option value="3">3 مسافرين</option>
+                  <option value="4">4 مسافرين</option>
+                  <option value="5">5 مسافرين</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-couch"></i> الفئة</label>
+              <div class="select-wrapper">
+                <i class="fas fa-star"></i>
+                <select id="flightClass">
+                  <option value="economy">اقتصادية</option>
+                  <option value="business">رجال الأعمال</option>
+                  <option value="first">الأولى</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="btn-container" style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+            <button type="button" id="searchBtn" class="btn btn-primary"><i class="fas fa-search"></i> بحث عن الرحلات</button>
+            <button type="reset" id="resetBtn" class="btn btn-ghost"><i class="fas fa-eraser"></i> تفريغ النموذج</button>
+          </div>
+        </form>
+
+        <!-- Recent Searches -->
+        <div class="recent-searches" id="recentSearches" style="display:none">
+          <div class="recent-title"><i class="fas fa-history"></i> عمليات البحث الأخيرة</div>
+          <div class="recent-list" id="recentList"></div>
+        </div>
+
+        <!-- Summary -->
+        <div id="resultArea" class="summary">
+          <div class="summary-content">
+            <div class="summary-row">
+              <i class="fas fa-info-circle"></i>
+              <span><strong>نوع الرحلة:</strong> <span id="summaryType"></span></span>
+            </div>
+            
+            <div class="flight-direction">
+              <i class="fas fa-long-arrow-alt-right"></i>
+              <span><strong>من:</strong> <span id="summaryOrigin"></span></span>
+            </div>
+            
+            <div class="flight-direction" id="returnDirection" style="display:none">
+              <i class="fas fa-long-arrow-alt-left"></i>
+              <span><strong>إلى:</strong> <span id="summaryDestination"></span></span>
+            </div>
+            
+            <div class="summary-row">
+              <i class="fas fa-calendar-alt"></i>
+              <span><strong>تاريخ المغادرة:</strong> <span id="summaryDeparture"></span></span>
+            </div>
+            
+            <div class="summary-row" id="summaryReturnRow" style="display:none">
+              <i class="fas fa-calendar-check"></i>
+              <span><strong>تاريخ العودة:</strong> <span id="summaryReturn"></span></span>
+            </div>
+            
+            <div class="summary-row">
+              <i class="fas fa-users"></i>
+              <span><strong>عدد المسافرين:</strong> <span id="summaryPassengers"></span></span>
+            </div>
+            
+            <div class="summary-row">
+              <i class="fas fa-couch"></i>
+              <span><strong>فئة الرحلة:</strong> <span id="summaryClass"></span></span>
+            </div>
+            
+            <!-- مخطط الرحلة المحسن -->
+            <div class="flight-path">
+              <div class="flight-timeline">
+                <div class="timeline-point">
+                  <div class="point active"></div>
+                  <div class="timeline-label" id="timelineOrigin"></div>
+                </div>
+                <div class="timeline-point">
+                  <div class="point"></div>
+                  <div class="timeline-label">في الطريق</div>
+                </div>
+                <div class="timeline-point">
+                  <div class="point"></div>
+                  <div class="timeline-label" id="timelineDestination"></div>
+                </div>
+              </div>
+            </div>
+            
+            <button class="btn btn-whatsapp pulse" onclick="sendWhatsApp()"><i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- زر العائم -->
+  <div class="floating-action" id="floatingAction" title="بحث سريع">
+    <i class="fas fa-paper-plane"></i>
+  </div>
+
+  <!-- شاشة التحميل -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-plane">
+      <i class="fas fa-plane"></i>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    // ... (الكود الجافاسكريبت الأصلي يبقى كما هو مع بعض التحسينات الطفيفة)
+    // تم الحفاظ على نفس منطق العمل مع تحسينات في الأداء والتجربة
+    
+    const CONTACT_PHONE = '967781333149'; // ضع رقم الواتساب
+    const tabs = document.querySelectorAll('.tab');
+    let tripType = 'round';
+
+    // العناصر الرئيسية
+    const originCountrySelect = document.getElementById('originCountrySelect');
+    const originCountryText = document.getElementById('originCountryText');
+    const originCountryDropdown = document.getElementById('originCountryDropdown');
+    const originCountryOptions = document.getElementById('originCountryOptions');
+    const originCountrySearch = document.getElementById('originCountrySearch');
+    
+    const originCitySelect = document.getElementById('originCitySelect');
+    const originCityText = document.getElementById('originCityText');
+    const originCityDropdown = document.getElementById('originCityDropdown');
+    const originCityOptions = document.getElementById('originCityOptions');
+    const originCitySearch = document.getElementById('originCitySearch');
+    
+    const originAirportSelect = document.getElementById('originAirportSelect');
+    const originAirportText = document.getElementById('originAirportText');
+    const originAirportDropdown = document.getElementById('originAirportDropdown');
+    const originAirportOptions = document.getElementById('originAirportOptions');
+    const originAirportSearch = document.getElementById('originAirportSearch');
+    
+    const destinationCountrySelect = document.getElementById('destinationCountrySelect');
+    const destinationCountryText = document.getElementById('destinationCountryText');
+    const destinationCountryDropdown = document.getElementById('destinationCountryDropdown');
+    const destinationCountryOptions = document.getElementById('destinationCountryOptions');
+    const destinationCountrySearch = document.getElementById('destinationCountrySearch');
+    
+    const destinationCitySelect = document.getElementById('destinationCitySelect');
+    const destinationCityText = document.getElementById('destinationCityText');
+    const destinationCityDropdown = document.getElementById('destinationCityDropdown');
+    const destinationCityOptions = document.getElementById('destinationCityOptions');
+    const destinationCitySearch = document.getElementById('destinationCitySearch');
+    
+    const destinationAirportSelect = document.getElementById('destinationAirportSelect');
+    const destinationAirportText = document.getElementById('destinationAirportText');
+    const destinationAirportDropdown = document.getElementById('destinationAirportDropdown');
+    const destinationAirportOptions = document.getElementById('destinationAirportOptions');
+    const destinationAirportSearch = document.getElementById('destinationAirportSearch');
+    
+    const departureDate = document.getElementById('departureDate');
+    const returnDate = document.getElementById('returnDate');
+    const returnGroup = document.getElementById('returnGroup');
+    const resultArea = document.getElementById('resultArea');
+    const toast = document.getElementById('toast');
+    const recentSearches = document.getElementById('recentSearches');
+    const recentList = document.getElementById('recentList');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const floatingAction = document.getElementById('floatingAction');
+
+    let data = [];
+    let recentSearchesData = JSON.parse(localStorage.getItem('recentSearches')) || [];
+
+    // تعيين تاريخ اليوم كحد أدنى
+    const today = new Date().toISOString().split('T')[0];
+    departureDate.min = today;
+    returnDate.min = today;
+
+    // تحميل JSON
+    async function loadData(){
+      showLoading();
+      try{
+        // محاولة تحميل البيانات من ملف JSON
+        const response = await fetch('airports.json');
+        
+        if (!response.ok) {
+          throw new Error('فشل في تحميل البيانات');
+        }
+        
+        data = await response.json();
+        populateCountries();
+        setupCustomSelects();
+        updateRecentSearches();
+        hideLoading();
+        showToast('تم تحميل البيانات بنجاح', 'success');
+        
+      } catch(e) {
+        hideLoading();
+        showToast('فشل تحميل بيانات المطارات. تأكد من وجود ملف airports.json', 'error');
+        console.error('Error loading data:', e);
+        
+        // استخدام بيانات افتراضية للعرض
+        data = [
+          {
+            "الدولة": "Algeria",
+            "رمز الدولة": "DZ",
+            "مدن": [
+              {
+                "المدينة": "Algiers",
+                "المطارات": [
+                  {
+                    "الاسم": "Houari Boumediene Airport",
+                    "الرمز": "ALG"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "الدولة": "American Samoa",
+            "رمز الدولة": "AS",
+            "مدن": [
+              {
+                "المدينة": "Pago Pago",
+                "المطارات": [
+                  {
+                    "الاسم": "Pago Pago International Airport",
+                    "الرمز": "PPG"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "الدولة": "Andorra",
+            "رمز الدولة": "AD",
+            "مدن": [
+              {
+                "المدينة": "Andorra la Vella",
+                "المطارات": [
+                  {
+                    "الاسم": "Andorra la Vella Heliport",
+                    "الرمز": "ALV"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "الدولة": "Angola",
+            "رمز الدولة": "AO",
+            "مدن": [
+              {
+                "المدينة": "Luanda",
+                "المطارات": [
+                  {
+                    "الاسم": "Quatro de Fevereiro Airport",
+                    "الرمز": "LAD"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "الدولة": "Anguilla",
+            "رمز الدولة": "AI",
+            "مدن": [
+              {
+                "المدينة": "The Valley",
+                "المطارات": [
+                  {
+                    "الاسم": "Clayton J. Lloyd International Airport",
+                    "الرمز": "AXA"
+                  }
+                ]
+              }
+            ]
+          }
+        ];
+        populateCountries();
+        setupCustomSelects();
+        updateRecentSearches();
+      }
+    }
+
+    // تعبئة قائمة الدول
+    function populateCountries(){
+      [originCountryOptions, destinationCountryOptions].forEach(container => {
+        container.innerHTML = '';
+        if (data && data.length > 0) {
+          data.forEach((c, i) => {
+            const opt = document.createElement('div');
+            opt.className = 'custom-select-option';
+            opt.dataset.value = i;
+            opt.innerHTML = `
+              <i class="fas fa-flag"></i>
+              <span>${c["الدولة"]}</span>
+            `;
+            container.appendChild(opt);
+          });
+        }
+      });
+    }
+
+    // إعداد القوائم المنسدلة المخصصة
+    function setupCustomSelects() {
+      // إعداد جميع القوائم المنسدلة
+      const allSelects = [
+        { select: originCountrySelect, dropdown: originCountryDropdown, search: originCountrySearch, options: originCountryOptions },
+        { select: originCitySelect, dropdown: originCityDropdown, search: originCitySearch, options: originCityOptions },
+        { select: originAirportSelect, dropdown: originAirportDropdown, search: originAirportSearch, options: originAirportOptions },
+        { select: destinationCountrySelect, dropdown: destinationCountryDropdown, search: destinationCountrySearch, options: destinationCountryOptions },
+        { select: destinationCitySelect, dropdown: destinationCityDropdown, search: destinationCitySearch, options: destinationCityOptions },
+        { select: destinationAirportSelect, dropdown: destinationAirportDropdown, search: destinationAirportSearch, options: destinationAirportOptions }
+      ];
+      
+      allSelects.forEach(item => {
+        item.select.addEventListener('click', (e) => {
+          e.stopPropagation();
+          
+          // إغلاق جميع القوائم المنسدلة الأخرى
+          allSelects.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.dropdown.classList.remove('open');
+              otherItem.select.classList.remove('open');
+            }
+          });
+          
+          item.dropdown.classList.toggle('open');
+          item.select.classList.toggle('open');
+          
+          if (item.dropdown.classList.contains('open') && item.search) {
+            item.search.focus();
+          }
+        });
+        
+        if (item.search) {
+          item.search.addEventListener('input', (e) => {
+            filterOptions(item.options, e.target.value);
+          });
+        }
+      });
+      
+      // إغلاق القوائم المنسدلة عند النقر خارجها
+      document.addEventListener('click', () => {
+        allSelects.forEach(item => {
+          item.dropdown.classList.remove('open');
+          item.select.classList.remove('open');
+        });
+      });
+      
+      // منع إغلاق القائمة عند النقر داخلها
+      allSelects.forEach(item => {
+        item.dropdown.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+      });
+      
+      // إعداد أحداث اختيار الخيارات
+      setupOptionSelection(originCountryOptions, originCountryText, originCountryDropdown, originCountrySelect, 'country', 'origin');
+      setupOptionSelection(destinationCountryOptions, destinationCountryText, destinationCountryDropdown, destinationCountrySelect, 'country', 'destination');
+      
+      setupOptionSelection(originCityOptions, originCityText, originCityDropdown, originCitySelect, 'city', 'origin');
+      setupOptionSelection(destinationCityOptions, destinationCityText, destinationCityDropdown, destinationCitySelect, 'city', 'destination');
+      
+      setupOptionSelection(originAirportOptions, originAirportText, originAirportDropdown, originAirportSelect, 'airport', 'origin');
+      setupOptionSelection(destinationAirportOptions, destinationAirportText, destinationAirportDropdown, destinationAirportSelect, 'airport', 'destination');
+    }
+    
+    // تصفية الخيارات بناءً على البحث
+    function filterOptions(container, searchTerm) {
+      const options = container.querySelectorAll('.custom-select-option:not(.disabled)');
+      options.forEach(option => {
+        const text = option.textContent.toLowerCase();
+        if (text.includes(searchTerm.toLowerCase())) {
+          option.style.display = 'flex';
+        } else {
+          option.style.display = 'none';
+        }
+      });
+    }
+    
+    // إعداد أحداث اختيار الخيارات
+    function setupOptionSelection(optionsContainer, textElement, dropdown, select, type, section) {
+      optionsContainer.addEventListener('click', (e) => {
+        const option = e.target.closest('.custom-select-option');
+        if (option && !option.classList.contains('disabled')) {
+          // إزالة التحديد من جميع الخيارات
+          optionsContainer.querySelectorAll('.custom-select-option').forEach(opt => {
+            opt.classList.remove('selected');
+          });
+          
+          // تحديد الخيار المختار
+          option.classList.add('selected');
+          
+          // تحديث النص المعروض
+          textElement.textContent = option.textContent;
+          
+          // إغلاق القائمة المنسدلة
+          dropdown.classList.remove('open');
+          select.classList.remove('open');
+          
+          // تحديث البيانات بناءً على النوع والقسم
+          if (type === 'country') {
+            const countryIndex = option.dataset.value;
+            if (section === 'origin') {
+              updateCities(countryIndex, originCityOptions, originCityText, originAirportOptions, originAirportText);
+            } else {
+              updateCities(countryIndex, destinationCityOptions, destinationCityText, destinationAirportOptions, destinationAirportText);
+            }
+          } else if (type === 'city') {
+            const cityIndex = option.dataset.value;
+            if (section === 'origin') {
+              const countryIndex = getSelectedCountryIndex(originCountryOptions);
+              updateAirports(countryIndex, cityIndex, originAirportOptions, originAirportText);
+            } else {
+              const countryIndex = getSelectedCountryIndex(destinationCountryOptions);
+              updateAirports(countryIndex, cityIndex, destinationAirportOptions, destinationAirportText);
+            }
+          }
+          // بالنسبة للمطارات، لا نحتاج إلى تحديث أي شيء إضافي
+        }
+      });
+    }
+    
+    // تحديث المدن بناءً على الدولة المختارة
+    function updateCities(countryIndex, cityOptionsContainer, cityTextElement, airportOptionsContainer, airportTextElement){
+      cityOptionsContainer.innerHTML = '';
+      airportOptionsContainer.innerHTML = '<div class="custom-select-option disabled">يرجى اختيار المدينة أولاً</div>';
+      airportTextElement.textContent = 'اختر المطار';
+      
+      if(!data || data.length === 0) return;
+      
+      const country = data[countryIndex];
+      if (country && country["مدن"]) {
+        if (country["مدن"].length === 0) {
+          cityOptionsContainer.innerHTML = '<div class="custom-select-option disabled">لا توجد مدن متاحة</div>';
+        } else {
+          country["مدن"].forEach((ct, ci) => {
+            const opt = document.createElement('div');
+            opt.className = 'custom-select-option';
+            opt.dataset.value = ci;
+            opt.innerHTML = `
+              <i class="fas fa-city"></i>
+              <span>${ct["المدينة"]}</span>
+            `;
+            cityOptionsContainer.appendChild(opt);
+          });
+        }
+      } else {
+        cityOptionsContainer.innerHTML = '<div class="custom-select-option disabled">لا توجد مدن متاحة</div>';
+      }
+    }
+
+    // تحديث المطارات بناءً على المدينة المختارة
+    function updateAirports(countryIndex, cityIndex, airportOptionsContainer, airportTextElement){
+      airportOptionsContainer.innerHTML = '';
+      
+      if(!data || data.length === 0) return;
+      
+      const country = data[countryIndex];
+      if (country && country["مدن"] && country["مدن"][cityIndex]) {
+        const city = country["مدن"][cityIndex];
+        if (city["المطارات"]) {
+          if (city["المطارات"].length === 0) {
+            airportOptionsContainer.innerHTML = '<div class="custom-select-option disabled">لا توجد مطارات متاحة</div>';
+          } else {
+            city["المطارات"].forEach(ap => {
+              const opt = document.createElement('div');
+              opt.className = 'custom-select-option';
+              opt.dataset.value = ap["الرمز"];
+              opt.innerHTML = `
+                <i class="fas fa-plane"></i>
+                <span>${ap["الاسم"]} (${ap["الرمز"]})</span>
+              `;
+              airportOptionsContainer.appendChild(opt);
+            });
+          }
+        } else {
+          airportOptionsContainer.innerHTML = '<div class="custom-select-option disabled">لا توجد مطارات متاحة</div>';
+        }
+      } else {
+        airportOptionsContainer.innerHTML = '<div class="custom-select-option disabled">لا توجد مطارات متاحة</div>';
+      }
+    }
+
+    // تحديث عمليات البحث الأخيرة
+    function updateRecentSearches() {
+      if (recentSearchesData.length === 0) {
+        recentSearches.style.display = 'none';
+        return;
+      }
+      
+      recentSearches.style.display = 'block';
+      recentList.innerHTML = '';
+      
+      // عرض آخر 5 عمليات بحث فقط
+      const recentToShow = recentSearchesData.slice(-5).reverse();
+      
+      recentToShow.forEach(search => {
+        const item = document.createElement('div');
+        item.className = 'recent-item';
+        item.innerHTML = `
+          <i class="fas fa-plane"></i>
+          <span>${search.origin} → ${search.destination}</span>
+        `;
+        item.onclick = () => loadRecentSearch(search);
+        recentList.appendChild(item);
+      });
+    }
+
+    // تحميل بحث سابق
+    function loadRecentSearch(search) {
+      if (!data || data.length === 0) {
+        showToast('لا يمكن تحميل البحث السابق - البيانات غير متوفرة', 'error');
+        return;
+      }
+      
+      // البحث عن الدولة الأصل
+      const originCountryIndex = data.findIndex(country => 
+        country["مدن"].some(city => 
+          city["المطارات"].some(airport => airport["الرمز"] === search.originAirport)
+        )
+      );
+      
+      if (originCountryIndex !== -1) {
+        // تحديث القائمة المنسدلة للدولة الأصل
+        const originOption = originCountryOptions.querySelector(`[data-value="${originCountryIndex}"]`);
+        if (originOption) {
+          originOption.click();
+        }
+        
+        // البحث عن المدينة الأصل
+        const originCityIndex = data[originCountryIndex]["مدن"].findIndex(city => 
+          city["المطارات"].some(airport => airport["الرمز"] === search.originAirport)
+        );
+        
+        if (originCityIndex !== -1) {
+          // تحديث القائمة المنسدلة للمدينة الأصل
+          const originCityOption = originCityOptions.querySelector(`[data-value="${originCityIndex}"]`);
+          if (originCityOption) {
+            originCityOption.click();
+          }
+          
+          // تحديث القائمة المنسدلة للمطار الأصل
+          const originAirportOption = originAirportOptions.querySelector(`[data-value="${search.originAirport}"]`);
+          if (originAirportOption) {
+            originAirportOption.click();
+          }
+        }
+      }
+      
+      // البحث عن دولة الوجهة
+      const destCountryIndex = data.findIndex(country => 
+        country["مدن"].some(city => 
+          city["المطارات"].some(airport => airport["الرمز"] === search.destinationAirport)
+        )
+      );
+      
+      if (destCountryIndex !== -1) {
+        // تحديث القائمة المنسدلة لدولة الوجهة
+        const destOption = destinationCountryOptions.querySelector(`[data-value="${destCountryIndex}"]`);
+        if (destOption) {
+          destOption.click();
+        }
+        
+        // البحث عن مدينة الوجهة
+        const destCityIndex = data[destCountryIndex]["مدن"].findIndex(city => 
+          city["المطارات"].some(airport => airport["الرمز"] === search.destinationAirport)
+        );
+        
+        if (destCityIndex !== -1) {
+          // تحديث القائمة المنسدلة لمدينة الوجهة
+          const destCityOption = destinationCityOptions.querySelector(`[data-value="${destCityIndex}"]`);
+          if (destCityOption) {
+            destCityOption.click();
+          }
+          
+          // تحديث القائمة المنسدلة لمطار الوجهة
+          const destAirportOption = destinationAirportOptions.querySelector(`[data-value="${search.destinationAirport}"]`);
+          if (destAirportOption) {
+            destAirportOption.click();
+          }
+        }
+      }
+      
+      // تعيين نوع الرحلة
+      tripType = search.tripType;
+      tabs.forEach(t => t.setAttribute('aria-pressed', t.dataset.type === tripType ? 'true' : 'false'));
+      returnGroup.style.display = tripType === 'oneway' ? 'none' : 'block';
+      
+      showToast('تم تحميل البحث السابق', 'success');
+    }
+
+    // حفظ البحث الحالي
+    function saveCurrentSearch() {
+      const originAirportCode = getSelectedAirportCode(originAirportOptions);
+      const destinationAirportCode = getSelectedAirportCode(destinationAirportOptions);
+      
+      if (!originAirportCode || !destinationAirportCode) return;
+      
+      const search = {
+        tripType,
+        originAirport: originAirportCode,
+        destinationAirport: destinationAirportCode,
+        origin: originAirportText.textContent || '',
+        destination: destinationAirportText.textContent || '',
+        date: new Date().toISOString()
+      };
+      
+      // تجنب التكرار
+      const exists = recentSearchesData.some(s => 
+        s.originAirport === search.originAirport && 
+        s.destinationAirport === search.destinationAirport && 
+        s.tripType === search.tripType
+      );
+      
+      if (!exists) {
+        recentSearchesData.push(search);
+        // الاحتفاظ بـ 10 عملية بحث فقط
+        if (recentSearchesData.length > 10) {
+          recentSearchesData = recentSearchesData.slice(-10);
+        }
+        localStorage.setItem('recentSearches', JSON.stringify(recentSearchesData));
+        updateRecentSearches();
+      }
+    }
+
+    // الحصول على رمز المطار المحدد
+    function getSelectedAirportCode(airportOptionsContainer) {
+      const selectedOption = airportOptionsContainer.querySelector('.custom-select-option.selected');
+      return selectedOption ? selectedOption.dataset.value : null;
+    }
+
+    // الحصول على فهرس الدولة المحددة
+    function getSelectedCountryIndex(optionsContainer) {
+      const selectedOption = optionsContainer.querySelector('.custom-select-option.selected');
+      return selectedOption ? selectedOption.dataset.value : null;
+    }
+
+    // عرض الملخص
+    function showSummary() {
+      const originText = originAirportText.textContent || '';
+      const destinationText = destinationAirportText.textContent || '';
+      
+      document.getElementById('summaryType').textContent = tripType === 'oneway' ? 'ذهاب فقط' : 'ذهاب وعودة';
+      document.getElementById('summaryOrigin').textContent = originText;
+      document.getElementById('summaryDestination').textContent = destinationText;
+      document.getElementById('summaryDeparture').textContent = departureDate.value;
+      document.getElementById('summaryPassengers').textContent = passengers.value + ' مسافر' + (passengers.value > 1 ? 'ين' : '');
+      
+      // تحديث مخطط الرحلة
+      document.getElementById('timelineOrigin').textContent = originText.split('(')[0].trim();
+      document.getElementById('timelineDestination').textContent = destinationText.split('(')[0].trim();
+      
+      const classNames = {
+        'economy': 'اقتصادية',
+        'business': 'رجال الأعمال',
+        'first': 'الأولى'
+      };
+      document.getElementById('summaryClass').textContent = classNames[flightClass.value] || flightClass.value;
+      
+      if (tripType === 'round') {
+        document.getElementById('summaryReturn').textContent = returnDate.value;
+        document.getElementById('summaryReturnRow').style.display = 'flex';
+        document.getElementById('returnDirection').style.display = 'flex';
+      } else {
+        document.getElementById('summaryReturnRow').style.display = 'none';
+        document.getElementById('returnDirection').style.display = 'none';
+      }
+      
+      resultArea.style.display = 'block';
+      saveCurrentSearch();
+      
+      // إضافة تأثيرات جميلة
+      createConfetti();
+    }
+
+    // إرسال الطلب عبر واتساب
+    function sendWhatsApp(){
+      const originText = originAirportText.textContent || '';
+      const destinationText = destinationAirportText.textContent || '';
+      
+      let message = `طلب حجز رحلة طيران\n`;
+      message += `نوع الرحلة: ${tripType === 'oneway' ? 'ذهاب فقط' : 'ذهاب وعودة'}\n`;
+      message += `من: ${originText}\n`;
+      message += `إلى: ${destinationText}\n`;
+      message += `تاريخ المغادرة: ${departureDate.value}\n`;
+      
+      if (tripType === 'round') {
+        message += `تاريخ العودة: ${returnDate.value}\n`;
+      }
+      
+      message += `عدد المسافرين: ${passengers.value}\n`;
+      
+      const classNames = {
+        'economy': 'اقتصادية',
+        'business': 'رجال الأعمال',
+        'first': 'الأولى'
+      };
+      message += `فئة الرحلة: ${classNames[flightClass.value] || flightClass.value}\n\n`;
+      message += `أرغب في الحصول على تفاصيل أكثر عن هذه الرحلة.`;
+      
+      window.open(`https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    // عرض الإشعارات
+    function showToast(message, type = 'info') {
+      toast.textContent = message;
+      
+      // تغيير لون الإشعار حسب النوع
+      if (type === 'success') {
+        toast.style.background = 'linear-gradient(90deg, var(--success), #059669)';
+      } else if (type === 'error') {
+        toast.style.background = 'linear-gradient(90deg, var(--danger), #dc2626)';
+      } else {
+        toast.style.background = '#111';
+      }
+      
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    }
+
+    // إظهار شاشة التحميل
+    function showLoading() {
+      loadingOverlay.style.display = 'flex';
+    }
+
+    // إخفاء شاشة التحميل
+    function hideLoading() {
+      loadingOverlay.style.display = 'none';
+    }
+
+    // إنشاء تأثير الكونفيتي
+    function createConfetti() {
+      const colors = ['#2563eb', '#7c3aed', '#f59e0b', '#10b981', '#ef4444'];
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.width = Math.random() * 10 + 5 + 'px';
+        confetti.style.height = Math.random() * 10 + 5 + 'px';
+        confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+        
+        document.body.appendChild(confetti);
+        
+        // إزالة الكونفيتي بعد انتهاء الرسوم المتحركة
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+
+    // استرجاع آخر بحث
+    document.getElementById('open-demo').onclick = () => {
+      if (recentSearchesData.length === 0) {
+        showToast('لا يوجد بحث محفوظ', 'info');
+        return;
+      }
+      
+      const lastSearch = recentSearchesData[recentSearchesData.length - 1];
+      loadRecentSearch(lastSearch);
+    };
+
+    // البحث عن رحلات
+    document.getElementById('searchBtn').onclick = () => {
+      if (!data || data.length === 0) {
+        showToast('لا توجد بيانات متاحة للبحث', 'error');
+        return;
+      }
+      
+      const originAirportCode = getSelectedAirportCode(originAirportOptions);
+      const destinationAirportCode = getSelectedAirportCode(destinationAirportOptions);
+      
+      if (!originAirportCode || !destinationAirportCode || !departureDate.value) {
+        showToast('يرجى تعبئة جميع الحقول المطلوبة', 'error');
+        return;
+      }
+      
+      if (tripType === 'round' && !returnDate.value) {
+        showToast('يرجى تحديد تاريخ العودة', 'error');
+        return;
+      }
+      
+      if (originAirportCode === destinationAirportCode) {
+        showToast('لا يمكن أن تكون نقطة الانطلاق والوجهة نفسها', 'error');
+        return;
+      }
+      
+      showLoading();
+      // محاكاة البحث عن الرحلات
+      setTimeout(() => {
+        hideLoading();
+        showSummary();
+        showToast('تم العثور على رحلات متاحة!', 'success');
+      }, 2000);
+    };
+
+    // إعادة تعيين النموذج
+    document.getElementById('resetBtn').onclick = () => {
+      resultArea.style.display = 'none';
+      
+      // إعادة تعيين جميع القوائم المنسدلة
+      const allTextElements = [
+        originCountryText, originCityText, originAirportText,
+        destinationCountryText, destinationCityText, destinationAirportText
+      ];
+      
+      allTextElements.forEach(el => {
+        if (el.id.includes('Country')) {
+          el.textContent = 'اختر الدولة';
+        } else if (el.id.includes('City')) {
+          el.textContent = 'اختر المدينة';
+        } else if (el.id.includes('Airport')) {
+          el.textContent = 'اختر المطار';
+        }
+      });
+      
+      // إعادة تعيين خيارات المدن والمطارات
+      originCityOptions.innerHTML = '<div class="custom-select-option disabled">يرجى اختيار الدولة أولاً</div>';
+      originAirportOptions.innerHTML = '<div class="custom-select-option disabled">يرجى اختيار المدينة أولاً</div>';
+      destinationCityOptions.innerHTML = '<div class="custom-select-option disabled">يرجى اختيار الدولة أولاً</div>';
+      destinationAirportOptions.innerHTML = '<div class="custom-select-option disabled">يرجى اختيار المدينة أولاً</div>';
+      
+      // إزالة التحديد من جميع الخيارات
+      const allOptionsContainers = [
+        originCountryOptions, originCityOptions, originAirportOptions,
+        destinationCountryOptions, destinationCityOptions, destinationAirportOptions
+      ];
+      
+      allOptionsContainers.forEach(container => {
+        container.querySelectorAll('.custom-select-option').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+      });
+      
+      showToast('تم تفريغ النموذج', 'info');
+    };
+
+    // الزر العائم للبحث السريع
+    floatingAction.onclick = () => {
+      document.getElementById('searchBtn').click();
+    };
+
+    tabs.forEach(t => {
+      t.onclick = () => {
+        tabs.forEach(x => x.setAttribute('aria-pressed', 'false'));
+        t.setAttribute('aria-pressed', 'true');
+        tripType = t.dataset.type;
+        returnGroup.style.display = tripType === 'oneway' ? 'none' : 'block';
+      };
+    });
+
+    // تحميل البيانات
+    loadData();
+  </script>
+</body>
+</html>

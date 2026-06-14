@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>حجز فندقي - أمان للسفريات</title>
+  <meta name="description" content="احجز فندقك المثالي بأفضل الأسعار والعروض الحصرية">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #3a4bdc;
+      --secondary-color: #5f2caa;
+      --accent-color: #ff6b35;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+      --border-radius: 12px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Tajawal', sans-serif;
+      margin: 0;
+      background: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      padding-bottom: 80px; /* مساحة للشريط السفلي */
+    }
+    
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 20px;
+      color: white;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo i {
+      margin-left: 10px;
+    }
+    
+    .back-button {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+    
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .back-button i {
+      margin-right: 5px;
+    }
+    
+    /* Search Section */
+    .search-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+    
+    .search-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 20px;
+      position: relative;
+      top: -20px;
+    }
+    
+    .search-tabs {
+      display: flex;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 20px;
+    }
+    
+    .search-tab {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 16px;
+      color: #666;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .search-tab.active {
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+    
+    .search-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary-color);
+    }
+    
+    .search-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: 555;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(58, 75, 220, 0.1);
+    }
+    
+    .search-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      grid-column: span 2;
+    }
+    
+    .search-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(58, 75, 220, 0.2);
+    }
+    
+    .search-btn i {
+      margin-left: 8px;
+    }
+    
+    /* Filters Section */
+    .filters-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+      align-items: center;
+    }
+    
+    .filter-tag {
+      padding: 8px 15px;
+      background: white;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+    }
+    
+    .filter-tag:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+    
+    .filter-tag.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .filter-tag i {
+      margin-left: 5px;
+    }
+    
+    .sort-by {
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+    }
+    
+    .sort-by select {
+      border: none;
+      background: none;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 14px;
+      color: #555;
+      padding: 5px;
+    }
+    
+    /* Hotels List */
+    .hotels-container {
+      max-width: 1200px;
+      margin: 0 auto 100px;
+      padding: 0 15px;
+    }
+    
+    .hotel-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      margin-bottom: 20px;
+      transition: var(--transition);
+      display: flex;
+    }
+    
+    .hotel-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .hotel-image {
+      width: 300px;
+      height: 250px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    
+    .hotel-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .hotel-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--accent-color);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .hotel-details {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .hotel-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .hotel-name {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .hotel-rating {
+      display: flex;
+      align-items: center;
+      background: #f5f5f5;
+      padding: 5px 10px;
+      border-radius: 20px;
+    }
+    
+    .hotel-rating i {
+      color: var(--warning-color);
+      margin-left: 5px;
+    }
+    
+    .hotel-location {
+      display: flex;
+      align-items: center;
+      color: #666;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    
+    .hotel-location i {
+      margin-left: 5px;
+    }
+    
+    .hotel-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .feature {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #555;
+    }
+    
+    .feature i {
+      margin-left: 5px;
+      color: var(--primary-color);
+    }
+    
+    .hotel-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+    
+    .hotel-price {
+      text-align: left;
+    }
+    
+    .price-from {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .price-amount {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .price-night {
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .book-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+    }
+    
+    .book-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    .book-btn i {
+      margin-left: 8px;
+    }
+    
+    /* Hotel Details Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: var(--border-radius);
+      width: 90%;
+      max-width: 1000px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1;
+    }
+    
+    /* Footer Navigation - UPDATED */
+    footer {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+      max-width: 500px;
+      padding: 0;
+      z-index: 100;
+    }
+    
+    footer .nav-item {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      border-radius: 50%;
+      transition: var(--transition);
+      cursor: pointer;
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      width: 60px;
+      height: 60px;
+      justify-content: center;
+    }
+    
+    footer .nav-item:hover {
+      color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(58, 75, 220, 0.25);
+    }
+    
+    footer .nav-item.active {
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(58, 75, 220, 0.3);
+    }
+    
+    footer .nav-item i {
+      font-size: 22px;
+      margin-bottom: 0;
+      transition: var(--transition);
+    }
+    
+    footer .nav-item.active i {
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    footer .nav-item span {
+      display: none;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .hotel-card {
+        flex-direction: column;
+      }
+      
+      .hotel-image {
+        width: 100%;
+        height: 200px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .search-form {
+        grid-template-columns: 1fr;
+      }
+      
+      .search-btn {
+        grid-column: span 1;
+      }
+      
+      .filters-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .sort-by {
+        margin-right: 0;
+        margin-top: 10px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      footer {
+        width: 95%;
+        bottom: 15px;
+      }
+      
+      footer .nav-item {
+        width: 55px;
+        height: 55px;
+        padding: 12px;
+      }
+      
+      footer .nav-item i {
+        font-size: 20px;
+      }
+      
+      .hotel-header {
+        flex-direction: column;
+      }
+      
+      .hotel-rating {
+        margin-top: 5px;
+      }
+      
+      .hotel-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .book-btn {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <button class="back-button" onclick="window.history.back()">
+      <i class="fas fa-arrow-right"></i>
+      رجوع
+    </button>
+    <div class="logo">
+      <i class="fas fa-hotel"></i>
+      حجز فندقي
+    </div>
+    <div></div> <!-- Empty div for balance -->
+  </div>
+</header>
+
+<div class="search-container">
+  <div class="search-card">
+    <div class="search-tabs">
+      <button class="search-tab active">فنادق</button>
+      <button class="search-tab">شقق فندقية</button>
+      <button class="search-tab">منتجعات</button>
+      <button class="search-tab">بيوت ضيافة</button>
+    </div>
+    
+    <form class="search-form">
+      <div class="form-group">
+        <label for="destination">الوجهة</label>
+        <input type="text" id="destination" class="form-control" placeholder="أين تريد الذهاب؟">
+      </div>
+      
+      <div class="form-group">
+        <label for="checkin">تاريخ الوصول</label>
+        <input type="date" id="checkin" class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="checkout">تاريخ المغادرة</label>
+        <input type="date" id="checkout" class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="guests">الضيوف</label>
+        <select id="guests" class="form-control">
+          <option value="1">1 ضيف</option>
+          <option value="2">2 ضيف</option>
+          <option value="3">3 ضيوف</option>
+          <option value="4">4 ضيوف</option>
+          <option value="family">عائلة</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="rooms">الغرف</label>
+        <select id="rooms" class="form-control">
+          <option value="1">1 غرفة</option>
+          <option value="2">2 غرف</option>
+          <option value="3">3 غرف</option>
+          <option value="4+">4+ غرف</option>
+        </select>
+      </div>
+      
+      <button type="submit" class="search-btn">
+        بحث
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="hotels-container">
+  <div class="filters-container">
+    <div class="filter-tag active"><i class="fas fa-fire"></i> الأكثر حجزاً</div>
+    <div class="filter-tag"><i class="fas fa-star"></i> 5 نجوم</div>
+    <div class="filter-tag"><i class="fas fa-wifi"></i> واي فاي مجاني</div>
+    <div class="filter-tag"><i class="fas fa-swimming-pool"></i> مسبح</div>
+    <div class="filter-tag"><i class="fas fa-utensils"></i> مطعم</div>
+    <div class="filter-tag"><i class="fas fa-spa"></i> سبا</div>
+    
+    <div class="sort-by">
+      <span>ترتيب حسب:</span>
+      <select>
+        <option>السعر (من الأقل)</option>
+        <option>السعر (من الأعلى)</option>
+        <option>التقييم</option>
+        <option>المسافة من المركز</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="hotel-card" onclick="showHotelModal()">
+    <div class="hotel-image">
+      <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="فندق جراند حياة">
+      <div class="hotel-badge">خصم 25%</div>
+    </div>
+    <div class="hotel-details">
+      <div class="hotel-header">
+        <h3 class="hotel-name">فندق جراند حياة</h3>
+        <div class="hotel-rating">
+          4.8
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+      
+      <div class="hotel-location">
+        <i class="fas fa-map-marker-alt"></i>
+        دبي، الإمارات العربية المتحدة
+      </div>
+      
+      <div class="hotel-features">
+        <div class="feature">
+          <i class="fas fa-wifi"></i>
+          واي فاي مجاني
+        </div>
+        <div class="feature">
+          <i class="fas fa-swimming-pool"></i>
+          مسبح
+        </div>
+        <div class="feature">
+          <i class="fas fa-utensils"></i>
+          3 مطاعم
+        </div>
+        <div class="feature">
+          <i class="fas fa-spa"></i>
+          سبا
+        </div>
+      </div>
+      
+      <div class="hotel-footer">
+        <div class="hotel-price">
+          <div class="price-from">ابتداءً من</div>
+          <div class="price-amount">450 ريال</div>
+          <div class="price-night">لليلة الواحدة</div>
+        </div>
+        <button class="book-btn">
+          احجز الآن
+          <i class="fas fa-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="hotel-card" onclick="showHotelModal()">
+    <div class="hotel-image">
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="فندق شيراتون">
+      <div class="hotel-badge">عرض خاص</div>
+    </div>
+    <div class="hotel-details">
+      <div class="hotel-header">
+        <h3 class="hotel-name">فندق شيراتون</h3>
+        <div class="hotel-rating">
+          4.6
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+      
+      <div class="hotel-location">
+        <i class="fas fa-map-marker-alt"></i>
+        الرياض، المملكة العربية السعودية
+      </div>
+      
+      <div class="hotel-features">
+        <div class="feature">
+          <i class="fas fa-wifi"></i>
+          واي فاي مجاني
+        </div>
+        <div class="feature">
+          <i class="fas fa-dumbbell"></i>
+          نادي رياضي
+        </div>
+        <div class="feature">
+          <i class="fas fa-utensils"></i>
+          وجبة إفطار
+        </div>
+        <div class="feature">
+          <i class="fas fa-parking"></i>
+          موقف سيارات
+        </div>
+      </div>
+      
+      <div class="hotel-footer">
+        <div class="hotel-price">
+          <div class="price-from">ابتداءً من</div>
+          <div class="price-amount">380 ريال</div>
+          <div class="price-night">لليلة الواحدة</div>
+        </div>
+        <button class="book-btn">
+          احجز الآن
+          <i class="fas fa-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="hotel-card" onclick="showHotelModal()">
+    <div class="hotel-image">
+      <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="منتجع السعديات">
+      <div class="hotel-badge">شامل الإفطار</div>
+    </div>
+    <div class="hotel-details">
+      <div class="hotel-header">
+        <h3 class="hotel-name">منتجع السعديات</h3>
+        <div class="hotel-rating">
+          4.9
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+      
+      <div class="hotel-location">
+        <i class="fas fa-map-marker-alt"></i>
+        أبوظبي، الإمارات العربية المتحدة
+      </div>
+      
+      <div class="hotel-features">
+        <div class="feature">
+          <i class="fas fa-umbrella-beach"></i>
+          شاطئ خاص
+        </div>
+        <div class="feature">
+          <i class="fas fa-swimming-pool"></i>
+          3 مسابح
+        </div>
+        <div class="feature">
+          <i class="fas fa-utensils"></i>
+          5 مطاعم
+        </div>
+        <div class="feature">
+          <i class="fas fa-spa"></i>
+          سبا فاخر
+        </div>
+      </div>
+      
+      <div class="hotel-footer">
+        <div class="hotel-price">
+          <div class="price-from">ابتداءً من</div>
+          <div class="price-amount">720 ريال</div>
+          <div class="price-night">لليلة الواحدة</div>
+        </div>
+        <button class="book-btn">
+          احجز الآن
+          <i class="fas fa-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hotel Details Modal -->
+<div class="modal-overlay" id="hotelModal">
+  <div class="modal-content">
+    <div class="modal-close" onclick="closeHotelModal()">
+      <i class="fas fa-times"></i>
+    </div>
+    
+    <!-- Modal content would be loaded dynamically in a real app -->
+    <div style="padding: 20px;">
+      <h2>تفاصيل الفندق</h2>
+      <p>هذه صفحة تفاصيل الفندق التي ستظهر عند النقر على أي فندق. في التطبيق الحقيقي، سيتم تحميل هذه البيانات بشكل ديناميكي بناءً على الفندق المحدد.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer with only two icons -->
+<footer>
+  <div class="nav-item" id="homeButton" onclick="goToHomePage()">
+    <i class="fas fa-home"></i>
+    <span>الرئيسية</span>
+  </div>
+  <div class="nav-item active" id="pageButton">
+    <i class="fas fa-hotel"></i>
+    <span>الفنادق</span>
+    </div>
+</footer>
+
+<script>
+  // Hotel Modal Functions
+  function showHotelModal() {
+    document.getElementById('hotelModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeHotelModal() {
+    document.getElementById('hotelModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+  
+  // Close modal when clicking outside
+  document.getElementById('hotelModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeHotelModal();
+    }
+  });
+  
+  // Filter tags functionality
+  document.querySelectorAll('.filter-tag').forEach(tag => {
+    tag.addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+  });
+  
+  // Search tabs functionality
+  document.querySelectorAll('.search-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  
+  // Function to navigate to home page
+  function goToHomePage() {
+    window.location.href = 'index.html';
+  }
+  
+  // Add animation effect to buttons
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      // Remove active class from all items
+      document.querySelectorAll('.nav-item').forEach(i => {
+        i.classList.remove('active');
+      });
+      
+      // Add active class to clicked item
+      this.classList.add('active');
+      
+      // Add pulse animation
+      this.style.animation = 'pulse 0.5s';
+      setTimeout(() => {
+        this.style.animation = '';
+      }, 500);
+    });
+  });
+</script>
+
+</body>
+</html>

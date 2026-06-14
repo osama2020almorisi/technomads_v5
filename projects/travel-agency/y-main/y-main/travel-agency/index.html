@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متطلبات السفر - الخطوط الجوية اليمنية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .search-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .results-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .requirements-card {
+            padding: 30px;
+        }
+
+        .requirements-card h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-right: 4px solid #667eea;
+        }
+
+        .section h3 {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-right: 20px;
+        }
+
+        .section li:before {
+            content: "•";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+        }
+
+        .baggage-item, .weight-item, .link-item, .service-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .service-item {
+            border-right: 3px solid #28a745;
+        }
+
+        .link-item a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .link-item a:hover {
+            text-decoration: underline;
+        }
+
+        .note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .note strong {
+            color: #856404;
+        }
+
+        .general-info {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 30px;
+        }
+
+        .general-info h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sub-section {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-right: 3px solid #764ba2;
+        }
+
+        .sub-section h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .sub-section h5 {
+            color: #555;
+            margin: 10px 0 5px 0;
+            font-size: 1rem;
+        }
+
+        .baggage-item.note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+
+        .requirements-card .section {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .search-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .requirements-card {
+                padding: 20px;
+            }
+            
+            .sub-section {
+                padding: 10px;
+                margin: 8px 0;
+            }
+            
+            .service-item {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌍 متطلبات السفر الدولي</h1>
+            <p>الخطوط الجوية اليمنية - تأكد من متطلبات سفرك قبل المغادرة</p>
+        </header>
+
+        <div class="search-section">
+            <div class="form-group">
+                <label for="nationality">الجنسية:</label>
+                <select id="nationality">
+                    <option value="">-- اختر الجنسية --</option>
+                    <option value="يمني">يمني</option>
+                    <option value="سعودي">سعودي</option>
+                    <option value="أردني">أردني</option>
+                    <option value="مصري">مصري</option>
+                    <option value="سوداني">سوداني</option>
+                    <option value="سوري">سوري</option>
+                    <option value="إماراتي">إماراتي</option>
+                    <option value="كويتي">كويتي</option>
+                    <option value="هندي">هندي</option>
+                    <option value="ماليزي">ماليزي</option>
+                    <option value="إثيوبي">إثيوبي</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destination">الوجهة:</label>
+                <select id="destination">
+                    <option value="">-- اختر الوجهة --</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="city">المدينة:</label>
+                <select id="city">
+                    <option value="">-- اختر المدينة --</option>
+                </select>
+            </div>
+
+            <button id="searchBtn">ابحث عن المتطلبات</button>
+        </div>
+
+        <div id="results" class="results-section" style="display: none;">
+            <div class="requirements-card">
+                <!-- سيتم تعبئة المحتوى ديناميكياً -->
+            </div>
+        </div>
+
+        <div id="generalInfo" class="general-info">
+            <h2>📜 التعليمات العامة</h2>
+            <div id="generalInstructions"></div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات المتطلبات
+        let travelData = {};
+
+        // تحميل البيانات من ملف JSON
+        async function loadData() {
+            try {
+                const response = await fetch('data.json');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                travelData = await response.json();
+                console.log('تم تحميل البيانات بنجاح:', travelData);
+                initializePage();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('خطأ في تحميل البيانات. تأكد من وجود ملف data.json في نفس المجلد');
+            }
+        }
+
+        // تهيئة الصفحة
+        function initializePage() {
+            // تعبئة خيارات الوجهات
+            const destinationSelect = document.getElementById('destination');
+            destinationSelect.innerHTML = '<option value="">-- اختر الوجهة --</option>';
+            
+            Object.keys(travelData.destinations).forEach(destination => {
+                const option = document.createElement('option');
+                option.value = destination;
+                option.textContent = destination;
+                destinationSelect.appendChild(option);
+            });
+
+            // عرض التعليمات العامة
+            displayGeneralInstructions();
+
+            // إضافة المستمعين للأحداث
+            document.getElementById('destination').addEventListener('change', updateCities);
+            document.getElementById('searchBtn').addEventListener('click', searchRequirements);
+        }
+
+        // تحديث قائمة المدن بناءً على الوجهة المختارة
+        function updateCities() {
+            const destination = document.getElementById('destination').value;
+            const citySelect = document.getElementById('city');
+            citySelect.innerHTML = '<option value="">-- اختر المدينة --</option>';
+
+            if (destination && travelData.destinations[destination]) {
+                travelData.destinations[destination].cities.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        }
+
+        // عرض التعليمات العامة
+        function displayGeneralInstructions() {
+            const generalInstructions = document.getElementById('generalInstructions');
+            
+            if (travelData.general_requirements) {
+                let html = `
+                    <div class="section">
+                        <h3>📋 ${travelData.general_requirements.title}</h3>
+                        <ul>
+                            ${travelData.general_requirements.instructions.map(instruction => 
+                                `<li>${instruction}</li>`
+                            ).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>🎒 معلومات الأمتعة</h3>
+                        <div class="baggage-item">
+                            <strong>حقيبة اليد:</strong> ${travelData.general_requirements.baggage.hand_baggage}
+                        </div>
+                        <div class="baggage-item">
+                            <strong>الدرجة السياحية:</strong> ${travelData.general_requirements.baggage.economy}
+                        </div>
+                        <div class="baggage-item">
+                            <strong>درجة رجال الأعمال والأولى:</strong> ${travelData.general_requirements.baggage.business_first}
+                        </div>
+                        <div class="baggage-item note">
+                            <strong>ملاحظة:</strong> ${travelData.general_requirements.baggage.note}
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <strong>ملاحظة هامة:</strong>
+                        <p>${travelData.general_requirements.note}</p>
+                    </div>
+                `;
+                
+                generalInstructions.innerHTML = html;
+            }
+        }
+
+        // البحث عن المتطلبات
+        function searchRequirements() {
+            const nationality = document.getElementById('nationality').value;
+            const destination = document.getElementById('destination').value;
+            const city = document.getElementById('city').value;
+
+            if (!nationality || !destination || !city) {
+                alert('يرجى اختيار جميع الخيارات');
+                return;
+            }
+
+            const destinationData = travelData.destinations[destination];
+            
+            // تصحيح للتأكد من البيانات
+            console.log('بيانات الوجهة:', destinationData);
+            if (!destinationData) {
+                alert('لا توجد بيانات لهذه الوجهة');
+                return;
+            }
+
+            // عرض النتائج
+            document.getElementById('results').style.display = 'block';
+
+            // عرض البيانات حسب الوجهة
+            displayDestinationRequirements(destinationData, destination, city);
+            
+            // التمرير إلى النتائج
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // عرض متطلبات الوجهة المحددة
+        function displayDestinationRequirements(destinationData, destinationName, city) {
+            console.log('عرض بيانات:', destinationData);
+            
+            let html = '';
+
+            // المتطلبات الأساسية
+            if (destinationData.requirements && Array.isArray(destinationData.requirements)) {
+                html += `
+                    <div class="section">
+                        <h3>📋 المتطلبات الأساسية</h3>
+                        <ul>
+                            ${destinationData.requirements.map(req => `<li>${req}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // متطلبات التأشيرة (للأردن)
+            if (destinationData.visa_requirements) {
+                html += `
+                    <div class="section">
+                        <h3>📄 متطلبات التأشيرة</h3>
+                        <div class="sub-section">
+                            <h4>المعفون من التأشيرة المسبقة:</h4>
+                            <ul>
+                                ${destinationData.visa_requirements.المعفون.map(req => `<li>${req}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="sub-section">
+                            <h4>يحتاجون تأشيرة مسبقة:</h4>
+                            <ul>
+                                ${destinationData.visa_requirements.يحتاجون_تأشيرة_مسبقة.map(req => `<li>${req}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // متطلبات الترانزيت
+            if (destinationData.transit_requirements) {
+                html += `
+                    <div class="section">
+                        <h3>🔄 متطلبات الترانزيت</h3>
+                        ${Array.isArray(destinationData.transit_requirements) 
+                            ? `<ul>${destinationData.transit_requirements.map(req => `<li>${req}</li>`).join('')}</ul>`
+                            : Object.entries(destinationData.transit_requirements).map(([key, requirements]) => `
+                                <div class="sub-section">
+                                    <h4>${key.replace(/_/g, ' ')}:</h4>
+                                    <ul>
+                                        ${requirements.map(req => `<li>${req}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')
+                        }
+                    </div>
+                `;
+            }
+
+            // المواد المسموحة
+            if (destinationData.allowed_items) {
+                const cityItems = destinationData.allowed_items[city];
+                if (cityItems) {
+                    html += `
+                        <div class="section">
+                            <h3>📦 المواد المسموحة</h3>
+                            ${Object.entries(cityItems).map(([item, description]) => `
+                                <div class="baggage-item">
+                                    <strong>${item.replace(/_/g, ' ')}:</strong> ${description}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            }
+
+            // أسعار الوزن الزائد
+            if (destinationData.excess_weight) {
+                html += `
+                    <div class="section">
+                        <h3>💵 أسعار الوزن الزائد</h3>
+                        ${Object.entries(destinationData.excess_weight).map(([to, price]) => `
+                            <div class="weight-item">
+                                <strong>إلى ${to}:</strong> ${price}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            // الخدمات الخاصة
+            if (destinationData.special_services) {
+                html += `
+                    <div class="section">
+                        <h3>♿ الخدمات الخاصة</h3>
+                        ${Object.entries(destinationData.special_services).map(([service, price]) => {
+                            if (typeof price === 'object') {
+                                return Object.entries(price).map(([subService, subPrice]) => `
+                                    <div class="service-item">
+                                        <strong>${service.replace(/_/g, ' ')} - ${subService.replace(/_/g, ' ')}:</strong> ${subPrice}
+                                    </div>
+                                `).join('');
+                            } else {
+                                return `<div class="service-item"><strong>${service.replace(/_/g, ' ')}:</strong> ${price}</div>`;
+                            }
+                        }).join('')}
+                        <div class="note">
+                            <strong>ملاحظة:</strong> يتم إصدار قسيمة EMD للخدمة أعلاه من مكتب المبيعات أثناء الحجز
+                        </div>
+                    </div>
+                `;
+            }
+
+            // مواعيد العمرة (للسعودية)
+            if (destinationData.umrah_dates) {
+                html += `
+                    <div class="section">
+                        <h3>🕋 مواعيد نقل المعتمرين</h3>
+                        <div class="baggage-item">
+                            <strong>بداية دخول حاملي تأشيرات العمرة:</strong> ${destinationData.umrah_dates.بداية_الدخول}
+                        </div>
+                        <div class="baggage-item">
+                            <strong>آخر موعد لدخول حاملي تأشيرة العمرة:</strong> ${destinationData.umrah_dates.آخر_موعد_لدخول}
+                        </div>
+                        <div class="baggage-item">
+                            <strong>آخر موعد لمغادرة حاملي تأشيرة العمرة:</strong> ${destinationData.umrah_dates.آخر_موعد_لمغادرة}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // المستندات المطلوبة (للهند)
+            if (destinationData.documents_required) {
+                html += `
+                    <div class="section">
+                        <h3>📄 المستندات المطلوبة</h3>
+                        <ul>
+                            ${destinationData.documents_required.map(doc => `<li>${doc}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // متطلبات الحجز (للهند)
+            if (destinationData.booking_requirements) {
+                html += `
+                    <div class="section">
+                        <h3>🎫 متطلبات الحجز</h3>
+                        <ul>
+                            ${destinationData.booking_requirements.map(req => `<li>${req}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // لوائح الاستيراد (لإثيوبيا)
+            if (destinationData.import_regulations) {
+                html += `
+                    <div class="section">
+                        <h3>📦 لوائح الاستيراد</h3>
+                        <ul>
+                            ${destinationData.import_regulations.map(reg => `<li>${reg}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // متطلبات السوريين (للبنان)
+            if (destinationData.syrian_nationals) {
+                html += `
+                    <div class="section">
+                        <h3>🇸🇾 متطلبات الجنسية السورية</h3>
+                        <ul>
+                            ${destinationData.syrian_nationals.map(req => `<li>${req}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // متطلبات الأجانب (لليمن)
+            if (destinationData.foreigners_requirements) {
+                html += `
+                    <div class="section">
+                        <h3>👤 متطلبات الأجانب لدخول اليمن</h3>
+                        ${Object.entries(destinationData.foreigners_requirements).map(([airport, requirements]) => `
+                            <div class="sub-section">
+                                <h4>مطار ${airport}:</h4>
+                                ${Object.entries(requirements).map(([key, value]) => {
+                                    if (Array.isArray(value)) {
+                                        return `
+                                            <h5>${key.replace(/_/g, ' ')}:</h5>
+                                            <ul>
+                                                ${value.map(item => `<li>${item}</li>`).join('')}
+                                            </ul>
+                                        `;
+                                    } else {
+                                        return `<p><strong>${key.replace(/_/g, ' ')}:</strong> ${value}</p>`;
+                                    }
+                                }).join('')}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            // متطلبات حاملي الجوازات اليمنية (لليمن)
+            if (destinationData.yemeni_passport_holders) {
+                html += `
+                    <div class="section">
+                        <h3>🇾🇪 متطلبات حاملي الجوازات اليمنية</h3>
+                        <div class="sub-section">
+                            <h4>الوثائق المطلوبة:</h4>
+                            <ul>
+                                ${destinationData.yemeni_passport_holders.required_documents.map(doc => `<li>${doc}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <strong>ملاحظة:</strong> ${destinationData.yemeni_passport_holders.note}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // رسوم التحويل (للإمارات)
+            if (destinationData.transfer_fees) {
+                html += `
+                    <div class="section">
+                        <h3>💸 رسوم خدمة التحويل (مرحبا)</h3>
+                        ${Object.entries(destinationData.transfer_fees).map(([service, fee]) => `
+                            <div class="service-item">
+                                <strong>${service.replace(/_/g, ' ')}:</strong> ${fee}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            // الملاحظة النهائية
+            if (destinationData.note) {
+                html += `
+                    <div class="note">
+                        <strong>ملاحظة هامة:</strong>
+                        <p>${destinationData.note}</p>
+                    </div>
+                `;
+            } else if (travelData.general_note) {
+                html += `
+                    <div class="note">
+                        <strong>ملاحظة هامة:</strong>
+                        <p>${travelData.general_note}</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('results').querySelector('.requirements-card').innerHTML = `
+                <h2>متطلبات السفر إلى ${destinationName} - ${city}</h2>
+                ${html}
+            `;
+        }
+
+        // تحميل البيانات عند فتح الصفحة
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>

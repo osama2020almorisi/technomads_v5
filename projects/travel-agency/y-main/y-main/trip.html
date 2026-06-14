@@ -1,0 +1,2460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة بيانات التأشيرات</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط CSS المحسنة */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --info: #17a2b8;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #2c3e50, #4a6491);
+            --gradient-secondary: linear-gradient(135deg, #3498db, #2c3e50);
+            --gradient-success: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 20px 0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+        
+        header h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        header p {
+            text-align: center;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .database-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .last-update {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .form-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .required::after {
+            content: " *";
+            color: var(--danger);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .checkbox-item input {
+            width: auto;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+        }
+        
+        .btn-success:hover {
+            background-color: #219955;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning);
+        }
+        
+        .btn-warning:hover {
+            background-color: #d68910;
+        }
+        
+        .btn-info {
+            background-color: var(--info);
+        }
+        
+        .btn-info:hover {
+            background-color: #138496;
+        }
+        
+        .btn-light {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .btn-light:hover {
+            background-color: #dde4e6;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: right;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .search-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .search-container input {
+            flex: 1;
+            margin-left: 10px;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .close {
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .close:hover {
+            color: var(--danger);
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--secondary);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .tab:hover:not(.active) {
+            background-color: #f5f5f5;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-card .label {
+            color: #777;
+            margin-top: 5px;
+        }
+        
+        .requirements-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .requirements-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .requirements-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .requirements-list li i {
+            margin-left: 10px;
+            color: var(--success);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-tourist {
+            background-color: #e8f4fd;
+            color: var(--secondary);
+        }
+        
+        .badge-business {
+            background-color: #e6f7ed;
+            color: var(--success);
+        }
+        
+        .badge-student {
+            background-color: #fef7e0;
+            color: var(--warning);
+        }
+        
+        .badge-medical {
+            background-color: #fde8e8;
+            color: var(--danger);
+        }
+        
+        .badge-transit {
+            background-color: #e6f3f7;
+            color: var(--info);
+        }
+        
+        .badge-diplomatic {
+            background-color: #f0e6f7;
+            color: #8e44ad;
+        }
+        
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        
+        .status-active {
+            background-color: var(--success);
+        }
+        
+        .status-inactive {
+            background-color: var(--danger);
+        }
+        
+        .status-pending {
+            background-color: var(--warning);
+        }
+        
+        .file-controls {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .help-text {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .copy-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--secondary);
+            font-size: 16px;
+            margin-right: 5px;
+            transition: color 0.3s;
+        }
+        
+        .copy-btn:hover {
+            color: var(--primary);
+        }
+        
+        .share-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--info);
+            font-size: 16px;
+            margin-right: 5px;
+            transition: color 0.3s;
+        }
+        
+        .share-btn:hover {
+            color: var(--primary);
+        }
+        
+        .export-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .quick-action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .quick-action-btn i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .quick-action-btn span {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: var(--card-shadow);
+            z-index: 1001;
+            display: none;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .dashboard-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .visa-type-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .visa-type-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .visa-type-bar {
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        
+        .visa-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            color: #555;
+        }
+        
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: #f0f8ff;
+            border-radius: 5px;
+        }
+        
+        .requirement-item i {
+            color: var(--success);
+        }
+        
+        .share-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .share-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .share-option:hover {
+            background: #e9ecef;
+            transform: translateY(-3px);
+        }
+        
+        .share-option i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .advanced-filters {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .advanced-filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .toggle-filters {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--secondary);
+            font-size: 14px;
+        }
+        
+        .filters-content {
+            display: none;
+        }
+        
+        .filters-content.active {
+            display: block;
+        }
+        
+        .range-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .range-filter {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+                justify-content: center;
+            }
+            
+            .form-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .database-info, .last-update {
+                position: static;
+                margin: 10px auto;
+                width: fit-content;
+            }
+            
+            .quick-actions {
+                justify-content: center;
+            }
+            
+            .quick-action-btn {
+                min-width: 100px;
+            }
+            
+            .visa-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .stats-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .stat-card .value {
+                font-size: 1.5rem;
+            }
+            
+            .quick-actions {
+                justify-content: space-between;
+            }
+            
+            .quick-action-btn {
+                min-width: 80px;
+                padding: 10px;
+            }
+            
+            .quick-action-btn i {
+                font-size: 20px;
+            }
+            
+            .quick-action-btn span {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="database-info">
+                <i class="fas fa-database"></i>
+                <span id="databaseStatus">جار التحميل...</span>
+            </div>
+            <h1><i class="fas fa-passport"></i> نظام إدارة بيانات التأشيرات</h1>
+            <p>بيانات موحدة لجميع الموظفين - قاعدة بيانات مشتركة</p>
+            <div class="last-update">
+                <i class="fas fa-clock"></i>
+                <span id="lastUpdateText">جار التحميل...</span>
+            </div>
+        </header>
+        
+        <div class="alert alert-success" id="successAlert"></div>
+        <div class="alert alert-danger" id="errorAlert"></div>
+        <div class="copy-notification" id="copyNotification">تم النسخ إلى الحافظة</div>
+        
+        <div class="file-controls">
+            <div class="actions">
+                <button class="btn btn-success" id="loadData"><i class="fas fa-download"></i> تحميل البيانات</button>
+                <button class="btn btn-info" id="downloadData"><i class="fas fa-file-download"></i> تحميل ملف البيانات</button>
+                <button class="btn btn-light" id="exportJson"><i class="fas fa-file-code"></i> تصدير JSON</button>
+                <button class="btn btn-light" id="exportCsv"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+                <button class="btn btn-warning" id="importData"><i class="fas fa-file-upload"></i> استيراد بيانات</button>
+            </div>
+            <p class="help-text">البيانات مخزنة في ملف <strong>trip_data.json</strong> في نفس مجلد الصفحة</p>
+        </div>
+        
+        <div class="stats-cards">
+            <div class="stat-card">
+                <i class="fas fa-globe-americas"></i>
+                <div class="value" id="totalCountries">0</div>
+                <div class="label">إجمالي الدول</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-file-contract"></i>
+                <div class="value" id="totalVisas">0</div>
+                <div class="label">إجمالي التأشيرات</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-coins"></i>
+                <div class="value" id="avgFees">$0</div>
+                <div class="label">متوسط الرسوم</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <div class="value" id="avgProcessing">0</div>
+                <div class="label">متوسط مدة المعالجة (أيام)</div>
+            </div>
+        </div>
+        
+        <div class="quick-actions">
+            <div class="quick-action-btn" data-tab="data-entry">
+                <i class="fas fa-plus-circle"></i>
+                <span>إضافة تأشيرة</span>
+            </div>
+            <div class="quick-action-btn" data-tab="data-view">
+                <i class="fas fa-table"></i>
+                <span>عرض البيانات</span>
+            </div>
+            <div class="quick-action-btn" data-tab="dashboard">
+                <i class="fas fa-chart-bar"></i>
+                <span>لوحة التحكم</span>
+            </div>
+            <div class="quick-action-btn" data-tab="requirements">
+                <i class="fas fa-tasks"></i>
+                <span>المتطلبات</span>
+            </div>
+        </div>
+
+        <div class="tab-content active" id="data-entry">
+            <div class="card">
+                <h2><i class="fas fa-passport"></i> إضافة بيانات تأشيرة جديدة</h2>
+                <form id="visaForm">
+                    <div class="form-section">
+                        <div>
+                            <div class="form-group">
+                                <label for="country" class="required">الدولة</label>
+                                <input type="text" id="country" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="embassy" class="required">السفارة / القنصلية</label>
+                                <input type="text" id="embassy" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="visaType" class="required">نوع التأشيرة</label>
+                                <select id="visaType" required>
+                                    <option value="">اختر نوع التأشيرة</option>
+                                    <option value="سياحية">سياحية</option>
+                                    <option value="عمل">عمل</option>
+                                    <option value="دراسية">دراسية</option>
+                                    <option value="علاج">علاج</option>
+                                    <option value="عبور">عبور</option>
+                                    <option value="دبلوماسية">دبلوماسية</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="processingTime">مدة المعالجة (أيام)</label>
+                                <input type="number" id="processingTime" min="1" placeholder="مثال: 14">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="form-group">
+                                <label for="fees">رسوم التأشيرة ($)</label>
+                                <input type="number" id="fees" min="0" step="0.01" placeholder="مثال: 150.00">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="validity">فترة الصلاحية (أيام)</label>
+                                <input type="number" id="validity" min="1" placeholder="مثال: 90">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="entryType">نوع الدخول</label>
+                                <select id="entryType">
+                                    <option value="">اختر نوع الدخول</option>
+                                    <option value="مرة واحدة">مرة واحدة</option>
+                                    <option value="متعدد الدخول">متعدد الدخول</option>
+                                    <option value="مزدوج">مزدوج</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="status">حالة الطلب</label>
+                                <select id="status">
+                                    <option value="نشط">نشط</option>
+                                    <option value="غير نشط">غير نشط</option>
+                                    <option value="معلق">معلق</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="requirements">متطلبات التأشيرة الأساسية</label>
+                        <div class="checkbox-group" id="basicRequirements">
+                            <!-- سيتم ملؤها بالجافاسكريبت -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="additionalRequirements">متطلبات إضافية</label>
+                        <textarea id="additionalRequirements" placeholder="أدخل أي متطلبات إضافية للتأشيرة..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes">ملاحظات إضافية</label>
+                        <textarea id="notes" placeholder="أدخل أي ملاحظات إضافية..."></textarea>
+                    </div>
+                    
+                    <div class="actions">
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> حفظ البيانات</button>
+                        <button type="button" class="btn" id="resetForm"><i class="fas fa-broom"></i> تفريغ النموذج</button>
+                        <button type="button" class="btn btn-info" id="autoFillBtn"><i class="fas fa-magic"></i> تعبئة تلقائية</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="data-view">
+            <div class="card">
+                <h2><i class="fas fa-table"></i> عرض بيانات التأشيرات</h2>
+                
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="ابحث عن دولة أو نوع تأشيرة أو سفارة...">
+                    <button class="btn" id="searchBtn"><i class="fas fa-search"></i> بحث</button>
+                </div>
+                
+                <div class="advanced-filters">
+                    <div class="advanced-filters-header">
+                        <h3>التصفية المتقدمة</h3>
+                        <button class="toggle-filters" id="toggleFilters">
+                            <i class="fas fa-sliders-h"></i> إظهار/إخفاء التصفية المتقدمة
+                        </button>
+                    </div>
+                    <div class="filters-content" id="filtersContent">
+                        <div class="range-filters">
+                            <div class="range-filter">
+                                <label for="filterFeesMin">الرسوم ($)</label>
+                                <input type="range" id="filterFeesMin" min="0" max="1000" value="0">
+                                <input type="range" id="filterFeesMax" min="0" max="1000" value="1000">
+                                <div class="range-values">
+                                    <span id="feesMinValue">0</span>
+                                    <span id="feesMaxValue">1000</span>
+                                </div>
+                            </div>
+                            
+                            <div class="range-filter">
+                                <label for="filterProcessingMin">مدة المعالجة (أيام)</label>
+                                <input type="range" id="filterProcessingMin" min="0" max="90" value="0">
+                                <input type="range" id="filterProcessingMax" min="0" max="90" value="90">
+                                <div class="range-values">
+                                    <span id="processingMinValue">0</span>
+                                    <span id="processingMaxValue">90</span>
+                                </div>
+                            </div>
+                            
+                            <div class="range-filter">
+                                <label for="filterValidityMin">فترة الصلاحية (أيام)</label>
+                                <input type="range" id="filterValidityMin" min="0" max="365" value="0">
+                                <input type="range" id="filterValidityMax" min="0" max="365" value="365">
+                                <div class="range-values">
+                                    <span id="validityMinValue">0</span>
+                                    <span id="validityMaxValue">365</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="filterType">تصفية حسب النوع</label>
+                        <select id="filterType">
+                            <option value="">جميع الأنواع</option>
+                            <option value="سياحية">سياحية</option>
+                            <option value="عمل">عمل</option>
+                            <option value="دراسية">دراسية</option>
+                            <option value="علاج">علاج</option>
+                            <option value="عبور">عبور</option>
+                            <option value="دبلوماسية">دبلوماسية</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filterCountry">تصفية حسب الدولة</label>
+                        <input type="text" id="filterCountry" placeholder="اسم الدولة">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filterStatus">تصفية حسب الحالة</label>
+                        <select id="filterStatus">
+                            <option value="">جميع الحالات</option>
+                            <option value="نشط">نشط</option>
+                            <option value="غير نشط">غير نشط</option>
+                            <option value="معلق">معلق</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="sortBy">ترتيب حسب</label>
+                        <select id="sortBy">
+                            <option value="country">الدولة (أ-ي)</option>
+                            <option value="countryDesc">الدولة (ي-أ)</option>
+                            <option value="fees">الرسوم (منخفضة-عالية)</option>
+                            <option value="feesDesc">الرسوم (عالية-منخفضة)</option>
+                            <option value="processingTime">مدة المعالجة (قصيرة-طويلة)</option>
+                            <option value="processingTimeDesc">مدة المعالجة (طويلة-قصيرة)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="visaTable">
+                        <thead>
+                            <tr>
+                                <th>الدولة</th>
+                                <th>السفارة</th>
+                                <th>نوع التأشيرة</th>
+                                <th>المتطلبات</th>
+                                <th>مدة المعالجة</th>
+                                <th>الرسوم ($)</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="visaTableBody">
+                            <!-- سيتم ملء هذا القسم بالبيانات من JavaScript -->
+                        </tbody>
+                    </table>
+                    <div class="no-data" id="noDataMessage">لا توجد بيانات لعرضها. يرجى إضافة بيانات جديدة.</div>
+                </div>
+                
+                <div class="actions">
+                    <button class="btn" id="refreshData"><i class="fas fa-sync-alt"></i> تحديث البيانات</button>
+                    <button class="btn btn-danger" id="clearAllBtn"><i class="fas fa-trash-alt"></i> حذف جميع البيانات</button>
+                    <button class="btn btn-info" id="copyTableBtn"><i class="fas fa-copy"></i> نسخ الجدول</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="dashboard">
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3><i class="fas fa-chart-pie"></i> توزيع أنواع التأشيرات</h3>
+                    <div class="visa-type-chart" id="visaTypeChart">
+                        <!-- سيتم ملؤها بالجافاسكريبت -->
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3><i class="fas fa-flag"></i> الدول الأكثر طلباً</h3>
+                    <div id="topCountries">
+                        <!-- سيتم ملؤها بالجافاسكريبت -->
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3><i class="fas fa-history"></i> آخر التحديثات</h3>
+                    <div id="recentUpdates">
+                        <!-- سيتم ملؤها بالجافاسكريبت -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="requirements">
+            <div class="card">
+                <h2><i class="fas fa-tasks"></i> المتطلبات الشائعة للتأشيرات</h2>
+                <div class="form-section">
+                    <div>
+                        <h3>المتطلبات الأساسية</h3>
+                        <ul class="requirements-list" id="commonRequirements">
+                            <!-- سيتم ملؤها بالجافاسكريبت -->
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>نصائح للحصول على التأشيرة</h3>
+                        <ul class="requirements-list" id="visaTips">
+                            <!-- سيتم ملؤها بالجافاسكريبت -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نموذج التعديل -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit"></i> تعديل بيانات التأشيرة</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-section">
+                    <div>
+                        <div class="form-group">
+                            <label for="editCountry" class="required">الدولة</label>
+                            <input type="text" id="editCountry" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editEmbassy" class="required">السفارة / القنصلية</label>
+                            <input type="text" id="editEmbassy" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editVisaType" class="required">نوع التأشيرة</label>
+                            <select id="editVisaType" required>
+                                <option value="">اختر نوع التأشيرة</option>
+                                <option value="سياحية">سياحية</option>
+                                <option value="عمل">عمل</option>
+                                <option value="دراسية">دراسية</option>
+                                <option value="علاج">علاج</option>
+                                <option value="عبور">عبور</option>
+                                <option value="دبلوماسية">دبلوماسية</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editProcessingTime">مدة المعالجة (أيام)</label>
+                            <input type="number" id="editProcessingTime" min="1">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-group">
+                            <label for="editFees">رسوم التأشيرة ($)</label>
+                            <input type="number" id="editFees" min="0" step="0.01">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editValidity">فترة الصلاحية (أيام)</label>
+                            <input type="number" id="editValidity" min="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editEntryType">نوع الدخول</label>
+                            <select id="editEntryType">
+                                <option value="">اختر نوع الدخول</option>
+                                <option value="مرة واحدة">مرة واحدة</option>
+                                <option value="متعدد الدخول">متعدد الدخول</option>
+                                <option value="مزدوج">مزدوج</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editStatus">حالة الطلب</label>
+                            <select id="editStatus">
+                                <option value="نشط">نشط</option>
+                                <option value="غير نشط">غير نشط</option>
+                                <option value="معلق">معلق</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editRequirements">متطلبات التأشيرة الأساسية</label>
+                    <div class="checkbox-group" id="editBasicRequirements">
+                        <!-- سيتم ملؤها بالجافاسكريبت -->
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editAdditionalRequirements">متطلبات إضافية</label>
+                    <textarea id="editAdditionalRequirements" placeholder="أدخل أي متطلبات إضافية للتأشيرة..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editNotes">ملاحظات إضافية</label>
+                    <textarea id="editNotes" placeholder="أدخل أي ملاحظات إضافية..."></textarea>
+                </div>
+                
+                <div class="actions">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> حفظ التعديلات</button>
+                    <button type="button" class="btn btn-danger" id="cancelEdit"><i class="fas fa-times"></i> إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نموذج عرض التفاصيل والمشاركة -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-info-circle"></i> تفاصيل التأشيرة</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div id="visaDetailsContent">
+                <!-- سيتم ملؤها بالجافاسكريبت -->
+            </div>
+            <div class="share-options">
+                <div class="share-option" id="copyVisaDetails">
+                    <i class="fas fa-copy"></i>
+                    <span>نسخ البيانات</span>
+                </div>
+                <div class="share-option" id="shareVisaDetails">
+                    <i class="fas fa-share-alt"></i>
+                    <span>مشاركة</span>
+                </div>
+                <div class="share-option" id="printVisaDetails">
+                    <i class="fas fa-print"></i>
+                    <span>طباعة</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نموذج استيراد البيانات -->
+    <div class="modal" id="importModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-import"></i> استيراد بيانات التأشيرات</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="form-group">
+                <label for="importFile">اختر ملف JSON لاستيراد البيانات</label>
+                <input type="file" id="importFile" accept=".json">
+            </div>
+            <div class="form-group">
+                <label for="importMethod">طريقة الاستيراد</label>
+                <select id="importMethod">
+                    <option value="merge">دمج البيانات (إضافة جديدة فقط)</option>
+                    <option value="replace">استبدال جميع البيانات</option>
+                </select>
+            </div>
+            <div class="actions">
+                <button class="btn btn-success" id="confirmImport"><i class="fas fa-file-import"></i> استيراد البيانات</button>
+                <button class="btn btn-danger" id="cancelImport"><i class="fas fa-times"></i> إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات التطبيق
+        let visaData = [];
+        let currentEditId = null;
+        let currentVisaDetails = null;
+        
+        // متطلبات التأشيرة الأساسية
+        const basicRequirementsList = [
+            "جواز سفر ساري المفعول",
+            "صور شخصية",
+            "نموذج طلب تأشيرة مكتمل",
+            "حجز فندق",
+            "تذكرة طيران ذهاب وعودة",
+            "كشف حساب بنكي",
+            "تأمين صحي",
+            "شهادة عمل",
+            "دعوة رسمية (إن وجدت)",
+            "سجل عدلي",
+            "صور من صفحات جواز السفر",
+            "إثبات الإقامة",
+            "خطاب تغطية",
+            "إثبات العلاقات العائلية (للتأشيرات العائلية)",
+            "شهادة الميلاد (للتأشيرات العائلية)",
+            "كشف الدرجات (للتأشيرات الدراسية)",
+            "قبول جامعي (للتأشيرات الدراسية)",
+            "شهادة طبية (للتأشيرات العلاجية)",
+            "حجز مستشفى (للتأشيرات العلاجية)"
+        ];
+        
+        // المتطلبات الشائعة
+        const commonRequirements = [
+            "تأكد من صلاحية جواز سفرك (6 أشهر على الأقل)",
+            "احصل على صور شخصية وفقاً للمواصفات المطلوبة",
+            "احفظ نسخة من جميع المستندات المقدمة",
+            "تأكد من دقة المعلومات في نموذج الطلب",
+            "احصل على التأمين الصحي المناسب",
+            "تأكد من توفر الأموال الكافية لإثبات الإقامة"
+        ];
+        
+        // نصائح للحصول على التأشيرة
+        const visaTips = [
+            "قدم الطلب قبل موعد السفر بفترة كافية",
+            "راجع المتطلبات المحددة للدولة التي تريد زيارتها",
+            "كن صادقاً ودقيقاً في تقديم المعلومات",
+            "احتفظ بسجل سفر جيد (للمسافرين الدائمين)",
+            "استشر مكتب التأشيرات أو سفارة الدولة للاستفسارات",
+            "تأكد من أن جميع المستندات مترجمة إذا لزم الأمر"
+        ];
+        
+        // عناصر DOM
+        const visaForm = document.getElementById('visaForm');
+        const editForm = document.getElementById('editForm');
+        const visaTableBody = document.getElementById('visaTableBody');
+        const noDataMessage = document.getElementById('noDataMessage');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const filterType = document.getElementById('filterType');
+        const filterCountry = document.getElementById('filterCountry');
+        const filterStatus = document.getElementById('filterStatus');
+        const sortBy = document.getElementById('sortBy');
+        const loadDataBtn = document.getElementById('loadData');
+        const downloadDataBtn = document.getElementById('downloadData');
+        const refreshDataBtn = document.getElementById('refreshData');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const editModal = document.getElementById('editModal');
+        const detailsModal = document.getElementById('detailsModal');
+        const importModal = document.getElementById('importModal');
+        const resetFormBtn = document.getElementById('resetForm');
+        const autoFillBtn = document.getElementById('autoFillBtn');
+        const successAlert = document.getElementById('successAlert');
+        const errorAlert = document.getElementById('errorAlert');
+        const copyNotification = document.getElementById('copyNotification');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const basicRequirementsContainer = document.getElementById('basicRequirements');
+        const editBasicRequirementsContainer = document.getElementById('editBasicRequirements');
+        const commonRequirementsContainer = document.getElementById('commonRequirements');
+        const visaTipsContainer = document.getElementById('visaTips');
+        const databaseStatus = document.getElementById('databaseStatus');
+        const lastUpdateText = document.getElementById('lastUpdateText');
+        const exportJsonBtn = document.getElementById('exportJson');
+        const exportCsvBtn = document.getElementById('exportCsv');
+        const copyTableBtn = document.getElementById('copyTableBtn');
+        const quickActionBtns = document.querySelectorAll('.quick-action-btn');
+        const visaDetailsContent = document.getElementById('visaDetailsContent');
+        const copyVisaDetailsBtn = document.getElementById('copyVisaDetails');
+        const shareVisaDetailsBtn = document.getElementById('shareVisaDetails');
+        const printVisaDetailsBtn = document.getElementById('printVisaDetails');
+        const importDataBtn = document.getElementById('importData');
+        const importFile = document.getElementById('importFile');
+        const importMethod = document.getElementById('importMethod');
+        const confirmImportBtn = document.getElementById('confirmImport');
+        const cancelImportBtn = document.getElementById('cancelImport');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const toggleFiltersBtn = document.getElementById('toggleFilters');
+        const filtersContent = document.getElementById('filtersContent');
+
+        // عناصر التصفية المتقدمة
+        const filterFeesMin = document.getElementById('filterFeesMin');
+        const filterFeesMax = document.getElementById('filterFeesMax');
+        const filterProcessingMin = document.getElementById('filterProcessingMin');
+        const filterProcessingMax = document.getElementById('filterProcessingMax');
+        const filterValidityMin = document.getElementById('filterValidityMin');
+        const filterValidityMax = document.getElementById('filterValidityMax');
+        const feesMinValue = document.getElementById('feesMinValue');
+        const feesMaxValue = document.getElementById('feesMaxValue');
+        const processingMinValue = document.getElementById('processingMinValue');
+        const processingMaxValue = document.getElementById('processingMaxValue');
+        const validityMinValue = document.getElementById('validityMinValue');
+        const validityMaxValue = document.getElementById('validityMaxValue');
+
+        // إحصائيات
+        const totalCountriesElement = document.getElementById('totalCountries');
+        const totalVisasElement = document.getElementById('totalVisas');
+        const avgFeesElement = document.getElementById('avgFees');
+        const avgProcessingElement = document.getElementById('avgProcessing');
+
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeRequirements();
+            initializeAdvancedFilters();
+            loadDataFromLocalStorage(); // تحميل البيانات من localStorage تلقائياً عند فتح الصفحة
+            
+            // إضافة مستمعي الأحداث
+            visaForm.addEventListener('submit', handleFormSubmit);
+            editForm.addEventListener('submit', handleEditSubmit);
+            searchBtn.addEventListener('click', handleSearch);
+            filterType.addEventListener('change', renderTable);
+            filterCountry.addEventListener('input', renderTable);
+            filterStatus.addEventListener('change', renderTable);
+            sortBy.addEventListener('change', renderTable);
+            loadDataBtn.addEventListener('click', loadDataFromFile);
+            downloadDataBtn.addEventListener('click', downloadDataFile);
+            refreshDataBtn.addEventListener('click', loadDataFromFile);
+            clearAllBtn.addEventListener('click', handleClearAll);
+            resetFormBtn.addEventListener('click', resetForm);
+            autoFillBtn.addEventListener('click', autoFillForm);
+            exportJsonBtn.addEventListener('click', exportToJson);
+            exportCsvBtn.addEventListener('click', exportToCsv);
+            copyTableBtn.addEventListener('click', copyTableToClipboard);
+            copyVisaDetailsBtn.addEventListener('click', copyVisaDetailsToClipboard);
+            shareVisaDetailsBtn.addEventListener('click', shareVisaDetails);
+            printVisaDetailsBtn.addEventListener('click', printVisaDetails);
+            importDataBtn.addEventListener('click', showImportModal);
+            confirmImportBtn.addEventListener('click', handleImport);
+            cancelImportBtn.addEventListener('click', () => importModal.style.display = 'none');
+            toggleFiltersBtn.addEventListener('click', toggleAdvancedFilters);
+            
+            // إغلاق النماذج
+            document.querySelectorAll('.close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+            
+            document.getElementById('cancelEdit').addEventListener('click', function() {
+                editModal.style.display = 'none';
+            });
+            
+            // التبديل بين التبويبات
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    switchToTab(tabId);
+                });
+            });
+            
+            // إجراءات سريعة
+            quickActionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    switchToTab(tabId);
+                });
+            });
+            
+            // البحث أثناء الكتابة
+            searchInput.addEventListener('input', handleSearch);
+            
+            // التصفية المتقدمة
+            filterFeesMin.addEventListener('input', updateFeesRange);
+            filterFeesMax.addEventListener('input', updateFeesRange);
+            filterProcessingMin.addEventListener('input', updateProcessingRange);
+            filterProcessingMax.addEventListener('input', updateProcessingRange);
+            filterValidityMin.addEventListener('input', updateValidityRange);
+            filterValidityMax.addEventListener('input', updateValidityRange);
+            
+            // حفظ البيانات تلقائياً قبل إغلاق الصفحة
+            window.addEventListener('beforeunload', function() {
+                saveDataToLocalStorage();
+            });
+        });
+        
+        // تهيئة متطلبات التأشيرة
+        function initializeRequirements() {
+            // تهيئة المتطلبات الأساسية في نموذج الإضافة
+            basicRequirementsContainer.innerHTML = basicRequirementsList.map(req => `
+                <div class="checkbox-item">
+                    <input type="checkbox" id="req_${basicRequirementsList.indexOf(req)}" value="${req}">
+                    <label for="req_${basicRequirementsList.indexOf(req)}">${req}</label>
+                </div>
+            `).join('');
+            
+            // تهيئة المتطلبات الأساسية في نموذج التعديل
+            editBasicRequirementsContainer.innerHTML = basicRequirementsList.map(req => `
+                <div class="checkbox-item">
+                    <input type="checkbox" id="edit_req_${basicRequirementsList.indexOf(req)}" value="${req}">
+                    <label for="edit_req_${basicRequirementsList.indexOf(req)}">${req}</label>
+                </div>
+            `).join('');
+            
+            // تهيئة المتطلبات الشائعة
+            commonRequirementsContainer.innerHTML = commonRequirements.map(req => `
+                <li><i class="fas fa-check-circle"></i> ${req}</li>
+            `).join('');
+            
+            // تهيئة نصائح التأشيرة
+            visaTipsContainer.innerHTML = visaTips.map(tip => `
+                <li><i class="fas fa-lightbulb"></i> ${tip}</li>
+            `).join('');
+        }
+        
+        // تهيئة التصفية المتقدمة
+        function initializeAdvancedFilters() {
+            // تحديث قيم النطاقات
+            updateFeesRange();
+            updateProcessingRange();
+            updateValidityRange();
+        }
+        
+        // تحديث نطاق الرسوم
+        function updateFeesRange() {
+            feesMinValue.textContent = filterFeesMin.value;
+            feesMaxValue.textContent = filterFeesMax.value;
+            renderTable();
+        }
+        
+        // تحديث نطاق مدة المعالجة
+        function updateProcessingRange() {
+            processingMinValue.textContent = filterProcessingMin.value;
+            processingMaxValue.textContent = filterProcessingMax.value;
+            renderTable();
+        }
+        
+        // تحديث نطاق فترة الصلاحية
+        function updateValidityRange() {
+            validityMinValue.textContent = filterValidityMin.value;
+            validityMaxValue.textContent = filterValidityMax.value;
+            renderTable();
+        }
+        
+        // تبديل التصفية المتقدمة
+        function toggleAdvancedFilters() {
+            filtersContent.classList.toggle('active');
+        }
+        
+        // معالجة إرسال النموذج
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // جمع المتطلبات المحددة
+            const selectedRequirements = [];
+            basicRequirementsContainer.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                selectedRequirements.push(checkbox.value);
+            });
+            
+            const newVisa = {
+                id: Date.now().toString(),
+                country: document.getElementById('country').value,
+                embassy: document.getElementById('embassy').value,
+                visaType: document.getElementById('visaType').value,
+                requirements: selectedRequirements,
+                additionalRequirements: document.getElementById('additionalRequirements').value,
+                processingTime: document.getElementById('processingTime').value,
+                fees: document.getElementById('fees').value,
+                validity: document.getElementById('validity').value,
+                entryType: document.getElementById('entryType').value,
+                status: document.getElementById('status').value,
+                notes: document.getElementById('notes').value,
+                createdAt: new Date().toISOString(),
+                createdBy: 'المسؤول'
+            };
+            
+            visaData.push(newVisa);
+            saveDataToLocalStorage(); // حفظ البيانات في localStorage
+            resetForm();
+            showAlert('تم إضافة بيانات التأشيرة بنجاح', 'success');
+            
+            // الانتقال إلى تبويب العرض
+            switchToTab('data-view');
+        }
+        
+        // معالجة تعديل النموذج
+        function handleEditSubmit(e) {
+            e.preventDefault();
+            
+            const index = visaData.findIndex(item => item.id === currentEditId);
+            if (index !== -1) {
+                // جمع المتطلبات المحددة
+                const selectedRequirements = [];
+                editBasicRequirementsContainer.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                    selectedRequirements.push(checkbox.value);
+                });
+                
+                visaData[index] = {
+                    ...visaData[index],
+                    country: document.getElementById('editCountry').value,
+                    embassy: document.getElementById('editEmbassy').value,
+                    visaType: document.getElementById('editVisaType').value,
+                    requirements: selectedRequirements,
+                    additionalRequirements: document.getElementById('editAdditionalRequirements').value,
+                    processingTime: document.getElementById('editProcessingTime').value,
+                    fees: document.getElementById('editFees').value,
+                    validity: document.getElementById('editValidity').value,
+                    entryType: document.getElementById('editEntryType').value,
+                    status: document.getElementById('editStatus').value,
+                    notes: document.getElementById('editNotes').value,
+                    updatedAt: new Date().toISOString(),
+                    updatedBy: 'المسؤول'
+                };
+                
+                saveDataToLocalStorage(); // حفظ البيانات في localStorage
+                editModal.style.display = 'none';
+                showAlert('تم تحديث بيانات التأشيرة بنجاح', 'success');
+            }
+        }
+        
+        // تحميل البيانات من localStorage
+        function loadDataFromLocalStorage() {
+            showLoading();
+            databaseStatus.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> جاري تحميل البيانات...';
+            
+            try {
+                const savedData = localStorage.getItem('visaData');
+                if (savedData) {
+                    visaData = JSON.parse(savedData);
+                    renderTable();
+                    updateStats();
+                    updateDashboard();
+                    updateLastUpdateTime();
+                    databaseStatus.innerHTML = '<i class="fas fa-check-circle"></i> تم تحميل البيانات بنجاح من التخزين المحلي';
+                    showAlert('تم تحميل البيانات بنجاح من التخزين المحلي', 'success');
+                } else {
+                    // إذا لم توجد بيانات محفوظة، جرب تحميل البيانات من الملف
+                    loadDataFromFile();
+                }
+            } catch (error) {
+                console.error('Error loading data from localStorage:', error);
+                databaseStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> فشل في تحميل البيانات المحلية';
+                showAlert('فشل في تحميل البيانات من التخزين المحلي. جاري تحميل البيانات من الملف.', 'error');
+                loadDataFromFile();
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        // حفظ البيانات إلى localStorage
+        function saveDataToLocalStorage() {
+            try {
+                localStorage.setItem('visaData', JSON.stringify(visaData));
+                databaseStatus.innerHTML = '<i class="fas fa-check-circle"></i> تم حفظ البيانات محلياً';
+                updateLastUpdateTime();
+            } catch (error) {
+                console.error('Error saving data to localStorage:', error);
+                databaseStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> فشل في حفظ البيانات محلياً';
+                showAlert('فشل في حفظ البيانات في التخزين المحلي', 'error');
+            }
+        }
+        
+        // تحميل البيانات من ملف JSON (للتوافق مع الإصدار السابق)
+        function loadDataFromFile() {
+            showLoading();
+            databaseStatus.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> جاري تحميل البيانات...';
+            
+            // استخدام fetch لتحميل البيانات من ملف trip_data.json في نفس المجلد
+            fetch('trip_data.json')
+                .then(response => {
+                    if (!response.ok) {
+                        // إذا الملف غير موجود، نبدأ بمصفوفة فارغة
+                        if (response.status === 404) {
+                            return Promise.resolve([]);
+                        }
+                        throw new Error('فشل في تحميل البيانات من الملف');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const fileData = Array.isArray(data) ? data : [];
+                    
+                    // دمج البيانات من الملف مع البيانات المحلية
+                    if (fileData.length > 0) {
+                        const existingIds = new Set(visaData.map(item => item.id));
+                        const newData = fileData.filter(item => !existingIds.has(item.id));
+                        visaData = [...visaData, ...newData];
+                        saveDataToLocalStorage(); // حفظ البيانات المدمجة
+                    }
+                    
+                    renderTable();
+                    updateStats();
+                    updateDashboard();
+                    updateLastUpdateTime();
+                    databaseStatus.innerHTML = '<i class="fas fa-check-circle"></i> تم تحميل البيانات بنجاح';
+                    showAlert('تم تحميل البيانات بنجاح', 'success');
+                    hideLoading();
+                })
+                .catch(error => {
+                    console.error('Error loading data:', error);
+                    databaseStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> فشل في التحميل - استخدام البيانات المحلية';
+                    showAlert('فشل في تحميل البيانات من trip_data.json: ' + error.message + '. استخدام البيانات المحلية.', 'error');
+                    hideLoading();
+                });
+        }
+        
+        // تحميل ملف البيانات
+        function downloadDataFile() {
+            const dataStr = JSON.stringify(visaData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', 'trip_data.json');
+            linkElement.click();
+            
+            showAlert('تم تحميل ملف trip_data.json بنجاح', 'success');
+        }
+        
+        // تصدير إلى JSON
+        function exportToJson() {
+            const dataStr = JSON.stringify(visaData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', 'visa_data_export.json');
+            linkElement.click();
+            
+            showAlert('تم تصدير البيانات بصيغة JSON بنجاح', 'success');
+        }
+        
+        // تصدير إلى CSV
+        function exportToCsv() {
+            if (visaData.length === 0) {
+                showAlert('لا توجد بيانات لتصديرها', 'error');
+                return;
+            }
+            
+            const headers = ['الدولة', 'السفارة', 'نوع التأشيرة', 'المتطلبات', 'مدة المعالجة', 'الرسوم ($)', 'فترة الصلاحية', 'نوع الدخول', 'الحالة'];
+            
+            const csvData = visaData.map(item => [
+                item.country,
+                item.embassy,
+                item.visaType,
+                item.requirements ? item.requirements.join('; ') : '',
+                item.processingTime || '',
+                item.fees || '',
+                item.validity || '',
+                item.entryType || '',
+                item.status || ''
+            ]);
+            
+            const csvContent = [headers, ...csvData]
+                .map(row => row.map(field => `"${field}"`).join(','))
+                .join('\n');
+            
+            const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', 'visa_data_export.csv');
+            linkElement.click();
+            
+            showAlert('تم تصدير البيانات بصيغة CSV بنجاح', 'success');
+        }
+        
+        // نسخ الجدول إلى الحافظة
+        function copyTableToClipboard() {
+            if (visaData.length === 0) {
+                showAlert('لا توجد بيانات لنسخها', 'error');
+                return;
+            }
+            
+            const headers = ['الدولة', 'السفارة', 'نوع التأشيرة', 'المتطلبات', 'مدة المعالجة', 'الرسوم ($)', 'الحالة'];
+            
+            const tableData = visaData.map(item => [
+                item.country,
+                item.embassy,
+                item.visaType,
+                item.requirements ? item.requirements.slice(0, 3).join('، ') + (item.requirements.length > 3 ? '...' : '') : '',
+                item.processingTime ? item.processingTime + ' يوم' : '',
+                item.fees ? '$' + item.fees : '',
+                item.status
+            ]);
+            
+            const textContent = [headers, ...tableData]
+                .map(row => row.join('\t'))
+                .join('\n');
+            
+            navigator.clipboard.writeText(textContent)
+                .then(() => {
+                    showCopyNotification();
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    showAlert('فشل في نسخ البيانات إلى الحافظة', 'error');
+                });
+        }
+        
+        // عرض الجدول
+        function renderTable() {
+            let filteredData = [...visaData];
+            
+            // التصفية حسب البحث
+            const searchTerm = searchInput.value.toLowerCase();
+            if (searchTerm) {
+                filteredData = filteredData.filter(item => 
+                    item.country.toLowerCase().includes(searchTerm) || 
+                    item.visaType.toLowerCase().includes(searchTerm) ||
+                    item.embassy.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // التصفية حسب النوع
+            const typeFilter = filterType.value;
+            if (typeFilter) {
+                filteredData = filteredData.filter(item => item.visaType === typeFilter);
+            }
+            
+            // التصفية حسب الدولة
+            const countryFilter = filterCountry.value.toLowerCase();
+            if (countryFilter) {
+                filteredData = filteredData.filter(item => 
+                    item.country.toLowerCase().includes(countryFilter)
+                );
+            }
+            
+            // التصفية حسب الحالة
+            const statusFilter = filterStatus.value;
+            if (statusFilter) {
+                filteredData = filteredData.filter(item => item.status === statusFilter);
+            }
+            
+            // التصفية حسب الرسوم
+            const feesMin = parseInt(filterFeesMin.value);
+            const feesMax = parseInt(filterFeesMax.value);
+            filteredData = filteredData.filter(item => {
+                const fees = parseFloat(item.fees) || 0;
+                return fees >= feesMin && fees <= feesMax;
+            });
+            
+            // التصفية حسب مدة المعالجة
+            const processingMin = parseInt(filterProcessingMin.value);
+            const processingMax = parseInt(filterProcessingMax.value);
+            filteredData = filteredData.filter(item => {
+                const processing = parseInt(item.processingTime) || 0;
+                return processing >= processingMin && processing <= processingMax;
+            });
+            
+            // التصفية حسب فترة الصلاحية
+            const validityMin = parseInt(filterValidityMin.value);
+            const validityMax = parseInt(filterValidityMax.value);
+            filteredData = filteredData.filter(item => {
+                const validity = parseInt(item.validity) || 0;
+                return validity >= validityMin && validity <= validityMax;
+            });
+            
+            // الترتيب
+            const sortOption = sortBy.value;
+            switch(sortOption) {
+                case 'country':
+                    filteredData.sort((a, b) => a.country.localeCompare(b.country));
+                    break;
+                case 'countryDesc':
+                    filteredData.sort((a, b) => b.country.localeCompare(a.country));
+                    break;
+                case 'fees':
+                    filteredData.sort((a, b) => (parseFloat(a.fees) || 0) - (parseFloat(b.fees) || 0));
+                    break;
+                case 'feesDesc':
+                    filteredData.sort((a, b) => (parseFloat(b.fees) || 0) - (parseFloat(a.fees) || 0));
+                    break;
+                case 'processingTime':
+                    filteredData.sort((a, b) => (parseInt(a.processingTime) || 0) - (parseInt(b.processingTime) || 0));
+                    break;
+                case 'processingTimeDesc':
+                    filteredData.sort((a, b) => (parseInt(b.processingTime) || 0) - (parseInt(a.processingTime) || 0));
+                    break;
+            }
+            
+            // عرض البيانات
+            if (filteredData.length === 0) {
+                visaTableBody.innerHTML = '';
+                noDataMessage.style.display = 'block';
+            } else {
+                noDataMessage.style.display = 'none';
+                visaTableBody.innerHTML = filteredData.map(item => `
+                    <tr>
+                        <td>${item.country}</td>
+                        <td>${item.embassy}</td>
+                        <td><span class="badge badge-${getBadgeClass(item.visaType)}">${item.visaType}</span></td>
+                        <td>${item.requirements ? item.requirements.slice(0, 3).join('، ') + (item.requirements.length > 3 ? '...' : '') : ''}</td>
+                        <td>${item.processingTime ? item.processingTime + ' يوم' : ''}</td>
+                        <td>${item.fees ? '$' + item.fees : ''}</td>
+                        <td>
+                            ${item.status}
+                            <span class="status-indicator status-${getStatusClass(item.status)}"></span>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning" onclick="editVisa('${item.id}')"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger" onclick="deleteVisa('${item.id}')"><i class="fas fa-trash"></i></button>
+                            <button class="btn btn-info" onclick="showVisaDetails('${item.id}')"><i class="fas fa-eye"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+        
+        // الحصول على فئة البادج حسب نوع التأشيرة
+        function getBadgeClass(visaType) {
+            switch(visaType) {
+                case 'سياحية': return 'tourist';
+                case 'عمل': return 'business';
+                case 'دراسية': return 'student';
+                case 'علاج': return 'medical';
+                case 'عبور': return 'transit';
+                case 'دبلوماسية': return 'diplomatic';
+                default: return 'tourist';
+            }
+        }
+        
+        // الحصول على فئة الحالة
+        function getStatusClass(status) {
+            switch(status) {
+                case 'نشط': return 'active';
+                case 'غير نشط': return 'inactive';
+                case 'معلق': return 'pending';
+                default: return 'inactive';
+            }
+        }
+        
+        // تعديل تأشيرة
+        function editVisa(id) {
+            const visa = visaData.find(item => item.id === id);
+            if (visa) {
+                currentEditId = id;
+                document.getElementById('editCountry').value = visa.country;
+                document.getElementById('editEmbassy').value = visa.embassy;
+                document.getElementById('editVisaType').value = visa.visaType;
+                document.getElementById('editProcessingTime').value = visa.processingTime || '';
+                document.getElementById('editFees').value = visa.fees || '';
+                document.getElementById('editValidity').value = visa.validity || '';
+                document.getElementById('editEntryType').value = visa.entryType || '';
+                document.getElementById('editStatus').value = visa.status || 'نشط';
+                document.getElementById('editAdditionalRequirements').value = visa.additionalRequirements || '';
+                document.getElementById('editNotes').value = visa.notes || '';
+                
+                // تفريغ جميع المربعات أولاً
+                editBasicRequirementsContainer.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                // تحديد المتطلبات المحددة مسبقاً
+                if (visa.requirements && Array.isArray(visa.requirements)) {
+                    visa.requirements.forEach(req => {
+                        const index = basicRequirementsList.indexOf(req);
+                        if (index !== -1) {
+                            document.getElementById(`edit_req_${index}`).checked = true;
+                        }
+                    });
+                }
+                
+                editModal.style.display = 'flex';
+            }
+        }
+        
+        // حذف تأشيرة
+        function deleteVisa(id) {
+            if (confirm('هل أنت متأكد من حذف هذه البيانات؟')) {
+                visaData = visaData.filter(item => item.id !== id);
+                saveDataToLocalStorage(); // حفظ البيانات في localStorage بعد الحذف
+                showAlert('تم حذف بيانات التأشيرة بنجاح', 'success');
+            }
+        }
+        
+        // حذف جميع البيانات
+        function handleClearAll() {
+            if (confirm('هل أنت متأكد من حذف جميع البيانات؟ لا يمكن التراجع عن هذا الإجراء.')) {
+                visaData = [];
+                saveDataToLocalStorage(); // حفظ البيانات الفارغة في localStorage
+                showAlert('تم حذف جميع البيانات بنجاح', 'success');
+            }
+        }
+        
+        // عرض تفاصيل التأشيرة
+        function showVisaDetails(id) {
+            const visa = visaData.find(item => item.id === id);
+            if (visa) {
+                currentVisaDetails = visa;
+                
+                const requirementsHtml = visa.requirements && visa.requirements.length > 0 
+                    ? visa.requirements.map(req => `
+                        <div class="requirement-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>${req}</span>
+                        </div>
+                    `).join('')
+                    : '<p>لا توجد متطلبات محددة</p>';
+                
+                visaDetailsContent.innerHTML = `
+                    <div class="visa-details">
+                        <div class="detail-item">
+                            <div class="detail-label">الدولة</div>
+                            <div class="detail-value">${visa.country}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">السفارة / القنصلية</div>
+                            <div class="detail-value">${visa.embassy}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">نوع التأشيرة</div>
+                            <div class="detail-value"><span class="badge badge-${getBadgeClass(visa.visaType)}">${visa.visaType}</span></div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">نوع الدخول</div>
+                            <div class="detail-value">${visa.entryType || 'غير محدد'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">مدة المعالجة</div>
+                            <div class="detail-value">${visa.processingTime ? visa.processingTime + ' يوم' : 'غير محدد'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">الرسوم</div>
+                            <div class="detail-value">${visa.fees ? '$' + visa.fees : 'غير محدد'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">فترة الصلاحية</div>
+                            <div class="detail-value">${visa.validity ? visa.validity + ' يوم' : 'غير محدد'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">الحالة</div>
+                            <div class="detail-value">
+                                ${visa.status}
+                                <span class="status-indicator status-${getStatusClass(visa.status)}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>المتطلبات الأساسية</label>
+                        <div class="requirements-grid">
+                            ${requirementsHtml}
+                        </div>
+                    </div>
+                    
+                    ${visa.additionalRequirements ? `
+                    <div class="form-group">
+                        <label>متطلبات إضافية</label>
+                        <div class="detail-value">${visa.additionalRequirements}</div>
+                    </div>
+                    ` : ''}
+                    
+                    ${visa.notes ? `
+                    <div class="form-group">
+                        <label>ملاحظات إضافية</label>
+                        <div class="detail-value">${visa.notes}</div>
+                    </div>
+                    ` : ''}
+                `;
+                
+                detailsModal.style.display = 'flex';
+            }
+        }
+        
+        // نسخ تفاصيل التأشيرة إلى الحافظة
+        function copyVisaDetailsToClipboard() {
+            if (!currentVisaDetails) return;
+            
+            const visa = currentVisaDetails;
+            const requirementsList = visa.requirements && visa.requirements.length > 0 
+                ? visa.requirements.map(req => `• ${req}`).join('\n') 
+                : 'لا توجد متطلبات محددة';
+            
+            const text = `
+بيانات تأشيرة ${visa.country}
+السفارة: ${visa.embassy}
+نوع التأشيرة: ${visa.visaType}
+نوع الدخول: ${visa.entryType || 'غير محدد'}
+المتطلبات:
+${requirementsList}
+${visa.additionalRequirements ? `متطلبات إضافية: ${visa.additionalRequirements}` : ''}
+مدة المعالجة: ${visa.processingTime ? visa.processingTime + ' يوم' : 'غير محدد'}
+الرسوم: ${visa.fees ? '$' + visa.fees : 'غير محدد'}
+فترة الصلاحية: ${visa.validity ? visa.validity + ' يوم' : 'غير محدد'}
+الحالة: ${visa.status}
+${visa.notes ? `ملاحظات: ${visa.notes}` : ''}
+            `;
+            
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    showCopyNotification();
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    showAlert('فشل في نسخ البيانات إلى الحافظة', 'error');
+                });
+        }
+        
+        // مشاركة تفاصيل التأشيرة
+        function shareVisaDetails() {
+            if (!currentVisaDetails) return;
+            
+            const visa = currentVisaDetails;
+            const text = `بيانات تأشيرة ${visa.country} - ${visa.visaType}`;
+            const url = window.location.href.split('?')[0];
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: `تأشيرة ${visa.country}`,
+                    text: text,
+                    url: url
+                })
+                .then(() => console.log('تمت المشاركة بنجاح'))
+                .catch((error) => console.log('خطأ في المشاركة', error));
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const shareUrl = `${url}?country=${encodeURIComponent(visa.country)}&type=${encodeURIComponent(visa.visaType)}`;
+                navigator.clipboard.writeText(shareUrl)
+                    .then(() => {
+                        showAlert('تم نسخ رابط المشاركة إلى الحافظة', 'success');
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                        showAlert('فشل في نسخ رابط المشاركة', 'error');
+                    });
+            }
+        }
+        
+        // طباعة تفاصيل التأشيرة
+        function printVisaDetails() {
+            const printContent = visaDetailsContent.innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = `
+                <div style="padding: 20px; direction: rtl;">
+                    <h1 style="text-align: center; margin-bottom: 20px;">تفاصيل التأشيرة</h1>
+                    ${printContent}
+                </div>
+            `;
+            
+            window.print();
+            document.body.innerHTML = originalContent;
+            renderTable(); // إعادة تحميل الجدول بعد الطباعة
+        }
+        
+        // معالجة البحث
+        function handleSearch() {
+            renderTable();
+        }
+        
+        // تفريغ النموذج
+        function resetForm() {
+            visaForm.reset();
+            // تفريغ جميع المربعات
+            basicRequirementsContainer.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
+        
+        // تعبئة تلقائية للنموذج (لأغراض التجربة)
+        function autoFillForm() {
+            document.getElementById('country').value = 'تركيا';
+            document.getElementById('embassy').value = 'السفارة التركية في الرياض';
+            document.getElementById('visaType').value = 'سياحية';
+            document.getElementById('processingTime').value = '10';
+            document.getElementById('fees').value = '60';
+            document.getElementById('validity').value = '90';
+            document.getElementById('entryType').value = 'متعدد الدخول';
+            document.getElementById('status').value = 'نشط';
+            document.getElementById('additionalRequirements').value = 'حجز فندق مؤكد وتذكرة طيران';
+            document.getElementById('notes').value = 'يمكن الحصول على التأشيرة الإلكترونية أيضاً';
+            
+            // تحديد بعض المتطلبات
+            document.getElementById('req_0').checked = true;
+            document.getElementById('req_1').checked = true;
+            document.getElementById('req_2').checked = true;
+            document.getElementById('req_4').checked = true;
+            document.getElementById('req_5').checked = true;
+            
+            showAlert('تم تعبئة النموذج تلقائياً بنموذج تجريبي', 'success');
+        }
+        
+        // تحديث وقت التحديث الأخير
+        function updateLastUpdateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-SA');
+            const dateString = now.toLocaleDateString('ar-SA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            lastUpdateText.textContent = `آخر تحديث: ${timeString} - ${dateString}`;
+        }
+        
+        // تحديث الإحصائيات
+        function updateStats() {
+            const countries = [...new Set(visaData.map(item => item.country))];
+            totalCountriesElement.textContent = countries.length;
+            totalVisasElement.textContent = visaData.length;
+            
+            // متوسط الرسوم
+            const totalFees = visaData.reduce((sum, item) => sum + (parseFloat(item.fees) || 0), 0);
+            const avgFees = visaData.length > 0 ? (totalFees / visaData.length).toFixed(2) : 0;
+            avgFeesElement.textContent = `$${avgFees}`;
+            
+            // متوسط مدة المعالجة
+            const totalProcessing = visaData.reduce((sum, item) => sum + (parseInt(item.processingTime) || 0), 0);
+            const avgProcessing = visaData.length > 0 ? Math.round(totalProcessing / visaData.length) : 0;
+            avgProcessingElement.textContent = avgProcessing;
+        }
+        
+        // تحديث لوحة التحكم
+        function updateDashboard() {
+            // تحديث مخطط أنواع التأشيرات
+            const visaTypes = {};
+            visaData.forEach(item => {
+                if (visaTypes[item.visaType]) {
+                    visaTypes[item.visaType]++;
+                } else {
+                    visaTypes[item.visaType] = 1;
+                }
+            });
+            
+            const total = visaData.length;
+            visaTypeChart.innerHTML = Object.keys(visaTypes).map(type => {
+                const count = visaTypes[type];
+                const percentage = total > 0 ? (count / total * 100).toFixed(1) : 0;
+                return `
+                    <div class="visa-type-item">
+                        <div>
+                            <span>${type}</span>
+                            <div class="visa-type-bar" style="width: ${percentage}%"></div>
+                        </div>
+                        <span>${count} (${percentage}%)</span>
+                    </div>
+                `;
+            }).join('');
+            
+            // تحديث الدول الأكثر طلباً
+            const countries = {};
+            visaData.forEach(item => {
+                if (countries[item.country]) {
+                    countries[item.country]++;
+                } else {
+                    countries[item.country] = 1;
+                }
+            });
+            
+            const sortedCountries = Object.keys(countries)
+                .map(country => ({ country, count: countries[country] }))
+                .sort((a, b) => b.count - a.count)
+                .slice(0, 5);
+            
+            const topCountriesElement = document.getElementById('topCountries');
+            topCountriesElement.innerHTML = sortedCountries.map(item => `
+                <div class="detail-item">
+                    <div class="detail-label">${item.country}</div>
+                    <div class="detail-value">${item.count} تأشيرة</div>
+                </div>
+            `).join('');
+            
+            // تحديث آخر التحديثات
+            const sortedData = [...visaData]
+                .sort((a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt))
+                .slice(0, 5);
+            
+            const recentUpdatesElement = document.getElementById('recentUpdates');
+            recentUpdatesElement.innerHTML = sortedData.map(item => `
+                <div class="detail-item">
+                    <div class="detail-label">${item.country}</div>
+                    <div class="detail-value">${item.visaType} - ${new Date(item.updatedAt || item.createdAt).toLocaleDateString('ar-SA', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    })}</div>
+                </div>
+            `).join('');
+        }
+        
+        // عرض التنبيهات
+        function showAlert(message, type) {
+            const alert = type === 'success' ? successAlert : errorAlert;
+            alert.textContent = message;
+            alert.style.display = 'block';
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+        
+        // عرض إشعار النسخ
+        function showCopyNotification() {
+            copyNotification.style.display = 'block';
+            
+            setTimeout(() => {
+                copyNotification.style.display = 'none';
+            }, 2000);
+        }
+        
+        // التبديل إلى تبويب معين
+        function switchToTab(tabId) {
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(tc => tc.classList.remove('active'));
+            
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+            
+            // إذا كان التبويب هو لوحة التحكم، قم بتحديثها
+            if (tabId === 'dashboard') {
+                updateDashboard();
+            }
+        }
+        
+        // عرض نموذج الاستيراد
+        function showImportModal() {
+            importModal.style.display = 'flex';
+        }
+        
+        // معالجة الاستيراد
+        function handleImport() {
+            const file = importFile.files[0];
+            if (!file) {
+                showAlert('يرجى اختيار ملف JSON لاستيراده', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (!Array.isArray(importedData)) {
+                        throw new Error('الملف يجب أن يحتوي على مصفوفة من البيانات');
+                    }
+                    
+                    const method = importMethod.value;
+                    if (method === 'replace') {
+                        visaData = importedData;
+                    } else {
+                        // دمج البيانات - إضافة الجديدة فقط
+                        const existingIds = new Set(visaData.map(item => item.id));
+                        const newData = importedData.filter(item => !existingIds.has(item.id));
+                        visaData = [...visaData, ...newData];
+                    }
+                    
+                    saveDataToLocalStorage(); // حفظ البيانات المستوردة في localStorage
+                    importModal.style.display = 'none';
+                    showAlert(`تم استيراد البيانات بنجاح (${method === 'replace' ? 'استبدال' : 'دمج'})`, 'success');
+                } catch (error) {
+                    showAlert('خطأ في قراءة الملف: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        // عرض مؤشر التحميل
+        function showLoading() {
+            loadingOverlay.style.display = 'flex';
+        }
+        
+        // إخفاء مؤشر التحميل
+        function hideLoading() {
+            loadingOverlay.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

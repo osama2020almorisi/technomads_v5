@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>التأشيرة الإلكترونية - أمان للسفريات</title>
+  <meta name="description" content="قدم على تأشيرتك الإلكترونية بسهولة وسرعة مع خدمتنا المتكاملة">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #3a4bdc;
+      --secondary-color: #5f2caa;
+      --accent-color: #ff6b35;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+      --border-radius: 12px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+      font-family: 'Tajawal', sans-serif;
+      margin: 0;
+      background: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      padding-bottom: 70px;
+    }
+    
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 15px 10px;
+      color: white;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+    
+    .logo i {
+      margin-left: 8px;
+    }
+    
+    .back-button {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .back-button i {
+      margin-right: 5px;
+      font-size: 14px;
+    }
+    
+    /* Page Title */
+    .page-title {
+      text-align: center;
+      margin: 20px 0;
+      position: relative;
+      padding: 0 10px;
+    }
+    
+    .page-title h1 {
+      font-size: 24px;
+      color: var(--dark-color);
+      margin-bottom: 8px;
+    }
+    
+    .page-title p {
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 15px;
+    }
+    
+    .page-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+      margin: 15px auto;
+      border-radius: 2px;
+    }
+    
+    /* E-Visa Application */
+    .evisa-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+    
+    .application-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+      position: relative;
+      padding: 0 10px;
+    }
+    
+    .step {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+      padding-right: 30px;
+    }
+    
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-left: 10px;
+      flex-shrink: 0;
+      transition: var(--transition);
+      font-size: 14px;
+    }
+    
+    .step.active .step-number {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+    
+    .step.completed .step-number {
+      background: var(--success-color);
+      color: white;
+    }
+    
+    .step.completed .step-number::after {
+      content: '\f00c';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      font-size: 12px;
+    }
+    
+    .step-label {
+      font-size: 15px;
+      color: #777;
+    }
+    
+    .step.active .step-label {
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+    
+    /* Application Form */
+    .application-form {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 20px 15px;
+      margin-bottom: 20px;
+    }
+    
+    .form-section {
+      display: none;
+    }
+    
+    .form-section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .form-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-title i {
+      margin-left: 8px;
+      font-size: 18px;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group.full-width {
+      grid-column: span 1;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #555;
+      font-size: 14px;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 15px;
+      transition: var(--transition);
+      -webkit-appearance: none;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(58, 75, 220, 0.1);
+    }
+    
+    select.form-control {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: left 15px center;
+      background-size: 12px;
+      padding-right: 15px;
+    }
+    
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      grid-column: span 1;
+      gap: 10px;
+    }
+    
+    .btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      min-height: 48px;
+    }
+    
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(58, 75, 220, 0.2);
+    }
+    
+    .btn i {
+      margin-left: 8px;
+      font-size: 14px;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+    
+    /* Document Upload */
+    .upload-area {
+      border: 2px dashed #ddd;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .upload-area:hover {
+      border-color: var(--primary-color);
+      background: #f9f9f9;
+    }
+    
+    .upload-icon {
+      font-size: 32px;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    .upload-text {
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    .upload-hint {
+      color: #777;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    
+    .uploaded-files {
+      margin-top: 15px;
+    }
+    
+    .file-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: var(--border-radius);
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .file-icon {
+      margin-left: 8px;
+      color: var(--primary-color);
+      font-size: 14px;
+    }
+    
+    .file-name {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .file-remove {
+      color: var(--danger-color);
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 5px;
+    }
+    
+    /* E-Visa Benefits */
+    .benefits-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin: 25px 0;
+      padding: 0 10px;
+    }
+    
+    .benefit-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 20px;
+      transition: var(--transition);
+    }
+    
+    .benefit-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .benefit-icon {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: var(--primary-color);
+    }
+    
+    .benefit-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    
+    .benefit-description {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    
+    /* Processing Time */
+    .processing-time {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 20px;
+      margin: 25px 0;
+      text-align: center;
+    }
+    
+    .time-icon {
+      font-size: 32px;
+      color: var(--primary-color);
+      margin-bottom: 12px;
+    }
+    
+    .time-description {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    
+    .time-duration {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    /* Supported Countries */
+    .countries-section {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 20px 15px;
+      margin: 25px 0;
+    }
+    
+    .countries-section h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      font-size: 18px;
+    }
+    
+    .countries-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+    
+    .country-card {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      border-radius: 8px;
+      background: #f9f9f9;
+      transition: var(--transition);
+      font-size: 13px;
+    }
+    
+    .country-card:hover {
+      background: #f0f0f0;
+    }
+    
+    .country-flag {
+      width: 25px;
+      height: 17px;
+      object-fit: cover;
+      border-radius: 3px;
+      margin-left: 8px;
+    }
+    
+    /* Payment Options */
+    .payment-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .payment-option {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      border-radius: 8px;
+      background: #f5f5f5;
+    }
+    
+    .payment-option input {
+      margin-left: 8px;
+    }
+    
+    .payment-icon {
+      font-size: 24px;
+      margin: 0 8px;
+    }
+    
+    /* Terms Checkbox */
+    .terms-container {
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: var(--border-radius);
+      margin-bottom: 15px;
+    }
+    
+    .terms-agreement {
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .terms-agreement input {
+      margin-left: 8px;
+      margin-top: 3px;
+    }
+    
+    .terms-text {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    
+    .terms-text a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    /* Footer Navigation - UPDATED */
+    footer {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+      max-width: 500px;
+      padding: 0;
+      z-index: 100;
+    }
+    
+    footer .nav-item {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      border-radius: 50%;
+      transition: var(--transition);
+      cursor: pointer;
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      width: 60px;
+      height: 60px;
+      justify-content: center;
+    }
+    
+    footer .nav-item:hover {
+      color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(58, 75, 220, 0.25);
+    }
+    
+    footer .nav-item.active {
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(58, 75, 220, 0.3);
+    }
+    
+    footer .nav-item i {
+      font-size: 22px;
+      margin-bottom: 0;
+      transition: var(--transition);
+    }
+    
+    footer .nav-item.active i {
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    footer .nav-item span {
+      display: none;
+    }
+    
+    /* Responsive Design */
+    @media (min-width: 480px) {
+      .page-title h1 {
+        font-size: 26px;
+      }
+      
+      .page-title p {
+        font-size: 16px;
+      }
+      
+      .logo {
+        font-size: 22px;
+      }
+      
+      .back-button {
+        font-size: 15px;
+        padding: 8px 15px;
+      }
+      
+      .application-form {
+        padding: 25px 20px;
+      }
+      
+      .form-title {
+        font-size: 19px;
+      }
+      
+      .benefits-section {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      footer .nav-item {
+        font-size: 12px;
+      }
+      
+      footer .nav-item i {
+        font-size: 20px;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      header {
+        padding: 20px;
+      }
+      
+      .logo {
+        font-size: 24px;
+      }
+      
+      .page-title h1 {
+        font-size: 28px;
+      }
+      
+      .application-steps {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0;
+      }
+      
+      .step {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+      }
+      
+      .step-number {
+        margin-left: 0;
+        margin-bottom: 8px;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .form-group.full-width {
+        grid-column: span 2;
+      }
+      
+      .countries-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+      
+      .payment-options {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      
+      .payment-option {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <button class="back-button" onclick="window.history.back()">
+      <i class="fas fa-arrow-right"></i>
+      رجوع
+    </button>
+    <div class="logo">
+      <i class="fas fa-file-alt"></i>
+      التأشيرة الإلكترونية
+    </div>
+    <div></div> <!-- Empty div for balance -->
+  </div>
+</header>
+
+<div class="page-title">
+  <h1>التأشيرة الإلكترونية</h1>
+  <p>احصل على تأشيرتك الإلكترونية بسهولة وسرعة دون الحاجة لزيارة السفارة</p>
+</div>
+
+<div class="evisa-container">
+  <div class="application-steps">
+    <div class="step active">
+      <div class="step-number">1</div>
+      <div class="step-label">معلومات المسافر</div>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-label">الوثائق المطلوبة</div>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-label">الدفع والتقديم</div>
+    </div>
+  </div>
+  
+  <div class="application-form">
+    <!-- Step 1: Traveler Information -->
+    <div class="form-section active" id="step1">
+      <h3 class="form-title"><i class="fas fa-user"></i> معلومات المسافر الأساسية</h3>
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="fullName">الاسم الكامل (كما في الجواز)</label>
+          <input type="text" id="fullName" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="nationality">الجنسية</label>
+          <select id="nationality" class="form-control" required>
+            <option value="">اختر الجنسية</option>
+            <option value="Yemeni">يمني</option>
+            <option value="saudi">سعودي</option>
+            <option value="emirati">إماراتي</option>
+            <option value="kuwaiti">كويتي</option>
+            <option value="other">أخرى</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="passportNumber">رقم الجواز</label>
+          <input type="text" id="passportNumber" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="passportExpiry">تاريخ انتهاء الجواز</label>
+          <input type="date" id="passportExpiry" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="birthDate">تاريخ الميلاد</label>
+          <input type="date" id="birthDate" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="gender">الجنس</label>
+          <select id="gender" class="form-control" required>
+            <option value="male">ذكر</option>
+            <option value="female">أنثى</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">البريد الإلكتروني</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">رقم الهاتف</label>
+          <input type="tel" id="phone" class="form-control" required>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn" onclick="nextStep(1, 2)">
+            التالي
+            <i class="fas fa-arrow-left"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Step 2: Documents Upload -->
+    <div class="form-section" id="step2">
+      <h3 class="form-title"><i class="fas fa-file-upload"></i> تحميل الوثائق المطلوبة</h3>
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label>صورة جواز السفر</label>
+          <div class="upload-area" id="passportUpload">
+            <div class="upload-icon"><i class="fas fa-passport"></i></div>
+            <div class="upload-text">انقر لرفع صورة جواز السفر</div>
+            <div class="upload-hint">يجب أن تكون الصورة واضحة وتظهر جميع التفاصيل</div>
+          </div>
+          <div class="uploaded-files" id="passportFiles"></div>
+        </div>
+        
+        <div class="form-group">
+          <label>صورة شخصية</label>
+          <div class="upload-area" id="photoUpload">
+            <div class="upload-icon"><i class="fas fa-camera"></i></div>
+            <div class="upload-text">انقر لرفع الصورة الشخصية</div>
+            <div class="upload-hint">خلفية بيضاء، مقاس 3.5x4.5 سم</div>
+          </div>
+          <div class="uploaded-files" id="photoFiles"></div>
+        </div>
+        
+        <div class="form-group">
+          <label>تذكرة السفر (اختياري)</label>
+          <div class="upload-area" id="ticketUpload">
+            <div class="upload-icon"><i class="fas fa-ticket-alt"></i></div>
+            <div class="upload-text">انقر لرفع تذكرة السفر</div>
+            <div class="upload-hint">لتسريع عملية الموافقة على التأشيرة</div>
+          </div>
+          <div class="uploaded-files" id="ticketFiles"></div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" onclick="prevStep(2, 1)">
+            <i class="fas fa-arrow-right"></i>
+            السابق
+          </button>
+          <button type="button" class="btn" onclick="nextStep(2, 3)">
+            التالي
+            <i class="fas fa-arrow-left"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Step 3: Payment and Submission -->
+    <div class="form-section" id="step3">
+      <h3 class="form-title"><i class="fas fa-credit-card"></i> الدفع والتقديم</h3>
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="visaType">نوع التأشيرة</label>
+          <select id="visaType" class="form-control" required>
+            <option value="tourist">سياحية - 250 ريال</option>
+            <option value="business">عمل - 350 ريال</option>
+            <option value="transit">ترانزيت - 150 ريال</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="processingTime">مدة المعالجة</label>
+          <select id="processingTime" class="form-control" required>
+            <option value="standard">معالجة عادية (3-5 أيام عمل)</option>
+            <option value="express">معالجة سريعة (24-48 ساعة) + 100 ريال</option>
+            <option value="urgent">معالجة عاجلة (4-8 ساعات) + 200 ريال</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="totalAmount">المبلغ الإجمالي</label>
+          <input type="text" id="totalAmount" class="form-control" value="250 ريال" readonly>
+        </div>
+        
+        <div class="form-group">
+          <label>طريقة الدفع</label>
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="credit" checked>
+              <i class="fab fa-cc-visa payment-icon" style="color: #1a1f71;"></i>
+              <i class="fab fa-cc-mastercard payment-icon" style="color: #eb001b;"></i>
+              بطاقة ائتمانية
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="mada">
+              <i class="fas fa-credit-card payment-icon" style="color: #1b9e57;"></i>
+              مدى
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="applepay">
+              <i class="fab fa-apple-pay payment-icon"></i>
+              Apple Pay
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="terms-container">
+            <label class="terms-agreement">
+              <input type="checkbox" id="termsAgreement" required>
+              <span class="terms-text">أقر بأن جميع المعلومات المقدمة صحيحة وكاملة، وأوافق على <a href="#">الشروط والأحكام</a> و<a href="#">سياسة الخصوصية</a></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" onclick="prevStep(3, 2)">
+            <i class="fas fa-arrow-right"></i>
+            السابق
+          </button>
+          <button type="submit" class="btn">
+            تقديم الطلب والدفع
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="benefits-section">
+    <div class="benefit-card">
+      <div class="benefit-icon"><i class="fas fa-clock"></i></div>
+      <h4 class="benefit-title">توفير الوقت</h4>
+      <p class="benefit-description">لا حاجة لزيارة السفارات أو الانتظار في طوابير، تقديم الطلب الكترونياً في دقائق</p>
+    </div>
+    
+    <div class="benefit-card">
+      <div class="benefit-icon"><i class="fas fa-check-circle"></i></div>
+      <h4 class="benefit-title">موافقة سريعة</h4>
+      <p class="benefit-description">معالجة الطلبات خلال 24-72 ساعة مع إشعار فوري عند الموافقة</p>
+    </div>
+    
+    <div class="benefit-card">
+      <div class="benefit-icon"><i class="fas fa-mobile-alt"></i></div>
+      <h4 class="benefit-title">تأشيرة على الهاتف</h4>
+      <p class="benefit-description">استلم تأشيرتك على بريدك الإلكتروني وهاتفك المحمول بدون حاجة للطباعة</p>
+    </div>
+  </div>
+  
+  <div class="processing-time">
+    <div class="time-icon"><i class="fas fa-stopwatch"></i></div>
+    <div class="time-description">متوسط وقت معالجة التأشيرة الإلكترونية</div>
+    <div class="time-duration">24 - 72 ساعة</div>
+  </div>
+  
+  <div class="countries-section">
+    <h2>الدول التي نقدم لها خدمة التأشيرة الإلكترونية</h2>
+    <div class="countries-grid">
+      <div class="country-card">
+        <img src="https://flagcdn.com/w80/tr.png" alt="تركيا" class="country-flag">
+        <span>تركيا</span>
+      </div>
+      <div class="country-card">
+        <img src="https://flagcdn.com/w80/in.png" alt="الهند" class="country-flag">
+        <span>الهند</span>
+      </div>
+      <div class="country-card">
+        <img src="https://flagcdn.com/w80/lk.png" alt="سريلانكا" class="country-flag">
+        <span>سريلانكا</span>
+      </div>
+      <div class="country-card">
+        <img src="https://flagcdn.com/w80/az.png" alt="أذربيجان" class="country-flag">
+        <span>أذربيجان</span>
+      </div>
+      <div class="country-card">
+        <img src="https://flagcdn.com/w80/ge.png" alt="جورجيا" class="country-flag">
+        <span>جورجيا</span>
+      </div>
+      <div class="country-card">
+        <img src="https://flagcdn.com/w80/th.png" alt="تايلاند" class="country-flag">
+        <span>تايلاند</span>
+      </div>
+      <div class="country-card">
+        <img src="https://flagcdn.com/w80/vn.png" alt="فيتنام" class="country-flag">
+        <span>فيتنام</span>
+      </div>
+      <div class="country-card">
+        <img src="https://flagcdn.com/w80/am.png" alt="أرمينيا" class="country-flag">
+        <span>أرمينيا</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer with only two icons -->
+<footer>
+  <div class="nav-item" id="homeButton" onclick="goToHomePage()">
+    <i class="fas fa-home"></i>
+    <span>الرئيسية</span>
+  </div>
+  <div class="nav-item active" id="pageButton">
+    <i class="fas fa-file-alt"></i>
+    <span>التأشيرات</span>
+  </div>
+</footer>
+<script>
+  // Form Steps Navigation
+  function nextStep(current, next) {
+    document.getElementById(`step${current}`).classList.remove('active');
+    document.getElementById(`step${next}`).classList.add('active');
+    
+    // Update steps indicator
+    document.querySelectorAll('.step').forEach(step => step.classList.remove('active', 'completed'));
+    for (let i = 1; i <= next; i++) {
+      if (i < next) {
+        document.querySelector(`.step:nth-child(${i})`).classList.add('completed');
+      } else {
+        document.querySelector(`.step:nth-child(${i})`).classList.add('active');
+      }
+    }
+    
+    // Scroll to top of form
+    document.querySelector('.application-form').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+  
+  function prevStep(current, prev) {
+    document.getElementById(`step${current}`).classList.remove('active');
+    document.getElementById(`step${prev}`).classList.add('active');
+    
+    // Update steps indicator
+    document.querySelectorAll('.step').forEach(step => step.classList.remove('active', 'completed'));
+    for (let i = 1; i <= prev; i++) {
+      if (i < prev) {
+        document.querySelector(`.step:nth-child(${i})`).classList.add('completed');
+      } else {
+        document.querySelector(`.step:nth-child(${i})`).classList.add('active');
+      }
+    }
+    
+    // Scroll to top of form
+    document.querySelector('.application-form').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+  
+  // File Upload Simulation
+  function setupFileUpload(uploadAreaId, filesContainerId) {
+    const uploadArea = document.getElementById(uploadAreaId);
+    const filesContainer = document.getElementById(filesContainerId);
+    
+    uploadArea.addEventListener('click', function() {
+      // In a real app, this would open a file dialog
+      // Here we'll simulate a successful upload
+      const fileName = uploadAreaId === 'passportUpload' ? 'جواز السفر.jpg' : 
+                       uploadAreaId === 'photoUpload' ? 'الصورة الشخصية.jpg' : 
+                       'تذكرة السفر.pdf';
+      
+      const fileItem = document.createElement('div');
+      fileItem.className = 'file-item';
+      fileItem.innerHTML = `
+        <i class="fas fa-file-alt file-icon"></i>
+        <div class="file-name">${fileName}</div>
+        <i class="fas fa-times file-remove"></i>
+      `;
+      
+      // Remove existing files
+      filesContainer.innerHTML = '';
+      filesContainer.appendChild(fileItem);
+      
+      // Add remove functionality
+      fileItem.querySelector('.file-remove').addEventListener('click', function(e) {
+        e.stopPropagation();
+        fileItem.remove();
+      });
+    });
+  }
+  
+  // Initialize file uploads
+  setupFileUpload('passportUpload', 'passportFiles');
+  setupFileUpload('photoUpload', 'photoFiles');
+  setupFileUpload('ticketUpload', 'ticketFiles');
+  
+  // Calculate total amount
+  document.getElementById('visaType').addEventListener('change', updateTotal);
+  document.getElementById('processingTime').addEventListener('change', updateTotal);
+  
+  function updateTotal() {
+    const visaType = document.getElementById('visaType').value;
+    const processingTime = document.getElementById('processingTime').value;
+    
+    let total = 0;
+    
+    // Base visa cost
+    if (visaType === 'tourist') total = 250;
+    else if (visaType === 'business') total = 350;
+    else if (visaType === 'transit') total = 150;
+    
+    // Processing time additional cost
+    if (processingTime === 'express') total += 100;
+    else if (processingTime === 'urgent') total += 200;
+    
+    document.getElementById('totalAmount').value = total + ' ريال';
+  }
+  
+  // Function to navigate to home page
+  function goToHomePage() {
+    window.location.href = 'index.html';
+  }
+  
+  // Form submission
+  document.querySelector('.application-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Validate terms agreement
+    if (!document.getElementById('termsAgreement').checked) {
+      alert('يرجى الموافقة على الشروط والأحكام قبل المتابعة');
+      return;
+    }
+    
+    // Show success message
+    const successMessage = document.createElement('div');
+    successMessage.innerHTML = `
+      <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 10000;">
+        <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; max-width: 90%; width: 400px;">
+          <i class="fas fa-check-circle" style="font-size: 50px; color: #28a745; margin-bottom: 15px;"></i>
+          <h3 style="margin-bottom: 15px; color: var(--primary-color);">تم تقديم الطلب بنجاح!</h3>
+          <p style="margin-bottom: 20px;">سيتم مراجعة طلبك وإعلامك عند الموافقة на التأشيرة. يمكنك تتبع حالة الطلب من خلال صفحة "طلباتي".</p>
+          <button onclick="this.parentNode.parentNode.remove()" style="background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">حسناً</button>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(successMessage);
+  }); // هذا كان ناقصاً - تم إصلاحه الآن
+  
+  // Add animation effect to buttons
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      // Remove active class from all items
+      document.querySelectorAll('.nav-item').forEach(i => {
+        i.classList.remove('active');
+      });
+      
+      // Add active class to clicked item
+      this.classList.add('active');
+      
+      // Add pulse animation
+      this.style.animation = 'pulse 0.5s';
+      setTimeout(() => {
+        this.style.animation = '';
+      }, 500);
+    });
+  });
+  
+  // Initialize total amount calculation
+  updateTotal();
+</script>
+  
+
+</body>
+</html>
