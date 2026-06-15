@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /projects/*/assets/
-Disallow: /projects/*/images/
+
+# نعم، لا تمنع أي شيء في المشاريع
+# فقط امنع المجلدات غير الضرورية (إن وجدت)
 
 Sitemap: https://te-2026.netlify.app/sitemap.xml
-Crawl-delay: 1

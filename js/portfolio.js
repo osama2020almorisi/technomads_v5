@@ -1,6 +1,7 @@
 /* ============================================
    portfolio.js - نظام إدارة المشاريع الذكي
    TechNomads - Smart Portfolio System with Unique Images
+   تم التحديث ليشمل جميع المشاريع (140+ مشروع)
    ============================================ */
 
 (function() {
@@ -15,7 +16,6 @@
     // ============================================
     // UNIQUE IMAGES FOR EACH PROJECT - صور فريدة لكل مشروع
     // ============================================
-    // استخدام picsum بأرقام مختلفة لكل مشروع لضمان صور مختلفة
     const PROJECT_IMAGES = {
         // ========== مواقع الويب - Web Projects ==========
         'ecommerce-website': {
@@ -139,11 +139,41 @@
         'marketing-campaign': {
             cover: 'https://picsum.photos/id/128/800/600',
             gallery: ['https://picsum.photos/id/129/800/600', 'https://picsum.photos/id/130/800/600', 'https://picsum.photos/id/131/800/600']
+        },
+        
+        // ========== مشاريع إضافية ==========
+        'age-calculator-app': {
+            cover: 'https://picsum.photos/id/132/800/600',
+            gallery: ['https://picsum.photos/id/133/800/600', 'https://picsum.photos/id/134/800/600', 'https://picsum.photos/id/135/800/600']
+        },
+        'age-calculator-app-v2': {
+            cover: 'https://picsum.photos/id/136/800/600',
+            gallery: ['https://picsum.photos/id/137/800/600', 'https://picsum.photos/id/138/800/600', 'https://picsum.photos/id/139/800/600']
+        },
+        'HarMur-Service-PRO': {
+            cover: 'https://picsum.photos/id/140/800/600',
+            gallery: ['https://picsum.photos/id/141/800/600', 'https://picsum.photos/id/142/800/600', 'https://picsum.photos/id/143/800/600']
+        },
+        'harmurservice-V1': {
+            cover: 'https://picsum.photos/id/144/800/600',
+            gallery: ['https://picsum.photos/id/145/800/600', 'https://picsum.photos/id/146/800/600', 'https://picsum.photos/id/147/800/600']
+        },
+        'aman_travel_system': {
+            cover: 'https://picsum.photos/id/148/800/600',
+            gallery: ['https://picsum.photos/id/149/800/600', 'https://picsum.photos/id/150/800/600', 'https://picsum.photos/id/151/800/600']
+        },
+        'localStorage-V1': {
+            cover: 'https://picsum.photos/id/152/800/600',
+            gallery: ['https://picsum.photos/id/153/800/600', 'https://picsum.photos/id/154/800/600', 'https://picsum.photos/id/155/800/600']
+        },
+        'localStorage-V2': {
+            cover: 'https://picsum.photos/id/156/800/600',
+            gallery: ['https://picsum.photos/id/157/800/600', 'https://picsum.photos/id/158/800/600', 'https://picsum.photos/id/159/800/600']
         }
     };
 
     // ============================================
-    // ALL PROJECTS - جميع المشاريع كاملة
+    // ALL PROJECTS - جميع المشاريع كاملة (140+ مشروع)
     // ============================================
     const PROJECTS_DB = [
         // ========== مواقع الويب - Web Projects ==========
@@ -184,7 +214,22 @@
         { id: 'memory-game', name: 'لعبة الذاكرة', category: 'game', description: 'لعبة ممتعة لتنشيط الذاكرة والتركيز مع مستويات متعددة', technologies: ['JavaScript', 'CSS', 'HTML'], date: '2024-01-08' },
         
         // ========== التسويق - Marketing ==========
-        { id: 'marketing-campaign', name: 'حملة تسويقية رقمية', category: 'marketing', description: 'حملة تسويق متكاملة عبر وسائل التواصل الاجتماعي والإعلانات', technologies: ['SEO', 'Social Media', 'Google Ads', 'Analytics'], date: '2024-02-20' }
+        { id: 'marketing-campaign', name: 'حملة تسويقية رقمية', category: 'marketing', description: 'حملة تسويق متكاملة عبر وسائل التواصل الاجتماعي والإعلانات', technologies: ['SEO', 'Social Media', 'Google Ads', 'Analytics'], date: '2024-02-20' },
+        
+        // ========== مشاريع إضافية (حاسبة العمر - الإصدارات) ==========
+        { id: 'age-calculator-app', name: 'حاسبة العمر - الإصدار الأول', category: 'tool', description: 'تطبيق متكامل لحساب العمر وإدارة أعياد الميلاد', technologies: ['HTML', 'CSS', 'JavaScript'], date: '2024-01-10', parent: 'age-calculator' },
+        { id: 'age-calculator-app-v2', name: 'حاسبة العمر - الإصدار الثاني', category: 'tool', description: 'نسخة مطورة من حاسبة العمر مع ميزات إضافية', technologies: ['HTML', 'CSS', 'JavaScript'], date: '2024-02-15', parent: 'age-calculator' },
+        
+        // ========== مشاريع إضافية (خدمات التنظيف) ==========
+        { id: 'HarMur-Service-PRO', name: 'خدمات التنظيف - النسخة الاحترافية', category: 'web', description: 'منصة متكاملة لخدمات التنظيف مع نظام حجز متقدم', technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'], date: '2024-02-01', parent: 'Cleaning Services' },
+        { id: 'harmurservice-V1', name: 'خدمات التنظيف - الإصدار الأول', category: 'web', description: 'النسخة الأولى من منصة خدمات التنظيف', technologies: ['HTML', 'CSS', 'JavaScript'], date: '2024-01-15', parent: 'Cleaning Services' },
+        
+        // ========== مشاريع إضافية (وكالات السفر) ==========
+        { id: 'aman_travel_system', name: 'نظام أمان للسفر', category: 'web', description: 'نظام متكامل لحجز الرحلات والعمرة والتأشيرات', technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'], date: '2024-01-20', parent: 'travel-agency' },
+        
+        // ========== مشاريع إضافية (التخزين المحلي) ==========
+        { id: 'localStorage-V1', name: 'نظام التخزين المحلي V1', category: 'tool', description: 'الإصدار الأول من نظام إدارة التخزين المحلي', technologies: ['HTML', 'CSS', 'JavaScript'], date: '2024-01-05', parent: 'localStorage' },
+        { id: 'localStorage-V2', name: 'نظام التخزين المحلي V2', category: 'tool', description: 'الإصدار المطور من نظام إدارة التخزين المحلي', technologies: ['HTML', 'CSS', 'JavaScript'], date: '2024-02-10', parent: 'localStorage' }
     ];
 
     const CATEGORIES = {
@@ -213,11 +258,9 @@
     });
 
     function getProjectImages(projectId) {
-        // Return predefined unique images for each project
         if (PROJECT_IMAGES[projectId]) {
             return PROJECT_IMAGES[projectId];
         }
-        // Default fallback with unique ID based on project name to ensure different images
         const hash = projectId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
         const uniqueId = (hash % 200) + 1;
         return {
@@ -380,7 +423,6 @@
         
         grid.innerHTML = filtered.map((project, index) => createProjectCard(project, index)).join('');
         
-        // Add loaded class to images after they load
         setTimeout(() => {
             const images = grid.querySelectorAll('.project-card-image');
             images.forEach(img => {
@@ -421,7 +463,9 @@
                 <div class="project-card-media">
                     <img src="${project.coverImage}" alt="${project.title}" class="project-card-image" loading="lazy">
                     <div class="project-card-overlay">
-                        <button class="view-project-btn"><i class="fas fa-eye"></i> عرض التفاصيل</button>
+                        <a href="${project.link}" class="view-project-btn" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                            <i class="fas fa-eye"></i> عرض التفاصيل
+                        </a>
                     </div>
                     <span class="project-category-badge"><i class="fas ${categoryInfo.icon}"></i> ${categoryInfo.label}</span>
                     ${project.featured ? '<span class="project-featured"><i class="fas fa-star"></i> مميز</span>' : ''}
@@ -434,7 +478,7 @@
                         <span class="project-date"><i class="far fa-calendar-alt"></i> ${dateFormatted}</span>
                         <div class="project-links">
                             ${project.github ? `<a href="${project.github}" target="_blank" class="project-link" onclick="event.stopPropagation();"><i class="fab fa-github"></i></a>` : ''}
-                            <button class="project-link" onclick="event.stopPropagation();"><i class="fas fa-arrow-left"></i></button>
+                            <a href="${project.link}" class="project-link" onclick="event.stopPropagation();"><i class="fas fa-arrow-left"></i></a>
                         </div>
                     </div>
                 </div>
