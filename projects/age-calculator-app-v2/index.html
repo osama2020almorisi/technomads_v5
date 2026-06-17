@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - حاسبة العمر</title>
+
+    <!-- الخطوط والأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- ملفات التنسيق -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<header class="header">
+    <h1><i class="fas fa-calendar-alt"></i> إدارة أعياد الميلاد</h1>
+
+    <nav>
+        <a href="calculator.html"><i class="fas fa-calculator"></i> حاسبة العمر</a>
+        <a href="add-birthday.html"><i class="fas fa-plus-circle"></i> إضافة مولود</a>
+        <a href="upcoming.html"><i class="fas fa-gift"></i> الأعياد القادمة</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <!-- شريط الأدوات (تصدير، استيراد، وضع ليلي) -->
+    <div class="toolbar">
+        <div class="export-import">
+            <button onclick="exportData()" class="toolbar-btn"><i class="fas fa-download"></i> تصدير</button>
+            <button onclick="importData()" class="toolbar-btn"><i class="fas fa-upload"></i> استيراد</button>
+            <input type="file" id="importFile" accept=".json" style="display:none;">
+        </div>
+        <button id="themeToggle" class="toolbar-btn"><i class="fas fa-moon"></i></button>
+    </div>
+
+    <!-- بطاقات الإحصائيات -->
+    <div class="stats">
+        <div class="card">
+            <i class="fas fa-users"></i>
+            <h3>عدد السجلات</h3>
+            <p id="totalRecords">0</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-birthday-cake"></i>
+            <h3>الأعياد القادمة</h3>
+            <p id="upcomingCount">0</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-star"></i>
+            <h3>أقرب عيد</h3>
+            <p id="nearestBirthday">-</p>
+        </div>
+    </div>
+
+    <!-- شريط البحث والتصفية -->
+    <div class="search-filter">
+        <input type="text" id="searchInput" placeholder="🔍 بحث بالاسم أو التاريخ..." class="search-box">
+        <select id="typeFilter" class="filter-select">
+            <option value="all">كل التصنيفات</option>
+            <option value="person">👤 إنسان</option>
+            <option value="animal">🐾 حيوان أليف</option>
+            <option value="other">🎁 آخر</option>
+        </select>
+    </div>
+
+    <!-- زر إضافة مولود جديد -->
+    <button onclick="goAdd()" class="primaryBtn">
+        <i class="fas fa-plus"></i> إضافة مولود جديد
+    </button>
+
+    <!-- الجدول -->
+    <div class="table-responsive">
+        <table id="birthdayTable">
+            <thead>
+                <tr>
+                    <th data-sort="name">الاسم <i class="fas fa-sort"></i></th>
+                    <th data-sort="date">التاريخ <i class="fas fa-sort"></i></th>
+                    <th>العمر</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- هنا سيتم إدراج الصفوف بواسطة JavaScript -->
+                <tr>
+                    <td colspan="4" class="empty-message">
+                        <i class="fas fa-smile-wink"></i>
+                        لا توجد بيانات حالياً، أضف مولودك الأول!
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- الرسم البياني -->
+    <div class="chart-container">
+        <canvas id="ageChart"></canvas>
+    </div>
+
+</main>
+
+<footer class="footer">
+    <p>© 2025 حاسبة العمر - جميع الحقوق محفوظة</p>
+</footer>
+
+<!-- ملفات الجافاسكريبت -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof loadTable === 'function') loadTable();
+        if (typeof initTheme === 'function') initTheme();
+        if (typeof checkTodayBirthdays === 'function') checkTodayBirthdays();
+    });
+</script>
+</body>
+</html>

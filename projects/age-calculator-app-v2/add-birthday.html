@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة مولود جديد</title>
+
+    <!-- الخطوط والأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- ملفات التنسيق -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/forms.css">
+</head>
+<body>
+    <div class="formBox">
+        <h2><i class="fas fa-plus-circle"></i> <span id="formTitle">إضافة مولود جديد</span></h2>
+
+        <form id="birthdayForm" onsubmit="event.preventDefault(); saveForm();">
+            <!-- الاسم -->
+            <div class="input-group">
+                <label><i class="fas fa-user"></i> الاسم <span class="required">*</span></label>
+                <input type="text" id="name" placeholder="الاسم الكامل" required maxlength="100">
+            </div>
+
+            <!-- التصنيف -->
+            <div class="input-group">
+                <label><i class="fas fa-tag"></i> التصنيف</label>
+                <select id="type">
+                    <option value="person">👤 إنسان</option>
+                    <option value="animal">🐾 حيوان أليف</option>
+                    <option value="other">🎁 آخر</option>
+                </select>
+            </div>
+
+            <!-- تاريخ الميلاد -->
+            <div class="input-group">
+                <label><i class="fas fa-calendar-alt"></i> تاريخ الميلاد <span class="required">*</span></label>
+                <input type="date" id="date" required>
+                <small class="help-text">التاريخ مهم لحساب العمر بدقة</small>
+            </div>
+
+            <!-- الوقت -->
+            <div class="input-group">
+                <label><i class="fas fa-clock"></i> الوقت (اختياري)</label>
+                <input type="time" id="time" value="00:00">
+            </div>
+
+            <!-- صورة -->
+            <div class="input-group">
+                <label><i class="fas fa-image"></i> صورة (اختياري)</label>
+                <input type="file" id="image" accept="image/*">
+                <div id="imagePreview" class="image-preview"></div>
+            </div>
+
+            <!-- حدث سنوي -->
+            <div class="input-group checkbox-group">
+                <label>
+                    <input type="checkbox" id="isRecurring"> 
+                    <i class="fas fa-sync-alt"></i> حدث سنوي (لا يرتبط بعمر)
+                </label>
+            </div>
+
+            <!-- ملاحظات -->
+            <div class="input-group">
+                <label><i class="fas fa-pencil-alt"></i> ملاحظات</label>
+                <textarea id="notes" placeholder="أي ملاحظات إضافية (مناسبة، هدية، ...)" rows="3"></textarea>
+            </div>
+
+            <!-- أزرار الحفظ والإلغاء -->
+            <div class="form-actions">
+                <button type="submit" class="primaryBtn">
+                    <i class="fas fa-save"></i> حفظ
+                </button>
+                <a href="index.html" class="cancel-btn"><i class="fas fa-times"></i> إلغاء</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/add-birthday.js"></script>
+</body>
+</html>
