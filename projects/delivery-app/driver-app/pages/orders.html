@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>الطلبات - TechNomads</title>
+    <link rel="stylesheet" href="../css/driver.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .orders-container {
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+        .orders-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+        .orders-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+        .orders-tab:active {
+            transform: scale(0.95);
+        }
+        .orders-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        .orders-tab .count {
+            background: rgba(0,0,0,0.1);
+            padding: 0 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            margin-right: 4px;
+        }
+        .orders-tab.active .count {
+            background: rgba(255,255,255,0.2);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .order-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .order-card:active {
+            transform: scale(0.98);
+        }
+        .order-card .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .order-card .id {
+            font-weight: 800;
+            font-size: 14px;
+        }
+        .order-card .status {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+        .order-card .status.pending { background: rgba(245,158,11,0.1); color: var(--warning); }
+        .order-card .status.accepted { background: rgba(59,130,246,0.1); color: var(--info); }
+        .order-card .status.pickup { background: rgba(99,102,241,0.1); color: var(--primary); }
+        .order-card .status.delivering { background: rgba(99,102,241,0.1); color: var(--primary); }
+        .order-card .status.delivered { background: rgba(16,185,129,0.1); color: var(--secondary); }
+        .order-card .status.cancelled { background: rgba(239,68,68,0.1); color: var(--danger); }
+        .order-card .route {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+        .order-card .route i {
+            color: var(--primary);
+            font-size: 12px;
+        }
+        .order-card .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+        .order-card .amount {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 15px;
+        }
+        .order-card .time {
+            font-size: 12px;
+            color: var(--gray-light);
+        }
+        .order-card .actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+        .order-card .actions .btn {
+            flex: 1;
+            padding: 8px;
+            font-size: 12px;
+            min-height: 36px;
+            border-radius: 8px;
+            justify-content: center;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--gray);
+        }
+        .empty-state i {
+            font-size: 48px;
+            color: var(--gray-light);
+            margin-bottom: 12px;
+            display: block;
+        }
+        .empty-state h3 {
+            font-size: 18px;
+            color: var(--dark);
+        }
+        .empty-state p {
+            font-size: 14px;
+        }
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--light);
+            padding-bottom: 80px;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 6px 0 12px;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.06);
+            z-index: 100;
+            max-width: 480px;
+            margin: 0 auto;
+            border-radius: 24px 24px 0 0;
+        }
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 12px;
+            color: var(--gray);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        .bottom-nav .nav-item:active {
+            transform: scale(0.95);
+        }
+        .bottom-nav .nav-item i {
+            font-size: 20px;
+        }
+        .bottom-nav .nav-item span {
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .bottom-nav .nav-item.active {
+            color: var(--primary);
+        }
+        .nav-badge {
+            position: absolute;
+            top: -2px;
+            right: -4px;
+            background: var(--danger);
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .app-header {
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--dark);
+            transition: var(--transition);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .menu-btn:active {
+            background: var(--light);
+            transform: scale(0.95);
+        }
+        .app-title {
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .status-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: var(--light);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .status-toggle:active {
+            transform: scale(0.95);
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .status-dot.online { background: var(--secondary); }
+        .status-dot.offline { background: var(--danger); }
+        .side-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .side-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 201;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .side-menu.active {
+            transform: translateX(0);
+        }
+        .side-menu-header {
+            padding: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .driver-avatar-large {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+        .driver-info {
+            text-align: center;
+        }
+        .driver-info h3 {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        .driver-info p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        .driver-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 4px;
+            font-size: 13px;
+        }
+        .driver-rating i {
+            color: var(--warning);
+        }
+        .side-menu-body {
+            flex: 1;
+            padding: 12px 0;
+            overflow-y: auto;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 20px;
+            color: var(--dark);
+            font-size: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .menu-item:active {
+            background: var(--light);
+        }
+        .menu-item i {
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+            color: var(--gray);
+        }
+        .side-menu-footer {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .btn-logout {
+            width: 100%;
+            padding: 14px;
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+            border: none;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .btn-logout:active {
+            background: var(--danger);
+            color: var(--white);
+        }
+        .custom-toast {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            z-index: 9999;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            max-width: 90%;
+            color: white;
+        }
+        .custom-toast.success { background: #10b981; }
+        .custom-toast.error { background: #ef4444; }
+        .custom-toast.info { background: #6366f1; }
+        .btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .btn:active { transform: scale(0.95); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-success { background: var(--secondary); color: white; }
+        .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-danger { background: var(--danger); color: white; }
+        @media (max-width:480px) {
+            .orders-tab {
+                font-size: 11px;
+                padding: 8px;
+            }
+            .order-card .route {
+                font-size: 12px;
+            }
+            .order-card {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-left">
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="header-center">
+                <h1 class="app-title">الطلبات</h1>
+            </div>
+            <div class="header-right">
+                <div class="status-toggle" onclick="toggleStatus()">
+                    <div class="status-dot online" id="statusDot"></div>
+                    <span id="statusText">متاح</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="orders-container">
+            <div class="orders-tabs">
+                <button class="orders-tab active" data-tab="available" onclick="switchTab('available')">
+                    متاحة <span class="count" id="availableCount">3</span>
+                </button>
+                <button class="orders-tab" data-tab="current" onclick="switchTab('current')">
+                    نشطة <span class="count" id="currentCount">1</span>
+                </button>
+                <button class="orders-tab" data-tab="history" onclick="switchTab('history')">
+                    سابقة <span class="count" id="historyCount">6</span>
+                </button>
+            </div>
+
+            <div class="tab-content active" id="tab-available">
+                <div id="availableOrdersList">
+                    <div class="order-card" onclick="showAcceptModal('#1235')">
+                        <div class="header">
+                            <span class="id">#1235</span>
+                            <span class="status pending">جديد</span>
+                        </div>
+                        <div class="route">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>شارع الستين</span>
+                            <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                            <span>حي الحصبة</span>
+                        </div>
+                        <div class="footer">
+                            <span class="amount">12,000 ر.ي</span>
+                            <span class="time">1.8 كم</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-success" onclick="event.stopPropagation(); showAcceptModal('#1235')">
+                                <i class="fas fa-check"></i> قبول
+                            </button>
+                            <button class="btn btn-outline" onclick="event.stopPropagation(); showToast('عرض تفاصيل الطلب #1235', 'info')">
+                                <i class="fas fa-eye"></i> عرض
+                            </button>
+                        </div>
+                    </div>
+                    <div class="order-card" onclick="showAcceptModal('#1236')">
+                        <div class="header">
+                            <span class="id">#1236</span>
+                            <span class="status pending">جديد</span>
+                        </div>
+                        <div class="route">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>جولة المصباحي</span>
+                            <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                            <span>حي الصافية</span>
+                        </div>
+                        <div class="footer">
+                            <span class="amount">18,000 ر.ي</span>
+                            <span class="time">3.2 كم</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-success" onclick="event.stopPropagation(); showAcceptModal('#1236')">
+                                <i class="fas fa-check"></i> قبول
+                            </button>
+                            <button class="btn btn-outline" onclick="event.stopPropagation(); showToast('عرض تفاصيل الطلب #1236', 'info')">
+                                <i class="fas fa-eye"></i> عرض
+                            </button>
+                        </div>
+                    </div>
+                    <div class="order-card" onclick="showAcceptModal('#1237')">
+                        <div class="header">
+                            <span class="id">#1237</span>
+                            <span class="status pending">جديد</span>
+                        </div>
+                        <div class="route">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>شارع تعز</span>
+                            <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                            <span>حي الزبيري</span>
+                        </div>
+                        <div class="footer">
+                            <span class="amount">9,500 ر.ي</span>
+                            <span class="time">1.2 كم</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-success" onclick="event.stopPropagation(); showAcceptModal('#1237')">
+                                <i class="fas fa-check"></i> قبول
+                            </button>
+                            <button class="btn btn-outline" onclick="event.stopPropagation(); showToast('عرض تفاصيل الطلب #1237', 'info')">
+                                <i class="fas fa-eye"></i> عرض
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-current">
+                <div id="currentOrdersList">
+                    <div class="order-card" onclick="window.location.href='dashboard.html'">
+                        <div class="header">
+                            <span class="id">#1234</span>
+                            <span class="status delivering">في الطريق</span>
+                        </div>
+                        <div class="route">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>شارع تعز، جوار البنك المركزي</span>
+                            <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                            <span>حي الصافية، خلف جامع النور</span>
+                        </div>
+                        <div class="footer">
+                            <span class="amount">15,000 ر.ي</span>
+                            <span class="time">منذ 5 دقائق</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); window.location.href='dashboard.html'">
+                                <i class="fas fa-eye"></i> متابعة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-history">
+                <div id="historyOrdersList">
+                    <div class="order-card" onclick="window.location.href='history.html'">
+                        <div class="header">
+                            <span class="id">#1232</span>
+                            <span class="status delivered">مكتمل</span>
+                        </div>
+                        <div class="route">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>شارع تعز</span>
+                            <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                            <span>حي الصافية</span>
+                        </div>
+                        <div class="footer">
+                            <span class="amount">22,000 ر.ي</span>
+                            <span class="time">منذ ساعة</span>
+                        </div>
+                    </div>
+                    <div class="order-card" onclick="window.location.href='history.html'">
+                        <div class="header">
+                            <span class="id">#1229</span>
+                            <span class="status delivered">مكتمل</span>
+                        </div>
+                        <div class="route">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>جولة المصباحي</span>
+                            <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                            <span>حي الحصبة</span>
+                        </div>
+                        <div class="footer">
+                            <span class="amount">9,500 ر.ي</span>
+                            <span class="time">منذ 4 ساعات</span>
+                        </div>
+                    </div>
+                    <div class="order-card" onclick="window.location.href='history.html'">
+                        <div class="header">
+                            <span class="id">#1228</span>
+                            <span class="status cancelled">ملغي</span>
+                        </div>
+                        <div class="route">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>شارع الستين</span>
+                            <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                            <span>حي الزبيري</span>
+                        </div>
+                        <div class="footer">
+                            <span class="amount">7,000 ر.ي</span>
+                            <span class="time">منذ 5 ساعات</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <span class="nav-item" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </span>
+            <span class="nav-item active" onclick="window.location.href='orders.html'">
+                <i class="fas fa-box"></i>
+                <span>الطلبات</span>
+                <span class="nav-badge">3</span>
+            </span>
+            <span class="nav-item" onclick="window.location.href='earnings.html'">
+                <i class="fas fa-chart-line"></i>
+                <span>الأرباح</span>
+            </span>
+            <span class="nav-item" onclick="window.location.href='profile.html'">
+                <i class="fas fa-user"></i>
+                <span>حسابي</span>
+            </span>
+        </nav>
+
+        <div class="side-menu-overlay" id="sideMenuOverlay" onclick="toggleMenu()"></div>
+        <div class="side-menu" id="sideMenu">
+            <div class="side-menu-header">
+                <div class="driver-avatar-large">أ</div>
+                <div class="driver-info">
+                    <h3 id="sideMenuName">أحمد علي</h3>
+                    <p id="sideMenuPhone">+967 770 200 970</p>
+                    <div class="driver-rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.9</span>
+                        <span>(156 تقييم)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="side-menu-body">
+                <span class="menu-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i> الرئيسية</span>
+                <span class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i> الملف الشخصي</span>
+                <span class="menu-item" onclick="window.location.href='orders.html'"><i class="fas fa-box"></i> الطلبات</span>
+                <span class="menu-item" onclick="window.location.href='history.html'"><i class="fas fa-history"></i> سجل الطلبات</span>
+                <span class="menu-item" onclick="window.location.href='earnings.html'"><i class="fas fa-wallet"></i> المحفظة</span>
+                <span class="menu-item" onclick="showToast('جاري فتح الإعدادات...', 'info')"><i class="fas fa-cog"></i> الإعدادات</span>
+                <span class="menu-item" onclick="showToast('جاري الاتصال بالدعم...', 'info')"><i class="fas fa-headset"></i> المساعدة</span>
+            </div>
+            <div class="side-menu-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </button>
+            </div>
+        </div>
+
+        <!-- ACCEPT ORDER MODAL -->
+        <div class="modal-overlay" id="acceptOrderModal">
+            <div class="modal-bottom">
+                <div class="modal-drag-handle"></div>
+                <div class="modal-header">
+                    <h3 class="modal-title">قبول الطلب</h3>
+                    <button class="modal-close" onclick="closeAcceptModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="order-preview">
+                        <div class="preview-route">
+                            <div class="preview-point">
+                                <div class="preview-dot pickup"></div>
+                                <span id="modalPickup">شارع تعز</span>
+                            </div>
+                            <div class="preview-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                                <span id="modalDistance">2.5 كم</span>
+                            </div>
+                            <div class="preview-point">
+                                <div class="preview-dot dropoff"></div>
+                                <span id="modalDropoff">حي الصافية</span>
+                            </div>
+                        </div>
+                        <div class="preview-details">
+                            <div class="preview-item">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <span id="modalAmount">15,000 ر.ي</span>
+                            </div>
+                            <div class="preview-item">
+                                <i class="fas fa-clock"></i>
+                                <span id="modalTime">15 دقيقة</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeAcceptModal()">رفض</button>
+                    <button class="btn btn-success" onclick="confirmAccept()">
+                        <i class="fas fa-check"></i> قبول الطلب
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 500;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-bottom {
+            background: var(--white);
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-bottom {
+            transform: translateY(0);
+        }
+        .modal-drag-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin: 12px auto;
+        }
+        .modal-header {
+            padding: 0 20px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            background: var(--light);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        .modal-close:active {
+            background: var(--border);
+        }
+        .modal-body {
+            padding: 0 20px 20px;
+        }
+        .modal-footer {
+            padding: 0 20px 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .modal-footer .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: var(--transition);
+            text-align: center;
+        }
+        .modal-footer .btn:active {
+            transform: scale(0.97);
+        }
+        .modal-footer .btn-outline {
+            background: var(--light);
+            color: var(--gray);
+        }
+        .modal-footer .btn-success {
+            background: var(--secondary);
+            color: white;
+        }
+        .order-preview {
+            padding: 10px 0;
+        }
+        .preview-route {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .preview-point {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .preview-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .preview-dot.pickup { background: var(--primary); }
+        .preview-dot.dropoff { background: var(--danger); }
+        .preview-arrow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-right: 6px;
+            font-size: 13px;
+            color: var(--gray);
+        }
+        .preview-arrow i { font-size: 14px; }
+        .preview-details {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .preview-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .preview-item i { color: var(--primary); }
+    </style>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/orders.js"></script>
+    <script>
+        let selectedOrderId = null;
+        let isAvailable = true;
+
+        function switchTab(tab) {
+            document.querySelectorAll('.orders-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            const tabBtn = document.querySelector(`.orders-tab[data-tab="${tab}"]`);
+            if (tabBtn) tabBtn.classList.add('active');
+            const content = document.getElementById(`tab-${tab}`);
+            if (content) content.classList.add('active');
+        }
+
+        function showAcceptModal(orderId) {
+            selectedOrderId = orderId;
+            document.getElementById('acceptOrderModal').classList.add('active');
+        }
+
+        function closeAcceptModal() {
+            document.getElementById('acceptOrderModal').classList.remove('active');
+            selectedOrderId = null;
+        }
+
+        function confirmAccept() {
+            if (selectedOrderId) {
+                showToast('تم قبول الطلب بنجاح!', 'success');
+                closeAcceptModal();
+                // Move to current tab
+                switchTab('current');
+                document.getElementById('currentCount').textContent = 
+                    parseInt(document.getElementById('currentCount').textContent) + 1;
+                document.getElementById('availableCount').textContent = 
+                    parseInt(document.getElementById('availableCount').textContent) - 1;
+            }
+        }
+
+        function toggleStatus() {
+            isAvailable = !isAvailable;
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+            if (isAvailable) {
+                dot.className = 'status-dot online';
+                text.textContent = 'متاح';
+                showToast('تم تغيير الحالة إلى متاح', 'success');
+            } else {
+                dot.className = 'status-dot offline';
+                text.textContent = 'غير متاح';
+                showToast('تم تغيير الحالة إلى غير متاح', 'info');
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = `custom-toast ${type}`;
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="margin-left:8px;"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(0)'; }, 10);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(-100px)'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function toggleMenu() {
+            document.getElementById('sideMenuOverlay').classList.toggle('active');
+            document.getElementById('sideMenu').classList.toggle('active');
+        }
+
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                localStorage.clear();
+                showToast('تم تسجيل الخروج بنجاح', 'info');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1000);
+            }
+        }
+
+        function loadUserData() {
+            const userName = localStorage.getItem('driverName') || 'أحمد علي';
+            const userPhone = localStorage.getItem('driverPhone') || '+967 770 200 970';
+            document.getElementById('sideMenuName').textContent = userName;
+            document.getElementById('sideMenuPhone').textContent = userPhone;
+            document.querySelector('.driver-avatar-large').textContent = userName.charAt(0);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === this) this.classList.remove('active');
+                });
+            });
+        });
+
+        window.showAcceptModal = showAcceptModal;
+        window.closeAcceptModal = closeAcceptModal;
+        window.confirmAccept = confirmAccept;
+        window.switchTab = switchTab;
+        window.toggleStatus = toggleStatus;
+        window.showToast = showToast;
+        window.toggleMenu = toggleMenu;
+        window.logout = logout;
+    </script>
+</body>
+</html>

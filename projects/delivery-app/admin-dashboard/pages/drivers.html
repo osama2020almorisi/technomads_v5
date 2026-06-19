@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>السائقين - نظام TechNomads للتوصيل</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ============================================
+           DRIVERS PAGE SPECIFIC STYLES
+           ============================================ */
+
+        /* Driver Card View (Mobile) */
+        .driver-card-view {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .driver-card-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .driver-card-item:active {
+            transform: scale(0.98);
+        }
+
+        .driver-card-item .driver-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .driver-card-item .driver-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .driver-card-item .driver-name {
+            font-weight: 800;
+            font-size: 15px;
+            flex: 1;
+        }
+
+        .driver-card-item .driver-vehicle {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .driver-card-item .driver-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 12px;
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .driver-card-item .driver-details .label {
+            color: var(--gray-light);
+            font-size: 10px;
+        }
+
+        .driver-card-item .driver-details .value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .driver-card-item .driver-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .driver-card-item .driver-actions .btn {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 12px;
+            min-height: 36px;
+            border-radius: 8px;
+            justify-content: center;
+        }
+
+        .driver-card-item .driver-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .driver-card-item .driver-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .driver-card-item .driver-status.active { background: rgba(16,185,129,0.12); color: var(--secondary); }
+        .driver-card-item .driver-status.active::before { background: var(--secondary); }
+
+        .driver-card-item .driver-status.offline { background: rgba(239,68,68,0.12); color: var(--danger); }
+        .driver-card-item .driver-status.offline::before { background: var(--danger); }
+
+        .driver-card-item .driver-status.on_break { background: rgba(245,158,11,0.12); color: var(--warning); }
+        .driver-card-item .driver-status.on_break::before { background: var(--warning); }
+
+        @media (max-width: 768px) {
+            .driver-card-view {
+                display: flex !important;
+            }
+
+            .table-container .driver-table-view {
+                display: none;
+            }
+
+            .driver-card-item .driver-details {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .driver-card-item .driver-actions .btn {
+                font-size: 11px;
+                padding: 6px 10px;
+                min-height: 32px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .driver-card-view {
+                display: none !important;
+            }
+            .table-container .driver-table-view {
+                display: table;
+            }
+        }
+
+        /* Driver Stats Cards */
+        .driver-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .driver-stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .driver-stat-card .stat-number {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .driver-stat-card .stat-label {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        .driver-stat-card .stat-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .driver-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .driver-stat-card {
+                padding: 10px 12px;
+            }
+
+            .driver-stat-card .stat-number {
+                font-size: 18px;
+            }
+
+            .driver-stat-card .stat-label {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .driver-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+
+            .driver-stat-card {
+                padding: 8px 10px;
+            }
+
+            .driver-stat-card .stat-number {
+                font-size: 16px;
+            }
+        }
+
+        /* Status Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid var(--border);
+            background: var(--white);
+            color: var(--gray);
+            font-family: inherit;
+        }
+
+        .filter-btn:active {
+            transform: scale(0.95);
+        }
+
+        .filter-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .filter-btn .count {
+            background: rgba(0,0,0,0.1);
+            padding: 0 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            margin-right: 4px;
+        }
+
+        .filter-btn.active .count {
+            background: rgba(255,255,255,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .filter-btn {
+                padding: 4px 10px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-truck-fast"></i>
+            </div>
+            <div class="sidebar-brand">TechNomads</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">القائمة الرئيسية</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>لوحة التحكم</span>
+                </a>
+                <a href="orders.html" class="nav-item">
+                    <i class="fas fa-box"></i>
+                    <span>الطلبات</span>
+                    <span class="nav-badge">24</span>
+                </a>
+                <a href="drivers.html" class="nav-item active">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>السائقين</span>
+                    <span class="nav-badge" id="driversBadge">5</span>
+                </a>
+                <a href="customers.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>العملاء</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">الإدارة</div>
+                <a href="zones.html" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>المناطق والأسعار</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>التقارير</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">م</div>
+                <div class="user-info">
+                    <div class="user-name">مدير النظام</div>
+                    <div class="user-role">مسؤول</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="mobile-menu-btn" onclick="toggleMobileSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-search">
+                <input type="text" placeholder="بحث عن سائق..." id="searchInput" onkeyup="searchDrivers(event)">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+                <button class="header-btn" onclick="refreshDrivers()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="header-btn" onclick="openAddDriverModal()">
+                    <i class="fas fa-user-plus"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Search -->
+        <div class="mobile-search" style="display: none;">
+            <input type="text" placeholder="بحث عن سائق..." id="mobileSearchInput" onkeyup="searchDrivers(event)">
+            <button onclick="performMobileSearch()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">السائقين</h1>
+                    <p class="page-subtitle">إدارة جميع السائقين في النظام</p>
+                </div>
+                <button class="btn btn-primary" onclick="openAddDriverModal()">
+                    <i class="fas fa-plus"></i>
+                    إضافة سائق
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="driver-stats-grid" id="driverStats">
+                <div class="driver-stat-card">
+                    <span class="stat-icon" style="color: var(--primary);">👤</span>
+                    <div class="stat-number" id="totalDrivers">0</div>
+                    <div class="stat-label">إجمالي السائقين</div>
+                </div>
+                <div class="driver-stat-card">
+                    <span class="stat-icon" style="color: var(--secondary);">✅</span>
+                    <div class="stat-number" id="activeDrivers">0</div>
+                    <div class="stat-label">نشطين</div>
+                </div>
+                <div class="driver-stat-card">
+                    <span class="stat-icon" style="color: var(--warning);">⏳</span>
+                    <div class="stat-number" id="onlineDrivers">0</div>
+                    <div class="stat-label">متاحين الآن</div>
+                </div>
+                <div class="driver-stat-card">
+                    <span class="stat-icon" style="color: var(--warning);">⭐</span>
+                    <div class="stat-number" id="avgRating">0</div>
+                    <div class="stat-label">متوسط التقييم</div>
+                </div>
+            </div>
+
+            <!-- Status Filters -->
+            <div class="filter-buttons" id="statusFilters">
+                <button class="filter-btn active" data-status="all" onclick="filterDrivers('all')">
+                    الكل <span class="count" id="countAll">0</span>
+                </button>
+                <button class="filter-btn" data-status="active" onclick="filterDrivers('active')">
+                    نشط <span class="count" id="countActive">0</span>
+                </button>
+                <button class="filter-btn" data-status="offline" onclick="filterDrivers('offline')">
+                    غير متاح <span class="count" id="countOffline">0</span>
+                </button>
+                <button class="filter-btn" data-status="on_break" onclick="filterDrivers('on_break')">
+                    في استراحة <span class="count" id="countBreak">0</span>
+                </button>
+            </div>
+
+            <!-- Drivers Table -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">جميع السائقين</h3>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <span style="font-size: 12px; color: var(--gray);">إجمالي: <strong id="totalDriversCount">0</strong></span>
+                        <button class="btn btn-outline btn-sm" onclick="exportDrivers()">
+                            <i class="fas fa-file-export"></i>
+                            <span class="hide-mobile">تصدير</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table View (Desktop) -->
+                <div class="table-container">
+                    <table class="driver-table-view">
+                        <thead>
+                            <tr>
+                                <th>السائق</th>
+                                <th>الهاتف</th>
+                                <th>المنطقة</th>
+                                <th>الحالة</th>
+                                <th>الطلبات</th>
+                                <th>التقييم</th>
+                                <th>الإيرادات</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="driversTableBody">
+                            <!-- Generated by JS -->
+                        </tbody>
+                    </table>
+
+                    <!-- Card View (Mobile) -->
+                    <div class="driver-card-view" id="driversCardContainer">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Driver Modal -->
+    <div class="modal-overlay" id="addDriverModal">
+        <div class="modal">
+            <div class="modal-drag-handle"></div>
+            <div class="modal-header">
+                <h3 class="modal-title">إضافة سائق جديد</h3>
+                <button class="modal-close" onclick="closeAddDriverModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addDriverForm" onsubmit="submitAddDriver(event)">
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">الاسم الكامل</label>
+                            <input type="text" class="form-input" placeholder="اسم السائق" required id="driverName">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">رقم الهاتف</label>
+                            <input type="tel" class="form-input" placeholder="+967" required id="driverPhone">
+                        </div>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">البريد الإلكتروني</label>
+                            <input type="email" class="form-input" placeholder="example@email.com" id="driverEmail">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">المنطقة</label>
+                            <select class="form-select" required id="driverZone">
+                                <option value="">اختر</option>
+                                <option>صنعاء</option>
+                                <option>عدن</option>
+                                <option>تعز</option>
+                                <option>الحديدة</option>
+                                <option>إب</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">نوع المركبة</label>
+                            <select class="form-select" id="driverVehicle">
+                                <option value="">اختر</option>
+                                <option>سيارة</option>
+                                <option>دراجة نارية</option>
+                                <option>شاحنة صغيرة</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">رقم المركبة</label>
+                            <input type="text" class="form-input" placeholder="رقم اللوحة" id="driverPlate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">كلمة المرور</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required id="driverPassword">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeAddDriverModal()">إلغاء</button>
+                <button class="btn btn-primary" onclick="submitAddDriver(event)">
+                    <i class="fas fa-user-plus"></i>
+                    إضافة
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Driver Details Modal -->
+    <div class="modal-overlay" id="driverDetailsModal">
+        <div class="modal">
+            <div class="modal-drag-handle"></div>
+            <div class="modal-header">
+                <h3 class="modal-title" id="driverDetailsTitle">تفاصيل السائق</h3>
+                <button class="modal-close" onclick="closeDriverDetails()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="driverDetailsBody">
+                <!-- Generated by JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeDriverDetails()">إغلاق</button>
+                <button class="btn btn-primary" onclick="editDriverFromDetails()">
+                    <i class="fas fa-edit"></i> تعديل
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Dropdown -->
+    <div class="notifications-dropdown" id="notificationsDropdown" style="display: none;">
+        <div class="notifications-header">
+            <span>الإشعارات</span>
+            <button onclick="markAllRead()">تحديد الكل كمقروء</button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Generated by JS -->
+        </div>
+    </div>
+
+    <script src="../../shared/js/utils.js"></script>
+    <script src="../../shared/js/constants.js"></script>
+    <script src="../../shared/js/i18n.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/mobile.js"></script>
+
+    <script>
+        // ============================================
+        // DRIVERS PAGE
+        // ============================================
+
+        let allDrivers = [];
+        let filteredDrivers = [];
+        let currentFilter = 'all';
+
+        // ============================================
+        // LOAD DRIVERS
+        // ============================================
+        function loadDrivers() {
+            allDrivers = [
+                { id: 1, name: 'أحمد علي', phone: '+967 770 200 970', zone: 'صنعاء', status: 'active', orders: 156, rating: 4.9, earnings: 45000, vehicle: 'تويوتا هايلوكس', plate: '1234 أ ب ج', avatar: 'أ' },
+                { id: 2, name: 'خالد سعيد', phone: '+967 771 300 971', zone: 'عدن', status: 'active', orders: 142, rating: 4.8, earnings: 38000, vehicle: 'هيونداي أكسنت', plate: '5678 د هـ و', avatar: 'خ' },
+                { id: 3, name: 'علي محمود', phone: '+967 772 400 972', zone: 'تعز', status: 'offline', orders: 128, rating: 4.7, earnings: 32000, vehicle: 'دراجة نارية', plate: '9012 ي ك ل', avatar: 'ع' },
+                { id: 4, name: 'يوسف أحمد', phone: '+967 773 500 973', zone: 'الحديدة', status: 'active', orders: 115, rating: 4.6, earnings: 28000, vehicle: 'شيفروليه سبارك', plate: '3456 م ن س', avatar: 'ي' },
+                { id: 5, name: 'محمد فارس', phone: '+967 774 600 974', zone: 'صنعاء', status: 'on_break', orders: 98, rating: 4.5, earnings: 22000, vehicle: 'دراجة نارية', plate: '7890 ع ف ص', avatar: 'م' }
+            ];
+
+            filteredDrivers = [...allDrivers];
+            updateStats();
+            updateCounts();
+            renderDrivers();
+        }
+
+        // ============================================
+        // UPDATE STATS
+        // ============================================
+        function updateStats() {
+            const total = allDrivers.length;
+            const active = allDrivers.filter(d => d.status === 'active').length;
+            const online = allDrivers.filter(d => d.status === 'active' || d.status === 'available').length;
+            const avgRating = total > 0 ? (allDrivers.reduce((sum, d) => sum + d.rating, 0) / total) : 0;
+
+            document.getElementById('totalDrivers').textContent = total;
+            document.getElementById('activeDrivers').textContent = active;
+            document.getElementById('onlineDrivers').textContent = online;
+            document.getElementById('avgRating').textContent = avgRating.toFixed(1);
+            document.getElementById('totalDriversCount').textContent = total;
+            document.getElementById('driversBadge').textContent = total;
+        }
+
+        function updateCounts() {
+            document.getElementById('countAll').textContent = allDrivers.length;
+            document.getElementById('countActive').textContent = allDrivers.filter(d => d.status === 'active').length;
+            document.getElementById('countOffline').textContent = allDrivers.filter(d => d.status === 'offline').length;
+            document.getElementById('countBreak').textContent = allDrivers.filter(d => d.status === 'on_break').length;
+        }
+
+        // ============================================
+        // RENDER DRIVERS
+        // ============================================
+        function renderDrivers() {
+            const tbody = document.getElementById('driversTableBody');
+            const cardContainer = document.getElementById('driversCardContainer');
+
+            if (filteredDrivers.length === 0) {
+                const empty = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 30px; color: var(--gray);">
+                            <i class="fas fa-users" style="font-size: 32px; display: block; margin-bottom: 8px;"></i>
+                            لا يوجد سائقين
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML = empty;
+                cardContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <h3>لا يوجد سائقين</h3>
+                        <p>لم يتم العثور على سائقين مطابقين للبحث</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Table rows
+            tbody.innerHTML = filteredDrivers.map(d => `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">
+                                ${d.avatar || d.name.charAt(0)}
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 14px;">${d.name}</div>
+                                <div style="font-size: 11px; color: var(--gray);">${d.vehicle}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-size: 13px;">${d.phone}</td>
+                    <td>${d.zone}</td>
+                    <td><span class="status ${d.status}">${getStatusText(d.status)}</span></td>
+                    <td>${d.orders}</td>
+                    <td style="color: var(--warning);"><i class="fas fa-star"></i> ${d.rating}</td>
+                    <td><strong>${Number(d.earnings).toLocaleString()} ر.ي</strong></td>
+                    <td>
+                        <button class="btn btn-icon" style="color: var(--primary);" onclick="viewDriver(${d.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-icon" style="color: var(--info);" onclick="editDriver(${d.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-icon" style="color: var(--danger);" onclick="deleteDriver(${d.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Card view (mobile)
+            cardContainer.innerHTML = filteredDrivers.map(d => `
+                <div class="driver-card-item">
+                    <div class="driver-header">
+                        <div class="driver-avatar">${d.avatar || d.name.charAt(0)}</div>
+                        <div>
+                            <div class="driver-name">${d.name}</div>
+                            <div class="driver-vehicle">${d.vehicle} · ${d.plate}</div>
+                        </div>
+                        <div style="margin-right: auto;">
+                            <span class="driver-status ${d.status}">${getStatusText(d.status)}</span>
+                        </div>
+                    </div>
+                    <div class="driver-details">
+                        <div><span class="label">الهاتف:</span> <span class="value">${d.phone}</span></div>
+                        <div><span class="label">المنطقة:</span> <span class="value">${d.zone}</span></div>
+                        <div><span class="label">الطلبات:</span> <span class="value">${d.orders}</span></div>
+                        <div><span class="label">التقييم:</span> <span class="value" style="color: var(--warning);">⭐ ${d.rating}</span></div>
+                        <div style="grid-column: span 2;"><span class="label">الإيرادات:</span> <span class="value">${Number(d.earnings).toLocaleString()} ر.ي</span></div>
+                    </div>
+                    <div class="driver-actions">
+                        <button class="btn btn-outline btn-sm" onclick="viewDriver(${d.id})">
+                            <i class="fas fa-eye"></i> عرض
+                        </button>
+                        <button class="btn btn-primary btn-sm" onclick="editDriver(${d.id})">
+                            <i class="fas fa-edit"></i> تعديل
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteDriver(${d.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // STATUS HELPERS
+        // ============================================
+        function getStatusText(status) {
+            const statuses = {
+                'active': 'نشط',
+                'offline': 'غير متاح',
+                'on_break': 'في استراحة',
+                'available': 'متاح',
+                'busy': 'مشغول'
+            };
+            return statuses[status] || status;
+        }
+
+        // ============================================
+        // FILTERS
+        // ============================================
+        function filterDrivers(status) {
+            currentFilter = status;
+
+            // Update buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.status === status);
+            });
+
+            if (status === 'all') {
+                filteredDrivers = [...allDrivers];
+            } else {
+                filteredDrivers = allDrivers.filter(d => d.status === status);
+            }
+
+            renderDrivers();
+
+            if (filteredDrivers.length === 0) {
+                showToast('لا توجد نتائج مطابقة', 'info');
+            }
+        }
+
+        // ============================================
+        // SEARCH
+        // ============================================
+        function searchDrivers(event) {
+            const query = event.target.value.trim().toLowerCase();
+            if (!query) {
+                filterDrivers(currentFilter);
+                return;
+            }
+
+            const filtered = allDrivers.filter(d =>
+                d.name.toLowerCase().includes(query) ||
+                d.phone.includes(query) ||
+                d.zone.toLowerCase().includes(query) ||
+                d.vehicle.toLowerCase().includes(query)
+            );
+
+            filteredDrivers = filtered;
+            renderDrivers();
+        }
+
+        function performMobileSearch() {
+            const input = document.getElementById('mobileSearchInput');
+            if (input && input.value.trim()) {
+                searchDrivers({ target: input });
+            }
+        }
+
+        // ============================================
+        // DRIVER ACTIONS
+        // ============================================
+        function viewDriver(id) {
+            const driver = allDrivers.find(d => d.id === id);
+            if (!driver) return;
+
+            const modal = document.getElementById('driverDetailsModal');
+            const title = document.getElementById('driverDetailsTitle');
+            const body = document.getElementById('driverDetailsBody');
+
+            title.textContent = `تفاصيل السائق: ${driver.name}`;
+
+            body.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                    <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800;">
+                        ${driver.avatar || driver.name.charAt(0)}
+                    </div>
+                    <div>
+                        <h3 style="font-size: 18px;">${driver.name}</h3>
+                        <div style="color: var(--gray); font-size: 13px;">${driver.vehicle} - ${driver.plate}</div>
+                        <div style="color: var(--warning); font-size: 14px;">
+                            <i class="fas fa-star"></i> ${driver.rating} (${driver.orders} طلب)
+                        </div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div><strong>رقم الهاتف:</strong> ${driver.phone}</div>
+                    <div><strong>المنطقة:</strong> ${driver.zone}</div>
+                    <div><strong>الحالة:</strong> <span class="status ${driver.status}">${getStatusText(driver.status)}</span></div>
+                    <div><strong>الإيرادات:</strong> ${Number(driver.earnings).toLocaleString()} ر.ي</div>
+                    <div style="grid-column: span 2;"><strong>رقم المركبة:</strong> ${driver.plate}</div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function closeDriverDetails() {
+            document.getElementById('driverDetailsModal').classList.remove('active');
+        }
+
+        function editDriverFromDetails() {
+            closeDriverDetails();
+            showToast('جاري فتح صفحة التعديل...', 'info');
+        }
+
+        function editDriver(id) {
+            showToast(`تعديل بيانات السائق`, 'info');
+        }
+
+        function deleteDriver(id) {
+            const driver = allDrivers.find(d => d.id === id);
+            if (!driver) return;
+
+            if (confirm(`هل أنت متأكد من حذف السائق "${driver.name}"؟`)) {
+                allDrivers = allDrivers.filter(d => d.id !== id);
+                filterDrivers(currentFilter);
+                updateStats();
+                updateCounts();
+                showToast(`تم حذف السائق ${driver.name}`, 'success');
+            }
+        }
+
+        // ============================================
+        // ADD DRIVER
+        // ============================================
+        function openAddDriverModal() {
+            document.getElementById('addDriverModal').classList.add('active');
+            document.getElementById('addDriverForm').reset();
+        }
+
+        function closeAddDriverModal() {
+            document.getElementById('addDriverModal').classList.remove('active');
+        }
+
+        function submitAddDriver(event) {
+            event.preventDefault();
+            const form = document.getElementById('addDriverForm');
+
+            if (form.checkValidity()) {
+                const newDriver = {
+                    id: allDrivers.length + 1,
+                    name: document.getElementById('driverName').value,
+                    phone: document.getElementById('driverPhone').value,
+                    email: document.getElementById('driverEmail').value,
+                    zone: document.getElementById('driverZone').value,
+                    vehicle: document.getElementById('driverVehicle').value || 'سيارة',
+                    plate: document.getElementById('driverPlate').value || '---',
+                    status: 'active',
+                    orders: 0,
+                    rating: 0,
+                    earnings: 0,
+                    avatar: document.getElementById('driverName').value.charAt(0)
+                };
+
+                allDrivers.push(newDriver);
+                filterDrivers(currentFilter);
+                updateStats();
+                updateCounts();
+                closeAddDriverModal();
+                form.reset();
+                showToast('تم إضافة السائق بنجاح!', 'success');
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        // ============================================
+        // EXPORT
+        // ============================================
+        function exportDrivers() {
+            showToast('جاري تصدير البيانات...', 'info');
+            setTimeout(() => {
+                showToast('تم تصدير البيانات بنجاح', 'success');
+            }, 1500);
+        }
+
+        // ============================================
+        // REFRESH
+        // ============================================
+        function refreshDrivers() {
+            showToast('جاري تحديث البيانات...', 'info');
+            setTimeout(() => {
+                loadDrivers();
+                showToast('تم التحديث بنجاح', 'success');
+            }, 1000);
+        }
+
+        // ============================================
+        // NOTIFICATIONS
+        // ============================================
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationsDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            if (dropdown.style.display === 'block') {
+                loadNotifications();
+            }
+        }
+
+        function loadNotifications() {
+            const list = document.getElementById('notificationsList');
+            const notifications = [
+                { id: 1, icon: 'fa-box', color: 'primary', text: 'طلب جديد #1234 من محمد عبدالله', time: 'منذ 2 دقيقة' },
+                { id: 2, icon: 'fa-motorcycle', color: 'success', text: 'السائق أحمد علي بدأ التوصيل', time: 'منذ 5 دقائق' },
+                { id: 3, icon: 'fa-money-bill-wave', color: 'warning', text: 'دفعة جديدة بقيمة 15,000 ر.ي', time: 'منذ 12 دقيقة' }
+            ];
+
+            list.innerHTML = notifications.map(n => `
+                <div class="notification-item">
+                    <div class="notification-icon" style="background: rgba(99,102,241,0.1); color: var(--${n.color});">
+                        <i class="fas ${n.icon}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-text">${n.text}</div>
+                        <div class="notification-time">${n.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function markAllRead() {
+            document.querySelector('.header-btn .badge').textContent = '0';
+            document.getElementById('notificationsDropdown').style.display = 'none';
+            showToast('تم تحديد الكل كمقروء', 'success');
+        }
+
+        // ============================================
+        // TOAST
+        // ============================================
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.style.cssText = `
+                position: fixed;
+                top: ${window.innerWidth <= 768 ? '70px' : '20px'};
+                left: 50%;
+                transform: translateX(-50%) translateY(-100px);
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#6366f1'};
+                color: white;
+                padding: ${window.innerWidth <= 768 ? '12px 20px' : '15px 30px'};
+                border-radius: 12px;
+                font-weight: 700;
+                font-size: ${window.innerWidth <= 768 ? '13px' : '14px'};
+                z-index: 9999;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                transition: transform 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                max-width: 92%;
+                font-family: 'Tajawal', sans-serif;
+                text-align: right;
+            `;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="font-size: ${window.innerWidth <= 768 ? '16px' : '18px'}; flex-shrink: 0;"></i> ${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            }, 10);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(-100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDrivers();
+        });
+
+        // Expose functions
+        window.filterDrivers = filterDrivers;
+        window.searchDrivers = searchDrivers;
+        window.performMobileSearch = performMobileSearch;
+        window.viewDriver = viewDriver;
+        window.closeDriverDetails = closeDriverDetails;
+        window.editDriverFromDetails = editDriverFromDetails;
+        window.editDriver = editDriver;
+        window.deleteDriver = deleteDriver;
+        window.openAddDriverModal = openAddDriverModal;
+        window.closeAddDriverModal = closeAddDriverModal;
+        window.submitAddDriver = submitAddDriver;
+        window.exportDrivers = exportDrivers;
+        window.refreshDrivers = refreshDrivers;
+        window.toggleNotifications = toggleNotifications;
+        window.markAllRead = markAllRead;
+        window.showToast = showToast;
+    </script>
+</body>
+</html>

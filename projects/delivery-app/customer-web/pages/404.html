@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="الصفحة غير موجودة - TechNomads">
+    <title>404 - الصفحة غير موجودة</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/web.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .error-page {
+            padding: 80px 20px;
+            background: var(--light);
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .error-page .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .error-page .error-icon {
+            font-size: 100px;
+            color: var(--primary);
+            opacity: 0.2;
+            display: block;
+            margin-bottom: 16px;
+        }
+        .error-page h1 {
+            font-size: 80px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .error-page h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .error-page p {
+            color: var(--gray);
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        .error-page .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .error-page .btn-group .btn {
+            padding: 12px 28px;
+            font-size: 15px;
+        }
+        .error-page .search-box {
+            max-width: 400px;
+            margin: 24px auto 0;
+            display: flex;
+            gap: 10px;
+        }
+        .error-page .search-box input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+        .error-page .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+        }
+        .error-page .search-box button {
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .error-page .search-box button:hover {
+            background: var(--primary-dark);
+        }
+        @media (max-width: 480px) {
+            .error-page h1 {
+                font-size: 60px;
+            }
+            .error-page h2 {
+                font-size: 22px;
+            }
+            .error-page p {
+                font-size: 16px;
+            }
+            .error-page .btn-group {
+                flex-direction: column;
+            }
+            .error-page .btn-group .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="services.html">الخدمات</a>
+                <a href="about.html">من نحن</a>
+                <a href="track.html">تتبع الطلب</a>
+                <a href="contact.html">اتصل بنا</a>
+            </nav>
+            <div class="header-right">
+                <a href="login.html" class="btn btn-outline btn-sm">تسجيل الدخول</a>
+                <a href="register.html" class="btn btn-primary btn-sm">انضم الآن</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">الرئيسية</a>
+            <a href="services.html">الخدمات</a>
+            <a href="about.html">من نحن</a>
+            <a href="track.html">تتبع الطلب</a>
+            <a href="contact.html">اتصل بنا</a>
+            <hr>
+            <a href="login.html" class="btn btn-outline btn-sm" style="justify-content:center;">تسجيل الدخول</a>
+            <a href="register.html" class="btn btn-primary btn-sm" style="justify-content:center;">انضم الآن</a>
+        </div>
+    </header>
+
+    <section class="error-page">
+        <div class="container">
+            <i class="fas fa-truck-fast error-icon"></i>
+            <h1>٤٠٤</h1>
+            <h2>عفواً! الصفحة غير موجودة</h2>
+            <p>
+                يبدو أن الصفحة التي تبحث عنها قد تم نقلها أو حذفها أو أنها غير موجودة.
+                <br>
+                قد تكون قد كتبت الرابط بشكل خاطئ.
+            </p>
+            <div class="btn-group">
+                <a href="index.html" class="btn btn-primary">
+                    <i class="fas fa-home"></i> العودة للرئيسية
+                </a>
+                <a href="services.html" class="btn btn-outline">
+                    <i class="fas fa-list"></i> عرض الخدمات
+                </a>
+                <a href="contact.html" class="btn btn-outline">
+                    <i class="fas fa-headset"></i> تواصل معنا
+                </a>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="ابحث في الموقع..." id="searchInput">
+                <button onclick="searchSite()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </div>
+                    <p style="color:var(--gray);font-size:14px;margin-top:8px;line-height:1.6;">
+                        منصتك الموثوقة لتوصيل الطرود والطلبات في جميع أنحاء اليمن.
+                    </p>
+                    <div class="social-links" style="margin-top:12px;display:flex;gap:10px;">
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <a href="index.html">الرئيسية</a>
+                    <a href="services.html">الخدمات</a>
+                    <a href="about.html">من نحن</a>
+                    <a href="contact.html">اتصل بنا</a>
+                </div>
+                <div class="footer-col">
+                    <h4>خدماتنا</h4>
+                    <a href="services.html#fast">توصيل سريع</a>
+                    <a href="services.html#normal">توصيل عادي</a>
+                    <a href="services.html#frozen">توصيل مجمدات</a>
+                    <a href="services.html#food">توصيل مطاعم</a>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--primary);"></i> +967 770 200 970</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--primary);"></i> info@technomads.ye</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> صنعاء، اليمن</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TechNomads. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn i');
+            if (menu) {
+                menu.classList.toggle('active');
+                if (btn) {
+                    btn.classList.toggle('fa-bars');
+                    btn.classList.toggle('fa-times');
+                }
+            }
+        }
+
+        function searchSite() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (query) {
+                showToast('جاري البحث عن: ' + query, 'info');
+            } else {
+                showToast('يرجى إدخال كلمة البحث', 'error');
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchSite();
+        });
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.toast-container');
+            if (existing) existing.remove();
+            const container = document.createElement('div');
+            container.className = 'toast-container';
+            container.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 9999;
+                max-width: 90%;
+                width: 400px;
+            `;
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.style.cssText = `
+                padding: 14px 20px;
+                border-radius: 10px;
+                font-weight: 700;
+                font-size: 14px;
+                color: white;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                animation: slideDown 0.4s ease forwards;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1'};
+            `;
+            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i> ${message}`;
+            container.appendChild(toast);
+            document.body.appendChild(container);
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.3s ease forwards';
+                setTimeout(() => container.remove(), 300);
+            }, 3000);
+        }
+
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('active');
+                const icon = btn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const menu = document.getElementById('mobileMenu');
+                const btn = document.querySelector('.mobile-menu-btn');
+                if (menu && menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                    const icon = btn?.querySelector('i');
+                    if (icon) {
+                        icon.classList.add('fa-bars');
+                        icon.classList.remove('fa-times');
+                    }
+                }
+            }
+        });
+    </script>
+    <style>
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+    </style>
+</body>
+</html>

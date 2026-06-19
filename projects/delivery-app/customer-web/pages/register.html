@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="انضم الآن - TechNomads">
+    <title>انضم الآن - TechNomads</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/web.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .register-page {
+            padding: 60px 20px;
+            background: var(--light);
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .register-page .container {
+            max-width: 520px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .register-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 32px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+        .register-card .logo-center {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .register-card .logo-center i {
+            font-size: 48px;
+            color: var(--primary);
+            background: rgba(99,102,241,0.1);
+            padding: 16px;
+            border-radius: 16px;
+            display: inline-block;
+        }
+        .register-card .logo-center h2 {
+            margin-top: 12px;
+            font-size: 24px;
+            font-weight: 800;
+        }
+        .register-card .logo-center p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        .register-card .form-group {
+            margin-bottom: 16px;
+        }
+        .register-card .form-label {
+            display: block;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .register-card .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+        }
+        .register-card .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+        }
+        .register-card .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .register-card .btn-register {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .register-card .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+        }
+        .register-card .btn-register:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .register-card .login-link {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        .register-card .login-link a {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .register-card .terms {
+            font-size: 13px;
+            color: var(--gray);
+            text-align: center;
+            margin-top: 12px;
+        }
+        .register-card .terms a {
+            color: var(--primary);
+        }
+        .register-card .alert {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 700;
+            display: none;
+        }
+        .register-card .alert.error {
+            display: block;
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239,68,68,0.2);
+        }
+        .register-card .alert.success {
+            display: block;
+            background: rgba(16,185,129,0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(16,185,129,0.2);
+        }
+        .register-card .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 8px;
+            background: var(--border);
+            overflow: hidden;
+        }
+        .register-card .password-strength .bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 28px 20px;
+            }
+            .register-card .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="services.html">الخدمات</a>
+                <a href="about.html">من نحن</a>
+                <a href="track.html">تتبع الطلب</a>
+                <a href="contact.html">اتصل بنا</a>
+            </nav>
+            <div class="header-right">
+                <a href="login.html" class="btn btn-outline btn-sm">تسجيل الدخول</a>
+                <a href="register.html" class="btn btn-primary btn-sm active">انضم الآن</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">الرئيسية</a>
+            <a href="services.html">الخدمات</a>
+            <a href="about.html">من نحن</a>
+            <a href="track.html">تتبع الطلب</a>
+            <a href="contact.html">اتصل بنا</a>
+            <hr>
+            <a href="login.html" class="btn btn-outline btn-sm" style="justify-content:center;">تسجيل الدخول</a>
+            <a href="register.html" class="btn btn-primary btn-sm active" style="justify-content:center;">انضم الآن</a>
+        </div>
+    </header>
+
+    <section class="register-page">
+        <div class="container">
+            <div class="register-card">
+                <div class="logo-center">
+                    <i class="fas fa-user-plus"></i>
+                    <h2>انضم إلينا</h2>
+                    <p>أنشئ حسابك واستمتع بخدمات التوصيل</p>
+                </div>
+
+                <div class="alert" id="registerAlert"></div>
+
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">الاسم الأول</label>
+                            <input type="text" class="form-input" placeholder="أحمد" required id="registerFirstName">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">الاسم الأخير</label>
+                            <input type="text" class="form-input" placeholder="علي" required id="registerLastName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">البريد الإلكتروني</label>
+                        <input type="email" class="form-input" placeholder="example@email.com" required id="registerEmail">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">رقم الهاتف</label>
+                        <input type="tel" class="form-input" placeholder="+967 770 200 970" required id="registerPhone">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">كلمة المرور</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required id="registerPassword" oninput="checkPasswordStrength(this.value)">
+                        <div class="password-strength">
+                            <div class="bar" id="passwordBar"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">تأكيد كلمة المرور</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required id="registerConfirm">
+                    </div>
+                    <div style="margin:12px 0;">
+                        <label>
+                            <input type="checkbox" required id="registerTerms">
+                            أوافق على <a href="#">الشروط والأحكام</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-register" id="registerBtn">
+                        <i class="fas fa-user-plus"></i> إنشاء الحساب
+                    </button>
+                </form>
+
+                <div class="login-link">
+                    لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a>
+                </div>
+                <div class="terms">
+                    بالتسجيل أنت توافق على <a href="#">سياسة الخصوصية</a> و <a href="#">الشروط والأحكام</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </div>
+                    <p style="color:var(--gray);font-size:14px;margin-top:8px;line-height:1.6;">
+                        منصتك الموثوقة لتوصيل الطرود والطلبات في جميع أنحاء اليمن.
+                    </p>
+                    <div class="social-links" style="margin-top:12px;display:flex;gap:10px;">
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <a href="index.html">الرئيسية</a>
+                    <a href="services.html">الخدمات</a>
+                    <a href="about.html">من نحن</a>
+                    <a href="contact.html">اتصل بنا</a>
+                </div>
+                <div class="footer-col">
+                    <h4>خدماتنا</h4>
+                    <a href="services.html#fast">توصيل سريع</a>
+                    <a href="services.html#normal">توصيل عادي</a>
+                    <a href="services.html#frozen">توصيل مجمدات</a>
+                    <a href="services.html#food">توصيل مطاعم</a>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--primary);"></i> +967 770 200 970</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--primary);"></i> info@technomads.ye</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> صنعاء، اليمن</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TechNomads. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn i');
+            if (menu) {
+                menu.classList.toggle('active');
+                if (btn) {
+                    btn.classList.toggle('fa-bars');
+                    btn.classList.toggle('fa-times');
+                }
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.toast-container');
+            if (existing) existing.remove();
+            const container = document.createElement('div');
+            container.className = 'toast-container';
+            container.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 9999;
+                max-width: 90%;
+                width: 400px;
+            `;
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.style.cssText = `
+                padding: 14px 20px;
+                border-radius: 10px;
+                font-weight: 700;
+                font-size: 14px;
+                color: white;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                animation: slideDown 0.4s ease forwards;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1'};
+            `;
+            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i> ${message}`;
+            container.appendChild(toast);
+            document.body.appendChild(container);
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.3s ease forwards';
+                setTimeout(() => container.remove(), 300);
+            }, 3000);
+        }
+
+        function checkPasswordStrength(password) {
+            const bar = document.getElementById('passwordBar');
+            let strength = 0;
+            if (password.length >= 6) strength += 20;
+            if (password.length >= 10) strength += 20;
+            if (/[a-z]/.test(password)) strength += 20;
+            if (/[A-Z]/.test(password)) strength += 20;
+            if (/[0-9]/.test(password)) strength += 20;
+            if (/[^a-zA-Z0-9]/.test(password)) strength += 20;
+            strength = Math.min(strength, 100);
+            bar.style.width = strength + '%';
+            if (strength < 40) {
+                bar.style.background = '#ef4444';
+            } else if (strength < 70) {
+                bar.style.background = '#f59e0b';
+            } else {
+                bar.style.background = '#10b981';
+            }
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const btn = document.getElementById('registerBtn');
+            const alert = document.getElementById('registerAlert');
+            const password = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('registerConfirm').value;
+            const terms = document.getElementById('registerTerms').checked;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء الحساب...';
+            alert.className = 'alert';
+            alert.style.display = 'none';
+
+            if (password !== confirm) {
+                alert.className = 'alert error';
+                alert.style.display = 'block';
+                alert.innerHTML = '<i class="fas fa-exclamation-circle"></i> كلمة المرور وتأكيدها غير متطابقين';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> إنشاء الحساب';
+                return;
+            }
+
+            if (password.length < 6) {
+                alert.className = 'alert error';
+                alert.style.display = 'block';
+                alert.innerHTML = '<i class="fas fa-exclamation-circle"></i> كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> إنشاء الحساب';
+                return;
+            }
+
+            if (!terms) {
+                alert.className = 'alert error';
+                alert.style.display = 'block';
+                alert.innerHTML = '<i class="fas fa-exclamation-circle"></i> يجب الموافقة على الشروط والأحكام';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> إنشاء الحساب';
+                return;
+            }
+
+            setTimeout(() => {
+                alert.className = 'alert success';
+                alert.style.display = 'block';
+                alert.innerHTML = '<i class="fas fa-check-circle"></i> تم إنشاء الحساب بنجاح! جاري التوجيه...';
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            }, 1500);
+        }
+
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('active');
+                const icon = btn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const menu = document.getElementById('mobileMenu');
+                const btn = document.querySelector('.mobile-menu-btn');
+                if (menu && menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                    const icon = btn?.querySelector('i');
+                    if (icon) {
+                        icon.classList.add('fa-bars');
+                        icon.classList.remove('fa-times');
+                    }
+                }
+            }
+        });
+    </script>
+    <style>
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+    </style>
+</body>
+</html>

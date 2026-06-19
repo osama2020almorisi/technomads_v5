@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>تتبع الطلب - TechNomads</title>
+    <link rel="stylesheet" href="../css/customer.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .tracking-page {
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+        .tracking-header-section {
+            margin-bottom: 16px;
+        }
+        .tracking-header-section .order-id {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        .tracking-header-section .order-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+        .tracking-header-section .order-status-badge.delivering {
+            background: rgba(99,102,241,0.1);
+            color: var(--primary);
+        }
+        .tracking-header-section .order-status-badge.delivering i {
+            animation: pulse 1.5s infinite;
+        }
+        .map-container {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            position: relative;
+            height: 280px;
+        }
+        .map-container .map-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            position: relative;
+        }
+        .map-container .map-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(99,102,241,0.08) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(99,102,241,0.08) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .map-container .driver-marker {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(99,102,241,0.4);
+            z-index: 10;
+            transition: all 0.5s ease;
+            top: 50%;
+            left: 40%;
+        }
+        .map-container .driver-marker i {
+            color: white;
+            transform: rotate(45deg);
+            font-size: 18px;
+        }
+        .map-container .driver-marker .pulse-ring {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 2px solid rgba(99,102,241,0.3);
+            animation: pulse-ring 2s infinite;
+        }
+        .map-container .destination-marker {
+            position: absolute;
+            bottom: 30%;
+            left: 70%;
+            width: 16px;
+            height: 16px;
+            background: var(--danger);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 12px rgba(239,68,68,0.3);
+            z-index: 5;
+        }
+        .map-container .pickup-marker {
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 14px;
+            height: 14px;
+            background: var(--secondary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 12px rgba(16,185,129,0.3);
+            z-index: 5;
+        }
+        .map-container .route-line {
+            position: absolute;
+            top: 28%;
+            left: 30%;
+            width: 40%;
+            height: 2px;
+            background: var(--primary);
+            opacity: 0.3;
+            z-index: 4;
+            transform: rotate(20deg);
+        }
+        .map-container .route-line::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0; }
+        }
+        .progress-steps-container {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+        .progress-steps-container .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .progress-steps-container .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            width: 60%;
+        }
+        .progress-steps-container .steps {
+            display: flex;
+            justify-content: space-between;
+        }
+        .progress-steps-container .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+        }
+        .progress-steps-container .step .dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--gray);
+            transition: var(--transition);
+            position: relative;
+        }
+        .progress-steps-container .step .dot i {
+            font-size: 12px;
+        }
+        .progress-steps-container .step.completed .dot {
+            background: var(--secondary);
+            color: white;
+        }
+        .progress-steps-container .step.active .dot {
+            background: var(--primary);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        .progress-steps-container .step .label {
+            font-size: 10px;
+            color: var(--gray);
+            font-weight: 600;
+            text-align: center;
+        }
+        .progress-steps-container .step.completed .label {
+            color: var(--secondary);
+        }
+        .progress-steps-container .step.active .label {
+            color: var(--primary);
+        }
+        .driver-info-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .driver-info-card .avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .driver-info-card .info {
+            flex: 1;
+            min-width: 0;
+        }
+        .driver-info-card .info .name {
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .driver-info-card .info .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: var(--warning);
+        }
+        .driver-info-card .info .rating span {
+            color: var(--gray);
+            font-weight: 400;
+        }
+        .driver-info-card .actions {
+            display: flex;
+            gap: 8px;
+        }
+        .driver-info-card .actions button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .driver-info-card .actions button:active {
+            transform: scale(0.9);
+        }
+        .driver-info-card .actions .call-btn {
+            background: rgba(16,185,129,0.1);
+            color: var(--secondary);
+        }
+        .driver-info-card .actions .msg-btn {
+            background: rgba(59,130,246,0.1);
+            color: var(--info);
+        }
+        .order-details-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+        .order-details-card .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+        .order-details-card .detail-row:last-child {
+            border-bottom: none;
+        }
+        .order-details-card .detail-row .label {
+            color: var(--gray);
+        }
+        .order-details-card .detail-row .value {
+            font-weight: 600;
+        }
+        .order-details-card .detail-row .value.amount {
+            color: var(--primary);
+            font-size: 16px;
+        }
+        .empty-tracking {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .empty-tracking i {
+            font-size: 56px;
+            color: var(--gray-light);
+            margin-bottom: 16px;
+            display: block;
+        }
+        .empty-tracking h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .empty-tracking p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        .btn-outline:active {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-full {
+            width: 100%;
+            justify-content: center;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 6px 0 12px;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.06);
+            z-index: 100;
+            max-width: 480px;
+            margin: 0 auto;
+            border-radius: 24px 24px 0 0;
+        }
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 12px;
+            color: var(--gray);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        .bottom-nav .nav-item:active {
+            transform: scale(0.95);
+        }
+        .bottom-nav .nav-item i {
+            font-size: 20px;
+        }
+        .bottom-nav .nav-item span {
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .bottom-nav .nav-item.active {
+            color: var(--primary);
+        }
+        .nav-item-center {
+            margin-top: -24px;
+        }
+        .nav-center-btn {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 22px;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.35);
+            border: 3px solid var(--light);
+            transition: var(--transition);
+        }
+        .nav-center-btn:active {
+            transform: scale(0.9);
+        }
+        .nav-badge {
+            position: absolute;
+            top: -2px;
+            right: -4px;
+            background: var(--danger);
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--light);
+            position: relative;
+            padding-bottom: 90px;
+        }
+        .app-header {
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .menu-btn, .notification-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--dark);
+            transition: var(--transition);
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+        }
+        .menu-btn:active, .notification-btn:active {
+            background: var(--light);
+            transform: scale(0.95);
+        }
+        .notification-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger);
+            color: var(--white);
+            font-size: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .side-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .side-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 201;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .side-menu.active {
+            transform: translateX(0);
+        }
+        .side-menu-header {
+            padding: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-avatar-large {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+        .user-avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .user-info h3 {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        .user-info p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        .loyalty-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245,158,11,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .loyalty-badge i {
+            color: var(--warning);
+        }
+        .side-menu-body {
+            flex: 1;
+            padding: 12px 0;
+            overflow-y: auto;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 20px;
+            color: var(--dark);
+            font-size: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .menu-item:active {
+            background: var(--light);
+        }
+        .menu-item i {
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+            color: var(--gray);
+        }
+        .side-menu-footer {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .btn-logout {
+            width: 100%;
+            padding: 14px;
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+            border: none;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .btn-logout:active {
+            background: var(--danger);
+            color: var(--white);
+        }
+        .custom-toast {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            z-index: 9999;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            max-width: 90%;
+            color: white;
+        }
+        .custom-toast.success { background: #10b981; }
+        .custom-toast.error { background: #ef4444; }
+        .custom-toast.info { background: #6366f1; }
+        @media (max-width: 480px) {
+            .map-container {
+                height: 200px;
+            }
+            .map-container .driver-marker {
+                width: 36px;
+                height: 36px;
+            }
+            .map-container .driver-marker i {
+                font-size: 14px;
+            }
+            .progress-steps-container {
+                padding: 14px;
+            }
+            .progress-steps-container .step .dot {
+                width: 26px;
+                height: 26px;
+                font-size: 10px;
+            }
+            .driver-info-card {
+                padding: 12px;
+            }
+            .driver-info-card .avatar {
+                width: 44px;
+                height: 44px;
+                font-size: 16px;
+            }
+            .driver-info-card .actions button {
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
+            }
+            .order-details-card {
+                padding: 12px;
+            }
+            .order-details-card .detail-row {
+                font-size: 13px;
+                padding: 6px 0;
+            }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-left">
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <button class="menu-btn" onclick="window.location.href='home.html'">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <div class="header-center">
+                <h1 class="app-title">تتبع الطلب</h1>
+            </div>
+            <div class="header-right">
+                <button class="notification-btn" onclick="showNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">2</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="tracking-page">
+            <div id="trackingContainer">
+                <div class="tracking-header-section">
+                    <div class="order-id">الطلب <span id="trackingOrderId">#1234</span></div>
+                    <div class="order-status-badge delivering" id="trackingStatus">
+                        <i class="fas fa-circle"></i>
+                        <span>في الطريق</span>
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <div class="map-bg">
+                        <div class="map-grid"></div>
+                        <div class="route-line"></div>
+                        <div class="pickup-marker"></div>
+                        <div class="destination-marker"></div>
+                        <div class="driver-marker" id="driverMarker">
+                            <div class="pulse-ring"></div>
+                            <i class="fas fa-motorcycle"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-steps-container">
+                    <div class="progress-bar">
+                        <div class="fill" id="progressFill" style="width: 60%;"></div>
+                    </div>
+                    <div class="steps">
+                        <div class="step completed">
+                            <div class="dot"><i class="fas fa-check"></i></div>
+                            <span class="label">تم القبول</span>
+                        </div>
+                        <div class="step completed">
+                            <div class="dot"><i class="fas fa-check"></i></div>
+                            <span class="label">في الطريق</span>
+                        </div>
+                        <div class="step active">
+                            <div class="dot"><i class="fas fa-home"></i></div>
+                            <span class="label">جاري التوصيل</span>
+                        </div>
+                        <div class="step">
+                            <div class="dot"><i class="fas fa-check"></i></div>
+                            <span class="label">تم التوصيل</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="driver-info-card">
+                    <div class="avatar" id="trackingDriverInitial">أ</div>
+                    <div class="info">
+                        <div class="name" id="trackingDriverName">أحمد علي</div>
+                        <div class="rating" id="trackingDriverRating">
+                            <i class="fas fa-star"></i> 4.9 <span>(156 تقييم)</span>
+                        </div>
+                        <div class="driver-location" id="driverLocationText" style="font-size:12px; color:var(--gray); margin-top:2px;">
+                            📍 جاري التحديث...
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="call-btn" onclick="callDriver()">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                        <button class="msg-btn" onclick="messageDriver()">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="order-details-card">
+                    <div class="detail-row">
+                        <span class="label">نقطة الاستلام</span>
+                        <span class="value" id="trackingPickup">شارع تعز، جوار البنك المركزي</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">نقطة التوصيل</span>
+                        <span class="value" id="trackingDropoff">حي الصافية، خلف جامع النور</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">المسافة المتبقية</span>
+                        <span class="value"><span id="trackingDistance">3.2</span> كم</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">الوقت المتوقع</span>
+                        <span class="value"><span id="estimatedTime">15</span> دقيقة</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">المبلغ</span>
+                        <span class="value amount" id="trackingAmount">15,000 ر.ي</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">وقت الطلب</span>
+                        <span class="value" id="trackingTime">منذ 5 دقائق</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <button class="btn-outline btn-full" onclick="cancelTracking()" style="flex:1; padding:12px;">
+                        <i class="fas fa-times"></i> إلغاء التتبع
+                    </button>
+                    <button class="btn-primary btn-full" onclick="refreshTracking()" style="flex:1; padding:12px;">
+                        <i class="fas fa-sync"></i> تحديث
+                    </button>
+                </div>
+            </div>
+
+            <div id="emptyTrackingContainer" style="display: none;">
+                <div class="empty-tracking">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>لا توجد طلبات للتتبع</h3>
+                    <p>ليس لديك أي طلبات قيد التنفيذ حالياً</p>
+                    <button class="btn-primary" onclick="window.location.href='home.html'">
+                        <i class="fas fa-home"></i> العودة للرئيسية
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <span class="nav-item" onclick="window.location.href='home.html'">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </span>
+            <span class="nav-item" onclick="window.location.href='orders.html'">
+                <i class="fas fa-box"></i>
+                <span>طلباتي</span>
+                <span class="nav-badge">3</span>
+            </span>
+            <span class="nav-item nav-item-center" onclick="window.location.href='new-order.html'">
+                <div class="nav-center-btn">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </span>
+            <span class="nav-item" onclick="window.location.href='payment.html'">
+                <i class="fas fa-wallet"></i>
+                <span>المحفظة</span>
+            </span>
+            <span class="nav-item" onclick="window.location.href='profile.html'">
+                <i class="fas fa-user"></i>
+                <span>حسابي</span>
+            </span>
+        </nav>
+
+        <div class="side-menu-overlay" id="sideMenuOverlay" onclick="toggleMenu()"></div>
+        <div class="side-menu" id="sideMenu">
+            <div class="side-menu-header">
+                <div class="user-avatar-large">
+                    <img src="https://ui-avatars.com/api/?name=Mohamed+Abdullah&background=6366f1&color=fff" alt="User">
+                </div>
+                <div class="user-info">
+                    <h3 id="sideMenuName">محمد عبدالله</h3>
+                    <p id="sideMenuPhone">+967 770 200 970</p>
+                    <div class="loyalty-badge">
+                        <i class="fas fa-crown"></i>
+                        <span>عضو ذهبي</span>
+                    </div>
+                </div>
+            </div>
+            <div class="side-menu-body">
+                <span class="menu-item" onclick="window.location.href='home.html'"><i class="fas fa-home"></i> الرئيسية</span>
+                <span class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i> الملف الشخصي</span>
+                <span class="menu-item" onclick="window.location.href='orders.html'"><i class="fas fa-box"></i> طلباتي</span>
+                <span class="menu-item" onclick="window.location.href='payment.html'"><i class="fas fa-credit-card"></i> طرق الدفع</span>
+                <span class="menu-item" onclick="window.location.href='tracking.html'"><i class="fas fa-map-marked-alt"></i> تتبع الطلب</span>
+                <span class="menu-item" onclick="showToast('نقاطي: 2,450', 'info')"><i class="fas fa-gift"></i> نقاطي (2,450)</span>
+                <span class="menu-item" onclick="showToast('جاري الاتصال بالدعم الفني...', 'info')"><i class="fas fa-headset"></i> الدعم الفني</span>
+                <span class="menu-item" onclick="showToast('جاري فتح الإعدادات...', 'info')"><i class="fas fa-cog"></i> الإعدادات</span>
+            </div>
+            <div class="side-menu-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/tracking.js"></script>
+    <script>
+        function callDriver() {
+            window.location.href = 'tel:+967770200970';
+        }
+
+        function messageDriver() {
+            showToast('جاري فتح المحادثة مع السائق...', 'info');
+        }
+
+        function cancelTracking() {
+            if (!confirm('هل أنت متأكد من إلغاء تتبع هذا الطلب؟')) return;
+            localStorage.removeItem('trackingOrder');
+            showToast('تم إلغاء تتبع الطلب', 'info');
+            window.location.href = 'orders.html';
+        }
+
+        function refreshTracking() {
+            showToast('جاري تحديث معلومات الطلب...', 'info');
+            setTimeout(() => {
+                showToast('تم تحديث معلومات الطلب', 'success');
+            }, 1000);
+        }
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = `custom-toast ${type}`;
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="margin-left:8px;"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(0)'; }, 10);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(-100px)'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function toggleMenu() {
+            document.getElementById('sideMenuOverlay').classList.toggle('active');
+            document.getElementById('sideMenu').classList.toggle('active');
+        }
+
+        function showNotifications() {
+            showToast('لديك 2 إشعارات جديدة', 'info');
+        }
+
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                localStorage.clear();
+                showToast('تم تسجيل الخروج بنجاح', 'info');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1000);
+            }
+        }
+
+        function loadUserData() {
+            const userName = localStorage.getItem('userName') || 'محمد عبدالله';
+            const userPhone = localStorage.getItem('userPhone') || '+967 770 200 970';
+            const nameEl = document.getElementById('sideMenuName');
+            const phoneEl = document.getElementById('sideMenuPhone');
+            if (nameEl) nameEl.textContent = userName;
+            if (phoneEl) phoneEl.textContent = userPhone;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            if (orderId) {
+                document.getElementById('trackingOrderId').textContent = orderId;
+                localStorage.setItem('trackingOrder', JSON.stringify({ id: orderId }));
+            }
+            const currentPage = window.location.pathname.split('/').pop() || 'tracking.html';
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+                const onclickAttr = item.getAttribute('onclick');
+                if (onclickAttr && onclickAttr.includes(currentPage.replace('.html', ''))) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

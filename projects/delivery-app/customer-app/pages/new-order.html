@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>طلب جديد - TechNomads</title>
+    <link rel="stylesheet" href="../css/customer.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .new-order-page {
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+        .new-order-page .page-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .new-order-page .page-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        .order-type-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .order-type-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 8px;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .order-type-card:active {
+            transform: scale(0.95);
+        }
+        .order-type-card.active {
+            border-color: var(--primary);
+            background: rgba(99,102,241,0.05);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+        }
+        .order-type-card .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+        .order-type-card .icon.fast { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .order-type-card .icon.normal { background: linear-gradient(135deg, #10b981, #34d399); }
+        .order-type-card .icon.frozen { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .order-type-card .icon.food { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .order-type-card .label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .order-type-card .desc {
+            font-size: 10px;
+            color: var(--gray);
+        }
+        .form-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+        .form-card .form-title {
+            font-weight: 800;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-card .form-title i {
+            color: var(--primary);
+        }
+        .location-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+        .location-input-group .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .location-input-group .dot.pickup { background: var(--secondary); }
+        .location-input-group .dot.dropoff { background: var(--danger); }
+        .location-input-group .form-input {
+            flex: 1;
+        }
+        .location-input-group .location-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-xs);
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .location-input-group .location-btn:active {
+            transform: scale(0.9);
+            background: var(--primary-dark);
+        }
+        .map-preview {
+            height: 120px;
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            border-radius: var(--radius-sm);
+            margin-top: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .map-preview .map-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(99,102,241,0.08) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(99,102,241,0.08) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .map-preview .route-pin {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        .map-preview .route-pin.pickup {
+            background: var(--secondary);
+            top: 30%;
+            left: 25%;
+        }
+        .map-preview .route-pin.dropoff {
+            background: var(--danger);
+            bottom: 30%;
+            right: 25%;
+        }
+        .map-preview .route-line-preview {
+            position: absolute;
+            top: 35%;
+            left: 30%;
+            width: 30%;
+            height: 2px;
+            background: var(--primary);
+            opacity: 0.4;
+        }
+        .price-estimate-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+        .price-estimate-card .estimate-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        .price-estimate-card .estimate-row.total {
+            border-top: 2px solid var(--border);
+            margin-top: 8px;
+            padding-top: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        .price-estimate-card .estimate-row.total .value {
+            color: var(--primary);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            width: 100%;
+            transition: var(--transition);
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 6px 0 12px;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.06);
+            z-index: 100;
+            max-width: 480px;
+            margin: 0 auto;
+            border-radius: 24px 24px 0 0;
+        }
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 12px;
+            color: var(--gray);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        .bottom-nav .nav-item:active {
+            transform: scale(0.95);
+        }
+        .bottom-nav .nav-item i {
+            font-size: 20px;
+        }
+        .bottom-nav .nav-item span {
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .bottom-nav .nav-item.active {
+            color: var(--primary);
+        }
+        .nav-item-center {
+            margin-top: -24px;
+        }
+        .nav-center-btn {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 22px;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.35);
+            border: 3px solid var(--light);
+            transition: var(--transition);
+        }
+        .nav-center-btn:active {
+            transform: scale(0.9);
+        }
+        .nav-badge {
+            position: absolute;
+            top: -2px;
+            right: -4px;
+            background: var(--danger);
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--light);
+            position: relative;
+            padding-bottom: 90px;
+        }
+        .app-header {
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .menu-btn, .notification-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--dark);
+            transition: var(--transition);
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+        }
+        .menu-btn:active, .notification-btn:active {
+            background: var(--light);
+            transform: scale(0.95);
+        }
+        .notification-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger);
+            color: var(--white);
+            font-size: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .side-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .side-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 201;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .side-menu.active {
+            transform: translateX(0);
+        }
+        .side-menu-header {
+            padding: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-avatar-large {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+        .user-avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .user-info h3 {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        .user-info p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        .loyalty-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245,158,11,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .loyalty-badge i {
+            color: var(--warning);
+        }
+        .side-menu-body {
+            flex: 1;
+            padding: 12px 0;
+            overflow-y: auto;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 20px;
+            color: var(--dark);
+            font-size: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .menu-item:active {
+            background: var(--light);
+        }
+        .menu-item i {
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+            color: var(--gray);
+        }
+        .side-menu-footer {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .btn-logout {
+            width: 100%;
+            padding: 14px;
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+            border: none;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .btn-logout:active {
+            background: var(--danger);
+            color: var(--white);
+        }
+        .custom-toast {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            z-index: 9999;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            max-width: 90%;
+            color: white;
+        }
+        .custom-toast.success { background: #10b981; }
+        .custom-toast.error { background: #ef4444; }
+        .custom-toast.info { background: #6366f1; }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 15px;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+        }
+        .form-input::placeholder {
+            color: var(--gray-light);
+        }
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 15px;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+            min-height: 80px;
+            resize: vertical;
+        }
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+        }
+        @media (max-width: 480px) {
+            .order-type-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .order-type-card {
+                padding: 12px 8px;
+            }
+            .order-type-card .icon {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+            .form-card {
+                padding: 16px;
+            }
+            .price-estimate-card {
+                padding: 16px;
+            }
+            .location-input-group .location-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
+            }
+            .map-preview {
+                height: 80px;
+            }
+        }
+        @media (max-width: 380px) {
+            .order-type-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-left">
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <button class="menu-btn" onclick="window.location.href='home.html'">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <div class="header-center">
+                <h1 class="app-title">طلب جديد</h1>
+            </div>
+            <div class="header-right">
+                <button class="notification-btn" onclick="showNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">2</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="new-order-page">
+            <h1 class="page-title">طلب توصيل جديد</h1>
+            <p class="page-subtitle">اختر نوع الطلب وأدخل تفاصيل التوصيل</p>
+
+            <div class="order-type-grid">
+                <div class="order-type-card active" data-type="fast" onclick="selectOrderType('fast')">
+                    <div class="icon fast"><i class="fas fa-bolt"></i></div>
+                    <span class="label">سريع</span>
+                    <span class="desc">توصيل خلال 30 د</span>
+                </div>
+                <div class="order-type-card" data-type="normal" onclick="selectOrderType('normal')">
+                    <div class="icon normal"><i class="fas fa-box"></i></div>
+                    <span class="label">عادي</span>
+                    <span class="desc">توصيل خلال ساعة</span>
+                </div>
+                <div class="order-type-card" data-type="frozen" onclick="selectOrderType('frozen')">
+                    <div class="icon frozen"><i class="fas fa-snowflake"></i></div>
+                    <span class="label">مجمدات</span>
+                    <span class="desc">تبريد خاص</span>
+                </div>
+                <div class="order-type-card" data-type="food" onclick="selectOrderType('food')">
+                    <div class="icon food"><i class="fas fa-utensils"></i></div>
+                    <span class="label">مطاعم</span>
+                    <span class="desc">وجبات ساخنة</span>
+                </div>
+            </div>
+
+            <form id="newOrderForm" onsubmit="submitNewOrder(event)">
+                <div class="form-card">
+                    <div class="form-title"><i class="fas fa-map-pin"></i> نقطة الاستلام</div>
+                    <div class="location-input-group">
+                        <div class="dot pickup"></div>
+                        <input type="text" class="form-input" id="pickupAddress" placeholder="أدخل عنوان الاستلام" required>
+                        <button type="button" class="location-btn" onclick="useCurrentLocation('pickup')">
+                            <i class="fas fa-crosshairs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <div class="form-title"><i class="fas fa-map-marker-alt"></i> نقطة التوصيل</div>
+                    <div class="location-input-group">
+                        <div class="dot dropoff"></div>
+                        <input type="text" class="form-input" id="dropoffAddress" placeholder="أدخل عنوان التوصيل" required>
+                        <button type="button" class="location-btn" onclick="useCurrentLocation('dropoff')">
+                            <i class="fas fa-crosshairs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="map-preview" id="mapPreview">
+                    <div class="map-grid"></div>
+                    <div class="route-pin pickup"></div>
+                    <div class="route-pin dropoff"></div>
+                    <div class="route-line-preview"></div>
+                </div>
+
+                <div class="form-card">
+                    <div class="form-title"><i class="fas fa-pen"></i> ملاحظات إضافية</div>
+                    <textarea class="form-textarea" id="orderNotes" placeholder="أي ملاحظات خاصة بالطلب (اختياري)"></textarea>
+                </div>
+
+                <div class="price-estimate-card">
+                    <div class="estimate-row">
+                        <span>تكلفة التوصيل</span>
+                        <span id="deliveryFee">2,500 ر.ي</span>
+                    </div>
+                    <div class="estimate-row">
+                        <span>الضريبة</span>
+                        <span id="taxFee">250 ر.ي</span>
+                    </div>
+                    <div class="estimate-row total">
+                        <span>الإجمالي</span>
+                        <span class="value" id="totalFee">2,750 ر.ي</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitOrderBtn">
+                    <i class="fas fa-paper-plane"></i> تأكيد الطلب
+                </button>
+            </form>
+        </main>
+
+        <nav class="bottom-nav">
+            <span class="nav-item" onclick="window.location.href='home.html'">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </span>
+            <span class="nav-item" onclick="window.location.href='orders.html'">
+                <i class="fas fa-box"></i>
+                <span>طلباتي</span>
+                <span class="nav-badge">3</span>
+            </span>
+            <span class="nav-item nav-item-center active" onclick="window.location.href='new-order.html'">
+                <div class="nav-center-btn">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </span>
+            <span class="nav-item" onclick="window.location.href='payment.html'">
+                <i class="fas fa-wallet"></i>
+                <span>المحفظة</span>
+            </span>
+            <span class="nav-item" onclick="window.location.href='profile.html'">
+                <i class="fas fa-user"></i>
+                <span>حسابي</span>
+            </span>
+        </nav>
+
+        <div class="side-menu-overlay" id="sideMenuOverlay" onclick="toggleMenu()"></div>
+        <div class="side-menu" id="sideMenu">
+            <div class="side-menu-header">
+                <div class="user-avatar-large">
+                    <img src="https://ui-avatars.com/api/?name=Mohamed+Abdullah&background=6366f1&color=fff" alt="User">
+                </div>
+                <div class="user-info">
+                    <h3 id="sideMenuName">محمد عبدالله</h3>
+                    <p id="sideMenuPhone">+967 770 200 970</p>
+                    <div class="loyalty-badge">
+                        <i class="fas fa-crown"></i>
+                        <span>عضو ذهبي</span>
+                    </div>
+                </div>
+            </div>
+            <div class="side-menu-body">
+                <span class="menu-item" onclick="window.location.href='home.html'"><i class="fas fa-home"></i> الرئيسية</span>
+                <span class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i> الملف الشخصي</span>
+                <span class="menu-item" onclick="window.location.href='orders.html'"><i class="fas fa-box"></i> طلباتي</span>
+                <span class="menu-item" onclick="window.location.href='payment.html'"><i class="fas fa-credit-card"></i> طرق الدفع</span>
+                <span class="menu-item" onclick="window.location.href='tracking.html'"><i class="fas fa-map-marked-alt"></i> تتبع الطلب</span>
+                <span class="menu-item" onclick="showToast('نقاطي: 2,450', 'info')"><i class="fas fa-gift"></i> نقاطي (2,450)</span>
+                <span class="menu-item" onclick="showToast('جاري الاتصال بالدعم الفني...', 'info')"><i class="fas fa-headset"></i> الدعم الفني</span>
+                <span class="menu-item" onclick="showToast('جاري فتح الإعدادات...', 'info')"><i class="fas fa-cog"></i> الإعدادات</span>
+            </div>
+            <div class="side-menu-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        let selectedType = 'fast';
+        let isSubmitting = false;
+
+        function selectOrderType(type) {
+            selectedType = type;
+            document.querySelectorAll('.order-type-card').forEach(el => {
+                el.classList.toggle('active', el.dataset.type === type);
+            });
+            updatePriceEstimate();
+        }
+
+        function updatePriceEstimate() {
+            const fees = {
+                'fast': { delivery: 3500, tax: 350 },
+                'normal': { delivery: 2500, tax: 250 },
+                'frozen': { delivery: 4000, tax: 400 },
+                'food': { delivery: 2000, tax: 200 }
+            };
+            const fee = fees[selectedType] || fees['normal'];
+            document.getElementById('deliveryFee').textContent = fee.delivery.toLocaleString() + ' ر.ي';
+            document.getElementById('taxFee').textContent = fee.tax.toLocaleString() + ' ر.ي';
+            document.getElementById('totalFee').textContent = (fee.delivery + fee.tax).toLocaleString() + ' ر.ي';
+        }
+
+        function useCurrentLocation(field) {
+            if (!navigator.geolocation) {
+                showToast('المتصفح لا يدعم تحديد الموقع', 'error');
+                return;
+            }
+            showToast('جاري تحديد الموقع...', 'info');
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const input = document.getElementById(field + 'Address');
+                    if (input) {
+                        input.value = 'موقعك الحالي';
+                        input.dataset.lat = position.coords.latitude;
+                        input.dataset.lng = position.coords.longitude;
+                    }
+                    showToast('تم تحديد الموقع بنجاح', 'success');
+                },
+                (error) => {
+                    showToast('تعذر تحديد الموقع', 'error');
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }
+
+        function submitNewOrder(event) {
+            event.preventDefault();
+            if (isSubmitting) return;
+
+            const pickup = document.getElementById('pickupAddress').value.trim();
+            const dropoff = document.getElementById('dropoffAddress').value.trim();
+
+            if (!pickup || !dropoff) {
+                showToast('يرجى ملء جميع الحقول المطلوبة', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('submitOrderBtn');
+            isSubmitting = true;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإنشاء...';
+
+            const orderId = '#' + Math.floor(1000 + Math.random() * 9000);
+            const totalEl = document.getElementById('totalFee');
+            const amount = totalEl ? parseInt(totalEl.textContent.replace(/[^0-9]/g, '')) : 0;
+
+            setTimeout(() => {
+                const orderData = {
+                    id: orderId,
+                    status: 'pending',
+                    pickupAddress: pickup,
+                    dropoffAddress: dropoff,
+                    amount: amount,
+                    type: selectedType,
+                    createdAt: new Date().toISOString()
+                };
+                localStorage.setItem('lastOrder', JSON.stringify(orderData));
+                showToast(`تم إنشاء الطلب ${orderId} بنجاح!`, 'success');
+                setTimeout(() => {
+                    window.location.href = `tracking.html?id=${orderId}`;
+                }, 1000);
+            }, 1500);
+        }
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = `custom-toast ${type}`;
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="margin-left:8px;"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(0)'; }, 10);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(-100px)'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function toggleMenu() {
+            document.getElementById('sideMenuOverlay').classList.toggle('active');
+            document.getElementById('sideMenu').classList.toggle('active');
+        }
+
+        function showNotifications() {
+            showToast('لديك 2 إشعارات جديدة', 'info');
+        }
+
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                localStorage.clear();
+                showToast('تم تسجيل الخروج بنجاح', 'info');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1000);
+            }
+        }
+
+        function loadUserData() {
+            const userName = localStorage.getItem('userName') || 'محمد عبدالله';
+            const userPhone = localStorage.getItem('userPhone') || '+967 770 200 970';
+            const nameEl = document.getElementById('sideMenuName');
+            const phoneEl = document.getElementById('sideMenuPhone');
+            if (nameEl) nameEl.textContent = userName;
+            if (phoneEl) phoneEl.textContent = userPhone;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type');
+            if (type) {
+                selectOrderType(type);
+            }
+            updatePriceEstimate();
+            const currentPage = window.location.pathname.split('/').pop() || 'new-order.html';
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+                const onclickAttr = item.getAttribute('onclick');
+                if (onclickAttr && onclickAttr.includes(currentPage.replace('.html', ''))) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

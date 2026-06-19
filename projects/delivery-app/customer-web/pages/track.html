@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="تتبع طلبك - TechNomads، أدخل رقم الطلب لمتابعة حالة الشحنة">
+    <title>تتبع الطلب - TechNomads</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/web.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 60px 20px 40px;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .track-page {
+            padding: 60px 20px;
+            background: var(--light);
+        }
+        .track-page .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .track-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 40px 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+        .track-card .track-title {
+            font-size: 20px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .track-card .track-subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .track-input-group {
+            display: flex;
+            gap: 12px;
+        }
+        .track-input-group input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+            text-align: center;
+        }
+        .track-input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+        }
+        .track-input-group input::placeholder {
+            color: var(--gray-light);
+        }
+        .track-input-group .btn-track {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            white-space: nowrap;
+        }
+        .track-input-group .btn-track:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+        }
+        .track-input-group .btn-track:active {
+            transform: scale(0.97);
+        }
+        .track-result {
+            display: none;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            animation: fadeIn 0.4s ease;
+        }
+        .track-result.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .track-result .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .track-result .order-header .order-id {
+            font-weight: 800;
+            font-size: 18px;
+        }
+        .track-result .order-header .status-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .track-result .order-header .status-badge.delivering {
+            background: rgba(99,102,241,0.1);
+            color: var(--primary);
+        }
+        .track-result .order-header .status-badge.delivered {
+            background: rgba(16,185,129,0.1);
+            color: var(--secondary);
+        }
+        .track-result .order-header .status-badge.pending {
+            background: rgba(245,158,11,0.1);
+            color: var(--warning);
+        }
+        .track-result .order-header .status-badge.cancelled {
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+        }
+        .track-result .order-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .track-result .order-details .detail {
+            background: var(--light);
+            padding: 12px 16px;
+            border-radius: 10px;
+        }
+        .track-result .order-details .detail .label {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        .track-result .order-details .detail .value {
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .track-result .progress-container {
+            margin-top: 16px;
+        }
+        .track-result .progress-container .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .track-result .progress-container .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            width: 60%;
+        }
+        .track-result .progress-container .steps {
+            display: flex;
+            justify-content: space-between;
+        }
+        .track-result .progress-container .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+        }
+        .track-result .progress-container .step .dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        .track-result .progress-container .step.completed .dot {
+            background: var(--secondary);
+            color: white;
+        }
+        .track-result .progress-container .step.active .dot {
+            background: var(--primary);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        .track-result .progress-container .step .label {
+            font-size: 10px;
+            color: var(--gray);
+            font-weight: 600;
+            text-align: center;
+        }
+        .track-result .progress-container .step.completed .label {
+            color: var(--secondary);
+        }
+        .track-result .progress-container .step.active .label {
+            color: var(--primary);
+        }
+        .track-result .driver-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: var(--light);
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+        .track-result .driver-info .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .track-result .driver-info .info {
+            flex: 1;
+        }
+        .track-result .driver-info .info .name {
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .track-result .driver-info .info .rating {
+            font-size: 13px;
+            color: var(--warning);
+        }
+        .track-result .driver-info .info .rating i {
+            margin-left: 2px;
+        }
+        .track-result .driver-info .actions {
+            display: flex;
+            gap: 8px;
+        }
+        .track-result .driver-info .actions button {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .track-result .driver-info .actions button:active {
+            transform: scale(0.9);
+        }
+        .track-result .driver-info .actions .call-btn {
+            background: rgba(16,185,129,0.1);
+            color: var(--secondary);
+        }
+        .track-result .driver-info .actions .msg-btn {
+            background: rgba(59,130,246,0.1);
+            color: var(--info);
+        }
+        .track-result .actions-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .track-result .actions-row .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 12px;
+            font-size: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .track-result .actions-row .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .track-result .actions-row .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        .track-result .actions-row .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .track-result .actions-row .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .track-result .not-found {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        .track-result .not-found i {
+            font-size: 48px;
+            color: var(--gray-light);
+            display: block;
+            margin-bottom: 12px;
+        }
+        .track-result .not-found h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .track-result .not-found p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .custom-toast {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            z-index: 9999;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            max-width: 90%;
+            color: white;
+        }
+        .custom-toast.success { background: #10b981; }
+        .custom-toast.error { background: #ef4444; }
+        .custom-toast.info { background: #6366f1; }
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 28px;
+            }
+            .track-card {
+                padding: 28px 20px;
+            }
+            .track-input-group {
+                flex-direction: column;
+            }
+            .track-input-group .btn-track {
+                width: 100%;
+                justify-content: center;
+            }
+            .track-result .order-details {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+        }
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 24px;
+            }
+            .track-card {
+                padding: 20px 16px;
+            }
+            .track-result .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .track-result .driver-info {
+                flex-wrap: wrap;
+            }
+            .track-result .driver-info .actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .track-result .actions-row {
+                flex-direction: column;
+            }
+            .track-result .progress-container .step .label {
+                font-size: 8px;
+            }
+            .track-result .progress-container .step .dot {
+                width: 22px;
+                height: 22px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="services.html">الخدمات</a>
+                <a href="about.html">من نحن</a>
+                <a href="track.html" class="active">تتبع الطلب</a>
+                <a href="contact.html">اتصل بنا</a>
+            </nav>
+            <div class="header-right">
+                <a href="../customer-app/pages/login.html" class="btn btn-outline btn-sm">تسجيل الدخول</a>
+                <a href="../customer-app/pages/register.html" class="btn btn-primary btn-sm">انضم الآن</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">الرئيسية</a>
+            <a href="services.html">الخدمات</a>
+            <a href="about.html">من نحن</a>
+            <a href="track.html" class="active">تتبع الطلب</a>
+            <a href="contact.html">اتصل بنا</a>
+            <hr>
+            <a href="../customer-app/pages/login.html" class="btn btn-outline btn-sm" style="justify-content:center;">تسجيل الدخول</a>
+            <a href="../customer-app/pages/register.html" class="btn btn-primary btn-sm" style="justify-content:center;">انضم الآن</a>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>تتبع طلبك</h1>
+        <p>أدخل رقم الطلب لمتابعة حالة شحنتك في الوقت الفعلي</p>
+    </section>
+
+    <section class="track-page">
+        <div class="container">
+            <div class="track-card">
+                <h2 class="track-title">تتبع الشحنة</h2>
+                <p class="track-subtitle">أدخل رقم الطلب المكون من 4 أرقام (مثال: 1234)</p>
+
+                <div class="track-input-group">
+                    <input type="text" id="trackingInput" placeholder="أدخل رقم الطلب (مثال: 1234)" maxlength="10">
+                    <button class="btn-track" onclick="trackOrder()">
+                        <i class="fas fa-search"></i> تتبع
+                    </button>
+                </div>
+
+                <!-- Result Area -->
+                <div class="track-result" id="trackResult">
+                    <!-- سيتم تعبئته بواسطة JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </div>
+                    <p style="color:var(--gray);font-size:14px;margin-top:8px;line-height:1.6;">
+                        منصتك الموثوقة لتوصيل الطرود والطلبات في جميع أنحاء اليمن.
+                    </p>
+                    <div class="social-links" style="margin-top:12px;display:flex;gap:10px;">
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <a href="index.html">الرئيسية</a>
+                    <a href="services.html">الخدمات</a>
+                    <a href="about.html">من نحن</a>
+                    <a href="contact.html">اتصل بنا</a>
+                </div>
+                <div class="footer-col">
+                    <h4>خدماتنا</h4>
+                    <a href="services.html#fast">توصيل سريع</a>
+                    <a href="services.html#normal">توصيل عادي</a>
+                    <a href="services.html#frozen">توصيل مجمدات</a>
+                    <a href="services.html#food">توصيل مطاعم</a>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--primary);"></i> +967 770 200 970</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--primary);"></i> info@technomads.ye</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> صنعاء، اليمن</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TechNomads. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/web.js"></script>
+    <script src="../js/tracking.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = `custom-toast ${type}`;
+            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(0)'; }, 10);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(-100px)'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function trackOrder() {
+            const input = document.getElementById('trackingInput');
+            const orderId = input.value.trim();
+            const resultDiv = document.getElementById('trackResult');
+
+            if (!orderId) {
+                showToast('يرجى إدخال رقم الطلب', 'error');
+                return;
+            }
+
+            // Validate format (must start with # or be a number)
+            if (!orderId.match(/^#?\d{4,5}$/)) {
+                showToast('يرجى إدخال رقم طلب صحيح (مثال: 1234)', 'error');
+                return;
+            }
+
+            // Show loading
+            resultDiv.innerHTML = `
+                <div style="text-align:center;padding:20px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size:32px;color:var(--primary);"></i>
+                    <p style="margin-top:8px;color:var(--gray);">جاري البحث عن الطلب...</p>
+                </div>
+            `;
+            resultDiv.className = 'track-result active';
+
+            // Simulate API call
+            setTimeout(() => {
+                // Mock order data
+                const mockOrders = {
+                    '#1234': {
+                        id: '#1234',
+                        status: 'delivering',
+                        pickup: 'شارع تعز، جوار البنك المركزي',
+                        dropoff: 'حي الصافية، خلف جامع النور',
+                        amount: 15000,
+                        driver: 'أحمد علي',
+                        driverRating: 4.9,
+                        time: 'منذ 5 دقائق',
+                        progress: 60
+                    },
+                    '#1235': {
+                        id: '#1235',
+                        status: 'delivered',
+                        pickup: 'شارع الستين',
+                        dropoff: 'حي الحصبة',
+                        amount: 12000,
+                        driver: 'سامي حسن',
+                        driverRating: 4.8,
+                        time: 'منذ ساعة',
+                        progress: 100
+                    },
+                    '#1229': {
+                        id: '#1229',
+                        status: 'pending',
+                        pickup: 'جولة المصباحي',
+                        dropoff: 'حي الحصبة',
+                        amount: 9500,
+                        driver: 'جاري البحث عن سائق...',
+                        driverRating: null,
+                        time: 'منذ 10 دقائق',
+                        progress: 20
+                    }
+                };
+
+                const order = mockOrders[orderId] || mockOrders['#1234'];
+
+                resultDiv.innerHTML = renderOrderResult(order);
+            }, 1000);
+        }
+
+        function renderOrderResult(order) {
+            if (!order) {
+                return `
+                    <div class="not-found">
+                        <i class="fas fa-box-open"></i>
+                        <h4>الطلب غير موجود</h4>
+                        <p>تأكد من رقم الطلب وحاول مرة أخرى</p>
+                    </div>
+                `;
+            }
+
+            const statusMap = {
+                'pending': 'قيد الانتظار',
+                'accepted': 'تم القبول',
+                'pickup': 'في الاستلام',
+                'delivering': 'في الطريق',
+                'delivered': 'تم التوصيل',
+                'cancelled': 'ملغي'
+            };
+
+            const steps = ['pending', 'accepted', 'pickup', 'delivering', 'delivered'];
+            const currentIndex = steps.indexOf(order.status);
+            const progress = order.progress || ((currentIndex / (steps.length - 1)) * 100);
+
+            const stepsHtml = steps.map((step, index) => {
+                let cls = '';
+                if (index < currentIndex) cls = 'completed';
+                else if (index === currentIndex) cls = 'active';
+                const icons = {
+                    'pending': 'fa-clock',
+                    'accepted': 'fa-check',
+                    'pickup': 'fa-box',
+                    'delivering': 'fa-truck',
+                    'delivered': 'fa-flag-checkered'
+                };
+                const labels = {
+                    'pending': 'قيد الانتظار',
+                    'accepted': 'تم القبول',
+                    'pickup': 'في الاستلام',
+                    'delivering': 'في الطريق',
+                    'delivered': 'تم التوصيل'
+                };
+                return `
+                    <div class="step ${cls}">
+                        <div class="dot"><i class="fas ${icons[step]}"></i></div>
+                        <span class="label">${labels[step]}</span>
+                    </div>
+                `;
+            }).join('');
+
+            const driverHtml = order.driver && order.driver !== 'جاري البحث عن سائق...' ? `
+                <div class="driver-info">
+                    <div class="avatar">${order.driver.charAt(0)}</div>
+                    <div class="info">
+                        <div class="name">${order.driver}</div>
+                        ${order.driverRating ? `<div class="rating"><i class="fas fa-star"></i> ${order.driverRating}</div>` : ''}
+                    </div>
+                    <div class="actions">
+                        <button class="call-btn" onclick="window.location.href='tel:+967770200970'">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                        <button class="msg-btn" onclick="showToast('جاري فتح المحادثة مع السائق...', 'info')">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                </div>
+            ` : '';
+
+            return `
+                <div class="order-header">
+                    <span class="order-id">${order.id}</span>
+                    <span class="status-badge ${order.status}">${statusMap[order.status] || order.status}</span>
+                </div>
+
+                <div class="order-details">
+                    <div class="detail">
+                        <div class="label">نقطة الاستلام</div>
+                        <div class="value">${order.pickup}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">نقطة التوصيل</div>
+                        <div class="value">${order.dropoff}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">المبلغ</div>
+                        <div class="value">${order.amount.toLocaleString()} ر.ي</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">الوقت</div>
+                        <div class="value">${order.time}</div>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="fill" style="width:${Math.min(progress, 100)}%;"></div>
+                    </div>
+                    <div class="steps">
+                        ${stepsHtml}
+                    </div>
+                </div>
+
+                ${driverHtml}
+
+                <div class="actions-row">
+                    ${order.status !== 'delivered' ? `
+                        <button class="btn btn-primary" onclick="window.location.href='../customer-app/pages/tracking.html?id=${order.id}'">
+                            <i class="fas fa-map-marked-alt"></i> تتبع مباشر
+                        </button>
+                    ` : `
+                        <button class="btn btn-outline" onclick="window.location.href='../customer-app/pages/new-order.html'">
+                            <i class="fas fa-redo"></i> طلب جديد
+                        </button>
+                    `}
+                    <button class="btn btn-outline" onclick="window.location.href='../customer-app/pages/orders.html'">
+                        <i class="fas fa-list"></i> كل الطلبات
+                    </button>
+                </div>
+            `;
+        }
+
+        // Enter key support
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('trackingInput');
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        trackOrder();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

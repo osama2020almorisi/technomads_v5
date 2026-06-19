@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="dashboard_title">لوحة التحكم - Pulse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- شريط الهواتف العلوي -->
+        <div class="mobile-header">
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="mobile-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Pulse</span>
+            </div>
+            <div class="mobile-actions">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span class="logo-text">Pulse</span>
+                </div>
+                <button class="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="sidebar_dashboard">لوحة التحكم</span>
+                </a>
+                <a href="patients.html" class="nav-item">
+                    <i class="fas fa-user-injured"></i>
+                    <span data-i18n="sidebar_patients">إدارة المرضى</span>
+                </a>
+                <a href="analysis.html" class="nav-item">
+                    <i class="fas fa-vial"></i>
+                    <span data-i18n="sidebar_analysis">تحليل التحاليل</span>
+                    <span class="badge new-tests">0</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span data-i18n="sidebar_reports">التقارير</span>
+                </a>
+                <a href="notifications.html" class="nav-item">
+                    <i class="fas fa-bell"></i>
+                    <span data-i18n="sidebar_notifications">التنبيهات</span>
+                    <span class="badge new-notifications">0</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span data-i18n="sidebar_settings">الإعدادات</span>
+                </a>
+                <!-- أضف هذا الزر في لوحة التحكم -->
+<a href="medication-manager/index.html" class="medication-link">
+    <div class="dashboard-card">
+        <i class="fas fa-pills"></i>
+        <h3>مدير الأدوية</h3>
+        <p>متابعة شرائط الأدوية وتنبيهات المرضى</p>
+    </div>
+</a>
+            </nav>
+
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="user-display-name">د. أحمد محمد</span>
+                        <span class="user-role" id="user-specialty">طبيب استشاري</span>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span data-i18n="sidebar_logout">تسجيل الخروج</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- الغطاء للهواتف -->
+        <div class="sidebar-overlay"></div>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط العنوان -->
+            <header class="content-header">
+                <div class="header-title">
+                    <h1 data-i18n="dashboard_title">لوحة التحكم</h1>
+                    <p id="welcome-message" data-i18n="welcome_message">مرحباً بعودتك، د. أحمد</p>
+                </div>
+                <div class="header-actions">
+                    <div class="language-switcher">
+                        <button class="lang-btn" id="langToggle">
+                            <i class="fas fa-globe"></i>
+                            <span data-i18n="nav_language">English</span>
+                        </button>
+                    </div>
+                    <div class="search-container">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="global-search" data-i18n-ph="search_placeholder" placeholder="ابحث عن مريض أو تحليل...">
+                            <button class="search-clear" style="display: none;">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- إحصائيات سريعة -->
+            <section class="stats-grid">
+                <div class="stat-card" data-action="patients">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-user-injured"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-patients">0</h3>
+                        <p data-i18n="stat_total_patients">إجمالي المرضى</p>
+                    </div>
+                    <div class="stat-trend">
+                        <i class="fas fa-plus"></i>
+                        <span data-i18n="stat_add_patients">أضف مرضى</span>
+                    </div>
+                </div>
+
+                <div class="stat-card" data-action="tests">
+                    <div class="stat-icon success">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-tests">0</h3>
+                        <p data-i18n="stat_total_tests">إجمالي التحاليل</p>
+                    </div>
+                    <div class="stat-trend">
+                        <i class="fas fa-plus"></i>
+                        <span data-i18n="stat_add_tests">سجل تحليلاً</span>
+                    </div>
+                </div>
+
+                <div class="stat-card" data-action="reviews">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="pending-reviews">0</h3>
+                        <p data-i18n="stat_pending_reviews">تحتاج مراجعة</p>
+                    </div>
+                    <div class="stat-trend">
+                        <i class="fas fa-eye"></i>
+                        <span data-i18n="stat_review_now">راجع الآن</span>
+                    </div>
+                </div>
+
+                <div class="stat-card" data-action="appointments">
+                    <div class="stat-icon info">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="upcoming-appointments">0</h3>
+                        <p data-i18n="stat_weekly_appointments">مواعيد هذا الأسبوع</p>
+                    </div>
+                    <div class="stat-trend">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span data-i18n="stat_schedule_appointment">حدد موعداً</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- الإجراءات السريعة -->
+            <section class="quick-actions">
+                <h2 data-i18n="quick_actions_title">إجراءات سريعة</h2>
+                <div class="actions-grid">
+                    <button class="action-btn" onclick="location.href='patients.html'">
+                        <i class="fas fa-user-plus"></i>
+                        <span data-i18n="action_add_patient">إضافة مريض جديد</span>
+                    </button>
+                    <button class="action-btn" onclick="location.href='analysis.html'">
+                        <i class="fas fa-vial"></i>
+                        <span data-i18n="action_add_test">تسجيل تحليل جديد</span>
+                    </button>
+                    <button class="action-btn" onclick="location.href='reports.html'">
+                        <i class="fas fa-file-pdf"></i>
+                        <span data-i18n="action_generate_report">إنشاء تقرير</span>
+                    </button>
+                    <button class="action-btn" onclick="dashboard.showAppointmentModal()">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span data-i18n="action_book_appointment">حجز موعد</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- المحتوى الرئيسي -->
+            <div class="content-grid">
+                <!-- المرضى الجدد -->
+                <section class="content-card new-patients">
+                    <div class="card-header">
+                        <h2 data-i18n="recent_patients_title">آخر المرضى المضافين</h2>
+                        <a href="patients.html" class="view-all" data-i18n="view_all">عرض الكل</a>
+                    </div>
+                    <div class="card-body">
+                        <div id="recent-patients-list" class="patients-list">
+                            <!-- سيتم ملؤها بالبيانات الحقيقية -->
+                            <div class="empty-state">
+                                <i class="fas fa-user-plus"></i>
+                                <p data-i18n="no_patients_message">لا يوجد مرضى مسجلين بعد</p>
+                                <button class="btn-primary" onclick="location.href='patient.html'" data-i18n="add_first_patient">إضافة أول مريض</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- التحاليل الأخيرة -->
+                <section class="content-card recent-tests">
+                    <div class="card-header">
+                        <h2 data-i18n="recent_tests_title">آخر التحاليل المسجلة</h2>
+                        <a href="analysis.html" class="view-all" data-i18n="view_all">عرض الكل</a>
+                    </div>
+                    <div class="card-body">
+                        <div id="recent-tests-list" class="tests-list">
+                            <!-- سيتم ملؤها بالبيانات الحقيقية -->
+                            <div class="empty-state">
+                                <i class="fas fa-vial"></i>
+                                <p data-i18n="no_tests_message">لا توجد تحاليل مسجلة بعد</p>
+                                <button class="btn-primary" onclick="location.href='analysis.html'" data-i18n="add_first_test">تسجيل أول تحليل</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- الإشعارات الهامة -->
+                <section class="content-card important-notifications">
+                    <div class="card-header">
+                        <h2 data-i18n="important_notifications_title">الإشعارات الهامة</h2>
+                        <a href="notifications.html" class="view-all" data-i18n="view_all">عرض الكل</a>
+                    </div>
+                    <div class="card-body">
+                        <div id="notifications-list" class="notifications-list">
+                            <!-- سيتم ملؤها بالبيانات الحقيقية -->
+                            <div class="empty-state">
+                                <i class="fas fa-bell-slash"></i>
+                                <p data-i18n="no_notifications_message">لا توجد إشعارات حالياً</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- نموذج حجز الموعد -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="appointment_modal_title">حجز موعد جديد</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="appointmentForm">
+                    <div class="form-group">
+                        <label for="patientSelect" data-i18n="select_patient_label">اختر المريض</label>
+                        <select id="patientSelect" required>
+                            <option value="" data-i18n="select_patient_option">اختر المريض</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentDate" data-i18n="appointment_date_label">تاريخ الموعد</label>
+                        <input type="date" id="appointmentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentTime" data-i18n="appointment_time_label">وقت الموعد</label>
+                        <input type="time" id="appointmentTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentType" data-i18n="appointment_type_label">نوع الموعد</label>
+                        <select id="appointmentType" required>
+                            <option value="consultation" data-i18n="appointment_consultation">استشارة</option>
+                            <option value="followup" data-i18n="appointment_followup">متابعة</option>
+                            <option value="test" data-i18n="appointment_test">تحليل</option>
+                            <option value="review" data-i18n="appointment_review">مراجعة نتائج</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary close-modal" data-i18n="cancel_button">إلغاء</button>
+                        <button type="submit" class="btn-primary" data-i18n="save_appointment_button">حفظ الموعد</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/language.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

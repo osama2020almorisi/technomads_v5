@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>إنشاء حساب - TechNomads</title>
+    <link rel="stylesheet" href="../css/customer.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .register-screen {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .register-screen::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            top: -100px;
+            left: -100px;
+        }
+        .register-screen::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            bottom: 50px;
+            right: -80px;
+        }
+        .register-content {
+            width: 100%;
+            max-width: 420px;
+            z-index: 1;
+        }
+        .register-brand {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+        .register-brand-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 34px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .register-brand h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .register-brand p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .register-card {
+            background: white;
+            border-radius: 24px;
+            padding: 28px 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            animation: slideUp 0.5s ease forwards;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .register-card-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--dark);
+        }
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--dark);
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 15px;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+        }
+        .form-input::placeholder {
+            color: var(--gray-light);
+        }
+        .terms {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--gray);
+            margin-top: 10px;
+        }
+        .terms a {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .terms input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            flex-shrink: 0;
+        }
+        .btn-register {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 800;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 10px;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+        }
+        .btn-register:active {
+            transform: scale(0.97);
+        }
+        .btn-register:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-register i {
+            margin-left: 8px;
+        }
+        .register-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--gray);
+        }
+        .register-footer a {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .social-register {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .social-register p {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+        .social-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: var(--transition);
+            background: white;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .social-btn:active {
+            transform: scale(0.95);
+            background: var(--light);
+        }
+        .social-btn.google { color: #DB4437; }
+        .social-btn.facebook { color: #1877F2; }
+        .social-btn.whatsapp { color: #25D366; }
+        .custom-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 14px 28px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            z-index: 9999;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            max-width: 90%;
+            color: white;
+        }
+        .custom-toast.success { background: #10b981; }
+        .custom-toast.error { background: #ef4444; }
+        .custom-toast.info { background: #6366f1; }
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 20px 16px;
+            }
+            .register-brand h1 {
+                font-size: 20px;
+            }
+            .register-brand-icon {
+                width: 64px;
+                height: 64px;
+                font-size: 28px;
+            }
+            .social-btn {
+                font-size: 12px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-screen">
+        <div class="register-content">
+            <div class="register-brand">
+                <div class="register-brand-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h1>انضم إلينا</h1>
+                <p>استمتع بتجربة توصيل سريعة وآمنة</p>
+            </div>
+
+            <div class="register-card">
+                <h2 class="register-card-title">إنشاء حساب جديد</h2>
+
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label class="form-label">الاسم الكامل</label>
+                        <input type="text" class="form-input" placeholder="أدخل اسمك الكامل" required id="fullName" value="محمد عبدالله">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">رقم الهاتف</label>
+                        <input type="tel" class="form-input" placeholder="+967 770 200 970" required id="phone" value="+967 770 200 970">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">البريد الإلكتروني</label>
+                        <input type="email" class="form-input" placeholder="example@email.com" id="email" value="mohamed@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">المنطقة</label>
+                        <select class="form-input" required id="zone">
+                            <option value="">اختر المنطقة</option>
+                            <option value="صنعاء" selected>صنعاء</option>
+                            <option value="عدن">عدن</option>
+                            <option value="تعز">تعز</option>
+                            <option value="الحديدة">الحديدة</option>
+                            <option value="إب">إب</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">كلمة المرور</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required id="password" value="123456">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">تأكيد كلمة المرور</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required id="confirmPassword" value="123456">
+                    </div>
+                    <div class="terms">
+                        <input type="checkbox" required id="termsCheck" checked>
+                        <label for="termsCheck">أوافق على <a href="#">شروط الاستخدام</a> و <a href="#">سياسة الخصوصية</a></label>
+                    </div>
+                    <button type="submit" class="btn-register" id="registerBtn">
+                        <i class="fas fa-user-plus"></i> إنشاء الحساب
+                    </button>
+                </form>
+
+                <div class="social-register">
+                    <p>أو سجل باستخدام</p>
+                    <div class="social-buttons">
+                        <button class="social-btn google" onclick="socialRegister('google')">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="social-btn facebook" onclick="socialRegister('facebook')">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                        <button class="social-btn whatsapp" onclick="socialRegister('whatsapp')">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+                    </div>
+                </div>
+
+                <div class="register-footer">
+                    <p>لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = `custom-toast ${type}`;
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="margin-left:8px;"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(0)'; }, 10);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(-100px)'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const btn = document.getElementById('registerBtn');
+            const name = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const zone = document.getElementById('zone').value;
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('termsCheck').checked;
+
+            if (!name || !phone || !zone || !password) {
+                showToast('يرجى ملء جميع الحقول المطلوبة', 'error');
+                return;
+            }
+            if (password !== confirm) {
+                showToast('كلمة المرور غير متطابقة', 'error');
+                return;
+            }
+            if (password.length < 6) {
+                showToast('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
+                return;
+            }
+            if (!terms) {
+                showToast('يرجى الموافقة على الشروط والأحكام', 'error');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإنشاء...';
+
+            setTimeout(() => {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userName', name);
+                localStorage.setItem('userPhone', phone);
+                showToast('تم إنشاء الحساب بنجاح!', 'success');
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 800);
+            }, 1500);
+        }
+
+        function socialRegister(provider) {
+            const names = { google: 'Google', facebook: 'Facebook', whatsapp: 'WhatsApp' };
+            showToast(`جاري التسجيل عبر ${names[provider]}...`, 'info');
+            setTimeout(() => {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userName', 'مستخدم');
+                showToast('تم التسجيل بنجاح!', 'success');
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 800);
+            }, 1500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                window.location.href = 'home.html';
+            }
+        });
+    </script>
+</body>
+</html>

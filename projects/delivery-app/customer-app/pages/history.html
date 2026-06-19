@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>سجل الطلبات - TechNomads</title>
+    <link rel="stylesheet" href="../css/customer.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .history-page {
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+        .history-page .page-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .history-page .page-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        .history-filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding: 4px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+        .history-filters::-webkit-scrollbar {
+            display: none;
+        }
+        .filter-btn {
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            border: 2px solid var(--border);
+            background: var(--white);
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .filter-btn:active {
+            transform: scale(0.95);
+        }
+        .filter-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            padding: 4px 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+        .search-box i {
+            color: var(--gray-light);
+            font-size: 16px;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+            background: transparent;
+            color: var(--dark);
+        }
+        .search-box input::placeholder {
+            color: var(--gray-light);
+        }
+        .history-item {
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            margin-bottom: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .history-item:active {
+            transform: scale(0.98);
+        }
+        .history-item .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        .history-item .id {
+            font-weight: 800;
+            font-size: 14px;
+        }
+        .history-item .status {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+        }
+        .history-item .status.delivered {
+            background: rgba(16,185,129,0.1);
+            color: var(--secondary);
+        }
+        .history-item .status.cancelled {
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+        }
+        .history-item .status.pending {
+            background: rgba(245,158,11,0.1);
+            color: var(--warning);
+        }
+        .history-item .route {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 6px;
+        }
+        .history-item .route i {
+            color: var(--primary);
+            font-size: 11px;
+        }
+        .history-item .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+        .history-item .amount {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 15px;
+        }
+        .history-item .time {
+            font-size: 12px;
+            color: var(--gray-light);
+        }
+        .history-item .driver-name {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        .history-item .driver-name i {
+            color: var(--primary);
+        }
+        .history-item .reorder-btn {
+            padding: 4px 12px;
+            border-radius: var(--radius-xs);
+            border: 2px solid var(--border);
+            background: transparent;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .history-item .reorder-btn:active {
+            background: var(--primary);
+            color: white;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .empty-state i {
+            font-size: 48px;
+            color: var(--gray-light);
+            margin-bottom: 12px;
+            display: block;
+        }
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        .empty-state p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 6px 0 12px;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.06);
+            z-index: 100;
+            max-width: 480px;
+            margin: 0 auto;
+            border-radius: 24px 24px 0 0;
+        }
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 12px;
+            color: var(--gray);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        .bottom-nav .nav-item:active {
+            transform: scale(0.95);
+        }
+        .bottom-nav .nav-item i {
+            font-size: 20px;
+        }
+        .bottom-nav .nav-item span {
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .bottom-nav .nav-item.active {
+            color: var(--primary);
+        }
+        .nav-item-center {
+            margin-top: -24px;
+        }
+        .nav-center-btn {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 22px;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.35);
+            border: 3px solid var(--light);
+            transition: var(--transition);
+        }
+        .nav-center-btn:active {
+            transform: scale(0.9);
+        }
+        .nav-badge {
+            position: absolute;
+            top: -2px;
+            right: -4px;
+            background: var(--danger);
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--light);
+            position: relative;
+            padding-bottom: 90px;
+        }
+        .app-header {
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .menu-btn, .notification-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--dark);
+            transition: var(--transition);
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+        }
+        .menu-btn:active, .notification-btn:active {
+            background: var(--light);
+            transform: scale(0.95);
+        }
+        .notification-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger);
+            color: var(--white);
+            font-size: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .side-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .side-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 201;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .side-menu.active {
+            transform: translateX(0);
+        }
+        .side-menu-header {
+            padding: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-avatar-large {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+        .user-avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .user-info h3 {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        .user-info p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        .loyalty-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245,158,11,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .loyalty-badge i {
+            color: var(--warning);
+        }
+        .side-menu-body {
+            flex: 1;
+            padding: 12px 0;
+            overflow-y: auto;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 20px;
+            color: var(--dark);
+            font-size: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .menu-item:active {
+            background: var(--light);
+        }
+        .menu-item i {
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+            color: var(--gray);
+        }
+        .side-menu-footer {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .btn-logout {
+            width: 100%;
+            padding: 14px;
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+            border: none;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .btn-logout:active {
+            background: var(--danger);
+            color: var(--white);
+        }
+        .custom-toast {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            z-index: 9999;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            max-width: 90%;
+            color: white;
+        }
+        .custom-toast.success { background: #10b981; }
+        .custom-toast.error { background: #ef4444; }
+        .custom-toast.info { background: #6366f1; }
+        @media (max-width: 480px) {
+            .filter-btn {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+            .history-item .route {
+                font-size: 12px;
+            }
+            .history-item {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-left">
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="header-center">
+                <h1 class="app-title">سجل الطلبات</h1>
+            </div>
+            <div class="header-right">
+                <button class="notification-btn" onclick="showNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">2</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="history-page">
+            <h1 class="page-title">سجل الطلبات</h1>
+            <p class="page-subtitle">جميع طلباتك السابقة في مكان واحد</p>
+
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="ابحث عن طلب..." oninput="filterHistory()">
+            </div>
+
+            <div class="history-filters">
+                <button class="filter-btn active" data-filter="all" onclick="filterByStatus('all')">الكل</button>
+                <button class="filter-btn" data-filter="delivered" onclick="filterByStatus('delivered')">مكتمل</button>
+                <button class="filter-btn" data-filter="cancelled" onclick="filterByStatus('cancelled')">ملغي</button>
+                <button class="filter-btn" data-filter="pending" onclick="filterByStatus('pending')">قيد الانتظار</button>
+            </div>
+
+            <div id="historyList">
+                <div class="history-item" onclick="window.location.href='tracking.html?id=#1232'">
+                    <div class="header">
+                        <span class="id">#1232</span>
+                        <span class="status delivered">مكتمل</span>
+                    </div>
+                    <div class="route">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>شارع تعز</span>
+                        <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                        <span>حي الصافية</span>
+                    </div>
+                    <div class="footer">
+                        <span class="amount">22,000 ر.ي</span>
+                        <span class="time">منذ ساعة</span>
+                    </div>
+                    <div class="footer" style="border-top:none; padding-top:4px;">
+                        <span class="driver-name"><i class="fas fa-user"></i> أحمد علي</span>
+                        <button class="reorder-btn" onclick="event.stopPropagation(); window.location.href='new-order.html'">
+                            <i class="fas fa-redo"></i> إعادة الطلب
+                        </button>
+                    </div>
+                </div>
+
+                <div class="history-item" onclick="window.location.href='tracking.html?id=#1229'">
+                    <div class="header">
+                        <span class="id">#1229</span>
+                        <span class="status delivered">مكتمل</span>
+                    </div>
+                    <div class="route">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>جولة المصباحي</span>
+                        <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                        <span>حي الحصبة</span>
+                    </div>
+                    <div class="footer">
+                        <span class="amount">9,500 ر.ي</span>
+                        <span class="time">منذ 4 ساعات</span>
+                    </div>
+                    <div class="footer" style="border-top:none; padding-top:4px;">
+                        <span class="driver-name"><i class="fas fa-user"></i> سامي حسن</span>
+                        <button class="reorder-btn" onclick="event.stopPropagation(); window.location.href='new-order.html'">
+                            <i class="fas fa-redo"></i> إعادة الطلب
+                        </button>
+                    </div>
+                </div>
+
+                <div class="history-item" onclick="window.location.href='tracking.html?id=#1228'">
+                    <div class="header">
+                        <span class="id">#1228</span>
+                        <span class="status cancelled">ملغي</span>
+                    </div>
+                    <div class="route">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>شارع الستين</span>
+                        <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                        <span>حي الزبيري</span>
+                    </div>
+                    <div class="footer">
+                        <span class="amount">7,000 ر.ي</span>
+                        <span class="time">منذ 5 ساعات</span>
+                    </div>
+                    <div class="footer" style="border-top:none; padding-top:4px;">
+                        <span class="driver-name"><i class="fas fa-user"></i> -</span>
+                    </div>
+                </div>
+
+                <div class="history-item" onclick="window.location.href='tracking.html?id=#1225'">
+                    <div class="header">
+                        <span class="id">#1225</span>
+                        <span class="status delivered">مكتمل</span>
+                    </div>
+                    <div class="route">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>شارع الثلاثين</span>
+                        <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                        <span>حي العصيفير</span>
+                    </div>
+                    <div class="footer">
+                        <span class="amount">18,000 ر.ي</span>
+                        <span class="time">منذ يوم</span>
+                    </div>
+                    <div class="footer" style="border-top:none; padding-top:4px;">
+                        <span class="driver-name"><i class="fas fa-user"></i> خالد محمود</span>
+                        <button class="reorder-btn" onclick="event.stopPropagation(); window.location.href='new-order.html'">
+                            <i class="fas fa-redo"></i> إعادة الطلب
+                        </button>
+                    </div>
+                </div>
+
+                <div class="history-item" onclick="window.location.href='tracking.html?id=#1223'">
+                    <div class="header">
+                        <span class="id">#1223</span>
+                        <span class="status delivered">مكتمل</span>
+                    </div>
+                    <div class="route">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>شارع الجيش</span>
+                        <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                        <span>حي الميناء</span>
+                    </div>
+                    <div class="footer">
+                        <span class="amount">12,000 ر.ي</span>
+                        <span class="time">منذ يومين</span>
+                    </div>
+                    <div class="footer" style="border-top:none; padding-top:4px;">
+                        <span class="driver-name"><i class="fas fa-user"></i> أحمد علي</span>
+                        <button class="reorder-btn" onclick="event.stopPropagation(); window.location.href='new-order.html'">
+                            <i class="fas fa-redo"></i> إعادة الطلب
+                        </button>
+                    </div>
+                </div>
+
+                <div class="history-item" onclick="window.location.href='tracking.html?id=#1220'">
+                    <div class="header">
+                        <span class="id">#1220</span>
+                        <span class="status cancelled">ملغي</span>
+                    </div>
+                    <div class="route">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>شارع الجمهوري</span>
+                        <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                        <span>حي القاهرة</span>
+                    </div>
+                    <div class="footer">
+                        <span class="amount">15,000 ر.ي</span>
+                        <span class="time">منذ 3 أيام</span>
+                    </div>
+                    <div class="footer" style="border-top:none; padding-top:4px;">
+                        <span class="driver-name"><i class="fas fa-user"></i> -</span>
+                    </div>
+                </div>
+
+                <div class="history-item" onclick="window.location.href='tracking.html?id=#1218'">
+                    <div class="header">
+                        <span class="id">#1218</span>
+                        <span class="status delivered">مكتمل</span>
+                    </div>
+                    <div class="route">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>شارع الزراعة</span>
+                        <i class="fas fa-arrow-left" style="font-size:10px;"></i>
+                        <span>حي الروضة</span>
+                    </div>
+                    <div class="footer">
+                        <span class="amount">8,500 ر.ي</span>
+                        <span class="time">منذ 5 أيام</span>
+                    </div>
+                    <div class="footer" style="border-top:none; padding-top:4px;">
+                        <span class="driver-name"><i class="fas fa-user"></i> سامي حسن</span>
+                        <button class="reorder-btn" onclick="event.stopPropagation(); window.location.href='new-order.html'">
+                            <i class="fas fa-redo"></i> إعادة الطلب
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <span class="nav-item" onclick="window.location.href='home.html'">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </span>
+            <span class="nav-item" onclick="window.location.href='orders.html'">
+                <i class="fas fa-box"></i>
+                <span>طلباتي</span>
+                <span class="nav-badge">3</span>
+            </span>
+            <span class="nav-item nav-item-center" onclick="window.location.href='new-order.html'">
+                <div class="nav-center-btn">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </span>
+            <span class="nav-item" onclick="window.location.href='payment.html'">
+                <i class="fas fa-wallet"></i>
+                <span>المحفظة</span>
+            </span>
+            <span class="nav-item" onclick="window.location.href='profile.html'">
+                <i class="fas fa-user"></i>
+                <span>حسابي</span>
+            </span>
+        </nav>
+
+        <div class="side-menu-overlay" id="sideMenuOverlay" onclick="toggleMenu()"></div>
+        <div class="side-menu" id="sideMenu">
+            <div class="side-menu-header">
+                <div class="user-avatar-large">
+                    <img src="https://ui-avatars.com/api/?name=Mohamed+Abdullah&background=6366f1&color=fff" alt="User">
+                </div>
+                <div class="user-info">
+                    <h3 id="sideMenuName">محمد عبدالله</h3>
+                    <p id="sideMenuPhone">+967 770 200 970</p>
+                    <div class="loyalty-badge">
+                        <i class="fas fa-crown"></i>
+                        <span>عضو ذهبي</span>
+                    </div>
+                </div>
+            </div>
+            <div class="side-menu-body">
+                <span class="menu-item" onclick="window.location.href='home.html'"><i class="fas fa-home"></i> الرئيسية</span>
+                <span class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i> الملف الشخصي</span>
+                <span class="menu-item" onclick="window.location.href='orders.html'"><i class="fas fa-box"></i> طلباتي</span>
+                <span class="menu-item" onclick="window.location.href='history.html'"><i class="fas fa-history"></i> سجل الطلبات</span>
+                <span class="menu-item" onclick="window.location.href='earnings.html'"><i class="fas fa-chart-line"></i> الأرباح</span>
+                <span class="menu-item" onclick="window.location.href='payment.html'"><i class="fas fa-credit-card"></i> طرق الدفع</span>
+                <span class="menu-item" onclick="window.location.href='tracking.html'"><i class="fas fa-map-marked-alt"></i> تتبع الطلب</span>
+                <span class="menu-item" onclick="showToast('نقاطي: 2,450', 'info')"><i class="fas fa-gift"></i> نقاطي (2,450)</span>
+                <span class="menu-item" onclick="showToast('جاري الاتصال بالدعم الفني...', 'info')"><i class="fas fa-headset"></i> الدعم الفني</span>
+                <span class="menu-item" onclick="showToast('جاري فتح الإعدادات...', 'info')"><i class="fas fa-cog"></i> الإعدادات</span>
+            </div>
+            <div class="side-menu-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        function filterByStatus(status) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === status);
+            });
+            showToast(`تم تصفية الطلبات حسب ${status === 'all' ? 'الكل' : status === 'delivered' ? 'المكتملة' : status === 'cancelled' ? 'الملغية' : 'قيد الانتظار'}`, 'info');
+        }
+
+        function filterHistory() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (searchTerm) {
+                showToast(`البحث عن: ${searchTerm}`, 'info');
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = `custom-toast ${type}`;
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="margin-left:8px;"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(0)'; }, 10);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(-100px)'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function toggleMenu() {
+            document.getElementById('sideMenuOverlay').classList.toggle('active');
+            document.getElementById('sideMenu').classList.toggle('active');
+        }
+
+        function showNotifications() {
+            showToast('لديك 2 إشعارات جديدة', 'info');
+        }
+
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                localStorage.clear();
+                showToast('تم تسجيل الخروج بنجاح', 'info');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1000);
+            }
+        }
+
+        function loadUserData() {
+            const userName = localStorage.getItem('userName') || 'محمد عبدالله';
+            const userPhone = localStorage.getItem('userPhone') || '+967 770 200 970';
+            const nameEl = document.getElementById('sideMenuName');
+            const phoneEl = document.getElementById('sideMenuPhone');
+            if (nameEl) nameEl.textContent = userName;
+            if (phoneEl) phoneEl.textContent = userPhone;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            const currentPage = window.location.pathname.split('/').pop() || 'history.html';
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+                const onclickAttr = item.getAttribute('onclick');
+                if (onclickAttr && onclickAttr.includes(currentPage.replace('.html', ''))) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

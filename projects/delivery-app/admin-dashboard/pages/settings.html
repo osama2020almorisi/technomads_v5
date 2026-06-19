@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>الإعدادات - نظام TechNomads للتوصيل</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ============================================
+           SETTINGS PAGE SPECIFIC STYLES
+           ============================================ */
+
+        /* Settings Tabs */
+        .settings-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            background: var(--white);
+            padding: 6px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            flex-wrap: nowrap;
+        }
+
+        .settings-tabs::-webkit-scrollbar {
+            height: 2px;
+        }
+
+        .settings-tabs::-webkit-scrollbar-thumb {
+            background: var(--gray-light);
+            border-radius: 2px;
+        }
+
+        .settings-tab-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: transparent;
+            color: var(--gray);
+            font-family: inherit;
+            white-space: nowrap;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .settings-tab-btn:active {
+            transform: scale(0.95);
+        }
+
+        .settings-tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.25);
+        }
+
+        .settings-tab-btn i {
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .settings-tabs {
+                gap: 4px;
+                padding: 4px;
+                border-radius: 10px;
+            }
+
+            .settings-tab-btn {
+                padding: 6px 12px;
+                font-size: 11px;
+                min-height: 36px;
+                gap: 4px;
+            }
+
+            .settings-tab-btn i {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-tab-btn span {
+                display: none;
+            }
+            .settings-tab-btn i {
+                font-size: 16px;
+            }
+            .settings-tab-btn {
+                padding: 6px 10px;
+                min-width: 44px;
+                justify-content: center;
+            }
+        }
+
+        /* Settings Sections */
+        .settings-section {
+            display: none;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .settings-section.active {
+            display: block;
+        }
+
+        .settings-section .card {
+            margin-bottom: 16px;
+        }
+
+        .settings-section .card:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--dark);
+            min-height: 44px;
+        }
+
+        .toggle-switch input {
+            display: none;
+        }
+
+        .toggle-switch .slider {
+            width: 48px;
+            height: 26px;
+            background: var(--border);
+            border-radius: 13px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .toggle-switch .slider::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: var(--transition);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .toggle-switch input:checked + .slider {
+            background: var(--primary);
+        }
+
+        .toggle-switch input:checked + .slider::after {
+            transform: translateX(-22px);
+        }
+
+        .toggle-switch:active .slider {
+            transform: scale(0.95);
+        }
+
+        /* Color Picker */
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .color-picker-wrapper input[type="color"] {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 2px;
+            cursor: pointer;
+            background: none;
+        }
+
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 4px;
+        }
+
+        /* Font Size Controls */
+        .font-size-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .font-size-controls .btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            padding: 0;
+        }
+
+        .font-size-controls .size-display {
+            font-weight: 700;
+            font-size: 16px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        /* Danger Zone */
+        .danger-zone {
+            border: 2px solid var(--danger);
+            border-radius: 12px;
+            padding: 16px;
+            background: rgba(239,68,68,0.04);
+        }
+
+        .danger-zone .danger-title {
+            color: var(--danger);
+            font-weight: 800;
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .danger-zone .danger-desc {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .danger-zone .btn-danger {
+            background: var(--danger);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .danger-zone .btn-danger:active {
+            transform: scale(0.95);
+        }
+
+        /* Responsive Grid */
+        .settings-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .settings-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .settings-grid-2 {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .settings-grid-3 {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Save Button */
+        .save-all-btn {
+            position: sticky;
+            bottom: 80px;
+            z-index: 50;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.35);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .save-all-btn:active {
+            transform: scale(0.97);
+        }
+
+        @media (min-width: 769px) {
+            .save-all-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-truck-fast"></i>
+            </div>
+            <div class="sidebar-brand">TechNomads</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">القائمة الرئيسية</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>لوحة التحكم</span>
+                </a>
+                <a href="orders.html" class="nav-item">
+                    <i class="fas fa-box"></i>
+                    <span>الطلبات</span>
+                    <span class="nav-badge">24</span>
+                </a>
+                <a href="drivers.html" class="nav-item">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>السائقين</span>
+                    <span class="nav-badge">5</span>
+                </a>
+                <a href="customers.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>العملاء</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">الإدارة</div>
+                <a href="zones.html" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>المناطق والأسعار</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>التقارير</span>
+                </a>
+                <a href="settings.html" class="nav-item active">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">م</div>
+                <div class="user-info">
+                    <div class="user-name">مدير النظام</div>
+                    <div class="user-role">مسؤول</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="mobile-menu-btn" onclick="toggleMobileSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-search">
+                <input type="text" placeholder="بحث في الإعدادات..." id="settingsSearch" onkeyup="searchSettings(event)">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+                <button class="header-btn" onclick="resetSettings()">
+                    <i class="fas fa-undo"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">الإعدادات</h1>
+                    <p class="page-subtitle">إدارة إعدادات النظام</p>
+                </div>
+                <button class="btn btn-primary" onclick="saveAllSettings()">
+                    <i class="fas fa-save"></i>
+                    حفظ الكل
+                </button>
+            </div>
+
+            <!-- Settings Tabs -->
+            <div class="settings-tabs" id="settingsTabs">
+                <button class="settings-tab-btn active" data-tab="general" onclick="switchSettingsTab('general')">
+                    <i class="fas fa-cog"></i>
+                    <span>عام</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="payment" onclick="switchSettingsTab('payment')">
+                    <i class="fas fa-credit-card"></i>
+                    <span>الدفع</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="notifications" onclick="switchSettingsTab('notifications')">
+                    <i class="fas fa-bell"></i>
+                    <span>إشعارات</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="security" onclick="switchSettingsTab('security')">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>الأمان</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="appearance" onclick="switchSettingsTab('appearance')">
+                    <i class="fas fa-palette"></i>
+                    <span>المظهر</span>
+                </button>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- GENERAL SETTINGS -->
+            <!-- ============================================ -->
+            <div class="settings-section active" id="settings-general">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">الإعدادات العامة</h3>
+                    </div>
+                    <div class="settings-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">اسم التطبيق</label>
+                            <input type="text" class="form-input" value="TechNomads" id="appName">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">اللغة الافتراضية</label>
+                            <select class="form-select" id="defaultLanguage">
+                                <option value="ar" selected>العربية</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">العملة</label>
+                            <select class="form-select" id="defaultCurrency">
+                                <option value="YER" selected>ريال يمني (ر.ي)</option>
+                                <option value="SAR">ريال سعودي (ر.س)</option>
+                                <option value="USD">دولار أمريكي ($)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">المنطقة الزمنية</label>
+                            <select class="form-select" id="timezone">
+                                <option value="Asia/Aden" selected>آسيا/عدن (GMT+3)</option>
+                                <option value="Asia/Riyadh">آسيا/الرياض (GMT+3)</option>
+                                <option value="UTC">UTC</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label class="form-label">وصف التطبيق</label>
+                            <textarea class="form-textarea" id="appDescription">نظام TechNomads للتوصيل - منصة متكاملة لإدارة طلبات التوصيل في اليمن</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">إعدادات التوصيل</h3>
+                    </div>
+                    <div class="settings-grid-3">
+                        <div class="form-group">
+                            <label class="form-label">الحد الأدنى للطلب</label>
+                            <input type="number" class="form-input" value="500" id="minOrderAmount">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">الحد الأقصى للمسافة</label>
+                            <input type="number" class="form-input" value="20" id="maxDistance">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">وقت انتظار السائق</label>
+                            <input type="number" class="form-input" value="10" id="driverWaitTime">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- PAYMENT SETTINGS -->
+            <!-- ============================================ -->
+            <div class="settings-section" id="settings-payment">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">إعدادات الدفع</h3>
+                    </div>
+                    <div class="settings-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">نسبة الضريبة</label>
+                            <input type="number" class="form-input" value="5" id="taxRate">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">رسوم الخدمة</label>
+                            <input type="number" class="form-input" value="10" id="serviceFee">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">طريقة الدفع الافتراضية</label>
+                            <select class="form-select" id="defaultPaymentMethod">
+                                <option value="cash" selected>نقداً</option>
+                                <option value="card">بطاقة ائتمان</option>
+                                <option value="wallet">محفظة إلكترونية</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">حد المحفظة الإلكترونية</label>
+                            <input type="number" class="form-input" value="10000" id="walletLimit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- NOTIFICATIONS SETTINGS -->
+            <!-- ============================================ -->
+            <div class="settings-section" id="settings-notifications">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">إعدادات الإشعارات</h3>
+                    </div>
+                    <div class="settings-grid-2">
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked id="notifyOrderNew">
+                            <span class="slider"></span>
+                            طلبات جديدة
+                        </label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked id="notifyOrderUpdate">
+                            <span class="slider"></span>
+                            تحديثات الطلبات
+                        </label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked id="notifyDriverStatus">
+                            <span class="slider"></span>
+                            تغييرات حالة السائقين
+                        </label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked id="notifyPromotions">
+                            <span class="slider"></span>
+                            العروض والخصومات
+                        </label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked id="notifySystem">
+                            <span class="slider"></span>
+                            إشعارات النظام
+                        </label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notifyEmail">
+                            <span class="slider"></span>
+                            إشعارات البريد الإلكتروني
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECURITY SETTINGS -->
+            <!-- ============================================ -->
+            <div class="settings-section" id="settings-security">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">إعدادات الأمان</h3>
+                    </div>
+                    <div class="settings-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">مدة صلاحية الجلسة (ساعة)</label>
+                            <input type="number" class="form-input" value="24" id="sessionTimeout">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">عدد محاولات تسجيل الدخول</label>
+                            <input type="number" class="form-input" value="5" id="loginAttempts">
+                        </div>
+                        <div style="grid-column: span 2;">
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked id="twoFactorAuth">
+                                <span class="slider"></span>
+                                تفعيل المصادقة الثنائية
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">كلمة المرور</h3>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="changePassword()">
+                            <i class="fas fa-key"></i>
+                            تغيير كلمة المرور
+                        </button>
+                        <button class="btn btn-outline" onclick="exportData()">
+                            <i class="fas fa-download"></i>
+                            تصدير البيانات
+                        </button>
+                    </div>
+                </div>
+
+                <div class="danger-zone">
+                    <div class="danger-title">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        منطقة الخطر
+                    </div>
+                    <div class="danger-desc">
+                        حذف جميع البيانات نهائياً. هذا الإجراء لا يمكن التراجع عنه.
+                    </div>
+                    <button class="btn-danger" onclick="deleteAllData()">
+                        <i class="fas fa-trash"></i>
+                        حذف جميع البيانات
+                    </button>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- APPEARANCE SETTINGS -->
+            <!-- ============================================ -->
+            <div class="settings-section" id="settings-appearance">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">إعدادات المظهر</h3>
+                    </div>
+                    <div class="settings-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">الوضع</label>
+                            <select class="form-select" id="themeMode" onchange="applyTheme(this.value)">
+                                <option value="light">فاتح</option>
+                                <option value="dark">داكن</option>
+                                <option value="system">نظام</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">اللون الرئيسي</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" value="#6366f1" id="primaryColor" onchange="applyColor(this.value)">
+                                <span style="font-size: 13px; color: var(--gray);">اختر لوناً</span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label class="form-label">حجم الخط</label>
+                            <div class="font-size-controls">
+                                <button class="btn btn-outline" onclick="changeFontSize(-1)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="size-display" id="fontSizeDisplay">16px</span>
+                                <button class="btn btn-outline" onclick="changeFontSize(1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Save Button -->
+            <button class="save-all-btn" onclick="saveAllSettings()">
+                <i class="fas fa-save"></i>
+                حفظ جميع الإعدادات
+            </button>
+        </div>
+    </main>
+
+    <!-- Change Password Modal -->
+    <div class="modal-overlay" id="changePasswordModal">
+        <div class="modal">
+            <div class="modal-drag-handle"></div>
+            <div class="modal-header">
+                <h3 class="modal-title">تغيير كلمة المرور</h3>
+                <button class="modal-close" onclick="closeChangePassword()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm" onsubmit="submitChangePassword(event)">
+                    <div class="form-group">
+                        <label class="form-label">كلمة المرور الحالية</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required id="currentPassword">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">كلمة المرور الجديدة</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required id="newPassword">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">تأكيد كلمة المرور الجديدة</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required id="confirmPassword">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeChangePassword()">إلغاء</button>
+                <button class="btn btn-primary" onclick="submitChangePassword(event)">
+                    <i class="fas fa-save"></i>
+                    تغيير
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Dropdown -->
+    <div class="notifications-dropdown" id="notificationsDropdown" style="display: none;">
+        <div class="notifications-header">
+            <span>الإشعارات</span>
+            <button onclick="markAllRead()">تحديد الكل كمقروء</button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Generated by JS -->
+        </div>
+    </div>
+
+    <script src="../../shared/js/utils.js"></script>
+    <script src="../../shared/js/constants.js"></script>
+    <script src="../../shared/js/i18n.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/mobile.js"></script>
+
+    <script>
+        // ============================================
+        // SETTINGS PAGE
+        // ============================================
+
+        let fontSize = 16;
+
+        // ============================================
+        // LOAD SETTINGS
+        // ============================================
+        function loadSettings() {
+            const savedSettings = Utils.storage.get('appSettings');
+            if (savedSettings) {
+                Object.entries(savedSettings).forEach(([key, value]) => {
+                    const el = document.getElementById(key);
+                    if (el) {
+                        if (el.type === 'checkbox') {
+                            el.checked = value;
+                        } else {
+                            el.value = value;
+                        }
+                    }
+                });
+
+                // Apply theme
+                if (savedSettings.themeMode) {
+                    applyTheme(savedSettings.themeMode);
+                }
+                if (savedSettings.primaryColor) {
+                    applyColor(savedSettings.primaryColor);
+                }
+                if (savedSettings.fontSize) {
+                    fontSize = savedSettings.fontSize;
+                    document.getElementById('fontSizeDisplay').textContent = fontSize + 'px';
+                    document.documentElement.style.fontSize = fontSize + 'px';
+                }
+            }
+        }
+
+        // ============================================
+        // SETTINGS TABS
+        // ============================================
+        function switchSettingsTab(tab) {
+            // Hide all sections
+            document.querySelectorAll('.settings-section').forEach(s => {
+                s.classList.remove('active');
+            });
+
+            // Show selected section
+            const section = document.getElementById(`settings-${tab}`);
+            if (section) {
+                section.classList.add('active');
+            }
+
+            // Update buttons
+            document.querySelectorAll('.settings-tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tab);
+            });
+        }
+
+        // ============================================
+        // SAVE SETTINGS
+        // ============================================
+        function saveAllSettings() {
+            const settings = {
+                appName: document.getElementById('appName').value,
+                defaultLanguage: document.getElementById('defaultLanguage').value,
+                defaultCurrency: document.getElementById('defaultCurrency').value,
+                timezone: document.getElementById('timezone').value,
+                appDescription: document.getElementById('appDescription').value,
+                minOrderAmount: document.getElementById('minOrderAmount').value,
+                maxDistance: document.getElementById('maxDistance').value,
+                driverWaitTime: document.getElementById('driverWaitTime').value,
+                taxRate: document.getElementById('taxRate').value,
+                serviceFee: document.getElementById('serviceFee').value,
+                defaultPaymentMethod: document.getElementById('defaultPaymentMethod').value,
+                walletLimit: document.getElementById('walletLimit').value,
+                sessionTimeout: document.getElementById('sessionTimeout').value,
+                loginAttempts: document.getElementById('loginAttempts').value,
+                twoFactorAuth: document.getElementById('twoFactorAuth').checked,
+                themeMode: document.getElementById('themeMode').value,
+                primaryColor: document.getElementById('primaryColor').value,
+                fontSize: fontSize,
+                notifyOrderNew: document.getElementById('notifyOrderNew').checked,
+                notifyOrderUpdate: document.getElementById('notifyOrderUpdate').checked,
+                notifyDriverStatus: document.getElementById('notifyDriverStatus').checked,
+                notifyPromotions: document.getElementById('notifyPromotions').checked,
+                notifySystem: document.getElementById('notifySystem').checked,
+                notifyEmail: document.getElementById('notifyEmail').checked
+            };
+
+            Utils.storage.set('appSettings', settings);
+            showToast('تم حفظ جميع الإعدادات بنجاح!', 'success');
+
+            // Apply theme
+            applyTheme(settings.themeMode);
+            applyColor(settings.primaryColor);
+        }
+
+        // ============================================
+        // THEME & APPEARANCE
+        // ============================================
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else if (theme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                // System theme
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+            }
+        }
+
+        function applyColor(color) {
+            document.documentElement.style.setProperty('--primary', color);
+            // Generate dark variant
+            const darkColor = darkenColor(color, 20);
+            document.documentElement.style.setProperty('--primary-dark', darkColor);
+        }
+
+        function darkenColor(hex, percent) {
+            const num = parseInt(hex.replace('#', ''), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = Math.max(0, (num >> 16) - amt);
+            const G = Math.max(0, ((num >> 8) & 0x00FF) - amt);
+            const B = Math.max(0, (num & 0x0000FF) - amt);
+            return `#${(1 << 24 | R << 16 | G << 8 | B).toString(16).slice(1)}`;
+        }
+
+        function changeFontSize(direction) {
+            fontSize = Math.max(12, Math.min(24, fontSize + direction));
+            document.documentElement.style.fontSize = fontSize + 'px';
+            document.getElementById('fontSizeDisplay').textContent = fontSize + 'px';
+            Utils.storage.set('fontSize', fontSize);
+        }
+
+        // ============================================
+        // SEARCH SETTINGS
+        // ============================================
+        function searchSettings(event) {
+            const query = event.target.value.trim().toLowerCase();
+            if (!query) {
+                document.querySelectorAll('.settings-section .card').forEach(card => {
+                    card.style.display = 'block';
+                });
+                return;
+            }
+
+            document.querySelectorAll('.settings-section .card').forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        // ============================================
+        // CHANGE PASSWORD
+        // ============================================
+        function changePassword() {
+            document.getElementById('changePasswordModal').classList.add('active');
+            document.getElementById('changePasswordForm').reset();
+        }
+
+        function closeChangePassword() {
+            document.getElementById('changePasswordModal').classList.remove('active');
+        }
+
+        function submitChangePassword(event) {
+            event.preventDefault();
+            const form = document.getElementById('changePasswordForm');
+
+            if (form.checkValidity()) {
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (newPassword !== confirmPassword) {
+                    showToast('كلمة المرور الجديدة غير متطابقة', 'error');
+                    return;
+                }
+
+                showToast('تم تغيير كلمة المرور بنجاح!', 'success');
+                closeChangePassword();
+                form.reset();
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        // ============================================
+        // DATA ACTIONS
+        // ============================================
+        function exportData() {
+            showToast('جاري تصدير بيانات النظام...', 'info');
+            setTimeout(() => {
+                showToast('تم تصدير البيانات بنجاح', 'success');
+            }, 1500);
+        }
+
+        function deleteAllData() {
+            if (confirm('⚠️ هل أنت متأكد من حذف جميع البيانات؟ هذا الإجراء لا يمكن التراجع عنه!')) {
+                if (confirm('تأكيد نهائي: هل أنت متأكد تماماً؟')) {
+                    showToast('جاري حذف جميع البيانات...', 'warning');
+                    setTimeout(() => {
+                        showToast('تم حذف جميع البيانات', 'success');
+                    }, 2000);
+                }
+            }
+        }
+
+        function resetSettings() {
+            if (confirm('هل أنت متأكد من إعادة تعيين جميع الإعدادات؟')) {
+                const defaultSettings = {
+                    appName: 'TechNomads',
+                    defaultLanguage: 'ar',
+                    defaultCurrency: 'YER',
+                    timezone: 'Asia/Aden',
+                    appDescription: 'نظام TechNomads للتوصيل - منصة متكاملة لإدارة طلبات التوصيل في اليمن',
+                    minOrderAmount: 500,
+                    maxDistance: 20,
+                    driverWaitTime: 10,
+                    taxRate: 5,
+                    serviceFee: 10,
+                    defaultPaymentMethod: 'cash',
+                    walletLimit: 10000,
+                    sessionTimeout: 24,
+                    loginAttempts: 5,
+                    twoFactorAuth: true,
+                    themeMode: 'light',
+                    primaryColor: '#6366f1',
+                    fontSize: 16,
+                    notifyOrderNew: true,
+                    notifyOrderUpdate: true,
+                    notifyDriverStatus: true,
+                    notifyPromotions: true,
+                    notifySystem: true,
+                    notifyEmail: false
+                };
+
+                Object.entries(defaultSettings).forEach(([key, value]) => {
+                    const el = document.getElementById(key);
+                    if (el) {
+                        if (el.type === 'checkbox') {
+                            el.checked = value;
+                        } else {
+                            el.value = value;
+                        }
+                    }
+                });
+
+                fontSize = 16;
+                document.getElementById('fontSizeDisplay').textContent = '16px';
+                document.documentElement.style.fontSize = '16px';
+                applyTheme('light');
+                applyColor('#6366f1');
+
+                Utils.storage.set('appSettings', defaultSettings);
+                showToast('تم إعادة تعيين الإعدادات', 'success');
+            }
+        }
+
+        // ============================================
+        // NOTIFICATIONS
+        // ============================================
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationsDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            if (dropdown.style.display === 'block') {
+                loadNotifications();
+            }
+        }
+
+        function loadNotifications() {
+            const list = document.getElementById('notificationsList');
+            const notifications = [
+                { id: 1, icon: 'fa-box', color: 'primary', text: 'طلب جديد #1234 من محمد عبدالله', time: 'منذ 2 دقيقة' },
+                { id: 2, icon: 'fa-motorcycle', color: 'success', text: 'السائق أحمد علي بدأ التوصيل', time: 'منذ 5 دقائق' },
+                { id: 3, icon: 'fa-money-bill-wave', color: 'warning', text: 'دفعة جديدة بقيمة 15,000 ر.ي', time: 'منذ 12 دقيقة' }
+            ];
+
+            list.innerHTML = notifications.map(n => `
+                <div class="notification-item">
+                    <div class="notification-icon" style="background: rgba(99,102,241,0.1); color: var(--${n.color});">
+                        <i class="fas ${n.icon}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-text">${n.text}</div>
+                        <div class="notification-time">${n.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function markAllRead() {
+            document.querySelector('.header-btn .badge').textContent = '0';
+            document.getElementById('notificationsDropdown').style.display = 'none';
+            showToast('تم تحديد الكل كمقروء', 'success');
+        }
+
+        // ============================================
+        // TOAST
+        // ============================================
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.style.cssText = `
+                position: fixed;
+                top: ${window.innerWidth <= 768 ? '70px' : '20px'};
+                left: 50%;
+                transform: translateX(-50%) translateY(-100px);
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#6366f1'};
+                color: white;
+                padding: ${window.innerWidth <= 768 ? '12px 20px' : '15px 30px'};
+                border-radius: 12px;
+                font-weight: 700;
+                font-size: ${window.innerWidth <= 768 ? '13px' : '14px'};
+                z-index: 9999;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                transition: transform 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                max-width: 92%;
+                font-family: 'Tajawal', sans-serif;
+                text-align: right;
+            `;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="font-size: ${window.innerWidth <= 768 ? '16px' : '18px'}; flex-shrink: 0;"></i> ${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            }, 10);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(-100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+        });
+
+        // Expose functions
+        window.switchSettingsTab = switchSettingsTab;
+        window.saveAllSettings = saveAllSettings;
+        window.applyTheme = applyTheme;
+        window.applyColor = applyColor;
+        window.changeFontSize = changeFontSize;
+        window.searchSettings = searchSettings;
+        window.changePassword = changePassword;
+        window.closeChangePassword = closeChangePassword;
+        window.submitChangePassword = submitChangePassword;
+        window.exportData = exportData;
+        window.deleteAllData = deleteAllData;
+        window.resetSettings = resetSettings;
+        window.toggleNotifications = toggleNotifications;
+        window.markAllRead = markAllRead;
+        window.showToast = showToast;
+    </script>
+</body>
+</html>

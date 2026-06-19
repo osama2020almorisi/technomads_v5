@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>التقارير - نظام TechNomads للتوصيل</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ============================================
+           REPORTS PAGE SPECIFIC STYLES
+           ============================================ */
+
+        /* Filter Bar */
+        .report-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            align-items: flex-end;
+        }
+
+        .report-filters .form-group {
+            margin-bottom: 0;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .report-filters .form-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+
+        .report-filters .form-select,
+        .report-filters .form-input {
+            padding: 8px 12px;
+            font-size: 13px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            width: 100%;
+            background: var(--white);
+            font-family: inherit;
+        }
+
+        .report-filters .btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            min-height: 38px;
+            border-radius: 8px;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .report-filters {
+                flex-direction: column;
+                gap: 8px;
+                padding: 10px 12px;
+            }
+
+            .report-filters .form-group {
+                min-width: 100%;
+            }
+
+            .report-filters .form-select,
+            .report-filters .form-input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .filter-actions {
+                width: 100%;
+                flex-direction: row;
+            }
+
+            .filter-actions .btn {
+                flex: 1;
+                justify-content: center;
+                padding: 10px;
+                font-size: 13px;
+                min-height: 44px;
+            }
+        }
+
+        /* Report Stats */
+        .report-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .report-stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .report-stat-card .stat-number {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .report-stat-card .stat-label {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        .report-stat-card .stat-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .report-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .report-stat-card {
+                padding: 10px 12px;
+            }
+
+            .report-stat-card .stat-number {
+                font-size: 18px;
+            }
+
+            .report-stat-card .stat-label {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .report-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+
+            .report-stat-card {
+                padding: 8px 10px;
+            }
+
+            .report-stat-card .stat-number {
+                font-size: 16px;
+            }
+        }
+
+        /* Chart Container */
+        .chart-container {
+            height: 280px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 16px 0;
+            gap: 4px;
+        }
+
+        .chart-bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chart-bar {
+            width: 32px;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 8px;
+            position: relative;
+        }
+
+        .chart-bar.primary { background: var(--primary); }
+        .chart-bar.primary-light { background: var(--primary-light); }
+        .chart-bar.success { background: var(--secondary); }
+        .chart-bar.warning { background: var(--warning); }
+
+        .chart-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+            border-radius: 4px 4px 0 0;
+        }
+
+        .chart-label {
+            font-size: 10px;
+            color: var(--gray);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .chart-value {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 200px;
+                padding: 10px 0;
+            }
+
+            .chart-bar {
+                width: 22px;
+            }
+
+            .chart-value {
+                font-size: 10px;
+            }
+
+            .chart-label {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .chart-container {
+                height: 160px;
+                padding: 8px 0;
+            }
+
+            .chart-bar {
+                width: 18px;
+            }
+        }
+
+        /* Chart Type Buttons */
+        .chart-type-buttons {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .chart-type-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid var(--border);
+            background: var(--white);
+            color: var(--gray);
+            font-family: inherit;
+        }
+
+        .chart-type-btn:active {
+            transform: scale(0.95);
+        }
+
+        .chart-type-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .chart-type-btn {
+                padding: 4px 10px;
+                font-size: 10px;
+            }
+        }
+
+        /* Report Table */
+        .report-table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -4px;
+            padding: 0 4px;
+        }
+
+        .report-table-container table {
+            min-width: 500px;
+            font-size: 13px;
+        }
+
+        .report-table-container thead th {
+            padding: 10px 12px;
+            font-size: 11px;
+            white-space: nowrap;
+            color: var(--gray);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .report-table-container tbody td {
+            padding: 10px 12px;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .report-table-container table {
+                font-size: 12px;
+                min-width: 400px;
+            }
+
+            .report-table-container thead th {
+                padding: 8px 10px;
+                font-size: 10px;
+            }
+
+            .report-table-container tbody td {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+        }
+
+        /* Export Buttons */
+        .export-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .export-buttons .btn {
+            font-size: 12px;
+            padding: 6px 14px;
+            min-height: 36px;
+        }
+
+        @media (max-width: 768px) {
+            .export-buttons .btn {
+                font-size: 11px;
+                padding: 6px 12px;
+                min-height: 32px;
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .sidebar,
+            .header,
+            .bottom-nav-mobile,
+            .report-filters,
+            .export-buttons {
+                display: none !important;
+            }
+
+            .main-content {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .card {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+                break-inside: avoid;
+            }
+
+            .report-stat-card {
+                border: 1px solid #ddd !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-truck-fast"></i>
+            </div>
+            <div class="sidebar-brand">TechNomads</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">القائمة الرئيسية</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>لوحة التحكم</span>
+                </a>
+                <a href="orders.html" class="nav-item">
+                    <i class="fas fa-box"></i>
+                    <span>الطلبات</span>
+                    <span class="nav-badge">24</span>
+                </a>
+                <a href="drivers.html" class="nav-item">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>السائقين</span>
+                    <span class="nav-badge">5</span>
+                </a>
+                <a href="customers.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>العملاء</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">الإدارة</div>
+                <a href="zones.html" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>المناطق والأسعار</span>
+                </a>
+                <a href="reports.html" class="nav-item active">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>التقارير</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">م</div>
+                <div class="user-info">
+                    <div class="user-name">مدير النظام</div>
+                    <div class="user-role">مسؤول</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="mobile-menu-btn" onclick="toggleMobileSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-search">
+                <input type="text" placeholder="بحث في التقارير...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+                <button class="header-btn" onclick="refreshReport()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="header-btn" onclick="window.print()">
+                    <i class="fas fa-print"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">التقارير</h1>
+                    <p class="page-subtitle">تحليلات وإحصائيات النظام</p>
+                </div>
+                <div class="export-buttons">
+                    <button class="btn btn-outline" onclick="exportReport('pdf')">
+                        <i class="fas fa-file-pdf"></i>
+                        <span class="hide-mobile">PDF</span>
+                    </button>
+                    <button class="btn btn-outline" onclick="exportReport('excel')">
+                        <i class="fas fa-file-excel"></i>
+                        <span class="hide-mobile">Excel</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="generateReport()">
+                        <i class="fas fa-sync-alt"></i>
+                        <span class="hide-mobile">إنشاء</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Report Filters -->
+            <div class="report-filters">
+                <div class="form-group">
+                    <label class="form-label">نوع التقرير</label>
+                    <select class="form-select" id="reportType" onchange="loadReport()">
+                        <option value="orders">الطلبات</option>
+                        <option value="drivers">السائقين</option>
+                        <option value="revenue">الإيرادات</option>
+                        <option value="zones">المناطق</option>
+                        <option value="customers">العملاء</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">الفترة</label>
+                    <select class="form-select" id="reportPeriod" onchange="loadReport()">
+                        <option value="today">اليوم</option>
+                        <option value="week">هذا الأسبوع</option>
+                        <option value="month" selected>هذا الشهر</option>
+                        <option value="quarter">هذا الربع</option>
+                        <option value="year">هذا العام</option>
+                        <option value="custom">مخصص</option>
+                    </select>
+                </div>
+                <div class="form-group" id="dateFromGroup" style="display: none;">
+                    <label class="form-label">من تاريخ</label>
+                    <input type="date" class="form-input" id="reportDateFrom" onchange="loadReport()">
+                </div>
+                <div class="form-group" id="dateToGroup" style="display: none;">
+                    <label class="form-label">إلى تاريخ</label>
+                    <input type="date" class="form-input" id="reportDateTo" onchange="loadReport()">
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="loadReport()">
+                        <i class="fas fa-search"></i>
+                        عرض
+                    </button>
+                    <button class="btn btn-outline" onclick="resetReportFilters()">
+                        <i class="fas fa-undo"></i>
+                        إعادة
+                    </button>
+                </div>
+            </div>
+
+            <!-- Report Stats -->
+            <div class="report-stats-grid">
+                <div class="report-stat-card">
+                    <span class="stat-icon" style="color: var(--primary);">📦</span>
+                    <div class="stat-number" id="reportTotalOrders">0</div>
+                    <div class="stat-label">إجمالي الطلبات</div>
+                </div>
+                <div class="report-stat-card">
+                    <span class="stat-icon" style="color: var(--secondary);">✅</span>
+                    <div class="stat-number" id="reportCompleted">0</div>
+                    <div class="stat-label">مكتملة</div>
+                </div>
+                <div class="report-stat-card">
+                    <span class="stat-icon" style="color: var(--warning);">⏳</span>
+                    <div class="stat-number" id="reportPending">0</div>
+                    <div class="stat-label">قيد الانتظار</div>
+                </div>
+                <div class="report-stat-card">
+                    <span class="stat-icon" style="color: var(--danger);">💰</span>
+                    <div class="stat-number" id="reportRevenue">0</div>
+                    <div class="stat-label">الإيرادات</div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="card" style="margin-bottom: 16px;">
+                <div class="card-header">
+                    <h3 class="card-title">التحليل البياني</h3>
+                    <div class="chart-type-buttons">
+                        <button class="chart-type-btn active" data-chart="orders" onclick="switchChart('orders')">
+                            الطلبات
+                        </button>
+                        <button class="chart-type-btn" data-chart="revenue" onclick="switchChart('revenue')">
+                            الإيرادات
+                        </button>
+                        <button class="chart-type-btn" data-chart="drivers" onclick="switchChart('drivers')">
+                            السائقين
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-container" id="reportChart">
+                    <!-- Chart bars generated by JS -->
+                </div>
+            </div>
+
+            <!-- Report Table -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">تفاصيل التقرير</h3>
+                    <span style="font-size: 12px; color: var(--gray);">إجمالي: <strong id="reportItemsCount">0</strong></span>
+                </div>
+                <div class="report-table-container">
+                    <table>
+                        <thead id="reportTableHeader">
+                            <!-- Generated by JS -->
+                        </thead>
+                        <tbody id="reportTableBody">
+                            <!-- Generated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notifications Dropdown -->
+    <div class="notifications-dropdown" id="notificationsDropdown" style="display: none;">
+        <div class="notifications-header">
+            <span>الإشعارات</span>
+            <button onclick="markAllRead()">تحديد الكل كمقروء</button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Generated by JS -->
+        </div>
+    </div>
+
+    <script src="../../shared/js/utils.js"></script>
+    <script src="../../shared/js/constants.js"></script>
+    <script src="../../shared/js/i18n.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/mobile.js"></script>
+
+    <script>
+        // ============================================
+        // REPORTS PAGE
+        // ============================================
+
+        let currentReportType = 'orders';
+        let currentPeriod = 'month';
+        let currentChart = 'orders';
+
+        // ============================================
+        // LOAD REPORT
+        // ============================================
+        function loadReport() {
+            const type = document.getElementById('reportType').value;
+            const period = document.getElementById('reportPeriod').value;
+            currentReportType = type;
+            currentPeriod = period;
+
+            // Show/hide custom date fields
+            const dateFromGroup = document.getElementById('dateFromGroup');
+            const dateToGroup = document.getElementById('dateToGroup');
+            if (period === 'custom') {
+                dateFromGroup.style.display = 'block';
+                dateToGroup.style.display = 'block';
+            } else {
+                dateFromGroup.style.display = 'none';
+                dateToGroup.style.display = 'none';
+            }
+
+            // Generate mock data
+            const data = generateReportData(type, period);
+            updateReportStats(data);
+            renderReportChart(data);
+            renderReportTable(data);
+        }
+
+        // ============================================
+        // GENERATE REPORT DATA
+        // ============================================
+        function generateReportData(type, period) {
+            const multiplier = period === 'today' ? 1 : period === 'week' ? 7 : period === 'month' ? 30 : period === 'quarter' ? 90 : 365;
+
+            const baseData = {
+                orders: {
+                    title: 'تقرير الطلبات',
+                    total: Math.round(156 * (multiplier / 30)),
+                    completed: Math.round(142 * (multiplier / 30)),
+                    pending: Math.round(8 * (multiplier / 30)),
+                    revenue: Math.round(385000 * (multiplier / 30)),
+                    headers: ['رقم الطلب', 'العميل', 'السائق', 'الحالة', 'المبلغ', 'التاريخ'],
+                    data: [
+                        ['#1234', 'محمد عبدالله', 'أحمد علي', 'مكتمل', '15,000', '2024-01-15'],
+                        ['#1233', 'فاطمة أحمد', 'خالد سعيد', 'مكتمل', '8,500', '2024-01-15'],
+                        ['#1232', 'عبدالرحمن صالح', 'علي محمود', 'مكتمل', '22,000', '2024-01-14'],
+                        ['#1231', 'سارة محمد', 'يوسف أحمد', 'قيد التنفيذ', '12,000', '2024-01-14'],
+                        ['#1230', 'خالد عمر', 'غير معين', 'معلق', '18,000', '2024-01-13']
+                    ],
+                    chart: {
+                        labels: ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'],
+                        values: [45, 62, 38, 75, 55, 89, 42]
+                    }
+                },
+                drivers: {
+                    title: 'تقرير السائقين',
+                    total: 12,
+                    completed: 8,
+                    pending: 4,
+                    revenue: Math.round(185000 * (multiplier / 30)),
+                    headers: ['السائق', 'المنطقة', 'الطلبات', 'التقييم', 'الإيرادات', 'الحالة'],
+                    data: [
+                        ['أحمد علي', 'صنعاء', '156', '4.9', '45,000', 'نشط'],
+                        ['خالد سعيد', 'عدن', '142', '4.8', '38,000', 'نشط'],
+                        ['علي محمود', 'تعز', '128', '4.7', '32,000', 'غير متاح'],
+                        ['يوسف أحمد', 'الحديدة', '115', '4.6', '28,000', 'نشط'],
+                        ['محمد فارس', 'صنعاء', '98', '4.5', '22,000', 'في استراحة']
+                    ],
+                    chart: {
+                        labels: ['أحمد علي', 'خالد سعيد', 'علي محمود', 'يوسف أحمد', 'محمد فارس'],
+                        values: [156, 142, 128, 115, 98]
+                    }
+                },
+                revenue: {
+                    title: 'تقرير الإيرادات',
+                    total: Math.round(385000 * (multiplier / 30)),
+                    completed: Math.round(350000 * (multiplier / 30)),
+                    pending: Math.round(35000 * (multiplier / 30)),
+                    revenue: Math.round(385000 * (multiplier / 30)),
+                    headers: ['التاريخ', 'الطلبات', 'الإيرادات', 'الضريبة', 'الصافي'],
+                    data: [
+                        ['2024-01-15', '12', '45,000', '2,250', '42,750'],
+                        ['2024-01-14', '10', '38,000', '1,900', '36,100'],
+                        ['2024-01-13', '8', '30,000', '1,500', '28,500'],
+                        ['2024-01-12', '6', '22,000', '1,100', '20,900']
+                    ],
+                    chart: {
+                        labels: ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'],
+                        values: [1200, 1800, 950, 2100, 1500, 2600, 1300]
+                    }
+                },
+                zones: {
+                    title: 'تقرير المناطق',
+                    total: 5,
+                    completed: 5,
+                    pending: 0,
+                    revenue: Math.round(185000 * (multiplier / 30)),
+                    headers: ['المنطقة', 'التوصيلات', 'الإيرادات', 'المتوسط', 'الحالة'],
+                    data: [
+                        ['صنعاء', '450', '135,000', '300', 'نشط'],
+                        ['عدن', '320', '96,000', '300', 'نشط'],
+                        ['تعز', '280', '78,400', '280', 'نشط'],
+                        ['الحديدة', '150', '39,000', '260', 'نشط'],
+                        ['إب', '120', '28,800', '240', 'غير نشط']
+                    ],
+                    chart: {
+                        labels: ['صنعاء', 'عدن', 'تعز', 'الحديدة', 'إب'],
+                        values: [450, 320, 280, 150, 120]
+                    }
+                },
+                customers: {
+                    title: 'تقرير العملاء',
+                    total: 345,
+                    completed: Math.round(340 * (multiplier / 30)),
+                    pending: 5,
+                    revenue: Math.round(2175000 * (multiplier / 30)),
+                    headers: ['العميل', 'المنطقة', 'الطلبات', 'الإجمالي', 'التقييم', 'تاريخ التسجيل'],
+                    data: [
+                        ['محمد عبدالله', 'صنعاء', '45', '675,000', '4.9', '2024-01-15'],
+                        ['فاطمة أحمد', 'عدن', '32', '480,000', '4.8', '2024-02-20'],
+                        ['عبدالرحمن صالح', 'تعز', '28', '420,000', '4.7', '2024-03-10'],
+                        ['سارة محمد', 'الحديدة', '22', '330,000', '4.6', '2024-04-05'],
+                        ['خالد عمر', 'إب', '18', '270,000', '4.5', '2024-05-12']
+                    ],
+                    chart: {
+                        labels: ['محمد', 'فاطمة', 'عبدالرحمن', 'سارة', 'خالد'],
+                        values: [45, 32, 28, 22, 18]
+                    }
+                }
+            };
+
+            // If type doesn't exist, use orders as default
+            return baseData[type] || baseData.orders;
+        }
+
+        // ============================================
+        // UPDATE STATS
+        // ============================================
+        function updateReportStats(data) {
+            document.getElementById('reportTotalOrders').textContent = data.total;
+            document.getElementById('reportCompleted').textContent = data.completed;
+            document.getElementById('reportPending').textContent = data.pending;
+            document.getElementById('reportRevenue').textContent = data.revenue.toLocaleString();
+            document.getElementById('reportItemsCount').textContent = data.data.length;
+        }
+
+        // ============================================
+        // RENDER CHART
+        // ============================================
+        function renderReportChart(data) {
+            const container = document.getElementById('reportChart');
+            const chartData = data.chart;
+            const max = Math.max(...chartData.values);
+
+            container.innerHTML = chartData.labels.map((label, i) => {
+                const height = (chartData.values[i] / max) * 100;
+                const isHighest = chartData.values[i] === max;
+                const barClass = isHighest ? 'primary' : 'primary-light';
+
+                return `
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-value">${chartData.values[i]}</div>
+                        <div class="chart-bar ${barClass}" style="height: ${Math.max(height * 1.8, 20)}px;"></div>
+                        <div class="chart-label">${label}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============================================
+        // RENDER TABLE
+        // ============================================
+        function renderReportTable(data) {
+            const thead = document.getElementById('reportTableHeader');
+            const tbody = document.getElementById('reportTableBody');
+
+            thead.innerHTML = data.headers.map(h => `<th>${h}</th>`).join('');
+
+            if (data.data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="${data.headers.length}" style="text-align: center; padding: 30px; color: var(--gray);">
+                            <i class="fas fa-chart-bar" style="font-size: 32px; display: block; margin-bottom: 8px;"></i>
+                            لا توجد بيانات
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = data.data.map(row => `
+                <tr>
+                    ${row.map(cell => `<td>${cell}</td>`).join('')}
+                </tr>
+            `).join('');
+        }
+
+        // ============================================
+        // SWITCH CHART
+        // ============================================
+        function switchChart(type) {
+            currentChart = type;
+
+            // Update buttons
+            document.querySelectorAll('.chart-type-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.chart === type);
+            });
+
+            // Reload with current data but different chart
+            const data = generateReportData(currentReportType, currentPeriod);
+            // For demo, we just show a different view
+            // In production, you would fetch different chart data
+            renderReportChart(data);
+            showToast(`عرض رسم بياني ${type === 'orders' ? 'الطلبات' : type === 'revenue' ? 'الإيرادات' : 'السائقين'}`, 'info');
+        }
+
+        // ============================================
+        // REPORT ACTIONS
+        // ============================================
+        function generateReport() {
+            showToast('جاري إنشاء التقرير...', 'info');
+            setTimeout(() => {
+                loadReport();
+                showToast('تم إنشاء التقرير بنجاح', 'success');
+            }, 1500);
+        }
+
+        function exportReport(format) {
+            showToast(`جاري تصدير التقرير بصيغة ${format.toUpperCase()}...`, 'info');
+            setTimeout(() => {
+                showToast(`تم تصدير التقرير بصيغة ${format.toUpperCase()}`, 'success');
+            }, 1500);
+        }
+
+        function resetReportFilters() {
+            document.getElementById('reportType').value = 'orders';
+            document.getElementById('reportPeriod').value = 'month';
+            document.getElementById('reportDateFrom').value = '';
+            document.getElementById('reportDateTo').value = '';
+            document.getElementById('dateFromGroup').style.display = 'none';
+            document.getElementById('dateToGroup').style.display = 'none';
+            loadReport();
+            showToast('تم إعادة تعيين التصفية', 'info');
+        }
+
+        function refreshReport() {
+            showToast('جاري تحديث البيانات...', 'info');
+            setTimeout(() => {
+                loadReport();
+                showToast('تم التحديث بنجاح', 'success');
+            }, 1000);
+        }
+
+        // ============================================
+        // NOTIFICATIONS
+        // ============================================
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationsDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            if (dropdown.style.display === 'block') {
+                loadNotifications();
+            }
+        }
+
+        function loadNotifications() {
+            const list = document.getElementById('notificationsList');
+            const notifications = [
+                { id: 1, icon: 'fa-box', color: 'primary', text: 'طلب جديد #1234 من محمد عبدالله', time: 'منذ 2 دقيقة' },
+                { id: 2, icon: 'fa-motorcycle', color: 'success', text: 'السائق أحمد علي بدأ التوصيل', time: 'منذ 5 دقائق' },
+                { id: 3, icon: 'fa-money-bill-wave', color: 'warning', text: 'دفعة جديدة بقيمة 15,000 ر.ي', time: 'منذ 12 دقيقة' }
+            ];
+
+            list.innerHTML = notifications.map(n => `
+                <div class="notification-item">
+                    <div class="notification-icon" style="background: rgba(99,102,241,0.1); color: var(--${n.color});">
+                        <i class="fas ${n.icon}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-text">${n.text}</div>
+                        <div class="notification-time">${n.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function markAllRead() {
+            document.querySelector('.header-btn .badge').textContent = '0';
+            document.getElementById('notificationsDropdown').style.display = 'none';
+            showToast('تم تحديد الكل كمقروء', 'success');
+        }
+
+        // ============================================
+        // TOAST
+        // ============================================
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.style.cssText = `
+                position: fixed;
+                top: ${window.innerWidth <= 768 ? '70px' : '20px'};
+                left: 50%;
+                transform: translateX(-50%) translateY(-100px);
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#6366f1'};
+                color: white;
+                padding: ${window.innerWidth <= 768 ? '12px 20px' : '15px 30px'};
+                border-radius: 12px;
+                font-weight: 700;
+                font-size: ${window.innerWidth <= 768 ? '13px' : '14px'};
+                z-index: 9999;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                transition: transform 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                max-width: 92%;
+                font-family: 'Tajawal', sans-serif;
+                text-align: right;
+            `;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="font-size: ${window.innerWidth <= 768 ? '16px' : '18px'}; flex-shrink: 0;"></i> ${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            }, 10);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(-100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadReport();
+
+            // Show/hide custom date fields
+            document.getElementById('reportPeriod').addEventListener('change', function() {
+                const dateFromGroup = document.getElementById('dateFromGroup');
+                const dateToGroup = document.getElementById('dateToGroup');
+                if (this.value === 'custom') {
+                    dateFromGroup.style.display = 'block';
+                    dateToGroup.style.display = 'block';
+                } else {
+                    dateFromGroup.style.display = 'none';
+                    dateToGroup.style.display = 'none';
+                }
+            });
+        });
+
+        // Expose functions
+        window.loadReport = loadReport;
+        window.switchChart = switchChart;
+        window.generateReport = generateReport;
+        window.exportReport = exportReport;
+        window.resetReportFilters = resetReportFilters;
+        window.refreshReport = refreshReport;
+        window.toggleNotifications = toggleNotifications;
+        window.markAllRead = markAllRead;
+        window.showToast = showToast;
+    </script>
+</body>
+</html>

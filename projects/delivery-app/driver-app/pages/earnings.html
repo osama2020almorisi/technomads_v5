@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>الأرباح - TechNomads</title>
+    <link rel="stylesheet" href="../css/driver.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .earnings-container {
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+        .earnings-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .earnings-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 14px 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+        .earnings-card .amount {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        .earnings-card .label {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+        .earnings-card .icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .earnings-card.primary .icon { color: var(--primary); }
+        .earnings-card.success .icon { color: var(--secondary); }
+        .earnings-card.warning .icon { color: var(--warning); }
+        .period-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding: 4px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+        .period-selector::-webkit-scrollbar { display: none; }
+        .period-btn {
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 2px solid var(--border);
+            background: var(--white);
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .period-btn:active { transform: scale(0.95); }
+        .period-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+        .earnings-chart {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .earnings-chart h3 {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 160px;
+            gap: 4px;
+        }
+        .chart-bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+        }
+        .chart-bar {
+            width: 28px;
+            border-radius: 4px 4px 0 0;
+            min-height: 6px;
+            transition: height 0.5s ease;
+            background: var(--primary-light);
+        }
+        .chart-bar.high { background: var(--primary); }
+        .chart-label {
+            font-size: 9px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+        .chart-value {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .earnings-list {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+        .earnings-list h3 {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .earning-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .earning-item:last-child { border-bottom: none; }
+        .earning-item .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .earning-item .info { flex: 1; min-width: 0; }
+        .earning-item .info .title {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .earning-item .info .sub {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        .earning-item .amount {
+            font-weight: 800;
+            font-size: 15px;
+        }
+        .earning-item .amount.positive { color: var(--secondary); }
+        .earning-item .amount.negative { color: var(--danger); }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+        .empty-state i {
+            font-size: 40px;
+            color: var(--gray-light);
+            margin-bottom: 8px;
+            display: block;
+        }
+        .empty-state h3 { font-size: 16px; color: var(--dark); }
+        .empty-state p { font-size: 13px; }
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--light);
+            padding-bottom: 80px;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 6px 0 12px;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.06);
+            z-index: 100;
+            max-width: 480px;
+            margin: 0 auto;
+            border-radius: 24px 24px 0 0;
+        }
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 12px;
+            color: var(--gray);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        .bottom-nav .nav-item:active { transform: scale(0.95); }
+        .bottom-nav .nav-item i { font-size: 20px; }
+        .bottom-nav .nav-item span { font-size: 10px; font-weight: 600; }
+        .bottom-nav .nav-item.active { color: var(--primary); }
+        .nav-badge {
+            position: absolute;
+            top: -2px;
+            right: -4px;
+            background: var(--danger);
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .app-header {
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--dark);
+            transition: var(--transition);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .menu-btn:active { background: var(--light); transform: scale(0.95); }
+        .app-title { font-size: 18px; font-weight: 800; }
+        .status-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: var(--light);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .status-toggle:active { transform: scale(0.95); }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .status-dot.online { background: var(--secondary); }
+        .status-dot.offline { background: var(--danger); }
+        .side-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .side-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 201;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .side-menu.active { transform: translateX(0); }
+        .side-menu-header {
+            padding: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .driver-avatar-large {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+        .driver-info { text-align: center; }
+        .driver-info h3 { font-size: 18px; margin-bottom: 2px; }
+        .driver-info p { font-size: 13px; opacity: 0.9; }
+        .driver-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 4px;
+            font-size: 13px;
+        }
+        .driver-rating i { color: var(--warning); }
+        .side-menu-body {
+            flex: 1;
+            padding: 12px 0;
+            overflow-y: auto;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 20px;
+            color: var(--dark);
+            font-size: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .menu-item:active { background: var(--light); }
+        .menu-item i {
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+            color: var(--gray);
+        }
+        .side-menu-footer {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .btn-logout {
+            width: 100%;
+            padding: 14px;
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+            border: none;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .btn-logout:active {
+            background: var(--danger);
+            color: var(--white);
+        }
+        .custom-toast {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            z-index: 9999;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            max-width: 90%;
+            color: white;
+        }
+        .custom-toast.success { background: #10b981; }
+        .custom-toast.error { background: #ef4444; }
+        .custom-toast.info { background: #6366f1; }
+        @media (max-width:480px) {
+            .earnings-summary {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 8px;
+            }
+            .earnings-card {
+                padding: 10px 8px;
+            }
+            .earnings-card .amount { font-size: 16px; }
+            .earnings-card .label { font-size: 10px; }
+            .chart-bar { width: 20px; }
+            .period-btn {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+        }
+        @media (max-width:380px) {
+            .earnings-summary {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-left">
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="header-center">
+                <h1 class="app-title">الأرباح</h1>
+            </div>
+            <div class="header-right">
+                <div class="status-toggle" onclick="toggleStatus()">
+                    <div class="status-dot online" id="statusDot"></div>
+                    <span id="statusText">متاح</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="earnings-container">
+            <div class="earnings-summary">
+                <div class="earnings-card primary">
+                    <span class="icon"><i class="fas fa-wallet"></i></span>
+                    <div class="amount" id="totalEarnings">45,000</div>
+                    <div class="label">إجمالي الأرباح</div>
+                </div>
+                <div class="earnings-card success">
+                    <span class="icon"><i class="fas fa-calendar-day"></i></span>
+                    <div class="amount" id="todayEarnings">3,500</div>
+                    <div class="label">أرباح اليوم</div>
+                </div>
+                <div class="earnings-card warning">
+                    <span class="icon"><i class="fas fa-box"></i></span>
+                    <div class="amount" id="totalOrders">156</div>
+                    <div class="label">إجمالي الطلبات</div>
+                </div>
+            </div>
+
+            <div class="period-selector">
+                <button class="period-btn active" data-period="week" onclick="changePeriod('week')">هذا الأسبوع</button>
+                <button class="period-btn" data-period="month" onclick="changePeriod('month')">هذا الشهر</button>
+                <button class="period-btn" data-period="quarter" onclick="changePeriod('quarter')">هذا الربع</button>
+                <button class="period-btn" data-period="year" onclick="changePeriod('year')">هذا العام</button>
+            </div>
+
+            <div class="earnings-chart">
+                <h3>الرسوم البيانية للأرباح</h3>
+                <div class="chart-bars" id="earningsChart">
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-value">1,200</div>
+                        <div class="chart-bar" style="height:40px;"></div>
+                        <div class="chart-label">السبت</div>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-value">1,800</div>
+                        <div class="chart-bar" style="height:60px;"></div>
+                        <div class="chart-label">الأحد</div>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-value">950</div>
+                        <div class="chart-bar" style="height:30px;"></div>
+                        <div class="chart-label">الاثنين</div>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-value">2,100</div>
+                        <div class="chart-bar high" style="height:80px;"></div>
+                        <div class="chart-label">الثلاثاء</div>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-value">1,500</div>
+                        <div class="chart-bar" style="height:50px;"></div>
+                        <div class="chart-label">الأربعاء</div>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-value">2,600</div>
+                        <div class="chart-bar high" style="height:100px;"></div>
+                        <div class="chart-label">الخميس</div>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-value">1,300</div>
+                        <div class="chart-bar" style="height:45px;"></div>
+                        <div class="chart-label">الجمعة</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="earnings-list">
+                <h3>سجل الأرباح</h3>
+                <div id="earningsList">
+                    <div class="earning-item">
+                        <div class="icon" style="background:rgba(16,185,129,0.1); color:var(--secondary);">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="info">
+                            <div class="title">طلب #1234</div>
+                            <div class="sub">اليوم</div>
+                        </div>
+                        <div class="amount positive">+15,000 ر.ي</div>
+                    </div>
+                    <div class="earning-item">
+                        <div class="icon" style="background:rgba(16,185,129,0.1); color:var(--secondary);">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="info">
+                            <div class="title">طلب #1233</div>
+                            <div class="sub">اليوم</div>
+                        </div>
+                        <div class="amount positive">+8,500 ر.ي</div>
+                    </div>
+                    <div class="earning-item">
+                        <div class="icon" style="background:rgba(16,185,129,0.1); color:var(--secondary);">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="info">
+                            <div class="title">طلب #1232</div>
+                            <div class="sub">أمس</div>
+                        </div>
+                        <div class="amount positive">+22,000 ر.ي</div>
+                    </div>
+                    <div class="earning-item">
+                        <div class="icon" style="background:rgba(245,158,11,0.1); color:var(--warning);">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="info">
+                            <div class="title">مكافأة نهاية الأسبوع</div>
+                            <div class="sub">أمس</div>
+                        </div>
+                        <div class="amount positive">+5,000 ر.ي</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <span class="nav-item" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </span>
+            <span class="nav-item" onclick="window.location.href='orders.html'">
+                <i class="fas fa-box"></i>
+                <span>الطلبات</span>
+                <span class="nav-badge">3</span>
+            </span>
+            <span class="nav-item active" onclick="window.location.href='earnings.html'">
+                <i class="fas fa-chart-line"></i>
+                <span>الأرباح</span>
+            </span>
+            <span class="nav-item" onclick="window.location.href='profile.html'">
+                <i class="fas fa-user"></i>
+                <span>حسابي</span>
+            </span>
+        </nav>
+
+        <div class="side-menu-overlay" id="sideMenuOverlay" onclick="toggleMenu()"></div>
+        <div class="side-menu" id="sideMenu">
+            <div class="side-menu-header">
+                <div class="driver-avatar-large">أ</div>
+                <div class="driver-info">
+                    <h3 id="sideMenuName">أحمد علي</h3>
+                    <p id="sideMenuPhone">+967 770 200 970</p>
+                    <div class="driver-rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.9</span>
+                        <span>(156 تقييم)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="side-menu-body">
+                <span class="menu-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i> الرئيسية</span>
+                <span class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i> الملف الشخصي</span>
+                <span class="menu-item" onclick="window.location.href='orders.html'"><i class="fas fa-box"></i> الطلبات</span>
+                <span class="menu-item" onclick="window.location.href='history.html'"><i class="fas fa-history"></i> سجل الطلبات</span>
+                <span class="menu-item" onclick="window.location.href='earnings.html'"><i class="fas fa-wallet"></i> المحفظة</span>
+                <span class="menu-item" onclick="showToast('جاري فتح الإعدادات...', 'info')"><i class="fas fa-cog"></i> الإعدادات</span>
+                <span class="menu-item" onclick="showToast('جاري الاتصال بالدعم...', 'info')"><i class="fas fa-headset"></i> المساعدة</span>
+            </div>
+            <div class="side-menu-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        let currentPeriod = 'week';
+        let isAvailable = true;
+
+        function changePeriod(period) {
+            currentPeriod = period;
+            document.querySelectorAll('.period-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.period === period);
+            });
+            showToast(`تم تغيير الفترة إلى ${period === 'week' ? 'هذا الأسبوع' : period === 'month' ? 'هذا الشهر' : period === 'quarter' ? 'هذا الربع' : 'هذا العام'}`, 'info');
+        }
+
+        function toggleStatus() {
+            isAvailable = !isAvailable;
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+            if (isAvailable) {
+                dot.className = 'status-dot online';
+                text.textContent = 'متاح';
+                showToast('تم تغيير الحالة إلى متاح', 'success');
+            } else {
+                dot.className = 'status-dot offline';
+                text.textContent = 'غير متاح';
+                showToast('تم تغيير الحالة إلى غير متاح', 'info');
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = `custom-toast ${type}`;
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="margin-left:8px;"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(0)'; }, 10);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(-100px)'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function toggleMenu() {
+            document.getElementById('sideMenuOverlay').classList.toggle('active');
+            document.getElementById('sideMenu').classList.toggle('active');
+        }
+
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                localStorage.clear();
+                showToast('تم تسجيل الخروج بنجاح', 'info');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1000);
+            }
+        }
+
+        function loadUserData() {
+            const userName = localStorage.getItem('driverName') || 'أحمد علي';
+            const userPhone = localStorage.getItem('driverPhone') || '+967 770 200 970';
+            document.getElementById('sideMenuName').textContent = userName;
+            document.getElementById('sideMenuPhone').textContent = userPhone;
+            document.querySelector('.driver-avatar-large').textContent = userName.charAt(0);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+        });
+
+        window.changePeriod = changePeriod;
+        window.toggleStatus = toggleStatus;
+        window.showToast = showToast;
+        window.toggleMenu = toggleMenu;
+        window.logout = logout;
+    </script>
+</body>
+</html>

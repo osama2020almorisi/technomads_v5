@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="description" content="منصة التوصيل المتكاملة - حلول سريعة وآمنة لإدارة الطلبات والسائقين والعملاء" />
+    <title>منصة التوصيل المتكاملة</title>
+
+    <!-- أيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- خط Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================================
+                   CSS VARIABLES
+                ============================================ */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #06b6d4;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --gray-light: #f1f5f9;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.14);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ============================================
+                   RESET & BASE
+                ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--gray-light);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+
+        /* ============================================
+                   HEADER
+                ============================================ */
+        .main-header {
+            background: var(--white);
+            padding: 0 32px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .main-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--dark);
+        }
+        .main-header .logo i {
+            color: var(--primary);
+            font-size: 28px;
+        }
+        .main-header .logo span {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .main-nav a {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        .main-nav a:hover,
+        .main-nav a.active {
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.08);
+        }
+        .main-nav a i {
+            margin-left: 6px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ============================================
+                   BUTTONS
+                ============================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--gray);
+            border: 2px solid var(--border);
+        }
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .btn-white {
+            background: var(--white);
+            color: var(--primary);
+        }
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+        .btn-lg {
+            padding: 14px 32px;
+            font-size: 16px;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        /* ============================================
+                   MOBILE MENU
+                ============================================ */
+        .mobile-menu {
+            display: none;
+            background: var(--white);
+            padding: 16px 24px 24px;
+            border-bottom: 1px solid var(--border);
+            flex-direction: column;
+            gap: 4px;
+        }
+        .mobile-menu.active {
+            display: flex;
+        }
+        .mobile-menu a {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.06);
+        }
+        .mobile-menu hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 8px 0;
+        }
+        .mobile-menu .btn {
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* ============================================
+                   HERO
+                ============================================ */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+            color: var(--white);
+            padding: 60px 32px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            top: -200px;
+            right: -150px;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            bottom: -180px;
+            left: -120px;
+        }
+        .hero-content {
+            max-width: 720px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-content .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            backdrop-filter: blur(4px);
+        }
+        .hero-content h1 {
+            font-size: 44px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        .hero-content h1 .highlight {
+            color: #fcd34d;
+        }
+        .hero-content p {
+            font-size: 18px;
+            opacity: 0.9;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .hero-stats .stat .number {
+            font-size: 30px;
+            font-weight: 900;
+        }
+        .hero-stats .stat .label {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* ============================================
+                   PORTAL CARDS
+                ============================================ */
+        .portals {
+            padding: 50px 32px 60px;
+            background: var(--gray-light);
+        }
+        .portals .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .portals .section-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .portals .section-sub {
+            text-align: center;
+            color: var(--gray);
+            font-size: 16px;
+            margin-bottom: 36px;
+        }
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+        }
+
+        .portal-card {
+            background: var(--white);
+            padding: 32px 20px 28px;
+            border-radius: var(--radius);
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .portal-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+        .portal-card .icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 28px;
+            color: var(--white);
+        }
+        .portal-card .icon.blue {
+            background: var(--primary);
+        }
+        .portal-card .icon.green {
+            background: var(--secondary);
+        }
+        .portal-card .icon.purple {
+            background: #8b5cf6;
+        }
+        .portal-card .icon.orange {
+            background: var(--warning);
+        }
+        .portal-card h3 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .portal-card p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+        .portal-card .tag {
+            display: inline-block;
+            background: var(--gray-light);
+            color: var(--gray);
+            padding: 2px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ============================================
+                   FEATURES
+                ============================================ */
+        .features {
+            padding: 50px 32px 60px;
+            background: var(--white);
+        }
+        .features .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 20px 12px;
+        }
+        .feature-item i {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: block;
+        }
+        .feature-item h4 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .feature-item p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* ============================================
+                   CTA
+                ============================================ */
+        .cta {
+            background: linear-gradient(135deg, var(--dark), #1e293b);
+            color: var(--white);
+            padding: 50px 32px;
+            text-align: center;
+        }
+        .cta h2 {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .cta p {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 24px;
+        }
+
+        /* ============================================
+                   FOOTER
+                ============================================ */
+        .main-footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 32px 32px 24px;
+        }
+        .main-footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 32px;
+        }
+        .main-footer .logo {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--white);
+        }
+        .main-footer .logo i {
+            color: var(--primary);
+        }
+        .main-footer .footer-col p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 6px;
+        }
+        .main-footer .footer-col h4 {
+            color: var(--white);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .main-footer .footer-col a {
+            display: block;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 4px 0;
+            transition: var(--transition);
+        }
+        .main-footer .footer-col a:hover {
+            color: var(--white);
+        }
+        .main-footer .footer-bottom {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 16px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* ============================================
+                   RESPONSIVE
+                ============================================ */
+        @media (max-width: 1024px) {
+            .main-footer .container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 0 16px;
+            }
+            .main-nav {
+                display: none;
+            }
+            .header-actions .btn {
+                display: none;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+
+            .hero {
+                padding: 40px 16px 36px;
+            }
+            .hero-content h1 {
+                font-size: 30px;
+            }
+            .hero-content p {
+                font-size: 16px;
+            }
+            .hero-stats {
+                gap: 24px;
+            }
+            .hero-stats .stat .number {
+                font-size: 22px;
+            }
+
+            .portals {
+                padding: 30px 16px 40px;
+            }
+            .portal-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .features {
+                padding: 30px 16px 40px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .cta h2 {
+                font-size: 24px;
+            }
+
+            .main-footer .container {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .main-footer .footer-col h4 {
+                margin-bottom: 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .portal-grid {
+                grid-template-columns: 1fr;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .hero-content h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==========================================
+    HEADER
+    ========================================== -->
+    <header class="main-header">
+        <div class="logo">
+            <i class="fas fa-truck-fast"></i>
+            <span>توصيل</span>
+        </div>
+
+        <nav class="main-nav">
+            <a href="index.html" class="active"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="customer-web/pages/services.html"><i class="fas fa-concierge-bell"></i> الخدمات</a>
+            <a href="customer-web/pages/about.html"><i class="fas fa-info-circle"></i> عن المنصة</a>
+            <a href="customer-web/pages/track.html"><i class="fas fa-map-pin"></i> تتبع الطلب</a>
+            <a href="customer-web/pages/contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="admin-dashboard/pages/login.html" class="btn btn-outline btn-sm">
+                <i class="fas fa-sign-in-alt"></i> دخول
+            </a>
+            <a href="customer-app/pages/register.html" class="btn btn-primary btn-sm">
+                <i class="fas fa-user-plus"></i> انضم الآن
+            </a>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="القائمة">
+                <i class="fas fa-bars" id="menuIcon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================
+    MOBILE MENU
+    ========================================== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="active"><i class="fas fa-home"></i> الرئيسية</a>
+        <a href="customer-web/pages/services.html"><i class="fas fa-concierge-bell"></i> الخدمات</a>
+        <a href="customer-web/pages/about.html"><i class="fas fa-info-circle"></i> عن المنصة</a>
+        <a href="customer-web/pages/track.html"><i class="fas fa-map-pin"></i> تتبع الطلب</a>
+        <a href="customer-web/pages/contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a>
+        <hr />
+        <a href="admin-dashboard/pages/login.html" class="btn btn-outline btn-sm">تسجيل الدخول</a>
+        <a href="customer-app/pages/register.html" class="btn btn-primary btn-sm">انضم الآن</a>
+    </div>
+
+    <!-- ==========================================
+    HERO
+    ========================================== -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">
+                <i class="fas fa-rocket"></i> المنصة الرائدة في اليمن
+            </div>
+            <h1>
+                توصيل سريع وآمن<br />
+                <span class="highlight">لكل أنحاء اليمن</span>
+            </h1>
+            <p>
+                منصة متكاملة لإدارة الطلبات والسائقين والعملاء. نوفر لك تجربة
+                توصيل سلسة مع أحدث التقنيات وأفضل الكوادر.
+            </p>
+            <div class="hero-actions">
+                <a href="customer-app/pages/register.html" class="btn btn-white btn-lg">
+                    <i class="fas fa-play"></i> ابدأ الآن
+                </a>
+                <a href="customer-web/pages/services.html" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.3);color:white;">
+                    <i class="fas fa-info-circle"></i> تعرف علينا
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="number">10K+</div>
+                    <div class="label">طلبات منجزة</div>
+                </div>
+                <div class="stat">
+                    <div class="number">500+</div>
+                    <div class="label">سائق نشط</div>
+                </div>
+                <div class="stat">
+                    <div class="number">4.9★</div>
+                    <div class="label">تقييم العملاء</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+    PORTAL CARDS
+    ========================================== -->
+    <section class="portals">
+        <div class="container">
+            <h2 class="section-title">اختر بوابتك</h2>
+            <p class="section-sub">جميع حلول التوصيل في مكان واحد</p>
+
+            <div class="portal-grid">
+                <!-- لوحة التحكم -->
+                <a href="admin-dashboard/pages/dashboard.html" class="portal-card">
+                    <div class="icon blue"><i class="fas fa-chart-pie"></i></div>
+                    <h3>لوحة التحكم</h3>
+                    <p>إدارة كاملة للمنصة والإحصائيات</p>
+                    <span class="tag">مدير النظام</span>
+                </a>
+
+                <!-- الموقع الرئيسي -->
+                <a href="customer-web/pages/index.html" class="portal-card">
+                    <div class="icon purple"><i class="fas fa-globe"></i></div>
+                    <h3>الموقع الرئيسي</h3>
+                    <p>واجهة العملاء لعرض الخدمات</p>
+                    <span class="tag">عميل - ويب</span>
+                </a>
+
+                <!-- تطبيق العميل -->
+                <a href="customer-app/pages/home.html" class="portal-card">
+                    <div class="icon green"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>تطبيق العميل</h3>
+                    <p>طلب وتتبع مباشر من هاتفك</p>
+                    <span class="tag">عميل - موبايل</span>
+                </a>
+
+                <!-- تطبيق السائق -->
+                <a href="driver-app/pages/dashboard.html" class="portal-card">
+                    <div class="icon orange"><i class="fas fa-user-check"></i></div>
+                    <h3>تطبيق السائق</h3>
+                    <p>إدارة الرحلات والطلبات</p>
+                    <span class="tag">سائق</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+    FEATURES
+    ========================================== -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">لماذا نحن؟</h2>
+            <p class="section-sub">مميزات تجعلنا الخيار الأول</p>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-bolt"></i>
+                    <h4>توصيل سريع</h4>
+                    <p>أسرع وقت مع سائقين محترفين</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>آمن وموثوق</h4>
+                    <p>جميع السائقين موثقون</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h4>تتبع مباشر</h4>
+                    <p>متابعة الطلب لحظة بلحظة</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-credit-card"></i>
+                    <h4>دفع مرن</h4>
+                    <p>نقداً، بطاقة، محفظة رقمية</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-headset"></i>
+                    <h4>دعم 24/7</h4>
+                    <p>فريق دعم متاح طوال اليوم</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h4>أسعار تنافسية</h4>
+                    <p>عروض وخصومات مستمرة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+    CTA
+    ========================================== -->
+    <section class="cta">
+        <h2>جاهز لتجربة التوصيل المثالية؟</h2>
+        <p>انضم إلى آلاف العملاء الذين يثقون في منصتنا</p>
+        <a href="customer-app/pages/register.html" class="btn btn-white btn-lg">
+            <i class="fas fa-rocket"></i> ابدأ الآن
+        </a>
+    </section>
+
+    <!-- ==========================================
+    FOOTER
+    ========================================== -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-col">
+                <div class="logo">
+                    <i class="fas fa-truck-fast"></i> توصيل
+                </div>
+                <p>منصتك الموثوقة لتوصيل الطرود والطلبات في جميع أنحاء اليمن.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>روابط سريعة</h4>
+                <a href="index.html">الرئيسية</a>
+                <a href="customer-web/pages/services.html">الخدمات</a>
+                <a href="customer-web/pages/about.html">من نحن</a>
+                <a href="customer-web/pages/contact.html">اتصل بنا</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>المنصات</h4>
+                <a href="admin-dashboard/pages/dashboard.html">لوحة التحكم</a>
+                <a href="customer-web/pages/index.html">الموقع الرئيسي</a>
+                <a href="customer-app/pages/home.html">تطبيق العميل</a>
+                <a href="driver-app/pages/dashboard.html">تطبيق السائق</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>تواصل معنا</h4>
+                <p><i class="fas fa-phone" style="color:var(--primary);"></i> +967 770 200 970</p>
+                <p><i class="fas fa-envelope" style="color:var(--primary);"></i> info@delivery.ye</p>
+                <p><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> صنعاء، اليمن</p>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 منصة التوصيل المتكاملة. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+    SCRIPTS
+    ========================================== -->
+    <script>
+        /**
+         * تبديل قائمة الهامبرغر للجوال
+         */
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+
+            if (menu) {
+                menu.classList.toggle('active');
+                if (icon) {
+                    icon.classList.toggle('fa-bars');
+                    icon.classList.toggle('fa-times');
+                }
+            }
+        }
+
+        /**
+         * إغلاق القائمة عند الضغط خارجها
+         */
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-toggle');
+
+            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('active');
+                const icon = document.getElementById('menuIcon');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
+        });
+
+        /**
+         * إغلاق القائمة عند الضغط على Esc
+         */
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const menu = document.getElementById('mobileMenu');
+                const icon = document.getElementById('menuIcon');
+                if (menu && menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                    if (icon) {
+                        icon.classList.add('fa-bars');
+                        icon.classList.remove('fa-times');
+                    }
+                }
+            }
+        });
+
+        console.log('🚀 منصة التوصيل المتكاملة - تم التحميل بنجاح!');
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>العملاء - نظام TechNomads للتوصيل</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ============================================
+           CUSTOMERS PAGE SPECIFIC STYLES
+           ============================================ */
+
+        /* Customer Card View (Mobile) */
+        .customer-card-view {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .customer-card-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .customer-card-item:active {
+            transform: scale(0.98);
+        }
+
+        .customer-card-item .customer-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .customer-card-item .customer-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .customer-card-item .customer-name {
+            font-weight: 800;
+            font-size: 15px;
+            flex: 1;
+        }
+
+        .customer-card-item .customer-phone {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .customer-card-item .customer-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 12px;
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .customer-card-item .customer-details .label {
+            color: var(--gray-light);
+            font-size: 10px;
+        }
+
+        .customer-card-item .customer-details .value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .customer-card-item .customer-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .customer-card-item .customer-actions .btn {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 12px;
+            min-height: 36px;
+            border-radius: 8px;
+            justify-content: center;
+        }
+
+        .customer-card-item .customer-rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--warning);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .customer-card-view {
+                display: flex !important;
+            }
+
+            .table-container .customer-table-view {
+                display: none;
+            }
+
+            .customer-card-item .customer-details {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .customer-card-item .customer-actions .btn {
+                font-size: 11px;
+                padding: 6px 10px;
+                min-height: 32px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .customer-card-view {
+                display: none !important;
+            }
+            .table-container .customer-table-view {
+                display: table;
+            }
+        }
+
+        /* Customer Stats */
+        .customer-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .customer-stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .customer-stat-card .stat-number {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .customer-stat-card .stat-label {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        .customer-stat-card .stat-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .customer-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .customer-stat-card {
+                padding: 10px 12px;
+            }
+
+            .customer-stat-card .stat-number {
+                font-size: 18px;
+            }
+
+            .customer-stat-card .stat-label {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .customer-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+
+            .customer-stat-card {
+                padding: 8px 10px;
+            }
+
+            .customer-stat-card .stat-number {
+                font-size: 16px;
+            }
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-bar .search-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: var(--transition);
+            background: var(--white);
+            min-width: 150px;
+        }
+
+        .search-bar .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+        }
+
+        .search-bar .search-input::placeholder {
+            color: var(--gray-light);
+        }
+
+        @media (max-width: 768px) {
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .search-bar .search-input {
+                font-size: 16px;
+                padding: 12px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-truck-fast"></i>
+            </div>
+            <div class="sidebar-brand">TechNomads</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">القائمة الرئيسية</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>لوحة التحكم</span>
+                </a>
+                <a href="orders.html" class="nav-item">
+                    <i class="fas fa-box"></i>
+                    <span>الطلبات</span>
+                    <span class="nav-badge">24</span>
+                </a>
+                <a href="drivers.html" class="nav-item">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>السائقين</span>
+                    <span class="nav-badge">5</span>
+                </a>
+                <a href="customers.html" class="nav-item active">
+                    <i class="fas fa-users"></i>
+                    <span>العملاء</span>
+                    <span class="nav-badge" id="customersBadge">5</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">الإدارة</div>
+                <a href="zones.html" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>المناطق والأسعار</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>التقارير</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">م</div>
+                <div class="user-info">
+                    <div class="user-name">مدير النظام</div>
+                    <div class="user-role">مسؤول</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="mobile-menu-btn" onclick="toggleMobileSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-search">
+                <input type="text" placeholder="بحث عن عميل..." id="searchInput" onkeyup="searchCustomers(event)">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+                <button class="header-btn" onclick="refreshCustomers()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="header-btn" onclick="openAddCustomerModal()">
+                    <i class="fas fa-user-plus"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Search -->
+        <div class="mobile-search" style="display: none;">
+            <input type="text" placeholder="بحث عن عميل..." id="mobileSearchInput" onkeyup="searchCustomers(event)">
+            <button onclick="performMobileSearch()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">العملاء</h1>
+                    <p class="page-subtitle">إدارة جميع العملاء في النظام</p>
+                </div>
+                <button class="btn btn-primary" onclick="openAddCustomerModal()">
+                    <i class="fas fa-plus"></i>
+                    إضافة عميل
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="customer-stats-grid" id="customerStats">
+                <div class="customer-stat-card">
+                    <span class="stat-icon" style="color: var(--primary);">👥</span>
+                    <div class="stat-number" id="totalCustomers">0</div>
+                    <div class="stat-label">إجمالي العملاء</div>
+                </div>
+                <div class="customer-stat-card">
+                    <span class="stat-icon" style="color: var(--success);">🆕</span>
+                    <div class="stat-number" id="newCustomers">0</div>
+                    <div class="stat-label">جدد هذا الشهر</div>
+                </div>
+                <div class="customer-stat-card">
+                    <span class="stat-icon" style="color: var(--warning);">📦</span>
+                    <div class="stat-number" id="avgOrders">0</div>
+                    <div class="stat-label">متوسط الطلبات</div>
+                </div>
+                <div class="customer-stat-card">
+                    <span class="stat-icon" style="color: var(--danger);">⭐</span>
+                    <div class="stat-number" id="avgRating">0</div>
+                    <div class="stat-label">متوسط التقييم</div>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="بحث عن عميل بالاسم أو الهاتف..." id="searchBarInput" onkeyup="searchCustomers(event)">
+                <select class="form-select" style="width: auto; min-width: 120px; padding: 10px 14px; border-radius: 10px;" id="zoneFilter" onchange="filterByZone()">
+                    <option value="all">جميع المناطق</option>
+                    <option value="صنعاء">صنعاء</option>
+                    <option value="عدن">عدن</option>
+                    <option value="تعز">تعز</option>
+                    <option value="الحديدة">الحديدة</option>
+                    <option value="إب">إب</option>
+                </select>
+            </div>
+
+            <!-- Customers Table -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">جميع العملاء</h3>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <span style="font-size: 12px; color: var(--gray);">إجمالي: <strong id="totalCustomersCount">0</strong></span>
+                        <button class="btn btn-outline btn-sm" onclick="exportCustomers()">
+                            <i class="fas fa-file-export"></i>
+                            <span class="hide-mobile">تصدير</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table View (Desktop) -->
+                <div class="table-container">
+                    <table class="customer-table-view">
+                        <thead>
+                            <tr>
+                                <th>العميل</th>
+                                <th>الهاتف</th>
+                                <th>المنطقة</th>
+                                <th>الطلبات</th>
+                                <th>الإجمالي</th>
+                                <th>التقييم</th>
+                                <th>تاريخ التسجيل</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersTableBody">
+                            <!-- Generated by JS -->
+                        </tbody>
+                    </table>
+
+                    <!-- Card View (Mobile) -->
+                    <div class="customer-card-view" id="customersCardContainer">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Customer Modal -->
+    <div class="modal-overlay" id="addCustomerModal">
+        <div class="modal">
+            <div class="modal-drag-handle"></div>
+            <div class="modal-header">
+                <h3 class="modal-title">إضافة عميل جديد</h3>
+                <button class="modal-close" onclick="closeAddCustomerModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addCustomerForm" onsubmit="submitAddCustomer(event)">
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">الاسم الكامل</label>
+                            <input type="text" class="form-input" placeholder="اسم العميل" required id="customerName">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">رقم الهاتف</label>
+                            <input type="tel" class="form-input" placeholder="+967" required id="customerPhone">
+                        </div>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">البريد الإلكتروني</label>
+                            <input type="email" class="form-input" placeholder="example@email.com" id="customerEmail">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">المنطقة</label>
+                            <select class="form-select" required id="customerZone">
+                                <option value="">اختر</option>
+                                <option>صنعاء</option>
+                                <option>عدن</option>
+                                <option>تعز</option>
+                                <option>الحديدة</option>
+                                <option>إب</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">العنوان</label>
+                        <input type="text" class="form-input" placeholder="العنوان بالتفصيل" id="customerAddress">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeAddCustomerModal()">إلغاء</button>
+                <button class="btn btn-primary" onclick="submitAddCustomer(event)">
+                    <i class="fas fa-user-plus"></i>
+                    إضافة
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Details Modal -->
+    <div class="modal-overlay" id="customerDetailsModal">
+        <div class="modal">
+            <div class="modal-drag-handle"></div>
+            <div class="modal-header">
+                <h3 class="modal-title" id="customerDetailsTitle">تفاصيل العميل</h3>
+                <button class="modal-close" onclick="closeCustomerDetails()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="customerDetailsBody">
+                <!-- Generated by JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeCustomerDetails()">إغلاق</button>
+                <button class="btn btn-primary" onclick="editCustomerFromDetails()">
+                    <i class="fas fa-edit"></i> تعديل
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Dropdown -->
+    <div class="notifications-dropdown" id="notificationsDropdown" style="display: none;">
+        <div class="notifications-header">
+            <span>الإشعارات</span>
+            <button onclick="markAllRead()">تحديد الكل كمقروء</button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Generated by JS -->
+        </div>
+    </div>
+
+    <script src="../../shared/js/utils.js"></script>
+    <script src="../../shared/js/constants.js"></script>
+    <script src="../../shared/js/i18n.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/mobile.js"></script>
+
+    <script>
+        // ============================================
+        // CUSTOMERS PAGE
+        // ============================================
+
+        let allCustomers = [];
+        let filteredCustomers = [];
+
+        // ============================================
+        // LOAD CUSTOMERS
+        // ============================================
+        function loadCustomers() {
+            allCustomers = [
+                { id: 1, name: 'محمد عبدالله', phone: '+967 770 200 970', zone: 'صنعاء', orders: 45, total: 675000, rating: 4.9, joined: '2024-01-15', avatar: 'م', address: 'شارع تعز، صنعاء' },
+                { id: 2, name: 'فاطمة أحمد', phone: '+967 771 300 971', zone: 'عدن', orders: 32, total: 480000, rating: 4.8, joined: '2024-02-20', avatar: 'ف', address: 'حي كريتر، عدن' },
+                { id: 3, name: 'عبدالرحمن صالح', phone: '+967 772 400 972', zone: 'تعز', orders: 28, total: 420000, rating: 4.7, joined: '2024-03-10', avatar: 'ع', address: 'حي العصيفير، تعز' },
+                { id: 4, name: 'سارة محمد', phone: '+967 773 500 973', zone: 'الحديدة', orders: 22, total: 330000, rating: 4.6, joined: '2024-04-05', avatar: 'س', address: 'حي الميناء، الحديدة' },
+                { id: 5, name: 'خالد عمر', phone: '+967 774 600 974', zone: 'إب', orders: 18, total: 270000, rating: 4.5, joined: '2024-05-12', avatar: 'خ', address: 'حي القاهرة، إب' }
+            ];
+
+            filteredCustomers = [...allCustomers];
+            updateStats();
+            renderCustomers();
+        }
+
+        // ============================================
+        // UPDATE STATS
+        // ============================================
+        function updateStats() {
+            const total = allCustomers.length;
+            const newCustomers = Math.floor(Math.random() * 20) + 5;
+            const avgOrders = total > 0 ? (allCustomers.reduce((sum, c) => sum + c.orders, 0) / total) : 0;
+            const avgRating = total > 0 ? (allCustomers.reduce((sum, c) => sum + c.rating, 0) / total) : 0;
+
+            document.getElementById('totalCustomers').textContent = total;
+            document.getElementById('newCustomers').textContent = newCustomers;
+            document.getElementById('avgOrders').textContent = avgOrders.toFixed(1);
+            document.getElementById('avgRating').textContent = avgRating.toFixed(1);
+            document.getElementById('totalCustomersCount').textContent = total;
+            document.getElementById('customersBadge').textContent = total;
+        }
+
+        // ============================================
+        // RENDER CUSTOMERS
+        // ============================================
+        function renderCustomers() {
+            const tbody = document.getElementById('customersTableBody');
+            const cardContainer = document.getElementById('customersCardContainer');
+
+            if (filteredCustomers.length === 0) {
+                const empty = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 30px; color: var(--gray);">
+                            <i class="fas fa-users" style="font-size: 32px; display: block; margin-bottom: 8px;"></i>
+                            لا يوجد عملاء
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML = empty;
+                cardContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <h3>لا يوجد عملاء</h3>
+                        <p>لم يتم العثور على عملاء مطابقين للبحث</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Table rows
+            tbody.innerHTML = filteredCustomers.map(c => `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">
+                                ${c.avatar || c.name.charAt(0)}
+                            </div>
+                            <div style="font-weight: 700; font-size: 14px;">${c.name}</div>
+                        </div>
+                    </td>
+                    <td style="font-size: 13px;">${c.phone}</td>
+                    <td>${c.zone}</td>
+                    <td>${c.orders}</td>
+                    <td><strong>${Number(c.total).toLocaleString()} ر.ي</strong></td>
+                    <td style="color: var(--warning);"><i class="fas fa-star"></i> ${c.rating}</td>
+                    <td style="font-size: 12px;">${formatDate(c.joined)}</td>
+                    <td>
+                        <button class="btn btn-icon" style="color: var(--primary);" onclick="viewCustomer(${c.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-icon" style="color: var(--info);" onclick="editCustomer(${c.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-icon" style="color: var(--danger);" onclick="deleteCustomer(${c.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Card view (mobile)
+            cardContainer.innerHTML = filteredCustomers.map(c => `
+                <div class="customer-card-item">
+                    <div class="customer-header">
+                        <div class="customer-avatar">${c.avatar || c.name.charAt(0)}</div>
+                        <div>
+                            <div class="customer-name">${c.name}</div>
+                            <div class="customer-phone">${c.phone}</div>
+                        </div>
+                        <div style="margin-right: auto;">
+                            <span class="customer-rating"><i class="fas fa-star"></i> ${c.rating}</span>
+                        </div>
+                    </div>
+                    <div class="customer-details">
+                        <div><span class="label">المنطقة:</span> <span class="value">${c.zone}</span></div>
+                        <div><span class="label">الطلبات:</span> <span class="value">${c.orders}</span></div>
+                        <div><span class="label">الإجمالي:</span> <span class="value">${Number(c.total).toLocaleString()} ر.ي</span></div>
+                        <div><span class="label">تاريخ التسجيل:</span> <span class="value">${formatDate(c.joined)}</span></div>
+                        <div style="grid-column: span 2;"><span class="label">العنوان:</span> <span class="value">${c.address || 'غير متوفر'}</span></div>
+                    </div>
+                    <div class="customer-actions">
+                        <button class="btn btn-outline btn-sm" onclick="viewCustomer(${c.id})">
+                            <i class="fas fa-eye"></i> عرض
+                        </button>
+                        <button class="btn btn-primary btn-sm" onclick="editCustomer(${c.id})">
+                            <i class="fas fa-edit"></i> تعديل
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteCustomer(${c.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // HELPERS
+        // ============================================
+        function formatDate(date) {
+            const d = new Date(date);
+            return d.toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        // ============================================
+        // SEARCH & FILTER
+        // ============================================
+        function searchCustomers(event) {
+            const query = event.target.value.trim().toLowerCase();
+            const zone = document.getElementById('zoneFilter').value;
+
+            let filtered = [...allCustomers];
+
+            if (query) {
+                filtered = filtered.filter(c =>
+                    c.name.toLowerCase().includes(query) ||
+                    c.phone.includes(query) ||
+                    c.zone.toLowerCase().includes(query)
+                );
+            }
+
+            if (zone !== 'all') {
+                filtered = filtered.filter(c => c.zone === zone);
+            }
+
+            filteredCustomers = filtered;
+            renderCustomers();
+
+            if (filtered.length === 0 && query) {
+                showToast('لا توجد نتائج مطابقة للبحث', 'info');
+            }
+        }
+
+        function filterByZone() {
+            searchCustomers({ target: document.getElementById('searchBarInput') });
+        }
+
+        function performMobileSearch() {
+            const input = document.getElementById('mobileSearchInput');
+            if (input && input.value.trim()) {
+                searchCustomers({ target: input });
+            }
+        }
+
+        // ============================================
+        // CUSTOMER ACTIONS
+        // ============================================
+        function viewCustomer(id) {
+            const customer = allCustomers.find(c => c.id === id);
+            if (!customer) return;
+
+            const modal = document.getElementById('customerDetailsModal');
+            const title = document.getElementById('customerDetailsTitle');
+            const body = document.getElementById('customerDetailsBody');
+
+            title.textContent = `تفاصيل العميل: ${customer.name}`;
+
+            body.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                    <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800;">
+                        ${customer.avatar || customer.name.charAt(0)}
+                    </div>
+                    <div>
+                        <h3 style="font-size: 18px;">${customer.name}</h3>
+                        <div style="color: var(--gray); font-size: 13px;">${customer.phone}</div>
+                        <div style="color: var(--warning); font-size: 14px; margin-top: 4px;">
+                            <i class="fas fa-star"></i> ${customer.rating} (${customer.orders} طلب)
+                        </div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div><strong>المنطقة:</strong> ${customer.zone}</div>
+                    <div><strong>إجمالي الطلبات:</strong> ${customer.orders}</div>
+                    <div><strong>الإجمالي المنفق:</strong> ${Number(customer.total).toLocaleString()} ر.ي</div>
+                    <div><strong>تاريخ التسجيل:</strong> ${formatDate(customer.joined)}</div>
+                    <div style="grid-column: span 2;"><strong>العنوان:</strong> ${customer.address || 'غير متوفر'}</div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function closeCustomerDetails() {
+            document.getElementById('customerDetailsModal').classList.remove('active');
+        }
+
+        function editCustomerFromDetails() {
+            closeCustomerDetails();
+            showToast('جاري فتح صفحة التعديل...', 'info');
+        }
+
+        function editCustomer(id) {
+            showToast('جاري فتح صفحة التعديل...', 'info');
+        }
+
+        function deleteCustomer(id) {
+            const customer = allCustomers.find(c => c.id === id);
+            if (!customer) return;
+
+            if (confirm(`هل أنت متأكد من حذف العميل "${customer.name}"؟`)) {
+                allCustomers = allCustomers.filter(c => c.id !== id);
+                filteredCustomers = [...allCustomers];
+                updateStats();
+                renderCustomers();
+                showToast(`تم حذف العميل ${customer.name}`, 'success');
+            }
+        }
+
+        // ============================================
+        // ADD CUSTOMER
+        // ============================================
+        function openAddCustomerModal() {
+            document.getElementById('addCustomerModal').classList.add('active');
+            document.getElementById('addCustomerForm').reset();
+        }
+
+        function closeAddCustomerModal() {
+            document.getElementById('addCustomerModal').classList.remove('active');
+        }
+
+        function submitAddCustomer(event) {
+            event.preventDefault();
+            const form = document.getElementById('addCustomerForm');
+
+            if (form.checkValidity()) {
+                const newCustomer = {
+                    id: allCustomers.length + 1,
+                    name: document.getElementById('customerName').value,
+                    phone: document.getElementById('customerPhone').value,
+                    email: document.getElementById('customerEmail').value,
+                    zone: document.getElementById('customerZone').value,
+                    address: document.getElementById('customerAddress').value || '',
+                    orders: 0,
+                    total: 0,
+                    rating: 0,
+                    joined: new Date().toISOString().split('T')[0],
+                    avatar: document.getElementById('customerName').value.charAt(0)
+                };
+
+                allCustomers.push(newCustomer);
+                filteredCustomers = [...allCustomers];
+                updateStats();
+                renderCustomers();
+                closeAddCustomerModal();
+                form.reset();
+                showToast('تم إضافة العميل بنجاح!', 'success');
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        // ============================================
+        // EXPORT
+        // ============================================
+        function exportCustomers() {
+            showToast('جاري تصدير البيانات...', 'info');
+            setTimeout(() => {
+                showToast('تم تصدير البيانات بنجاح', 'success');
+            }, 1500);
+        }
+
+        // ============================================
+        // REFRESH
+        // ============================================
+        function refreshCustomers() {
+            showToast('جاري تحديث البيانات...', 'info');
+            setTimeout(() => {
+                loadCustomers();
+                showToast('تم التحديث بنجاح', 'success');
+            }, 1000);
+        }
+
+        // ============================================
+        // NOTIFICATIONS
+        // ============================================
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationsDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            if (dropdown.style.display === 'block') {
+                loadNotifications();
+            }
+        }
+
+        function loadNotifications() {
+            const list = document.getElementById('notificationsList');
+            const notifications = [
+                { id: 1, icon: 'fa-box', color: 'primary', text: 'طلب جديد #1234 من محمد عبدالله', time: 'منذ 2 دقيقة' },
+                { id: 2, icon: 'fa-motorcycle', color: 'success', text: 'السائق أحمد علي بدأ التوصيل', time: 'منذ 5 دقائق' },
+                { id: 3, icon: 'fa-money-bill-wave', color: 'warning', text: 'دفعة جديدة بقيمة 15,000 ر.ي', time: 'منذ 12 دقيقة' }
+            ];
+
+            list.innerHTML = notifications.map(n => `
+                <div class="notification-item">
+                    <div class="notification-icon" style="background: rgba(99,102,241,0.1); color: var(--${n.color});">
+                        <i class="fas ${n.icon}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-text">${n.text}</div>
+                        <div class="notification-time">${n.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function markAllRead() {
+            document.querySelector('.header-btn .badge').textContent = '0';
+            document.getElementById('notificationsDropdown').style.display = 'none';
+            showToast('تم تحديد الكل كمقروء', 'success');
+        }
+
+        // ============================================
+        // TOAST
+        // ============================================
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.style.cssText = `
+                position: fixed;
+                top: ${window.innerWidth <= 768 ? '70px' : '20px'};
+                left: 50%;
+                transform: translateX(-50%) translateY(-100px);
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#6366f1'};
+                color: white;
+                padding: ${window.innerWidth <= 768 ? '12px 20px' : '15px 30px'};
+                border-radius: 12px;
+                font-weight: 700;
+                font-size: ${window.innerWidth <= 768 ? '13px' : '14px'};
+                z-index: 9999;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                transition: transform 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                max-width: 92%;
+                font-family: 'Tajawal', sans-serif;
+                text-align: right;
+            `;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="font-size: ${window.innerWidth <= 768 ? '16px' : '18px'}; flex-shrink: 0;"></i> ${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            }, 10);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(-100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCustomers();
+        });
+
+        // Expose functions
+        window.searchCustomers = searchCustomers;
+        window.filterByZone = filterByZone;
+        window.performMobileSearch = performMobileSearch;
+        window.viewCustomer = viewCustomer;
+        window.closeCustomerDetails = closeCustomerDetails;
+        window.editCustomerFromDetails = editCustomerFromDetails;
+        window.editCustomer = editCustomer;
+        window.deleteCustomer = deleteCustomer;
+        window.openAddCustomerModal = openAddCustomerModal;
+        window.closeAddCustomerModal = closeAddCustomerModal;
+        window.submitAddCustomer = submitAddCustomer;
+        window.exportCustomers = exportCustomers;
+        window.refreshCustomers = refreshCustomers;
+        window.toggleNotifications = toggleNotifications;
+        window.markAllRead = markAllRead;
+        window.showToast = showToast;
+    </script>
+</body>
+</html>

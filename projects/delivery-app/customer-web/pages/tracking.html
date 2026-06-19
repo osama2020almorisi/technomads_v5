@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="تتبع مفصل - TechNomads">
+    <title>تتبع مفصل - TechNomads</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/web.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .tracking-page {
+            padding: 40px 20px 60px;
+            background: var(--light);
+            min-height: calc(100vh - 200px);
+        }
+        .tracking-page .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .tracking-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+        .tracking-card .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray);
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            margin-bottom: 16px;
+        }
+        .tracking-card .back-link:hover {
+            color: var(--primary);
+        }
+        .tracking-card .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tracking-card .order-header .order-id {
+            font-size: 22px;
+            font-weight: 900;
+        }
+        .tracking-card .order-header .status-badge {
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .tracking-card .order-header .status-badge.delivering {
+            background: rgba(99,102,241,0.1);
+            color: var(--primary);
+        }
+        .tracking-card .order-header .status-badge.delivered {
+            background: rgba(16,185,129,0.1);
+            color: var(--secondary);
+        }
+        .tracking-card .order-header .status-badge.pending {
+            background: rgba(245,158,11,0.1);
+            color: var(--warning);
+        }
+        .tracking-card .order-header .status-badge.cancelled {
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+        }
+        /* خريطة وهمية */
+        .tracking-card .map-container {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            border-radius: 14px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        .tracking-card .map-container .map-overlay {
+            text-align: center;
+            color: var(--gray);
+        }
+        .tracking-card .map-container .map-overlay i {
+            font-size: 48px;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 8px;
+        }
+        .tracking-card .map-container .map-overlay .driver-marker {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            animation: pulse-marker 2s infinite;
+        }
+        @keyframes pulse-marker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .tracking-card .progress-container {
+            margin: 16px 0 20px;
+        }
+        .tracking-card .progress-container .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .tracking-card .progress-container .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            width: 60%;
+        }
+        .tracking-card .progress-container .steps {
+            display: flex;
+            justify-content: space-between;
+        }
+        .tracking-card .progress-container .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+        }
+        .tracking-card .progress-container .step .dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        .tracking-card .progress-container .step.completed .dot {
+            background: var(--secondary);
+            color: white;
+        }
+        .tracking-card .progress-container .step.active .dot {
+            background: var(--primary);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .tracking-card .progress-container .step .label {
+            font-size: 10px;
+            color: var(--gray);
+            font-weight: 600;
+            text-align: center;
+        }
+        .tracking-card .progress-container .step.completed .label {
+            color: var(--secondary);
+        }
+        .tracking-card .progress-container .step.active .label {
+            color: var(--primary);
+        }
+        .tracking-card .order-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .tracking-card .order-details .detail {
+            background: var(--light);
+            padding: 12px 16px;
+            border-radius: 10px;
+        }
+        .tracking-card .order-details .detail .label {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        .tracking-card .order-details .detail .value {
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .tracking-card .driver-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: var(--light);
+            border-radius: 12px;
+            margin-top: 12px;
+        }
+        .tracking-card .driver-info .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .tracking-card .driver-info .info {
+            flex: 1;
+        }
+        .tracking-card .driver-info .info .name {
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .tracking-card .driver-info .info .rating {
+            font-size: 13px;
+            color: var(--warning);
+        }
+        .tracking-card .driver-info .actions {
+            display: flex;
+            gap: 8px;
+        }
+        .tracking-card .driver-info .actions button {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tracking-card .driver-info .actions button:active {
+            transform: scale(0.9);
+        }
+        .tracking-card .driver-info .actions .call-btn {
+            background: rgba(16,185,129,0.1);
+            color: var(--secondary);
+        }
+        .tracking-card .driver-info .actions .msg-btn {
+            background: rgba(59,130,246,0.1);
+            color: var(--info);
+        }
+        .tracking-card .actions-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .tracking-card .actions-row .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 12px;
+            font-size: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            text-align: center;
+        }
+        @media (max-width: 480px) {
+            .tracking-card {
+                padding: 20px 16px;
+            }
+            .tracking-card .order-details {
+                grid-template-columns: 1fr;
+            }
+            .tracking-card .driver-info {
+                flex-wrap: wrap;
+            }
+            .tracking-card .driver-info .actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .tracking-card .actions-row {
+                flex-direction: column;
+            }
+            .tracking-card .map-container {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="services.html">الخدمات</a>
+                <a href="about.html">من نحن</a>
+                <a href="track.html">تتبع الطلب</a>
+                <a href="contact.html">اتصل بنا</a>
+            </nav>
+            <div class="header-right">
+                <a href="login.html" class="btn btn-outline btn-sm">تسجيل الدخول</a>
+                <a href="register.html" class="btn btn-primary btn-sm">انضم الآن</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">الرئيسية</a>
+            <a href="services.html">الخدمات</a>
+            <a href="about.html">من نحن</a>
+            <a href="track.html">تتبع الطلب</a>
+            <a href="contact.html">اتصل بنا</a>
+            <hr>
+            <a href="login.html" class="btn btn-outline btn-sm" style="justify-content:center;">تسجيل الدخول</a>
+            <a href="register.html" class="btn btn-primary btn-sm" style="justify-content:center;">انضم الآن</a>
+        </div>
+    </header>
+
+    <section class="tracking-page">
+        <div class="container">
+            <div class="tracking-card">
+                <a href="track.html" class="back-link">
+                    <i class="fas fa-arrow-right"></i> العودة للتتبع
+                </a>
+
+                <div id="trackingContent">
+                    <!-- سيتم تعبئتها بواسطة JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </div>
+                    <p style="color:var(--gray);font-size:14px;margin-top:8px;line-height:1.6;">
+                        منصتك الموثوقة لتوصيل الطرود والطلبات في جميع أنحاء اليمن.
+                    </p>
+                    <div class="social-links" style="margin-top:12px;display:flex;gap:10px;">
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <a href="index.html">الرئيسية</a>
+                    <a href="services.html">الخدمات</a>
+                    <a href="about.html">من نحن</a>
+                    <a href="contact.html">اتصل بنا</a>
+                </div>
+                <div class="footer-col">
+                    <h4>خدماتنا</h4>
+                    <a href="services.html#fast">توصيل سريع</a>
+                    <a href="services.html#normal">توصيل عادي</a>
+                    <a href="services.html#frozen">توصيل مجمدات</a>
+                    <a href="services.html#food">توصيل مطاعم</a>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--primary);"></i> +967 770 200 970</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--primary);"></i> info@technomads.ye</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> صنعاء، اليمن</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TechNomads. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn i');
+            if (menu) {
+                menu.classList.toggle('active');
+                if (btn) {
+                    btn.classList.toggle('fa-bars');
+                    btn.classList.toggle('fa-times');
+                }
+            }
+        }
+
+        // بيانات الطلبات الوهمية
+        const ordersDB = {
+            '1234': {
+                id: '#1234',
+                status: 'delivering',
+                pickup: 'شارع تعز، جوار البنك المركزي',
+                dropoff: 'حي الصافية، خلف جامع النور',
+                amount: 15000,
+                driver: 'أحمد علي',
+                driverRating: 4.9,
+                driverPhone: '+967771234567',
+                time: 'منذ 5 دقائق',
+                progress: 60,
+                service: 'سريع'
+            },
+            '1235': {
+                id: '#1235',
+                status: 'delivered',
+                pickup: 'شارع الستين',
+                dropoff: 'حي الحصبة',
+                amount: 12000,
+                driver: 'سامي حسن',
+                driverRating: 4.8,
+                driverPhone: '+967771234568',
+                time: 'منذ ساعة',
+                progress: 100,
+                service: 'عادي'
+            },
+            '1229': {
+                id: '#1229',
+                status: 'pending',
+                pickup: 'جولة المصباحي',
+                dropoff: 'حي الحصبة',
+                amount: 9500,
+                driver: null,
+                driverRating: null,
+                driverPhone: null,
+                time: 'منذ 10 دقائق',
+                progress: 20,
+                service: 'مطاعم'
+            }
+        };
+
+        function renderTracking(orderId) {
+            const container = document.getElementById('trackingContent');
+            const order = ordersDB[orderId] || ordersDB['1234'];
+
+            const statusMap = {
+                'pending': { label: 'قيد الانتظار', class: 'pending' },
+                'accepted': { label: 'تم القبول', class: 'pending' },
+                'pickup': { label: 'في الاستلام', class: 'delivering' },
+                'delivering': { label: 'في الطريق', class: 'delivering' },
+                'delivered': { label: 'تم التوصيل', class: 'delivered' },
+                'cancelled': { label: 'ملغي', class: 'cancelled' }
+            };
+
+            const steps = ['pending', 'accepted', 'pickup', 'delivering', 'delivered'];
+            let currentIndex = steps.indexOf(order.status);
+            if (currentIndex === -1) currentIndex = 0;
+            const progress = order.progress || ((currentIndex / (steps.length - 1)) * 100);
+
+            const stepConfig = {
+                'pending': { icon: 'fa-clock', label: 'قيد الانتظار' },
+                'accepted': { icon: 'fa-check', label: 'تم القبول' },
+                'pickup': { icon: 'fa-box', label: 'في الاستلام' },
+                'delivering': { icon: 'fa-truck', label: 'في الطريق' },
+                'delivered': { icon: 'fa-flag-checkered', label: 'تم التوصيل' }
+            };
+
+            const stepsHtml = steps.map((step, index) => {
+                let cls = '';
+                if (index < currentIndex) cls = 'completed';
+                else if (index === currentIndex) cls = 'active';
+                return `
+                    <div class="step ${cls}">
+                        <div class="dot"><i class="fas ${stepConfig[step].icon}"></i></div>
+                        <span class="label">${stepConfig[step].label}</span>
+                    </div>
+                `;
+            }).join('');
+
+            const statusInfo = statusMap[order.status] || statusMap['pending'];
+            const isDelivered = order.status === 'delivered';
+            const isCancelled = order.status === 'cancelled';
+
+            const driverHtml = order.driver && !isCancelled ? `
+                <div class="driver-info">
+                    <div class="avatar">${order.driver.charAt(0)}</div>
+                    <div class="info">
+                        <div class="name">${order.driver}</div>
+                        ${order.driverRating ? `<div class="rating"><i class="fas fa-star"></i> ${order.driverRating}</div>` : ''}
+                    </div>
+                    <div class="actions">
+                        ${order.driverPhone ? `
+                            <button class="call-btn" onclick="window.location.href='tel:${order.driverPhone}'" title="اتصال">
+                                <i class="fas fa-phone"></i>
+                            </button>
+                        ` : ''}
+                        <button class="msg-btn" onclick="showToast('جاري فتح المحادثة...', 'info')" title="رسالة">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                </div>
+            ` : '';
+
+            container.innerHTML = `
+                <div class="order-header">
+                    <span class="order-id">${order.id}</span>
+                    <span class="status-badge ${statusInfo.class}">${statusInfo.label}</span>
+                </div>
+
+                <div class="map-container">
+                    <div class="map-overlay">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>📍 تتبع الطلب في الوقت الفعلي</p>
+                        ${order.status === 'delivering' ? '<div class="driver-marker"><i class="fas fa-truck"></i> السائق في الطريق</div>' : ''}
+                    </div>
+                </div>
+
+                ${!isCancelled ? `
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="fill" style="width:${Math.min(progress, 100)}%;"></div>
+                        </div>
+                        <div class="steps">${stepsHtml}</div>
+                    </div>
+                ` : `
+                    <div style="text-align:center;padding:12px;background:rgba(239,68,68,0.08);border-radius:10px;color:var(--danger);font-weight:700;">
+                        <i class="fas fa-times-circle"></i> تم إلغاء هذا الطلب
+                    </div>
+                `}
+
+                <div class="order-details">
+                    <div class="detail">
+                        <div class="label">نقطة الاستلام</div>
+                        <div class="value">${order.pickup}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">نقطة التوصيل</div>
+                        <div class="value">${order.dropoff}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">المبلغ</div>
+                        <div class="value">${order.amount.toLocaleString()} ر.ي</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">نوع الخدمة</div>
+                        <div class="value">${order.service || 'عادي'}</div>
+                    </div>
+                </div>
+
+                ${driverHtml}
+
+                <div class="actions-row">
+                    ${!isDelivered && !isCancelled ? `
+                        <button class="btn btn-primary" onclick="showToast('جاري تحديث الموقع...', 'info')">
+                            <i class="fas fa-sync"></i> تحديث الموقع
+                        </button>
+                    ` : `
+                        <a href="new-order.html" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> طلب جديد
+                        </a>
+                    `}
+                    <a href="orders.html" class="btn btn-outline">
+                        <i class="fas fa-list"></i> كل الطلبات
+                    </a>
+                </div>
+
+                <div style="text-align:center;margin-top:12px;color:var(--gray-light);font-size:12px;">
+                    آخر تحديث: ${new Date().toLocaleTimeString('ar-EG')}
+                </div>
+            `;
+        }
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.toast-container');
+            if (existing) existing.remove();
+            const container = document.createElement('div');
+            container.className = 'toast-container';
+            container.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 9999;
+                max-width: 90%;
+                width: 400px;
+            `;
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.style.cssText = `
+                padding: 14px 20px;
+                border-radius: 10px;
+                font-weight: 700;
+                font-size: 14px;
+                color: white;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                animation: slideDown 0.4s ease forwards;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1'};
+            `;
+            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i> ${message}`;
+            container.appendChild(toast);
+            document.body.appendChild(container);
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.3s ease forwards';
+                setTimeout(() => container.remove(), 300);
+            }, 3000);
+        }
+
+        // قراءة رقم الطلب من URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (id) {
+                renderTracking(id);
+            } else {
+                renderTracking('1234');
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('active');
+                const icon = btn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const menu = document.getElementById('mobileMenu');
+                const btn = document.querySelector('.mobile-menu-btn');
+                if (menu && menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                    const icon = btn?.querySelector('i');
+                    if (icon) {
+                        icon.classList.add('fa-bars');
+                        icon.classList.remove('fa-times');
+                    }
+                }
+            }
+        });
+    </script>
+    <style>
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+    </style>
+</body>
+</html>

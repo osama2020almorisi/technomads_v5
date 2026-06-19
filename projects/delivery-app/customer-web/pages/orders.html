@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="طلباتي - TechNomads">
+    <title>طلباتي - TechNomads</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/web.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .orders-page {
+            padding: 40px 20px 60px;
+            background: var(--light);
+            min-height: calc(100vh - 200px);
+        }
+        .orders-page .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .orders-page .page-header-custom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .orders-page .page-header-custom h2 {
+            font-size: 24px;
+            font-weight: 800;
+        }
+        .orders-page .page-header-custom .btn-new {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        .orders-page .page-header-custom .btn-new:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .orders-page .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .orders-page .filter-tabs .tab {
+            padding: 8px 18px;
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--white);
+        }
+        .orders-page .filter-tabs .tab:hover {
+            border-color: var(--primary);
+        }
+        .orders-page .filter-tabs .tab.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .order-item {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 18px 20px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .order-item:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .order-item .order-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .order-item .order-info .order-id {
+            font-weight: 800;
+            font-size: 16px;
+        }
+        .order-item .order-info .order-meta {
+            font-size: 13px;
+            color: var(--gray);
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .order-item .order-info .order-meta i {
+            width: 16px;
+            color: var(--primary);
+        }
+        .order-item .order-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .order-item .order-status .badge {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .order-item .order-status .badge.pending {
+            background: rgba(245,158,11,0.1);
+            color: var(--warning);
+        }
+        .order-item .order-status .badge.delivering {
+            background: rgba(99,102,241,0.1);
+            color: var(--primary);
+        }
+        .order-item .order-status .badge.delivered {
+            background: rgba(16,185,129,0.1);
+            color: var(--secondary);
+        }
+        .order-item .order-status .badge.cancelled {
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+        }
+        .order-item .order-status .btn-track {
+            padding: 6px 14px;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            color: var(--primary);
+            background: transparent;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .order-item .order-status .btn-track:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .orders-empty {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+        .orders-empty i {
+            font-size: 64px;
+            color: var(--gray-light);
+            display: block;
+            margin-bottom: 12px;
+        }
+        .orders-empty h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .orders-empty p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        @media (max-width: 480px) {
+            .order-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .order-item .order-status {
+                justify-content: space-between;
+            }
+            .orders-page .page-header-custom {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .orders-page .page-header-custom .btn-new {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="services.html">الخدمات</a>
+                <a href="about.html">من نحن</a>
+                <a href="track.html">تتبع الطلب</a>
+                <a href="contact.html">اتصل بنا</a>
+            </nav>
+            <div class="header-right">
+                <a href="login.html" class="btn btn-outline btn-sm">تسجيل الدخول</a>
+                <a href="register.html" class="btn btn-primary btn-sm">انضم الآن</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">الرئيسية</a>
+            <a href="services.html">الخدمات</a>
+            <a href="about.html">من نحن</a>
+            <a href="track.html">تتبع الطلب</a>
+            <a href="contact.html">اتصل بنا</a>
+            <hr>
+            <a href="login.html" class="btn btn-outline btn-sm" style="justify-content:center;">تسجيل الدخول</a>
+            <a href="register.html" class="btn btn-primary btn-sm" style="justify-content:center;">انضم الآن</a>
+        </div>
+    </header>
+
+    <section class="orders-page">
+        <div class="container">
+            <div class="page-header-custom">
+                <h2><i class="fas fa-list" style="color:var(--primary);"></i> طلباتي</h2>
+                <a href="new-order.html" class="btn-new">
+                    <i class="fas fa-plus"></i> طلب جديد
+                </a>
+            </div>
+
+            <div class="filter-tabs">
+                <span class="tab active" data-filter="all" onclick="filterOrders('all')">الكل</span>
+                <span class="tab" data-filter="pending" onclick="filterOrders('pending')">قيد الانتظار</span>
+                <span class="tab" data-filter="delivering" onclick="filterOrders('delivering')">في الطريق</span>
+                <span class="tab" data-filter="delivered" onclick="filterOrders('delivered')">تم التوصيل</span>
+                <span class="tab" data-filter="cancelled" onclick="filterOrders('cancelled')">ملغية</span>
+            </div>
+
+            <div class="orders-list" id="ordersList">
+                <!-- سيتم تعبئتها بواسطة JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </div>
+                    <p style="color:var(--gray);font-size:14px;margin-top:8px;line-height:1.6;">
+                        منصتك الموثوقة لتوصيل الطرود والطلبات في جميع أنحاء اليمن.
+                    </p>
+                    <div class="social-links" style="margin-top:12px;display:flex;gap:10px;">
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <a href="index.html">الرئيسية</a>
+                    <a href="services.html">الخدمات</a>
+                    <a href="about.html">من نحن</a>
+                    <a href="contact.html">اتصل بنا</a>
+                </div>
+                <div class="footer-col">
+                    <h4>خدماتنا</h4>
+                    <a href="services.html#fast">توصيل سريع</a>
+                    <a href="services.html#normal">توصيل عادي</a>
+                    <a href="services.html#frozen">توصيل مجمدات</a>
+                    <a href="services.html#food">توصيل مطاعم</a>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--primary);"></i> +967 770 200 970</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--primary);"></i> info@technomads.ye</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> صنعاء، اليمن</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TechNomads. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn i');
+            if (menu) {
+                menu.classList.toggle('active');
+                if (btn) {
+                    btn.classList.toggle('fa-bars');
+                    btn.classList.toggle('fa-times');
+                }
+            }
+        }
+
+        // بيانات الطلبات الوهمية
+        const ordersData = [
+            { id: '#1234', status: 'delivering', pickup: 'شارع تعز', dropoff: 'حي الصافية', amount: 15000, time: 'منذ 5 دقائق', service: 'سريع' },
+            { id: '#1235', status: 'delivered', pickup: 'شارع الستين', dropoff: 'حي الحصبة', amount: 12000, time: 'منذ ساعة', service: 'عادي' },
+            { id: '#1236', status: 'pending', pickup: 'جولة المصباحي', dropoff: 'حي الحصبة', amount: 9500, time: 'منذ 10 دقائق', service: 'مطاعم' },
+            { id: '#1237', status: 'cancelled', pickup: 'شارع حدة', dropoff: 'حي الروضة', amount: 8000, time: 'منذ 30 دقيقة', service: 'عادي' },
+            { id: '#1238', status: 'delivering', pickup: 'سوق البطحاء', dropoff: 'حي الجراف', amount: 11000, time: 'منذ 8 دقائق', service: 'مجمدات' },
+            { id: '#1239', status: 'delivered', pickup: 'شارع الزراعة', dropoff: 'حي السبعين', amount: 18000, time: 'منذ 2 ساعة', service: 'فوري' },
+        ];
+
+        let currentFilter = 'all';
+
+        function renderOrders(filter = 'all') {
+            const container = document.getElementById('ordersList');
+            const filtered = filter === 'all' ? ordersData : ordersData.filter(o => o.status === filter);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="orders-empty">
+                        <i class="fas fa-inbox"></i>
+                        <h3>لا توجد طلبات</h3>
+                        <p>لم تجد أي طلبات ${filter !== 'all' ? 'بهذه الحالة' : ''}</p>
+                        <a href="new-order.html" class="btn btn-primary" style="margin-top:12px;display:inline-flex;">
+                            <i class="fas fa-plus"></i> طلب جديد
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(order => {
+                const statusMap = {
+                    'pending': 'قيد الانتظار',
+                    'delivering': 'في الطريق',
+                    'delivered': 'تم التوصيل',
+                    'cancelled': 'ملغي'
+                };
+                return `
+                    <div class="order-item" data-status="${order.status}">
+                        <div class="order-info">
+                            <span class="order-id">${order.id}</span>
+                            <div class="order-meta">
+                                <span><i class="fas fa-map-pin"></i> ${order.pickup}</span>
+                                <span><i class="fas fa-flag-checkered"></i> ${order.dropoff}</span>
+                                <span><i class="fas fa-tag"></i> ${order.service}</span>
+                                <span><i class="fas fa-clock"></i> ${order.time}</span>
+                            </div>
+                        </div>
+                        <div class="order-status">
+                            <span class="badge ${order.status}">${statusMap[order.status] || order.status}</span>
+                            <span style="font-weight:700;font-size:14px;">${order.amount.toLocaleString()} ر.ي</span>
+                            <a href="track.html?id=${order.id.replace('#', '')}" class="btn-track">
+                                <i class="fas fa-eye"></i> تتبع
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterOrders(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-tabs .tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.filter === filter);
+            });
+            renderOrders(filter);
+        }
+
+        // تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            renderOrders('all');
+        });
+
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('active');
+                const icon = btn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const menu = document.getElementById('mobileMenu');
+                const btn = document.querySelector('.mobile-menu-btn');
+                if (menu && menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                    const icon = btn?.querySelector('i');
+                    if (icon) {
+                        icon.classList.add('fa-bars');
+                        icon.classList.remove('fa-times');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

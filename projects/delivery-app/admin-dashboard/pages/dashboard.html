@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>لوحة التحكم - نظام TechNomads للتوصيل</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-truck-fast"></i>
+            </div>
+            <div class="sidebar-brand">TechNomads</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">القائمة الرئيسية</div>
+                <a href="dashboard.html" class="nav-item active">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>لوحة التحكم</span>
+                </a>
+                <a href="orders.html" class="nav-item">
+                    <i class="fas fa-box"></i>
+                    <span>الطلبات</span>
+                    <span class="nav-badge">24</span>
+                </a>
+                <a href="drivers.html" class="nav-item">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>السائقين</span>
+                    <span class="nav-badge">5</span>
+                </a>
+                <a href="customers.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>العملاء</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">الإدارة</div>
+                <a href="zones.html" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>المناطق والأسعار</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>التقارير</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">م</div>
+                <div class="user-info">
+                    <div class="user-name">مدير النظام</div>
+                    <div class="user-role">مسؤول</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="mobile-menu-btn" onclick="toggleMobileSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-search">
+                <input type="text" placeholder="بحث عن طلب، سائق، عميل..." id="globalSearch" onkeyup="globalSearch(event)">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge" id="notificationBadge">3</span>
+                </button>
+                <button class="header-btn" onclick="refreshDashboard()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="header-btn" onclick="openNewOrderModal()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Search -->
+        <div class="mobile-search" style="display: none;">
+            <input type="text" placeholder="بحث..." id="mobileSearchInput" onkeyup="globalSearch(event)">
+            <button onclick="performMobileSearch()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">لوحة التحكم</h1>
+                    <p class="page-subtitle" id="currentDateTime">نظرة عامة على أداء النظام اليوم</p>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="btn btn-outline btn-sm" onclick="exportDashboard()">
+                        <i class="fas fa-file-export"></i>
+                        <span class="hide-mobile">تصدير</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="openNewOrderModal()">
+                        <i class="fas fa-plus"></i>
+                        <span class="hide-mobile">طلب جديد</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card animate-fade-in" onclick="navigateTo('orders.html')">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalOrders">1,247</h3>
+                        <p>إجمالي الطلبات</p>
+                        <div class="stat-change up">
+                            <i class="fas fa-arrow-up"></i> 12.5%
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card animate-fade-in" style="animation-delay: 0.1s" onclick="navigateTo('orders.html?status=delivered')">
+                    <div class="stat-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="deliveredOrders">1,089</h3>
+                        <p>طلبات مكتملة</p>
+                        <div class="stat-change up">
+                            <i class="fas fa-arrow-up"></i> 8.2%
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card animate-fade-in" style="animation-delay: 0.2s" onclick="navigateTo('orders.html?status=pending')">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="pendingOrders">24</h3>
+                        <p>طلبات قيد الانتظار</p>
+                        <div class="stat-change down">
+                            <i class="fas fa-arrow-down"></i> 3 جديدة
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card animate-fade-in" style="animation-delay: 0.3s" onclick="navigateTo('reports.html')">
+                    <div class="stat-icon danger">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalRevenue">45,230</h3>
+                        <p>إجمالي الإيرادات</p>
+                        <div class="stat-change up">
+                            <i class="fas fa-arrow-up"></i> 15.3%
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="quick-stats" id="quickStatsContainer">
+                <!-- Generated by JS -->
+            </div>
+
+            <!-- Charts & Tables Row -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
+                <!-- Orders Chart -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">إحصائيات الطلبات</h3>
+                        <select class="form-select" style="width: auto; padding: 4px 12px; font-size: 12px; min-height: 32px;" onchange="changeChartPeriod(this.value)">
+                            <option value="7">آخر 7 أيام</option>
+                            <option value="30" selected>آخر 30 يوم</option>
+                            <option value="90">آخر 3 أشهر</option>
+                        </select>
+                    </div>
+                    <div id="ordersChart" class="chart-container">
+                        <!-- Chart bars will be generated by JS -->
+                    </div>
+                </div>
+
+                <!-- Driver Performance -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">أفضل السائقين</h3>
+                        <button class="btn btn-outline btn-sm" onclick="navigateTo('drivers.html')">عرض الكل</button>
+                    </div>
+                    <div id="topDrivers">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders Table -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">أحدث الطلبات</h3>
+                    <a href="orders.html" class="btn btn-outline btn-sm">عرض الكل</a>
+                </div>
+                <div class="table-container">
+                    <table id="recentOrdersTable">
+                        <thead>
+                            <tr>
+                                <th>رقم الطلب</th>
+                                <th>العميل</th>
+                                <th>المنطقة</th>
+                                <th>السائق</th>
+                                <th>الحالة</th>
+                                <th>المبلغ</th>
+                                <th>الوقت</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- Generated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Activity Feed & Live Map -->
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-top: 16px;">
+                <!-- Activity Feed -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">النشاطات الأخيرة</h3>
+                        <button class="btn btn-outline btn-sm" onclick="refreshActivity()">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="activity-feed" id="activityFeed">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <!-- Live Map -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">تتبع السائقين</h3>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            <span class="status processing" style="font-size: 10px; padding: 2px 8px;">
+                                <span></span> <span id="activeDriversCount">5</span>
+                            </span>
+                            <span class="status pending" style="font-size: 10px; padding: 2px 8px;">
+                                <span></span> <span id="availableDriversCount">3</span>
+                            </span>
+                            <span class="status delivered" style="font-size: 10px; padding: 2px 8px;">
+                                <span></span> <span id="breakDriversCount">2</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="map-container" id="liveMap">
+                        <div class="map-placeholder">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <p id="mapStatus">جاري تحميل الخريطة...</p>
+                            <p class="sub-text">سيتم دمج Google Maps API هنا</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- New Order Modal -->
+    <div class="modal-overlay" id="newOrderModal">
+        <div class="modal">
+            <div class="modal-drag-handle"></div>
+            <div class="modal-header">
+                <h3 class="modal-title">طلب جديد</h3>
+                <button class="modal-close" onclick="closeNewOrderModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="newOrderForm" onsubmit="submitNewOrder(event)">
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">اسم العميل</label>
+                            <input type="text" class="form-input" placeholder="اسم العميل" required id="customerName">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">رقم الهاتف</label>
+                            <input type="tel" class="form-input" placeholder="+967" required id="customerPhone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">عنوان الاستلام</label>
+                        <input type="text" class="form-input" placeholder="العنوان بالتفصيل" required id="pickupAddress">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">عنوان التوصيل</label>
+                        <input type="text" class="form-input" placeholder="عنوان التوصيل" required id="dropoffAddress">
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">المنطقة</label>
+                            <select class="form-select" required id="orderZone">
+                                <option value="">اختر</option>
+                                <option>صنعاء</option>
+                                <option>عدن</option>
+                                <option>تعز</option>
+                                <option>الحديدة</option>
+                                <option>إب</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">نوع الطلب</label>
+                            <select class="form-select" required id="orderType">
+                                <option value="">اختر</option>
+                                <option value="fast">توصيل سريع</option>
+                                <option value="normal">توصيل عادي</option>
+                                <option value="frozen">مجمدات</option>
+                                <option value="food">مطاعم</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ملاحظات</label>
+                        <textarea class="form-textarea" placeholder="ملاحظات إضافية..." id="orderNotes"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeNewOrderModal()">إلغاء</button>
+                <button class="btn btn-primary" onclick="submitNewOrder(event)">
+                    <i class="fas fa-paper-plane"></i>
+                    إرسال
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div class="modal-overlay" id="orderDetailsModal">
+        <div class="modal">
+            <div class="modal-drag-handle"></div>
+            <div class="modal-header">
+                <h3 class="modal-title" id="orderDetailsTitle">تفاصيل الطلب</h3>
+                <button class="modal-close" onclick="closeOrderDetails()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="orderDetailsBody">
+                <!-- Generated by JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeOrderDetails()">إغلاق</button>
+                <button class="btn btn-primary" onclick="editOrderFromDetails()">
+                    <i class="fas fa-edit"></i> تعديل
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Dropdown -->
+    <div class="notifications-dropdown" id="notificationsDropdown" style="display: none;">
+        <div class="notifications-header">
+            <span>الإشعارات</span>
+            <button onclick="markAllRead()">تحديد الكل كمقروء</button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Generated by JS -->
+        </div>
+    </div>
+
+    <script src="../../shared/js/utils.js"></script>
+    <script src="../../shared/js/constants.js"></script>
+    <script src="../../shared/js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/mobile.js"></script>
+
+    <script>
+        // ============================================
+        // DASHBOARD PAGE - COMPLETE
+        // ============================================
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 60000);
+            loadDashboardData();
+            initMobileElements();
+        });
+
+        // ============================================
+        // MOBILE ELEMENTS
+        // ============================================
+        function initMobileElements() {
+            // Mobile menu button
+            const header = document.querySelector('.header');
+            if (header) {
+                let menuBtn = header.querySelector('.mobile-menu-btn');
+                if (!menuBtn) {
+                    menuBtn = document.createElement('button');
+                    menuBtn.className = 'mobile-menu-btn';
+                    menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    menuBtn.onclick = toggleMobileSidebar;
+                    header.prepend(menuBtn);
+                }
+            }
+        }
+
+        // ============================================
+        // DATE & TIME
+        // ============================================
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const el = document.getElementById('currentDateTime');
+            if (el) {
+                el.textContent = now.toLocaleDateString('ar-SA', options);
+            }
+        }
+
+        // ============================================
+        // NAVIGATION
+        // ============================================
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+
+        // ============================================
+        // GLOBAL SEARCH
+        // ============================================
+        function globalSearch(event) {
+            const query = event.target.value.trim();
+            if (event.key === 'Enter' && query) {
+                showToast(`جاري البحث عن: ${query}`, 'info');
+            }
+        }
+
+        function performMobileSearch() {
+            const input = document.getElementById('mobileSearchInput');
+            if (input && input.value.trim()) {
+                showToast(`جاري البحث عن: ${input.value.trim()}`, 'info');
+            }
+        }
+
+        // ============================================
+        // NOTIFICATIONS
+        // ============================================
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationsDropdown');
+            if (dropdown) {
+                dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                if (dropdown.style.display === 'block') {
+                    loadNotifications();
+                }
+            }
+        }
+
+        function loadNotifications() {
+            const list = document.getElementById('notificationsList');
+            if (!list) return;
+
+            const notifications = [
+                { id: 1, icon: 'fa-box', color: 'primary', text: 'طلب جديد #1234 من محمد عبدالله', time: 'منذ 2 دقيقة' },
+                { id: 2, icon: 'fa-motorcycle', color: 'success', text: 'السائق أحمد علي بدأ التوصيل', time: 'منذ 5 دقائق' },
+                { id: 3, icon: 'fa-money-bill-wave', color: 'warning', text: 'دفعة جديدة بقيمة 15,000 ر.ي', time: 'منذ 12 دقيقة' }
+            ];
+
+            list.innerHTML = notifications.map(n => `
+                <div class="notification-item">
+                    <div class="notification-icon" style="background: rgba(99,102,241,0.1); color: var(--${n.color});">
+                        <i class="fas ${n.icon}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-text">${n.text}</div>
+                        <div class="notification-time">${n.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function markAllRead() {
+            const badge = document.getElementById('notificationBadge');
+            if (badge) {
+                badge.textContent = '0';
+                badge.style.display = 'none';
+            }
+            const dropdown = document.getElementById('notificationsDropdown');
+            if (dropdown) {
+                dropdown.style.display = 'none';
+            }
+            showToast('تم تحديد الكل كمقروء', 'success');
+        }
+
+        // ============================================
+        // ORDER DETAILS
+        // ============================================
+        function viewOrder(orderId) {
+            const order = window.AppState?.orders?.find(o => o.id === orderId);
+            if (!order) {
+                showToast('الطلب غير موجود', 'error');
+                return;
+            }
+
+            const modal = document.getElementById('orderDetailsModal');
+            const title = document.getElementById('orderDetailsTitle');
+            const body = document.getElementById('orderDetailsBody');
+
+            if (modal) modal.classList.add('active');
+            if (title) title.textContent = `تفاصيل الطلب ${order.id}`;
+
+            if (body) {
+                body.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div><strong>العميل:</strong> ${order.customer}</div>
+                        <div><strong>الهاتف:</strong> ${order.phone || 'غير متوفر'}</div>
+                        <div><strong>المنطقة:</strong> ${order.zone}</div>
+                        <div><strong>الحالة:</strong> <span class="status ${order.status}">${getStatusText(order.status)}</span></div>
+                        <div><strong>السائق:</strong> ${order.driver}</div>
+                        <div><strong>المبلغ:</strong> ${Number(order.amount).toLocaleString()} ر.ي</div>
+                        <div style="grid-column: span 2;"><strong>الاستلام:</strong> ${order.pickup || 'غير متوفر'}</div>
+                        <div style="grid-column: span 2;"><strong>التوصيل:</strong> ${order.dropoff || 'غير متوفر'}</div>
+                        <div style="grid-column: span 2;"><strong>الوقت:</strong> ${order.time}</div>
+                    </div>
+                `;
+            }
+        }
+
+        function closeOrderDetails() {
+            const modal = document.getElementById('orderDetailsModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function editOrderFromDetails() {
+            closeOrderDetails();
+            showToast('جاري فتح صفحة التعديل...', 'info');
+        }
+
+        function editOrder(orderId) {
+            showToast(`تعديل الطلب ${orderId}`, 'info');
+        }
+
+        function deleteOrder(orderId) {
+            if (confirm(`هل أنت متأكد من حذف الطلب ${orderId}؟`)) {
+                if (window.AppState) {
+                    window.AppState.orders = window.AppState.orders.filter(o => o.id !== orderId);
+                    renderOrdersTable(window.AppState.orders);
+                }
+                showToast(`تم حذف الطلب ${orderId}`, 'success');
+            }
+        }
+
+        function getStatusText(status) {
+            const statuses = {
+                'pending': 'قيد الانتظار',
+                'processing': 'قيد التنفيذ',
+                'delivered': 'تم التوصيل',
+                'cancelled': 'ملغي'
+            };
+            return statuses[status] || status;
+        }
+
+        // ============================================
+        // NEW ORDER
+        // ============================================
+        function openNewOrderModal() {
+            const modal = document.getElementById('newOrderModal');
+            if (modal) {
+                modal.classList.add('active');
+                const form = document.getElementById('newOrderForm');
+                if (form) form.reset();
+            }
+        }
+
+        function closeNewOrderModal() {
+            const modal = document.getElementById('newOrderModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function submitNewOrder(event) {
+            event.preventDefault();
+            const form = document.getElementById('newOrderForm');
+
+            if (form && form.checkValidity()) {
+                showToast('تم إنشاء الطلب بنجاح!', 'success');
+                closeNewOrderModal();
+                form.reset();
+                setTimeout(() => {
+                    loadDashboardData();
+                }, 500);
+            } else if (form) {
+                form.reportValidity();
+            }
+        }
+
+        // ============================================
+        // CHART PERIOD
+        // ============================================
+        function changeChartPeriod(period) {
+            showToast(`عرض بيانات آخر ${period} يوم`, 'info');
+            if (window.initCharts) {
+                window.initCharts();
+            }
+        }
+
+        // ============================================
+        // REFRESH
+        // ============================================
+        function refreshDashboard() {
+            showToast('جاري تحديث البيانات...', 'info');
+            setTimeout(() => {
+                if (window.loadDashboardData) {
+                    window.loadDashboardData();
+                }
+                showToast('تم تحديث البيانات بنجاح', 'success');
+            }, 1500);
+        }
+
+        function refreshActivity() {
+            showToast('جاري تحديث النشاطات...', 'info');
+            setTimeout(() => {
+                if (window.loadRecentActivities) {
+                    window.loadRecentActivities();
+                }
+                showToast('تم تحديث النشاطات', 'success');
+            }, 1000);
+        }
+
+        // ============================================
+        // EXPORT
+        // ============================================
+        function exportDashboard() {
+            showToast('جاري تصدير البيانات...', 'info');
+            setTimeout(() => {
+                showToast('تم تصدير البيانات بنجاح', 'success');
+            }, 1500);
+        }
+
+        // ============================================
+        // KEYBOARD SHORTCUTS
+        // ============================================
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                openNewOrderModal();
+            }
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                const dropdown = document.getElementById('notificationsDropdown');
+                if (dropdown) dropdown.style.display = 'none';
+            }
+        });
+
+        // ============================================
+        // TOAST
+        // ============================================
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+
+            const isMobile = window.innerWidth <= 768;
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.style.cssText = `
+                position: fixed;
+                top: ${isMobile ? '70px' : '20px'};
+                left: 50%;
+                transform: translateX(-50%) translateY(-100px);
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#6366f1'};
+                color: white;
+                padding: ${isMobile ? '12px 20px' : '15px 30px'};
+                border-radius: 12px;
+                font-weight: 700;
+                font-size: ${isMobile ? '13px' : '14px'};
+                z-index: 9999;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                max-width: 92%;
+                font-family: 'Tajawal', sans-serif;
+                text-align: right;
+            `;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="font-size: ${isMobile ? '16px' : '18px'}; flex-shrink: 0;"></i> ${message}`;
+            document.body.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            });
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(-100px)';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // ============================================
+        // LOAD DASHBOARD DATA (from dashboard.js)
+        // ============================================
+        function loadDashboardData() {
+            // This function is defined in dashboard.js
+            // If not available, show mock data
+            if (typeof window.loadDashboardData === 'function') {
+                window.loadDashboardData();
+            } else {
+                // Mock data fallback
+                const mockOrders = [
+                    { id: '#1234', customer: 'محمد عبدالله', zone: 'صنعاء', driver: 'أحمد علي', status: 'processing', amount: 15000, time: 'منذ 10 دقائق', phone: '+967 770 200 970', pickup: 'شارع تعز، صنعاء', dropoff: 'حي الصافية، صنعاء' },
+                    { id: '#1233', customer: 'فاطمة أحمد', zone: 'عدن', driver: 'خالد سعيد', status: 'pending', amount: 8500, time: 'منذ 25 دقيقة', phone: '+967 771 300 971', pickup: 'جولة المصباحي، عدن', dropoff: 'حي كريتر، عدن' },
+                    { id: '#1232', customer: 'عبدالرحمن صالح', zone: 'تعز', driver: 'علي محمود', status: 'delivered', amount: 22000, time: 'منذ ساعة', phone: '+967 772 400 972', pickup: 'شارع الثلاثين، تعز', dropoff: 'حي العصيفير، تعز' }
+                ];
+
+                renderOrdersTable(mockOrders);
+                renderTopDrivers();
+                renderActivities();
+            }
+        }
+
+        function renderOrdersTable(orders) {
+            const tbody = document.getElementById('ordersTableBody');
+            if (!tbody) return;
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 30px; color: var(--gray);">
+                            <i class="fas fa-box-open" style="font-size: 32px; display: block; margin-bottom: 8px;"></i>
+                            لا توجد طلبات
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td><strong>${order.id}</strong></td>
+                    <td>${order.customer}</td>
+                    <td>${order.zone}</td>
+                    <td>${order.driver}</td>
+                    <td><span class="status ${order.status}">${getStatusText(order.status)}</span></td>
+                    <td><strong>${Number(order.amount).toLocaleString()} ر.ي</strong></td>
+                    <td style="color: var(--gray-light); font-size: 12px;">${order.time}</td>
+                    <td>
+                        <button class="btn btn-icon" style="color: var(--primary);" onclick="viewOrder('${order.id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-icon" style="color: var(--info);" onclick="editOrder('${order.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderTopDrivers() {
+            const container = document.getElementById('topDrivers');
+            if (!container) return;
+
+            const drivers = [
+                { name: 'أحمد علي', orders: 156, rating: 4.9, avatar: 'أ' },
+                { name: 'خالد سعيد', orders: 142, rating: 4.8, avatar: 'خ' },
+                { name: 'علي محمود', orders: 128, rating: 4.7, avatar: 'ع' },
+                { name: 'يوسف أحمد', orders: 115, rating: 4.6, avatar: 'ي' },
+                { name: 'محمد فارس', orders: 98, rating: 4.5, avatar: 'م' }
+            ];
+
+            container.innerHTML = drivers.map((driver, index) => `
+                <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; ${index < drivers.length - 1 ? 'border-bottom: 1px solid var(--border);' : ''}">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">
+                        ${driver.avatar}
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-weight: 700; font-size: 14px;">${driver.name}</div>
+                        <div style="font-size: 11px; color: var(--gray);">${driver.orders} طلب</div>
+                    </div>
+                    <div style="color: var(--warning); font-size: 13px;">
+                        <i class="fas fa-star"></i> ${driver.rating}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderActivities() {
+            const container = document.getElementById('activityFeed');
+            if (!container) return;
+
+            const activities = [
+                { icon: 'fa-box', color: 'primary', text: 'طلب جديد <strong>#1234</strong> من محمد عبدالله', time: 'منذ 2 دقيقة' },
+                { icon: 'fa-motorcycle', color: 'success', text: 'السائق <strong>أحمد علي</strong> بدأ التوصيل', time: 'منذ 5 دقائق' },
+                { icon: 'fa-money-bill-wave', color: 'warning', text: 'دفعة جديدة بقيمة <strong>15,000 ر.ي</strong>', time: 'منذ 12 دقيقة' },
+                { icon: 'fa-box', color: 'danger', text: 'تم إلغاء الطلب <strong>#1230</strong>', time: 'منذ 25 دقيقة' },
+                { icon: 'fa-user-plus', color: 'info', text: 'سائق جديد <strong>محمد فارس</strong> انضم', time: 'منذ ساعة' }
+            ];
+
+            container.innerHTML = activities.map(activity => `
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(99,102,241,0.1); color: var(--${activity.color});">
+                        <i class="fas ${activity.icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-text">${activity.text}</div>
+                        <div class="activity-time">${activity.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // EXPORT FUNCTIONS TO GLOBAL
+        // ============================================
+        window.viewOrder = viewOrder;
+        window.closeOrderDetails = closeOrderDetails;
+        window.editOrderFromDetails = editOrderFromDetails;
+        window.editOrder = editOrder;
+        window.deleteOrder = deleteOrder;
+        window.openNewOrderModal = openNewOrderModal;
+        window.closeNewOrderModal = closeNewOrderModal;
+        window.submitNewOrder = submitNewOrder;
+        window.changeChartPeriod = changeChartPeriod;
+        window.refreshDashboard = refreshDashboard;
+        window.refreshActivity = refreshActivity;
+        window.exportDashboard = exportDashboard;
+        window.toggleNotifications = toggleNotifications;
+        window.markAllRead = markAllRead;
+        window.navigateTo = navigateTo;
+        window.globalSearch = globalSearch;
+        window.performMobileSearch = performMobileSearch;
+        window.showToast = showToast;
+        window.getStatusText = getStatusText;
+        window.renderOrdersTable = renderOrdersTable;
+        window.renderTopDrivers = renderTopDrivers;
+        window.renderActivities = renderActivities;
+        window.loadDashboardData = loadDashboardData;
+    </script>
+        <!-- Mobile Enhancements -->
+<script src="../js/mobile.js"></script>
+
+
+</body>
+</html>

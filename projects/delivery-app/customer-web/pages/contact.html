@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="تواصل معنا - TechNomads، خدمة العملاء والدعم الفني">
+    <title>اتصل بنا - TechNomads</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/web.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 60px 20px 40px;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .contact-page {
+            padding: 60px 20px;
+            background: var(--light);
+        }
+        .contact-page .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .contact-info {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px 24px;
+            border: 1px solid var(--border);
+        }
+        .contact-info h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        .contact-info .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .contact-info .info-item .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(99,102,241,0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .contact-info .info-item .text h4 {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+        .contact-info .info-item .text p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        .contact-info .info-item .text a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .contact-info .info-item .text a:hover {
+            text-decoration: underline;
+        }
+        .contact-form {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px 24px;
+            border: 1px solid var(--border);
+        }
+        .contact-form h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        .contact-form .form-group {
+            margin-bottom: 16px;
+        }
+        .contact-form .form-label {
+            display: block;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .contact-form .form-input,
+        .contact-form .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+        }
+        .contact-form .form-input:focus,
+        .contact-form .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+        }
+        .contact-form .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .contact-form .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .contact-form .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+        }
+        .contact-form .btn-submit:active {
+            transform: scale(0.97);
+        }
+        .map-section {
+            padding: 0 20px 60px;
+            background: var(--light);
+        }
+        .map-section .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .map-container {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+        }
+        .map-container .map-placeholder {
+            text-align: center;
+            color: var(--gray);
+        }
+        .map-container .map-placeholder i {
+            font-size: 48px;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 8px;
+        }
+        .map-container .map-placeholder p {
+            font-size: 16px;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 28px;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .map-container {
+                height: 200px;
+            }
+        }
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 24px;
+            }
+            .contact-info {
+                padding: 20px 16px;
+            }
+            .contact-form {
+                padding: 20px 16px;
+            }
+            .contact-info .info-item .icon {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="services.html">الخدمات</a>
+                <a href="about.html">من نحن</a>
+                <a href="track.html">تتبع الطلب</a>
+                <a href="contact.html" class="active">اتصل بنا</a>
+            </nav>
+            <div class="header-right">
+                <a href="../customer-app/pages/login.html" class="btn btn-outline btn-sm">تسجيل الدخول</a>
+                <a href="../customer-app/pages/register.html" class="btn btn-primary btn-sm">انضم الآن</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">الرئيسية</a>
+            <a href="services.html">الخدمات</a>
+            <a href="about.html">من نحن</a>
+            <a href="track.html">تتبع الطلب</a>
+            <a href="contact.html" class="active">اتصل بنا</a>
+            <hr>
+            <a href="../customer-app/pages/login.html" class="btn btn-outline btn-sm" style="justify-content:center;">تسجيل الدخول</a>
+            <a href="../customer-app/pages/register.html" class="btn btn-primary btn-sm" style="justify-content:center;">انضم الآن</a>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>اتصل بنا</h1>
+        <p>نحن هنا لمساعدتك، تواصل معنا بأي وقت</p>
+    </section>
+
+    <section class="contact-page">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>معلومات الاتصال</h3>
+                    <div class="info-item">
+                        <div class="icon"><i class="fas fa-phone"></i></div>
+                        <div class="text">
+                            <h4>الهاتف</h4>
+                            <p><a href="tel:+967770200970">+967 770 200 970</a></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icon"><i class="fas fa-envelope"></i></div>
+                        <div class="text">
+                            <h4>البريد الإلكتروني</h4>
+                            <p><a href="mailto:info@technomads.ye">info@technomads.ye</a></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="text">
+                            <h4>العنوان</h4>
+                            <p>صنعاء، اليمن</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icon"><i class="fas fa-clock"></i></div>
+                        <div class="text">
+                            <h4>ساعات العمل</h4>
+                            <p>السبت - الخميس: 8:00 ص - 10:00 م</p>
+                            <p style="font-size:13px;color:var(--gray-light);">الجمعة: مغلق</p>
+                        </div>
+                    </div>
+                    <div style="margin-top:16px;">
+                        <h4 style="font-size:14px;font-weight:700;margin-bottom:8px;">تابعنا على</h4>
+                        <div style="display:flex;gap:10px;">
+                            <a href="#" style="width:40px;height:40px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);font-size:18px;"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" style="width:40px;height:40px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);font-size:18px;"><i class="fab fa-twitter"></i></a>
+                            <a href="#" style="width:40px;height:40px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);font-size:18px;"><i class="fab fa-instagram"></i></a>
+                            <a href="#" style="width:40px;height:40px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);font-size:18px;"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>أرسل لنا رسالة</h3>
+                    <form id="contactForm" onsubmit="handleContactForm(event)">
+                        <div class="form-group">
+                            <label class="form-label">الاسم الكامل</label>
+                            <input type="text" class="form-input" placeholder="أدخل اسمك" required id="contactName">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">البريد الإلكتروني</label>
+                            <input type="email" class="form-input" placeholder="example@email.com" required id="contactEmail">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">رقم الهاتف</label>
+                            <input type="tel" class="form-input" placeholder="+967 770 200 970" id="contactPhone">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">الموضوع</label>
+                            <input type="text" class="form-input" placeholder="موضوع الرسالة" required id="contactSubject">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">الرسالة</label>
+                            <textarea class="form-textarea" placeholder="اكتب رسالتك هنا..." required id="contactMessage"></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit" id="contactSubmitBtn">
+                            <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="map-section">
+        <div class="container">
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p>📍 موقعنا على الخريطة - صنعاء، اليمن</p>
+                    <p style="font-size:13px;color:var(--gray-light);">خريطة تفاعلية ستظهر هنا</p>
+                </div>
+                <!-- يمكن إضافة خريطة Google Maps هنا -->
+                <!--
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d..." allowfullscreen="" loading="lazy"></iframe>
+                -->
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </div>
+                    <p style="color:var(--gray);font-size:14px;margin-top:8px;line-height:1.6;">
+                        منصتك الموثوقة لتوصيل الطرود والطلبات في جميع أنحاء اليمن.
+                    </p>
+                    <div class="social-links" style="margin-top:12px;display:flex;gap:10px;">
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <a href="index.html">الرئيسية</a>
+                    <a href="services.html">الخدمات</a>
+                    <a href="about.html">من نحن</a>
+                    <a href="contact.html">اتصل بنا</a>
+                </div>
+                <div class="footer-col">
+                    <h4>خدماتنا</h4>
+                    <a href="services.html#fast">توصيل سريع</a>
+                    <a href="services.html#normal">توصيل عادي</a>
+                    <a href="services.html#frozen">توصيل مجمدات</a>
+                    <a href="services.html#food">توصيل مطاعم</a>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--primary);"></i> +967 770 200 970</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--primary);"></i> info@technomads.ye</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> صنعاء، اليمن</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TechNomads. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+       <script src="../js/web.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+
+        function handleContactForm(event) {
+            event.preventDefault();
+            const btn = document.getElementById('contactSubmitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+
+            setTimeout(() => {
+                showToast('تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.', 'success');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الرسالة';
+                document.getElementById('contactForm').reset();
+            }, 1500);
+        }
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = `custom-toast ${type}`;
+            toast.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-100px);
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1'};
+                color: white;
+                padding: 14px 24px;
+                border-radius: 12px;
+                font-weight: 700;
+                font-size: 14px;
+                z-index: 9999;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                transition: transform 0.3s ease;
+                font-family: 'Tajawal', sans-serif;
+                text-align: center;
+                max-width: 90%;
+            `;
+            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(0)'; }, 10);
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(-100px)'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+    </script>
+</body>
+</html>

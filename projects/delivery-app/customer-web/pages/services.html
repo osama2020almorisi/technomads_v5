@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="خدمات التوصيل من TechNomads - توصيل سريع، عادي، مجمدات، ومطاعم">
+    <title>الخدمات - TechNomads</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/web.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 60px 20px 40px;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .services-page {
+            padding: 60px 20px;
+            background: var(--light);
+        }
+        .services-page .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .service-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        .service-card .icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+            color: white;
+        }
+        .service-card .icon.fast { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .service-card .icon.normal { background: linear-gradient(135deg, #10b981, #34d399); }
+        .service-card .icon.frozen { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .service-card .icon.food { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .service-card .icon.business { background: linear-gradient(135deg, #ef4444, #f87171); }
+        .service-card .icon.express { background: linear-gradient(135deg, #14b8a6, #2dd4bf); }
+        .service-card h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .service-card p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        .service-card .price {
+            display: inline-block;
+            background: var(--light);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--primary);
+        }
+        .service-card .btn-service {
+            margin-top: 16px;
+            display: inline-block;
+            padding: 10px 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .service-card .btn-service:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .pricing-section {
+            padding: 60px 20px;
+            background: var(--white);
+        }
+        .pricing-section .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .pricing-table th {
+            background: var(--primary);
+            color: white;
+            padding: 16px 20px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .pricing-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+        .pricing-table tr:hover td {
+            background: var(--lighter);
+        }
+        .pricing-table .highlight {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .faq-section {
+            padding: 60px 20px;
+            background: var(--light);
+        }
+        .faq-section .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .faq-item:hover {
+            border-color: var(--primary);
+        }
+        .faq-item .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .faq-item .question i {
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        .faq-item .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .faq-item.active .answer {
+            max-height: 200px;
+            padding-top: 12px;
+        }
+        .faq-item.active .question i {
+            transform: rotate(180deg);
+        }
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 28px;
+            }
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .pricing-table {
+                font-size: 13px;
+            }
+            .pricing-table th,
+            .pricing-table td {
+                padding: 10px 14px;
+            }
+        }
+        @media (max-width: 480px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-header h1 {
+                font-size: 24px;
+            }
+            .pricing-table {
+                font-size: 12px;
+            }
+            .pricing-table th,
+            .pricing-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="services.html" class="active">الخدمات</a>
+                <a href="about.html">من نحن</a>
+                <a href="track.html">تتبع الطلب</a>
+                <a href="contact.html">اتصل بنا</a>
+            </nav>
+            <div class="header-right">
+                <a href="../customer-app/pages/login.html" class="btn btn-outline btn-sm">تسجيل الدخول</a>
+                <a href="../customer-app/pages/register.html" class="btn btn-primary btn-sm">انضم الآن</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">الرئيسية</a>
+            <a href="services.html" class="active">الخدمات</a>
+            <a href="about.html">من نحن</a>
+            <a href="track.html">تتبع الطلب</a>
+            <a href="contact.html">اتصل بنا</a>
+            <hr>
+            <a href="../customer-app/pages/login.html" class="btn btn-outline btn-sm" style="justify-content:center;">تسجيل الدخول</a>
+            <a href="../customer-app/pages/register.html" class="btn btn-primary btn-sm" style="justify-content:center;">انضم الآن</a>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>خدماتنا</h1>
+        <p>نقدم لك مجموعة متنوعة من خدمات التوصيل لتلبية جميع احتياجاتك</p>
+    </section>
+
+    <section class="services-page">
+        <div class="container">
+            <div class="services-grid" id="servicesGrid">
+                <div class="service-card" id="fast">
+                    <div class="icon fast"><i class="fas fa-bolt"></i></div>
+                    <h3>توصيل سريع</h3>
+                    <p>توصيل طلباتك في أسرع وقت ممكن خلال 30 دقيقة، مناسب للطلبات العاجلة</p>
+                    <span class="price">يبدأ من 3,500 ر.ي</span>
+                    <br>
+                    <a href="../customer-app/pages/new-order.html?type=fast" class="btn-service">اطلب الآن</a>
+                </div>
+                <div class="service-card" id="normal">
+                    <div class="icon normal"><i class="fas fa-box"></i></div>
+                    <h3>توصيل عادي</h3>
+                    <p>توصيل موثوق خلال ساعة، مثالي للطلبات اليومية والتسوق</p>
+                    <span class="price">يبدأ من 2,500 ر.ي</span>
+                    <br>
+                    <a href="../customer-app/pages/new-order.html?type=normal" class="btn-service">اطلب الآن</a>
+                </div>
+                <div class="service-card" id="frozen">
+                    <div class="icon frozen"><i class="fas fa-snowflake"></i></div>
+                    <h3>توصيل مجمدات</h3>
+                    <p>توصيل المواد المجمدة والمبردة بدرجة حرارة محكومة لضمان جودتها</p>
+                    <span class="price">يبدأ من 4,000 ر.ي</span>
+                    <br>
+                    <a href="../customer-app/pages/new-order.html?type=frozen" class="btn-service">اطلب الآن</a>
+                </div>
+                <div class="service-card" id="food">
+                    <div class="icon food"><i class="fas fa-utensils"></i></div>
+                    <h3>توصيل مطاعم</h3>
+                    <p>استمتع بوجباتك المفضلة من أفضل المطاعم، توصيل ساخن ومميز</p>
+                    <span class="price">يبدأ من 2,000 ر.ي</span>
+                    <br>
+                    <a href="../customer-app/pages/new-order.html?type=food" class="btn-service">اطلب الآن</a>
+                </div>
+                <div class="service-card" id="business">
+                    <div class="icon business"><i class="fas fa-briefcase"></i></div>
+                    <h3>توصيل أعمال</h3>
+                    <p>خدمة توصيل مخصصة للشركات والمؤسسات، مع تقارير مفصلة</p>
+                    <span class="price">يبدأ من 5,000 ر.ي</span>
+                    <br>
+                    <a href="../customer-app/pages/new-order.html?type=normal" class="btn-service">اطلب الآن</a>
+                </div>
+                <div class="service-card" id="express">
+                    <div class="icon express"><i class="fas fa-rocket"></i></div>
+                    <h3>توصيل فوري</h3>
+                    <p>أسرع خدمة توصيل في اليمن، وصول خلال 15 دقيقة للمناطق القريبة</p>
+                    <span class="price">يبدأ من 5,500 ر.ي</span>
+                    <br>
+                    <a href="../customer-app/pages/new-order.html?type=fast" class="btn-service">اطلب الآن</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing-section">
+        <div class="container">
+            <h2 class="section-title">أسعار التوصيل</h2>
+            <p class="section-subtitle">تعرف على تكلفة التوصيل حسب المنطقة ونوع الخدمة</p>
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>الخدمة</th>
+                        <th>داخل المدينة</th>
+                        <th>خارج المدينة</th>
+                        <th>الوقت المتوقع</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>توصيل سريع</strong></td>
+                        <td>3,500 ر.ي</td>
+                        <td>5,500 ر.ي</td>
+                        <td>30 دقيقة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>توصيل عادي</strong></td>
+                        <td>2,500 ر.ي</td>
+                        <td>4,000 ر.ي</td>
+                        <td>60 دقيقة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>توصيل مجمدات</strong></td>
+                        <td>4,000 ر.ي</td>
+                        <td>6,000 ر.ي</td>
+                        <td>45 دقيقة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>توصيل مطاعم</strong></td>
+                        <td>2,000 ر.ي</td>
+                        <td>3,500 ر.ي</td>
+                        <td>40 دقيقة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>توصيل أعمال</strong></td>
+                        <td class="highlight">5,000 ر.ي</td>
+                        <td class="highlight">8,000 ر.ي</td>
+                        <td>حسب الاتفاق</td>
+                    </tr>
+                    <tr>
+                        <td><strong>توصيل فوري</strong></td>
+                        <td class="highlight">5,500 ر.ي</td>
+                        <td class="highlight">8,500 ر.ي</td>
+                        <td>15-20 دقيقة</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">الأسئلة الشائعة</h2>
+            <p class="section-subtitle">إجابات لأكثر الأسئلة التي تطرحها عن خدماتنا</p>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="question">
+                    <span>كم تستغرق عملية التوصيل؟</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="answer">مدة التوصيل تختلف حسب نوع الخدمة. التوصيل السريع يستغرق 30 دقيقة، والتوصيل العادي يستغرق ساعة، والتوصيل الفوري يستغرق 15-20 دقيقة.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="question">
+                    <span>ما هي طرق الدفع المتاحة؟</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="answer">نوفر عدة طرق للدفع: الدفع عند الاستلام، الدفع ببطاقة الائتمان، الدفع عبر المحفظة الرقمية، والتحويل البنكي.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="question">
+                    <span>كيف يمكنني تتبع طلبي؟</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="answer">يمكنك تتبع طلبك من خلال صفحة "تتبع الطلب" على موقعنا، أو من خلال تطبيق TechNomads على هاتفك المحمول.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="question">
+                    <span>هل هناك حد أدنى للطلب؟</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="answer">لا يوجد حد أدنى للطلب، يمكنك طلب أي كمية مهما كانت صغيرة. نوفر خدمة التوصيل لجميع الطلبات.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="question">
+                    <span>ماذا أفعل إذا تأخر الطلب؟</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="answer">في حال تأخر الطلب، يمكنك التواصل مع فريق الدعم الفني على الرقم +967 770 200 970 وسنقوم بمتابعة طلبك فوراً.</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </div>
+                    <p style="color:var(--gray);font-size:14px;margin-top:8px;line-height:1.6;">
+                        منصتك الموثوقة لتوصيل الطرود والطلبات في جميع أنحاء اليمن.
+                    </p>
+                    <div class="social-links" style="margin-top:12px;display:flex;gap:10px;">
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <a href="index.html">الرئيسية</a>
+                    <a href="services.html">الخدمات</a>
+                    <a href="about.html">من نحن</a>
+                    <a href="contact.html">اتصل بنا</a>
+                </div>
+                <div class="footer-col">
+                    <h4>خدماتنا</h4>
+                    <a href="services.html#fast">توصيل سريع</a>
+                    <a href="services.html#normal">توصيل عادي</a>
+                    <a href="services.html#frozen">توصيل مجمدات</a>
+                    <a href="services.html#food">توصيل مطاعم</a>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--primary);"></i> +967 770 200 970</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--primary);"></i> info@technomads.ye</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> صنعاء، اليمن</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TechNomads. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+        <script src="../js/web.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+        function toggleFaq(el) {
+            el.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

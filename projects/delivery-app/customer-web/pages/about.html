@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="من نحن - TechNomads، شركة توصيل رائدة في اليمن">
+    <title>من نحن - TechNomads</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/web.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 60px 20px 40px;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .about-page {
+            padding: 60px 20px;
+            background: var(--light);
+        }
+        .about-page .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .about-image {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 16px;
+            padding: 60px 40px;
+            color: white;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .about-image i {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        .about-image h3 {
+            font-size: 24px;
+            font-weight: 800;
+        }
+        .about-image p {
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+        .about-text h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .about-text p {
+            color: var(--gray);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .about-text .highlight {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .mission-section {
+            padding: 60px 20px;
+            background: var(--white);
+        }
+        .mission-section .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 30px;
+        }
+        .mission-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 30px 24px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .mission-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        .mission-card .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 24px;
+            color: white;
+        }
+        .mission-card .icon.vision { background: var(--primary); }
+        .mission-card .icon.mission { background: var(--secondary); }
+        .mission-card .icon.values { background: var(--warning); }
+        .mission-card h4 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .mission-card p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .team-section {
+            padding: 60px 20px;
+            background: var(--light);
+        }
+        .team-section .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 30px;
+        }
+        .team-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .team-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        .team-card .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 28px;
+            font-weight: 800;
+        }
+        .team-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .team-card p {
+            color: var(--gray);
+            font-size: 13px;
+        }
+        .stats-section {
+            padding: 60px 20px;
+            background: var(--primary);
+            color: white;
+        }
+        .stats-section .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+        .stats-grid .stat .number {
+            font-size: 36px;
+            font-weight: 900;
+        }
+        .stats-grid .stat .label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 28px;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .mission-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-grid .stat .number {
+                font-size: 28px;
+            }
+        }
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 24px;
+            }
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-image {
+                padding: 40px 20px;
+                min-height: 200px;
+            }
+            .about-image i {
+                font-size: 48px;
+            }
+            .team-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="services.html">الخدمات</a>
+                <a href="about.html" class="active">من نحن</a>
+                <a href="track.html">تتبع الطلب</a>
+                <a href="contact.html">اتصل بنا</a>
+            </nav>
+            <div class="header-right">
+                <a href="../customer-app/pages/login.html" class="btn btn-outline btn-sm">تسجيل الدخول</a>
+                <a href="../customer-app/pages/register.html" class="btn btn-primary btn-sm">انضم الآن</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">الرئيسية</a>
+            <a href="services.html">الخدمات</a>
+            <a href="about.html" class="active">من نحن</a>
+            <a href="track.html">تتبع الطلب</a>
+            <a href="contact.html">اتصل بنا</a>
+            <hr>
+            <a href="../customer-app/pages/login.html" class="btn btn-outline btn-sm" style="justify-content:center;">تسجيل الدخول</a>
+            <a href="../customer-app/pages/register.html" class="btn btn-primary btn-sm" style="justify-content:center;">انضم الآن</a>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>من نحن</h1>
+        <p>تعرف على فريق TechNomads وقصتنا</p>
+    </section>
+
+    <section class="about-page">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                    <i class="fas fa-truck-fast"></i>
+                    <h3>TechNomads</h3>
+                    <p>شريكك الموثوق في التوصيل</p>
+                </div>
+                <div class="about-text">
+                    <h2>قصة نجاحنا</h2>
+                    <p>
+                        <span class="highlight">TechNomads</span> هي منصة يمنية رائدة في مجال خدمات التوصيل، تأسست بهدف توفير حلول توصيل سريعة وآمنة وموثوقة في جميع أنحاء اليمن.
+                    </p>
+                    <p>
+                        نؤمن بأن التوصيل لا يجب أن يكون مجرد خدمة، بل تجربة سلسة وممتعة. لذلك قمنا ببناء منصة تربط بين العملاء وأفضل السائقين في اليمن، مع ضمان الجودة والسرعة والأمان.
+                    </p>
+                    <p>
+                        منذ انطلاقتنا، حققنا أكثر من <span class="highlight">10,000 طلب</span> ناجح، وانضم إلينا أكثر من <span class="highlight">500 سائق</span> محترف، وحققنا تقييم <span class="highlight">4.9 نجوم</span> من عملائنا.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="number">10K+</div>
+                    <div class="label">طلبات منجزة</div>
+                </div>
+                <div class="stat">
+                    <div class="number">500+</div>
+                    <div class="label">سائق نشط</div>
+                </div>
+                <div class="stat">
+                    <div class="number">4.9★</div>
+                    <div class="label">تقييم العملاء</div>
+                </div>
+                <div class="stat">
+                    <div class="number">99%</div>
+                    <div class="label">رضا العملاء</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mission-section">
+        <div class="container">
+            <h2 class="section-title">رؤيتنا ورسالتنا</h2>
+            <p class="section-subtitle">نعمل بجد لنقدم لك أفضل خدمة توصيل في اليمن</p>
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="icon vision"><i class="fas fa-eye"></i></div>
+                    <h4>رؤيتنا</h4>
+                    <p>أن نكون المنصة الأولى والأكثر ثقة في مجال التوصيل في اليمن والمنطقة العربية.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="icon mission"><i class="fas fa-bullseye"></i></div>
+                    <h4>رسالتنا</h4>
+                    <p>تقديم خدمات توصيل سريعة وآمنة وبأسعار مناسبة، مع التركيز على رضا العملاء وجودة الخدمة.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="icon values"><i class="fas fa-heart"></i></div>
+                    <h4>قيمنا</h4>
+                    <p>الشفافية، الجودة، السرعة، الأمان، والابتكار هي القيم التي نبني عليها شراكتنا مع عملائنا.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title">فريقنا</h2>
+            <p class="section-subtitle">نخبة من المحترفين يعملون على تقديم أفضل خدمة لك</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="avatar">م</div>
+                    <h4>محمد عبدالله</h4>
+                    <p>المدير التنفيذي</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar">أ</div>
+                    <h4>أحمد علي</h4>
+                    <p>مدير العمليات</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar">س</div>
+                    <h4>سامي حسن</h4>
+                    <p>مدير التكنولوجيا</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar">ن</div>
+                    <h4>نورة سعيد</h4>
+                    <p>مديرة التسويق</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </div>
+                    <p style="color:var(--gray);font-size:14px;margin-top:8px;line-height:1.6;">
+                        منصتك الموثوقة لتوصيل الطرود والطلبات في جميع أنحاء اليمن.
+                    </p>
+                    <div class="social-links" style="margin-top:12px;display:flex;gap:10px;">
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <a href="index.html">الرئيسية</a>
+                    <a href="services.html">الخدمات</a>
+                    <a href="about.html">من نحن</a>
+                    <a href="contact.html">اتصل بنا</a>
+                </div>
+                <div class="footer-col">
+                    <h4>خدماتنا</h4>
+                    <a href="services.html#fast">توصيل سريع</a>
+                    <a href="services.html#normal">توصيل عادي</a>
+                    <a href="services.html#frozen">توصيل مجمدات</a>
+                    <a href="services.html#food">توصيل مطاعم</a>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--primary);"></i> +967 770 200 970</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--primary);"></i> info@technomads.ye</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> صنعاء، اليمن</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TechNomads. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+      <script src="../js/web.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

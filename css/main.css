@@ -1059,12 +1059,25 @@ body.dark-mode .mobile-social-links a {
 }
 
 /* ---------- Device Showcase ---------- */
+/*.device-showcase {
+    position: relative;
+    flex: 1;
+    max-width: 600px;
+    margin-right: 2rem;
+    height: 500px;
+}*/
+
 .device-showcase {
     position: relative;
     flex: 1;
     max-width: 600px;
     margin-right: 2rem;
     height: 500px;
+    display: flex;
+    flex-direction: column;      /* ← ترتيب عمودي */
+    align-items: center;          /* ← توسيط */
+    justify-content: center;      /* ← توسيط */
+    gap: 0rem;                    /* ← مسافة بين الهاتف والتابلت */
 }
 
 .phone-mockup-wrapper,
@@ -1090,7 +1103,7 @@ body.dark-mode .mobile-social-links a {
     transform: rotate(-5deg) translateY(-10px);
 }
 
-.phone-frame {
+/*.phone-frame {
     position: relative;
     width: 100%;
     padding-bottom: 200%;
@@ -1102,11 +1115,25 @@ body.dark-mode .mobile-social-links a {
     overflow: hidden;
     transform-style: preserve-3d;
     border: 3px solid #d0d0d0;
-/*background: transparent;   خلفية شفافة تماماً */
-/*box-shadow: none;          إزالة الظل */
-    border: none;             /* إزالة الحدود */
-}
+    background: transparent;   خلفية شفافة تماماً 
+    box-shadow: none; 
+    background: transparent;
+    box-shadow: none;
+    border: none; 
 
+}*/
+.phone-frame {
+    position: relative;
+    width: 100%;
+    padding-bottom: 200%;
+    /* تم إزالة background و box-shadow و border */
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    border-radius: 35px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
 .phone-screen-container {
     position: absolute;
     width: 100%;
@@ -1114,7 +1141,7 @@ body.dark-mode .mobile-social-links a {
     top: 0;
     left: 0;
 }
-
+/*
 .phone-screen {
     position: absolute;
     width: 94%;
@@ -1126,8 +1153,25 @@ body.dark-mode .mobile-social-links a {
     background: var(--light);
     background: transparent; 
 }
+*/
+/* ============================================
+   HERO SECTION - القسم البطولي (تابع)
+   ============================================ */
 
+/* ... باقي الكود ... */
 
+.phone-screen {
+    position: absolute;
+    width: 94%;
+    height: 96%;
+    top: 2%;
+    left: 3%;
+    border-radius: 30px;
+    overflow: hidden;
+    background: transparent;
+}
+
+/* ... باقي الكود ... */
 .slide img {
     background: transparent;  /* خلفية الصورة شفافة */
     border-radius: 28px;      /* تدوير زوايا الصورة بمقدار 28px */
@@ -1160,7 +1204,8 @@ body.dark-mode .mobile-social-links a {
     object-fit: cover;
     object-position: top center;
     display: block;
-    background: #f0f0f0;
+    background: transparent;
+    border-radius: 28px;
 }
 
 .phone-notch {

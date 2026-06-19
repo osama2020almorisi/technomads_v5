@@ -1187,3 +1187,231 @@ img[loading="lazy"].loaded {
         border: 1px solid #ddd;
     }
 }
+
+
+
+
+/* تحسينات البحث المتقدم */
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--bg-white, #ffffff);
+    border-radius: 60px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.search-wrapper:focus-within {
+    border-color: #4ECDC4;
+    box-shadow: 0 8px 30px rgba(78, 205, 196, 0.2);
+}
+
+.search-input {
+    flex: 1;
+    padding: 18px 20px 18px 55px;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--text-color, #333);
+    outline: none;
+    direction: rtl;
+}
+
+.search-input::placeholder {
+    color: #999;
+    font-size: 0.95rem;
+}
+
+.search-icon {
+    position: absolute;
+    right: 20px;
+    color: #999;
+    font-size: 1.1rem;
+}
+
+.search-clear {
+    position: absolute;
+    left: 20px;
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.3s ease;
+    display: none;
+}
+
+.search-clear.visible {
+    display: block;
+}
+
+.search-clear:hover {
+    color: #e74c3c;
+    transform: scale(1.1);
+}
+
+.search-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.filter-btn {
+    padding: 8px 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 30px;
+    background: transparent;
+    color: #666;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    border-color: #4ECDC4;
+    color: #2A2D7C;
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #2A2D7C, #4ECDC4);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(42, 45, 124, 0.3);
+}
+
+.search-results-info {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #888;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    display: none;
+}
+
+/* اقتراحات البحث */
+.search-suggestions {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    left: 0;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 100;
+    padding: 8px 0;
+}
+
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.suggestion-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+    border-right: 3px solid transparent;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+    background: #f0f4ff;
+    border-right-color: #4ECDC4;
+}
+
+.suggestion-item i {
+    color: #4ECDC4;
+    width: 20px;
+    text-align: center;
+}
+
+.suggestion-item .suggestion-text {
+    flex: 1;
+    color: #333;
+}
+
+.suggestion-item .suggestion-category {
+    font-size: 0.75rem;
+    color: #999;
+    background: #f0f0f0;
+    padding: 2px 10px;
+    border-radius: 12px;
+}
+
+/* حالة فارغة محسنة */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f8f9fa;
+    border-radius: 20px;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    color: #2A2D7C;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.reset-btn {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #2A2D7C, #4ECDC4);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reset-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(42, 45, 124, 0.3);
+}
+
+/* تحسينات للهواتف */
+@media (max-width: 768px) {
+    .search-input {
+        padding: 14px 16px 14px 45px;
+        font-size: 0.95rem;
+    }
+    
+    .search-filters {
+        gap: 6px;
+    }
+    
+    .filter-btn {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+    }
+    
+    .search-suggestions {
+        max-height: 200px;
+    }
+}

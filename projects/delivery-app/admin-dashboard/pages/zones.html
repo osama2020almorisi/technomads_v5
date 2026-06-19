@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>المناطق والأسعار - نظام TechNomads للتوصيل</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ============================================
+           ZONES PAGE SPECIFIC STYLES
+           ============================================ */
+
+        /* Zone Card View */
+        .zones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .zone-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 2px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .zone-card:active {
+            transform: scale(0.98);
+        }
+
+        .zone-card.active {
+            border-color: var(--secondary);
+        }
+
+        .zone-card.inactive {
+            border-color: var(--danger);
+            opacity: 0.7;
+        }
+
+        .zone-card .zone-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .zone-card .zone-name {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .zone-card .zone-status {
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .zone-card .zone-status.active {
+            background: rgba(16,185,129,0.12);
+            color: var(--secondary);
+        }
+
+        .zone-card .zone-status.inactive {
+            background: rgba(239,68,68,0.12);
+            color: var(--danger);
+        }
+
+        .zone-card .zone-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 12px;
+            margin-bottom: 12px;
+        }
+
+        .zone-card .zone-details .label {
+            font-size: 11px;
+            color: var(--gray-light);
+        }
+
+        .zone-card .zone-details .value {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .zone-card .zone-details .value.price {
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .zone-card .zone-actions {
+            display: flex;
+            gap: 6px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .zone-card .zone-actions .btn {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 12px;
+            min-height: 36px;
+            border-radius: 8px;
+            justify-content: center;
+        }
+
+        .zone-card .zone-description {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        /* Pricing Rules */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .pricing-item {
+            background: var(--lighter);
+            border-radius: 10px;
+            padding: 12px 14px;
+            text-align: center;
+        }
+
+        .pricing-item .label {
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        .pricing-item .value {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-top: 2px;
+        }
+
+        .pricing-item .value .currency {
+            font-size: 12px;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        /* Zone Stats */
+        .zone-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .zone-stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .zone-stat-card .stat-number {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .zone-stat-card .stat-label {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        .zone-stat-card .stat-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .zone-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .zone-stat-card {
+                padding: 10px 12px;
+            }
+
+            .zone-stat-card .stat-number {
+                font-size: 18px;
+            }
+
+            .zone-stat-card .stat-label {
+                font-size: 10px;
+            }
+
+            .zones-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .pricing-item {
+                padding: 10px 12px;
+            }
+
+            .pricing-item .value {
+                font-size: 16px;
+            }
+
+            .zone-card .zone-details {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .zone-card .zone-actions .btn {
+                font-size: 11px;
+                padding: 6px 10px;
+                min-height: 32px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .zone-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+
+            .zone-stat-card {
+                padding: 8px 10px;
+            }
+
+            .zone-stat-card .stat-number {
+                font-size: 16px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Bulk Actions */
+        .bulk-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: var(--lighter);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .bulk-actions .btn {
+            font-size: 12px;
+            padding: 4px 12px;
+            min-height: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .bulk-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-truck-fast"></i>
+            </div>
+            <div class="sidebar-brand">TechNomads</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">القائمة الرئيسية</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>لوحة التحكم</span>
+                </a>
+                <a href="orders.html" class="nav-item">
+                    <i class="fas fa-box"></i>
+                    <span>الطلبات</span>
+                    <span class="nav-badge">24</span>
+                </a>
+                <a href="drivers.html" class="nav-item">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>السائقين</span>
+                    <span class="nav-badge">5</span>
+                </a>
+                <a href="customers.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>العملاء</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">الإدارة</div>
+                <a href="zones.html" class="nav-item active">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>المناطق والأسعار</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>التقارير</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">م</div>
+                <div class="user-info">
+                    <div class="user-name">مدير النظام</div>
+                    <div class="user-role">مسؤول</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="mobile-menu-btn" onclick="toggleMobileSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-search">
+                <input type="text" placeholder="بحث عن منطقة..." id="searchInput" onkeyup="searchZones(event)">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+                <button class="header-btn" onclick="refreshZones()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="header-btn" onclick="openAddZoneModal()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Search -->
+        <div class="mobile-search" style="display: none;">
+            <input type="text" placeholder="بحث عن منطقة..." id="mobileSearchInput" onkeyup="searchZones(event)">
+            <button onclick="performMobileSearch()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">المناطق والأسعار</h1>
+                    <p class="page-subtitle">إدارة المناطق وتحديد أسعار التوصيل</p>
+                </div>
+                <button class="btn btn-primary" onclick="openAddZoneModal()">
+                    <i class="fas fa-plus"></i>
+                    منطقة جديدة
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="zone-stats-grid">
+                <div class="zone-stat-card">
+                    <span class="stat-icon" style="color: var(--primary);">📍</span>
+                    <div class="stat-number" id="totalZones">0</div>
+                    <div class="stat-label">إجمالي المناطق</div>
+                </div>
+                <div class="zone-stat-card">
+                    <span class="stat-icon" style="color: var(--secondary);">✅</span>
+                    <div class="stat-number" id="activeZones">0</div>
+                    <div class="stat-label">مناطق نشطة</div>
+                </div>
+                <div class="zone-stat-card">
+                    <span class="stat-icon" style="color: var(--warning);">💰</span>
+                    <div class="stat-number" id="avgPrice">0</div>
+                    <div class="stat-label">متوسط السعر</div>
+                </div>
+                <div class="zone-stat-card">
+                    <span class="stat-icon" style="color: var(--danger);">📦</span>
+                    <div class="stat-number" id="totalDeliveries">0</div>
+                    <div class="stat-label">إجمالي التوصيلات</div>
+                </div>
+            </div>
+
+            <!-- Bulk Actions -->
+            <div class="bulk-actions" id="bulkActions" style="display: none;">
+                <span style="font-size: 13px; font-weight: 700; color: var(--primary);" id="selectedCount">0</span>
+                <span style="font-size: 13px; color: var(--gray);">محدد</span>
+                <button class="btn btn-success btn-sm" onclick="bulkToggleStatus(true)">
+                    <i class="fas fa-check"></i> تفعيل
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="bulkToggleStatus(false)">
+                    <i class="fas fa-times"></i> إلغاء تفعيل
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="clearSelection()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Zones Grid -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">المناطق</h3>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <span style="font-size: 12px; color: var(--gray);">إجمالي: <strong id="totalZonesCount">0</strong></span>
+                        <button class="btn btn-outline btn-sm" onclick="exportZones()">
+                            <i class="fas fa-file-export"></i>
+                            <span class="hide-mobile">تصدير</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="zones-grid" id="zonesContainer">
+                    <!-- Generated by JS -->
+                </div>
+            </div>
+
+            <!-- Pricing Rules -->
+            <div class="card" style="margin-top: 16px;">
+                <div class="card-header">
+                    <h3 class="card-title">قواعد التسعير العامة</h3>
+                    <button class="btn btn-primary btn-sm" onclick="editPricingRules()">
+                        <i class="fas fa-edit"></i>
+                        <span class="hide-mobile">تعديل</span>
+                    </button>
+                </div>
+                <div class="pricing-grid" id="pricingRules">
+                    <!-- Generated by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Zone Modal -->
+    <div class="modal-overlay" id="addZoneModal">
+        <div class="modal">
+            <div class="modal-drag-handle"></div>
+            <div class="modal-header">
+                <h3 class="modal-title">إضافة منطقة جديدة</h3>
+                <button class="modal-close" onclick="closeAddZoneModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addZoneForm" onsubmit="submitAddZone(event)">
+                    <div class="form-group">
+                        <label class="form-label">اسم المنطقة</label>
+                        <input type="text" class="form-input" placeholder="أدخل اسم المنطقة" required id="zoneName">
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">سعر التوصيل</label>
+                            <input type="number" class="form-input" placeholder="2500" required id="zonePrice">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">وقت التوصيل</label>
+                            <input type="text" class="form-input" placeholder="30-45 دقيقة" required id="zoneTime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">وصف المنطقة</label>
+                        <textarea class="form-textarea" placeholder="وصف المنطقة والحدود..." id="zoneDesc"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px;">
+                            <input type="checkbox" checked id="zoneActive">
+                            <span>نشط</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeAddZoneModal()">إلغاء</button>
+                <button class="btn btn-primary" onclick="submitAddZone(event)">
+                    <i class="fas fa-map-marker-alt"></i>
+                    إضافة
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Zone Modal -->
+    <div class="modal-overlay" id="editZoneModal">
+        <div class="modal">
+            <div class="modal-drag-handle"></div>
+            <div class="modal-header">
+                <h3 class="modal-title">تعديل المنطقة</h3>
+                <button class="modal-close" onclick="closeEditZoneModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editZoneForm" onsubmit="submitEditZone(event)">
+                    <div class="form-group">
+                        <label class="form-label">اسم المنطقة</label>
+                        <input type="text" class="form-input" id="editZoneName" required>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">سعر التوصيل</label>
+                            <input type="number" class="form-input" id="editZonePrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">وقت التوصيل</label>
+                            <input type="text" class="form-input" id="editZoneTime" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">وصف المنطقة</label>
+                        <textarea class="form-textarea" id="editZoneDesc"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px;">
+                            <input type="checkbox" id="editZoneActive">
+                            <span>نشط</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeEditZoneModal()">إلغاء</button>
+                <button class="btn btn-danger" onclick="deleteZoneFromEdit()" style="margin-left: auto;">
+                    <i class="fas fa-trash"></i> حذف
+                </button>
+                <button class="btn btn-primary" onclick="submitEditZone(event)">
+                    <i class="fas fa-save"></i> حفظ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Dropdown -->
+    <div class="notifications-dropdown" id="notificationsDropdown" style="display: none;">
+        <div class="notifications-header">
+            <span>الإشعارات</span>
+            <button onclick="markAllRead()">تحديد الكل كمقروء</button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Generated by JS -->
+        </div>
+    </div>
+
+    <script src="../../shared/js/utils.js"></script>
+    <script src="../../shared/js/constants.js"></script>
+    <script src="../../shared/js/i18n.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/mobile.js"></script>
+
+    <script>
+        // ============================================
+        // ZONES PAGE
+        // ============================================
+
+        let allZones = [];
+        let filteredZones = [];
+        let editingZoneId = null;
+        let selectedZones = [];
+
+        // Pricing rules
+        const pricingRules = {
+            basePrice: { label: 'السعر الأساسي', value: '2,500', currency: 'ر.ي' },
+            fastDelivery: { label: 'توصيل سريع', value: '3,500', currency: 'ر.ي' },
+            frozenDelivery: { label: 'توصيل مجمدات', value: '4,000', currency: 'ر.ي' },
+            foodDelivery: { label: 'توصيل مطاعم', value: '2,000', currency: 'ر.ي' },
+            taxRate: { label: 'الضريبة', value: '5%', currency: '' },
+            serviceFee: { label: 'رسوم الخدمة', value: '10%', currency: '' },
+            minOrder: { label: 'الحد الأدنى', value: '500', currency: 'ر.ي' }
+        };
+
+        // ============================================
+        // LOAD ZONES
+        // ============================================
+        function loadZones() {
+            allZones = [
+                { id: 1, name: 'صنعاء', price: 2500, time: '30-45 دقيقة', active: true, description: 'المركز الرئيسي، يشمل جميع أحياء العاصمة', deliveries: 450 },
+                { id: 2, name: 'عدن', price: 3000, time: '35-50 دقيقة', active: true, description: 'يشمل كريتر، الشيخ عثمان، والمعلا', deliveries: 320 },
+                { id: 3, name: 'تعز', price: 2800, time: '30-45 دقيقة', active: true, description: 'يشمل جميع أحياء مدينة تعز', deliveries: 280 },
+                { id: 4, name: 'الحديدة', price: 2600, time: '30-45 دقيقة', active: true, description: 'يشمل الميناء وجميع الأحياء', deliveries: 150 },
+                { id: 5, name: 'إب', price: 2400, time: '35-50 دقيقة', active: false, description: 'يشمل مدينة إب والمناطق المحيطة', deliveries: 120 }
+            ];
+
+            filteredZones = [...allZones];
+            updateStats();
+            renderZones();
+            renderPricingRules();
+        }
+
+        // ============================================
+        // UPDATE STATS
+        // ============================================
+        function updateStats() {
+            const total = allZones.length;
+            const active = allZones.filter(z => z.active).length;
+            const avgPrice = total > 0 ? (allZones.reduce((sum, z) => sum + z.price, 0) / total) : 0;
+            const totalDeliveries = allZones.reduce((sum, z) => sum + z.deliveries, 0);
+
+            document.getElementById('totalZones').textContent = total;
+            document.getElementById('activeZones').textContent = active;
+            document.getElementById('avgPrice').textContent = Math.round(avgPrice).toLocaleString();
+            document.getElementById('totalDeliveries').textContent = totalDeliveries.toLocaleString();
+            document.getElementById('totalZonesCount').textContent = total;
+        }
+
+        // ============================================
+        // RENDER ZONES
+        // ============================================
+        function renderZones() {
+            const container = document.getElementById('zonesContainer');
+
+            if (filteredZones.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 30px; color: var(--gray);">
+                        <i class="fas fa-map-marker-alt" style="font-size: 32px; display: block; margin-bottom: 8px;"></i>
+                        <h3 style="font-size: 16px; color: var(--dark);">لا توجد مناطق</h3>
+                        <p>لم يتم العثور على مناطق مطابقة للبحث</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredZones.map(zone => `
+                <div class="zone-card ${zone.active ? 'active' : 'inactive'}" data-id="${zone.id}">
+                    <div class="zone-header">
+                        <span class="zone-name">${zone.name}</span>
+                        <span class="zone-status ${zone.active ? 'active' : 'inactive'}">
+                            ${zone.active ? 'نشط' : 'غير نشط'}
+                        </span>
+                    </div>
+                    <div class="zone-description">${zone.description || 'لا يوجد وصف'}</div>
+                    <div class="zone-details">
+                        <div>
+                            <div class="label">سعر التوصيل</div>
+                            <div class="value price">${zone.price.toLocaleString()} ر.ي</div>
+                        </div>
+                        <div>
+                            <div class="label">وقت التوصيل</div>
+                            <div class="value">${zone.time}</div>
+                        </div>
+                        <div style="grid-column: span 2;">
+                            <div class="label">إجمالي التوصيلات</div>
+                            <div class="value">${zone.deliveries.toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <div class="zone-actions">
+                        <button class="btn btn-outline btn-sm" onclick="toggleZoneStatus(${zone.id})">
+                            <i class="fas ${zone.active ? 'fa-pause' : 'fa-play'}"></i>
+                            ${zone.active ? 'إيقاف' : 'تفعيل'}
+                        </button>
+                        <button class="btn btn-primary btn-sm" onclick="editZone(${zone.id})">
+                            <i class="fas fa-edit"></i> تعديل
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteZone(${zone.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // RENDER PRICING RULES
+        // ============================================
+        function renderPricingRules() {
+            const container = document.getElementById('pricingRules');
+
+            container.innerHTML = Object.entries(pricingRules).map(([key, rule]) => `
+                <div class="pricing-item">
+                    <div class="label">${rule.label}</div>
+                    <div class="value">${rule.value} <span class="currency">${rule.currency}</span></div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // SEARCH
+        // ============================================
+        function searchZones(event) {
+            const query = event.target.value.trim().toLowerCase();
+            if (!query) {
+                filteredZones = [...allZones];
+                renderZones();
+                return;
+            }
+
+            filteredZones = allZones.filter(z =>
+                z.name.toLowerCase().includes(query) ||
+                (z.description && z.description.toLowerCase().includes(query))
+            );
+
+            renderZones();
+        }
+
+        function performMobileSearch() {
+            const input = document.getElementById('mobileSearchInput');
+            if (input && input.value.trim()) {
+                searchZones({ target: input });
+            }
+        }
+
+        // ============================================
+        // ZONE ACTIONS
+        // ============================================
+        function toggleZoneStatus(id) {
+            const zone = allZones.find(z => z.id === id);
+            if (!zone) return;
+
+            zone.active = !zone.active;
+            updateStats();
+            renderZones();
+            showToast(`تم ${zone.active ? 'تفعيل' : 'إيقاف'} منطقة ${zone.name}`, 'success');
+        }
+
+        function editZone(id) {
+            const zone = allZones.find(z => z.id === id);
+            if (!zone) return;
+
+            editingZoneId = id;
+            document.getElementById('editZoneName').value = zone.name;
+            document.getElementById('editZonePrice').value = zone.price;
+            document.getElementById('editZoneTime').value = zone.time;
+            document.getElementById('editZoneDesc').value = zone.description || '';
+            document.getElementById('editZoneActive').checked = zone.active;
+
+            document.getElementById('editZoneModal').classList.add('active');
+        }
+
+        function closeEditZoneModal() {
+            document.getElementById('editZoneModal').classList.remove('active');
+            editingZoneId = null;
+        }
+
+        function submitEditZone(event) {
+            event.preventDefault();
+            if (!editingZoneId) return;
+
+            const zone = allZones.find(z => z.id === editingZoneId);
+            if (!zone) return;
+
+            zone.name = document.getElementById('editZoneName').value;
+            zone.price = parseInt(document.getElementById('editZonePrice').value);
+            zone.time = document.getElementById('editZoneTime').value;
+            zone.description = document.getElementById('editZoneDesc').value;
+            zone.active = document.getElementById('editZoneActive').checked;
+
+            closeEditZoneModal();
+            updateStats();
+            renderZones();
+            showToast('تم تحديث المنطقة بنجاح!', 'success');
+        }
+
+        function deleteZoneFromEdit() {
+            if (editingZoneId) {
+                closeEditZoneModal();
+                deleteZone(editingZoneId);
+            }
+        }
+
+        function deleteZone(id) {
+            const zone = allZones.find(z => z.id === id);
+            if (!zone) return;
+
+            if (confirm(`هل أنت متأكد من حذف منطقة "${zone.name}"؟`)) {
+                allZones = allZones.filter(z => z.id !== id);
+                filteredZones = [...allZones];
+                updateStats();
+                renderZones();
+                showToast(`تم حذف منطقة "${zone.name}"`, 'success');
+            }
+        }
+
+        // ============================================
+        // ADD ZONE
+        // ============================================
+        function openAddZoneModal() {
+            document.getElementById('addZoneModal').classList.add('active');
+            document.getElementById('addZoneForm').reset();
+        }
+
+        function closeAddZoneModal() {
+            document.getElementById('addZoneModal').classList.remove('active');
+        }
+
+        function submitAddZone(event) {
+            event.preventDefault();
+            const form = document.getElementById('addZoneForm');
+
+            if (form.checkValidity()) {
+                const newZone = {
+                    id: allZones.length + 1,
+                    name: document.getElementById('zoneName').value,
+                    price: parseInt(document.getElementById('zonePrice').value) || 2500,
+                    time: document.getElementById('zoneTime').value || '30-45 دقيقة',
+                    active: document.getElementById('zoneActive').checked,
+                    description: document.getElementById('zoneDesc').value || '',
+                    deliveries: 0
+                };
+
+                allZones.push(newZone);
+                filteredZones = [...allZones];
+                updateStats();
+                renderZones();
+                closeAddZoneModal();
+                form.reset();
+                showToast('تم إضافة المنطقة بنجاح!', 'success');
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        // ============================================
+        // PRICING RULES
+        // ============================================
+        function editPricingRules() {
+            showToast('جاري فتح صفحة تعديل قواعد التسعير...', 'info');
+        }
+
+        // ============================================
+        // EXPORT
+        // ============================================
+        function exportZones() {
+            showToast('جاري تصدير البيانات...', 'info');
+            setTimeout(() => {
+                showToast('تم تصدير البيانات بنجاح', 'success');
+            }, 1500);
+        }
+
+        // ============================================
+        // REFRESH
+        // ============================================
+        function refreshZones() {
+            showToast('جاري تحديث البيانات...', 'info');
+            setTimeout(() => {
+                loadZones();
+                showToast('تم التحديث بنجاح', 'success');
+            }, 1000);
+        }
+
+        // ============================================
+        // NOTIFICATIONS
+        // ============================================
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationsDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            if (dropdown.style.display === 'block') {
+                loadNotifications();
+            }
+        }
+
+        function loadNotifications() {
+            const list = document.getElementById('notificationsList');
+            const notifications = [
+                { id: 1, icon: 'fa-box', color: 'primary', text: 'طلب جديد #1234 من محمد عبدالله', time: 'منذ 2 دقيقة' },
+                { id: 2, icon: 'fa-motorcycle', color: 'success', text: 'السائق أحمد علي بدأ التوصيل', time: 'منذ 5 دقائق' },
+                { id: 3, icon: 'fa-money-bill-wave', color: 'warning', text: 'دفعة جديدة بقيمة 15,000 ر.ي', time: 'منذ 12 دقيقة' }
+            ];
+
+            list.innerHTML = notifications.map(n => `
+                <div class="notification-item">
+                    <div class="notification-icon" style="background: rgba(99,102,241,0.1); color: var(--${n.color});">
+                        <i class="fas ${n.icon}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-text">${n.text}</div>
+                        <div class="notification-time">${n.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function markAllRead() {
+            document.querySelector('.header-btn .badge').textContent = '0';
+            document.getElementById('notificationsDropdown').style.display = 'none';
+            showToast('تم تحديد الكل كمقروء', 'success');
+        }
+
+        // ============================================
+        // TOAST
+        // ============================================
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.custom-toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.style.cssText = `
+                position: fixed;
+                top: ${window.innerWidth <= 768 ? '70px' : '20px'};
+                left: 50%;
+                transform: translateX(-50%) translateY(-100px);
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#6366f1'};
+                color: white;
+                padding: ${window.innerWidth <= 768 ? '12px 20px' : '15px 30px'};
+                border-radius: 12px;
+                font-weight: 700;
+                font-size: ${window.innerWidth <= 768 ? '13px' : '14px'};
+                z-index: 9999;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                transition: transform 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                max-width: 92%;
+                font-family: 'Tajawal', sans-serif;
+                text-align: right;
+            `;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" style="font-size: ${window.innerWidth <= 768 ? '16px' : '18px'}; flex-shrink: 0;"></i> ${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            }, 10);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(-100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadZones();
+        });
+
+        // Expose functions
+        window.searchZones = searchZones;
+        window.performMobileSearch = performMobileSearch;
+        window.toggleZoneStatus = toggleZoneStatus;
+        window.editZone = editZone;
+        window.closeEditZoneModal = closeEditZoneModal;
+        window.submitEditZone = submitEditZone;
+        window.deleteZoneFromEdit = deleteZoneFromEdit;
+        window.deleteZone = deleteZone;
+        window.openAddZoneModal = openAddZoneModal;
+        window.closeAddZoneModal = closeAddZoneModal;
+        window.submitAddZone = submitAddZone;
+        window.editPricingRules = editPricingRules;
+        window.exportZones = exportZones;
+        window.refreshZones = refreshZones;
+        window.toggleNotifications = toggleNotifications;
+        window.markAllRead = markAllRead;
+        window.showToast = showToast;
+    </script>
+</body>
+</html>

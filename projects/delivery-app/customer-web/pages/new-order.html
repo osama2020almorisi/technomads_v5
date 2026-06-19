@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="طلب جديد - TechNomads">
+    <title>طلب جديد - TechNomads</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/web.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .order-page {
+            padding: 40px 20px 60px;
+            background: var(--light);
+            min-height: calc(100vh - 200px);
+        }
+        .order-page .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .order-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+        .order-card .page-title {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .order-card .page-title h2 {
+            font-size: 24px;
+            font-weight: 800;
+        }
+        .order-card .page-title p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        .order-card .form-group {
+            margin-bottom: 16px;
+        }
+        .order-card .form-label {
+            display: block;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .order-card .form-label .required {
+            color: var(--danger);
+        }
+        .order-card .form-input,
+        .order-card .form-select,
+        .order-card .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+        }
+        .order-card .form-input:focus,
+        .order-card .form-select:focus,
+        .order-card .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+        }
+        .order-card .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .order-card .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .order-card .service-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .order-card .service-selector .service-option {
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--white);
+        }
+        .order-card .service-selector .service-option:hover {
+            border-color: var(--primary);
+        }
+        .order-card .service-selector .service-option.active {
+            border-color: var(--primary);
+            background: rgba(99,102,241,0.05);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+        }
+        .order-card .service-selector .service-option i {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .order-card .service-selector .service-option .label {
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .order-card .service-selector .service-option .price {
+            font-size: 11px;
+            color: var(--gray);
+        }
+        .order-card .price-summary {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+        .order-card .price-summary .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 14px;
+        }
+        .order-card .price-summary .row.total {
+            border-top: 2px solid var(--border);
+            margin-top: 6px;
+            padding-top: 10px;
+            font-weight: 800;
+            font-size: 16px;
+        }
+        .order-card .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .order-card .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+        }
+        .order-card .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .order-card .alert {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 700;
+            display: none;
+        }
+        .order-card .alert.error {
+            display: block;
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239,68,68,0.2);
+        }
+        .order-card .alert.success {
+            display: block;
+            background: rgba(16,185,129,0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(16,185,129,0.2);
+        }
+        @media (max-width: 768px) {
+            .order-card .form-row {
+                grid-template-columns: 1fr;
+            }
+            .order-card .service-selector {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .order-card {
+                padding: 20px 16px;
+            }
+            .order-card .service-selector {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="services.html">الخدمات</a>
+                <a href="about.html">من نحن</a>
+                <a href="track.html">تتبع الطلب</a>
+                <a href="contact.html">اتصل بنا</a>
+            </nav>
+            <div class="header-right">
+                <a href="login.html" class="btn btn-outline btn-sm">تسجيل الدخول</a>
+                <a href="register.html" class="btn btn-primary btn-sm">انضم الآن</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">الرئيسية</a>
+            <a href="services.html">الخدمات</a>
+            <a href="about.html">من نحن</a>
+            <a href="track.html">تتبع الطلب</a>
+            <a href="contact.html">اتصل بنا</a>
+            <hr>
+            <a href="login.html" class="btn btn-outline btn-sm" style="justify-content:center;">تسجيل الدخول</a>
+            <a href="register.html" class="btn btn-primary btn-sm" style="justify-content:center;">انضم الآن</a>
+        </div>
+    </header>
+
+    <section class="order-page">
+        <div class="container">
+            <div class="order-card">
+                <div class="page-title">
+                    <h2><i class="fas fa-plus-circle" style="color:var(--primary);"></i> طلب جديد</h2>
+                    <p>أدخل تفاصيل طلبك وسنقوم بتوصيله في أسرع وقت</p>
+                </div>
+
+                <div class="alert" id="orderAlert"></div>
+
+                <form id="orderForm" onsubmit="handleNewOrder(event)">
+                    <!-- نوع الخدمة -->
+                    <div class="form-group">
+                        <label class="form-label">نوع الخدمة <span class="required">*</span></label>
+                        <div class="service-selector" id="serviceSelector">
+                            <div class="service-option active" data-service="fast" onclick="selectService(this)">
+                                <i class="fas fa-bolt" style="color:var(--primary);"></i>
+                                <span class="label">سريع</span>
+                                <span class="price">3,500 ر.ي</span>
+                            </div>
+                            <div class="service-option" data-service="normal" onclick="selectService(this)">
+                                <i class="fas fa-box" style="color:var(--secondary);"></i>
+                                <span class="label">عادي</span>
+                                <span class="price">2,500 ر.ي</span>
+                            </div>
+                            <div class="service-option" data-service="frozen" onclick="selectService(this)">
+                                <i class="fas fa-snowflake" style="color:var(--info);"></i>
+                                <span class="label">مجمدات</span>
+                                <span class="price">4,000 ر.ي</span>
+                            </div>
+                            <div class="service-option" data-service="food" onclick="selectService(this)">
+                                <i class="fas fa-utensils" style="color:var(--warning);"></i>
+                                <span class="label">مطاعم</span>
+                                <span class="price">2,000 ر.ي</span>
+                            </div>
+                            <div class="service-option" data-service="business" onclick="selectService(this)">
+                                <i class="fas fa-briefcase" style="color:var(--danger);"></i>
+                                <span class="label">أعمال</span>
+                                <span class="price">5,000 ر.ي</span>
+                            </div>
+                            <div class="service-option" data-service="express" onclick="selectService(this)">
+                                <i class="fas fa-rocket" style="color:#14b8a6;"></i>
+                                <span class="label">فوري</span>
+                                <span class="price">5,500 ر.ي</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selectedService" value="fast">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">نقطة الاستلام <span class="required">*</span></label>
+                            <input type="text" class="form-input" placeholder="شارع تعز، جوار البنك المركزي" required id="pickupAddress">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">نقطة التوصيل <span class="required">*</span></label>
+                            <input type="text" class="form-input" placeholder="حي الصافية، خلف جامع النور" required id="dropoffAddress">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">اسم المستلم</label>
+                            <input type="text" class="form-input" placeholder="أحمد علي" id="recipientName">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">رقم هاتف المستلم</label>
+                            <input type="tel" class="form-input" placeholder="+967 770 200 970" id="recipientPhone">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">ملاحظات إضافية</label>
+                        <textarea class="form-textarea" placeholder="أي تعليمات إضافية للسائق..." id="orderNotes"></textarea>
+                    </div>
+
+                    <!-- ملخص السعر -->
+                    <div class="price-summary">
+                        <div class="row">
+                            <span>سعر التوصيل</span>
+                            <span id="deliveryPrice">3,500 ر.ي</span>
+                        </div>
+                        <div class="row">
+                            <span>رسوم الخدمة</span>
+                            <span>500 ر.ي</span>
+                        </div>
+                        <div class="row total">
+                            <span>المجموع</span>
+                            <span id="totalPrice">4,000 ر.ي</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="orderBtn">
+                        <i class="fas fa-check-circle"></i> تأكيد الطلب
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>TechNomads</span>
+                    </div>
+                    <p style="color:var(--gray);font-size:14px;margin-top:8px;line-height:1.6;">
+                        منصتك الموثوقة لتوصيل الطرود والطلبات في جميع أنحاء اليمن.
+                    </p>
+                    <div class="social-links" style="margin-top:12px;display:flex;gap:10px;">
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="width:36px;height:36px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:var(--transition);"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <a href="index.html">الرئيسية</a>
+                    <a href="services.html">الخدمات</a>
+                    <a href="about.html">من نحن</a>
+                    <a href="contact.html">اتصل بنا</a>
+                </div>
+                <div class="footer-col">
+                    <h4>خدماتنا</h4>
+                    <a href="services.html#fast">توصيل سريع</a>
+                    <a href="services.html#normal">توصيل عادي</a>
+                    <a href="services.html#frozen">توصيل مجمدات</a>
+                    <a href="services.html#food">توصيل مطاعم</a>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--primary);"></i> +967 770 200 970</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--primary);"></i> info@technomads.ye</p>
+                    <p style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> صنعاء، اليمن</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TechNomads. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn i');
+            if (menu) {
+                menu.classList.toggle('active');
+                if (btn) {
+                    btn.classList.toggle('fa-bars');
+                    btn.classList.toggle('fa-times');
+                }
+            }
+        }
+
+        const servicePrices = {
+            fast: 3500,
+            normal: 2500,
+            frozen: 4000,
+            food: 2000,
+            business: 5000,
+            express: 5500
+        };
+
+        function selectService(el) {
+            document.querySelectorAll('.service-option').forEach(opt => opt.classList.remove('active'));
+            el.classList.add('active');
+            const service = el.dataset.service;
+            document.getElementById('selectedService').value = service;
+            updatePrice(service);
+        }
+
+        function updatePrice(service) {
+            const price = servicePrices[service] || 2500;
+            const total = price + 500;
+            document.getElementById('deliveryPrice').textContent = price.toLocaleString() + ' ر.ي';
+            document.getElementById('totalPrice').textContent = total.toLocaleString() + ' ر.ي';
+        }
+
+        function handleNewOrder(event) {
+            event.preventDefault();
+            const btn = document.getElementById('orderBtn');
+            const alert = document.getElementById('orderAlert');
+            const pickup = document.getElementById('pickupAddress').value.trim();
+            const dropoff = document.getElementById('dropoffAddress').value.trim();
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء الطلب...';
+            alert.className = 'alert';
+            alert.style.display = 'none';
+
+            if (!pickup || !dropoff) {
+                alert.className = 'alert error';
+                alert.style.display = 'block';
+                alert.innerHTML = '<i class="fas fa-exclamation-circle"></i> يرجى إدخال نقطة الاستلام والتوصيل';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> تأكيد الطلب';
+                return;
+            }
+
+            setTimeout(() => {
+                const orderId = '#' + Math.floor(1000 + Math.random() * 9000);
+                alert.className = 'alert success';
+                alert.style.display = 'block';
+                alert.innerHTML = '<i class="fas fa-check-circle"></i> تم إنشاء الطلب ' + orderId + ' بنجاح! جاري التوجيه...';
+                setTimeout(() => {
+                    window.location.href = 'track.html?id=' + orderId.replace('#', '');
+                }, 1500);
+            }, 1500);
+        }
+
+        // قراءة نوع الخدمة من URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const type = params.get('type');
+            if (type && servicePrices[type]) {
+                document.querySelectorAll('.service-option').forEach(opt => {
+                    opt.classList.remove('active');
+                    if (opt.dataset.service === type) {
+                        opt.classList.add('active');
+                        document.getElementById('selectedService').value = type;
+                        updatePrice(type);
+                    }
+                });
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('active');
+                const icon = btn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const menu = document.getElementById('mobileMenu');
+                const btn = document.querySelector('.mobile-menu-btn');
+                if (menu && menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                    const icon = btn?.querySelector('i');
+                    if (icon) {
+                        icon.classList.add('fa-bars');
+                        icon.classList.remove('fa-times');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

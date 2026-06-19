@@ -1,0 +1,975 @@
+/* ============================================
+   TechNomads - Customer App
+   Responsive Stylesheet
+   ============================================ */
+
+/* ============================================
+   MOBILE FIRST - Small Devices (<= 480px)
+   ============================================ */
+@media (max-width: 480px) {
+    /* App Container */
+    .app-container {
+        padding-bottom: 70px;
+    }
+
+    /* Header */
+    .app-header {
+        padding: 10px 12px;
+    }
+
+    .app-title {
+        font-size: 16px;
+    }
+
+    .location-selector {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .location-selector i {
+        font-size: 12px;
+    }
+
+    .menu-btn,
+    .notification-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .notification-badge {
+        width: 16px;
+        height: 16px;
+        font-size: 8px;
+        top: 0px;
+        right: 0px;
+    }
+
+    /* Hero */
+    .hero-title {
+        font-size: 20px;
+    }
+
+    .hero-subtitle {
+        font-size: 13px;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+    .action-card {
+        padding: 10px 6px;
+        border-radius: var(--radius-sm);
+    }
+
+    .action-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        border-radius: var(--radius-xs);
+    }
+
+    .action-label {
+        font-size: 10px;
+    }
+
+    /* Tracking Card */
+    .tracking-card {
+        border-radius: var(--radius-sm);
+    }
+
+    .tracking-header {
+        padding: 12px;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .tracking-id {
+        font-size: 12px;
+    }
+
+    .tracking-status {
+        font-size: 10px;
+        padding: 2px 8px;
+    }
+
+    .tracking-time {
+        font-size: 11px;
+    }
+
+    .tracking-progress {
+        padding: 12px;
+    }
+
+    .step span {
+        font-size: 9px;
+    }
+
+    .step-dot {
+        width: 20px;
+        height: 20px;
+        font-size: 8px;
+    }
+
+    /* Driver Info */
+    .driver-info {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    .driver-avatar {
+        width: 36px;
+        height: 36px;
+    }
+
+    .driver-name {
+        font-size: 13px;
+    }
+
+    .driver-rating {
+        font-size: 11px;
+    }
+
+    .driver-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+    }
+
+    .tracking-map {
+        height: 120px;
+    }
+
+    /* Orders List */
+    .orders-list {
+        gap: 8px;
+    }
+
+    .order-item {
+        padding: 10px 12px;
+        border-radius: var(--radius-sm);
+        gap: 8px;
+    }
+
+    .order-item-id {
+        font-size: 12px;
+    }
+
+    .order-item-status {
+        font-size: 10px;
+        padding: 2px 8px;
+    }
+
+    .order-item-route {
+        font-size: 12px;
+        gap: 4px;
+    }
+
+    .order-item-route i {
+        font-size: 10px;
+    }
+
+    .order-item-amount {
+        font-size: 13px;
+    }
+
+    .order-item-time {
+        font-size: 10px;
+    }
+
+    /* Promo Slider */
+    .promo-card {
+        min-width: 200px;
+        padding: 16px;
+    }
+
+    .promo-content h3 {
+        font-size: 15px;
+    }
+
+    .promo-content p {
+        font-size: 11px;
+    }
+
+    .promo-icon {
+        font-size: 32px;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+        padding: 4px 0 10px;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .bottom-nav .nav-item {
+        padding: 4px 8px;
+        gap: 2px;
+    }
+
+    .bottom-nav .nav-item i {
+        font-size: 16px;
+    }
+
+    .bottom-nav .nav-item span {
+        font-size: 9px;
+    }
+
+    .nav-center-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+        border-width: 3px;
+    }
+
+    .nav-item-center {
+        margin-top: -24px;
+    }
+
+    /* Side Menu */
+    .side-menu {
+        width: 260px;
+    }
+
+    .side-menu-header {
+        padding: 20px;
+    }
+
+    .user-avatar-large {
+        width: 56px;
+        height: 56px;
+    }
+
+    .user-info h3 {
+        font-size: 16px;
+    }
+
+    .user-info p {
+        font-size: 12px;
+    }
+
+    .menu-item {
+        padding: 10px 16px;
+        font-size: 14px;
+        gap: 12px;
+    }
+
+    .menu-item i {
+        font-size: 16px;
+        width: 20px;
+    }
+
+    /* Modal */
+    .modal-bottom {
+        border-radius: 16px 16px 0 0;
+    }
+
+    .modal-header {
+        padding: 0 16px 12px;
+    }
+
+    .modal-title {
+        font-size: 16px;
+    }
+
+    .modal-body {
+        padding: 0 16px 16px;
+    }
+
+    .modal-footer {
+        padding: 0 16px 16px;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .modal-footer .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .modal-drag-handle {
+        width: 32px;
+        height: 3px;
+        margin: 8px auto;
+    }
+
+    /* Order Types */
+    .order-types {
+        gap: 6px;
+    }
+
+    .order-type {
+        padding: 12px 8px;
+        border-radius: var(--radius-xs);
+    }
+
+    .order-type i {
+        font-size: 18px;
+    }
+
+    .order-type span {
+        font-size: 11px;
+    }
+
+    /* Price Estimate */
+    .price-estimate {
+        padding: 12px;
+    }
+
+    .estimate-row {
+        font-size: 12px;
+        padding: 6px 0;
+    }
+
+    .estimate-row.total {
+        font-size: 14px;
+        padding-top: 8px;
+        margin-top: 6px;
+    }
+
+    /* Stats */
+    .driver-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+
+    .stat-card-mini {
+        padding: 10px 8px;
+    }
+
+    .stat-icon-mini {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    .stat-value {
+        font-size: 15px;
+    }
+
+    .stat-label {
+        font-size: 9px;
+    }
+
+    /* Earnings */
+    .earnings-summary {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 6px;
+    }
+
+    .earnings-card {
+        padding: 10px 8px;
+    }
+
+    .earnings-card .amount {
+        font-size: 16px;
+    }
+
+    .earnings-card .label {
+        font-size: 9px;
+    }
+
+    .earnings-card .icon {
+        font-size: 16px;
+    }
+
+    .chart-bar {
+        width: 18px;
+    }
+
+    .chart-label {
+        font-size: 8px;
+    }
+
+    .chart-value {
+        font-size: 8px;
+    }
+
+    /* Profile */
+    .profile-avatar {
+        width: 64px;
+        height: 64px;
+        font-size: 24px;
+    }
+
+    .profile-name {
+        font-size: 17px;
+    }
+
+    .profile-stats {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 6px;
+    }
+
+    .profile-stat .number {
+        font-size: 16px;
+    }
+
+    .profile-stat .label {
+        font-size: 9px;
+    }
+
+    .info-row {
+        font-size: 13px;
+        padding: 6px 0;
+    }
+
+    /* History Filters */
+    .history-filters {
+        gap: 6px;
+    }
+
+    .filter-btn {
+        font-size: 11px;
+        padding: 4px 12px;
+    }
+
+    /* Orders Tabs */
+    .orders-tabs {
+        padding: 3px;
+        gap: 4px;
+    }
+
+    .orders-tab {
+        font-size: 11px;
+        padding: 8px 6px;
+    }
+
+    .orders-tab .count {
+        font-size: 9px;
+        padding: 0 4px;
+    }
+
+    /* Period Selector */
+    .period-selector {
+        gap: 4px;
+    }
+
+    .period-btn {
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+
+    /* Form Elements */
+    .form-input,
+    .form-select,
+    .form-textarea {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+
+    .form-label {
+        font-size: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+        font-size: 13px;
+        padding: 10px 16px;
+        min-height: 40px;
+    }
+
+    .btn-lg {
+        font-size: 14px;
+        padding: 12px 20px;
+        min-height: 48px;
+    }
+
+    .btn-sm {
+        font-size: 11px;
+        padding: 6px 12px;
+        min-height: 32px;
+    }
+}
+
+/* ============================================
+   EXTRA SMALL (<= 380px)
+   ============================================ */
+@media (max-width: 380px) {
+    .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+
+    .driver-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+
+    .earnings-summary {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+
+    .profile-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+
+    .action-card {
+        padding: 8px 4px;
+    }
+
+    .action-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .hero-title {
+        font-size: 18px;
+    }
+
+    .bottom-nav .nav-item {
+        padding: 2px 4px;
+    }
+
+    .bottom-nav .nav-item i {
+        font-size: 14px;
+    }
+
+    .bottom-nav .nav-item span {
+        font-size: 8px;
+    }
+
+    .nav-center-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 14px;
+    }
+
+    .nav-item-center {
+        margin-top: -20px;
+    }
+
+    .order-card-actions {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+
+    .order-card-actions .btn-action:last-child {
+        grid-column: span 2;
+    }
+}
+
+/* ============================================
+   TABLETS (481px - 768px)
+   ============================================ */
+@media (min-width: 481px) and (max-width: 768px) {
+    .app-container {
+        max-width: 100%;
+        padding: 0 20px 80px;
+    }
+
+    .quick-actions {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    .driver-stats {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    .earnings-summary {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .profile-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .bottom-nav {
+        max-width: 100%;
+        border-radius: 0;
+        padding: 8px 20px 12px;
+    }
+
+    .promo-card {
+        min-width: 280px;
+    }
+
+    .tracking-map {
+        height: 180px;
+    }
+}
+
+/* ============================================
+   LANDSCAPE MOBILE (max-height: 500px)
+   ============================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+    .app-header {
+        padding: 6px 12px;
+    }
+
+    .app-title {
+        font-size: 14px;
+    }
+
+    .location-selector {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+
+    .menu-btn,
+    .notification-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .hero-title {
+        font-size: 18px;
+    }
+
+    .quick-actions {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+    }
+
+    .action-card {
+        padding: 6px 4px;
+    }
+
+    .action-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .action-label {
+        font-size: 9px;
+    }
+
+    .tracking-card {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .tracking-map {
+        height: 80px;
+    }
+
+    .bottom-nav {
+        padding: 2px 0 4px;
+    }
+
+    .bottom-nav .nav-item {
+        padding: 2px 6px;
+        gap: 0px;
+    }
+
+    .bottom-nav .nav-item i {
+        font-size: 14px;
+    }
+
+    .bottom-nav .nav-item span {
+        font-size: 8px;
+    }
+
+    .nav-center-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+        border-width: 2px;
+    }
+
+    .nav-item-center {
+        margin-top: -16px;
+    }
+
+    .driver-stats {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+    }
+
+    .stat-card-mini {
+        padding: 4px 6px;
+    }
+
+    .stat-value {
+        font-size: 13px;
+    }
+
+    .stat-icon-mini {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+    }
+
+    .main-content {
+        padding-bottom: 40px;
+    }
+
+    .side-menu {
+        width: 220px;
+    }
+
+    .user-avatar-large {
+        width: 40px;
+        height: 40px;
+    }
+
+    .menu-item {
+        padding: 6px 12px;
+        font-size: 13px;
+        gap: 8px;
+    }
+
+    .side-menu-header {
+        padding: 12px;
+    }
+
+    .modal-bottom {
+        max-height: 80vh;
+    }
+}
+
+/* ============================================
+   DARK MODE
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --light: #0f172a;
+        --lighter: #1e293b;
+        --white: #1e293b;
+        --dark: #f1f5f9;
+        --dark-light: #e2e8f0;
+        --gray: #94a3b8;
+        --gray-light: #64748b;
+        --border: #334155;
+    }
+
+    .app-container {
+        background: var(--light);
+    }
+
+    .app-header {
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .action-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .tracking-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .order-item {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .bottom-nav {
+        background: var(--white);
+        border-top: 1px solid var(--border);
+    }
+
+    .side-menu {
+        background: var(--white);
+    }
+
+    .side-menu-header {
+        background: linear-gradient(135deg, var(--primary-dark), var(--dark));
+    }
+
+    .menu-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .modal-bottom {
+        background: var(--white);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        background: var(--lighter);
+        border-color: var(--border);
+        color: var(--dark);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+        color: var(--gray-light);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    }
+
+    .price-estimate {
+        background: var(--lighter);
+    }
+
+    .stat-card-mini {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .earnings-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .earnings-chart {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .earnings-list {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .profile-header {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .profile-stat {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .profile-section {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .history-item {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .order-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .orders-tabs {
+        background: var(--white);
+        border: 1px solid var(--border);
+    }
+
+    .promo-card {
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .driver-avatar img {
+        border-color: var(--border);
+    }
+
+    .custom-toast {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tracking-map {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+    }
+
+    .tracking-map .map-grid {
+        background-image: linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+    }
+
+    .city-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+}
+
+/* ============================================
+   SAFE AREA (Notch Phones)
+   ============================================ */
+@supports (padding: max(0px)) {
+    .app-header {
+        padding-top: max(10px, env(safe-area-inset-top));
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+    }
+
+    .bottom-nav {
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
+        padding-left: max(8px, env(safe-area-inset-left));
+        padding-right: max(8px, env(safe-area-inset-right));
+    }
+
+    .side-menu {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .modal-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .app-header,
+    .bottom-nav,
+    .side-menu,
+    .side-menu-overlay,
+    .modal-overlay,
+    .custom-toast,
+    .btn,
+    .driver-actions {
+        display: none !important;
+    }
+
+    .app-container {
+        max-width: 100%;
+        padding: 20px;
+        background: white !important;
+    }
+
+    .tracking-card,
+    .order-item,
+    .history-item,
+    .profile-section {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+    }
+
+    .tracking-card .order-card-header {
+        background: #f5f5f5 !important;
+        color: #333 !important;
+    }
+
+    .tracking-map {
+        height: 100px !important;
+        background: #f0f0f0 !important;
+    }
+
+    .progress-fill {
+        background: #6366f1 !important;
+    }
+}

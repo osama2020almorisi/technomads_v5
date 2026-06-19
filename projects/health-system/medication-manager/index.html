@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>مدير الأدوية المتقدم - نظام منبهات كامل</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 16px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* رأس الصفحة */
+        .header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.6rem;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* إحصائيات */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .stat-card i {
+            font-size: 1.8rem;
+            color: #667eea;
+        }
+
+        .stat-card .info h3 {
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        .stat-card .info p {
+            font-size: 0.7rem;
+            color: #888;
+        }
+
+        /* قائمة الأدوية */
+        .medicines-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* بطاقة الدواء */
+        .medicine-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 14px 18px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .card-header h3 {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .patient-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        /* منطقة الشرائط */
+        .strips-container {
+            padding: 16px;
+            background: #f5f7fb;
+        }
+
+        .strip-card {
+            background: #eef2f7;
+            border-radius: 20px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .strip-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .strip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.75rem;
+            color: #555;
+        }
+
+        .strip-progress {
+            background: #ddd;
+            border-radius: 10px;
+            height: 4px;
+            width: 80px;
+            overflow: hidden;
+        }
+
+        .strip-progress-fill {
+            background: #4caf50;
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        /* شبكة الحبات */
+        .pills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+            gap: 10px;
+        }
+
+        /* تصميم الحبة */
+        .pill {
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: bold;
+            color: white;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .pill:active {
+            transform: scale(0.92);
+        }
+
+        .pill.taken {
+            background: #9e9e9e !important;
+            opacity: 0.5;
+            filter: grayscale(0.3);
+        }
+
+        /* قائمة منبثقة عند الضغط الطويل */
+        .pill-menu {
+            position: fixed;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 3000;
+            overflow: hidden;
+            animation: fadeIn 0.2s;
+        }
+
+        .pill-menu button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            background: white;
+            text-align: right;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .pill-menu button:hover {
+            background: #f0f0f0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* معلومات الجرعات */
+        .schedule-info {
+            padding: 12px 16px;
+            background: #fafafa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.75rem;
+            border-top: 1px solid #eee;
+        }
+
+        .times {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .time-badge {
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: #3949ab;
+            font-size: 0.7rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .time-badge.alert {
+            background: #ff9800;
+            color: white;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .dose-counter {
+            background: #e0e0e0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* أزرار الإجراءات */
+        .card-actions {
+            padding: 12px 16px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #eee;
+            background: white;
+            flex-wrap: wrap;
+        }
+
+        .card-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-take { background: #4caf50; color: white; }
+        .btn-undo { background: #ff9800; color: white; }
+        .btn-edit-dose { background: #2196f3; color: white; }
+        .btn-delete { background: #f44336; color: white; }
+
+        /* مودال */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 32px;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 32px 32px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close {
+            font-size: 28px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+        }
+
+        form {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+            font-size: 0.85rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 40px;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            background: white;
+            border-radius: 28px;
+        }
+
+        /* Toast إشعار */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 16px;
+            right: 16px;
+            background: #333;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 50px;
+            z-index: 2100;
+            text-align: center;
+            animation: fadeInUp 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        /* نافذة المنبه */
+        .alarm-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .alarm-card {
+            background: white;
+            border-radius: 40px;
+            padding: 30px;
+            text-align: center;
+            max-width: 90%;
+            width: 320px;
+            animation: bounceIn 0.4s;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .alarm-card i {
+            font-size: 4rem;
+            color: #ff9800;
+            margin-bottom: 15px;
+        }
+
+        .alarm-card h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .alarm-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .alarm-card button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .alarm-card button.snooze {
+            background: #ff9800;
+        }
+
+        /* اختيار النغمة */
+        .ringtone-select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .pills-grid {
+                grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+                gap: 8px;
+            }
+            .pill {
+                font-size: 0.7rem;
+            }
+            .card-actions button {
+                font-size: 0.7rem;
+                padding: 8px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-pills"></i> مدير الأدوية المتقدم</h1>
+            <p>نظام متابعة مع إمكانية التعديل والتراجع ومنبهات صوتية</p>
+            <button class="btn-add" onclick="openModal()"><i class="fas fa-plus"></i> دواء جديد</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fas fa-capsules"></i>
+                <div class="info">
+                    <h3 id="totalCount">0</h3>
+                    <p>أدوية نشطة</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-chart-line"></i>
+                <div class="info">
+                    <h3 id="completionRate">0%</h3>
+                    <p>نسبة الالتزام</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-bell"></i>
+                <div class="info">
+                    <h3 id="nextDose">--:--</h3>
+                    <p>الجرعة القادمة</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="medicinesList" class="medicines-list"></div>
+    </div>
+
+    <!-- مودال الإضافة -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus-circle"></i> دواء جديد</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="medicineForm">
+                <div class="form-group">
+                    <label>👤 اسم المريض</label>
+                    <input type="text" id="patientName" required placeholder="مثال: أحمد محمد">
+                </div>
+                <div class="form-group">
+                    <label>💊 اسم الدواء</label>
+                    <input type="text" id="medicineName" required placeholder="مثال: علاج المعدة">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>حبات لكل شريط</label>
+                        <input type="number" id="pillsPerStrip" value="7" required min="1" max="30">
+                    </div>
+                    <div class="form-group">
+                        <label>عدد الأشرطة</label>
+                        <input type="number" id="numberOfStrips" value="2" required min="1" max="10">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>🕐 وقت الجرعة 1</label>
+                        <input type="time" id="time1" value="09:00" required>
+                    </div>
+                    <div class="form-group">
+                        <label>🕐 وقت الجرعة 2</label>
+                        <input type="time" id="time2" value="21:00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>🎨 لون الدواء</label>
+                    <select id="medicineColor">
+                        <option value="#4caf50">🟢 أخضر</option>
+                        <option value="#2196f3">🔵 أزرق</option>
+                        <option value="#ff9800">🟠 برتقالي</option>
+                        <option value="#9c27b0">🟣 بنفسجي</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>🔊 اختر نغمة المنبه</label>
+                    <select id="ringtone" class="ringtone-select">
+                        <option value="default">🔔 نغمة افتراضية</option>
+                        <option value="gentle">🎵 نغمة هادئة</option>
+                        <option value="urgent">⏰ نغمة حادة</option>
+                        <option value="digital">📱 نغمة رقمية</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>📝 تعليمات إضافية</label>
+                    <input type="text" id="instructions" placeholder="مثال: بعد الأكل">
+                </div>
+                <div class="form-group">
+                    <label>🔔 تفعيل التنبيهات</label>
+                    <label style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" id="notificationsEnabled" checked style="width: 20px;">
+                        تفعيل الإشعارات
+                    </label>
+                </div>
+                <button type="submit">💾 حفظ الدواء</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- مودال تعديل الجرعات -->
+    <div id="editDoseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit"></i> تعديل الجرعات</h2>
+                <span class="close" onclick="closeEditDoseModal()">&times;</span>
+            </div>
+            <div style="padding: 20px;">
+                <div class="form-group">
+                    <label>📊 عدد الجرعات المأخوذة</label>
+                    <input type="number" id="editTakenCount" min="0" style="font-size: 1.2rem;">
+                </div>
+                <div class="form-group">
+                    <label>📦 إجمالي الجرعات</label>
+                    <input type="number" id="editTotalDoses" min="1" style="font-size: 1.2rem;">
+                </div>
+                <button onclick="saveDoseEdit()" style="background: #4caf50; color: white; padding: 12px; border: none; border-radius: 40px; width: 100%;">💾 حفظ التعديلات</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="alarmSound" preload="auto"></audio>
+    <audio id="defaultAlarm" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="gentleAlarm" preload="auto">
+        <source src="https://www.soundjay.com/phone/phone-ringtone-1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="urgentAlarm" preload="auto">
+        <source src="https://www.soundjay.com/alarm/sounds/alarm-clock-01.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="digitalAlarm" preload="auto">
+        <source src="https://www.soundjay.com/clock/sounds/digital-watch-alarm-01.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let medicines = [];
+        let alarmInterval;
+        let currentAlarm = null;
+        let activeAlarmTimeout = null;
+
+        // تحميل البيانات
+        function loadData() {
+            const saved = localStorage.getItem('advanced_medicines');
+            if (saved) {
+                medicines = JSON.parse(saved);
+            } else {
+                medicines = [
+                    {
+                        id: Date.now(),
+                        patientName: "أحمد محمد",
+                        medicineName: "علاج المعدة",
+                        pillsPerStrip: 7,
+                        numberOfStrips: 2,
+                        totalDoses: 14,
+                        schedule: [
+                            { time: "09:00", label: "صباحاً - بعد الإفطار" },
+                            { time: "21:00", label: "مساءً - بعد العشاء" }
+                        ],
+                        medicineColor: "#4caf50",
+                        instructions: "يؤخذ بعد الأكل مع كوب ماء",
+                        dosesTaken: [],
+                        notificationsEnabled: true,
+                        ringtone: "default"
+                    }
+                ];
+                saveData();
+            }
+            renderMedicines();
+            updateStats();
+            startAlarmChecker();
+        }
+
+        function saveData() {
+            localStorage.setItem('advanced_medicines', JSON.stringify(medicines));
+        }
+
+        // بدء فحص المنبهات
+        function startAlarmChecker() {
+            if (alarmInterval) clearInterval(alarmInterval);
+            alarmInterval = setInterval(() => {
+                checkAlarms();
+                updateStats();
+            }, 10000); // كل 10 ثواني
+        }
+
+        // فحص المنبهات
+        function checkAlarms() {
+            const now = new Date();
+            const currentTime = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+            const today = now.toDateString();
+            
+            // منع تكرار المنبه لنفس الجرعة
+            if (currentAlarm && activeAlarmTimeout) return;
+            
+            medicines.forEach(medicine => {
+                if (!medicine.notificationsEnabled) return;
+                
+                medicine.schedule.forEach(schedule => {
+                    if (schedule.time === currentTime) {
+                        const alarmKey = `${medicine.id}_${schedule.time}_${today}`;
+                        if (localStorage.getItem(alarmKey) !== 'played') {
+                            triggerAlarm(medicine, schedule, alarmKey);
+                        }
+                    }
+                });
+            });
+        }
+
+        // تشغيل المنبه
+        function triggerAlarm(medicine, schedule, alarmKey) {
+            currentAlarm = { medicine, schedule };
+            
+            // اختيار النغمة حسب إعدادات الدواء
+            const ringtone = medicine.ringtone || 'default';
+            let audioElement = document.getElementById('defaultAlarm');
+            
+            switch(ringtone) {
+                case 'gentle':
+                    audioElement = document.getElementById('gentleAlarm');
+                    break;
+                case 'urgent':
+                    audioElement = document.getElementById('urgentAlarm');
+                    break;
+                case 'digital':
+                    audioElement = document.getElementById('digitalAlarm');
+                    break;
+                default:
+                    audioElement = document.getElementById('defaultAlarm');
+            }
+            
+            // تشغيل الصوت
+            audioElement.loop = true;
+            audioElement.play().catch(e => console.log('صوت غير متاح'));
+            
+            // اهتزاز للهواتف
+            if (navigator.vibrate) navigator.vibrate([500, 300, 500]);
+            
+            // عرض نافذة المنبه
+            showAlarmWindow(medicine, schedule, audioElement, alarmKey);
+            
+            // تغيير لون الصفحة
+            document.body.style.background = '#ff9800';
+            setTimeout(() => {
+                if (!currentAlarm) {
+                    document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                }
+            }, 500);
+        }
+
+        // عرض نافذة المنبه
+        function showAlarmWindow(medicine, schedule, audioElement, alarmKey) {
+            // إزالة أي نافذة منبه موجودة
+            const oldAlarm = document.querySelector('.alarm-overlay');
+            if (oldAlarm) oldAlarm.remove();
+            
+            const alarmDiv = document.createElement('div');
+            alarmDiv.className = 'alarm-overlay';
+            alarmDiv.innerHTML = `
+                <div class="alarm-card">
+                    <i class="fas fa-pills"></i>
+                    <i class="fas fa-bell" style="animation: bellShake 0.5s infinite;"></i>
+                    <h2>⏰ موعد تناول الدواء!</h2>
+                    <p><strong>${medicine.medicineName}</strong><br>
+                    👤 ${medicine.patientName}<br>
+                    🕐 ${schedule.label}<br>
+                    📝 ${medicine.instructions || 'اتبع تعليمات الطبيب'}</p>
+                    <button onclick="stopAlarmAndTake('${alarmKey}', ${medicine.id})">
+                        <i class="fas fa-check"></i> تم الأخذ
+                    </button>
+                    <button class="snooze" onclick="snoozeAlarm('${alarmKey}', ${medicine.id})">
+                        <i class="fas fa-clock"></i> تذكير بعد 5 دقائق
+                    </button>
+                </div>
+            `;
+            
+            // إضافة تأثير اهتزاز للجرس
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes bellShake {
+                    0%, 100% { transform: rotate(0); }
+                    25% { transform: rotate(15deg); }
+                    75% { transform: rotate(-15deg); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(alarmDiv);
+            
+            // حفظ أداة الصوت لإيقافها لاحقاً
+            alarmDiv.audioElement = audioElement;
+            alarmDiv.alarmKey = alarmKey;
+        }
+
+        // إيقاف المنبه وأخذ الدواء
+        function stopAlarmAndTake(alarmKey, medicineId) {
+            // إيقاف الصوت
+            const alarmDiv = document.querySelector('.alarm-overlay');
+            if (alarmDiv && alarmDiv.audioElement) {
+                alarmDiv.audioElement.pause();
+                alarmDiv.audioElement.currentTime = 0;
+            }
+            
+            // إزالة النافذة
+            if (alarmDiv) alarmDiv.remove();
+            
+            // تسجيل الجرعة
+            takeNextPill(medicineId);
+            
+            // حفظ أن المنبه تم تشغيله
+            localStorage.setItem(alarmKey, 'played');
+            currentAlarm = null;
+            if (activeAlarmTimeout) clearTimeout(activeAlarmTimeout);
+            
+            // استعادة لون الخلفية
+            document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+        }
+
+        // تأجيل المنبه (Snooze)
+        function snoozeAlarm(alarmKey, medicineId) {
+            // إيقاف الصوت مؤقتاً
+            const alarmDiv = document.querySelector('.alarm-overlay');
+            if (alarmDiv && alarmDiv.audioElement) {
+                alarmDiv.audioElement.pause();
+                alarmDiv.audioElement.currentTime = 0;
+            }
+            if (alarmDiv) alarmDiv.remove();
+            
+            // إعادة تعيين المنبه بعد 5 دقائق
+            currentAlarm = null;
+            activeAlarmTimeout = setTimeout(() => {
+                const medicine = medicines.find(m => m.id === medicineId);
+                if (medicine) {
+                    const schedule = medicine.schedule[0];
+                    triggerAlarm(medicine, schedule, alarmKey + '_snooze');
+                }
+                activeAlarmTimeout = null;
+            }, 5 * 60 * 1000);
+            
+            showToast("⏰ سيتم التذكير مرة أخرى بعد 5 دقائق", "info");
+        }
+
+        // عرض الأدوية
+        function renderMedicines() {
+            const container = document.getElementById('medicinesList');
+            
+            if (medicines.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-pills" style="font-size: 3rem; color: #ccc;"></i><p>لا توجد أدوية</p><button class="btn-add" onclick="openModal()">➕ دواء جديد</button></div>`;
+                return;
+            }
+            
+            container.innerHTML = medicines.map(med => createMedicineCard(med)).join('');
+        }
+
+        // إنشاء بطاقة دواء
+        function createMedicineCard(med) {
+            const totalDoses = med.totalDoses;
+            const takenCount = med.dosesTaken ? med.dosesTaken.length : 0;
+            const percentComplete = (takenCount / totalDoses) * 100;
+            
+            let stripsHtml = '';
+            const pillsPerStrip = med.pillsPerStrip;
+            const numberOfStrips = med.numberOfStrips;
+            
+            for (let stripNum = 0; stripNum < numberOfStrips; stripNum++) {
+                let pillsHtml = '';
+                let takenInStrip = 0;
+                
+                for (let i = 0; i < pillsPerStrip; i++) {
+                    const pillGlobalIndex = stripNum * pillsPerStrip + i;
+                    const isTaken = med.dosesTaken && med.dosesTaken.includes(pillGlobalIndex);
+                    if (isTaken) takenInStrip++;
+                    
+                    pillsHtml += `
+                        <div class="pill ${isTaken ? 'taken' : ''}" 
+                             style="background: ${med.medicineColor}"
+                             onclick="if(!${isTaken}) takeSpecificPill(${med.id}, ${pillGlobalIndex})"
+                             oncontextmenu="event.preventDefault(); showPillMenu(event, ${med.id}, ${pillGlobalIndex}, ${isTaken})">
+                            ${pillGlobalIndex + 1}
+                        </div>
+                    `;
+                }
+                
+                const stripPercent = (takenInStrip / pillsPerStrip) * 100;
+                stripsHtml += `
+                    <div class="strip-card">
+                        <div class="strip-header">
+                            <span class="strip-title"><i class="fas fa-square"></i> الشريط ${stripNum + 1}</span>
+                            <div class="strip-progress"><div class="strip-progress-fill" style="width: ${stripPercent}%"></div></div>
+                        </div>
+                        <div class="pills-grid">${pillsHtml}</div>
+                    </div>
+                `;
+            }
+            
+            const timesHtml = med.schedule.map(s => `<span class="time-badge"><i class="fas fa-clock"></i> ${s.time} ${s.label}</span>`).join('');
+            
+            return `
+                <div class="medicine-card" data-id="${med.id}">
+                    <div class="card-header">
+                        <h3><i class="fas fa-capsules"></i> ${med.medicineName}</h3>
+                        <span class="patient-badge"><i class="fas fa-user"></i> ${med.patientName}</span>
+                    </div>
+                    <div class="strips-container">${stripsHtml}</div>
+                    <div class="schedule-info">
+                        <div class="times">${timesHtml}</div>
+                        <div class="dose-counter">${takenCount}/${totalDoses} جرعة</div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-take" onclick="takeNextPill(${med.id})"><i class="fas fa-check"></i> أخذ</button>
+                        <button class="btn-undo" onclick="undoLastPill(${med.id})"><i class="fas fa-undo"></i> تراجع</button>
+                        <button class="btn-edit-dose" onclick="openEditDoseModal(${med.id})"><i class="fas fa-pen"></i> تعديل</button>
+                        <button class="btn-delete" onclick="deleteMedicine(${med.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // عرض قائمة منبثقة للحبة (تعديل/تراجع)
+        function showPillMenu(event, medicineId, pillIndex, isTaken) {
+            event.stopPropagation();
+            
+            // إزالة أي قائمة موجودة
+            const existingMenu = document.querySelector('.pill-menu');
+            if (existingMenu) existingMenu.remove();
+            
+            const menu = document.createElement('div');
+            menu.className = 'pill-menu';
+            menu.style.top = `${event.clientY}px`;
+            menu.style.left = `${event.clientX}px`;
+            
+            if (isTaken) {
+                menu.innerHTML = `
+                    <button onclick="undoSpecificPill(${medicineId}, ${pillIndex}); this.parentElement.remove();">
+                        <i class="fas fa-undo"></i> 🔄 التراجع عن أخذ هذه الحبة
+                    </button>
+                `;
+            } else {
+                menu.innerHTML = `
+                    <button onclick="takeSpecificPill(${medicineId}, ${pillIndex}); this.parentElement.remove();">
+                        <i class="fas fa-check"></i> ✅ تسجيل أخذ هذه الحبة
+                    </button>
+                `;
+            }
+            
+            document.body.appendChild(menu);
+            
+            // إغلاق القائمة عند النقر خارجها
+            setTimeout(() => {
+                document.addEventListener('click', function closeMenu(e) {
+                    if (!menu.contains(e.target)) {
+                        menu.remove();
+                        document.removeEventListener('click', closeMenu);
+                    }
+                });
+            }, 10);
+        }
+
+        // أخذ حبة محددة
+        function takeSpecificPill(medicineId, pillIndex) {
+            const medicine = medicines.find(m => m.id === medicineId);
+            if (!medicine) return;
+            if (!medicine.dosesTaken) medicine.dosesTaken = [];
+            
+            if (medicine.dosesTaken.includes(pillIndex)) {
+                showToast("⚠️ هذه الحبة تم أخذها مسبقاً!", "warning");
+                return;
+            }
+            
+            medicine.dosesTaken.push(pillIndex);
+            medicine.dosesTaken.sort((a,b) => a-b);
+            saveData();
+            renderMedicines();
+            updateStats();
+            showToast(`✓ تم أخذ الحبة رقم ${pillIndex + 1}`, "success");
+        }
+
+        // التراجع عن أخذ حبة محددة
+        function undoSpecificPill(medicineId, pillIndex) {
+            const medicine = medicines.find(m => m.id === medicineId);
+            if (!medicine) return;
+            if (!medicine.dosesTaken) medicine.dosesTaken = [];
+            
+            const index = medicine.dosesTaken.indexOf(pillIndex);
+            if (index !== -1) {
+                medicine.dosesTaken.splice(index, 1);
+                saveData();
+                renderMedicines();
+                updateStats();
+                showToast(`✓ تم التراجع عن الحبة رقم ${pillIndex + 1}`, "success");
+            }
+        }
+
+        // التراجع عن آخر جرعة
+        function undoLastPill(medicineId) {
+            const medicine = medicines.find(m => m.id === medicineId);
+            if (!medicine) return;
+            if (!medicine.dosesTaken || medicine.dosesTaken.length === 0) {
+                showToast("⚠️ لا توجد جرعات للتراجع عنها", "warning");
+                return;
+            }
+            
+            const lastPill = medicine.dosesTaken[medicine.dosesTaken.length - 1];
+            medicine.dosesTaken.pop();
+            saveData();
+            renderMedicines();
+            updateStats();
+            showToast(`✓ تم التراجع عن الحبة رقم ${lastPill + 1}`, "success");
+        }
+
+        // أخذ الجرعة التالية
+        function takeNextPill(medicineId) {
+            const medicine = medicines.find(m => m.id === medicineId);
+            if (!medicine) return;
+            if (!medicine.dosesTaken) medicine.dosesTaken = [];
+            
+            for (let i = 0; i < medicine.totalDoses; i++) {
+                if (!medicine.dosesTaken.includes(i)) {
+                    medicine.dosesTaken.push(i);
+                    medicine.dosesTaken.sort((a,b) => a-b);
+                    saveData();
+                    renderMedicines();
+                    updateStats();
+                    showToast(`✓ تم أخذ جرعة ${medicine.medicineName}`, "success");
+                    
+                    // إيقاف أي منبه نشط
+                    const alarmDiv = document.querySelector('.alarm-overlay');
+                    if (alarmDiv && alarmDiv.audioElement) {
+                        alarmDiv.audioElement.pause();
+                        alarmDiv.remove();
+                    }
+                    if (activeAlarmTimeout) clearTimeout(activeAlarmTimeout);
+                    currentAlarm = null;
+                    document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                    return;
+                }
+            }
+            showToast(`🎉 جميع جرعات ${medicine.medicineName} مكتملة!`, "success");
+        }
+
+        // فتح مودال تعديل الجرعات
+        let editingMedicineId = null;
+        function openEditDoseModal(medicineId) {
+            const medicine = medicines.find(m => m.id === medicineId);
+            if (!medicine) return;
+            
+            editingMedicineId = medicineId;
+            document.getElementById('editTakenCount').value = medicine.dosesTaken ? medicine.dosesTaken.length : 0;
+            document.getElementById('editTotalDoses').value = medicine.totalDoses;
+            document.getElementById('editDoseModal').style.display = 'flex';
+        }
+
+        function closeEditDoseModal() {
+            document.getElementById('editDoseModal').style.display = 'none';
+        }
+
+        function saveDoseEdit() {
+            const medicine = medicines.find(m => m.id === editingMedicineId);
+            if (!medicine) return;
+            
+            let newTakenCount = parseInt(document.getElementById('editTakenCount').value);
+            const newTotalDoses = parseInt(document.getElementById('editTotalDoses').value);
+            
+            if (isNaN(newTakenCount)) newTakenCount = 0;
+            if (newTakenCount > newTotalDoses) newTakenCount = newTotalDoses;
+            
+            // إعادة بناء مصفوفة الجرعات المأخوذة
+            const newDosesTaken = [];
+            for (let i = 0; i < newTakenCount; i++) {
+                newDosesTaken.push(i);
+            }
+            
+            medicine.dosesTaken = newDosesTaken;
+            medicine.totalDoses = newTotalDoses;
+            
+            // تحديث عدد الأشرطة والحبات إذا لزم الأمر
+            if (newTotalDoses !== medicine.pillsPerStrip * medicine.numberOfStrips) {
+                // إعادة حساب الأشرطة بشكل تقريبي
+                medicine.pillsPerStrip = 7;
+                medicine.numberOfStrips = Math.ceil(newTotalDoses / 7);
+            }
+            
+            saveData();
+            renderMedicines();
+            updateStats();
+            closeEditDoseModal();
+            showToast("✓ تم تحديث الجرعات", "success");
+        }
+
+        function deleteMedicine(id) {
+            if (confirm("⚠️ هل أنت متأكد من حذف هذا الدواء؟")) {
+                medicines = medicines.filter(m => m.id !== id);
+                saveData();
+                renderMedicines();
+                updateStats();
+                showToast("✓ تم حذف الدواء", "success");
+            }
+        }
+
+        // تحديث الإحصائيات
+        function updateStats() {
+            document.getElementById('totalCount').innerText = medicines.length;
+            
+            let totalTaken = 0, totalPossible = 0;
+            medicines.forEach(med => {
+                totalTaken += med.dosesTaken ? med.dosesTaken.length : 0;
+                totalPossible += med.totalDoses;
+            });
+            const rate = totalPossible > 0 ? Math.round((totalTaken / totalPossible) * 100) : 0;
+            document.getElementById('completionRate').innerText = rate + '%';
+            
+            // أقرب جرعة قادمة
+            let nextTime = null;
+            const now = new Date();
+            const nowMinutes = now.getHours() * 60 + now.getMinutes();
+            
+            medicines.forEach(med => {
+                med.schedule.forEach(s => {
+                    const [hours, minutes] = s.time.split(':');
+                    const doseMinutes = parseInt(hours) * 60 + parseInt(minutes);
+                    if (doseMinutes > nowMinutes) {
+                        if (nextTime === null || doseMinutes < nextTime) nextTime = doseMinutes;
+                    }
+                });
+            });
+            
+            if (nextTime) {
+                const hours = Math.floor(nextTime / 60);
+                const minutes = nextTime % 60;
+                document.getElementById('nextDose').innerText = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}`;
+            } else {
+                document.getElementById('nextDose').innerText = 'غداً';
+            }
+        }
+
+        function openModal() { document.getElementById('modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+        // حفظ دواء جديد
+        document.getElementById('medicineForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const time2 = document.getElementById('time2').value;
+            const schedule = [{ time: document.getElementById('time1').value, label: "الجرعة الأولى" }];
+            if (time2) schedule.push({ time: time2, label: "الجرعة الثانية" });
+            
+            const pillsPerStrip = parseInt(document.getElementById('pillsPerStrip').value);
+            const numberOfStrips = parseInt(document.getElementById('numberOfStrips').value);
+            
+            const newMedicine = {
+                id: Date.now(),
+                patientName: document.getElementById('patientName').value,
+                medicineName: document.getElementById('medicineName').value,
+                pillsPerStrip: pillsPerStrip,
+                numberOfStrips: numberOfStrips,
+                totalDoses: pillsPerStrip * numberOfStrips,
+                schedule: schedule,
+                medicineColor: document.getElementById('medicineColor').value,
+                instructions: document.getElementById('instructions').value,
+                dosesTaken: [],
+                notificationsEnabled: document.getElementById('notificationsEnabled').checked,
+                ringtone: document.getElementById('ringtone').value
+            };
+            
+            medicines.push(newMedicine);
+            saveData();
+            renderMedicines();
+            updateStats();
+            closeModal();
+            document.getElementById('medicineForm').reset();
+            showToast(`✓ تم إضافة ${newMedicine.medicineName}`, "success");
+        });
+
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = message;
+            toast.style.background = type === 'success' ? '#4caf50' : '#ff9800';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('modal')) closeModal();
+            if (event.target === document.getElementById('editDoseModal')) closeEditDoseModal();
+        }
+
+        if (Notification.permission === 'default') Notification.requestPermission();
+        loadData();
+    </script>
+</body>
+</html>

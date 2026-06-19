@@ -1,0 +1,287 @@
+/* ============================================
+   RESPONSIVE.CSS - TechNomads
+   Mobile-first responsive overrides
+   ============================================ */
+
+/* ---------- Extra Small Devices (Phones, < 480px) ---------- */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 12px;
+    }
+    
+    /* Typography */
+    h1 { font-size: 24px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 17px; }
+    h4 { font-size: 15px; }
+    p, .p { font-size: 14px; }
+    
+    /* Buttons */
+    .btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+    .btn-lg {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    .btn-sm {
+        padding: 4px 12px;
+        font-size: 11px;
+    }
+    
+    /* Cards */
+    .card {
+        padding: 16px;
+        border-radius: 12px;
+    }
+    
+    /* Section spacing */
+    section {
+        padding: 32px 0 !important;
+    }
+    .section-title {
+        font-size: 22px;
+    }
+    .section-subtitle {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    
+    /* Grid to single column */
+    .features-grid,
+    .services-grid,
+    .team-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px;
+    }
+    .stats-grid .stat .number {
+        font-size: 20px;
+    }
+    .stats-grid .stat .label {
+        font-size: 12px;
+    }
+    
+    /* Hero */
+    .hero-section {
+        padding: 40px 12px 32px !important;
+        min-height: auto;
+    }
+    .hero-content h1 {
+        font-size: 22px;
+    }
+    .hero-content p {
+        font-size: 14px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+    }
+    .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .hero-stats {
+        gap: 16px;
+    }
+    .hero-stats .stat .number {
+        font-size: 18px;
+    }
+    
+    /* Footer */
+    .site-footer {
+        padding: 24px 12px 16px;
+    }
+    .footer-grid {
+        gap: 16px;
+    }
+    .footer-col h4 {
+        font-size: 14px;
+    }
+    .footer-col a,
+    .footer-col p {
+        font-size: 13px;
+    }
+    
+    /* Forms */
+    .form-input,
+    .form-textarea {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+    
+    /* FAQ */
+    .faq-item {
+        padding: 14px 16px;
+    }
+    .faq-item .question {
+        font-size: 14px;
+    }
+    .faq-item .answer {
+        font-size: 13px;
+    }
+    
+    /* Track */
+    .track-card {
+        padding: 16px !important;
+    }
+    .track-input-group {
+        flex-direction: column;
+    }
+    .track-input-group input {
+        text-align: center;
+    }
+    .track-input-group .btn-track {
+        width: 100%;
+        justify-content: center;
+    }
+    .track-result .order-details {
+        grid-template-columns: 1fr;
+    }
+    .track-result .progress-container .step .label {
+        font-size: 8px;
+    }
+    .track-result .progress-container .step .dot {
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+    }
+    .track-result .driver-info {
+        flex-wrap: wrap;
+    }
+    .track-result .actions-row {
+        flex-direction: column;
+    }
+    
+    /* Toast */
+    .toast-container {
+        width: 95%;
+        top: 70px;
+    }
+    .toast {
+        font-size: 13px;
+        padding: 12px 16px;
+    }
+}
+
+/* ---------- Small Devices (Tablets, 481px - 768px) ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+    
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    
+    .features-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .team-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .hero-content h1 {
+        font-size: 32px;
+    }
+    
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .mission-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .track-result .order-details {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+}
+
+/* ---------- Medium Devices (Tablets/Laptops, 769px - 1024px) ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .about-grid {
+        gap: 30px;
+    }
+    
+    .mission-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ---------- Print ---------- */
+@media print {
+    .site-header,
+    .site-footer,
+    .mobile-menu-btn,
+    .hero-buttons,
+    .cta-section .btn-white,
+    .btn-service,
+    .btn-submit {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .card,
+    .feature-card,
+    .service-card,
+    .mission-card,
+    .team-card {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+    
+    .hero-section {
+        background: white !important;
+        color: black !important;
+        padding: 20px !important;
+        min-height: auto !important;
+    }
+    .hero-section::before,
+    .hero-section::after {
+        display: none !important;
+    }
+    .hero-content h1 {
+        color: black !important;
+    }
+    .hero-content p {
+        color: #333 !important;
+    }
+    .hero-stats .stat .label {
+        color: #666 !important;
+    }
+    
+    .stats-section {
+        background: #f5f5f5 !important;
+        color: black !important;
+    }
+}
