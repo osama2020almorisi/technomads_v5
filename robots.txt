@@ -1,7 +1,8 @@
 User-agent: *
 Allow: /
-
-# نعم، لا تمنع أي شيء في المشاريع
-# فقط امنع المجلدات غير الضرورية (إن وجدت)
-
+Disallow: /admin/
+Disallow: /images/temp/
 Sitemap: https://te-2026.netlify.app/sitemap.xml
+Sitemap: https://te-2026.netlify.app/sitemap-pages.xml
+Sitemap: https://te-2026.netlify.app/sitemap-projects.xml
+Sitemap: https://te-2026.netlify.app/sitemap-entertainment.xml

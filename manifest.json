@@ -1,13 +1,24 @@
-// manifest.json (لـ PWA)
 {
-  "name": "TechNomads",
-  "short_name": "TechNomads",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#2A2D7C",
-  "theme_color": "#2A2D7C",
-  "icons": [
-    { "src": "images/logo.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "images/logo.png", "sizes": "512x512", "type": "image/png" }
-  ]
+    "name": "TechNomads - الريادة التقنية اليمنية",
+    "short_name": "TechNomads",
+    "description": "حلول رقمية متكاملة تنطلق من اليمن",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#2A2D7C",
+    "theme_color": "#2A2D7C",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "images/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "images/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
 }

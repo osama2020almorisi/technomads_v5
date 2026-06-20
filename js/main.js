@@ -113,44 +113,64 @@ function initHeaderScroll() {
 }
 
 /* ============================================
-   TYPING EFFECT - تأثير الكتابة
+   TYPING EFFECT - تأثير الكتابة (معدل)
    ============================================ */
 function initTypingEffect() {
     const typingElement = document.querySelector('.typing-text');
-
     if (!typingElement) return;
 
-    const strings = JSON.parse(typingElement.getAttribute('data-strings') || '["ابتكارات رقمية"]');
+    // قراءة النصوص من data-strings بشكل آمن
+    let strings = [];
+    try {
+        const data = typingElement.getAttribute('data-strings');
+        if (data) {
+            strings = JSON.parse(data);
+        }
+    } catch (e) {
+        strings = ["ابتكارات رقمية"];
+    }
+
+    // إذا كانت المصفوفة فارغة، استخدم النص الافتراضي
+    if (!strings || strings.length === 0) {
+        strings = ["ابتكارات رقمية"];
+    }
+
     let currentStringIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
     let typingSpeed = 150;
 
     function type() {
-        const currentString = strings[currentStringIndex];
-
+        const currentString = strings[currentStringIndex] || "";
+        
         if (isDeleting) {
+            // حذف حرف
             typingElement.textContent = currentString.substring(0, charIndex - 1);
             charIndex--;
             typingSpeed = 80;
         } else {
+            // كتابة حرف
             typingElement.textContent = currentString.substring(0, charIndex + 1);
             charIndex++;
             typingSpeed = 150;
         }
 
+        // التحقق من انتهاء الكتابة
         if (!isDeleting && charIndex === currentString.length) {
             isDeleting = true;
-            typingSpeed = 2000;
-        } else if (isDeleting && charIndex === 0) {
+            typingSpeed = 2000; // انتظار قبل الحذف
+        } 
+        // التحقق من انتهاء الحذف
+        else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             currentStringIndex = (currentStringIndex + 1) % strings.length;
-            typingSpeed = 500;
+            typingSpeed = 500; // انتظار قبل الكتابة التالية
         }
 
         setTimeout(type, typingSpeed);
     }
 
+    // بدء التأثير بعد تأخير بسيط
     setTimeout(type, 1000);
 }
 
@@ -191,43 +211,84 @@ function initCounters() {
 }
 
 /* ============================================
-   APP SLIDER - شريط تطبيقات
+   APP SLIDER - شريط تطبيقات الهاتف (معدل بالكامل)
    ============================================ */
 function initAppSlider() {
-    const appSlider = document.querySelector('.app-slider');
+    const slider = document.getElementById('appSlider');
+    const dots = document.querySelectorAll('.slider-indicators .dot');
 
-    if (!appSlider) return;
+    if (!slider || dots.length === 0) return;
 
-    const slides = appSlider.querySelectorAll('.slide');
-    if (slides.length === 0) return;
+    let currentSlide = 0;
+    const totalSlides = slider.children.length;
 
-    let currentIndex = 0;
+    // التأكد من وجود شرائح
+    if (totalSlides === 0) return;
 
-    function changeSlide() {
-        slides[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % slides.length;
-        slides[currentIndex].classList.add('active');
+    // تعيين عرض الشريحة الأولية
+    function goToSlide(index) {
+        // منع التجاوز
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+
+        currentSlide = index;
+        // تحريك الشريحة باستخدام translateX
+        slider.style.transform = 'translateX(-' + (index * 100) + '%)';
+
+        // تحديث النقاط (الدوائر)
+        dots.forEach(function(dot, i) {
+            dot.classList.toggle('active', i === index);
+        });
     }
 
-    // التحقق من تحميل الصور
-    const checkImagesLoaded = () => {
-        let allLoaded = true;
-        slides.forEach(slide => {
-            const img = slide.querySelector('img');
-            if (img && !img.complete) {
-                allLoaded = false;
+    // إضافة حدث النقر على النقاط
+    dots.forEach(function(dot, index) {
+        dot.addEventListener('click', function(e) {
+            e.stopPropagation();
+            goToSlide(index);
+        });
+    });
+
+    // البدء بالسلايد الأول
+    goToSlide(0);
+
+    // التبديل التلقائي كل 4 ثواني
+    let autoSlide = setInterval(function() {
+        goToSlide(currentSlide + 1);
+    }, 4000);
+
+    // إيقاف التبديل التلقائي عند التفاعل مع السلايدر (لتحسين تجربة المستخدم)
+    slider.addEventListener('mouseenter', function() {
+        clearInterval(autoSlide);
+    });
+    slider.addEventListener('mouseleave', function() {
+        autoSlide = setInterval(function() {
+            goToSlide(currentSlide + 1);
+        }, 4000);
+    });
+
+    // دعم اللمس
+    let touchStartX = 0;
+    slider.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        clearInterval(autoSlide);
+    });
+    slider.addEventListener('touchend', function(e) {
+        var touchEndX = e.changedTouches[0].screenX;
+        var diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) { // سحب لأكثر من 50 بكسل
+            if (diff > 0) {
+                goToSlide(currentSlide + 1); // سحب لليسار (التالي)
+            } else {
+                goToSlide(currentSlide - 1); // سحب لليمين (السابق)
             }
-        });
-        return allLoaded;
-    };
-
-    if (checkImagesLoaded()) {
-        setInterval(changeSlide, 3000);
-    } else {
-        window.addEventListener('load', () => {
-            setInterval(changeSlide, 3000);
-        });
-    }
+        }
+        // إعادة التبديل التلقائي
+        clearInterval(autoSlide);
+        autoSlide = setInterval(function() {
+            goToSlide(currentSlide + 1);
+        }, 4000);
+    });
 }
 
 /* ============================================
@@ -436,7 +497,7 @@ function showNotification(message, type = 'info') {
     existingNotifications.forEach(n => n.remove());
 
     const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
+    notification.className = 'notification notification-' + type;
 
     const icons = {
         success: 'check-circle',
@@ -591,7 +652,7 @@ function initLanguageSwitcher() {
             });
 
             // إضافة النشاط للزر المحدد
-            document.querySelectorAll(`[data-lang="${lang}"]`).forEach(b => {
+            document.querySelectorAll('[data-lang="' + lang + '"]').forEach(b => {
                 b.classList.add('active');
             });
 
@@ -599,14 +660,14 @@ function initLanguageSwitcher() {
             localStorage.setItem('language', lang);
 
             // إشعار
-            showNotification(`تم تغيير اللغة إلى ${lang === 'ar' ? 'العربية' : 'English'}`, 'success');
+            showNotification('تم تغيير اللغة إلى ' + (lang === 'ar' ? 'العربية' : 'English'), 'success');
         });
     });
 
     // استعادة اللغة المحفوظة
     const savedLang = localStorage.getItem('language');
     if (savedLang) {
-        document.querySelectorAll(`[data-lang="${savedLang}"]`).forEach(b => {
+        document.querySelectorAll('[data-lang="' + savedLang + '"]').forEach(b => {
             b.classList.add('active');
         });
     }
