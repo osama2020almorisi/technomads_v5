@@ -3,334 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="متطلبات السفر الدولي - الخطوط الجوية اليمنية. تأكد من متطلبات سفرك قبل المغادرة">
-    <meta name="keywords" content="الخطوط الجوية اليمنية, متطلبات السفر, تأشيرة, جواز سفر, Yemenia">
-    <meta name="author" content="Yemenia Airways">
-    <meta name="theme-color" content="#1e3a5f">
-    <title>متطلبات السفر الدولي | الخطوط الجوية اليمنية</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="styles/style.css">
-<base target="_blank">
+    <title>متطلبات السفر - الخطوط الجوية اليمنية</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loadingScreen" class="loading-screen">
-        <div class="loader">
-            <div class="plane-loader">
-                <i class="fas fa-plane"></i>
-            </div>
-            <p>جاري التحميل...</p>
-        </div>
+    <!-- شريط التحميل -->
+    <div id="loader" class="loader">
+        <div class="loader-spinner"></div>
+        <p>جاري تحميل البيانات...</p>
     </div>
 
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-top">
-            <div class="container">
-                <div class="header-brand">
-                    <div class="logo">
-                        <i class="fas fa-plane-departure"></i>
-                    </div>
-                    <div class="brand-text">
-                        <h1>الخطوط الجوية اليمنية</h1>
-                        <span>Yemenia Airways</span>
-                    </div>
+    <div class="container" id="mainContent" style="display: none;">
+        <!-- رأس الصفحة -->
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-plane-departure"></i>
+                    <h1>متطلبات السفر الدولي</h1>
                 </div>
-                <div class="header-actions">
-                    <button class="theme-toggle" id="themeToggle" title="تبديل الوضع">
-                        <i class="fas fa-moon"></i>
+                <p class="subtitle">الخطوط الجوية اليمنية - تأكد من متطلبات سفرك قبل المغادرة</p>
+            </div>
+            <div class="header-decoration">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </header>
+
+        <!-- قسم البحث -->
+        <section class="search-section" id="searchSection">
+            <div class="search-header">
+                <i class="fas fa-search"></i>
+                <h2>ابحث عن متطلبات السفر</h2>
+                <p>اختر جنسيتك ووجهتك للاطلاع على كافة المتطلبات</p>
+            </div>
+
+            <div class="search-grid">
+                <div class="form-group">
+                    <label for="nationality">
+                        <i class="fas fa-user"></i> الجنسية
+                    </label>
+                    <select id="nationality" class="custom-select">
+                        <option value="">-- اختر الجنسية --</option>
+                        <option value="يمني">🇾🇪 يمني</option>
+                        <option value="سعودي">🇸🇦 سعودي</option>
+                        <option value="أردني">🇯🇴 أردني</option>
+                        <option value="مصري">🇪🇬 مصري</option>
+                        <option value="سوداني">🇸🇩 سوداني</option>
+                        <option value="سوري">🇸🇾 سوري</option>
+                        <option value="إماراتي">🇦🇪 إماراتي</option>
+                        <option value="كويتي">🇰🇼 كويتي</option>
+                        <option value="هندي">🇮🇳 هندي</option>
+                        <option value="ماليزي">🇲🇾 ماليزي</option>
+                        <option value="إثيوبي">🇪🇹 إثيوبي</option>
+                        <option value="أجنبي">🌍 أجنبي (جنسية أخرى)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="destination">
+                        <i class="fas fa-globe"></i> الوجهة
+                    </label>
+                    <select id="destination" class="custom-select">
+                        <option value="">-- اختر الوجهة --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">
+                        <i class="fas fa-city"></i> المدينة
+                    </label>
+                    <select id="city" class="custom-select">
+                        <option value="">-- اختر المدينة --</option>
+                    </select>
+                </div>
+
+                <div class="form-group search-actions">
+                    <button id="searchBtn" class="btn-primary">
+                        <i class="fas fa-search"></i> ابحث عن المتطلبات
                     </button>
-                    <button class="lang-toggle" id="langToggle" title="English">
-                        <span>EN</span>
+                    <button id="clearBtn" class="btn-secondary">
+                        <i class="fas fa-undo"></i> مسح
                     </button>
                 </div>
             </div>
-        </div>
-        <div class="header-bottom">
-            <div class="container">
-                <nav class="main-nav">
-                    <a href="#search" class="nav-link active">
-                        <i class="fas fa-search"></i>
-                        <span>البحث</span>
-                    </a>
-                    <a href="#general-info" class="nav-link">
-                        <i class="fas fa-info-circle"></i>
-                        <span>معلومات عامة</span>
-                    </a>
-                    <a href="#destinations" class="nav-link">
-                        <i class="fas fa-globe"></i>
-                        <span>الوجهات</span>
-                    </a>
-                    <a href="#contact" class="nav-link">
-                        <i class="fas fa-phone"></i>
-                        <span>اتصل بنا</span>
-                    </a>
-                </nav>
+
+            <!-- مؤشر البحث -->
+            <div id="searchIndicator" class="search-indicator" style="display: none;">
+                <div class="search-spinner"></div>
+                <span>جاري البحث...</span>
             </div>
-        </div>
-    </header>
+        </section>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-bg">
-            <div class="hero-overlay"></div>
-        </div>
-        <div class="container">
-            <div class="hero-content">
-                <h2 class="hero-title">
-                    <span class="title-icon">🌍</span>
-                    متطلبات السفر الدولي
-                </h2>
-                <p class="hero-subtitle">
-                    تأكد من متطلبات سفرك قبل المغادرة واستعد لرحلتك بكل ثقة
-                </p>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number" id="destCount">12</span>
-                        <span class="stat-label">وجهة دولية</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="cityCount">20+</span>
-                        <span class="stat-label">مدينة</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">24/7</span>
-                        <span class="stat-label">دعم مستمر</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Search Section -->
-    <section id="search" class="search-section">
-        <div class="container">
-            <div class="search-card">
-                <div class="search-header">
-                    <h3><i class="fas fa-passport"></i> استعلام عن متطلبات السفر</h3>
-                    <p>اختر جنسيتك والوجهة المقصودة للحصول على المعلومات اللازمة</p>
-                </div>
-
-                <div class="search-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nationality">
-                                <i class="fas fa-flag"></i>
-                                الجنسية
-                            </label>
-                            <div class="select-wrapper">
-                                <select id="nationality" required>
-                                    <option value="" disabled selected>-- اختر الجنسية --</option>
-                                    <option value="يمني">🇾🇪 يمني</option>
-                                    <option value="سعودي">🇸🇦 سعودي</option>
-                                    <option value="أردني">🇯🇴 أردني</option>
-                                    <option value="مصري">🇪🇬 مصري</option>
-                                    <option value="سوداني">🇸🇩 سوداني</option>
-                                    <option value="سوري">🇸🇾 سوري</option>
-                                    <option value="إماراتي">🇦🇪 إماراتي</option>
-                                    <option value="كويتي">🇰🇼 كويتي</option>
-                                    <option value="هندي">🇮🇳 هندي</option>
-                                    <option value="ماليزي">🇲🇾 ماليزي</option>
-                                    <option value="إثيوبي">🇪🇹 إثيوبي</option>
-                                    <option value="جيبوتي">🇩🇯 جيبوتي</option>
-                                    <option value="لبناني">🇱🇧 لبناني</option>
-                                    <option value="أخرى">🌍 جنسية أخرى</option>
-                                </select>
-                                <i class="fas fa-chevron-down select-icon"></i>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="destination">
-                                <i class="fas fa-map-marker-alt"></i>
-                                الوجهة
-                            </label>
-                            <div class="select-wrapper">
-                                <select id="destination" required>
-                                    <option value="" disabled selected>-- اختر الوجهة --</option>
-                                </select>
-                                <i class="fas fa-chevron-down select-icon"></i>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="city">
-                                <i class="fas fa-city"></i>
-                                المدينة
-                            </label>
-                            <div class="select-wrapper">
-                                <select id="city" required>
-                                    <option value="" disabled selected>-- اختر المدينة --</option>
-                                </select>
-                                <i class="fas fa-chevron-down select-icon"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button id="searchBtn" class="btn-primary">
-                            <i class="fas fa-search"></i>
-                            <span>ابحث عن المتطلبات</span>
-                        </button>
-                        <button id="resetBtn" class="btn-secondary">
-                            <i class="fas fa-redo"></i>
-                            <span>إعادة تعيين</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Results Section -->
-    <section id="results" class="results-section" style="display: none;">
-        <div class="container">
+        <!-- نتائج البحث -->
+        <section id="results" class="results-section" style="display: none;">
             <div class="results-header">
-                <h3><i class="fas fa-clipboard-list"></i> نتائج البحث</h3>
-                <div class="results-meta">
-                    <span class="meta-item" id="resultNationality"></span>
-                    <span class="meta-separator">|</span>
-                    <span class="meta-item" id="resultDestination"></span>
-                    <span class="meta-separator">|</span>
-                    <span class="meta-item" id="resultCity"></span>
-                </div>
+                <h2><i class="fas fa-clipboard-list"></i> <span id="resultTitle">متطلبات السفر</span></h2>
+                <button id="closeResults" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <div class="requirements-card" id="requirementsCard">
-                <!-- Content will be loaded dynamically -->
+                <!-- المحتوى يضاف ديناميكياً -->
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- General Info Section -->
-    <section id="general-info" class="general-info-section">
-        <div class="container">
-            <div class="section-header">
+        <!-- المعلومات العامة -->
+        <section class="general-info" id="generalInfo">
+            <div class="general-header">
                 <h2><i class="fas fa-info-circle"></i> التعليمات العامة</h2>
-                <p>معلومات مهمة لجميع المسافرين</p>
+                <button id="toggleGeneral" class="btn-toggle">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
             </div>
-            <div class="info-grid" id="generalInstructions">
-                <!-- Content will be loaded dynamically -->
+            <div class="general-body" id="generalBody">
+                <!-- المحتوى يضاف ديناميكياً -->
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Destinations Section -->
-    <section id="destinations" class="destinations-section">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-globe-africa"></i> وجهاتنا الدولية</h2>
-                <p>استكشف وجهات السفر المتاحة</p>
-            </div>
-            <div class="destinations-grid" id="destinationsGrid">
-                <!-- Content will be loaded dynamically -->
-            </div>
-        </div>
-    </section>
+        <!-- تذييل الصفحة -->
+        <footer>
+            <p>© 2026 الخطوط الجوية اليمنية - جميع الحقوق محفوظة</p>
+            <p class="footer-note">تحديث: <span id="updateDate"></span></p>
+        </footer>
+    </div>
 
-    <!-- Quick Links Section -->
-    <section class="quick-links-section">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-link"></i> روابط مهمة</h2>
-            </div>
-            <div class="links-grid">
-                <a href="https://visa.mofa.gov.sa/Issuedvisa/Home" target="_blank" class="link-card">
-                    <div class="link-icon"><i class="fas fa-passport"></i></div>
-                    <h4>التحقق من تأشيرة السعودية</h4>
-                    <p>وزارة الخارجية السعودية</p>
-                </a>
-                <a href="https://muqeem.sa/#/visa-validity/check" target="_blank" class="link-card">
-                    <div class="link-icon"><i class="fas fa-check-circle"></i></div>
-                    <h4>التحقق من صلاحية الإقامة</h4>
-                    <p>منصة مقيم</p>
-                </a>
-                <a href="https://imigresen-online.imi.gov.my/mdac/main/registerMain" target="_blank" class="link-card">
-                    <div class="link-icon"><i class="fas fa-file-alt"></i></div>
-                    <h4>بطاقة الوصول الماليزية</h4>
-                    <p>MDAC - الهجرة الماليزية</p>
-                </a>
-                <a href="https://www.yemenia.com" target="_blank" class="link-card">
-                    <div class="link-icon"><i class="fas fa-plane"></i></div>
-                    <h4>الموقع الرسمي</h4>
-                    <p>الخطوط الجوية اليمنية</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-headset"></i> اتصل بنا</h2>
-                <p>نحن هنا لمساعدتك على مدار الساعة</p>
-            </div>
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
-                    <h4>الهاتف</h4>
-                    <p>+967 1 274111</p>
-                    <p>+967 1 303 303</p>
-                </div>
-                <div class="contact-card">
-                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                    <h4>البريد الإلكتروني</h4>
-                    <p>info@yemenia.com</p>
-                    <p>COM.YEMENIA@PSPT</p>
-                </div>
-                <div class="contact-card">
-                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <h4>العنوان</h4>
-                    <p>صنعاء، الجمهورية اليمنية</p>
-                    <p>ص.ب: 100</p>
-                </div>
-                <div class="contact-card">
-                    <div class="contact-icon"><i class="fas fa-clock"></i></div>
-                    <h4>ساعات العمل</h4>
-                    <p>طوال أيام الأسبوع</p>
-                    <p>24 ساعة</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <i class="fas fa-plane-departure"></i>
-                    <span>الخطوط الجوية اليمنية</span>
-                </div>
-                <div class="footer-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 الخطوط الجوية اليمنية - جميع الحقوق محفوظة</p>
-                <p class="footer-note">المعلومات المعروضة تخضع للتغيير دون إشعار مسبق</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scroll to Top -->
-    <button id="scrollTop" class="scroll-top" title="العودة للأعلى">
+    <!-- زر العودة للأعلى -->
+    <button id="scrollTop" class="scroll-top" style="display: none;">
         <i class="fas fa-arrow-up"></i>
     </button>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="toast">
-        <div class="toast-content">
-            <i class="fas fa-exclamation-circle"></i>
-            <span id="toastMessage"></span>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>

@@ -1,889 +1,863 @@
-// ═══════════════════════════════════════════════════════════════
-// Yemenia Airways - Travel Requirements System
-// Professional Edition 2026
-// ═══════════════════════════════════════════════════════════════
+// ============================================================
+// SCRIPT.JS - النسخة المحسنة والمتقنة
+// الخطوط الجوية اليمنية - متطلبات السفر
+// ============================================================
 
-'use strict';
+(function() {
+    'use strict';
 
-// ─── Configuration ───────────────────────────────────────────
-const CONFIG = {
-    dataUrl: 'data.json',
-    animationDuration: 300,
-    scrollOffset: 100,
-    toastDuration: 4000
-};
+    // ============================================================
+    // 1. المتغيرات العامة
+    // ============================================================
+    let travelData = {};
+    let currentResults = null;
+    const DOM = {};
 
-// ─── State Management ──────────────────────────────────────────
-const State = {
-    data: {},
-    theme: localStorage.getItem('yemenia-theme') || 'light',
-    language: localStorage.getItem('yemenia-lang') || 'ar',
-    isLoading: false
-};
-
-// ─── DOM Elements ──────────────────────────────────────────────
-const DOM = {
-    loadingScreen: () => document.getElementById('loadingScreen'),
-    nationality: () => document.getElementById('nationality'),
-    destination: () => document.getElementById('destination'),
-    city: () => document.getElementById('city'),
-    searchBtn: () => document.getElementById('searchBtn'),
-    resetBtn: () => document.getElementById('resetBtn'),
-    results: () => document.getElementById('results'),
-    requirementsCard: () => document.getElementById('requirementsCard'),
-    generalInstructions: () => document.getElementById('generalInstructions'),
-    destinationsGrid: () => document.getElementById('destinationsGrid'),
-    resultNationality: () => document.getElementById('resultNationality'),
-    resultDestination: () => document.getElementById('resultDestination'),
-    resultCity: () => document.getElementById('resultCity'),
-    themeToggle: () => document.getElementById('themeToggle'),
-    scrollTop: () => document.getElementById('scrollTop'),
-    toast: () => document.getElementById('toast'),
-    toastMessage: () => document.getElementById('toastMessage'),
-    destCount: () => document.getElementById('destCount'),
-    cityCount: () => document.getElementById('cityCount')
-};
-
-// ─── Utility Functions ─────────────────────────────────────────
-const Utils = {
-    /**
-     * Format text by replacing underscores with spaces
-     */
-    formatKey: (key) => {
-        if (typeof key !== 'string') return key;
-        return key.replace(/_/g, ' ');
-    },
-
-    /**
-     * Create an icon element
-     */
-    createIcon: (className) => {
-        const icon = document.createElement('i');
-        icon.className = className;
-        return icon;
-    },
-
-    /**
-     * Debounce function
-     */
-    debounce: (func, wait) => {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    },
-
-    /**
-     * Smooth scroll to element
-     */
-    scrollTo: (element, offset = 0) => {
-        const top = element.getBoundingClientRect().top + window.pageYOffset - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
-    },
-
-    /**
-     * Animate number counting
-     */
-    animateNumber: (element, target, duration = 1000) => {
-        const start = 0;
-        const increment = target / (duration / 16);
-        let current = start;
-
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            element.textContent = Math.floor(current);
-        }, 16);
+    // ============================================================
+    // 2. DOM Elements - تجميع المراجع
+    // ============================================================
+    function cacheDomElements() {
+        DOM.loader = document.getElementById('loader');
+        DOM.mainContent = document.getElementById('mainContent');
+        DOM.nationality = document.getElementById('nationality');
+        DOM.destination = document.getElementById('destination');
+        DOM.city = document.getElementById('city');
+        DOM.searchBtn = document.getElementById('searchBtn');
+        DOM.clearBtn = document.getElementById('clearBtn');
+        DOM.results = document.getElementById('results');
+        DOM.resultsCard = document.getElementById('requirementsCard');
+        DOM.resultTitle = document.getElementById('resultTitle');
+        DOM.closeResults = document.getElementById('closeResults');
+        DOM.generalBody = document.getElementById('generalBody');
+        DOM.toggleGeneral = document.getElementById('toggleGeneral');
+        DOM.searchIndicator = document.getElementById('searchIndicator');
+        DOM.scrollTop = document.getElementById('scrollTop');
+        DOM.updateDate = document.getElementById('updateDate');
     }
-};
 
-// ─── Toast Notification ────────────────────────────────────────
-const Toast = {
-    show: (message, type = 'info') => {
-        const toast = DOM.toast();
-        const toastMessage = DOM.toastMessage();
-
-        toastMessage.textContent = message;
-        toast.className = `toast show ${type}`;
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, CONFIG.toastDuration);
-    }
-};
-
-// ─── Data Management ─────────────────────────────────────────────
-const DataManager = {
-    /**
-     * Load travel data from JSON
-     */
-    async load() {
+    // ============================================================
+    // 3. تحميل البيانات
+    // ============================================================
+    async function loadData() {
         try {
-            const response = await fetch(CONFIG.dataUrl);
-            if (!response.ok) throw new Error('Failed to load data');
-
-            State.data = await response.json();
-            return true;
+            showLoader(true);
+            const response = await fetch('data.json');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            travelData = await response.json();
+            
+            // التحقق من صحة البيانات
+            if (!travelData.destinations || Object.keys(travelData.destinations).length === 0) {
+                throw new Error('البيانات غير صالحة أو فارغة');
+            }
+            
+            initializePage();
+            showLoader(false);
+            DOM.mainContent.style.display = 'block';
+            
+            // تحديث تاريخ الصفحة
+            if (DOM.updateDate) {
+                const now = new Date();
+                DOM.updateDate.textContent = now.toLocaleDateString('ar-EG', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+            
         } catch (error) {
-            console.error('Error loading data:', error);
-            Toast.show('حدث خطأ في تحميل البيانات. يرجى تحديث الصفحة.', 'error');
-            return false;
+            console.error('خطأ في تحميل البيانات:', error);
+            showLoader(false);
+            showError('حدث خطأ في تحميل البيانات. يرجى تحديث الصفحة والمحاولة مرة أخرى.');
         }
-    },
+    }
 
-    /**
-     * Get destination data
-     */
-    getDestination: (name) => State.data.destinations?.[name] || null,
+    // ============================================================
+    // 4. عرض/إخفاء شريط التحميل
+    // ============================================================
+    function showLoader(show) {
+        if (DOM.loader) {
+            if (show) {
+                DOM.loader.classList.remove('hidden');
+            } else {
+                DOM.loader.classList.add('hidden');
+            }
+        }
+    }
 
-    /**
-     * Get all destinations
-     */
-    getAllDestinations: () => State.data.destinations || {},
-
-    /**
-     * Get general requirements
-     */
-    getGeneralRequirements: () => State.data.general_requirements || {},
-
-    /**
-     * Get general note
-     */
-    getGeneralNote: () => State.data.general_note || ''
-};
-
-// ─── UI Components ─────────────────────────────────────────────
-const UI = {
-    /**
-     * Hide loading screen
-     */
-    hideLoading: () => {
-        const loader = DOM.loadingScreen();
-        if (loader) {
-            loader.classList.add('fade-out');
+    // ============================================================
+    // 5. عرض رسالة خطأ
+    // ============================================================
+    function showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.innerHTML = `
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>${message}</span>
+        `;
+        errorDiv.style.cssText = `
+            background: #ffebee;
+            color: #c62828;
+            padding: 20px 25px;
+            border-radius: 12px;
+            border-right: 4px solid #c62828;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+        `;
+        
+        const container = document.querySelector('.container');
+        if (container) {
+            container.prepend(errorDiv);
             setTimeout(() => {
-                loader.style.display = 'none';
-            }, 500);
+                errorDiv.style.opacity = '0';
+                errorDiv.style.transition = 'opacity 0.5s';
+                setTimeout(() => errorDiv.remove(), 500);
+            }, 8000);
         }
-    },
+    }
 
-    /**
-     * Populate destination dropdown
-     */
-    populateDestinations: () => {
-        const select = DOM.destination();
-        const destinations = DataManager.getAllDestinations();
+    // ============================================================
+    // 6. تهيئة الصفحة
+    // ============================================================
+    function initializePage() {
+        populateDestinations();
+        populateGeneralInfo();
+        setupEventListeners();
+        setupScrollTop();
+        checkUrlParams();
+    }
 
-        select.innerHTML = '<option value="" disabled selected>-- اختر الوجهة --</option>';
+    // ============================================================
+    // 7. تعبئة قائمة الوجهات
+    // ============================================================
+    function populateDestinations() {
+        const destinationSelect = DOM.destination;
+        if (!destinationSelect) return;
 
-        Object.keys(destinations).forEach(destination => {
+        // حفظ القيمة المحددة مسبقاً
+        const previousValue = destinationSelect.value;
+        
+        destinationSelect.innerHTML = '<option value="">-- اختر الوجهة --</option>';
+        
+        // ترتيب الوجهات أبجدياً
+        const destinations = Object.keys(travelData.destinations).sort((a, b) => 
+            a.localeCompare(b, 'ar')
+        );
+        
+        destinations.forEach(destination => {
             const option = document.createElement('option');
             option.value = destination;
             option.textContent = destination;
-            select.appendChild(option);
+            option.dataset.hasCities = travelData.destinations[destination].cities ? 'true' : 'false';
+            destinationSelect.appendChild(option);
         });
-    },
+        
+        // استعادة القيمة السابقة إن وجدت
+        if (previousValue && destinations.includes(previousValue)) {
+            destinationSelect.value = previousValue;
+            updateCities();
+        }
+    }
 
-    /**
-     * Update city dropdown based on destination
-     */
-    updateCities: (destinationName) => {
-        const select = DOM.city();
-        const destination = DataManager.getDestination(destinationName);
+    // ============================================================
+    // 8. تعبئة التعليمات العامة
+    // ============================================================
+    function populateGeneralInfo() {
+        if (!DOM.generalBody || !travelData.general_requirements) return;
+        
+        const req = travelData.general_requirements;
+        let html = '';
+        
+        // التعليمات
+        if (req.instructions && req.instructions.length > 0) {
+            html += `
+                <div class="section">
+                    <h3><i class="fas fa-list-ul"></i> ${req.title || 'التعليمات العامة'}</h3>
+                    <ul>
+                        ${req.instructions.map(inst => `<li>${inst}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+        
+        // الأمتعة
+        if (req.baggage) {
+            html += `
+                <div class="section">
+                    <h3><i class="fas fa-suitcase"></i> معلومات الأمتعة</h3>
+                    <div class="baggage-item">
+                        <strong><i class="fas fa-hand-bag"></i> حقيبة اليد:</strong>
+                        <span>${req.baggage.hand_baggage || 'غير محدد'}</span>
+                    </div>
+                    <div class="baggage-item">
+                        <strong><i class="fas fa-chair"></i> الدرجة السياحية:</strong>
+                        <span>${req.baggage.economy || 'غير محدد'}</span>
+                    </div>
+                    <div class="baggage-item">
+                        <strong><i class="fas fa-crown"></i> درجة رجال الأعمال والأولى:</strong>
+                        <span>${req.baggage.business_first || 'غير محدد'}</span>
+                    </div>
+                    ${req.baggage.note ? `
+                        <div class="baggage-item note">
+                            <strong><i class="fas fa-info-circle"></i> ملاحظة:</strong>
+                            <span>${req.baggage.note}</span>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        // الملاحظة العامة
+        if (req.note) {
+            html += `
+                <div class="note">
+                    <strong><i class="fas fa-exclamation-triangle"></i> ملاحظة هامة:</strong>
+                    <p>${req.note}</p>
+                </div>
+            `;
+        }
+        
+        DOM.generalBody.innerHTML = html || '<p>لا توجد تعليمات عامة متاحة</p>';
+    }
 
-        select.innerHTML = '<option value="" disabled selected>-- اختر المدينة --</option>';
-
-        if (destination && destination.cities) {
-            destination.cities.forEach(city => {
+    // ============================================================
+    // 9. تحديث قائمة المدن
+    // ============================================================
+    function updateCities() {
+        const destination = DOM.destination.value;
+        const citySelect = DOM.city;
+        if (!citySelect) return;
+        
+        citySelect.innerHTML = '<option value="">-- اختر المدينة --</option>';
+        
+        if (destination && travelData.destinations[destination]) {
+            const cities = travelData.destinations[destination].cities || [];
+            if (cities.length > 0) {
+                cities.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            } else {
+                // إذا لم توجد مدن، نضيف خيار "الوجهة نفسها"
                 const option = document.createElement('option');
-                option.value = city;
-                option.textContent = city;
-                select.appendChild(option);
-            });
+                option.value = destination;
+                option.textContent = destination;
+                citySelect.appendChild(option);
+            }
         }
+    }
 
-        // Reset city selection
-        select.value = '';
-    },
-
-    /**
-     * Render general instructions
-     */
-    renderGeneralInstructions: () => {
-        const container = DOM.generalInstructions();
-        const general = DataManager.getGeneralRequirements();
-
-        if (!general) return;
-
-        let html = '';
-
-        // Instructions section
-        if (general.instructions && general.instructions.length > 0) {
-            html += `
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <div class="info-icon"><i class="fas fa-clipboard-list"></i></div>
-                        <h3>${general.title || 'الشروط العامة'}</h3>
-                    </div>
-                    <div class="info-card-body">
-                        <ul class="instruction-list">
-                            ${general.instructions.map((instruction, index) => `
-                                <li class="instruction-item" style="animation-delay: ${index * 0.05}s">
-                                    <span class="instruction-number">${index + 1}</span>
-                                    <span class="instruction-text">${instruction}</span>
-                                </li>
-                            `).join('')}
-                        </ul>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Baggage section
-        if (general.baggage) {
-            html += `
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <div class="info-icon"><i class="fas fa-suitcase"></i></div>
-                        <h3>معلومات الأمتعة</h3>
-                    </div>
-                    <div class="info-card-body">
-                        <div class="baggage-grid">
-                            <div class="baggage-item-card">
-                                <div class="baggage-icon"><i class="fas fa-hand-holding"></i></div>
-                                <h4>حقيبة اليد</h4>
-                                <p>${general.baggage.hand_baggage || 'غير محدد'}</p>
-                            </div>
-                            <div class="baggage-item-card">
-                                <div class="baggage-icon"><i class="fas fa-couch"></i></div>
-                                <h4>الدرجة السياحية</h4>
-                                <p>${general.baggage.economy || 'غير محدد'}</p>
-                            </div>
-                            <div class="baggage-item-card">
-                                <div class="baggage-icon"><i class="fas fa-crown"></i></div>
-                                <h4>درجة رجال الأعمال والأولى</h4>
-                                <p>${general.baggage.business_first || 'غير محدد'}</p>
-                            </div>
-                        </div>
-                        ${general.baggage.note ? `
-                            <div class="baggage-note">
-                                <i class="fas fa-exclamation-triangle"></i>
-                                <p>${general.baggage.note}</p>
-                            </div>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        // General note
-        if (general.note) {
-            html += `
-                <div class="info-card warning">
-                    <div class="info-card-header">
-                        <div class="info-icon"><i class="fas fa-exclamation-circle"></i></div>
-                        <h3>تنبيه هام</h3>
-                    </div>
-                    <div class="info-card-body">
-                        <p class="warning-text">${general.note}</p>
-                    </div>
-                </div>
-            `;
-        }
-
-        container.innerHTML = html;
-    },
-
-    /**
-     * Render destinations grid
-     */
-    renderDestinations: () => {
-        const container = DOM.destinationsGrid();
-        const destinations = DataManager.getAllDestinations();
-
-        let html = '';
-        Object.entries(destinations).forEach(([name, data], index) => {
-            const cityCount = data.cities ? data.cities.length : 0;
-            const citiesText = cityCount > 0 ? data.cities.join(' • ') : 'غير محدد';
-
-            html += `
-                <div class="destination-card" style="animation-delay: ${index * 0.1}s">
-                    <div class="destination-header">
-                        <div class="destination-flag">${getFlagEmoji(name)}</div>
-                        <h4>${name}</h4>
-                    </div>
-                    <div class="destination-body">
-                        <div class="destination-cities">
-                            <i class="fas fa-city"></i>
-                            <span>${citiesText}</span>
-                        </div>
-                        <div class="destination-meta">
-                            <span class="meta-badge">
-                                <i class="fas fa-building"></i>
-                                ${cityCount} ${cityCount === 1 ? 'مدينة' : 'مدن'}
-                            </span>
-                        </div>
-                    </div>
-                    <button class="destination-btn" onclick="selectDestination('${name}')">
-                        <i class="fas fa-search"></i>
-                        عرض المتطلبات
-                    </button>
-                </div>
-            `;
-        });
-
-        container.innerHTML = html;
-    },
-
-    /**
-     * Render requirements results
-     */
-    renderRequirements: (nationality, destinationName, cityName) => {
-        const destination = DataManager.getDestination(destinationName);
-        const card = DOM.requirementsCard();
-
-        if (!destination) {
-            Toast.show('لا توجد بيانات لهذه الوجهة', 'error');
+    // ============================================================
+    // 10. البحث عن المتطلبات
+    // ============================================================
+    function searchRequirements() {
+        const nationality = DOM.nationality.value;
+        const destination = DOM.destination.value;
+        const city = DOM.city.value;
+        
+        // التحقق من المدخلات
+        if (!nationality) {
+            showToast('يرجى اختيار الجنسية', 'warning');
+            DOM.nationality.focus();
             return;
         }
+        
+        if (!destination) {
+            showToast('يرجى اختيار الوجهة', 'warning');
+            DOM.destination.focus();
+            return;
+        }
+        
+        // إظهار مؤشر البحث
+        if (DOM.searchIndicator) {
+            DOM.searchIndicator.style.display = 'flex';
+        }
+        
+        // محاكاة تأخير البحث (لتحسين تجربة المستخدم)
+        setTimeout(() => {
+            const destinationData = travelData.destinations[destination];
+            const selectedCity = city || destination;
+            
+            // إخفاء مؤشر البحث
+            if (DOM.searchIndicator) {
+                DOM.searchIndicator.style.display = 'none';
+            }
+            
+            if (!destinationData) {
+                showToast('لا توجد بيانات لهذه الوجهة', 'error');
+                return;
+            }
+            
+            // عرض النتائج
+            displayResults(destinationData, destination, selectedCity, nationality);
+            
+            // التمرير إلى النتائج
+            if (DOM.results) {
+                DOM.results.style.display = 'block';
+                DOM.results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
+        }, 400);
+    }
 
+    // ============================================================
+    // 11. عرض النتائج
+    // ============================================================
+    function displayResults(destinationData, destinationName, city, nationality) {
+        if (!DOM.resultsCard) return;
+        
         let html = '';
-
-        // Basic requirements
-        if (destination.requirements && destination.requirements.length > 0) {
-            html += createSection('المتطلبات الأساسية', 'fa-clipboard-check', destination.requirements);
-        }
-
-        // Visa requirements
-        if (destination.visa_requirements) {
-            html += createVisaSection(destination.visa_requirements);
-        }
-
-        // Transit requirements
-        if (destination.transit_requirements) {
-            html += createTransitSection(destination.transit_requirements);
-        }
-
-        // Documents required
-        if (destination.documents_required) {
-            html += createSection('المستندات المطلوبة', 'fa-file-alt', destination.documents_required);
-        }
-
-        // Booking requirements
-        if (destination.booking_requirements) {
-            html += createSection('متطلبات الحجز', 'fa-ticket-alt', destination.booking_requirements);
-        }
-
-        // Syrian nationals
-        if (destination.syrian_nationals && nationality === 'سوري') {
-            html += createSection('متطلبات الجنسية السورية', 'fa-flag', destination.syrian_nationals, 'special');
-        }
-
-        // Foreigners requirements (for Yemen)
-        if (destination.foreigners_requirements) {
-            html += createForeignersSection(destination.foreigners_requirements);
-        }
-
-        // Yemeni passport holders
-        if (destination.yemeni_passport_holders && nationality === 'يمني') {
-            html += createYemeniSection(destination.yemeni_passport_holders);
-        }
-
-        // Umrah dates (for Saudi)
-        if (destination.umrah_dates) {
-            html += createUmrahSection(destination.umrah_dates);
-        }
-
-        // Import regulations
-        if (destination.import_regulations) {
-            html += createSection('لوائح الاستيراد', 'fa-box-open', destination.import_regulations);
-        }
-
-        // Allowed items
-        if (destination.allowed_items) {
-            html += createAllowedItemsSection(destination.allowed_items, cityName);
-        }
-
-        // Excess weight
-        if (destination.excess_weight) {
-            html += createExcessWeightSection(destination.excess_weight);
-        }
-
-        // Special services
-        if (destination.special_services) {
-            html += createSpecialServicesSection(destination.special_services);
-        }
-
-        // Transfer fees (for UAE)
-        if (destination.transfer_fees) {
-            html += createTransferFeesSection(destination.transfer_fees);
-        }
-
-        // Note
-        const note = destination.note || DataManager.getGeneralNote();
-        if (note) {
+        let hasContent = false;
+        
+        // العنوان
+        const titleParts = [destinationName];
+        if (city && city !== destinationName) titleParts.push(`- ${city}`);
+        if (nationality) titleParts.push(`(الجنسية: ${nationality})`);
+        
+        DOM.resultTitle.textContent = `متطلبات السفر إلى ${titleParts.join(' ')}`;
+        
+        // ===== 1. المتطلبات الأساسية =====
+        if (destinationData.requirements && Array.isArray(destinationData.requirements) && destinationData.requirements.length > 0) {
             html += `
-                <div class="result-note">
-                    <div class="note-icon"><i class="fas fa-exclamation-circle"></i></div>
-                    <div class="note-content">
-                        <h4>ملاحظة هامة</h4>
-                        <p>${note}</p>
+                <div class="section fade-in">
+                    <h3><i class="fas fa-clipboard-check"></i> المتطلبات الأساسية</h3>
+                    <ul>
+                        ${destinationData.requirements.map(req => `<li>${req}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 2. متطلبات التأشيرة (الأردن) =====
+        if (destinationData.visa_requirements) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-passport"></i> متطلبات التأشيرة</h3>
+                    ${destinationData.visa_requirements.المعفون ? `
+                        <div class="sub-section">
+                            <h4><i class="fas fa-check-circle" style="color:#2e7d32;"></i> المعفون من التأشيرة المسبقة</h4>
+                            <ul>
+                                ${destinationData.visa_requirements.المعفون.map(req => `<li>${req}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    ${destinationData.visa_requirements['يحتاجون_تأشيرة_مسبقة'] ? `
+                        <div class="sub-section">
+                            <h4><i class="fas fa-exclamation-circle" style="color:#c62828;"></i> يحتاجون تأشيرة مسبقة</h4>
+                            <ul>
+                                ${destinationData.visa_requirements['يحتاجون_تأشيرة_مسبقة'].map(req => `<li>${req}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 3. متطلبات الترانزيت =====
+        if (destinationData.transit_requirements) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-exchange-alt"></i> متطلبات الترانزيت</h3>
+                    ${Array.isArray(destinationData.transit_requirements) 
+                        ? `<ul>${destinationData.transit_requirements.map(req => `<li>${req}</li>`).join('')}</ul>`
+                        : Object.entries(destinationData.transit_requirements).map(([key, requirements]) => `
+                            <div class="sub-section">
+                                <h4>${key.replace(/_/g, ' ')}</h4>
+                                <ul>
+                                    ${requirements.map(req => `<li>${req}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')
+                    }
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 4. المواد المسموحة =====
+        if (destinationData.allowed_items) {
+            let cityItems = destinationData.allowed_items[city];
+            if (!cityItems && typeof destinationData.allowed_items === 'object') {
+                // محاولة العثور على المفتاح المناسب
+                const keys = Object.keys(destinationData.allowed_items);
+                for (const key of keys) {
+                    if (key.includes(city) || city.includes(key)) {
+                        cityItems = destinationData.allowed_items[key];
+                        break;
+                    }
+                }
+                if (!cityItems) {
+                    // استخدام أول عنصر
+                    cityItems = destinationData.allowed_items[keys[0]] || destinationData.allowed_items;
+                }
+            }
+            
+            if (cityItems && Object.keys(cityItems).length > 0) {
+                html += `
+                    <div class="section fade-in">
+                        <h3><i class="fas fa-box"></i> المواد المسموحة</h3>
+                        ${Object.entries(cityItems).map(([item, description]) => `
+                            <div class="baggage-item">
+                                <strong>${item.replace(/_/g, ' ')}:</strong>
+                                <span>${description}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                hasContent = true;
+            }
+        }
+        
+        // ===== 5. أسعار الوزن الزائد =====
+        if (destinationData.excess_weight) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-weight"></i> أسعار الوزن الزائد</h3>
+                    ${Object.entries(destinationData.excess_weight).map(([to, price]) => `
+                        <div class="weight-item">
+                            <strong>إلى ${to}:</strong>
+                            <span>${price}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 6. الخدمات الخاصة =====
+        if (destinationData.special_services) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-wheelchair"></i> الخدمات الخاصة</h3>
+                    ${Object.entries(destinationData.special_services).map(([service, price]) => {
+                        if (typeof price === 'object') {
+                            return Object.entries(price).map(([subService, subPrice]) => `
+                                <div class="service-item">
+                                    <strong>${service.replace(/_/g, ' ')} - ${subService.replace(/_/g, ' ')}:</strong>
+                                    <span>${subPrice}</span>
+                                </div>
+                            `).join('');
+                        } else {
+                            return `
+                                <div class="service-item">
+                                    <strong>${service.replace(/_/g, ' ')}:</strong>
+                                    <span>${price}</span>
+                                </div>
+                            `;
+                        }
+                    }).join('')}
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 7. مواعيد العمرة (السعودية) =====
+        if (destinationData.umrah_dates) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-mosque"></i> مواعيد نقل المعتمرين</h3>
+                    <div class="baggage-item">
+                        <strong>بداية دخول حاملي تأشيرات العمرة:</strong>
+                        <span>${destinationData.umrah_dates.بداية_الدخول}</span>
+                    </div>
+                    <div class="baggage-item">
+                        <strong>آخر موعد لدخول حاملي تأشيرة العمرة:</strong>
+                        <span>${destinationData.umrah_dates.آخر_موعد_لدخول}</span>
+                    </div>
+                    <div class="baggage-item">
+                        <strong>آخر موعد لمغادرة حاملي تأشيرة العمرة:</strong>
+                        <span>${destinationData.umrah_dates.آخر_موعد_لمغادرة}</span>
                     </div>
                 </div>
             `;
+            hasContent = true;
         }
-
-        card.innerHTML = html;
-
-        // Update results meta
-        DOM.resultNationality().textContent = `الجنسية: ${nationality}`;
-        DOM.resultDestination().textContent = `الوجهة: ${destinationName}`;
-        DOM.resultCity().textContent = `المدينة: ${cityName || destinationName}`;
-
-        // Show results
-        DOM.results().style.display = 'block';
-        Utils.scrollTo(DOM.results(), CONFIG.scrollOffset);
-    }
-};
-
-// ─── Helper Functions for Rendering ────────────────────────────
-
-function createSection(title, icon, items, type = 'default') {
-    const typeClass = type === 'special' ? 'section-special' : '';
-    return `
-        <div class="result-section ${typeClass}">
-            <div class="section-header-bar">
-                <i class="fas ${icon}"></i>
-                <h4>${title}</h4>
-            </div>
-            <ul class="section-list">
-                ${items.map(item => `<li><i class="fas fa-check-circle"></i><span>${item}</span></li>`).join('')}
-            </ul>
-        </div>
-    `;
-}
-
-function createVisaSection(visaData) {
-    let html = `
-        <div class="result-section">
-            <div class="section-header-bar">
-                <i class="fas fa-passport"></i>
-                <h4>متطلبات التأشيرة</h4>
-            </div>
-    `;
-
-    if (visaData.المعفون) {
-        html += `
-            <div class="sub-section">
-                <h5><i class="fas fa-check"></i> المعفون من التأشيرة المسبقة</h5>
-                <ul class="section-list">
-                    ${visaData.المعفون.map(item => `<li><i class="fas fa-check-circle"></i><span>${item}</span></li>`).join('')}
-                </ul>
-            </div>
-        `;
-    }
-
-    if (visaData.يحتاجون_تأشيرة_مسبقة) {
-        html += `
-            <div class="sub-section">
-                <h5><i class="fas fa-times"></i> يحتاجون تأشيرة مسبقة</h5>
-                <ul class="section-list">
-                    ${visaData.يحتاجون_تأشيرة_مسبقة.map(item => `<li><i class="fas fa-times-circle"></i><span>${item}</span></li>`).join('')}
-                </ul>
-            </div>
-        `;
-    }
-
-    if (visaData.يحتاجون_فيزا_مسبقة) {
-        html += `
-            <div class="sub-section">
-                <h5><i class="fas fa-times"></i> يحتاجون تأشيرة مسبقة</h5>
-                <ul class="section-list">
-                    ${visaData.يحتاجون_فيزا_مسبقة.map(item => `<li><i class="fas fa-times-circle"></i><span>${item}</span></li>`).join('')}
-                </ul>
-            </div>
-        `;
-    }
-
-    html += '</div>';
-    return html;
-}
-
-function createTransitSection(transitData) {
-    let html = `
-        <div class="result-section">
-            <div class="section-header-bar">
-                <i class="fas fa-exchange-alt"></i>
-                <h4>متطلبات الترانزيت</h4>
-            </div>
-    `;
-
-    if (Array.isArray(transitData)) {
-        html += `
-            <ul class="section-list">
-                ${transitData.map(item => `<li><i class="fas fa-check-circle"></i><span>${item}</span></li>`).join('')}
-            </ul>
-        `;
-    } else {
-        Object.entries(transitData).forEach(([key, items]) => {
+        
+        // ===== 8. المستندات المطلوبة (الهند) =====
+        if (destinationData.documents_required) {
             html += `
-                <div class="sub-section">
-                    <h5><i class="fas fa-route"></i> ${Utils.formatKey(key)}</h5>
-                    <ul class="section-list">
-                        ${items.map(item => `<li><i class="fas fa-check-circle"></i><span>${item}</span></li>`).join('')}
+                <div class="section fade-in">
+                    <h3><i class="fas fa-file-alt"></i> المستندات المطلوبة</h3>
+                    <ul>
+                        ${destinationData.documents_required.map(doc => `<li>${doc}</li>`).join('')}
                     </ul>
                 </div>
             `;
-        });
+            hasContent = true;
+        }
+        
+        // ===== 9. متطلبات الحجز (الهند) =====
+        if (destinationData.booking_requirements) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-ticket-alt"></i> متطلبات الحجز</h3>
+                    <ul>
+                        ${destinationData.booking_requirements.map(req => `<li>${req}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 10. لوائح الاستيراد (إثيوبيا) =====
+        if (destinationData.import_regulations) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-truck-loading"></i> لوائح الاستيراد</h3>
+                    <ul>
+                        ${destinationData.import_regulations.map(reg => `<li>${reg}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 11. متطلبات السوريين (لبنان) =====
+        if (destinationData.syrian_nationals) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-users"></i> متطلبات الجنسية السورية</h3>
+                    <ul>
+                        ${destinationData.syrian_nationals.map(req => `<li>${req}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 12. متطلبات الأجانب (اليمن) =====
+        if (destinationData.foreigners_requirements) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-globe-asia"></i> متطلبات الأجانب لدخول اليمن</h3>
+                    ${Object.entries(destinationData.foreigners_requirements).map(([airport, requirements]) => `
+                        <div class="sub-section">
+                            <h4><i class="fas fa-plane"></i> مطار ${airport}</h4>
+                            ${Object.entries(requirements).map(([key, value]) => {
+                                if (Array.isArray(value)) {
+                                    return `
+                                        <h5>${key.replace(/_/g, ' ')}</h5>
+                                        <ul>
+                                            ${value.map(item => `<li>${item}</li>`).join('')}
+                                        </ul>
+                                    `;
+                                } else {
+                                    return `<p><strong>${key.replace(/_/g, ' ')}:</strong> ${value}</p>`;
+                                }
+                            }).join('')}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 13. متطلبات حاملي الجوازات اليمنية (اليمن) =====
+        if (destinationData.yemeni_passport_holders) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-id-card"></i> متطلبات حاملي الجوازات اليمنية</h3>
+                    <div class="sub-section">
+                        <h4>الوثائق المطلوبة</h4>
+                        <ul>
+                            ${destinationData.yemeni_passport_holders.required_documents.map(doc => `<li>${doc}</li>`).join('')}
+                        </ul>
+                    </div>
+                    ${destinationData.yemeni_passport_holders.note ? `
+                        <div class="note" style="margin-top:12px;">
+                            <strong>ملاحظة:</strong>
+                            <p>${destinationData.yemeni_passport_holders.note}</p>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 14. رسوم التحويل (الإمارات) =====
+        if (destinationData.transfer_fees) {
+            html += `
+                <div class="section fade-in">
+                    <h3><i class="fas fa-money-bill-wave"></i> رسوم خدمة التحويل (مرحبا)</h3>
+                    ${Object.entries(destinationData.transfer_fees).map(([service, fee]) => `
+                        <div class="service-item">
+                            <strong>${service.replace(/_/g, ' ')}:</strong>
+                            <span>${fee}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            hasContent = true;
+        }
+        
+        // ===== 15. الملاحظة النهائية =====
+        const finalNote = destinationData.note || travelData.general_note;
+        if (finalNote) {
+            html += `
+                <div class="note fade-in">
+                    <strong><i class="fas fa-exclamation-triangle"></i> ملاحظة هامة:</strong>
+                    <p>${finalNote}</p>
+                </div>
+            `;
+        }
+        
+        // ===== إذا لم يوجد محتوى =====
+        if (!hasContent) {
+            html = `
+                <div class="empty-state" style="text-align:center;padding:40px 20px;">
+                    <i class="fas fa-search" style="font-size:3rem;color:#bdbdbd;margin-bottom:15px;display:block;"></i>
+                    <h3 style="color:#757575;">لا توجد متطلبات محددة لهذه الوجهة</h3>
+                    <p style="color:#9e9e9e;">يرجى التحقق من الوجهة المختارة أو المحاولة مرة أخرى</p>
+                </div>
+            `;
+        }
+        
+        DOM.resultsCard.innerHTML = html;
+        DOM.results.style.display = 'block';
+        
+        // حفظ النتائج الحالية
+        currentResults = { destinationData, destinationName, city, nationality };
     }
 
-    html += '</div>';
-    return html;
-}
-
-function createForeignersSection(foreignersData) {
-    let html = `
-        <div class="result-section section-special">
-            <div class="section-header-bar">
-                <i class="fas fa-user-shield"></i>
-                <h4>متطلبات الأجانب لدخول اليمن</h4>
-            </div>
-    `;
-
-    Object.entries(foreignersData).forEach(([airport, requirements]) => {
-        html += `
-            <div class="sub-section">
-                <h5><i class="fas fa-plane-arrival"></i> مطار ${airport.replace(/_/g, ' ')}</h5>
+    // ============================================================
+    // 12. إظهار رسائل Toast
+    // ============================================================
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        
+        const icons = {
+            info: 'fa-info-circle',
+            warning: 'fa-exclamation-triangle',
+            error: 'fa-times-circle',
+            success: 'fa-check-circle'
+        };
+        
+        const colors = {
+            info: '#2196f3',
+            warning: '#ff9800',
+            error: '#f44336',
+            success: '#4caf50'
+        };
+        
+        toast.innerHTML = `
+            <i class="fas ${icons[type] || icons.info}" style="color:${colors[type] || colors.info};"></i>
+            <span>${message}</span>
+            <button class="toast-close"><i class="fas fa-times"></i></button>
         `;
+        
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 10000;
+            max-width: 400px;
+            font-size: 1rem;
+            border-right: 4px solid ${colors[type] || colors.info};
+            animation: slideUp 0.4s ease;
+            direction: rtl;
+        `;
+        
+        // إضافة زر الإغلاق
+        toast.querySelector('.toast-close').addEventListener('click', () => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(20px)';
+            setTimeout(() => toast.remove(), 300);
+        });
+        
+        document.body.appendChild(toast);
+        
+        // إزالة تلقائية بعد 5 ثواني
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                setTimeout(() => toast.remove(), 300);
+            }
+        }, 5000);
+    }
 
-        Object.entries(requirements).forEach(([key, value]) => {
-            if (Array.isArray(value)) {
-                html += `
-                    <h6>${Utils.formatKey(key)}</h6>
-                    <ul class="section-list">
-                        ${value.map(item => `<li><i class="fas fa-check-circle"></i><span>${item}</span></li>`).join('')}
-                    </ul>
-                `;
-            } else {
-                html += `<p class="requirement-text"><strong>${Utils.formatKey(key)}:</strong> ${value}</p>`;
+    // ============================================================
+    // 13. إعداد مستمعات الأحداث
+    // ============================================================
+    function setupEventListeners() {
+        // تغيير الوجهة -> تحديث المدن
+        DOM.destination.addEventListener('change', updateCities);
+        
+        // زر البحث
+        DOM.searchBtn.addEventListener('click', searchRequirements);
+        
+        // زر مسح
+        DOM.clearBtn.addEventListener('click', clearSearch);
+        
+        // إغلاق النتائج
+        DOM.closeResults.addEventListener('click', () => {
+            DOM.results.style.display = 'none';
+            DOM.resultsCard.innerHTML = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // طي/فك التعليمات العامة
+        DOM.toggleGeneral.addEventListener('click', toggleGeneralInfo);
+        
+        // زر العودة للأعلى
+        DOM.scrollTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // البحث عند الضغط على Enter
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const active = document.activeElement;
+                if (active && (active.id === 'nationality' || active.id === 'destination' || active.id === 'city')) {
+                    searchRequirements();
+                }
             }
         });
-
-        html += '</div>';
-    });
-
-    html += '</div>';
-    return html;
-}
-
-function createYemeniSection(yemeniData) {
-    return `
-        <div class="result-section section-special">
-            <div class="section-header-bar">
-                <i class="fas fa-flag"></i>
-                <h4>متطلبات حاملي الجوازات اليمنية</h4>
-            </div>
-            <div class="sub-section">
-                <h5><i class="fas fa-file-alt"></i> الوثائق المطلوبة</h5>
-                <ul class="section-list">
-                    ${yemeniData.required_documents.map(doc => `<li><i class="fas fa-check-circle"></i><span>${doc}</span></li>`).join('')}
-                </ul>
-            </div>
-            ${yemeniData.note ? `
-                <div class="sub-note">
-                    <i class="fas fa-info-circle"></i>
-                    <p>${yemeniData.note}</p>
-                </div>
-            ` : ''}
-        </div>
-    `;
-}
-
-function createUmrahSection(umrahData) {
-    return `
-        <div class="result-section section-umrah">
-            <div class="section-header-bar">
-                <i class="fas fa-kaaba"></i>
-                <h4>مواعيد نقل المعتمرين</h4>
-            </div>
-            <div class="umrah-grid">
-                <div class="umrah-item">
-                    <div class="umrah-icon"><i class="fas fa-door-open"></i></div>
-                    <h5>بداية الدخول</h5>
-                    <p>${umrahData.بداية_الدخول || 'غير محدد'}</p>
-                </div>
-                <div class="umrah-item">
-                    <div class="umrah-icon"><i class="fas fa-hourglass-half"></i></div>
-                    <h5>آخر موعد للدخول</h5>
-                    <p>${umrahData.آخر_موعد_لدخول || 'غير محدد'}</p>
-                </div>
-                <div class="umrah-item">
-                    <div class="umrah-icon"><i class="fas fa-plane-departure"></i></div>
-                    <h5>آخر موعد للمغادرة</h5>
-                    <p>${umrahData.آخر_موعد_لمغادرة || 'غير محدد'}</p>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-function createAllowedItemsSection(allowedItems, cityName) {
-    let cityItems = allowedItems[cityName];
-
-    if (!cityItems && typeof allowedItems === 'object') {
-        // Try to get first available city data
-        const firstCity = Object.keys(allowedItems)[0];
-        cityItems = allowedItems[firstCity];
+        
+        // إظهار/إخفاء زر العودة للأعلى عند التمرير
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                DOM.scrollTop.classList.add('show');
+                DOM.scrollTop.style.display = 'flex';
+            } else {
+                DOM.scrollTop.classList.remove('show');
+                DOM.scrollTop.style.display = 'none';
+            }
+        });
     }
 
-    if (!cityItems || Object.keys(cityItems).length === 0) return '';
+    // ============================================================
+    // 14. مسح البحث
+    // ============================================================
+    function clearSearch() {
+        DOM.nationality.value = '';
+        DOM.destination.value = '';
+        DOM.city.innerHTML = '<option value="">-- اختر المدينة --</option>';
+        DOM.results.style.display = 'none';
+        DOM.resultsCard.innerHTML = '';
+        DOM.resultTitle.textContent = 'متطلبات السفر';
+        
+        // إعادة تعيين الوجهات
+        populateDestinations();
+        
+        showToast('تم مسح البحث', 'info');
+    }
 
-    return `
-        <div class="result-section">
-            <div class="section-header-bar">
-                <i class="fas fa-box"></i>
-                <h4>المواد المسموحة</h4>
-            </div>
-            <div class="items-grid">
-                ${Object.entries(cityItems).map(([item, description]) => `
-                    <div class="item-card">
-                        <div class="item-icon"><i class="fas fa-box-open"></i></div>
-                        <h5>${Utils.formatKey(item)}</h5>
-                        <p>${description}</p>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-}
+    // ============================================================
+    // 15. طي/فك التعليمات العامة
+    // ============================================================
+    function toggleGeneralInfo() {
+        const body = DOM.generalBody;
+        const btn = DOM.toggleGeneral;
+        
+        if (body.classList.contains('collapsed')) {
+            body.classList.remove('collapsed');
+            btn.classList.remove('active');
+            btn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        } else {
+            body.classList.add('collapsed');
+            btn.classList.add('active');
+            btn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        }
+    }
 
-function createExcessWeightSection(excessWeight) {
-    return `
-        <div class="result-section">
-            <div class="section-header-bar">
-                <i class="fas fa-weight-hanging"></i>
-                <h4>أسعار الوزن الزائد</h4>
-            </div>
-            <div class="weight-grid">
-                ${Object.entries(excessWeight).map(([to, price]) => `
-                    <div class="weight-card">
-                        <div class="weight-route">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>إلى ${to}</span>
-                        </div>
-                        <div class="weight-price">${price}</div>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-}
+    // ============================================================
+    // 16. إعداد زر العودة للأعلى
+    // ============================================================
+    function setupScrollTop() {
+        // يتم التعامل معه في مستمع التمرير
+    }
 
-function createSpecialServicesSection(services) {
-    return `
-        <div class="result-section">
-            <div class="section-header-bar">
-                <i class="fas fa-wheelchair"></i>
-                <h4>الخدمات الخاصة</h4>
-            </div>
-            <div class="services-grid">
-                ${Object.entries(services).map(([service, price]) => {
-                    if (typeof price === 'object') {
-                        return Object.entries(price).map(([subService, subPrice]) => `
-                            <div class="service-card">
-                                <div class="service-icon"><i class="fas fa-hand-holding-medical"></i></div>
-                                <h5>${Utils.formatKey(service)} - ${Utils.formatKey(subService)}</h5>
-                                <div class="service-price">${subPrice}</div>
-                            </div>
-                        `).join('');
-                    } else {
-                        return `
-                            <div class="service-card">
-                                <div class="service-icon"><i class="fas fa-hand-holding-medical"></i></div>
-                                <h5>${Utils.formatKey(service)}</h5>
-                                <div class="service-price">${price}</div>
-                            </div>
-                        `;
+    // ============================================================
+    // 17. التحقق من معلمات URL
+    // ============================================================
+    function checkUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        const dest = params.get('destination');
+        const city = params.get('city');
+        const nat = params.get('nationality');
+        
+        if (dest && travelData.destinations[dest]) {
+            DOM.destination.value = dest;
+            updateCities();
+            
+            if (city && travelData.destinations[dest].cities.includes(city)) {
+                DOM.city.value = city;
+            }
+            
+            if (nat) {
+                // محاولة العثور على الجنسية في القائمة
+                const options = DOM.nationality.options;
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].value === nat || options[i].text.includes(nat)) {
+                        DOM.nationality.value = options[i].value;
+                        break;
                     }
-                }).join('')}
-            </div>
-            <div class="emd-note">
-                <i class="fas fa-info-circle"></i>
-                <p>يتم إصدار قسيمة EMD للخدمة أعلاه من مكتب المبيعات أثناء الحجز</p>
-            </div>
-        </div>
-    `;
-}
+                }
+            }
+            
+            // تنفيذ البحث تلقائياً
+            setTimeout(searchRequirements, 500);
+        }
+    }
 
-function createTransferFeesSection(fees) {
-    return `
-        <div class="result-section">
-            <div class="section-header-bar">
-                <i class="fas fa-hand-holding-usd"></i>
-                <h4>رسوم خدمة التحويل (مرحبا)</h4>
-            </div>
-            <div class="fees-grid">
-                ${Object.entries(fees).map(([service, fee]) => `
-                    <div class="fee-card">
-                        <h5>${Utils.formatKey(service)}</h5>
-                        <p>${fee}</p>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-}
-
-function getFlagEmoji(countryName) {
-    const flags = {
-        'السعودية': '🇸🇦',
-        'الأردن': '🇯🇴',
-        'مصر': '🇪🇬',
-        'السودان': '🇸🇩',
-        'جيبوتي': '🇩🇯',
-        'لبنان': '🇱🇧',
-        'ماليزيا': '🇲🇾',
-        'الهند': '🇮🇳',
-        'إثيوبيا': '🇪🇹',
-        'اليمن': '🇾🇪',
-        'الإمارات': '🇦🇪',
-        'الكويت': '🇰🇼'
+    // ============================================================
+    // 18. تصدير الوظائف العامة (للاستخدام في وحدة التحكم)
+    // ============================================================
+    window.YemeniaTravel = {
+        loadData,
+        searchRequirements,
+        clearSearch,
+        travelData: () => travelData,
+        refresh: loadData
     };
-    return flags[countryName] || '🌍';
-}
 
-// ─── Event Handlers ────────────────────────────────────────────
-
-function handleDestinationChange() {
-    const destination = DOM.destination().value;
-    UI.updateCities(destination);
-}
-
-function handleSearch() {
-    const nationality = DOM.nationality().value;
-    const destination = DOM.destination().value;
-    const city = DOM.city().value;
-
-    if (!nationality) {
-        Toast.show('يرجى اختيار الجنسية', 'warning');
-        DOM.nationality().focus();
-        return;
-    }
-
-    if (!destination) {
-        Toast.show('يرجى اختيار الوجهة', 'warning');
-        DOM.destination().focus();
-        return;
-    }
-
-    UI.renderRequirements(nationality, destination, city);
-}
-
-function handleReset() {
-    DOM.nationality().value = '';
-    DOM.destination().value = '';
-    DOM.city().innerHTML = '<option value="" disabled selected>-- اختر المدينة --</option>';
-    DOM.results().style.display = 'none';
-
-    // Scroll to search
-    Utils.scrollTo(DOM.searchBtn(), CONFIG.scrollOffset);
-    Toast.show('تم إعادة تعيين البحث', 'success');
-}
-
-function handleThemeToggle() {
-    const body = document.body;
-    const isDark = body.classList.toggle('dark-theme');
-    State.theme = isDark ? 'dark' : 'light';
-    localStorage.setItem('yemenia-theme', State.theme);
-
-    const icon = DOM.themeToggle().querySelector('i');
-    icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-}
-
-function handleScroll() {
-    const scrollTop = DOM.scrollTop();
-    if (window.pageYOffset > 500) {
-        scrollTop.classList.add('show');
-    } else {
-        scrollTop.classList.remove('show');
-    }
-}
-
-function handleScrollTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function handleNavClick(e) {
-    if (e.target.classList.contains('nav-link')) {
-        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-        e.target.classList.add('active');
-    }
-}
-
-// ─── Global Functions ────────────────────────────────────────
-
-window.selectDestination = (destinationName) => {
-    DOM.destination().value = destinationName;
-    UI.updateCities(destinationName);
-    Utils.scrollTo(DOM.searchBtn(), CONFIG.scrollOffset);
-    Toast.show(`تم اختيار ${destinationName}. يرجى اختيار الجنسية والمدينة`, 'info');
-};
-
-// ─── Initialization ──────────────────────────────────────────────
-
-async function init() {
-    // Show loading
-    DOM.loadingScreen().style.display = 'flex';
-
-    // Load theme
-    if (State.theme === 'dark') {
-        document.body.classList.add('dark-theme');
-        DOM.themeToggle().querySelector('i').className = 'fas fa-sun';
-    }
-
-    // Load data
-    const loaded = await DataManager.load();
-    if (!loaded) return;
-
-    // Initialize UI
-    UI.populateDestinations();
-    UI.renderGeneralInstructions();
-    UI.renderDestinations();
-
-    // Animate stats
-    const destinations = DataManager.getAllDestinations();
-    const destCount = Object.keys(destinations).length;
-    let cityCount = 0;
-    Object.values(destinations).forEach(d => {
-        if (d.cities) cityCount += d.cities.length;
+    // ============================================================
+    // 19. تشغيل التطبيق
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        cacheDomElements();
+        loadData();
+        
+        // إضافة أنماط إضافية للتوست
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .toast button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #9e9e9e;
+                font-size: 1.1rem;
+                padding: 4px;
+                transition: color 0.3s;
+            }
+            .toast button:hover {
+                color: #424242;
+            }
+        `;
+        document.head.appendChild(style);
     });
 
-    Utils.animateNumber(DOM.destCount(), destCount);
-    Utils.animateNumber(DOM.cityCount(), cityCount);
-
-    // Add event listeners
-    DOM.destination().addEventListener('change', handleDestinationChange);
-    DOM.searchBtn().addEventListener('click', handleSearch);
-    DOM.resetBtn().addEventListener('click', handleReset);
-    DOM.themeToggle().addEventListener('click', handleThemeToggle);
-    DOM.scrollTop().addEventListener('click', handleScrollTop);
-    document.querySelector('.main-nav').addEventListener('click', handleNavClick);
-    window.addEventListener('scroll', Utils.debounce(handleScroll, 100));
-
-    // Hide loading
-    setTimeout(() => {
-        UI.hideLoading();
-    }, 800);
-}
-
-// ─── Start Application ─────────────────────────────────────────
-
-document.addEventListener('DOMContentLoaded', init);
+})();
