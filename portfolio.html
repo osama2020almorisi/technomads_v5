@@ -358,6 +358,63 @@
                 font-size: 0.8rem;
             }
         }
+
+        /* ============================================
+           TOAST NOTIFICATION - إشعارات منبثقة
+           ============================================ */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-light, #ffffff);
+            color: var(--text-primary, #333);
+            padding: 12px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 10001;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(0,0,0,0.05);
+            max-width: 90%;
+        }
+        body.dark-mode .toast-notification {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            border-color: rgba(255,255,255,0.05);
+        }
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .toast-notification.success {
+            border-right: 4px solid #4ECDC4;
+        }
+        .toast-notification.error {
+            border-right: 4px solid #FF6B6B;
+        }
+        .toast-notification i {
+            font-size: 1.2rem;
+        }
+        .toast-notification .fa-check-circle {
+            color: #4ECDC4;
+        }
+        .toast-notification .fa-exclamation-circle {
+            color: #FF6B6B;
+        }
+        @media (max-width: 576px) {
+            .toast-notification {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                bottom: 20px;
+                max-width: 95%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -770,7 +827,6 @@
             <div class="deep-category">
                 <h3><i class="fas fa-gamepad"></i> الألعاب والترفيه</h3>
                 <ul>
-                    <!-- ألعاب entertainment -->
                     <li><a href="entertainment/play.html"><i class="fas fa-play"></i> Play - Entertainment</a></li>
                     <li><a href="entertainment/memory-game.html"><i class="fas fa-brain"></i> لعبة الذاكرة - Entertainment</a></li>
                     <li><a href="entertainment/the-age.html"><i class="fas fa-calculator"></i> The Age</a></li>
@@ -778,8 +834,6 @@
                     <li><a href="entertainment/color-generator.html"><i class="fas fa-palette"></i> Color Generator</a></li>
                     <li><a href="entertainment/image-editor.html"><i class="fas fa-image"></i> Image Editor</a></li>
                     <li><a href="entertainment/quiz-game.html"><i class="fas fa-question-circle"></i> Quiz Game</a></li>
-                    
-                    <!-- ألعاب من مجلد projects -->
                     <li><a href="projects/memory-game/index.html"><i class="fas fa-brain"></i> لعبة الذاكرة - Projects</a></li>
                 </ul>
             </div>
@@ -934,27 +988,35 @@
 <script src="js/portfolio.js"></script>
 
 <script>
+    // ===== إزالة شاشة التحميل =====
     window.addEventListener('load', function() {
         document.body.classList.add('loaded');
-        const overlay = document.getElementById('loadingOverlay');
+        var overlay = document.getElementById('loadingOverlay');
         if (overlay) {
             overlay.style.opacity = '0';
-            setTimeout(() => overlay.remove(), 500);
+            setTimeout(function() { overlay.remove(); }, 500);
         }
     });
-    document.querySelectorAll('.current-year').forEach(el => el.textContent = new Date().getFullYear());
+    
+    // ===== تحديث سنة حقوق النشر =====
+    document.querySelectorAll('.current-year').forEach(function(el) {
+        el.textContent = new Date().getFullYear();
+    });
+    
+    // ===== تهيئة AOS =====
     AOS.init({ duration: 800, once: true, offset: 100, easing: 'ease-out-cubic' });
     
+    // ===== نظام القائمة الجانبية =====
     (function() {
-        const hamburger = document.getElementById('hamburgerBtn');
-        const mobileNav = document.getElementById('mobileNav');
-        const closeBtn = document.getElementById('closeNavBtn');
+        var hamburger = document.getElementById('hamburgerBtn');
+        var mobileNav = document.getElementById('mobileNav');
+        var closeBtn = document.getElementById('closeNavBtn');
         
         if (hamburger && mobileNav) {
             function toggleMenu() {
                 mobileNav.classList.toggle('active');
                 hamburger.classList.toggle('active');
-                const isOpen = mobileNav.classList.contains('active');
+                var isOpen = mobileNav.classList.contains('active');
                 hamburger.setAttribute('aria-expanded', isOpen);
                 document.body.style.overflow = isOpen ? 'hidden' : '';
             }
@@ -983,7 +1045,7 @@
                 }
             });
             
-            mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
+            mobileNav.querySelectorAll('.mobile-nav-link').forEach(function(link) {
                 link.addEventListener('click', toggleMenu);
             });
         }

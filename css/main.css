@@ -151,10 +151,6 @@ body.dark-mode .smart-header.scrolled-up {
     position: relative;
 }
 
-/* RTL: Logo is first child = RIGHT side, Hamburger is last = LEFT side */
-/* No overrides needed - dir="rtl" handles this naturally */
-
-/* ---------- Logo - شعار SVG ---------- */
 .logo {
     display: flex;
     align-items: center;
@@ -187,7 +183,6 @@ body.dark-mode .smart-header.scrolled-up {
     transition: all 0.3s ease;
 }
 
-/* Dark mode logo colors */
 body.dark-mode .logo-svg .logo-circle {
     stroke: url(#logoGradDark);
 }
@@ -211,7 +206,6 @@ body.dark-mode .logo-text {
     color: var(--accent);
 }
 
-/* ---------- Desktop Navigation ---------- */
 .desktop-nav {
     display: block;
 }
@@ -281,14 +275,12 @@ body.dark-mode .nav-link {
     width: 100%;
 }
 
-/* ---------- Desktop Tools ---------- */
 .desktop-tools {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-/* ---------- Language Switcher ---------- */
 .language-switcher {
     display: flex;
     border-radius: 20px;
@@ -321,12 +313,10 @@ body.dark-mode .lang-btn.active {
     color: var(--dark);
 }
 
-/* ---------- Theme Toggle - تم نقله للموبايل ---------- */
 .theme-toggle {
-    display: none; /* تم إخفاؤه من الشريط العلوي */
+    display: none;
 }
 
-/* ---------- Hamburger Menu ---------- */
 .hamburger {
     display: none;
     padding: 0.5rem;
@@ -337,7 +327,6 @@ body.dark-mode .lang-btn.active {
     position: relative;
 }
 
-/* Mobile: hide desktop nav, show hamburger */
 @media (max-width: 992px) {
     .nav-container .desktop-tools {
         display: none;
@@ -404,7 +393,6 @@ body.dark-mode .hamburger-inner::after {
     background: white;
 }
 
-/* ---------- Mobile Navigation ---------- */
 .mobile-nav {
     position: fixed;
     top: 0;
@@ -440,8 +428,6 @@ body.dark-mode .mobile-nav {
 body.dark-mode .mobile-nav-header {
     border-bottom-color: rgba(255,255,255,0.1);
 }
-
-/* RTL: Close button is first child = RIGHT side, Logo is last = LEFT side */
 
 .mobile-logo-wrapper {
     width: 50px;
@@ -559,7 +545,6 @@ body.dark-mode .mobile-nav-link:hover {
     right: 0;
 }
 
-/* ---------- Mobile Nav Footer ---------- */
 .mobile-nav-footer {
     padding: 1.5rem;
     border-top: 1px solid rgba(0,0,0,0.1);
@@ -572,7 +557,6 @@ body.dark-mode .mobile-nav-footer {
     border-top-color: rgba(255,255,255,0.1);
 }
 
-/* Mobile Theme Toggle - تم نقله هنا */
 .mobile-theme-toggle-wrapper {
     display: flex;
     align-items: center;
@@ -658,7 +642,6 @@ body:not(.dark-mode) .mobile-theme-text::before {
     content: 'داكن';
 }
 
-/* Mobile Language Switcher */
 .mobile-language-switcher {
     display: flex;
     justify-content: center;
@@ -961,7 +944,6 @@ body.dark-mode .mobile-social-links a {
     opacity: 0.8;
 }
 
-/* ---------- CTA Buttons ---------- */
 .cta-buttons {
     display: flex;
     gap: 1.5rem;
@@ -1058,248 +1040,9 @@ body.dark-mode .mobile-social-links a {
     60% { transform: translateY(-5px); }
 }
 
-/* ---------- Device Showcase ---------- */
-.device-showcase {
-    position: relative;
-    flex: 1;
-    max-width: 600px;
-    margin-right: 2rem;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0rem;
-}
-
-.phone-mockup-wrapper,
-.tablet-mockup-wrapper {
-    position: absolute;
-    transition: all 0.5s ease;
-}
-
-.phone-mockup-wrapper {
-    z-index: 2;
-    left: 10%;
-    top: 10%;
-}
-
-.phone-mockup {
-    position: relative;
-    width: 320px;
-    transform: rotate(-10deg);
-    transition: transform 0.5s ease;
-}
-
-.phone-mockup:hover {
-    transform: rotate(-5deg) translateY(-10px);
-}
-
-.phone-frame {
-    position: relative;
-    width: 100%;
-    padding-bottom: 200%;
-    background: transparent;
-    box-shadow: none;
-    border: none;
-    border-radius: 35px;
-    overflow: hidden;
-    transform-style: preserve-3d;
-}
-
-.phone-screen-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-}
-
-.phone-screen {
-    position: absolute;
-    width: 94%;
-    height: 96%;
-    top: 2%;
-    left: 3%;
-    border-radius: 30px;
-    overflow: hidden;
-    background: transparent;
-}
-
-.app-slider {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    will-change: transform;
-}
-
-.slide {
-    min-width: 100%;
-    height: 100%;
-    flex-shrink: 0;
-}
-
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    background: transparent;
-    border-radius: 28px;
-}
-
-.phone-notch {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40%;
-    height: 20px;
-    background: #333;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    z-index: 2;
-}
-
-.phone-home-bar {
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30%;
-    height: 4px;
-    background: rgba(255,255,255,0.5);
-    border-radius: 2px;
-    z-index: 2;
-}
-
-.phone-shadow {
-    position: absolute;
-    bottom: -20px;
-    left: 10%;
-    width: 80%;
-    height: 40px;
-    background: rgba(0,0,0,0.2);
-    border-radius: 50%;
-    filter: blur(10px);
-}
-
-.tablet-mockup-wrapper {
-    z-index: 1;
-    right: 0;
-    bottom: 0;
-}
-
-.tablet-mockup {
-    position: relative;
-    width: 400px;
-    transform: rotate(5deg);
-    transition: transform 0.5s ease;
-}
-
-.tablet-mockup:hover {
-    transform: rotate(10deg) translateY(-10px);
-}
-
-.tablet-frame {
-    position: relative;
-    width: 100%;
-    padding-bottom: 70%;
-    background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
-    border-radius: 20px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-    overflow: hidden;
-    border: 3px solid #d0d0d0;
-}
-
-.tablet-screen {
-    position: absolute;
-    width: 96%;
-    height: 95%;
-    top: 2.5%;
-    left: 2%;
-    border-radius: 15px;
-    overflow: hidden;
-    background: var(--light);
-}
-
-.tablet-screen img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    display: block;
-    background: #f0f0f0;
-}
-
-.tablet-shadow {
-    position: absolute;
-    bottom: -15px;
-    left: 10%;
-    width: 80%;
-    height: 30px;
-    background: rgba(0,0,0,0.2);
-    border-radius: 50%;
-    filter: blur(8px);
-}
-
-/* ---------- Scroll Down ---------- */
-.scroll-down {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    z-index: 5;
-    cursor: pointer;
-    animation: fadeInUp 1s ease 1s both;
-}
-
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-    to { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-
-.scroll-down span {
-    font-size: 0.9rem;
-    opacity: 0.8;
-    animation: fadeInOut 2s infinite;
-}
-
-@keyframes fadeInOut {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-
-.mouse {
-    width: 25px;
-    height: 40px;
-    border: 2px solid white;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    padding-top: 5px;
-}
-
-.wheel {
-    width: 5px;
-    height: 8px;
-    background: white;
-    border-radius: 3px;
-    animation: scrollAnimation 2s infinite;
-}
-
-@keyframes scrollAnimation {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(10px); opacity: 0; }
-}
+/* ============================================================
+   تم نقل جميع أنماط هاتف S23 إلى index.html
+   ============================================================ */
 
 /* ============================================
    SERVICES SECTION - قسم الخدمات
@@ -1401,7 +1144,6 @@ body.dark-mode .section-description {
     50% { transform: scale(1.3); opacity: 0.7; }
 }
 
-/* ---------- Services Grid ---------- */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1655,7 +1397,6 @@ body.dark-mode .service-features li {
     line-height: 0;
 }
 
-/* ---------- Section Footer ---------- */
 .section-footer {
     text-align: center;
     margin-top: 5rem;
@@ -1769,7 +1510,6 @@ body.dark-mode .smart-footer {
     padding: 1rem;
 }
 
-/* Footer Brand Section */
 .footer-brand {
     text-align: center;
 }
@@ -1903,7 +1643,6 @@ body.dark-mode .smart-footer {
     color: white;
 }
 
-/* Newsletter Form */
 .newsletter-form {
     display: flex;
     flex-direction: column;
@@ -1997,7 +1736,6 @@ body.dark-mode .newsletter-form input:focus {
     box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
 }
 
-/* Social Links */
 .social-links {
     display: flex;
     gap: 0.8rem;
@@ -2043,7 +1781,6 @@ body.dark-mode .newsletter-form input:focus {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* Copyright Section */
 .copyright-section {
     text-align: center;
     padding: 1.5rem;
@@ -2111,7 +1848,6 @@ body.dark-mode .newsletter-form input:focus {
     50% { transform: scale(1.2); }
 }
 
-/* ---------- Back to Top ---------- */
 .back-to-top {
     position: fixed;
     bottom: 30px;
@@ -2383,7 +2119,6 @@ body.dark-mode .newsletter-form input:focus {
     }
 }
 
-/* ---------- Click Effect ---------- */
 @keyframes clickEffect {
     0% { transform: translateX(-50%) scale(1); }
     50% { transform: translateX(-50%) scale(0.95); }
@@ -2394,7 +2129,6 @@ body.dark-mode .newsletter-form input:focus {
     animation: clickEffect 0.3s ease;
 }
 
-/* ---------- Lazy Loading ---------- */
 img[loading="lazy"] {
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -2404,7 +2138,6 @@ img[loading="lazy"].loaded {
     opacity: 1;
 }
 
-/* ---------- Selection Color ---------- */
 ::selection {
     background: var(--accent);
     color: white;
@@ -2414,7 +2147,6 @@ body.dark-mode ::selection {
     background: var(--secondary);
 }
 
-/* ---------- Scrollbar ---------- */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -2436,7 +2168,6 @@ body.dark-mode ::-webkit-scrollbar-track {
     background: var(--accent);
 }
 
-/* ---------- Focus Styles ---------- */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
@@ -2448,7 +2179,6 @@ input:focus-visible {
    ENTERTAINMENT PAGES - صفحات الترفيه
    ============================================ */
 
-/* ---------- Entertainment Hub (play.html) ---------- */
 .entertainment-hub {
     padding: 120px 2rem 4rem;
     max-width: 1200px;
@@ -2583,7 +2313,6 @@ body.dark-mode .game-info p {
     color: rgba(255,255,255,0.7);
 }
 
-/* ---------- Entertainment Sub-Pages ---------- */
 .entertainment-page-wrapper {
     padding-top: 100px;
     min-height: 100vh;
@@ -2682,7 +2411,6 @@ body.dark-mode .entertainment-page .lead-text {
     margin-top: 2rem;
 }
 
-/* ---------- Entertainment Mini-Footer ---------- */
 .entertainment-footer {
     background: var(--primary);
     color: white;
@@ -2718,7 +2446,6 @@ body.dark-mode .entertainment-footer {
     font-size: 1.2rem;
 }
 
-/* ---------- Responsive Entertainment ---------- */
 @media (max-width: 768px) {
     .entertainment-hub {
         padding: 100px 1rem 2rem;

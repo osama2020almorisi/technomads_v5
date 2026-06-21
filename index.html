@@ -25,7 +25,15 @@
     <meta name="revisit-after" content="7 days">
     <meta name="language" content="Arabic">
 
-    <!-- ===== OPEN GRAPH (فيسبوك، واتساب، تليجرام) ===== -->
+    <!-- ===== إصلاح مشكلة Prerender في إنستغرام وفيسبوك ===== -->
+    <meta http-equiv="Cache-Control" content="public, max-age=3600, must-revalidate">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="slurp" content="index, follow">
+    <meta name="ia_archiver" content="index, follow">
+    <meta name="Baiduspider" content="index, follow">
+
+    <!-- ===== OPEN GRAPH (فيسبوك، واتساب، تليجرام، إنستغرام) ===== -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="TechNomads | الريادة التقنية اليمنية - حلول رقمية مبتكرة" />
     <meta property="og:description" content="حلول تقنية متكاملة في اليمن: تطوير المواقع، التطبيقات، التسويق الرقمي، وتصميم UI/UX. أكثر من 150 مشروعاً ناجحاً." />
@@ -36,6 +44,7 @@
     <meta property="og:url" content="https://te-2026.netlify.app/" />
     <meta property="og:locale" content="ar_YE" />
     <meta property="og:site_name" content="TechNomads" />
+    <meta property="fb:app_id" content="123456789" />
 
     <!-- ===== TWITTER CARD ===== -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -135,7 +144,6 @@
     }
     </script>
 
-    <!-- ===== SCHEMA للتطبيقات والخدمات ===== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -207,7 +215,6 @@
             padding: 120px 0 80px;
         }
 
-        /* ===== ترتيب المحتوى عمودياً (النص ثم الأجهزة) ===== */
         .hero-content {
             position: relative;
             z-index: 2;
@@ -222,7 +229,6 @@
             gap: 50px;
         }
 
-        /* ===== النص في الأعلى ===== */
         .hero-text {
             text-align: center;
             width: 100%;
@@ -231,7 +237,6 @@
             color: var(--text-light);
         }
 
-        /* ===== الأجهزة في الأسفل ===== */
         .device-showcase {
             display: flex;
             align-items: center;
@@ -241,6 +246,7 @@
             flex-direction: row;
             flex-wrap: wrap;
             width: 100%;
+            perspective: 1500px;
         }
 
         @media (max-width: 768px) {
@@ -259,7 +265,6 @@
             }
         }
 
-        /* ===== الشارة ===== */
         .badge {
             display: inline-flex;
             align-items: center;
@@ -278,7 +283,6 @@
         @keyframes pulse-badge { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
         .badge i { color: var(--secondary); }
 
-        /* ===== العنوان ===== */
         .hero-title {
             font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 900;
@@ -306,7 +310,6 @@
             background-clip: text;
         }
 
-        /* ===== النص الفرعي ===== */
         .hero-subtitle {
             font-size: 1.2rem;
             opacity: 0.9;
@@ -315,7 +318,6 @@
             margin: 0 auto 30px;
         }
 
-        /* ===== الإحصائيات ===== */
         .hero-stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -344,7 +346,6 @@
         }
         .stat-item p { font-size: 0.85rem; opacity: 0.8; margin: 5px 0 0; }
 
-        /* ===== أزرار CTA ===== */
         .cta-buttons { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
 
         .cta-button {
@@ -389,37 +390,130 @@
         .bounce-animation { animation: bounce-arrow 1.5s ease-in-out infinite; }
         @keyframes bounce-arrow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 
-        /* ===== إطار الهاتف ===== */
-        .phone-mockup-wrapper { position: relative; perspective: 1000px; }
-        .phone-mockup { animation: float-phone 4s ease-in-out infinite; }
-
-        @keyframes float-phone { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-15px) rotate(0deg); } }
-
-        .phone-frame {
-            width: 280px;
-            height: 550px;
-            background: #0a0a1a;
-            border-radius: 40px;
-            padding: 10px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+        /* ============================================================
+           هاتف SAMSUNG S23 ULTRA - تصميم احترافي ثلاثي الأبعاد
+           ============================================================ */
+        
+        .phone-mockup-wrapper {
+            perspective: 1500px;
             position: relative;
-            margin: 0 auto;
+            width: 320px;
+            height: 660px;
         }
 
         @media (max-width: 480px) {
-            .phone-frame { width: 220px; height: 440px; padding: 8px; border-radius: 30px; }
+            .phone-mockup-wrapper {
+                width: 220px;
+                height: 450px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .phone-mockup-wrapper {
+                width: 260px;
+                height: 535px;
+            }
+        }
+
+        .phone-mockup {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: phone-appear 2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            position: relative;
+        }
+
+        @keyframes phone-appear {
+            0% {
+                transform: translateZ(-800px) scale(0.3) rotateY(40deg) rotateX(15deg);
+                opacity: 0;
+            }
+            60% {
+                transform: translateZ(50px) scale(0.95) rotateY(-5deg) rotateX(2deg);
+                opacity: 1;
+            }
+            80% {
+                transform: translateZ(-20px) scale(1.02) rotateY(3deg) rotateX(-1deg);
+            }
+            100% {
+                transform: translateZ(0) scale(1) rotateY(-3deg) rotateX(3deg);
+                opacity: 1;
+            }
+        }
+
+        .phone-mockup.float-animation {
+            animation: float-phone-3d 6s ease-in-out infinite 2s;
+        }
+
+        @keyframes float-phone-3d {
+            0%, 100% { transform: translateY(0) rotateY(-3deg) rotateX(3deg); }
+            50% { transform: translateY(-25px) rotateY(0deg) rotateX(0deg); }
+        }
+
+        .phone-frame-s23 {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #1a1a2e, #0d0d1a);
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow: 
+                0 40px 120px rgba(0,0,0,0.7),
+                inset 0 -3px 15px rgba(255,255,255,0.04),
+                inset 0 3px 15px rgba(0,0,0,0.9),
+                0 0 60px rgba(78, 205, 196, 0.05);
+            border: 1px solid rgba(255,255,255,0.04);
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .phone-frame-s23:hover {
+            transform: rotateY(-1deg) rotateX(1deg) scale(1.01);
+            box-shadow: 
+                0 50px 150px rgba(0,0,0,0.8),
+                inset 0 -3px 15px rgba(255,255,255,0.06),
+                inset 0 3px 15px rgba(0,0,0,0.9),
+                0 0 80px rgba(78, 205, 196, 0.08);
+        }
+
+        .phone-frame-s23::before {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 53px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.02), transparent 50%, rgba(0,0,0,0.1));
+            pointer-events: none;
+            z-index: 25;
+        }
+
+        .phone-frame-s23::after {
+            content: '';
+            position: absolute;
+            top: 8%;
+            left: -2px;
+            width: 3px;
+            height: 84%;
+            background: linear-gradient(to bottom, 
+                rgba(255,255,255,0.0) 0%,
+                rgba(255,255,255,0.06) 20%,
+                rgba(255,255,255,0.10) 50%,
+                rgba(255,255,255,0.06) 80%,
+                rgba(255,255,255,0.0) 100%
+            );
+            border-radius: 3px;
+            filter: blur(1px);
+            z-index: 30;
         }
 
         .phone-screen-container {
             width: 100%;
             height: 100%;
-            border-radius: 30px;
+            border-radius: 44px;
             overflow: hidden;
             position: relative;
             background: #0a0a1a;
+            box-shadow: inset 0 4px 30px rgba(0,0,0,0.8);
         }
-
-        @media (max-width: 480px) { .phone-screen-container { border-radius: 22px; } }
 
         .phone-screen {
             width: 100%;
@@ -427,7 +521,77 @@
             overflow: hidden;
             position: relative;
             background: #0a0a1a;
-            border-radius: 28px;
+            border-radius: 40px;
+        }
+
+        /* ===== أزرار جانبية S23 ===== */
+        .phone-side-btn-s23 {
+            position: absolute;
+            right: -5px;
+            width: 4px;
+            background: linear-gradient(to right, #1a1a2e, #2a2a4a);
+            border-radius: 0 4px 4px 0;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.4);
+            z-index: 20;
+        }
+
+        .phone-side-btn-s23.volume-up {
+            top: 130px;
+            height: 45px;
+        }
+
+        .phone-side-btn-s23.volume-down {
+            top: 185px;
+            height: 45px;
+        }
+
+        .phone-side-btn-s23.power {
+            top: 140px;
+            height: 55px;
+            right: auto;
+            left: -5px;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .phone-home-btn-s23 {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 5px;
+            background: linear-gradient(to right, rgba(255,255,255,0.05), rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            border-radius: 6px;
+            z-index: 15;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .phone-home-btn-s23:hover {
+            background: linear-gradient(to right, rgba(78, 205, 196, 0.1), rgba(78, 205, 196, 0.3), rgba(78, 205, 196, 0.1));
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.1);
+        }
+
+        .phone-shadow-s23 {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%) rotateX(25deg);
+            width: 85%;
+            height: 60px;
+            background: radial-gradient(ellipse, rgba(0,0,0,0.5) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(30px);
+            z-index: -1;
+            transition: all 0.5s ease;
+            opacity: 0.7;
+        }
+
+        .phone-frame-s23:hover + .phone-shadow-s23 {
+            width: 95%;
+            height: 70px;
+            opacity: 1;
+            background: radial-gradient(ellipse, rgba(0,0,0,0.6) 0%, transparent 70%);
         }
 
         .app-slider {
@@ -435,7 +599,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            border-radius: 28px;
+            border-radius: 40px;
         }
 
         .slide {
@@ -446,10 +610,6 @@
             height: 100%;
             opacity: 0;
             transition: opacity 0.8s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0a0a1a;
         }
 
         .slide.active {
@@ -465,61 +625,62 @@
             display: block;
         }
 
-        .phone-notch {
+        .slider-indicators {
             position: absolute;
-            top: 0;
+            bottom: 38px;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
-            height: 28px;
-            background: #0a0a1a;
-            border-radius: 0 0 16px 16px;
-            z-index: 10;
+            display: flex;
+            gap: 8px;
+            z-index: 20;
         }
 
-        .phone-notch::after {
-            content: '';
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 10px;
-            height: 10px;
-            background: #1a1a3e;
+        .slider-indicators .dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            border: 2px solid #2a2d7c;
+            background: rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        .phone-home-bar {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: rgba(255,255,255,0.15);
+        .slider-indicators .dot.active {
+            background: #4ECDC4;
+            width: 28px;
             border-radius: 4px;
-            z-index: 10;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.2);
         }
 
-        .phone-shadow {
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 40px;
-            background: radial-gradient(ellipse, rgba(0,0,0,0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(20px);
-            z-index: -1;
+        /* ===== التابلت ===== */
+        .tablet-mockup-wrapper { 
+            position: relative; 
+            perspective: 1000px;
+            animation: tablet-appear 2s cubic-bezier(0.23, 1, 0.32, 1) forwards 0.5s;
+            opacity: 0;
         }
 
-        /* ===== إطار التابلت ===== */
-        .tablet-mockup-wrapper { position: relative; perspective: 1000px; }
-        .tablet-mockup { animation: float-tablet 5s ease-in-out infinite; }
+        @keyframes tablet-appear {
+            0% {
+                transform: translateZ(-600px) scale(0.4) rotateY(-30deg);
+                opacity: 0;
+            }
+            100% {
+                transform: translateZ(0) scale(1) rotateY(0deg);
+                opacity: 1;
+            }
+        }
 
-        @keyframes float-tablet { 0%, 100% { transform: translateY(0) rotate(2deg); } 50% { transform: translateY(-10px) rotate(0deg); } }
+        .tablet-mockup { 
+            animation: float-tablet 5s ease-in-out infinite 1.5s; 
+        }
+
+        @keyframes float-tablet { 
+            0%, 100% { transform: translateY(0) rotate(2deg); } 
+            50% { transform: translateY(-15px) rotate(0deg); } 
+        }
 
         .tablet-frame {
             width: 350px;
@@ -527,11 +688,14 @@
             background: #1a1a2e;
             border-radius: 20px;
             padding: 12px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
             position: relative;
+            border: 1px solid rgba(255,255,255,0.04);
         }
 
-        @media (max-width: 480px) { .tablet-frame { width: 280px; height: 200px; padding: 8px; } }
+        @media (max-width: 480px) { 
+            .tablet-frame { width: 280px; height: 200px; padding: 8px; } 
+        }
 
         .tablet-screen {
             width: 100%;
@@ -544,46 +708,17 @@
 
         .tablet-shadow {
             position: absolute;
-            bottom: -20px;
+            bottom: -25px;
             left: 50%;
             transform: translateX(-50%);
             width: 70%;
-            height: 30px;
+            height: 35px;
             background: radial-gradient(ellipse, rgba(0,0,0,0.2) 0%, transparent 70%);
             border-radius: 50%;
-            filter: blur(15px);
+            filter: blur(20px);
             z-index: -1;
         }
 
-        /* ===== نقاط السلايدر ===== */
-        .slider-indicators {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 20;
-        }
-
-        .slider-indicators .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            padding: 0;
-        }
-
-        .slider-indicators .dot.active {
-            background: #4ECDC4;
-            width: 24px;
-            border-radius: 4px;
-        }
-
-        /* ===== زر التمرير لأسفل ===== */
         .scroll-down {
             position: absolute;
             bottom: 30px;
@@ -600,7 +735,7 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
             opacity: 0;
-            animation: fade-in-scroll 1s ease forwards 1.5s;
+            animation: fade-in-scroll 1s ease forwards 2.5s;
         }
 
         @keyframes fade-in-scroll { to { opacity: 1; } }
@@ -792,7 +927,6 @@
             box-shadow: 0 8px 30px rgba(42, 45, 124, 0.3);
         }
 
-        /* ===== خلفية الجسيمات ===== */
         #particles-js { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 
         .gradient-overlay {
@@ -803,7 +937,6 @@
             z-index: 1;
         }
 
-        /* ===== أشكال متحركة ===== */
         .animated-shapes {
             position: absolute;
             inset: 0;
@@ -876,7 +1009,6 @@
             75% { transform: translate(15px, -15px) scale(1.05) rotate(3deg); }
         }
 
-        /* ===== استجابة للشاشات الصغيرة ===== */
         @media (max-width: 768px) {
             .hero-section { min-height: auto; padding: 100px 0 60px; }
             .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
@@ -888,14 +1020,21 @@
         }
 
         @media (max-width: 480px) {
-            .phone-frame { width: 200px; height: 400px; border-radius: 25px; padding: 6px; }
-            .phone-screen-container { border-radius: 20px; }
-            .phone-notch { width: 80px; height: 20px; }
+            .phone-mockup-wrapper { width: 200px; height: 410px; }
+            .phone-frame-s23 { border-radius: 35px; padding: 8px; }
+            .phone-screen-container { border-radius: 28px; }
+            .phone-screen { border-radius: 24px; }
+            .app-slider { border-radius: 24px; }
+            .phone-home-btn-s23 { width: 80px; height: 4px; bottom: 12px; }
+            .slider-indicators { bottom: 22px; }
             .hero-title { font-size: 2rem; }
             .badge { font-size: 0.75rem; padding: 6px 16px; }
         }
 
-        /* ===== الوضع الداكن ===== */
+        @media (max-width: 768px) {
+            .phone-mockup-wrapper { width: 230px; height: 470px; }
+        }
+
         body.dark-mode .services-section { background: #1a1a2e; }
         body.dark-mode .service-card { background: #2a2a4a; border-color: rgba(255,255,255,0.05); }
         body.dark-mode .service-card h3 { color: #f0f0f0; }
@@ -1013,7 +1152,6 @@
             </div>
 
             <div class="hero-content">
-                <!-- ===== النص في الأعلى ===== -->
                 <div class="hero-text" data-aos="fade-up" data-aos-duration="800">
                     <div class="badge" data-aos="fade-up" data-aos-delay="100">
                         <span>الشركة الرائدة في اليمن</span>
@@ -1043,11 +1181,17 @@
                     </div>
                 </div>
 
-                <!-- ===== الأجهزة في الأسفل ===== -->
+                <!-- ===== هاتف SAMSUNG S23 ULTRA (بدون كاميرات) ===== -->
                 <div class="device-showcase" data-aos="fade-up" data-aos-delay="800">
                     <div class="phone-mockup-wrapper">
-                        <div class="phone-mockup">
-                            <div class="phone-frame">
+                        <div class="phone-mockup float-animation">
+                            <div class="phone-frame-s23">
+                                <!-- الأزرار الجانبية -->
+                                <div class="phone-side-btn-s23 volume-up"></div>
+                                <div class="phone-side-btn-s23 volume-down"></div>
+                                <div class="phone-side-btn-s23 power"></div>
+                                
+                                <!-- الشاشة -->
                                 <div class="phone-screen-container">
                                     <div class="phone-screen">
                                         <div class="app-slider" id="appSlider">
@@ -1062,8 +1206,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="phone-notch"></div>
-                                    <div class="phone-home-bar"></div>
+                                    <!-- تم إزالة النوتش والكاميرا الخلفية -->
+                                    <!-- شريط الصفحة الرئيسية -->
+                                    <div class="phone-home-btn-s23"></div>
+                                    <!-- نقاط التبديل -->
                                     <div class="slider-indicators" id="sliderIndicators">
                                         <div class="dot active" data-index="0"></div>
                                         <div class="dot" data-index="1"></div>
@@ -1071,7 +1217,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="phone-shadow"></div>
+                            <div class="phone-shadow-s23"></div>
                         </div>
                     </div>
 
@@ -1252,10 +1398,8 @@
     <script src="js/main.js"></script>
 
     <script>
-        // ===== تهيئة AOS =====
         AOS.init({ duration: 800, once: true, offset: 100, easing: 'ease-out-cubic' });
 
-        // ===== عدادات الأرقام =====
         document.querySelectorAll('.counter').forEach(counter => {
             const target = parseInt(counter.dataset.target);
             const duration = 2000;
@@ -1277,7 +1421,6 @@
             observer.observe(counter);
         });
 
-        // ===== تأثير الكتابة =====
         const typingElement = document.querySelector('.typing-text');
         if (typingElement) {
             const strings = JSON.parse(typingElement.dataset.strings || '["ابتكارات رقمية"]');
@@ -1295,7 +1438,6 @@
             typeEffect();
         }
 
-        // ===== سلايدر التطبيقات (يعمل على الجوال) =====
         function initAppSlider() {
             const slides = document.querySelectorAll('.app-slider .slide');
             const dots = document.querySelectorAll('.slider-indicators .dot');
@@ -1376,24 +1518,20 @@
 
         initAppSlider();
 
-        // ===== زر العودة للأعلى =====
         const backToTop = document.getElementById('backToTop');
         if (backToTop) {
             window.addEventListener('scroll', function() { backToTop.classList.toggle('visible', window.scrollY > 500); });
             backToTop.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
         }
 
-        // ===== النشرة البريدية =====
         document.getElementById('newsletterForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
             const input = this.querySelector('input[type="email"]');
             if (input && input.value) { alert('شكراً لك على الاشتراك في نشرتنا البريدية!'); input.value = ''; }
         });
 
-        // ===== تحديث سنة حقوق النشر =====
         document.querySelectorAll('.current-year').forEach(el => { el.textContent = new Date().getFullYear(); });
 
-        // ===== تهيئة الجسيمات =====
         if (typeof particlesJS !== 'undefined') {
             particlesJS('particles-js', {
                 particles: {

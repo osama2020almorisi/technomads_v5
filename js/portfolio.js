@@ -2,6 +2,7 @@
    portfolio.js - نظام إدارة المشاريع الذكي
    TechNomads - Smart Portfolio System
    مع بحث متقدم وفلاتر متجاوبة للجوال
+   مع دعم الروابط العميقة (Deep Links)
    ============================================ */
 
 (function() {
@@ -788,27 +789,147 @@
         renderProjects();
         updateStats();
         setupTechToggle();
+        initDeepLinks(); // تهيئة الروابط العميقة
     });
+
+    // ============================================
+    // DEEP LINKS - الروابط العميقة للمشاريع
+    // ============================================
+
+    /**
+     * مشاركة المشروع - نسخ رابط المشروع
+     */
+    function shareProject(projectId) {
+        const project = projects.find(p => p.id === projectId);
+        if (!project) {
+            showNotification('المشروع غير موجود', 'error');
+            return;
+        }
+        
+        const url = window.location.origin + window.location.pathname + '#project-' + projectId;
+        const shareText = 'شاهد مشروع ' + project.name + ' على TechNomads';
+        
+        // محاولة استخدام Web Share API
+        if (navigator.share) {
+            navigator.share({
+                title: project.name,
+                text: shareText,
+                url: url
+            }).catch(() => {});
+            return;
+        }
+        
+        // نسخ الرابط إلى الحافظة
+        navigator.clipboard.writeText(url).then(() => {
+            showNotification('✅ تم نسخ رابط المشروع: ' + project.name, 'success');
+        }).catch(() => {
+            // طريقة بديلة للنسخ
+            const textArea = document.createElement('textarea');
+            textArea.value = url;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showNotification('✅ تم نسخ رابط المشروع: ' + project.name, 'success');
+        });
+    }
+
+    /**
+     * تهيئة الروابط العميقة - عند تحميل الصفحة
+     */
+    function initDeepLinks() {
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#project-')) {
+            const projectId = hash.replace('#project-', '');
+            
+            // انتظار تحميل المشاريع
+            const checkProjects = setInterval(() => {
+                if (projects.length > 0) {
+                    clearInterval(checkProjects);
+                    const project = projects.find(p => p.id === projectId);
+                    if (project) {
+                        // فتح المودال بعد تأخير بسيط
+                        setTimeout(() => {
+                            openModal(projectId);
+                            
+                            // تمييز البطاقة في القائمة
+                            const card = document.querySelector('[data-project-id="' + projectId + '"]');
+                            if (card) {
+                                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                card.classList.add('highlight');
+                                setTimeout(function() {
+                                    card.classList.remove('highlight');
+                                }, 3000);
+                            }
+                        }, 600);
+                    } else {
+                        showNotification('⚠️ المشروع غير موجود', 'error');
+                    }
+                }
+            }, 100);
+        }
+    }
+
+    /**
+     * تحديث الرابط في شريط العنوان عند فتح المودال
+     */
+    function updateUrlWithProject(projectId) {
+        if (projectId) {
+            var newUrl = window.location.pathname + '#project-' + projectId;
+            window.history.pushState({ projectId: projectId }, '', newUrl);
+        } else {
+            window.history.pushState({}, '', window.location.pathname);
+        }
+    }
+
+    /**
+     * إظهار إشعار منبثق
+     */
+    function showNotification(message, type) {
+        type = type || 'success';
+        // إزالة الإشعارات السابقة
+        var existing = document.querySelectorAll('.toast-notification');
+        existing.forEach(function(el) { el.remove(); });
+        
+        var toast = document.createElement('div');
+        toast.className = 'toast-notification ' + type;
+        
+        var icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+        toast.innerHTML = '<i class="fas ' + icon + '"></i> ' + message;
+        
+        document.body.appendChild(toast);
+        
+        // إظهار الإشعار
+        requestAnimationFrame(function() {
+            toast.classList.add('show');
+        });
+        
+        // إخفاء الإشعار بعد 3 ثواني
+        setTimeout(function() {
+            toast.classList.remove('show');
+            setTimeout(function() { toast.remove(); }, 400);
+        }, 3000);
+    }
 
     function getProjectImages(projectId) {
         if (PROJECT_IMAGES[projectId]) {
             return PROJECT_IMAGES[projectId];
         }
-        const hash = projectId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-        const uniqueId = (hash % 200) + 1;
+        var hash = projectId.split('').reduce(function(acc, char) { return acc + char.charCodeAt(0); }, 0);
+        var uniqueId = (hash % 200) + 1;
         return {
-            cover: `https://picsum.photos/id/${uniqueId}/800/600`,
+            cover: 'https://picsum.photos/id/' + uniqueId + '/800/600',
             gallery: [
-                `https://picsum.photos/id/${uniqueId + 1}/800/600`,
-                `https://picsum.photos/id/${uniqueId + 2}/800/600`,
-                `https://picsum.photos/id/${uniqueId + 3}/800/600`
+                'https://picsum.photos/id/' + (uniqueId + 1) + '/800/600',
+                'https://picsum.photos/id/' + (uniqueId + 2) + '/800/600',
+                'https://picsum.photos/id/' + (uniqueId + 3) + '/800/600'
             ]
         };
     }
 
     async function loadProjects() {
-        const cached = localStorage.getItem('portfolio_projects');
-        const cacheTime = localStorage.getItem('portfolio_cache_time');
+        var cached = localStorage.getItem('portfolio_projects');
+        var cacheTime = localStorage.getItem('portfolio_cache_time');
         
         if (cached && cacheTime && (Date.now() - parseInt(cacheTime)) < CONFIG.cacheDuration) {
             projects = JSON.parse(cached);
@@ -816,14 +937,17 @@
             return;
         }
         
-        projects = PROJECTS_DB.map(project => ({
-            ...project,
-            images: getProjectImages(project.id).gallery,
-            coverImage: getProjectImages(project.id).cover,
-            views: parseInt(localStorage.getItem('view_' + project.id)) || 0
-        }));
+        projects = PROJECTS_DB.map(function(project) {
+            var images = getProjectImages(project.id);
+            return {
+                ...project,
+                images: images.gallery,
+                coverImage: images.cover,
+                views: parseInt(localStorage.getItem('view_' + project.id)) || 0
+            };
+        });
         
-        projects.sort((a, b) => new Date(b.date) - new Date(a.date));
+        projects.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
         
         localStorage.setItem('portfolio_projects', JSON.stringify(projects));
         localStorage.setItem('portfolio_cache_time', Date.now().toString());
@@ -831,21 +955,19 @@
     }
 
     function setupTechFilters() {
-        const container = document.getElementById('filterTechSection');
+        var container = document.getElementById('filterTechSection');
         if (!container) return;
         
-        const allTechs = new Set();
-        projects.forEach(p => p.technologies.forEach(t => allTechs.add(t)));
-        const techs = Array.from(allTechs).sort();
+        var allTechs = new Set();
+        projects.forEach(function(p) { p.technologies.forEach(function(t) { allTechs.add(t); }); });
+        var techs = Array.from(allTechs).sort();
         
-        container.innerHTML = `
-            <button class="filter-tech-btn active" data-tech="all">كل التقنيات</button>
-            ${techs.map(t => `<button class="filter-tech-btn" data-tech="${t}">${t}</button>`).join('')}
-        `;
+        container.innerHTML = '<button class="filter-tech-btn active" data-tech="all">كل التقنيات</button>' +
+            techs.map(function(t) { return '<button class="filter-tech-btn" data-tech="' + t + '">' + t + '</button>'; }).join('');
         
-        container.querySelectorAll('.filter-tech-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                container.querySelectorAll('.filter-tech-btn').forEach(b => b.classList.remove('active'));
+        container.querySelectorAll('.filter-tech-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                container.querySelectorAll('.filter-tech-btn').forEach(function(b) { b.classList.remove('active'); });
                 btn.classList.add('active');
                 currentTechFilter = btn.dataset.tech === 'all' ? '' : btn.dataset.tech;
                 currentPage = 1;
@@ -859,22 +981,22 @@
     }
 
     function setupTechToggle() {
-        const toggleBtn = document.getElementById('techToggle');
-        const techSection = document.getElementById('filterTechSection');
+        var toggleBtn = document.getElementById('techToggle');
+        var techSection = document.getElementById('filterTechSection');
         
         if (!toggleBtn || !techSection) return;
         
         toggleBtn.addEventListener('click', function() {
-            const isVisible = techSection.style.display !== 'none';
+            var isVisible = techSection.style.display !== 'none';
             techSection.style.display = isVisible ? 'none' : 'flex';
             this.querySelector('.fa-chevron-down').style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
         });
     }
 
     function setupPagination() {
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        var loadMoreBtn = document.getElementById('loadMoreBtn');
         if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', () => {
+            loadMoreBtn.addEventListener('click', function() {
                 currentPage++;
                 renderProjects();
             });
@@ -882,26 +1004,26 @@
     }
 
     function getFilteredProjects() {
-        let filtered = [...projects];
+        var filtered = projects.slice();
         
         if (currentFilter !== 'all') {
-            filtered = filtered.filter(p => p.category === currentFilter);
+            filtered = filtered.filter(function(p) { return p.category === currentFilter; });
         }
         
         if (currentTechFilter) {
-            filtered = filtered.filter(p => p.technologies.includes(currentTechFilter));
+            filtered = filtered.filter(function(p) { return p.technologies.indexOf(currentTechFilter) !== -1; });
         }
         
         if (currentSearch) {
-            const searchLower = currentSearch.toLowerCase();
-            filtered = filtered.filter(project => {
-                const nameMatch = project.name.toLowerCase().includes(searchLower);
-                const descMatch = project.description.toLowerCase().includes(searchLower);
-                const techMatch = project.technologies.some(t => t.toLowerCase().includes(searchLower));
-                const categoryMatch = CATEGORIES[project.category]?.label.includes(searchLower) || false;
-                const idMatch = project.id.toLowerCase().includes(searchLower);
-                const keywords = project.keywords || [];
-                const keywordMatch = keywords.some(k => k.toLowerCase().includes(searchLower));
+            var searchLower = currentSearch.toLowerCase();
+            filtered = filtered.filter(function(project) {
+                var nameMatch = project.name.toLowerCase().indexOf(searchLower) !== -1;
+                var descMatch = project.description.toLowerCase().indexOf(searchLower) !== -1;
+                var techMatch = project.technologies.some(function(t) { return t.toLowerCase().indexOf(searchLower) !== -1; });
+                var categoryMatch = CATEGORIES[project.category] ? CATEGORIES[project.category].label.indexOf(searchLower) !== -1 : false;
+                var idMatch = project.id.toLowerCase().indexOf(searchLower) !== -1;
+                var keywords = project.keywords || [];
+                var keywordMatch = keywords.some(function(k) { return k.toLowerCase().indexOf(searchLower) !== -1; });
                 
                 return nameMatch || descMatch || techMatch || categoryMatch || idMatch || keywordMatch;
             });
@@ -911,17 +1033,17 @@
     }
 
     function setupSearch() {
-        const searchInput = document.getElementById('searchInput');
-        const clearBtn = document.getElementById('searchClear');
-        const resetBtn = document.getElementById('resetSearchBtn');
-        const resultsInfo = document.getElementById('searchResultsInfo');
+        var searchInput = document.getElementById('searchInput');
+        var clearBtn = document.getElementById('searchClear');
+        var resetBtn = document.getElementById('resetSearchBtn');
+        var resultsInfo = document.getElementById('searchResultsInfo');
         
         if (!searchInput) return;
         
-        let debounceTimer;
-        searchInput.addEventListener('input', () => {
+        var debounceTimer;
+        searchInput.addEventListener('input', function() {
             clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
+            debounceTimer = setTimeout(function() {
                 currentSearch = searchInput.value.trim().toLowerCase();
                 currentPage = 1;
                 renderProjects();
@@ -932,7 +1054,7 @@
             }, 150);
         });
         
-        searchInput.addEventListener('keydown', (e) => {
+        searchInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 currentSearch = searchInput.value.trim().toLowerCase();
@@ -943,7 +1065,7 @@
         });
         
         if (clearBtn) {
-            clearBtn.addEventListener('click', () => {
+            clearBtn.addEventListener('click', function() {
                 searchInput.value = '';
                 currentSearch = '';
                 currentPage = 1;
@@ -955,14 +1077,18 @@
         }
         
         if (resetBtn) {
-            resetBtn.addEventListener('click', () => {
+            resetBtn.addEventListener('click', function() {
                 searchInput.value = '';
                 currentSearch = '';
                 currentFilter = 'all';
                 currentTechFilter = '';
                 currentPage = 1;
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.filter === 'all'));
-                document.querySelectorAll('.filter-tech-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tech === 'all'));
+                document.querySelectorAll('.filter-btn').forEach(function(btn) {
+                    btn.classList.toggle('active', btn.dataset.filter === 'all');
+                });
+                document.querySelectorAll('.filter-tech-btn').forEach(function(btn) {
+                    btn.classList.toggle('active', btn.dataset.tech === 'all');
+                });
                 renderProjects();
                 updateSearchInfo(resultsInfo);
                 searchInput.focus();
@@ -977,25 +1103,26 @@
     }
 
     function setupSearchSuggestions() {
-        const searchInput = document.getElementById('searchInput');
-        const suggestionsContainer = document.getElementById('searchSuggestions');
-        const suggestionsList = document.getElementById('suggestionsList');
+        var searchInput = document.getElementById('searchInput');
+        var suggestionsContainer = document.getElementById('searchSuggestions');
+        var suggestionsList = document.getElementById('suggestionsList');
         
         if (!searchInput || !suggestionsContainer || !suggestionsList) return;
         
-        let suggestionTimeout;
+        var suggestionTimeout;
+        var selectedIndex = -1;
         
         searchInput.addEventListener('input', function() {
             clearTimeout(suggestionTimeout);
-            const query = this.value.trim().toLowerCase();
+            var query = this.value.trim().toLowerCase();
             
             if (query.length < 1) {
                 suggestionsContainer.style.display = 'none';
                 return;
             }
             
-            suggestionTimeout = setTimeout(() => {
-                const suggestions = getSearchSuggestions(query);
+            suggestionTimeout = setTimeout(function() {
+                var suggestions = getSearchSuggestions(query);
                 if (suggestions.length > 0) {
                     renderSuggestions(suggestions);
                     suggestionsContainer.style.display = 'block';
@@ -1011,9 +1138,8 @@
             }
         });
         
-        let selectedIndex = -1;
         searchInput.addEventListener('keydown', function(e) {
-            const items = suggestionsList.querySelectorAll('.suggestion-item');
+            var items = suggestionsList.querySelectorAll('.suggestion-item');
             if (items.length === 0) return;
             
             if (e.key === 'ArrowDown') {
@@ -1032,25 +1158,25 @@
     }
 
     function getSearchSuggestions(query) {
-        const suggestions = [];
-        const seen = new Set();
+        var suggestions = [];
+        var seen = new Set();
         
-        projects.forEach(project => {
-            if (project.name.toLowerCase().includes(query) && !seen.has(project.name)) {
+        projects.forEach(function(project) {
+            if (project.name.toLowerCase().indexOf(query) !== -1 && !seen.has(project.name)) {
                 seen.add(project.name);
                 suggestions.push({
                     text: project.name,
-                    category: CATEGORIES[project.category]?.label || 'مشروع',
+                    category: CATEGORIES[project.category] ? CATEGORIES[project.category].label : 'مشروع',
                     type: 'project',
                     id: project.id
                 });
             }
         });
         
-        const techSet = new Set();
-        projects.forEach(project => {
-            project.technologies.forEach(tech => {
-                if (tech.toLowerCase().includes(query) && !techSet.has(tech)) {
+        var techSet = new Set();
+        projects.forEach(function(project) {
+            project.technologies.forEach(function(tech) {
+                if (tech.toLowerCase().indexOf(query) !== -1 && !techSet.has(tech)) {
                     techSet.add(tech);
                     suggestions.push({
                         text: tech,
@@ -1061,8 +1187,9 @@
             });
         });
         
-        Object.entries(CATEGORIES).forEach(([key, value]) => {
-            if (value.label.includes(query) && !seen.has(value.label)) {
+        Object.keys(CATEGORIES).forEach(function(key) {
+            var value = CATEGORIES[key];
+            if (value.label.indexOf(query) !== -1 && !seen.has(value.label)) {
                 seen.add(value.label);
                 suggestions.push({
                     text: value.label,
@@ -1077,26 +1204,27 @@
     }
 
     function renderSuggestions(suggestions) {
-        const list = document.getElementById('suggestionsList');
+        var list = document.getElementById('suggestionsList');
         if (!list) return;
         
-        list.innerHTML = suggestions.map((s, index) => `
-            <div class="suggestion-item" data-index="${index}" data-type="${s.type}" data-id="${s.id || ''}" data-filter="${s.filter || ''}">
-                <i class="fas ${s.type === 'project' ? 'fa-folder-open' : s.type === 'tech' ? 'fa-code' : 'fa-tag'}"></i>
-                <span class="suggestion-text">${escapeHtml(s.text)}</span>
-                <span class="suggestion-category">${escapeHtml(s.category)}</span>
-            </div>
-        `).join('');
+        list.innerHTML = suggestions.map(function(s, index) {
+            var icon = s.type === 'project' ? 'fa-folder-open' : s.type === 'tech' ? 'fa-code' : 'fa-tag';
+            return '<div class="suggestion-item" data-index="' + index + '" data-type="' + s.type + '" data-id="' + (s.id || '') + '" data-filter="' + (s.filter || '') + '">' +
+                '<i class="fas ' + icon + '"></i>' +
+                '<span class="suggestion-text">' + escapeHtml(s.text) + '</span>' +
+                '<span class="suggestion-category">' + escapeHtml(s.category) + '</span>' +
+                '</div>';
+        }).join('');
         
-        list.querySelectorAll('.suggestion-item').forEach(item => {
+        list.querySelectorAll('.suggestion-item').forEach(function(item) {
             item.addEventListener('click', function() {
-                const type = this.dataset.type;
-                const text = this.querySelector('.suggestion-text').textContent;
-                const filter = this.dataset.filter;
+                var type = this.dataset.type;
+                var text = this.querySelector('.suggestion-text').textContent;
+                var filter = this.dataset.filter;
                 
                 if (type === 'category' && filter) {
                     currentFilter = filter;
-                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                    document.querySelectorAll('.filter-btn').forEach(function(btn) {
                         btn.classList.toggle('active', btn.dataset.filter === filter);
                     });
                     document.getElementById('searchInput').value = '';
@@ -1115,19 +1243,19 @@
     }
 
     function updateSelectedSuggestion(items, index) {
-        items.forEach((item, i) => {
+        items.forEach(function(item, i) {
             item.classList.toggle('active', i === index);
         });
-        items[index]?.scrollIntoView({ block: 'nearest' });
+        if (items[index]) items[index].scrollIntoView({ block: 'nearest' });
     }
 
     function setupFilters() {
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const resultsInfo = document.getElementById('searchResultsInfo');
+        var filterBtns = document.querySelectorAll('.filter-btn');
+        var resultsInfo = document.getElementById('searchResultsInfo');
         
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
+        filterBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(function(b) { b.classList.remove('active'); });
                 btn.classList.add('active');
                 currentFilter = btn.dataset.filter;
                 currentPage = 1;
@@ -1139,10 +1267,10 @@
 
     function updateSearchInfo(resultsInfo) {
         if (!resultsInfo) return;
-        const filtered = getFilteredProjects();
-        const total = projects.length;
+        var filtered = getFilteredProjects();
+        var total = projects.length;
         if (currentSearch || currentFilter !== 'all' || currentTechFilter) {
-            resultsInfo.textContent = `عرض ${filtered.length} من ${total} مشروع`;
+            resultsInfo.textContent = 'عرض ' + filtered.length + ' من ' + total + ' مشروع';
             resultsInfo.style.display = 'block';
         } else {
             resultsInfo.style.display = 'none';
@@ -1150,27 +1278,27 @@
     }
 
     function setupModal() {
-        const modal = document.getElementById('projectModal');
-        const closeBtn = document.getElementById('modalClose');
+        var modal = document.getElementById('projectModal');
+        var closeBtn = document.getElementById('modalClose');
         
         if (!modal) return;
         
-        modal.addEventListener('click', (e) => {
+        modal.addEventListener('click', function(e) {
             if (e.target === modal) closeModal();
         });
         
         if (closeBtn) closeBtn.addEventListener('click', closeModal);
         
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
         });
     }
 
     function setupScrollEffects() {
-        const backToTop = document.getElementById('backToTop');
+        var backToTop = document.getElementById('backToTop');
         if (!backToTop) return;
         
-        window.addEventListener('scroll', () => {
+        window.addEventListener('scroll', function() {
             if (window.scrollY > 500) {
                 backToTop.classList.add('visible');
             } else {
@@ -1178,16 +1306,16 @@
             }
         });
         
-        backToTop.addEventListener('click', () => {
+        backToTop.addEventListener('click', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 
     function renderProjects() {
-        const grid = document.getElementById('projectsGrid');
-        const emptyState = document.getElementById('emptyState');
-        const projectsCountSpan = document.getElementById('projectsCount');
-        const loadMoreContainer = document.getElementById('loadMoreContainer');
+        var grid = document.getElementById('projectsGrid');
+        var emptyState = document.getElementById('emptyState');
+        var projectsCountSpan = document.getElementById('projectsCount');
+        var loadMoreContainer = document.getElementById('loadMoreContainer');
         
         if (!grid) {
             console.error('Projects grid not found!');
@@ -1195,7 +1323,7 @@
         }
         
         allFilteredProjects = getFilteredProjects();
-        const totalFiltered = allFilteredProjects.length;
+        var totalFiltered = allFilteredProjects.length;
         
         if (projectsCountSpan) projectsCountSpan.textContent = totalFiltered;
         
@@ -1208,32 +1336,34 @@
         
         if (emptyState) emptyState.style.display = 'none';
         
-        const start = 0;
-        const end = currentPage * itemsPerPage;
-        const displayProjects = allFilteredProjects.slice(start, end);
+        var start = 0;
+        var end = currentPage * itemsPerPage;
+        var displayProjects = allFilteredProjects.slice(start, end);
         
         if (loadMoreContainer) {
             if (end >= totalFiltered) {
                 loadMoreContainer.style.display = 'none';
             } else {
                 loadMoreContainer.style.display = 'block';
-                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                var loadMoreBtn = document.getElementById('loadMoreBtn');
                 if (loadMoreBtn) {
-                    loadMoreBtn.textContent = `تحميل المزيد (${end}/${totalFiltered})`;
+                    loadMoreBtn.textContent = 'تحميل المزيد (' + end + '/' + totalFiltered + ')';
                 }
             }
         }
         
-        grid.innerHTML = displayProjects.map((project, index) => createProjectCard(project, index)).join('');
+        grid.innerHTML = displayProjects.map(function(project, index) {
+            return createProjectCard(project, index);
+        }).join('');
         
-        setTimeout(() => {
-            const images = grid.querySelectorAll('.project-card-image');
-            images.forEach(img => {
+        setTimeout(function() {
+            var images = grid.querySelectorAll('.project-card-image');
+            images.forEach(function(img) {
                 if (img.complete) {
                     img.classList.add('loaded');
                 } else {
-                    img.addEventListener('load', () => img.classList.add('loaded'));
-                    img.addEventListener('error', () => {
+                    img.addEventListener('load', function() { img.classList.add('loaded'); });
+                    img.addEventListener('error', function() {
                         img.src = CONFIG.fallbackImage;
                         img.classList.add('loaded');
                     });
@@ -1241,16 +1371,16 @@
             });
         }, 100);
         
-        setTimeout(() => {
-            grid.querySelectorAll('.project-card').forEach((card, i) => {
-                setTimeout(() => card.classList.add('visible'), i * 50);
+        setTimeout(function() {
+            grid.querySelectorAll('.project-card').forEach(function(card, i) {
+                setTimeout(function() { card.classList.add('visible'); }, i * 50);
             });
         }, 50);
         
-        grid.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                if (!e.target.closest('.project-link') && !e.target.closest('.view-project-btn')) {
-                    const projectId = card.dataset.projectId;
+        grid.querySelectorAll('.project-card').forEach(function(card) {
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('.project-link') && !e.target.closest('.view-project-btn') && !e.target.closest('.share-btn')) {
+                    var projectId = card.dataset.projectId;
                     openModal(projectId);
                 }
             });
@@ -1258,61 +1388,67 @@
     }
 
     function createProjectCard(project, index) {
-        const categoryInfo = CATEGORIES[project.category] || { label: 'مشروع', icon: 'fa-folder' };
-        const dateFormatted = formatDate(project.date);
-        const stars = renderStars(project.rating || 0);
+        var categoryInfo = CATEGORIES[project.category] || { label: 'مشروع', icon: 'fa-folder' };
+        var dateFormatted = formatDate(project.date);
+        var stars = renderStars(project.rating || 0);
         
-        return `
-            <article class="project-card" data-project-id="${project.id}" data-category="${project.category}" data-aos="fade-up" data-aos-delay="${Math.min(index * 50, 300)}">
-                <div class="project-card-media">
-                    <img src="${project.coverImage}" alt="${project.name}" class="project-card-image" loading="lazy" width="800" height="600">
-                    <div class="project-card-overlay">
-                        <a href="${project.link}" class="view-project-btn" onclick="event.stopPropagation();">
-                            <i class="fas fa-eye"></i> عرض التفاصيل
-                        </a>
-                    </div>
-                    <span class="project-category-badge"><i class="fas ${categoryInfo.icon}"></i> ${categoryInfo.label}</span>
-                    ${project.featured ? '<span class="project-featured"><i class="fas fa-star"></i> مميز</span>' : ''}
-                    ${project.hasVersions ? '<span class="project-version-badge"><i class="fas fa-code-branch"></i> إصدارات</span>' : ''}
-                </div>
-                <div class="project-card-content">
-                    <h3 class="project-card-title">${escapeHtml(project.name)}</h3>
-                    <p class="project-card-description">${escapeHtml(project.description)}</p>
-                    <div class="project-rating">
-                        <span class="stars">${stars}</span>
-                        <span class="rating-count">(${project.rating || 0})</span>
-                    </div>
-                    <div class="project-card-footer">
-                        <span class="project-date"><i class="far fa-calendar-alt"></i> ${dateFormatted}</span>
-                        <div class="project-links">
-                            <span class="project-views"><i class="far fa-eye"></i> ${project.views || 0}</span>
-                            <a href="${project.link}" class="project-link" onclick="event.stopPropagation();" aria-label="زيارة ${project.name}"><i class="fas fa-arrow-left"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        `;
+        return '<article class="project-card" data-project-id="' + project.id + '" data-category="' + project.category + '" data-aos="fade-up" data-aos-delay="' + Math.min(index * 50, 300) + '">' +
+            '<div class="project-card-media">' +
+                '<img src="' + project.coverImage + '" alt="' + project.name + '" class="project-card-image" loading="lazy" width="800" height="600">' +
+                '<div class="project-card-overlay">' +
+                    '<a href="' + project.link + '" class="view-project-btn" onclick="event.stopPropagation();">' +
+                        '<i class="fas fa-eye"></i> عرض التفاصيل' +
+                    '</a>' +
+                '</div>' +
+                '<span class="project-category-badge"><i class="fas ' + categoryInfo.icon + '"></i> ' + categoryInfo.label + '</span>' +
+                (project.featured ? '<span class="project-featured"><i class="fas fa-star"></i> مميز</span>' : '') +
+                (project.hasVersions ? '<span class="project-version-badge"><i class="fas fa-code-branch"></i> إصدارات</span>' : '') +
+            '</div>' +
+            '<div class="project-card-content">' +
+                '<h3 class="project-card-title">' + escapeHtml(project.name) + '</h3>' +
+                '<p class="project-card-description">' + escapeHtml(project.description) + '</p>' +
+                '<div class="project-rating">' +
+                    '<span class="stars">' + stars + '</span>' +
+                    '<span class="rating-count">(' + (project.rating || 0) + ')</span>' +
+                '</div>' +
+                '<div class="project-card-footer">' +
+                    '<span class="project-date"><i class="far fa-calendar-alt"></i> ' + dateFormatted + '</span>' +
+                    '<div class="project-links">' +
+                        '<span class="project-views"><i class="far fa-eye"></i> ' + (project.views || 0) + '</span>' +
+                        '<button class="project-link share-btn" onclick="event.stopPropagation(); shareProject(\'' + project.id + '\')" aria-label="مشاركة ' + project.name + '">' +
+                            '<i class="fas fa-share-alt"></i>' +
+                        '</button>' +
+                        '<a href="' + project.link + '" class="project-link" onclick="event.stopPropagation();" aria-label="زيارة ' + project.name + '">' +
+                            '<i class="fas fa-arrow-left"></i>' +
+                        '</a>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</article>';
     }
 
     function renderStars(rating) {
-        const fullStars = Math.floor(rating);
-        const halfStar = rating - fullStars >= 0.5;
-        let html = '';
-        for (let i = 0; i < fullStars; i++) {
+        var fullStars = Math.floor(rating);
+        var halfStar = rating - fullStars >= 0.5;
+        var html = '';
+        for (var i = 0; i < fullStars; i++) {
             html += '<i class="fas fa-star"></i>';
         }
         if (halfStar) {
             html += '<i class="fas fa-star-half-alt"></i>';
         }
-        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-        for (let i = 0; i < emptyStars; i++) {
+        var emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+        for (var j = 0; j < emptyStars; j++) {
             html += '<i class="far fa-star"></i>';
         }
         return html;
     }
 
     function openModal(projectId) {
-        const project = projects.find(p => p.id === projectId);
+        // تحديث الرابط
+        updateUrlWithProject(projectId);
+        
+        var project = projects.find(function(p) { return p.id === projectId; });
         if (!project) return;
         
         currentModalProject = project;
@@ -1321,8 +1457,8 @@
         project.views = (project.views || 0) + 1;
         localStorage.setItem('view_' + project.id, project.views);
         
-        const modal = document.getElementById('projectModal');
-        const modalContent = document.getElementById('modalContent');
+        var modal = document.getElementById('projectModal');
+        var modalContent = document.getElementById('modalContent');
         
         if (!modal || !modalContent) return;
         
@@ -1335,7 +1471,10 @@
     }
 
     function closeModal() {
-        const modal = document.getElementById('projectModal');
+        // إزالة الرابط من العنوان
+        updateUrlWithProject(null);
+        
+        var modal = document.getElementById('projectModal');
         if (modal) {
             modal.classList.remove('active');
             document.body.style.overflow = '';
@@ -1344,159 +1483,150 @@
     }
 
     function buildModalContent(project) {
-        const categoryInfo = CATEGORIES[project.category] || { label: 'مشروع', icon: 'fa-folder' };
-        const galleryHtml = buildGalleryHtml(project);
-        const stars = renderStars(project.rating || 0);
+        var categoryInfo = CATEGORIES[project.category] || { label: 'مشروع', icon: 'fa-folder' };
+        var galleryHtml = buildGalleryHtml(project);
+        var stars = renderStars(project.rating || 0);
         
-        return `
-            ${galleryHtml}
-            <div class="modal-body">
-                <div class="modal-header">
-                    <h2 class="modal-title">${escapeHtml(project.name)}</h2>
-                    <span class="modal-category"><i class="fas ${categoryInfo.icon}"></i> ${categoryInfo.label}</span>
-                </div>
-                <p class="modal-description">${escapeHtml(project.description)}</p>
-                
-                <div class="project-rating">
-                    <span class="stars">${stars}</span>
-                    <span class="rating-count">(${project.rating || 0})</span>
-                    <span class="project-views" style="margin-right: auto;"><i class="far fa-eye"></i> ${project.views || 0} مشاهدة</span>
-                </div>
-                
-                <div class="modal-details">
-                    <div class="modal-detail-item">
-                        <i class="fas fa-check-circle"></i>
-                        <div><span class="modal-detail-label">الحالة</span><span class="modal-detail-value">مكتمل</span></div>
-                    </div>
-                    <div class="modal-detail-item">
-                        <i class="far fa-calendar-alt"></i>
-                        <div><span class="modal-detail-label">التاريخ</span><span class="modal-detail-value">${formatDate(project.date)}</span></div>
-                    </div>
-                    <div class="modal-detail-item">
-                        <i class="fas fa-cogs"></i>
-                        <div>
-                            <span class="modal-detail-label">التقنيات</span>
-                            <div class="modal-tech-list">
-                                ${project.technologies.map(tech => `<span class="modal-tech">${escapeHtml(tech)}</span>`).join('')}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="modal-actions">
-                    <a href="${project.link}" target="_blank" class="modal-btn primary"><i class="fas fa-external-link-alt"></i> زيارة المشروع</a>
-                </div>
-                
-                <div class="modal-share">
-                    <button class="share-facebook" data-share="facebook"><i class="fab fa-facebook-f"></i> فيسبوك</button>
-                    <button class="share-twitter" data-share="twitter"><i class="fab fa-twitter"></i> تويتر</button>
-                    <button class="share-linkedin" data-share="linkedin"><i class="fab fa-linkedin-in"></i> لينكدإن</button>
-                    <button class="share-copy" data-share="copy"><i class="fas fa-link"></i> نسخ الرابط</button>
-                </div>
-            </div>
-        `;
+        return galleryHtml +
+            '<div class="modal-body">' +
+                '<div class="modal-header">' +
+                    '<h2 class="modal-title">' + escapeHtml(project.name) + '</h2>' +
+                    '<span class="modal-category"><i class="fas ' + categoryInfo.icon + '"></i> ' + categoryInfo.label + '</span>' +
+                '</div>' +
+                '<p class="modal-description">' + escapeHtml(project.description) + '</p>' +
+                '<div class="project-rating">' +
+                    '<span class="stars">' + stars + '</span>' +
+                    '<span class="rating-count">(' + (project.rating || 0) + ')</span>' +
+                    '<span class="project-views" style="margin-right: auto;"><i class="far fa-eye"></i> ' + (project.views || 0) + ' مشاهدة</span>' +
+                '</div>' +
+                '<div class="modal-details">' +
+                    '<div class="modal-detail-item">' +
+                        '<i class="fas fa-check-circle"></i>' +
+                        '<div><span class="modal-detail-label">الحالة</span><span class="modal-detail-value">مكتمل</span></div>' +
+                    '</div>' +
+                    '<div class="modal-detail-item">' +
+                        '<i class="far fa-calendar-alt"></i>' +
+                        '<div><span class="modal-detail-label">التاريخ</span><span class="modal-detail-value">' + formatDate(project.date) + '</span></div>' +
+                    '</div>' +
+                    '<div class="modal-detail-item">' +
+                        '<i class="fas fa-cogs"></i>' +
+                        '<div>' +
+                            '<span class="modal-detail-label">التقنيات</span>' +
+                            '<div class="modal-tech-list">' +
+                                project.technologies.map(function(tech) { return '<span class="modal-tech">' + escapeHtml(tech) + '</span>'; }).join('') +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="modal-actions">' +
+                    '<a href="' + project.link + '" target="_blank" class="modal-btn primary"><i class="fas fa-external-link-alt"></i> زيارة المشروع</a>' +
+                    '<button class="modal-btn share-btn" onclick="shareProject(\'' + project.id + '\')"><i class="fas fa-share-alt"></i> مشاركة</button>' +
+                '</div>' +
+                '<div class="modal-share">' +
+                    '<button class="share-facebook" data-share="facebook"><i class="fab fa-facebook-f"></i> فيسبوك</button>' +
+                    '<button class="share-twitter" data-share="twitter"><i class="fab fa-twitter"></i> تويتر</button>' +
+                    '<button class="share-linkedin" data-share="linkedin"><i class="fab fa-linkedin-in"></i> لينكدإن</button>' +
+                    '<button class="share-copy" data-share="copy"><i class="fas fa-link"></i> نسخ الرابط</button>' +
+                '</div>' +
+            '</div>';
     }
 
     function buildGalleryHtml(project) {
         if (!project.images || project.images.length === 0) {
-            return `
-                <div class="modal-gallery">
-                    <img src="${project.coverImage}" alt="${project.name}" class="modal-gallery-image">
-                </div>
-            `;
+            return '<div class="modal-gallery"><img src="' + project.coverImage + '" alt="' + project.name + '" class="modal-gallery-image"></div>';
         }
         
-        return `
-            <div class="modal-gallery">
-                <img src="${project.images[0]}" alt="${project.name}" class="modal-gallery-image" id="modalGalleryImage">
-                ${project.images.length > 1 ? `
-                    <div class="gallery-nav">
-                        <button id="galleryPrev" aria-label="السابق"><i class="fas fa-chevron-left"></i></button>
-                        <button id="galleryNext" aria-label="التالي"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                    <div class="gallery-dots" id="galleryDots">
-                        ${project.images.map((_, i) => `<div class="gallery-dot ${i === 0 ? 'active' : ''}" data-index="${i}" role="button" aria-label="الصورة ${i + 1}"></div>`).join('')}
-                    </div>
-                    <div class="gallery-counter"><span id="galleryCurrent">1</span> / <span id="galleryTotal">${project.images.length}</span></div>
-                ` : ''}
-            </div>
-        `;
+        return '<div class="modal-gallery">' +
+            '<img src="' + project.images[0] + '" alt="' + project.name + '" class="modal-gallery-image" id="modalGalleryImage">' +
+            (project.images.length > 1 ? 
+                '<div class="gallery-nav">' +
+                    '<button id="galleryPrev" aria-label="السابق"><i class="fas fa-chevron-left"></i></button>' +
+                    '<button id="galleryNext" aria-label="التالي"><i class="fas fa-chevron-right"></i></button>' +
+                '</div>' +
+                '<div class="gallery-dots" id="galleryDots">' +
+                    project.images.map(function(_, i) { return '<div class="gallery-dot ' + (i === 0 ? 'active' : '') + '" data-index="' + i + '" role="button" aria-label="الصورة ' + (i + 1) + '"></div>'; }).join('') +
+                '</div>' +
+                '<div class="gallery-counter"><span id="galleryCurrent">1</span> / <span id="galleryTotal">' + project.images.length + '</span></div>' : '') +
+        '</div>';
     }
 
     function setupGalleryNavigation(project) {
         if (!project.images || project.images.length <= 1) return;
         
-        const prevBtn = document.getElementById('galleryPrev');
-        const nextBtn = document.getElementById('galleryNext');
-        const dots = document.querySelectorAll('.gallery-dot');
-        const galleryImage = document.getElementById('modalGalleryImage');
-        const currentSpan = document.getElementById('galleryCurrent');
+        var prevBtn = document.getElementById('galleryPrev');
+        var nextBtn = document.getElementById('galleryNext');
+        var dots = document.querySelectorAll('.gallery-dot');
+        var galleryImage = document.getElementById('modalGalleryImage');
+        var currentSpan = document.getElementById('galleryCurrent');
         
         function updateImage(index) {
             currentImageIndex = index;
             if (galleryImage) {
                 galleryImage.style.opacity = '0';
-                setTimeout(() => {
+                setTimeout(function() {
                     galleryImage.src = project.images[index];
                     galleryImage.style.opacity = '1';
                 }, 200);
             }
             if (currentSpan) currentSpan.textContent = index + 1;
-            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+            dots.forEach(function(dot, i) { dot.classList.toggle('active', i === index); });
         }
         
         if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : project.images.length - 1;
+            prevBtn.addEventListener('click', function() {
+                var newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : project.images.length - 1;
                 updateImage(newIndex);
             });
         }
         
         if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                const newIndex = currentImageIndex < project.images.length - 1 ? currentImageIndex + 1 : 0;
+            nextBtn.addEventListener('click', function() {
+                var newIndex = currentImageIndex < project.images.length - 1 ? currentImageIndex + 1 : 0;
                 updateImage(newIndex);
             });
         }
         
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => updateImage(parseInt(dot.dataset.index)));
+        dots.forEach(function(dot) {
+            dot.addEventListener('click', function() { updateImage(parseInt(this.dataset.index)); });
         });
         
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' && document.getElementById('projectModal').classList.contains('active')) {
-                const newIndex = currentImageIndex < project.images.length - 1 ? currentImageIndex + 1 : 0;
-                updateImage(newIndex);
-            }
-            if (e.key === 'ArrowLeft' && document.getElementById('projectModal').classList.contains('active')) {
-                const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : project.images.length - 1;
-                updateImage(newIndex);
+        document.addEventListener('keydown', function(e) {
+            var modal = document.getElementById('projectModal');
+            if (modal && modal.classList.contains('active')) {
+                if (e.key === 'ArrowRight') {
+                    var newIndex = currentImageIndex < project.images.length - 1 ? currentImageIndex + 1 : 0;
+                    updateImage(newIndex);
+                }
+                if (e.key === 'ArrowLeft') {
+                    var newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : project.images.length - 1;
+                    updateImage(newIndex);
+                }
             }
         });
     }
 
     function setupShareButtons(project) {
-        const url = encodeURIComponent(window.location.href);
-        const text = encodeURIComponent(`شاهد مشروع ${project.name} على TechNomads`);
+        var url = encodeURIComponent(window.location.href);
+        var text = encodeURIComponent('شاهد مشروع ' + project.name + ' على TechNomads');
         
-        document.querySelectorAll('.modal-share button').forEach(btn => {
+        document.querySelectorAll('.modal-share button').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                const shareType = this.dataset.share;
-                let shareUrl = '';
+                var shareType = this.dataset.share;
+                var shareUrl = '';
                 
                 switch(shareType) {
                     case 'facebook':
-                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                        shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
                         break;
                     case 'twitter':
-                        shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+                        shareUrl = 'https://twitter.com/intent/tweet?text=' + text + '&url=' + url;
                         break;
                     case 'linkedin':
-                        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                        shareUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
                         break;
                     case 'copy':
-                        navigator.clipboard.writeText(window.location.href).then(() => {
-                            alert('تم نسخ الرابط!');
+                        navigator.clipboard.writeText(window.location.href).then(function() {
+                            showNotification('✅ تم نسخ الرابط!', 'success');
                         });
                         return;
                 }
@@ -1509,9 +1639,9 @@
     }
 
     function updateStats() {
-        const totalEl = document.getElementById('statTotal');
-        const clientsEl = document.getElementById('statClients');
-        const techEl = document.getElementById('statTech');
+        var totalEl = document.getElementById('statTotal');
+        var clientsEl = document.getElementById('statClients');
+        var techEl = document.getElementById('statTech');
         
         if (totalEl) {
             animateNumber(totalEl, 0, projects.length, 1500);
@@ -1520,19 +1650,20 @@
             animateNumber(clientsEl, 0, Math.floor(projects.length * 2.5), 1500);
         }
         if (techEl) {
-            const uniqueTechs = new Set(projects.flatMap(p => p.technologies));
-            animateNumber(techEl, 0, uniqueTechs.size, 1500);
+            var techSet = new Set();
+            projects.forEach(function(p) { p.technologies.forEach(function(t) { techSet.add(t); }); });
+            animateNumber(techEl, 0, techSet.size, 1500);
         }
     }
 
     function animateNumber(element, start, end, duration) {
-        const startTime = Date.now();
-        const diff = end - start;
+        var startTime = Date.now();
+        var diff = end - start;
         
         function update() {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const value = Math.round(start + diff * progress);
+            var elapsed = Date.now() - startTime;
+            var progress = Math.min(elapsed / duration, 1);
+            var value = Math.round(start + diff * progress);
             element.textContent = value;
             if (progress < 1) {
                 requestAnimationFrame(update);
@@ -1544,7 +1675,7 @@
     function formatDate(dateString) {
         if (!dateString) return 'قريباً';
         try {
-            const date = new Date(dateString);
+            var date = new Date(dateString);
             return date.toLocaleDateString('ar-SA', { year: 'numeric', month: 'short' });
         } catch {
             return dateString;
@@ -1562,12 +1693,13 @@
     }
 
     window.PortfolioSystem = {
-        projects: () => projects,
-        refresh: () => { localStorage.removeItem('portfolio_projects'); loadProjects().then(() => renderProjects()); },
-        addProject: (project) => {
+        projects: function() { return projects; },
+        refresh: function() { localStorage.removeItem('portfolio_projects'); loadProjects().then(function() { renderProjects(); }); },
+        addProject: function(project) {
             PROJECTS_DB.push(project);
             localStorage.removeItem('portfolio_projects');
-            loadProjects().then(() => renderProjects());
-        }
+            loadProjects().then(function() { renderProjects(); });
+        },
+        shareProject: shareProject
     };
 })();

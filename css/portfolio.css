@@ -2,6 +2,7 @@
    portfolio.css - معرض الأعمال المتطور
    متوافق مع main.css ويدعم جميع الأجهزة
    مع تحسين كامل للوضع الليلي والجوال
+   مع دعم الروابط العميقة (Deep Links)
    ============================================ */
 
 /* ---------- Portfolio Variables ---------- */
@@ -561,6 +562,24 @@ body.dark-mode .project-card:hover {
     border-color: rgba(78,205,196,0.05);
 }
 
+/* ============================================
+   PROJECT CARD HIGHLIGHT - تمييز المشروع (Deep Link)
+   ============================================ */
+.project-card.highlight {
+    box-shadow: 0 0 0 4px #4ECDC4, 0 20px 60px rgba(78,205,196,0.3) !important;
+    transform: scale(1.02) !important;
+    transition: all 0.5s ease !important;
+    border-color: #4ECDC4 !important;
+}
+
+.project-card.highlight .project-card-title {
+    color: var(--portfolio-secondary) !important;
+}
+
+body.dark-mode .project-card.highlight .project-card-title {
+    color: #FF6B6B !important;
+}
+
 /* Card Media */
 .project-card-media {
     position: relative;
@@ -821,7 +840,7 @@ body.dark-mode .project-card:hover .project-card-title {
 .project-links {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .project-link {
@@ -852,6 +871,36 @@ body.dark-mode .project-link {
 }
 
 body.dark-mode .project-link:hover {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+/* ============================================
+   SHARE BUTTON - زر المشاركة
+   ============================================ */
+.share-btn {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--bg-light);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    font-family: inherit;
+}
+
+body.dark-mode .share-btn {
+    background: rgba(255,255,255,0.02);
+    border-color: rgba(255,255,255,0.04);
+    color: var(--portfolio-accent);
+}
+
+.share-btn:hover {
+    background: var(--gradient-primary);
+    color: white;
+    border-color: transparent;
+    transform: scale(1.1);
+}
+
+body.dark-mode .share-btn:hover {
     background: var(--gradient-primary);
     color: white;
 }
@@ -1258,6 +1307,29 @@ body.dark-mode .modal-btn.primary:hover {
     box-shadow: 0 8px 30px rgba(78,205,196,0.1);
 }
 
+.modal-btn.share-btn {
+    background: var(--bg-light);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+body.dark-mode .modal-btn.share-btn {
+    background: rgba(255,255,255,0.02);
+    border-color: rgba(255,255,255,0.04);
+    color: var(--portfolio-accent);
+}
+
+.modal-btn.share-btn:hover {
+    background: var(--gradient-primary);
+    color: white;
+    border-color: transparent;
+}
+
+body.dark-mode .modal-btn.share-btn:hover {
+    background: var(--gradient-primary);
+    color: white;
+}
+
 /* Modal Share */
 .modal-share {
     display: flex;
@@ -1330,6 +1402,62 @@ body.dark-mode .share-copy {
 .share-copy:hover { 
     background: var(--portfolio-accent); 
     color: white;
+}
+
+/* ============================================
+   TOAST NOTIFICATION - إشعارات منبثقة
+   ============================================ */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--bg-light);
+    color: var(--text-primary);
+    padding: 12px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    z-index: 10001;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border-color);
+    max-width: 90%;
+}
+
+body.dark-mode .toast-notification {
+    background: #1a1a2e;
+    color: #e0e0e0;
+    border-color: rgba(255,255,255,0.05);
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-notification.success {
+    border-right: 4px solid #4ECDC4;
+}
+
+.toast-notification.error {
+    border-right: 4px solid #FF6B6B;
+}
+
+.toast-notification i {
+    font-size: 1.2rem;
+}
+
+.toast-notification .fa-check-circle {
+    color: #4ECDC4;
+}
+
+.toast-notification .fa-exclamation-circle {
+    color: #FF6B6B;
 }
 
 /* ============================================
@@ -1733,6 +1861,18 @@ body.dark-mode .deep-note {
     .project-card-description {
         font-size: 0.8rem;
     }
+    .project-card-footer {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .project-links {
+        gap: 4px;
+    }
+    .project-link {
+        width: 28px;
+        height: 28px;
+        font-size: 0.7rem;
+    }
     
     .modal-gallery {
         height: 250px;
@@ -1777,6 +1917,13 @@ body.dark-mode .deep-note {
     .deep-category a {
         font-size: 0.8rem;
         padding: 5px 10px;
+    }
+    
+    .toast-notification {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        bottom: 20px;
+        max-width: 95%;
     }
 }
 
@@ -1909,6 +2056,9 @@ body.dark-mode .deep-note {
     .load-more-btn:hover {
         transform: none !important;
     }
+    .share-btn:hover {
+        transform: none !important;
+    }
 }
 
 /* Print styles */
@@ -1922,7 +2072,8 @@ body.dark-mode .deep-note {
     .project-card-overlay,
     .project-card .project-links,
     .modal-share,
-    .search-filters-wrapper {
+    .search-filters-wrapper,
+    .deep-links-section {
         display: none !important;
     }
     

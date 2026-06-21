@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // تهيئة جميع المكونات
     initNavigation();
     initHeaderScroll();
-    initTypingEffect();
+    
     initCounters();
     initAppSlider();
     initParticles();
@@ -112,67 +112,7 @@ function initHeaderScroll() {
     }, { passive: true });
 }
 
-/* ============================================
-   TYPING EFFECT - تأثير الكتابة (معدل)
-   ============================================ */
-function initTypingEffect() {
-    const typingElement = document.querySelector('.typing-text');
-    if (!typingElement) return;
 
-    // قراءة النصوص من data-strings بشكل آمن
-    let strings = [];
-    try {
-        const data = typingElement.getAttribute('data-strings');
-        if (data) {
-            strings = JSON.parse(data);
-        }
-    } catch (e) {
-        strings = ["ابتكارات رقمية"];
-    }
-
-    // إذا كانت المصفوفة فارغة، استخدم النص الافتراضي
-    if (!strings || strings.length === 0) {
-        strings = ["ابتكارات رقمية"];
-    }
-
-    let currentStringIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = 150;
-
-    function type() {
-        const currentString = strings[currentStringIndex] || "";
-        
-        if (isDeleting) {
-            // حذف حرف
-            typingElement.textContent = currentString.substring(0, charIndex - 1);
-            charIndex--;
-            typingSpeed = 80;
-        } else {
-            // كتابة حرف
-            typingElement.textContent = currentString.substring(0, charIndex + 1);
-            charIndex++;
-            typingSpeed = 150;
-        }
-
-        // التحقق من انتهاء الكتابة
-        if (!isDeleting && charIndex === currentString.length) {
-            isDeleting = true;
-            typingSpeed = 2000; // انتظار قبل الحذف
-        } 
-        // التحقق من انتهاء الحذف
-        else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            currentStringIndex = (currentStringIndex + 1) % strings.length;
-            typingSpeed = 500; // انتظار قبل الكتابة التالية
-        }
-
-        setTimeout(type, typingSpeed);
-    }
-
-    // بدء التأثير بعد تأخير بسيط
-    setTimeout(type, 1000);
-}
 
 /* ============================================
    COUNTERS - العدادات
