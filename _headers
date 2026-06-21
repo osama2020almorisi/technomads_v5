@@ -1,10 +1,20 @@
-# ===== الأمان مع دعم إنستغرام وفيسبوك =====
+# ===== الأمان مع دعم فيسبوك وإنستغرام =====
 /*
   X-Frame-Options: ALLOWALL
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer-when-downgrade
-  Cache-Control: public, max-age=3600, must-revalidate
+  Cache-Control: public, max-age=3600
+
+# ===== الصفحة الرئيسية والأعمال (دعم فيسبوك) =====
+/portfolio.html
+  Cache-Control: public, max-age=3600
+
+/portfolio
+  Cache-Control: public, max-age=3600
+
+/index.html
+  Cache-Control: public, max-age=3600
 
 # ===== تحسين التخزين المؤقت للصور =====
 /*.jpg
@@ -50,10 +60,3 @@
 
 /*.ttf
   Cache-Control: public, max-age=31536000, immutable
-
-# ===== HTML (الصفحة الرئيسية) =====
-/*.html
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/index.html
-  Cache-Control: public, max-age=3600, must-revalidate
