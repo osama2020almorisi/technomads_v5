@@ -13,6 +13,17 @@
     <meta property="og:url" content="https://te-2026.netlify.app/portfolio.html">
     <meta property="og:image" content="https://te-2026.netlify.app/images/og-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
+    <!-- ===== Open Graph الأساسية (سيتم تحديثها ديناميكياً) ===== -->
+<meta property="og:title" content="TechNomads | معرض الأعمال" id="ogTitle">
+<meta property="og:description" content="استعرض أكثر من 160 مشروعاً تقنياً متنوعاً" id="ogDescription">
+<meta property="og:image" content="https://te-2026.netlify.app/images/og-image.jpg" id="ogImage">
+<meta property="og:url" content="https://te-2026.netlify.app/portfolio.html" id="ogUrl">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TechNomads">
+<meta name="twitter:card" content="summary_large_image" id="twitterCard">
+<meta name="twitter:title" content="TechNomads | معرض الأعمال" id="twitterTitle">
+<meta name="twitter:description" content="استعرض أكثر من 160 مشروعاً تقنياً متنوعاً" id="twitterDescription">
+<meta name="twitter:image" content="https://te-2026.netlify.app/images/og-image.jpg" id="twitterImage">
     
     <title>معرض الأعمال | TechNomads - أكثر من 160 مشروعاً تقنياً</title>
     
@@ -1050,6 +1061,127 @@
             });
         }
     })();
+    
+    
+    // ============================================
+// تحديث Open Graph حسب المشروع المحدد
+// ============================================
+function updateOpenGraph(project) {
+    if (!project) return;
+    
+    // تحديد الصورة المناسبة
+    var imageUrl = project.coverImage || 'https://te-2026.netlify.app/images/og-image.jpg';
+    var title = project.name + ' | TechNomads';
+    var description = project.description.substring(0, 200);
+    var url = window.location.origin + window.location.pathname + '#project-' + project.id;
+    
+    // تحديث Open Graph
+    var ogTitle = document.getElementById('ogTitle');
+    var ogDescription = document.getElementById('ogDescription');
+    var ogImage = document.getElementById('ogImage');
+    var ogUrl = document.getElementById('ogUrl');
+    var twitterTitle = document.getElementById('twitterTitle');
+    var twitterDescription = document.getElementById('twitterDescription');
+    var twitterImage = document.getElementById('twitterImage');
+    
+    if (ogTitle) ogTitle.setAttribute('content', title);
+    if (ogDescription) ogDescription.setAttribute('content', description);
+    if (ogImage) ogImage.setAttribute('content', imageUrl);
+    if (ogUrl) ogUrl.setAttribute('content', url);
+    if (twitterTitle) twitterTitle.setAttribute('content', title);
+    if (twitterDescription) twitterDescription.setAttribute('content', description);
+    if (twitterImage) twitterImage.setAttribute('content', imageUrl);
+    
+    // تحديث عنوان الصفحة
+    document.title = title;
+}
+
+// ============================================
+// قراءة المشروع من الرابط وتحديث Open Graph
+// ============================================
+function initOpenGraphFromUrl() {
+    var hash = window.location.hash;
+    if (hash && hash.startsWith('#project-')) {
+        var projectId = hash.replace('#project-', '');
+        
+        // البحث عن المشروع في البيانات
+        if (window.PortfolioSystem && window.PortfolioSystem.projects) {
+            var projects = window.PortfolioSystem.projects();
+            var project = projects.find(function(p) { return p.id === projectId; });
+            if (project) {
+                updateOpenGraph(project);
+                return;
+            }
+        }
+        
+        // محاولة البحث من PROJECTS_DB مباشرة
+        // (سيتم استدعاؤها بعد تحميل البيانات)
+        setTimeout(function() {
+            if (window.PortfolioSystem && window.PortfolioSystem.projects) {
+                var projects = window.PortfolioSystem.projects();
+                var project = projects.find(function(p) { return p.id === projectId; });
+                if (project) {
+                    updateOpenGraph(project);
+                }
+            }
+        }, 1000);
+    }
+}
+
+// ============================================
+// تحديث Open Graph عند فتح المودال
+// ============================================
+// أضف هذا السطر داخل دالة openModal الموجودة في portfolio.js
+// بعد العثور على المشروع:
+// updateOpenGraph(project);
+
+// ============================================
+// تحديث Open Graph عند إغلاق المودال
+// ============================================
+// أضف هذا السطر داخل دالة closeModal:
+// resetOpenGraph();
+
+function resetOpenGraph() {
+    var defaultTitle = 'معرض الأعمال | TechNomads - أكثر من 160 مشروعاً تقنياً';
+    var defaultDescription = 'استعرض أكثر من 160 مشروعاً تقنياً متنوعاً في مجالات الويب والتطبيقات والتصميم والأدوات والألعاب';
+    var defaultImage = 'https://te-2026.netlify.app/images/og-image.jpg';
+    var defaultUrl = window.location.origin + window.location.pathname;
+    
+    var ogTitle = document.getElementById('ogTitle');
+    var ogDescription = document.getElementById('ogDescription');
+    var ogImage = document.getElementById('ogImage');
+    var ogUrl = document.getElementById('ogUrl');
+    var twitterTitle = document.getElementById('twitterTitle');
+    var twitterDescription = document.getElementById('twitterDescription');
+    var twitterImage = document.getElementById('twitterImage');
+    
+    if (ogTitle) ogTitle.setAttribute('content', defaultTitle);
+    if (ogDescription) ogDescription.setAttribute('content', defaultDescription);
+    if (ogImage) ogImage.setAttribute('content', defaultImage);
+    if (ogUrl) ogUrl.setAttribute('content', defaultUrl);
+    if (twitterTitle) twitterTitle.setAttribute('content', defaultTitle);
+    if (twitterDescription) twitterDescription.setAttribute('content', defaultDescription);
+    if (twitterImage) twitterImage.setAttribute('content', defaultImage);
+    
+    document.title = 'معرض الأعمال | TechNomads';
+}
+
+// ============================================
+// تهيئة Open Graph عند تحميل الصفحة
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    // انتظار تحميل المشاريع
+    setTimeout(function() {
+        initOpenGraphFromUrl();
+    }, 500);
+});
+
+// ============================================
+// مراقبة تغيير الرابط (للمتصفحات الحديثة)
+// ============================================
+window.addEventListener('hashchange', function() {
+    initOpenGraphFromUrl();
+});
 </script>
 </body>
 </html>

@@ -3,6 +3,7 @@
    TechNomads - Smart Portfolio System
    مع بحث متقدم وفلاتر متجاوبة للجوال
    مع دعم الروابط العميقة (Deep Links)
+   مع دعم Open Graph للمشاركة
    ============================================ */
 
 (function() {
@@ -789,16 +790,14 @@
         renderProjects();
         updateStats();
         setupTechToggle();
-        initDeepLinks(); // تهيئة الروابط العميقة
+        initDeepLinks();
+        initOpenGraphFromUrl();
     });
 
     // ============================================
     // DEEP LINKS - الروابط العميقة للمشاريع
     // ============================================
 
-    /**
-     * مشاركة المشروع - نسخ رابط المشروع
-     */
     function shareProject(projectId) {
         const project = projects.find(p => p.id === projectId);
         if (!project) {
@@ -809,7 +808,6 @@
         const url = window.location.origin + window.location.pathname + '#project-' + projectId;
         const shareText = 'شاهد مشروع ' + project.name + ' على TechNomads';
         
-        // محاولة استخدام Web Share API
         if (navigator.share) {
             navigator.share({
                 title: project.name,
@@ -819,11 +817,9 @@
             return;
         }
         
-        // نسخ الرابط إلى الحافظة
         navigator.clipboard.writeText(url).then(() => {
             showNotification('✅ تم نسخ رابط المشروع: ' + project.name, 'success');
         }).catch(() => {
-            // طريقة بديلة للنسخ
             const textArea = document.createElement('textarea');
             textArea.value = url;
             document.body.appendChild(textArea);
@@ -834,25 +830,20 @@
         });
     }
 
-    /**
-     * تهيئة الروابط العميقة - عند تحميل الصفحة
-     */
     function initDeepLinks() {
         const hash = window.location.hash;
         if (hash && hash.startsWith('#project-')) {
             const projectId = hash.replace('#project-', '');
             
-            // انتظار تحميل المشاريع
             const checkProjects = setInterval(() => {
                 if (projects.length > 0) {
                     clearInterval(checkProjects);
                     const project = projects.find(p => p.id === projectId);
                     if (project) {
-                        // فتح المودال بعد تأخير بسيط
                         setTimeout(() => {
                             openModal(projectId);
+                            updateOpenGraph(project);
                             
-                            // تمييز البطاقة في القائمة
                             const card = document.querySelector('[data-project-id="' + projectId + '"]');
                             if (card) {
                                 card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -870,9 +861,6 @@
         }
     }
 
-    /**
-     * تحديث الرابط في شريط العنوان عند فتح المودال
-     */
     function updateUrlWithProject(projectId) {
         if (projectId) {
             var newUrl = window.location.pathname + '#project-' + projectId;
@@ -882,12 +870,8 @@
         }
     }
 
-    /**
-     * إظهار إشعار منبثق
-     */
     function showNotification(message, type) {
         type = type || 'success';
-        // إزالة الإشعارات السابقة
         var existing = document.querySelectorAll('.toast-notification');
         existing.forEach(function(el) { el.remove(); });
         
@@ -899,12 +883,10 @@
         
         document.body.appendChild(toast);
         
-        // إظهار الإشعار
         requestAnimationFrame(function() {
             toast.classList.add('show');
         });
         
-        // إخفاء الإشعار بعد 3 ثواني
         setTimeout(function() {
             toast.classList.remove('show');
             setTimeout(function() { toast.remove(); }, 400);
@@ -1445,7 +1427,6 @@
     }
 
     function openModal(projectId) {
-        // تحديث الرابط
         updateUrlWithProject(projectId);
         
         var project = projects.find(function(p) { return p.id === projectId; });
@@ -1463,6 +1444,7 @@
         if (!modal || !modalContent) return;
         
         modalContent.innerHTML = buildModalContent(project);
+        updateOpenGraph(project);
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         
@@ -1471,7 +1453,7 @@
     }
 
     function closeModal() {
-        // إزالة الرابط من العنوان
+        resetOpenGraph();
         updateUrlWithProject(null);
         
         var modal = document.getElementById('projectModal');
@@ -1692,6 +1674,79 @@
         });
     }
 
+    // ============================================
+    // OPEN GRAPH - تحديث الصور والعناوين للمشاركة
+    // ============================================
+
+    function updateOpenGraph(project) {
+        if (!project) return;
+        
+        var imageUrl = project.coverImage || 'https://te-2026.netlify.app/images/og-image.jpg';
+        var title = project.name + ' | TechNomads';
+        var description = project.description.substring(0, 200);
+        var url = window.location.origin + window.location.pathname + '#project-' + project.id;
+        
+        var ogTitle = document.getElementById('ogTitle');
+        var ogDescription = document.getElementById('ogDescription');
+        var ogImage = document.getElementById('ogImage');
+        var ogUrl = document.getElementById('ogUrl');
+        var twitterTitle = document.getElementById('twitterTitle');
+        var twitterDescription = document.getElementById('twitterDescription');
+        var twitterImage = document.getElementById('twitterImage');
+        
+        if (ogTitle) ogTitle.setAttribute('content', title);
+        if (ogDescription) ogDescription.setAttribute('content', description);
+        if (ogImage) ogImage.setAttribute('content', imageUrl);
+        if (ogUrl) ogUrl.setAttribute('content', url);
+        if (twitterTitle) twitterTitle.setAttribute('content', title);
+        if (twitterDescription) twitterDescription.setAttribute('content', description);
+        if (twitterImage) twitterImage.setAttribute('content', imageUrl);
+        
+        document.title = title;
+    }
+
+    function resetOpenGraph() {
+        var defaultTitle = 'معرض الأعمال | TechNomads - أكثر من 160 مشروعاً تقنياً';
+        var defaultDescription = 'استعرض أكثر من 160 مشروعاً تقنياً متنوعاً في مجالات الويب والتطبيقات والتصميم والأدوات والألعاب';
+        var defaultImage = 'https://te-2026.netlify.app/images/og-image.jpg';
+        var defaultUrl = window.location.origin + window.location.pathname;
+        
+        var ogTitle = document.getElementById('ogTitle');
+        var ogDescription = document.getElementById('ogDescription');
+        var ogImage = document.getElementById('ogImage');
+        var ogUrl = document.getElementById('ogUrl');
+        var twitterTitle = document.getElementById('twitterTitle');
+        var twitterDescription = document.getElementById('twitterDescription');
+        var twitterImage = document.getElementById('twitterImage');
+        
+        if (ogTitle) ogTitle.setAttribute('content', defaultTitle);
+        if (ogDescription) ogDescription.setAttribute('content', defaultDescription);
+        if (ogImage) ogImage.setAttribute('content', defaultImage);
+        if (ogUrl) ogUrl.setAttribute('content', defaultUrl);
+        if (twitterTitle) twitterTitle.setAttribute('content', defaultTitle);
+        if (twitterDescription) twitterDescription.setAttribute('content', defaultDescription);
+        if (twitterImage) twitterImage.setAttribute('content', defaultImage);
+        
+        document.title = 'معرض الأعمال | TechNomads';
+    }
+
+    function initOpenGraphFromUrl() {
+        var hash = window.location.hash;
+        if (hash && hash.startsWith('#project-')) {
+            var projectId = hash.replace('#project-', '');
+            var project = projects.find(function(p) { return p.id === projectId; });
+            if (project) {
+                updateOpenGraph(project);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // ============================================
+    // EXPOSE FUNCTIONS - جعل الدوال متاحة للاستخدام
+    // ============================================
+    
     window.PortfolioSystem = {
         projects: function() { return projects; },
         refresh: function() { localStorage.removeItem('portfolio_projects'); loadProjects().then(function() { renderProjects(); }); },
@@ -1700,6 +1755,10 @@
             localStorage.removeItem('portfolio_projects');
             loadProjects().then(function() { renderProjects(); });
         },
-        shareProject: shareProject
+        shareProject: shareProject,
+        updateOpenGraph: updateOpenGraph,
+        resetOpenGraph: resetOpenGraph,
+        initOpenGraphFromUrl: initOpenGraphFromUrl
     };
+
 })();
