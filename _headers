@@ -1,12 +1,11 @@
-# ===== الأمان مع دعم فيسبوك وإنستغرام =====
+# ===== دعم فيسبوك وإنستغرام =====
 /*
-  X-Frame-Options: ALLOWALL
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer-when-downgrade
   Cache-Control: public, max-age=3600
 
-# ===== الصفحة الرئيسية والأعمال (دعم فيسبوك) =====
+# ===== الصفحات الرئيسية =====
 /portfolio.html
   Cache-Control: public, max-age=3600
 

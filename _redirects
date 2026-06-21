@@ -30,3 +30,6 @@ https://www.te-2026.netlify.app/* https://te-2026.netlify.app/:splat 301!
 /*.tmp / 404
 /*.log / 404
 /*.cache / 404
+
+# ===== إعادة توجيه =====
+/*  /index.html  200
