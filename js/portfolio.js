@@ -1,7 +1,7 @@
 /* ============================================
    portfolio.js - نظام إدارة المشاريع الذكي
    TechNomads - Smart Portfolio System
-   مع بحث متقدم وفلاتر و SEO محسن
+   مع بحث متقدم وفلاتر متجاوبة للجوال
    ============================================ */
 
 (function() {
@@ -10,7 +10,8 @@
     const CONFIG = {
         projectsPath: 'projects/',
         fallbackImage: 'https://placehold.co/800x600/2A2D7C/FFFFFF?text=TechNomads',
-        cacheDuration: 3600000
+        cacheDuration: 3600000,
+        itemsPerPage: 12
     };
 
     // ============================================
@@ -121,9 +122,13 @@
             cover: 'https://picsum.photos/id/120/800/600',
             gallery: ['https://picsum.photos/id/121/800/600', 'https://picsum.photos/id/122/800/600', 'https://picsum.photos/id/123/800/600']
         },
-        'memory-game': {
+        'memory-game-entertainment': {
             cover: 'https://picsum.photos/id/124/800/600',
             gallery: ['https://picsum.photos/id/125/800/600', 'https://picsum.photos/id/126/800/600', 'https://picsum.photos/id/127/800/600']
+        },
+        'memory-game-projects': {
+            cover: 'https://picsum.photos/id/200/800/600',
+            gallery: ['https://picsum.photos/id/201/800/600', 'https://picsum.photos/id/202/800/600', 'https://picsum.photos/id/203/800/600']
         },
         'marketing-campaign': {
             cover: 'https://picsum.photos/id/128/800/600',
@@ -164,11 +169,43 @@
         'project_airline_booking': {
             cover: 'https://picsum.photos/id/164/800/600',
             gallery: ['https://picsum.photos/id/165/800/600', 'https://picsum.photos/id/166/800/600', 'https://picsum.photos/id/167/800/600']
+        },
+        'Am-main': {
+            cover: 'https://picsum.photos/id/168/800/600',
+            gallery: ['https://picsum.photos/id/169/800/600', 'https://picsum.photos/id/170/800/600', 'https://picsum.photos/id/171/800/600']
+        },
+        'y-main': {
+            cover: 'https://picsum.photos/id/172/800/600',
+            gallery: ['https://picsum.photos/id/173/800/600', 'https://picsum.photos/id/174/800/600', 'https://picsum.photos/id/175/800/600']
+        },
+        'play-entertainment': {
+            cover: 'https://picsum.photos/id/176/800/600',
+            gallery: ['https://picsum.photos/id/177/800/600', 'https://picsum.photos/id/178/800/600', 'https://picsum.photos/id/179/800/600']
+        },
+        'the-age': {
+            cover: 'https://picsum.photos/id/180/800/600',
+            gallery: ['https://picsum.photos/id/181/800/600', 'https://picsum.photos/id/182/800/600', 'https://picsum.photos/id/183/800/600']
+        },
+        'code-lab': {
+            cover: 'https://picsum.photos/id/184/800/600',
+            gallery: ['https://picsum.photos/id/185/800/600', 'https://picsum.photos/id/186/800/600', 'https://picsum.photos/id/187/800/600']
+        },
+        'color-generator-entertainment': {
+            cover: 'https://picsum.photos/id/188/800/600',
+            gallery: ['https://picsum.photos/id/189/800/600', 'https://picsum.photos/id/190/800/600', 'https://picsum.photos/id/191/800/600']
+        },
+        'image-editor-entertainment': {
+            cover: 'https://picsum.photos/id/192/800/600',
+            gallery: ['https://picsum.photos/id/193/800/600', 'https://picsum.photos/id/194/800/600', 'https://picsum.photos/id/195/800/600']
+        },
+        'quiz-game': {
+            cover: 'https://picsum.photos/id/196/800/600',
+            gallery: ['https://picsum.photos/id/197/800/600', 'https://picsum.photos/id/198/800/600', 'https://picsum.photos/id/199/800/600']
         }
     };
 
     // ============================================
-    // ALL PROJECTS - جميع المشاريع كاملة مع مسارات صحيحة
+    // ALL PROJECTS - جميع المشاريع كاملة
     // ============================================
     const PROJECTS_DB = [
         // ========== مواقع الويب ==========
@@ -180,7 +217,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'], 
             date: '2024-01-15', 
             featured: true,
-            link: 'projects/ecommerce-website/index.html'
+            keywords: ['متجر', 'إلكتروني', 'تسوق', 'منتجات', 'طلبات', 'عملاء'],
+            link: 'projects/ecommerce-website/index.html',
+            rating: 4.8
         },
         { 
             id: 'pharmacy-website', 
@@ -191,7 +230,9 @@
             date: '2024-02-20', 
             featured: true, 
             hasVersions: true,
-            link: 'projects/pharmacy-website/index.html'
+            keywords: ['صيدلية', 'أدوية', 'مخزون', 'وصفات', 'مبيعات'],
+            link: 'projects/pharmacy-website/index.html',
+            rating: 4.7
         },
         { 
             id: 'booking-system', 
@@ -201,7 +242,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'], 
             date: '2023-12-10', 
             featured: true,
-            link: 'projects/booking-system/index.html'
+            keywords: ['حجز', 'فنادق', 'منتجعات', 'سياحة', 'غرف'],
+            link: 'projects/booking-system/index.html',
+            rating: 4.6
         },
         { 
             id: 'financial-accountant', 
@@ -211,7 +254,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL', 'Chart.js'], 
             date: '2024-03-01', 
             featured: true,
-            link: 'projects/financial-accountant/index.html'
+            keywords: ['محاسبة', 'مالي', 'فواتير', 'حسابات', 'ميزانية', 'تقارير'],
+            link: 'projects/financial-accountant/index.html',
+            rating: 4.9
         },
         { 
             id: 'health-system', 
@@ -220,7 +265,9 @@
             description: 'نظام متكامل لإدارة المستشفيات والمواعيد والمرضى والسجلات الطبية', 
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'], 
             date: '2024-01-05',
-            link: 'projects/health-system/index.html'
+            keywords: ['مستشفى', 'مرضى', 'مواعيد', 'طبي', 'سجلات'],
+            link: 'projects/health-system/index.html',
+            rating: 4.5
         },
         { 
             id: 'Cinema', 
@@ -229,7 +276,9 @@
             description: 'منصة متكاملة لعرض الأفلام وحجز التذاكر عبر الإنترنت', 
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2023-11-20',
-            link: 'projects/Cinema/index.html'
+            keywords: ['سينما', 'أفلام', 'تذاكر', 'حجز', 'ترفيه'],
+            link: 'projects/Cinema/index.html',
+            rating: 4.3
         },
         { 
             id: 'travel-agency', 
@@ -239,7 +288,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'], 
             date: '2024-02-01', 
             hasVersions: true,
-            link: 'projects/travel-agency/index.html'
+            keywords: ['سفر', 'سياحة', 'رحلات', 'فنادق', 'تأشيرات', 'عمرة'],
+            link: 'projects/travel-agency/index.html',
+            rating: 4.4
         },
         { 
             id: 'app-store', 
@@ -248,7 +299,9 @@
             description: 'منصة لعرض وتحميل التطبيقات مع نظام تقييم ومراجعات', 
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-20',
-            link: 'projects/app-store/index.html'
+            keywords: ['تطبيقات', 'متجر', 'تحميل', 'تقييم', 'مراجعات'],
+            link: 'projects/app-store/index.html',
+            rating: 4.2
         },
         { 
             id: 'quiz-platform', 
@@ -257,7 +310,9 @@
             description: 'منصة متكاملة لإنشاء وإجراء الاختبارات والمسابقات التعليمية', 
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'], 
             date: '2023-12-15',
-            link: 'projects/quiz-platform/index.html'
+            keywords: ['اختبارات', 'أسئلة', 'تعليم', 'مسابقات', 'تقييم'],
+            link: 'projects/quiz-platform/index.html',
+            rating: 4.1
         },
         { 
             id: 'wit', 
@@ -266,7 +321,9 @@
             description: 'منصة ويب متكاملة لتقديم خدمات تقنية مبتكرة', 
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-10',
-            link: 'projects/wit/index.html'
+            keywords: ['WIT', 'تقنية', 'خدمات', 'ابتكار'],
+            link: 'projects/wit/index.html',
+            rating: 4.0
         },
         { 
             id: 'project-structure', 
@@ -275,7 +332,9 @@
             description: 'نظام متكامل لإدارة هيكلية المشاريع والملفات', 
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2023-12-01',
-            link: 'projects/project-structure/index.html'
+            keywords: ['هيكل', 'مشاريع', 'ملفات', 'إدارة'],
+            link: 'projects/project-structure/index.html',
+            rating: 3.9
         },
         { 
             id: 'Cleaning Services', 
@@ -286,7 +345,33 @@
             date: '2024-02-20', 
             featured: true, 
             hasVersions: true,
-            link: 'projects/Cleaning%20Services/index.html'
+            keywords: ['تنظيف', 'خدمات', 'حجز', 'تتبع', 'تقييم'],
+            link: 'projects/Cleaning%20Services/index.html',
+            rating: 4.6
+        },
+        { 
+            id: 'Am-main', 
+            name: 'نظام أمان للسفر - النسخة الرئيسية', 
+            category: 'web', 
+            description: 'النظام الرئيسي لوكالة أمان للسفر مع جميع الخدمات المتكاملة', 
+            technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'], 
+            date: '2024-01-20', 
+            parent: 'travel-agency',
+            keywords: ['أمان', 'سفر', 'وكالة', 'رحلات', 'عمرة'],
+            link: 'projects/travel-agency/Am-main/Am-main/index.html',
+            rating: 4.3
+        },
+        { 
+            id: 'y-main', 
+            name: 'نظام السفر اليمني المتكامل', 
+            category: 'web', 
+            description: 'منصة متكاملة للسفر والسياحة مع نظام حجز متقدم وفنادق وتأشيرات', 
+            technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'], 
+            date: '2024-02-01', 
+            parent: 'travel-agency',
+            keywords: ['يمني', 'سفر', 'سياحة', 'فنادق', 'تأشيرات'],
+            link: 'projects/travel-agency/y-main/y-main/index.html',
+            rating: 4.5
         },
         
         // ========== التطبيقات ==========
@@ -294,11 +379,13 @@
             id: 'delivery-app', 
             name: 'تطبيق التوصيل الذكي', 
             category: 'app', 
-            description: 'تطبيق متكامل لتوصيل الطلبات مع تتبع مباشر للمندوبين - يشمل لوحة تحكم وتطبيق سائق وتطبيق عميل', 
+            description: 'تطبيق متكامل لتوصيل الطلبات مع تتبع مباشر للمندوبين', 
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL', 'Google Maps API'], 
             date: '2024-01-20', 
             featured: true,
-            link: 'projects/delivery-app/index.html'
+            keywords: ['توصيل', 'طلبات', 'مندوبين', 'تتبع', 'GPS'],
+            link: 'projects/delivery-app/index.html',
+            rating: 4.7
         },
         { 
             id: 'educational-app', 
@@ -307,7 +394,9 @@
             description: 'منصة تعليمية تفاعلية للأطفال مع دروس تفاعلية وألعاب تعليمية', 
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'], 
             date: '2023-12-15',
-            link: 'projects/educational-app/index.html'
+            keywords: ['تعليم', 'أطفال', 'دروس', 'ألعاب', 'تفاعلي'],
+            link: 'projects/educational-app/index.html',
+            rating: 4.4
         },
         { 
             id: 'MedicalAnalysisApp', 
@@ -317,16 +406,20 @@
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL', 'Chart.js'], 
             date: '2024-02-10', 
             hasVersions: true,
-            link: 'projects/MedicalAnalysisApp/index.html'
+            keywords: ['طبي', 'تحاليل', 'بيانات', 'تقارير', 'مرضى'],
+            link: 'projects/MedicalAnalysisApp/index.html',
+            rating: 4.8
         },
         { 
             id: 'treemix_app', 
             name: 'تطبيق Treemix', 
             category: 'app', 
-            description: 'تطبيق متخصص في تحليل البيانات وعرضها بشكل تفاعلي', 
+            description: 'تطبيق متخصص في تحليل البيانات وعرضها بشكل تفاعلي مع لوحة تحكم متقدمة', 
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-25',
-            link: 'projects/treemix_app/index.html'
+            keywords: ['Treemix', 'بيانات', 'تحليل', 'تفاعلي'],
+            link: 'projects/treemix_app/index.html',
+            rating: 4.2
         },
         
         // ========== التصميم ==========
@@ -338,7 +431,9 @@
             technologies: ['Adobe Illustrator', 'Adobe Photoshop', 'Figma'], 
             date: '2024-01-10', 
             featured: true,
-            link: 'projects/brand-identity/index.html'
+            keywords: ['هوية', 'علامة تجارية', 'شعار', 'ألوان', 'تصميم'],
+            link: 'projects/brand-identity/index.html',
+            rating: 4.9
         },
         { 
             id: 'logo-design', 
@@ -347,7 +442,9 @@
             description: 'مجموعة من التصاميم المبتكرة للشعارات لهوية العلامات التجارية', 
             technologies: ['Adobe Illustrator', 'Adobe Photoshop'], 
             date: '2023-12-05',
-            link: 'projects/logo-design/index.html'
+            keywords: ['شعارات', 'تصميم', 'هوية', 'علامة تجارية'],
+            link: 'projects/logo-design/index.html',
+            rating: 4.7
         },
         
         // ========== الأدوات ==========
@@ -359,7 +456,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-25', 
             hasVersions: true,
-            link: 'projects/age-calculator/index.html'
+            keywords: ['عمر', 'حاسبة', 'أعياد ميلاد', 'تواريخ'],
+            link: 'projects/age-calculator/index.html',
+            rating: 4.6
         },
         { 
             id: 'code-editor', 
@@ -368,7 +467,9 @@
             description: 'محرر أكواد متقدم مع تمييز الصيغ وتصحيح الأخطاء', 
             technologies: ['HTML', 'CSS', 'JavaScript', 'CodeMirror'], 
             date: '2024-02-05',
-            link: 'projects/code-editor/index.html'
+            keywords: ['محرر', 'أكواد', 'برمجة', 'تصحيح'],
+            link: 'projects/code-editor/index.html',
+            rating: 4.5
         },
         { 
             id: 'color-generator', 
@@ -377,7 +478,9 @@
             description: 'أداة احترافية لتوليد الألوان ونسخ الأكواد بسهولة', 
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-30',
-            link: 'projects/color-generator/index.html'
+            keywords: ['ألوان', 'مولد', 'تصميم', 'أكواد'],
+            link: 'projects/color-generator/index.html',
+            rating: 4.4
         },
         { 
             id: 'image-editor', 
@@ -386,7 +489,9 @@
             description: 'تحرير الصور وتطبيق الفلاتر والتأثيرات بجودة عالية', 
             technologies: ['HTML', 'CSS', 'JavaScript', 'Canvas API'], 
             date: '2024-02-15',
-            link: 'projects/image-editor/index.html'
+            keywords: ['صور', 'تحرير', 'فلاتر', 'تأثيرات'],
+            link: 'projects/image-editor/index.html',
+            rating: 4.3
         },
         { 
             id: 'fileuploader', 
@@ -395,7 +500,9 @@
             description: 'نظام متكامل لرفع وإدارة الملفات بأنواع مختلفة', 
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'], 
             date: '2024-01-18',
-            link: 'projects/fileuploader/index.html'
+            keywords: ['رفع', 'ملفات', 'تحميل', 'إدارة'],
+            link: 'projects/fileuploader/index.html',
+            rating: 4.2
         },
         { 
             id: 'localStorage', 
@@ -405,7 +512,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-02-01', 
             hasVersions: true,
-            link: 'projects/localStorage/index.html'
+            keywords: ['تخزين', 'محلي', 'متصفح', 'بيانات'],
+            link: 'projects/localStorage/index.html',
+            rating: 4.1
         },
         { 
             id: 'wifi-auto-connect', 
@@ -414,7 +523,9 @@
             description: 'أداة ذكية للاتصال التلقائي بشبكات الواي فاي', 
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-12',
-            link: 'projects/wifi-auto-connect/index.html'
+            keywords: ['واي فاي', 'اتصال', 'شبكات', 'تلقائي'],
+            link: 'projects/wifi-auto-connect/index.html',
+            rating: 4.0
         },
         { 
             id: 'wifi-extractor', 
@@ -423,18 +534,102 @@
             description: 'أداة لاستخراج معلومات شبكات الواي فاي', 
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-08',
-            link: 'projects/wifi-extractor/index.html'
+            keywords: ['واي فاي', 'استخراج', 'شبكات', 'معلومات'],
+            link: 'projects/wifi-extractor/index.html',
+            rating: 3.9
         },
         
-        // ========== الألعاب ==========
+        // ========== الألعاب - من entertainment ==========
         { 
-            id: 'memory-game', 
-            name: 'لعبة الذاكرة', 
+            id: 'memory-game-entertainment', 
+            name: 'لعبة الذاكرة - Entertainment', 
             category: 'game', 
-            description: 'لعبة ممتعة لتنشيط الذاكرة والتركيز مع مستويات متعددة', 
+            description: 'لعبة ممتعة لتنشيط الذاكرة والتركيز مع مستويات متعددة - إصدار entertainment', 
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-08',
-            link: 'entertainment/memory-game.html'
+            keywords: ['لعبة', 'ذاكرة', 'تركيز', 'مستويات', 'entertainment'],
+            link: 'entertainment/memory-game.html',
+            rating: 4.5
+        },
+        { 
+            id: 'play-entertainment', 
+            name: 'Play - Entertainment', 
+            category: 'game', 
+            description: 'منصة ألعاب تفاعلية متكاملة للترفيه والتسلية', 
+            technologies: ['HTML', 'CSS', 'JavaScript'], 
+            date: '2024-01-15',
+            keywords: ['ألعاب', 'ترفيه', 'تفاعلي', 'play'],
+            link: 'entertainment/play.html',
+            rating: 4.3
+        },
+        { 
+            id: 'the-age', 
+            name: 'The Age', 
+            category: 'game', 
+            description: 'لعبة تفاعلية ممتعة تعتمد على حساب العمر والتحديات', 
+            technologies: ['HTML', 'CSS', 'JavaScript'], 
+            date: '2024-01-20',
+            keywords: ['عمر', 'لعبة', 'تحديات', 'تفاعلي'],
+            link: 'entertainment/the-age.html',
+            rating: 4.2
+        },
+        { 
+            id: 'code-lab', 
+            name: 'Code Lab', 
+            category: 'game', 
+            description: 'معمل برمجة تفاعلي لتعلم البرمجة من خلال الألعاب', 
+            technologies: ['HTML', 'CSS', 'JavaScript'], 
+            date: '2024-02-01',
+            keywords: ['برمجة', 'تعلم', 'ألعاب', 'تفاعلي'],
+            link: 'entertainment/code-lab.html',
+            rating: 4.6
+        },
+        { 
+            id: 'color-generator-entertainment', 
+            name: 'Color Generator - Entertainment', 
+            category: 'game', 
+            description: 'أداة تفاعلية لتوليد الألوان بشكل ممتع ومسلي', 
+            technologies: ['HTML', 'CSS', 'JavaScript'], 
+            date: '2024-01-25',
+            keywords: ['ألوان', 'توليد', 'تفاعلي', 'entertainment'],
+            link: 'entertainment/color-generator.html',
+            rating: 4.1
+        },
+        { 
+            id: 'image-editor-entertainment', 
+            name: 'Image Editor - Entertainment', 
+            category: 'game', 
+            description: 'محرر صور تفاعلي مع تأثيرات ممتعة للترفيه', 
+            technologies: ['HTML', 'CSS', 'JavaScript', 'Canvas API'], 
+            date: '2024-02-05',
+            keywords: ['صور', 'تحرير', 'تفاعلي', 'entertainment'],
+            link: 'entertainment/image-editor.html',
+            rating: 4.4
+        },
+        { 
+            id: 'quiz-game', 
+            name: 'Quiz Game', 
+            category: 'game', 
+            description: 'لعبة أسئلة وثقافة عامة ممتعة مع مستويات متعددة', 
+            technologies: ['HTML', 'CSS', 'JavaScript'], 
+            date: '2024-02-10',
+            keywords: ['أسئلة', 'ثقافة', 'لعبة', 'مستويات'],
+            link: 'entertainment/quiz-game.html',
+            rating: 4.7
+        },
+        
+        // ========== الألعاب - من projects ==========
+        { 
+            id: 'memory-game-projects', 
+            name: 'لعبة الذاكرة - Projects', 
+            category: 'game', 
+            description: 'لعبة الذاكرة الاحترافية من مشاريعنا - إصدار متطور مع تصميم عصري', 
+            technologies: ['HTML', 'CSS', 'JavaScript'], 
+            date: '2024-02-15',
+            keywords: ['لعبة', 'ذاكرة', 'احترافي', 'projects', 'مطور'],
+            link: 'projects/memory-game/index.html',
+            rating: 4.8,
+            featured: true
         },
         
         // ========== التسويق ==========
@@ -445,10 +640,12 @@
             description: 'حملة تسويق متكاملة عبر وسائل التواصل الاجتماعي والإعلانات', 
             technologies: ['SEO', 'Social Media', 'Google Ads', 'Analytics'], 
             date: '2024-02-20',
-            link: 'projects/marketing-campaign/index.html'
+            keywords: ['تسويق', 'إعلانات', 'سوشيال ميديا', 'SEO'],
+            link: 'projects/marketing-campaign/index.html',
+            rating: 4.6
         },
         
-        // ========== المشاريع الفرعية - المسارات المصححة ==========
+        // ========== المشاريع الفرعية ==========
         { 
             id: 'age-calculator-app', 
             name: 'حاسبة العمر - الإصدار الأول', 
@@ -457,7 +654,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-10', 
             parent: 'age-calculator',
-            link: 'projects/age-calculator/age-calculator-app/index.html'
+            keywords: ['عمر', 'حاسبة', 'أعياد ميلاد', 'V1'],
+            link: 'projects/age-calculator/age-calculator-app/index.html',
+            rating: 4.3
         },
         { 
             id: 'age-calculator-app-v2', 
@@ -467,7 +666,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-02-15', 
             parent: 'age-calculator',
-            link: 'projects/age-calculator/age-calculator-app-v2/index.html'
+            keywords: ['عمر', 'حاسبة', 'أعياد ميلاد', 'V2', 'مطور'],
+            link: 'projects/age-calculator/age-calculator-app-v2/index.html',
+            rating: 4.6
         },
         { 
             id: 'HarMur-Service-PRO', 
@@ -477,7 +678,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'], 
             date: '2024-02-01', 
             parent: 'Cleaning Services',
-            link: 'projects/Cleaning%20Services/HarMur-Service-PRO/index.html'
+            keywords: ['تنظيف', 'PRO', 'احترافي', 'خدمات'],
+            link: 'projects/Cleaning%20Services/HarMur-Service-PRO/index.html',
+            rating: 4.7
         },
         { 
             id: 'harmurservice-V1', 
@@ -487,7 +690,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-15', 
             parent: 'Cleaning Services',
-            link: 'projects/Cleaning%20Services/harmurservice-V1/index.html'
+            keywords: ['تنظيف', 'V1', 'خدمات'],
+            link: 'projects/Cleaning%20Services/harmurservice-V1/index.html',
+            rating: 4.2
         },
         { 
             id: 'aman_travel_system', 
@@ -497,7 +702,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'], 
             date: '2024-01-20', 
             parent: 'travel-agency',
-            link: 'projects/travel-agency/aman_travel_system/index.html'
+            keywords: ['أمان', 'سفر', 'رحلات', 'عمرة', 'تأشيرات'],
+            link: 'projects/travel-agency/aman_travel_system/index.html',
+            rating: 4.4
         },
         { 
             id: 'Yemeni', 
@@ -507,7 +714,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-15', 
             parent: 'travel-agency',
-            link: 'projects/travel-agency/Yemeni/index.html'
+            keywords: ['يمني', 'سفر', 'وكالة', 'حجز'],
+            link: 'projects/travel-agency/Yemeni/index.html',
+            rating: 4.1
         },
         { 
             id: 'project_airline_booking', 
@@ -517,7 +726,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'], 
             date: '2024-01-10', 
             parent: 'travel-agency',
-            link: 'projects/travel-agency/project_airline_booking/%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D8%AD%D8%AC%D8%B2-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86/index.html'
+            keywords: ['طيران', 'حجز', 'تذاكر', 'رحلات'],
+            link: 'projects/travel-agency/project_airline_booking/%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D8%AD%D8%AC%D8%B2-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86/index.html',
+            rating: 4.3
         },
         { 
             id: 'localStorage-V1', 
@@ -527,7 +738,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-01-05', 
             parent: 'localStorage',
-            link: 'projects/localStorage/localStorage-V1/index.html'
+            keywords: ['تخزين', 'محلي', 'V1'],
+            link: 'projects/localStorage/localStorage-V1/index.html',
+            rating: 3.8
         },
         { 
             id: 'localStorage-V2', 
@@ -537,7 +750,9 @@
             technologies: ['HTML', 'CSS', 'JavaScript'], 
             date: '2024-02-10', 
             parent: 'localStorage',
-            link: 'projects/localStorage/localStorage-V2/index.html'
+            keywords: ['تخزين', 'محلي', 'V2', 'مطور'],
+            link: 'projects/localStorage/localStorage-V2/index.html',
+            rating: 4.2
         }
     ];
 
@@ -553,8 +768,12 @@
     let projects = [];
     let currentSearch = '';
     let currentFilter = 'all';
+    let currentTechFilter = '';
     let currentModalProject = null;
     let currentImageIndex = 0;
+    let currentPage = 1;
+    let itemsPerPage = CONFIG.itemsPerPage;
+    let allFilteredProjects = [];
 
     // Initialize
     document.addEventListener('DOMContentLoaded', async function() {
@@ -562,10 +781,13 @@
         await loadProjects();
         setupSearch();
         setupFilters();
+        setupTechFilters();
         setupModal();
         setupScrollEffects();
+        setupPagination();
         renderProjects();
         updateStats();
+        setupTechToggle();
     });
 
     function getProjectImages(projectId) {
@@ -597,7 +819,8 @@
         projects = PROJECTS_DB.map(project => ({
             ...project,
             images: getProjectImages(project.id).gallery,
-            coverImage: getProjectImages(project.id).cover
+            coverImage: getProjectImages(project.id).cover,
+            views: parseInt(localStorage.getItem('view_' + project.id)) || 0
         }));
         
         projects.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -607,9 +830,86 @@
         console.log('Projects loaded fresh:', projects.length);
     }
 
-    // ============================================
-    // محرك البحث المتطور - مع دعم الكلمات المفتاحية والتصنيفات
-    // ============================================
+    function setupTechFilters() {
+        const container = document.getElementById('filterTechSection');
+        if (!container) return;
+        
+        const allTechs = new Set();
+        projects.forEach(p => p.technologies.forEach(t => allTechs.add(t)));
+        const techs = Array.from(allTechs).sort();
+        
+        container.innerHTML = `
+            <button class="filter-tech-btn active" data-tech="all">كل التقنيات</button>
+            ${techs.map(t => `<button class="filter-tech-btn" data-tech="${t}">${t}</button>`).join('')}
+        `;
+        
+        container.querySelectorAll('.filter-tech-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                container.querySelectorAll('.filter-tech-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTechFilter = btn.dataset.tech === 'all' ? '' : btn.dataset.tech;
+                currentPage = 1;
+                renderProjects();
+                updateSearchInfo(document.getElementById('searchResultsInfo'));
+                if (window.innerWidth <= 768) {
+                    document.getElementById('filterTechSection').style.display = 'none';
+                }
+            });
+        });
+    }
+
+    function setupTechToggle() {
+        const toggleBtn = document.getElementById('techToggle');
+        const techSection = document.getElementById('filterTechSection');
+        
+        if (!toggleBtn || !techSection) return;
+        
+        toggleBtn.addEventListener('click', function() {
+            const isVisible = techSection.style.display !== 'none';
+            techSection.style.display = isVisible ? 'none' : 'flex';
+            this.querySelector('.fa-chevron-down').style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+    }
+
+    function setupPagination() {
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                currentPage++;
+                renderProjects();
+            });
+        }
+    }
+
+    function getFilteredProjects() {
+        let filtered = [...projects];
+        
+        if (currentFilter !== 'all') {
+            filtered = filtered.filter(p => p.category === currentFilter);
+        }
+        
+        if (currentTechFilter) {
+            filtered = filtered.filter(p => p.technologies.includes(currentTechFilter));
+        }
+        
+        if (currentSearch) {
+            const searchLower = currentSearch.toLowerCase();
+            filtered = filtered.filter(project => {
+                const nameMatch = project.name.toLowerCase().includes(searchLower);
+                const descMatch = project.description.toLowerCase().includes(searchLower);
+                const techMatch = project.technologies.some(t => t.toLowerCase().includes(searchLower));
+                const categoryMatch = CATEGORIES[project.category]?.label.includes(searchLower) || false;
+                const idMatch = project.id.toLowerCase().includes(searchLower);
+                const keywords = project.keywords || [];
+                const keywordMatch = keywords.some(k => k.toLowerCase().includes(searchLower));
+                
+                return nameMatch || descMatch || techMatch || categoryMatch || idMatch || keywordMatch;
+            });
+        }
+        
+        return filtered;
+    }
+
     function setupSearch() {
         const searchInput = document.getElementById('searchInput');
         const clearBtn = document.getElementById('searchClear');
@@ -623,16 +923,20 @@
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
                 currentSearch = searchInput.value.trim().toLowerCase();
+                currentPage = 1;
                 renderProjects();
                 updateSearchInfo(resultsInfo);
-            }, 150); // تحسين سرعة الاستجابة
+                if (clearBtn) {
+                    clearBtn.style.display = currentSearch ? 'block' : 'none';
+                }
+            }, 150);
         });
         
-        // البحث عند الضغط على Enter
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 currentSearch = searchInput.value.trim().toLowerCase();
+                currentPage = 1;
                 renderProjects();
                 updateSearchInfo(resultsInfo);
             }
@@ -642,9 +946,11 @@
             clearBtn.addEventListener('click', () => {
                 searchInput.value = '';
                 currentSearch = '';
+                currentPage = 1;
                 renderProjects();
                 updateSearchInfo(resultsInfo);
                 searchInput.focus();
+                clearBtn.style.display = 'none';
             });
         }
         
@@ -653,166 +959,167 @@
                 searchInput.value = '';
                 currentSearch = '';
                 currentFilter = 'all';
+                currentTechFilter = '';
+                currentPage = 1;
                 document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.filter === 'all'));
+                document.querySelectorAll('.filter-tech-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tech === 'all'));
                 renderProjects();
                 updateSearchInfo(resultsInfo);
                 searchInput.focus();
+                if (clearBtn) clearBtn.style.display = 'none';
+                if (window.innerWidth <= 768) {
+                    document.getElementById('filterTechSection').style.display = 'none';
+                }
             });
         }
+        
+        setupSearchSuggestions();
     }
-    
-    // ============================================
-// اقتراحات البحث الذكية - Search Suggestions
-// ============================================
-function setupSearchSuggestions() {
-    const searchInput = document.getElementById('searchInput');
-    const suggestionsContainer = document.getElementById('searchSuggestions');
-    const suggestionsList = document.getElementById('suggestionsList');
-    
-    if (!searchInput || !suggestionsContainer || !suggestionsList) return;
-    
-    let suggestionTimeout;
-    
-    searchInput.addEventListener('input', function() {
-        clearTimeout(suggestionTimeout);
-        const query = this.value.trim().toLowerCase();
+
+    function setupSearchSuggestions() {
+        const searchInput = document.getElementById('searchInput');
+        const suggestionsContainer = document.getElementById('searchSuggestions');
+        const suggestionsList = document.getElementById('suggestionsList');
         
-        if (query.length < 1) {
-            suggestionsContainer.style.display = 'none';
-            return;
-        }
+        if (!searchInput || !suggestionsContainer || !suggestionsList) return;
         
-        suggestionTimeout = setTimeout(() => {
-            const suggestions = getSearchSuggestions(query);
-            if (suggestions.length > 0) {
-                renderSuggestions(suggestions);
-                suggestionsContainer.style.display = 'block';
-            } else {
+        let suggestionTimeout;
+        
+        searchInput.addEventListener('input', function() {
+            clearTimeout(suggestionTimeout);
+            const query = this.value.trim().toLowerCase();
+            
+            if (query.length < 1) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+            
+            suggestionTimeout = setTimeout(() => {
+                const suggestions = getSearchSuggestions(query);
+                if (suggestions.length > 0) {
+                    renderSuggestions(suggestions);
+                    suggestionsContainer.style.display = 'block';
+                } else {
+                    suggestionsContainer.style.display = 'none';
+                }
+            }, 200);
+        });
+        
+        document.addEventListener('click', function(e) {
+            if (!suggestionsContainer.contains(e.target) && e.target !== searchInput) {
                 suggestionsContainer.style.display = 'none';
             }
-        }, 200);
-    });
-    
-    // إغلاق الاقتراحات عند النقر خارجها
-    document.addEventListener('click', function(e) {
-        if (!suggestionsContainer.contains(e.target) && e.target !== searchInput) {
-            suggestionsContainer.style.display = 'none';
-        }
-    });
-    
-    // التنقل في الاقتراحات باستخدام الأسهم
-    let selectedIndex = -1;
-    searchInput.addEventListener('keydown', function(e) {
-        const items = suggestionsList.querySelectorAll('.suggestion-item');
-        if (items.length === 0) return;
+        });
         
-        if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            selectedIndex = (selectedIndex + 1) % items.length;
-            updateSelectedSuggestion(items, selectedIndex);
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            selectedIndex = (selectedIndex - 1 + items.length) % items.length;
-            updateSelectedSuggestion(items, selectedIndex);
-        } else if (e.key === 'Enter' && selectedIndex >= 0) {
-            e.preventDefault();
-            items[selectedIndex].click();
-        }
-    });
-}
+        let selectedIndex = -1;
+        searchInput.addEventListener('keydown', function(e) {
+            const items = suggestionsList.querySelectorAll('.suggestion-item');
+            if (items.length === 0) return;
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex + 1) % items.length;
+                updateSelectedSuggestion(items, selectedIndex);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+                updateSelectedSuggestion(items, selectedIndex);
+            } else if (e.key === 'Enter' && selectedIndex >= 0) {
+                e.preventDefault();
+                items[selectedIndex].click();
+            }
+        });
+    }
 
-function getSearchSuggestions(query) {
-    const suggestions = [];
-    const seen = new Set();
-    
-    // البحث في أسماء المشاريع
-    projects.forEach(project => {
-        if (project.name.toLowerCase().includes(query) && !seen.has(project.name)) {
-            seen.add(project.name);
-            suggestions.push({
-                text: project.name,
-                category: CATEGORIES[project.category]?.label || 'مشروع',
-                type: 'project',
-                id: project.id
-            });
-        }
-    });
-    
-    // البحث في التقنيات
-    const techSet = new Set();
-    projects.forEach(project => {
-        project.technologies.forEach(tech => {
-            if (tech.toLowerCase().includes(query) && !techSet.has(tech)) {
-                techSet.add(tech);
+    function getSearchSuggestions(query) {
+        const suggestions = [];
+        const seen = new Set();
+        
+        projects.forEach(project => {
+            if (project.name.toLowerCase().includes(query) && !seen.has(project.name)) {
+                seen.add(project.name);
                 suggestions.push({
-                    text: tech,
-                    category: 'تقنية',
-                    type: 'tech'
+                    text: project.name,
+                    category: CATEGORIES[project.category]?.label || 'مشروع',
+                    type: 'project',
+                    id: project.id
                 });
             }
         });
-    });
-    
-    // البحث في التصنيفات
-    Object.entries(CATEGORIES).forEach(([key, value]) => {
-        if (value.label.includes(query) && !seen.has(value.label)) {
-            seen.add(value.label);
-            suggestions.push({
-                text: value.label,
-                category: 'تصنيف',
-                type: 'category',
-                filter: key
+        
+        const techSet = new Set();
+        projects.forEach(project => {
+            project.technologies.forEach(tech => {
+                if (tech.toLowerCase().includes(query) && !techSet.has(tech)) {
+                    techSet.add(tech);
+                    suggestions.push({
+                        text: tech,
+                        category: 'تقنية',
+                        type: 'tech'
+                    });
+                }
             });
-        }
-    });
-    
-    return suggestions.slice(0, 10);
-}
-
-function renderSuggestions(suggestions) {
-    const list = document.getElementById('suggestionsList');
-    if (!list) return;
-    
-    list.innerHTML = suggestions.map((s, index) => `
-        <div class="suggestion-item" data-index="${index}" data-type="${s.type}" data-id="${s.id || ''}" data-filter="${s.filter || ''}">
-            <i class="fas ${s.type === 'project' ? 'fa-folder-open' : s.type === 'tech' ? 'fa-code' : 'fa-tag'}"></i>
-            <span class="suggestion-text">${escapeHtml(s.text)}</span>
-            <span class="suggestion-category">${escapeHtml(s.category)}</span>
-        </div>
-    `).join('');
-    
-    // إضافة حدث النقر لكل اقتراح
-    list.querySelectorAll('.suggestion-item').forEach(item => {
-        item.addEventListener('click', function() {
-            const type = this.dataset.type;
-            const text = this.querySelector('.suggestion-text').textContent;
-            const filter = this.dataset.filter;
-            
-            if (type === 'category' && filter) {
-                currentFilter = filter;
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.filter === filter);
-                });
-                document.getElementById('searchInput').value = '';
-                currentSearch = '';
-            } else {
-                document.getElementById('searchInput').value = text;
-                currentSearch = text.toLowerCase();
-            }
-            
-            document.getElementById('searchSuggestions').style.display = 'none';
-            renderProjects();
-            updateSearchInfo(document.getElementById('searchResultsInfo'));
         });
-    });
-}
+        
+        Object.entries(CATEGORIES).forEach(([key, value]) => {
+            if (value.label.includes(query) && !seen.has(value.label)) {
+                seen.add(value.label);
+                suggestions.push({
+                    text: value.label,
+                    category: 'تصنيف',
+                    type: 'category',
+                    filter: key
+                });
+            }
+        });
+        
+        return suggestions.slice(0, 10);
+    }
 
-function updateSelectedSuggestion(items, index) {
-    items.forEach((item, i) => {
-        item.classList.toggle('active', i === index);
-    });
-    items[index]?.scrollIntoView({ block: 'nearest' });
-}
+    function renderSuggestions(suggestions) {
+        const list = document.getElementById('suggestionsList');
+        if (!list) return;
+        
+        list.innerHTML = suggestions.map((s, index) => `
+            <div class="suggestion-item" data-index="${index}" data-type="${s.type}" data-id="${s.id || ''}" data-filter="${s.filter || ''}">
+                <i class="fas ${s.type === 'project' ? 'fa-folder-open' : s.type === 'tech' ? 'fa-code' : 'fa-tag'}"></i>
+                <span class="suggestion-text">${escapeHtml(s.text)}</span>
+                <span class="suggestion-category">${escapeHtml(s.category)}</span>
+            </div>
+        `).join('');
+        
+        list.querySelectorAll('.suggestion-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const type = this.dataset.type;
+                const text = this.querySelector('.suggestion-text').textContent;
+                const filter = this.dataset.filter;
+                
+                if (type === 'category' && filter) {
+                    currentFilter = filter;
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.toggle('active', btn.dataset.filter === filter);
+                    });
+                    document.getElementById('searchInput').value = '';
+                    currentSearch = '';
+                } else {
+                    document.getElementById('searchInput').value = text;
+                    currentSearch = text.toLowerCase();
+                }
+                
+                currentPage = 1;
+                document.getElementById('searchSuggestions').style.display = 'none';
+                renderProjects();
+                updateSearchInfo(document.getElementById('searchResultsInfo'));
+            });
+        });
+    }
+
+    function updateSelectedSuggestion(items, index) {
+        items.forEach((item, i) => {
+            item.classList.toggle('active', i === index);
+        });
+        items[index]?.scrollIntoView({ block: 'nearest' });
+    }
 
     function setupFilters() {
         const filterBtns = document.querySelectorAll('.filter-btn');
@@ -823,6 +1130,7 @@ function updateSelectedSuggestion(items, index) {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 currentFilter = btn.dataset.filter;
+                currentPage = 1;
                 renderProjects();
                 updateSearchInfo(resultsInfo);
             });
@@ -831,48 +1139,14 @@ function updateSelectedSuggestion(items, index) {
 
     function updateSearchInfo(resultsInfo) {
         if (!resultsInfo) return;
-        const filtered = filterProjects();
+        const filtered = getFilteredProjects();
         const total = projects.length;
-        if (currentSearch || currentFilter !== 'all') {
+        if (currentSearch || currentFilter !== 'all' || currentTechFilter) {
             resultsInfo.textContent = `عرض ${filtered.length} من ${total} مشروع`;
             resultsInfo.style.display = 'block';
         } else {
             resultsInfo.style.display = 'none';
         }
-    }
-
-    // ============================================
-    // دالة البحث المتقدمة مع دعم الكلمات المفتاحية
-    // ============================================
-    function filterProjects() {
-        let filtered = projects;
-        
-        if (currentFilter !== 'all') {
-            filtered = filtered.filter(p => p.category === currentFilter);
-        }
-        
-        if (currentSearch) {
-            const searchLower = currentSearch.toLowerCase();
-            filtered = filtered.filter(project => {
-                // البحث في الاسم
-                const nameMatch = project.name.toLowerCase().includes(searchLower);
-                // البحث في الوصف
-                const descMatch = project.description.toLowerCase().includes(searchLower);
-                // البحث في التقنيات
-                const techMatch = project.technologies.some(t => t.toLowerCase().includes(searchLower));
-                // البحث في التصنيف
-                const categoryMatch = CATEGORIES[project.category]?.label.includes(searchLower) || false;
-                // البحث في المعرف
-                const idMatch = project.id.toLowerCase().includes(searchLower);
-                // البحث في الكلمات المفتاحية المضمنة
-                const keywords = project.keywords || [];
-                const keywordMatch = keywords.some(k => k.toLowerCase().includes(searchLower));
-                
-                return nameMatch || descMatch || techMatch || categoryMatch || idMatch || keywordMatch;
-            });
-        }
-        
-        return filtered;
     }
 
     function setupModal() {
@@ -913,25 +1187,44 @@ function updateSelectedSuggestion(items, index) {
         const grid = document.getElementById('projectsGrid');
         const emptyState = document.getElementById('emptyState');
         const projectsCountSpan = document.getElementById('projectsCount');
+        const loadMoreContainer = document.getElementById('loadMoreContainer');
         
         if (!grid) {
             console.error('Projects grid not found!');
             return;
         }
         
-        const filtered = filterProjects();
+        allFilteredProjects = getFilteredProjects();
+        const totalFiltered = allFilteredProjects.length;
         
-        if (projectsCountSpan) projectsCountSpan.textContent = filtered.length;
+        if (projectsCountSpan) projectsCountSpan.textContent = totalFiltered;
         
-        if (filtered.length === 0) {
+        if (totalFiltered === 0) {
             grid.innerHTML = '';
             if (emptyState) emptyState.style.display = 'block';
+            if (loadMoreContainer) loadMoreContainer.style.display = 'none';
             return;
         }
         
         if (emptyState) emptyState.style.display = 'none';
         
-        grid.innerHTML = filtered.map((project, index) => createProjectCard(project, index)).join('');
+        const start = 0;
+        const end = currentPage * itemsPerPage;
+        const displayProjects = allFilteredProjects.slice(start, end);
+        
+        if (loadMoreContainer) {
+            if (end >= totalFiltered) {
+                loadMoreContainer.style.display = 'none';
+            } else {
+                loadMoreContainer.style.display = 'block';
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                if (loadMoreBtn) {
+                    loadMoreBtn.textContent = `تحميل المزيد (${end}/${totalFiltered})`;
+                }
+            }
+        }
+        
+        grid.innerHTML = displayProjects.map((project, index) => createProjectCard(project, index)).join('');
         
         setTimeout(() => {
             const images = grid.querySelectorAll('.project-card-image');
@@ -967,13 +1260,14 @@ function updateSelectedSuggestion(items, index) {
     function createProjectCard(project, index) {
         const categoryInfo = CATEGORIES[project.category] || { label: 'مشروع', icon: 'fa-folder' };
         const dateFormatted = formatDate(project.date);
+        const stars = renderStars(project.rating || 0);
         
         return `
             <article class="project-card" data-project-id="${project.id}" data-category="${project.category}" data-aos="fade-up" data-aos-delay="${Math.min(index * 50, 300)}">
                 <div class="project-card-media">
                     <img src="${project.coverImage}" alt="${project.name}" class="project-card-image" loading="lazy" width="800" height="600">
                     <div class="project-card-overlay">
-                        <a href="${project.link}" class="view-project-btn" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        <a href="${project.link}" class="view-project-btn" onclick="event.stopPropagation();">
                             <i class="fas fa-eye"></i> عرض التفاصيل
                         </a>
                     </div>
@@ -984,9 +1278,14 @@ function updateSelectedSuggestion(items, index) {
                 <div class="project-card-content">
                     <h3 class="project-card-title">${escapeHtml(project.name)}</h3>
                     <p class="project-card-description">${escapeHtml(project.description)}</p>
+                    <div class="project-rating">
+                        <span class="stars">${stars}</span>
+                        <span class="rating-count">(${project.rating || 0})</span>
+                    </div>
                     <div class="project-card-footer">
                         <span class="project-date"><i class="far fa-calendar-alt"></i> ${dateFormatted}</span>
                         <div class="project-links">
+                            <span class="project-views"><i class="far fa-eye"></i> ${project.views || 0}</span>
                             <a href="${project.link}" class="project-link" onclick="event.stopPropagation();" aria-label="زيارة ${project.name}"><i class="fas fa-arrow-left"></i></a>
                         </div>
                     </div>
@@ -995,12 +1294,32 @@ function updateSelectedSuggestion(items, index) {
         `;
     }
 
+    function renderStars(rating) {
+        const fullStars = Math.floor(rating);
+        const halfStar = rating - fullStars >= 0.5;
+        let html = '';
+        for (let i = 0; i < fullStars; i++) {
+            html += '<i class="fas fa-star"></i>';
+        }
+        if (halfStar) {
+            html += '<i class="fas fa-star-half-alt"></i>';
+        }
+        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+        for (let i = 0; i < emptyStars; i++) {
+            html += '<i class="far fa-star"></i>';
+        }
+        return html;
+    }
+
     function openModal(projectId) {
         const project = projects.find(p => p.id === projectId);
         if (!project) return;
         
         currentModalProject = project;
         currentImageIndex = 0;
+        
+        project.views = (project.views || 0) + 1;
+        localStorage.setItem('view_' + project.id, project.views);
         
         const modal = document.getElementById('projectModal');
         const modalContent = document.getElementById('modalContent');
@@ -1012,6 +1331,7 @@ function updateSelectedSuggestion(items, index) {
         document.body.style.overflow = 'hidden';
         
         setupGalleryNavigation(project);
+        setupShareButtons(project);
     }
 
     function closeModal() {
@@ -1026,6 +1346,7 @@ function updateSelectedSuggestion(items, index) {
     function buildModalContent(project) {
         const categoryInfo = CATEGORIES[project.category] || { label: 'مشروع', icon: 'fa-folder' };
         const galleryHtml = buildGalleryHtml(project);
+        const stars = renderStars(project.rating || 0);
         
         return `
             ${galleryHtml}
@@ -1035,6 +1356,12 @@ function updateSelectedSuggestion(items, index) {
                     <span class="modal-category"><i class="fas ${categoryInfo.icon}"></i> ${categoryInfo.label}</span>
                 </div>
                 <p class="modal-description">${escapeHtml(project.description)}</p>
+                
+                <div class="project-rating">
+                    <span class="stars">${stars}</span>
+                    <span class="rating-count">(${project.rating || 0})</span>
+                    <span class="project-views" style="margin-right: auto;"><i class="far fa-eye"></i> ${project.views || 0} مشاهدة</span>
+                </div>
                 
                 <div class="modal-details">
                     <div class="modal-detail-item">
@@ -1058,6 +1385,13 @@ function updateSelectedSuggestion(items, index) {
                 
                 <div class="modal-actions">
                     <a href="${project.link}" target="_blank" class="modal-btn primary"><i class="fas fa-external-link-alt"></i> زيارة المشروع</a>
+                </div>
+                
+                <div class="modal-share">
+                    <button class="share-facebook" data-share="facebook"><i class="fab fa-facebook-f"></i> فيسبوك</button>
+                    <button class="share-twitter" data-share="twitter"><i class="fab fa-twitter"></i> تويتر</button>
+                    <button class="share-linkedin" data-share="linkedin"><i class="fab fa-linkedin-in"></i> لينكدإن</button>
+                    <button class="share-copy" data-share="copy"><i class="fas fa-link"></i> نسخ الرابط</button>
                 </div>
             </div>
         `;
@@ -1138,6 +1472,39 @@ function updateSelectedSuggestion(items, index) {
                 const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : project.images.length - 1;
                 updateImage(newIndex);
             }
+        });
+    }
+
+    function setupShareButtons(project) {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent(`شاهد مشروع ${project.name} على TechNomads`);
+        
+        document.querySelectorAll('.modal-share button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const shareType = this.dataset.share;
+                let shareUrl = '';
+                
+                switch(shareType) {
+                    case 'facebook':
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                        break;
+                    case 'twitter':
+                        shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+                        break;
+                    case 'linkedin':
+                        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                        break;
+                    case 'copy':
+                        navigator.clipboard.writeText(window.location.href).then(() => {
+                            alert('تم نسخ الرابط!');
+                        });
+                        return;
+                }
+                
+                if (shareUrl) {
+                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                }
+            });
         });
     }
 
