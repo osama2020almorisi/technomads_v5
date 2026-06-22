@@ -27,11 +27,6 @@
 
     <!-- ===== إصلاح مشكلة Prerender في إنستغرام وفيسبوك ===== -->
     <meta http-equiv="Cache-Control" content="public, max-age=3600, must-revalidate">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
-    <meta name="slurp" content="index, follow">
-    <meta name="ia_archiver" content="index, follow">
-    <meta name="Baiduspider" content="index, follow">
 
     <!-- ===== OPEN GRAPH (فيسبوك، واتساب، تليجرام، إنستغرام) ===== -->
     <meta property="og:type" content="website" />
@@ -44,14 +39,12 @@
     <meta property="og:url" content="https://te-2026.netlify.app/" />
     <meta property="og:locale" content="ar_YE" />
     <meta property="og:site_name" content="TechNomads" />
-    <meta property="fb:app_id" content="123456789" />
 
     <!-- ===== TWITTER CARD ===== -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="TechNomads | الريادة التقنية اليمنية" />
     <meta name="twitter:description" content="حلول تقنية متكاملة تنطلق من اليمن" />
     <meta name="twitter:image" content="https://te-2026.netlify.app/images/og-image.jpg" />
-    <meta name="twitter:site" content="@TechNomads" />
 
     <!-- ===== CANONICAL (منع المحتوى المكرر) ===== -->
     <link rel="canonical" href="https://te-2026.netlify.app/" />
@@ -91,7 +84,6 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-5EH1RRD7XQ');
-        gtag('config', 'G-CMO85HTNTO');
     </script>
 
     <!-- ===== SCHEMA.ORG (بيانات منظمة لتحسين الظهور في قوقل) ===== -->
@@ -125,69 +117,6 @@
             "ratingValue": "4.9",
             "reviewCount": "128",
             "bestRating": "5"
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "url": "https://te-2026.netlify.app",
-        "name": "TechNomads",
-        "description": "الريادة التقنية اليمنية - حلول رقمية متكاملة",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://te-2026.netlify.app/search?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "تطوير تطبيقات الجوال",
-        "provider": {
-            "@type": "Organization",
-            "name": "TechNomads"
-        },
-        "description": "تصميم وتطوير تطبيقات مخصصة لأنظمة iOS و Android",
-        "areaServed": "اليمن",
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "الخدمات التقنية",
-            "itemListElement": [
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "تطوير تطبيقات الجوال"
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "تطوير الويب"
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "تصميم UI/UX"
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "التسويق الرقمي"
-                    }
-                }
-            ]
         }
     }
     </script>
@@ -1047,9 +976,51 @@
         body.dark-mode .logo-text { color: #4ECDC4 !important; }
         body.dark-mode .logo-svg .logo-circle, body.dark-mode .logo-svg .logo-triangle { stroke: #4ECDC4 !important; }
         body.dark-mode .logo-svg .logo-dot { fill: #4ECDC4 !important; }
+
+        /* ============================================================
+           دعم الوضع الليلي للسكشنات الجديدة
+           ============================================================ */
+        body.dark-mode .seo-content p {
+            color: #b0b0c0 !important;
+        }
+
+        body.dark-mode .main-pages-links {
+            background: #1a1a2e !important;
+        }
+
+        body.dark-mode .main-pages-links h2 {
+            color: #4ECDC4 !important;
+        }
+
+        body.dark-mode .main-pages-links a {
+            background: #2a2a4a !important;
+            color: #f0f0f0 !important;
+            border-color: rgba(255,255,255,0.05) !important;
+        }
+
+        body.dark-mode .main-pages-links a:hover {
+            background: #4ECDC4 !important;
+            color: #1a1a2e !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(78,205,196,0.2);
+        }
+
+        body.dark-mode .main-pages-links a div:last-child {
+            color: #888 !important;
+        }
     </style>
 </head>
 <body>
+
+    <!-- ============================================ -->
+    <!-- NOSCRIPT - للمتصفحات التي لا تدعم JavaScript -->
+    <!-- ============================================ -->
+    <noscript>
+        <style>
+            .loading-overlay { display: none !important; }
+            body { opacity: 1 !important; }
+        </style>
+    </noscript>
 
     <!-- ===== HEADER ===== -->
     <header class="smart-header" id="main-header">
@@ -1181,17 +1152,15 @@
                     </div>
                 </div>
 
-                <!-- ===== هاتف SAMSUNG S23 ULTRA (بدون كاميرات) ===== -->
+                <!-- ===== هاتف SAMSUNG S23 ULTRA ===== -->
                 <div class="device-showcase" data-aos="fade-up" data-aos-delay="800">
                     <div class="phone-mockup-wrapper">
                         <div class="phone-mockup float-animation">
                             <div class="phone-frame-s23">
-                                <!-- الأزرار الجانبية -->
                                 <div class="phone-side-btn-s23 volume-up"></div>
                                 <div class="phone-side-btn-s23 volume-down"></div>
                                 <div class="phone-side-btn-s23 power"></div>
                                 
-                                <!-- الشاشة -->
                                 <div class="phone-screen-container">
                                     <div class="phone-screen">
                                         <div class="app-slider" id="appSlider">
@@ -1206,10 +1175,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- تم إزالة النوتش والكاميرا الخلفية -->
-                                    <!-- شريط الصفحة الرئيسية -->
                                     <div class="phone-home-btn-s23"></div>
-                                    <!-- نقاط التبديل -->
                                     <div class="slider-indicators" id="sliderIndicators">
                                         <div class="dot active" data-index="0"></div>
                                         <div class="dot" data-index="1"></div>
@@ -1238,6 +1204,24 @@
                 <span>قم بالتمرير</span>
                 <div class="mouse"><div class="wheel"></div></div>
             </a>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEO CONTENT - محتوى لمحركات البحث -->
+        <!-- ============================================ -->
+        <section class="seo-content" style="padding:2rem 0;max-width:900px;margin:0 auto;text-align:center;">
+            <p style="font-size:1.1rem;line-height:1.8;color:#555;">
+                <strong>TechNomads</strong> هي شركة رائدة في تقديم الحلول التقنية والرقمية في اليمن. 
+                نقدم خدمات متكاملة تشمل <strong>تطوير المواقع الإلكترونية</strong>، 
+                <strong>تطبيقات الجوال</strong>، <strong>تصميم واجهات المستخدم (UI/UX)</strong>، 
+                <strong>التسويق الرقمي</strong>، و<strong>الاستشارات التقنية</strong>.
+            </p>
+            <p style="font-size:1.1rem;line-height:1.8;color:#555;margin-top:1rem;">
+                نفخر بفريقنا المحترف الذي يضم نخبة من المطورين والمصممين والخبراء التقنيين، 
+                ونعمل على تقديم حلول مبتكرة تلبي احتياجات السوق اليمني والعربي. 
+                أكثر من <strong>150 مشروعاً ناجحاً</strong> و<strong>50 عميلاً سعيداً</strong> 
+                يثقون بخدماتنا.
+            </p>
         </section>
 
         <!-- ===== SERVICES SECTION ===== -->
@@ -1314,6 +1298,51 @@
                 </div>
             </div>
         </section>
+
+        <!-- ============================================ -->
+        <!-- روابط الصفحات الرئيسية - SEO Links -->
+        <!-- ============================================ -->
+        <section class="main-pages-links" style="padding:3rem 0;background:#f8f9fa;border-radius:16px;margin:0 0 2rem;">
+            <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+                <h2 style="text-align:center;color:#2A2D7C;margin-bottom:2rem;font-size:1.8rem;">
+                    <i class="fas fa-sitemap" style="color:#4ECDC4;"></i> 
+                    جميع صفحات TechNomads
+                </h2>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;">
+                    <a href="services.html" style="display:block;padding:1.2rem;background:white;border-radius:12px;text-decoration:none;color:#2A2D7C;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);transition:all 0.3s ease;">
+                        <div style="font-size:1.8rem;">⚙️</div>
+                        <div style="font-weight:700;font-size:0.95rem;">الخدمات</div>
+                        <div style="font-size:0.75rem;color:#666;">حلول تقنية متكاملة</div>
+                    </a>
+                    <a href="team.html" style="display:block;padding:1.2rem;background:white;border-radius:12px;text-decoration:none;color:#2A2D7C;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);transition:all 0.3s ease;">
+                        <div style="font-size:1.8rem;">👥</div>
+                        <div style="font-weight:700;font-size:0.95rem;">فريق العمل</div>
+                        <div style="font-size:0.75rem;color:#666;">نخبة من الخبراء</div>
+                    </a>
+                    <a href="portfolio.html" style="display:block;padding:1.2rem;background:white;border-radius:12px;text-decoration:none;color:#2A2D7C;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);transition:all 0.3s ease;">
+                        <div style="font-size:1.8rem;">💼</div>
+                        <div style="font-weight:700;font-size:0.95rem;">معرض الأعمال</div>
+                        <div style="font-size:0.75rem;color:#666;">أكثر من 160 مشروع</div>
+                    </a>
+                    <a href="contact.html" style="display:block;padding:1.2rem;background:white;border-radius:12px;text-decoration:none;color:#2A2D7C;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);transition:all 0.3s ease;">
+                        <div style="font-size:1.8rem;">📧</div>
+                        <div style="font-weight:700;font-size:0.95rem;">اتصل بنا</div>
+                        <div style="font-size:0.75rem;color:#666;">استفسارات ودعم</div>
+                    </a>
+                    <a href="entertainment/play.html" style="display:block;padding:1.2rem;background:white;border-radius:12px;text-decoration:none;color:#2A2D7C;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);transition:all 0.3s ease;">
+                        <div style="font-size:1.8rem;">🎮</div>
+                        <div style="font-weight:700;font-size:0.95rem;">الترفيه</div>
+                        <div style="font-size:0.75rem;color:#666;">ألعاب وتسلية</div>
+                    </a>
+                    <a href="projects-index.html" style="display:block;padding:1.2rem;background:white;border-radius:12px;text-decoration:none;color:#2A2D7C;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);transition:all 0.3s ease;">
+                        <div style="font-size:1.8rem;">📂</div>
+                        <div style="font-weight:700;font-size:0.95rem;">جميع المشاريع</div>
+                        <div style="font-size:0.75rem;color:#666;">قائمة شاملة</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- ===== FOOTER ===== -->
@@ -1340,11 +1369,13 @@
             <div class="footer-section" data-aos="fade-up" data-aos-delay="100">
                 <h3 class="footer-title">روابط سريعة</h3>
                 <ul class="footer-links">
-                    <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="team.html"><i class="fas fa-users"></i> من نحن</a></li>
-                    <li><a href="services.html"><i class="fas fa-concierge-bell"></i> الخدمات</a></li>
-                    <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> معرض الأعمال</a></li>
-                    <li><a href="contact.html"><i class="fas fa-envelope"></i> تواصل معنا</a></li>
+                    <li><a href="index.html" title="الصفحة الرئيسية - TechNomads"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="team.html" title="فريق TechNomads - نخبة من الخبراء"><i class="fas fa-users"></i> من نحن</a></li>
+                    <li><a href="services.html" title="خدمات TechNomads - حلول تقنية متكاملة"><i class="fas fa-concierge-bell"></i> الخدمات</a></li>
+                    <li><a href="portfolio.html" title="معرض أعمال TechNomads - أكثر من 160 مشروع"><i class="fas fa-briefcase"></i> معرض الأعمال</a></li>
+                    <li><a href="contact.html" title="تواصل مع TechNomads - استفسارات ودعم فني"><i class="fas fa-envelope"></i> تواصل معنا</a></li>
+                    <li><a href="entertainment/play.html" title="ألعاب وترفيه - TechNomads"><i class="fas fa-gamepad"></i> الترفيه</a></li>
+                    <li><a href="projects-index.html" title="جميع مشاريع TechNomads"><i class="fas fa-folder-open"></i> جميع المشاريع</a></li>
                 </ul>
             </div>
 
@@ -1376,6 +1407,23 @@
                     <a href="https://github.com/osama2020almorisi/" target="_blank" rel="noopener noreferrer" aria-label="جيت هاب"><i class="fab fa-github"></i></a>
                 </div>
             </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- روابط خفية لمحركات البحث - SEO Links -->
+        <!-- ============================================ -->
+        <div style="display:none;" aria-hidden="true">
+            <h3>روابط TechNomads الرئيسية لمحركات البحث</h3>
+            <ul>
+                <li><a href="https://te-2026.netlify.app/">الصفحة الرئيسية - TechNomads</a></li>
+                <li><a href="https://te-2026.netlify.app/services.html">خدمات TechNomads التقنية</a></li>
+                <li><a href="https://te-2026.netlify.app/team.html">فريق TechNomads - الخبراء التقنيون</a></li>
+                <li><a href="https://te-2026.netlify.app/portfolio.html">معرض أعمال TechNomads</a></li>
+                <li><a href="https://te-2026.netlify.app/contact.html">اتصل بنا - TechNomads</a></li>
+                <li><a href="https://te-2026.netlify.app/projects-index.html">جميع مشاريع TechNomads</a></li>
+                <li><a href="https://te-2026.netlify.app/entertainment/play.html">الترفيه - Play</a></li>
+                <li><a href="https://te-2026.netlify.app/sitemap.xml">خريطة الموقع - TechNomads</a></li>
+            </ul>
         </div>
 
         <div class="copyright-section" data-aos="fade-up">
