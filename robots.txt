@@ -1,7 +1,11 @@
 User-agent: *
 Allow: /
+
+# منع المجلدات الحساسة (اختياري)
 Disallow: /admin/
 Disallow: /images/temp/
+
+# خرائط الموقع
 Sitemap: https://te-2026.netlify.app/sitemap.xml
 Sitemap: https://te-2026.netlify.app/sitemap-pages.xml
 Sitemap: https://te-2026.netlify.app/sitemap-projects.xml

@@ -4,10 +4,6 @@
 [build.processing]
   skip_processing = true
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Cache-Control = "max-age=0, no-cache, no-store, must-revalidate"
 
 [[headers]]
   for = "/css/fontawesome/*"
