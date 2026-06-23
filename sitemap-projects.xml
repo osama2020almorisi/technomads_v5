@@ -2,267 +2,317 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- ============================================================ -->
-  <!-- 1. age-calculator (9 صفحات) -->
+  <!-- 1. age-calculator -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/age-calculator/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/calculator.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/add-birthday.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/upcoming.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/calculator.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/add-birthday.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/upcoming.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/age-calculator/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/calculator.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/add-birthday.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/upcoming.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/calculator.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/add-birthday.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/upcoming.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 2. app-store -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/app-store/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/app-store/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 3. booking-system -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/booking-system/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/booking-system/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 4. brand-identity -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/brand-identity/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/brand-identity/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
-  <!-- 5. Cinema (2 صفحات) -->
+  <!-- 5. Cinema -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/Cinema/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cinema/%D9%85%D8%AC%D9%84%D8%AF%20%D9%A1/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cinema/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cinema/%D9%85%D8%AC%D9%84%D8%AF%20%D9%A1/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
-  <!-- 6. Cleaning Services (15 صفحة) -->
+  <!-- 6. Cleaning Services -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
   <!-- HarMur-Service-PRO -->
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/about.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/contact.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/services.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/datenschutz.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/impressum.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/about.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/contact.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/services.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/datenschutz.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/impressum.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
   <!-- harmurservice-V1 -->
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/about.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/contact.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/services.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/datenschutz.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/impressum.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/about.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/contact.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/services.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/datenschutz.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/impressum.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 7. code-editor -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/code-editor/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/code-editor/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 8. color-generator -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/color-generator/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/color-generator/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 9. delivery-app -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/delivery-app/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <!-- admin-dashboard -->
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/dashboard.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/login.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/orders.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/drivers.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/customers.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/zones.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/reports.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/settings.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <!-- customer-app -->
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/dashboard.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/earnings.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/history.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/home.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/login.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/new-order.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/orders.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/payment.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/profile.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/register.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/tracking.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <!-- customer-web -->
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/about.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/services.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/contact.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/track.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/tracking.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/login.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/register.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/new-order.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/orders.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/404.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <!-- driver-app -->
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/dashboard.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/earnings.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/history.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/login.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/orders.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/profile.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/register.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 10. ecommerce-website -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/ecommerce-website/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/ecommerce-website/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 11. educational-app -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/educational-app/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/educational-app/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 12. fileuploader -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/fileuploader/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/fileuploader/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
-  <!-- 13. financial-accountant (34 صفحة) -->
+  <!-- 13. financial-accountant -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/dashboard.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/dashboard%20(1).html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/account.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/emergency.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/auth/login.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/auth/register.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/customers/list.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/customers/create.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/customers/edit.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/customers/view.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/invoices/list.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/invoices/create.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/invoices/edit.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/invoices/view.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/products/list.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/products/create.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/products/edit.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/products/view.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/expenses/list.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/expenses/create.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/expenses/edit.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/expenses/view.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/reports/financial.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/reports/sales.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/reports/tax.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/settings/company.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/settings/preferences.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/settings/profile.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/settings/users.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/dashboard.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/dashboard%20(1).html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/account.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/emergency.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/auth/login.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/auth/register.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/customers/list.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/customers/create.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/customers/edit.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/customers/view.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/invoices/list.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/invoices/create.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/invoices/edit.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/invoices/view.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/products/list.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/products/create.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/products/edit.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/products/view.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/expenses/list.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/expenses/create.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/expenses/edit.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/expenses/view.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/reports/financial.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/reports/sales.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/reports/tax.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/settings/company.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/settings/preferences.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/settings/profile.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/financial-accountant/settings/users.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 14. health-system -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/health-system/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/dashboard.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/analysis.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/patients.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/reports.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/notifications.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/settings.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/login.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/register.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/forgot-password.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/health-system/medication-manager/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 15. image-editor -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/image-editor/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/image-editor/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
-  <!-- 16. localStorage (3 صفحات) -->
+  <!-- 16. localStorage -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/localStorage/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/localStorage/localStorage-V1/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/localStorage/localStorage-V2/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/localStorage/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/localStorage/localStorage-V1/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/localStorage/localStorage-V2/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 17. logo-design -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/logo-design/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/logo-design/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 18. marketing-campaign -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/marketing-campaign/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/marketing-campaign/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
-  <!-- 19. MedicalAnalysisApp (14 صفحة) -->
+  <!-- 19. MedicalAnalysisApp -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/dashboard.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/analysis.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/patients.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/reports.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/notifications.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/settings.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/login.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/login%20(1).html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/register.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/forgot-password.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/medication-manager/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/medication-manager/index%20(1).html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/dashboard.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/analysis.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/patients.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/reports.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/notifications.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/settings.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/login.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/register.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/forgot-password.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/MedicalAnalysisApp/medication-manager/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 20. memory-game -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/memory-game/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/memory-game/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
-  <!-- 21. pharmacy-website (11 صفحة) -->
+  <!-- 21. pharmacy-website -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/login.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/medicines.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/customers.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/sales.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/purchases.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/suppliers.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/reports.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/settings.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/profile.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/backup.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/login.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/medicines.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/customers.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/sales.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/purchases.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/suppliers.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/reports.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/settings.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/profile.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/pharmacy-website/backup.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 22. project-structure -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/project-structure/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/project-structure/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 23. quiz-platform -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/quiz-platform/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/quiz-platform/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
-  <!-- 24. travel-agency (55+ صفحة) -->
+  <!-- 24. travel-agency -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
   <!-- aman_travel_system -->
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/flights.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/umrah.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/visas.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/clients.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/notifications.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/backup.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/flights.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/umrah.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/visas.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/clients.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/notifications.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/backup.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
   <!-- Yemeni -->
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Yemeni/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Yemeni/index%20(1).html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Yemeni/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
   <!-- project_airline_booking -->
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/project_airline_booking/%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D8%AD%D8%AC%D8%B2-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/project_airline_booking/%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D8%AD%D8%AC%D8%B2-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
   <!-- Am-main/Am-main -->
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/flights.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/umrah.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/visas.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/clients.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/notifications.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/backup.html</loc><priority>0.80</priority></url>
-  <!-- y-main/y-main (جميع الصفحات) -->
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index2.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index3.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index4.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index5.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index6.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index7.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index8.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/dashboard.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/flight.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/hotel.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/embassy.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/evisa.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/visa-packages.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/visa-req.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/trip.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/itinerary.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/insurance.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/sim.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/track.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/A.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/B.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/o.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/s.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/travel-agency/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/flights.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/umrah.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/visas.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/clients.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/notifications.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/backup.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/r.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <!-- y-main/y-main -->
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index2.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index3.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index4.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index5.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index6.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index7.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index8.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/dashboard.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/flight.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/hotel.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/embassy.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/evisa.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/visa-packages.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/visa-req.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/trip.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/itinerary.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/insurance.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/sim.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/track.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/A.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/B.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/o.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/s.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/travel-agency/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/travel-agency/1.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
-  <!-- 25. treemix_app (2 صفحات) -->
+  <!-- 25. treemix_app -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/treemix_app/index.html</loc><priority>0.80</priority></url>
-  <url><loc>https://te-2026.netlify.app/projects/treemix_app/admin.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/treemix_app/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/treemix_app/admin.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 26. wifi-auto-connect -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/wifi-auto-connect/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/wifi-auto-connect/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 27. wifi-extractor -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/wifi-extractor/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/wifi-extractor/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
   <!-- ============================================================ -->
   <!-- 28. wit -->
   <!-- ============================================================ -->
-  <url><loc>https://te-2026.netlify.app/projects/wit/index.html</loc><priority>0.80</priority></url>
+  <url><loc>https://te-2026.netlify.app/projects/wit/index.html</loc><lastmod>2026-06-23</lastmod><priority>0.80</priority></url>
 
 </urlset>
