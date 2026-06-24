@@ -203,7 +203,12 @@
         'quiz-game': {
             cover: 'https://picsum.photos/id/196/800/600',
             gallery: ['https://picsum.photos/id/197/800/600', 'https://picsum.photos/id/198/800/600', 'https://picsum.photos/id/199/800/600']
-        }
+        },
+        // ===== المشروع الجديد: مستكشف هيكلية المشاريع =====
+        'structure-explorer': {
+            cover: 'https://picsum.photos/id/204/800/600',
+            gallery: ['https://picsum.photos/id/205/800/600','https://picsum.photos/id/206/800/600','https://picsum.photos/id/207/800/600']
+       }
     };
 
     // ============================================
@@ -755,7 +760,25 @@
             keywords: ['تخزين', 'محلي', 'V2', 'مطور'],
             link: 'projects/localStorage/localStorage-V2/index.html',
             rating: 4.2
+        },
+
+        // ================================================================
+        // ===== المشروع الجديد: مستكشف هيكلية المشاريع =====
+        // ================================================================
+        { 
+            id: 'structure-explorer', 
+            name: 'مستكشف هيكلية المشاريع', 
+            category: 'tool', 
+            description: 'أداة متقدمة لاستكشاف وعرض هيكلية أي مجلد مشروع بشكل شجري مع إمكانية نسخ الهيكلية وطي/فتح المجلدات. مثالية للمطورين لتحليل هيكلية مشاريعهم بسهولة.', 
+            technologies: ['HTML', 'CSS', 'JavaScript', 'AOS', 'Font Awesome', 'Local File API'], 
+            date: '2024-06-24', 
+            featured: true,
+            keywords: ['هيكلية', 'مشاريع', 'استكشاف', 'مجلدات', 'ملفات', 'شجري', 'نسخ', 'طي', 'فتح', 'مطورين', 'أداة'],
+            link: 'projects/project-structure/structure-explorer.html',
+            rating: 5.0,
+            version: '2.0'
         }
+        // ================================================================
     ];
 
     const CATEGORIES = {

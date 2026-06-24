@@ -15,25 +15,18 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* ============================================
-           المتغيرات والأساسيات (مستوحاة من main.css)
-           ============================================ */
+        /* ===== المتغيرات ===== */
         :root {
             --primary: #2A2D7C;
-            --primary-light: #3d41a0;
             --secondary: #FF6B6B;
             --accent: #4ECDC4;
-            --accent-light: #6ee0d8;
             --dark: #1A1A1A;
-            --dark-secondary: #2d2d2d;
             --light: #F8F9FA;
-            --light-secondary: #e9ecef;
             --text-dark: #333;
-            --text-light: #f5f5f5;
             --text-muted: #6c757d;
             --bg-light: #ffffff;
             --card-bg-light: #ffffff;
-            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            --gradient: linear-gradient(135deg, #2A2D7C 0%, #4ECDC4 100%);
             --shadow: 0 8px 32px rgba(0,0,0,0.1);
             --shadow-lg: 0 15px 40px rgba(0,0,0,0.15);
             --radius: 16px;
@@ -43,18 +36,15 @@
             --font-main: 'Tajawal', sans-serif;
         }
 
-        /* ===== Dark Mode Variables ===== */
         body.dark-mode {
             --bg-light: #121212;
             --card-bg-light: #1e1e1e;
             --text-dark: #f5f5f5;
             --text-muted: #aaa;
-            --light-secondary: #2d2d2d;
             --shadow: 0 8px 32px rgba(0,0,0,0.3);
             --shadow-lg: 0 15px 40px rgba(0,0,0,0.4);
         }
 
-        /* ===== Reset & Base ===== */
         * {
             margin: 0;
             padding: 0;
@@ -68,11 +58,9 @@
             line-height: 1.7;
             transition: background 0.3s ease, color 0.3s ease;
             min-height: 100vh;
-            padding: 0;
-            margin: 0;
         }
 
-        /* ===== سكشن البطل (Hero) ===== */
+        /* ===== Hero ===== */
         .explorer-hero {
             background: var(--gradient);
             padding: 80px 20px 60px;
@@ -141,7 +129,7 @@
             margin: 0 auto 30px;
         }
 
-        /* ===== زر اختيار المجلد ===== */
+        /* ===== رفع المجلد ===== */
         .upload-area {
             background: var(--card-bg-light);
             border-radius: var(--radius-lg);
@@ -151,7 +139,7 @@
             border: 2px dashed var(--accent);
             transition: var(--transition);
             max-width: 600px;
-            margin: 0 auto;
+            margin: -30px auto 0;
             position: relative;
             z-index: 2;
         }
@@ -222,7 +210,7 @@
             font-size: 1.2rem;
         }
 
-        /* ===== قسم الهيكلية ===== */
+        /* ===== الهيكلية ===== */
         .structure-section {
             padding: 40px 20px 60px;
             max-width: 1200px;
@@ -285,17 +273,15 @@
             background: var(--gradient);
             box-shadow: 0 4px 15px rgba(42,45,124,0.2);
         }
-
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(42,45,124,0.3);
         }
 
         .btn-secondary {
-            background: var(--light-secondary);
+            background: #e9ecef;
             color: var(--text-dark);
         }
-
         .btn-secondary:hover {
             background: var(--accent);
             color: white;
@@ -304,7 +290,6 @@
         .btn-danger {
             background: var(--secondary);
         }
-
         .btn-danger:hover {
             background: #e05555;
             transform: translateY(-2px);
@@ -313,13 +298,12 @@
         .btn-success {
             background: #27ae60;
         }
-
         .btn-success:hover {
             background: #219653;
             transform: translateY(-2px);
         }
 
-        /* ===== خيارات النسخ ===== */
+        /* ===== خيارات ===== */
         .copy-options {
             background: var(--card-bg-light);
             border-radius: var(--radius);
@@ -435,6 +419,21 @@
             font-size: 0.85rem;
         }
 
+        .folder-item .folder-status {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-right: 6px;
+            font-weight: 400;
+            opacity: 0.6;
+        }
+
+        .folder-item.expanded .folder-status {
+            display: none;
+        }
+        .folder-item:not(.expanded) .folder-status {
+            display: inline;
+        }
+
         /* ===== المعاينة ===== */
         .preview-container {
             margin-top: 25px;
@@ -537,40 +536,32 @@
             font-size: 1.2rem;
         }
 
-        /* ===== Dark Mode Styles ===== */
+        /* ===== Dark Mode ===== */
         body.dark-mode .explorer-hero {
             background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 50%, #2A2D7C 100%);
         }
-
         body.dark-mode .upload-area {
             border-color: rgba(78,205,196,0.2);
         }
-
         body.dark-mode .folder-item {
             color: var(--accent);
         }
-
         body.dark-mode .file-item {
             color: #ccc;
         }
-
         body.dark-mode .structure-header .title {
             color: var(--accent);
         }
-
         body.dark-mode .stats .stat-item strong {
             color: var(--accent);
         }
-
         body.dark-mode .preview-box {
             background: #0d0d1a;
         }
-
         body.dark-mode .btn-secondary {
             background: #2d2d3e;
             color: #eee;
         }
-
         body.dark-mode .btn-secondary:hover {
             background: var(--accent);
             color: #1a1a2e;
@@ -583,6 +574,7 @@
             }
             .upload-area {
                 padding: 30px 20px;
+                margin-top: -20px;
             }
             .structure-header {
                 flex-direction: column;
@@ -631,13 +623,12 @@
             }
         }
 
-        /* ===== Scrollbar ===== */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--light-secondary);
+            background: #e9ecef;
         }
         ::-webkit-scrollbar-thumb {
             background: var(--primary);
@@ -661,7 +652,8 @@
                 <span>أداة مطورين TechNomads</span>
             </div>
             <h1>مستكشف <span>هيكلية</span> المشاريع</h1>
-            <p>قم بتحميل مجلد مشروعك لعرض هيكليته الكاملة بنظام شجري، مع إمكانية النسخ والتصدير.</p>
+            <p>قم بتحميل أي مجلد مشروع لعرض هيكليته الكاملة بنظام شجري.<br>
+            <strong style="color: #FFD700;">ما تراه في الشاشة هو ما سيتم نسخه بالضبط</strong></p>
         </div>
     </section>
 
@@ -669,10 +661,10 @@
     <section class="upload-area" data-aos="fade-up" data-aos-delay="100">
         <div class="icon"><i class="fas fa-folder-open"></i></div>
         <h3>اختر مجلد المشروع</h3>
-        <p>قم باختيار المجلد الرئيسي لمشروعك من جهازك لعرض هيكليته</p>
+        <p>قم باختيار أي مجلد من جهازك لعرض هيكليته ونسخها</p>
         <input type="file" id="folderInput" class="folder-input" webkitdirectory multiple>
         <label for="folderInput" class="folder-label">
-            <i class="fas fa-upload"></i> اختر مجلد
+            <i class="fas fa-upload"></i> اختر مجلد المشروع
         </label>
         <div id="selectedFolder" class="selected-folder">
             <i class="fas fa-check-circle"></i>
@@ -683,7 +675,6 @@
     <!-- ===== قسم الهيكلية ===== -->
     <section id="structureSection" class="structure-section" data-aos="fade-up" data-aos-delay="200">
 
-        <!-- الهيدر -->
         <div class="structure-header">
             <div class="title">
                 <i class="fas fa-sitemap"></i>
@@ -697,36 +688,46 @@
             </div>
         </div>
 
-        <!-- خيارات النسخ -->
         <div class="copy-options">
             <label><input type="checkbox" id="includeIcons" checked> تضمين الرموز (📁 📄)</label>
             <label><input type="checkbox" id="sortAlphabetically" checked> ترتيب أبجدي</label>
             <label><input type="checkbox" id="showPreview" checked> عرض معاينة قبل النسخ</label>
+            <label style="color: var(--secondary);">
+                <input type="checkbox" id="copyOnlyExpanded" checked> 
+                <i class="fas fa-folder-open"></i> نسخ المجلدات المفتوحة فقط
+            </label>
         </div>
 
-        <!-- عارض الهيكلية -->
         <div class="structure-viewer">
             <div class="tree" id="treeView">
                 <div style="color: var(--text-muted); text-align: center; padding: 40px 0;">
                     <i class="fas fa-folder-open" style="font-size: 2.5rem; display: block; margin-bottom: 15px; opacity: 0.3;"></i>
-                    <p>قم باختيار مجلد المشروع من الأعلى لعرض هيكليته</p>
+                    <p>قم باختيار مجلد مشروعك من الأعلى لعرض هيكليته</p>
+                    <p style="font-size: 0.85rem; margin-top: 10px; opacity: 0.6;">
+                        <i class="fas fa-info-circle"></i> انقر على أي مجلد لطي/فتح محتوياته
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- المعاينة -->
         <div id="previewContainer" class="preview-container">
             <div class="preview-header">
                 <span><i class="fas fa-eye"></i> معاينة النص المنسوخ</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">
+                    <i class="fas fa-info-circle"></i> تطابق الهيكلية المعروضة في الشاشة
+                </span>
             </div>
             <div class="preview-box" id="previewBox"></div>
         </div>
 
-        <!-- الإحصائيات -->
         <div class="stats" id="statsContainer">
             <div class="stat-item"><i class="fas fa-folder"></i> المجلدات: <strong id="foldersCount">0</strong></div>
             <div class="stat-item"><i class="fas fa-file"></i> الملفات: <strong id="filesCount">0</strong></div>
             <div class="stat-item"><i class="fas fa-layer-group"></i> المجموع: <strong id="totalCount">0</strong></div>
+            <div class="stat-item" style="color: var(--secondary);">
+                <i class="fas fa-eye-slash"></i> 
+                المطوية: <strong id="foldedCount">0</strong>
+            </div>
         </div>
 
     </section>
@@ -740,7 +741,6 @@
     <!-- ===== SCRIPTS ===== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // ===== تهيئة AOS =====
         AOS.init({
             duration: 800,
             once: true,
@@ -758,6 +758,7 @@
         const foldersCount = document.getElementById('foldersCount');
         const filesCount = document.getElementById('filesCount');
         const totalCount = document.getElementById('totalCount');
+        const foldedCount = document.getElementById('foldedCount');
 
         const copyStructureBtn = document.getElementById('copyStructure');
         const expandAllBtn = document.getElementById('expandAll');
@@ -767,17 +768,17 @@
         const includeIcons = document.getElementById('includeIcons');
         const sortAlphabetically = document.getElementById('sortAlphabetically');
         const showPreview = document.getElementById('showPreview');
+        const copyOnlyExpanded = document.getElementById('copyOnlyExpanded');
 
         const notification = document.getElementById('notification');
         const notificationMessage = document.getElementById('notificationMessage');
 
-        // ===== متغيرات الحالة =====
         let projectStructure = [];
         let totalFiles = 0;
         let totalFolders = 0;
+        let totalFolded = 0;
         let rootFolderName = '';
 
-        // ===== الإشعار =====
         function showNotification(message, type = 'success') {
             notificationMessage.textContent = message;
             notification.className = 'notification show';
@@ -796,11 +797,11 @@
             }, 3000);
         }
 
-        // ===== معالجة الملفات =====
         function processFiles(files) {
             projectStructure = [];
             totalFiles = 0;
             totalFolders = 0;
+            totalFolded = 0;
 
             const structure = {};
             const basePath = files[0].webkitRelativePath.split('/')[0];
@@ -812,15 +813,13 @@
 
                 parts.forEach((part, index) => {
                     if (index === parts.length - 1) {
-                        // ملف
                         if (!current[part]) {
                             current[part] = { type: 'file', name: part, path: path };
                             totalFiles++;
                         }
                     } else {
-                        // مجلد
                         if (!current[part]) {
-                            current[part] = { type: 'folder', name: part, children: {} };
+                            current[part] = { type: 'folder', name: part, children: {}, expanded: true };
                             if (index > 0) totalFolders++;
                         }
                         current = current[part].children;
@@ -830,6 +829,18 @@
 
             projectStructure = convertToArray(structure);
             rootFolderName = basePath;
+            totalFolded = countFoldedTotal(projectStructure);
+        }
+
+        function countFoldedTotal(structure) {
+            let count = 0;
+            structure.forEach(item => {
+                if (item.type === 'folder') {
+                    if (!item.expanded) count++;
+                    if (item.children) count += countFoldedTotal(item.children);
+                }
+            });
+            return count;
         }
 
         function convertToArray(obj) {
@@ -840,7 +851,7 @@
                     result.push({
                         name: item.name,
                         type: 'folder',
-                        expanded: true,
+                        expanded: item.expanded !== undefined ? item.expanded : true,
                         children: convertToArray(item.children)
                     });
                 } else {
@@ -862,7 +873,6 @@
             return result;
         }
 
-        // ===== عرض الهيكلية =====
         function renderTree(structure, level = 0) {
             if (!structure || structure.length === 0) {
                 return '<div class="empty-folder"><i class="fas fa-folder-open"></i> مجلد فارغ</div>';
@@ -872,13 +882,21 @@
             structure.forEach((item, index) => {
                 if (item.type === 'folder') {
                     const hasChildren = item.children && item.children.length > 0;
+                    const isExpanded = item.expanded !== undefined ? item.expanded : true;
+                    
                     html += `<div class="tree-node">`;
-                    html += `<div class="folder-item ${item.expanded ? 'expanded' : ''}" data-expanded="${item.expanded}">
+                    html += `<div class="folder-item ${isExpanded ? 'expanded' : ''}" data-expanded="${isExpanded}">
                                 <i class="fas fa-chevron-left"></i> ${item.name}/
+                                <span class="folder-status">(مطوي)</span>
                              </div>`;
-                    if (hasChildren) {
-                        html += `<div class="tree-children" style="${item.expanded ? '' : 'display: none;'}">
+                    if (hasChildren && isExpanded) {
+                        html += `<div class="tree-children">
                                     ${renderTree(item.children, level + 1)}
+                                </div>`;
+                    } else if (hasChildren && !isExpanded) {
+                        const count = countItems(item.children);
+                        html += `<div class="empty-folder" style="padding-right: 30px;">
+                                    <i class="fas fa-folder"></i> ${count} عنصر (مطوي)
                                 </div>`;
                     } else {
                         html += `<div class="empty-folder"><i class="fas fa-folder-open"></i> مجلد فارغ</div>`;
@@ -891,24 +909,46 @@
             return html;
         }
 
+        function countItems(structure) {
+            let count = 0;
+            structure.forEach(item => {
+                count++;
+                if (item.type === 'folder' && item.children) {
+                    count += countItems(item.children);
+                }
+            });
+            return count;
+        }
+
         function displayStructure() {
             treeView.innerHTML = renderTree(projectStructure);
 
-            // إضافة حدث النقر على المجلدات
             document.querySelectorAll('.folder-item').forEach(el => {
                 el.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const children = this.nextElementSibling;
+                    const isExpanded = this.classList.contains('expanded');
+                    
+                    const folderName = this.textContent.trim().replace('/', '').replace('(مطوي)', '').trim();
+                    toggleFolderExpanded(projectStructure, folderName, !isExpanded);
+                    
                     if (children && children.classList.contains('tree-children')) {
-                        const isExpanded = this.classList.contains('expanded');
                         if (isExpanded) {
                             this.classList.remove('expanded');
                             children.style.display = 'none';
+                            const statusSpan = this.querySelector('.folder-status');
+                            if (statusSpan) statusSpan.style.display = 'inline';
                         } else {
                             this.classList.add('expanded');
                             children.style.display = 'block';
+                            const statusSpan = this.querySelector('.folder-status');
+                            if (statusSpan) statusSpan.style.display = 'none';
                         }
                     }
+                    
+                    totalFolded = countFoldedTotal(projectStructure);
+                    updatePreview();
+                    updateStats();
                 });
             });
 
@@ -916,14 +956,24 @@
             updatePreview();
         }
 
-        // ===== تحديث الإحصائيات =====
+        function toggleFolderExpanded(structure, folderName, expanded) {
+            structure.forEach(item => {
+                if (item.type === 'folder' && item.name === folderName) {
+                    item.expanded = expanded;
+                }
+                if (item.type === 'folder' && item.children) {
+                    toggleFolderExpanded(item.children, folderName, expanded);
+                }
+            });
+        }
+
         function updateStats() {
             foldersCount.textContent = totalFolders;
             filesCount.textContent = totalFiles;
             totalCount.textContent = totalFolders + totalFiles;
+            foldedCount.textContent = totalFolded;
         }
 
-        // ===== المعاينة =====
         function getStructureText(structure, level = 0, prefix = '') {
             let text = '';
             structure.forEach((item, index) => {
@@ -933,9 +983,16 @@
 
                 if (item.type === 'folder') {
                     text += prefix + connector + icon + item.name + '/\n';
-                    if (item.children && item.children.length > 0) {
+                    
+                    if (item.expanded && item.children && item.children.length > 0) {
                         const newPrefix = prefix + (isLast ? '    ' : '│   ');
                         text += getStructureText(item.children, level + 1, newPrefix);
+                    } else if (item.expanded && (!item.children || item.children.length === 0)) {
+                        const newPrefix = prefix + (isLast ? '    ' : '│   ');
+                        text += newPrefix + '    (مجلد فارغ)\n';
+                    } else if (!item.expanded && item.children && item.children.length > 0) {
+                        const newPrefix = prefix + (isLast ? '    ' : '│   ');
+                        text += newPrefix + '    (' + countItems(item.children) + ' عنصر مطوي)\n';
                     }
                 } else {
                     text += prefix + connector + icon + item.name + '\n';
@@ -954,15 +1011,21 @@
             }
         }
 
-        // ===== نسخ الهيكلية =====
         function copyStructure() {
             if (projectStructure.length === 0) {
                 showNotification('لا توجد هيكلية للنسخ. اختر مجلداً أولاً.', 'error');
                 return;
             }
-            const text = rootFolderName + '/\n' + getStructureText(projectStructure);
             
-            // نسخ إلى الحافظة
+            let text;
+            if (copyOnlyExpanded.checked) {
+                text = rootFolderName + '/\n' + getStructureText(projectStructure);
+            } else {
+                const tempStructure = JSON.parse(JSON.stringify(projectStructure));
+                expandAllInStructure(tempStructure);
+                text = rootFolderName + '/\n' + getStructureText(tempStructure);
+            }
+            
             const textarea = document.createElement('textarea');
             textarea.value = text;
             document.body.appendChild(textarea);
@@ -970,31 +1033,75 @@
             document.execCommand('copy');
             document.body.removeChild(textarea);
 
-            showNotification(`تم نسخ هيكلية المشروع (${totalFolders} مجلد، ${totalFiles} ملف)`);
+            const folded = countFoldedTotal(projectStructure);
+            let message;
+            if (copyOnlyExpanded.checked && folded > 0) {
+                message = `✅ تم نسخ الهيكلية (استُبعدت محتويات ${folded} مجلد مطوي)`;
+            } else if (copyOnlyExpanded.checked && folded === 0) {
+                message = '✅ تم نسخ الهيكلية بالكامل (جميع المجلدات مفتوحة)';
+            } else {
+                message = '✅ تم نسخ الهيكلية الكاملة (جميع المجلدات والملفات)';
+            }
+            
+            showNotification(message);
         }
 
-        // ===== فتح وطي الكل =====
+        function expandAllInStructure(structure) {
+            structure.forEach(item => {
+                if (item.type === 'folder') {
+                    item.expanded = true;
+                    if (item.children) expandAllInStructure(item.children);
+                }
+            });
+        }
+
         function expandAllFolders() {
+            expandAllInStructure(projectStructure);
+            totalFolded = countFoldedTotal(projectStructure);
+            
             document.querySelectorAll('.folder-item').forEach(el => {
                 el.classList.add('expanded');
                 const children = el.nextElementSibling;
                 if (children && children.classList.contains('tree-children')) {
                     children.style.display = 'block';
                 }
+                const statusSpan = el.querySelector('.folder-status');
+                if (statusSpan) statusSpan.style.display = 'none';
             });
+            
+            updatePreview();
+            updateStats();
+            showNotification('🔽 تم فتح جميع المجلدات');
         }
 
         function collapseAllFolders() {
+            collapseAllInStructure(projectStructure);
+            totalFolded = countFoldedTotal(projectStructure);
+            
             document.querySelectorAll('.folder-item').forEach(el => {
                 el.classList.remove('expanded');
                 const children = el.nextElementSibling;
                 if (children && children.classList.contains('tree-children')) {
                     children.style.display = 'none';
                 }
+                const statusSpan = el.querySelector('.folder-status');
+                if (statusSpan) statusSpan.style.display = 'inline';
+            });
+            
+            updatePreview();
+            updateStats();
+            showNotification('🔼 تم طي جميع المجلدات');
+        }
+
+        function collapseAllInStructure(structure) {
+            structure.forEach(item => {
+                if (item.type === 'folder') {
+                    item.expanded = false;
+                    if (item.children) collapseAllInStructure(item.children);
+                }
             });
         }
 
-        // ===== إعادة تعيين =====
         function resetProject() {
             folderInput.value = '';
             selectedFolder.style.display = 'none';
@@ -1002,16 +1109,17 @@
             projectStructure = [];
             totalFiles = 0;
             totalFolders = 0;
+            totalFolded = 0;
             rootFolderName = '';
             treeView.innerHTML = `
                 <div style="color: var(--text-muted); text-align: center; padding: 40px 0;">
                     <i class="fas fa-folder-open" style="font-size: 2.5rem; display: block; margin-bottom: 15px; opacity: 0.3;"></i>
-                    <p>قم باختيار مجلد المشروع من الأعلى لعرض هيكليته</p>
+                    <p>قم باختيار مجلد مشروعك من الأعلى لعرض هيكليته</p>
                 </div>
             `;
             previewContainer.classList.remove('visible');
             updateStats();
-            showNotification('تم إعادة تعيين المستكشف');
+            showNotification('🔄 تم إعادة تعيين المستكشف');
         }
 
         // ===== حدث اختيار المجلد =====
@@ -1027,7 +1135,7 @@
             displayStructure();
             structureSection.classList.add('visible');
 
-            showNotification(`تم تحميل المشروع: ${basePath} (${totalFiles} ملف، ${totalFolders} مجلد)`);
+            showNotification(`✅ تم تحميل المشروع: ${basePath} (${totalFiles} ملف، ${totalFolders} مجلد)`);
         });
 
         // ===== أحداث الأزرار =====
@@ -1040,40 +1148,19 @@
         [includeIcons, sortAlphabetically, showPreview].forEach(option => {
             option.addEventListener('change', () => {
                 if (projectStructure.length > 0) {
-                    // إعادة بناء الهيكلية مع الترتيب الجديد
-                    // نعيد المعالجة من الصفر (نستخدم الملفات المخزنة)
-                    // لكننا نحتفظ بالهيكلية الأصلية
-                    // سنقوم بإعادة الترتيب دون إعادة المعالجة الكاملة
-                    const sorted = sortAlphabetically.checked ? sortStructure(projectStructure) : projectStructure;
-                    projectStructure = sorted;
                     displayStructure();
-                    updatePreview();
                 }
             });
         });
 
-        function sortStructure(structure) {
-            const sorted = [...structure];
-            sorted.sort((a, b) => {
-                if (a.type === 'folder' && b.type !== 'folder') return -1;
-                if (a.type !== 'folder' && b.type === 'folder') return 1;
-                return a.name.localeCompare(b.name);
-            });
-            sorted.forEach(item => {
-                if (item.type === 'folder' && item.children) {
-                    item.children = sortStructure(item.children);
-                }
-            });
-            return sorted;
-        }
-
-        // ===== إغلاق الإشعار بالنقر =====
+        // ===== إغلاق الإشعار =====
         notification.addEventListener('click', () => {
             notification.classList.remove('show');
         });
 
         console.log('🚀 مستكشف هيكلية المشاريع - TechNomads');
-        console.log('📁 اختر مجلد مشروعك لعرض هيكليته');
+        console.log('📁 اختر أي مجلد مشروع لعرض هيكليته');
+        console.log('📌 ما تراه في الشاشة هو ما سيتم نسخه بالضبط');
     </script>
 
 </body>
