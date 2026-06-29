@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أسامة منصور المريسي | السيرة الذاتية - مهندس برمجيات</title>
+    <meta name="description" content="السيرة الذاتية لأسامة منصور المريسي، مهندس برمجيات ومؤسس TechNomads. أكثر من 150 مشروعاً تقنياً ناجحاً.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- مكتبة html2pdf لإنشاء PDF تفاعلي -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        /* ===== الأساسيات ===== */
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #4ECDC4;
+            --accent: #FF6B6B;
+            --light: #f8f9fa;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+            --font: 'Tajawal', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font);
+            background: #f0f2f5;
+            color: var(--text);
+            direction: rtl;
+            padding: 20px;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        /* ===== الهيدر ===== */
+        header {
+            background: linear-gradient(135deg, var(--primary), #2d2d44);
+            color: #fff;
+            padding: 35px 40px 25px;
+            text-align: center;
+        }
+
+        .profile-badge {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid var(--secondary);
+            margin: 0 auto 15px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(78, 205, 196, 0.3);
+        }
+
+        .profile-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        h1 span {
+            color: var(--secondary);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 400;
+        }
+
+        .quick-contact {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px 25px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+
+        .quick-contact a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-contact a:hover {
+            color: var(--secondary);
+        }
+
+        /* ===== أزرار التواصل ===== */
+        .contact-section {
+            padding: 20px 30px;
+            background: var(--light);
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-btn {
+            width: 48px;
+            height: 48px;
+            border: 2px solid var(--primary);
+            background: rgba(26, 26, 46, 0.05);
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(26, 26, 46, 0.3);
+        }
+
+        .icon-btn.show-all {
+            border-color: var(--secondary);
+            color: var(--secondary);
+            background: rgba(78, 205, 196, 0.1);
+        }
+
+        .icon-btn.show-all:hover {
+            background: var(--secondary);
+            color: #fff;
+        }
+
+        .info-display {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 20px;
+            background: #fff;
+            border-radius: 50px;
+            border-right: 4px solid var(--secondary);
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            animation: fadeUp 0.3s ease;
+        }
+
+        .info-item i {
+            color: var(--primary);
+            width: 24px;
+            text-align: center;
+        }
+
+        .info-item a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .info-item a:hover {
+            color: var(--secondary);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== الأقسام ===== */
+        .section {
+            padding: 30px 40px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .section-title i {
+            color: var(--secondary);
+            font-size: 1.4rem;
+        }
+
+        /* ===== المهارات ===== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: var(--light);
+            padding: 22px;
+            border-radius: var(--radius);
+            border-top: 4px solid var(--secondary);
+            transition: var(--transition);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+        }
+
+        .skill-category h3 {
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-category h3 i {
+            color: var(--secondary);
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            padding: 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.93rem;
+            border-bottom: 1px dashed rgba(0,0,0,0.05);
+        }
+
+        .skill-category li:last-child {
+            border-bottom: none;
+        }
+
+        .skill-category li i {
+            color: var(--secondary);
+            font-size: 0.75rem;
+            min-width: 16px;
+        }
+
+        /* ===== المشاريع ===== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 20px 22px;
+            border: 1px solid #eee;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .project-card h3 {
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .project-card .project-desc {
+            color: var(--text-light);
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .tech-tag {
+            background: rgba(78, 205, 196, 0.15);
+            color: var(--primary);
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .project-link:hover {
+            color: var(--secondary);
+            gap: 12px;
+        }
+
+        .project-link i {
+            font-size: 0.8rem;
+        }
+
+        /* ===== الجدول الزمني ===== */
+        .timeline-item {
+            padding: 18px 25px;
+            margin-bottom: 15px;
+            background: var(--light);
+            border-radius: var(--radius);
+            border-right: 4px solid var(--secondary);
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover {
+            transform: translateX(5px);
+        }
+
+        .timeline-item h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .timeline-item .date {
+            display: inline-block;
+            background: rgba(26, 26, 46, 0.08);
+            color: var(--primary);
+            padding: 0 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 4px 0 8px;
+        }
+
+        .timeline-item ul {
+            padding-right: 20px;
+            margin-top: 5px;
+        }
+
+        .timeline-item ul li {
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        /* ===== أزرار الإجراءات ===== */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 25px 20px;
+            background: var(--light);
+            flex-wrap: wrap;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .action-btn {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 50px;
+            font-family: var(--font);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .action-btn.print {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .action-btn.print:hover {
+            background: #2d2d44;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 26, 46, 0.3);
+        }
+
+        .action-btn.pdf {
+            background: var(--secondary);
+            color: #fff;
+        }
+
+        .action-btn.pdf:hover {
+            background: #3ab0a8;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .action-btn.website {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .action-btn.website:hover {
+            background: #e55a5a;
+            transform: translateY(-3px);
+        }
+
+        /* ===== الفوتر ===== */
+        .footer {
+            text-align: center;
+            padding: 18px;
+            background: var(--primary);
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        /* ===== أنماط الطباعة ===== */
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .contact-section .icon-btn,
+            .action-buttons {
+                display: none !important;
+            }
+            .section {
+                page-break-inside: avoid;
+                padding: 20px 30px;
+            }
+            .project-card {
+                background: #f8f8f8;
+                border: 1px solid #ddd;
+            }
+            .quick-contact a {
+                color: #333 !important;
+            }
+            /* إظهار الروابط في الطباعة */
+            .project-link::after {
+                content: " (" attr(href) ")";
+                font-size: 0.7rem;
+                color: #666;
+            }
+        }
+
+        /* ===== التوافق ===== */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            header { padding: 25px 20px; }
+            h1 { font-size: 2rem; }
+            .section { padding: 20px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .contact-section { flex-direction: column; align-items: stretch; }
+            .info-display { min-width: unset; }
+            .quick-contact { gap: 10px; font-size: 0.85rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.6rem; }
+            .profile-badge { width: 100px; height: 100px; }
+            .section-title { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="cv-content">
+
+    <!-- ===== الرأس ===== -->
+    <header>
+        <div class="profile-badge">
+            <img src="profile.jpg" alt="أسامة منصور المريسي">
+        </div>
+        <h1>أسامة <span>منصور</span> المريسي</h1>
+        <p class="subtitle">مهندس برمجيات | مؤسس ورئيس تقني في TechNomads</p>
+        <div class="quick-contact">
+            <a href="mailto:2025ooss@gmail.com" target="_blank"><i class="fas fa-envelope"></i> 2025ooss@gmail.com</a>
+            <a href="tel:+967770200970" target="_blank"><i class="fas fa-phone"></i> +967 770 200 970</a>
+            <a href="https://te-2026.netlify.app" target="_blank"><i class="fas fa-globe"></i> TechNomads</a>
+            <span><i class="fas fa-map-marker-alt"></i> صنعاء، اليمن</span>
+        </div>
+    </header>
+
+    <!-- ===== أزرار التواصل ===== -->
+    <section class="contact-section">
+        <div>
+            <button class="icon-btn" onclick="showInfo('nationality')" aria-label="الجنسية"><i class="fas fa-passport"></i></button>
+            <button class="icon-btn" onclick="showInfo('birthdate')" aria-label="تاريخ الميلاد"><i class="fas fa-birthday-cake"></i></button>
+            <button class="icon-btn" onclick="showInfo('phone')" aria-label="الهاتف"><i class="fas fa-phone-alt"></i></button>
+            <button class="icon-btn" onclick="showInfo('email')" aria-label="البريد"><i class="fas fa-envelope"></i></button>
+            <button class="icon-btn" onclick="showInfo('linkedin')" aria-label="لينكدإن"><i class="fab fa-linkedin"></i></button>
+            <button class="icon-btn" onclick="showInfo('github')" aria-label="جيت هاب"><i class="fab fa-github"></i></button>
+            <button class="icon-btn" onclick="showInfo('website')" aria-label="الموقع"><i class="fas fa-globe"></i></button>
+            <button class="icon-btn show-all" onclick="showAll()" aria-label="عرض الكل"><i class="fas fa-layer-group"></i></button>
+        </div>
+        <div id="infoDisplay" class="info-display"></div>
+    </section>
+
+    <!-- ===== نبذة ===== -->
+    <section class="section">
+        <h2 class="section-title"><i class="fas fa-user-tie"></i> نبذة عني</h2>
+        <p style="font-size: 1.05rem; line-height: 1.9;">
+            مهندس برمجيات ومؤسس <strong>TechNomads</strong>، شركة رائدة في تقديم الحلول التقنية والرقمية في اليمن.
+            حاصل على بكالوريوس <strong>تقنية المعلومات</strong> من جامعة صنعاء بتقدير امتياز (معدل 3.8/4.0) - <strong>2024</strong>.
+            أمتلك شغفاً كبيراً في تطوير الأنظمة الذكية وتصميم حلول برمجية مبتكرة، مع خبرة عملية في إدارة وتنفيذ أكثر من <strong>150 مشروعاً</strong> تقنياً.
+            أؤمن بالتعلم المستمر وأسعى لمواكبة أحدث التقنيات العالمية لتقديم خدمات رقمية متكاملة.
+        </p>
+    </section>
+
+    <!-- ===== المهارات التقنية (مكتملة) ===== -->
+    <section class="section">
+        <h2 class="section-title"><i class="fas fa-tools"></i> المهارات التقنية</h2>
+        <div class="skills-grid">
+            
+            <!-- 1. لغات البرمجة -->
+            <div class="skill-category">
+                <h3><i class="fas fa-code"></i> لغات البرمجة</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> JavaScript (ES6+)</li>
+                    <li><i class="fas fa-check-circle"></i> Python</li>
+                    <li><i class="fas fa-check-circle"></i> PHP 7.x / 8.x</li>
+                    <li><i class="fas fa-check-circle"></i> Java (Android)</li>
+                    <li><i class="fas fa-check-circle"></i> Dart (Flutter)</li>
+                    <li><i class="fas fa-check-circle"></i> SQL (MySQL, PostgreSQL, Oracle)</li>
+                </ul>
+            </div>
+
+            <!-- 2. تطوير الويب -->
+            <div class="skill-category">
+                <h3><i class="fas fa-globe"></i> تطوير الويب</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> HTML5, CSS3, Sass</li>
+                    <li><i class="fas fa-check-circle"></i> React.js, Next.js</li>
+                    <li><i class="fas fa-check-circle"></i> Vue.js, Nuxt.js</li>
+                    <li><i class="fas fa-check-circle"></i> Angular</li>
+                    <li><i class="fas fa-check-circle"></i> Node.js, Express.js</li>
+                    <li><i class="fas fa-check-circle"></i> Laravel, CodeIgniter</li>
+                    <li><i class="fas fa-check-circle"></i> Bootstrap, Tailwind CSS</li>
+                    <li><i class="fas fa-check-circle"></i> RESTful APIs, GraphQL</li>
+                    <li><i class="fas fa-check-circle"></i> jQuery, Ajax</li>
+                </ul>
+            </div>
+
+            <!-- 3. قواعد البيانات -->
+            <div class="skill-category">
+                <h3><i class="fas fa-database"></i> قواعد البيانات</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> MySQL, MariaDB</li>
+                    <li><i class="fas fa-check-circle"></i> PostgreSQL</li>
+                    <li><i class="fas fa-check-circle"></i> Oracle SQL / PL/SQL</li>
+                    <li><i class="fas fa-check-circle"></i> Microsoft SQL Server</li>
+                    <li><i class="fas fa-check-circle"></i> MongoDB (NoSQL)</li>
+                    <li><i class="fas fa-check-circle"></i> Firebase Firestore / Realtime DB</li>
+                    <li><i class="fas fa-check-circle"></i> Redis, Elasticsearch</li>
+                    <li><i class="fas fa-check-circle"></i> نمذجة البيانات وتحسين الاستعلامات</li>
+                </ul>
+            </div>
+
+            <!-- 4. تطبيقات الجوال -->
+            <div class="skill-category">
+                <h3><i class="fas fa-mobile-alt"></i> تطبيقات الجوال</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Flutter & Dart</li>
+                    <li><i class="fas fa-check-circle"></i> React Native</li>
+                    <li><i class="fas fa-check-circle"></i> Android (Java / Kotlin)</li>
+                    <li><i class="fas fa-check-circle"></i> iOS (Swift)</li>
+                    <li><i class="fas fa-check-circle"></i> Firebase (Auth, Cloud, Notifications)</li>
+                    <li><i class="fas fa-check-circle"></i> Google Maps API, GPS Tracking</li>
+                </ul>
+            </div>
+
+            <!-- 5. أدوات التطوير والعمليات -->
+            <div class="skill-category">
+                <h3><i class="fas fa-cloud"></i> أدوات التطوير والعمليات</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Git, GitHub, GitLab</li>
+                    <li><i class="fas fa-check-circle"></i> Docker, Kubernetes</li>
+                    <li><i class="fas fa-check-circle"></i> Azure DevOps, CI/CD Pipelines</li>
+                    <li><i class="fas fa-check-circle"></i> Agile (Scrum, Kanban)</li>
+                    <li><i class="fas fa-check-circle"></i> Jira, Trello</li>
+                    <li><i class="fas fa-check-circle"></i> Linux Server Management (Ubuntu, CentOS)</li>
+                    <li><i class="fas fa-check-circle"></i> Nginx, Apache</li>
+                    <li><i class="fas fa-check-circle"></i> اختبار البرمجيات (Jest, Selenium, PHPUnit)</li>
+                </ul>
+            </div>
+
+            <!-- 6. التصميم والتحليل -->
+            <div class="skill-category">
+                <h3><i class="fas fa-paint-brush"></i> التصميم والتحليل</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Adobe Photoshop, Illustrator</li>
+                    <li><i class="fas fa-check-circle"></i> Figma, Adobe XD</li>
+                    <li><i class="fas fa-check-circle"></i> UI/UX Design</li>
+                    <li><i class="fas fa-check-circle"></i> تحليل وتصميم الأنظمة</li>
+                    <li><i class="fas fa-check-circle"></i> تحسين محركات البحث (SEO)</li>
+                    <li><i class="fas fa-check-circle"></i> Google Analytics, Data Studio</li>
+                    <li><i class="fas fa-check-circle"></i> Chart.js, D3.js (تصور البيانات)</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== المشاريع (قائمة كاملة) ===== -->
+    <section class="section">
+        <h2 class="section-title"><i class="fas fa-project-diagram"></i> جميع المشاريع</h2>
+        <div class="projects-grid">
+
+            <!-- 1. نظام إدارة الطلاب -->
+            <div class="project-card">
+                <h3>نظام إدارة الطلاب الذكي</h3>
+                <p class="project-desc">نظام متكامل لإدارة شؤون الطلاب والموظفين والنتائج مع لوحة تحليلية متقدمة.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Bootstrap</span>
+                    <span class="tech-tag">TensorFlow.js</span>
+                </div>
+                <a href="https://www.sm-fs.tech" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 2. نظام الصيدلية -->
+            <div class="project-card">
+                <h3>نظام إدارة الصيدلية</h3>
+                <p class="project-desc">نظام متكامل لإدارة المخزون، المبيعات، العملاء، والوصفات الطبية.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Bootstrap</span>
+                    <span class="tech-tag">jQuery</span>
+                </div>
+                <a href="projects/pharmacy-website/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 3. نظام الحجوزات -->
+            <div class="project-card">
+                <h3>نظام الحجز الإلكتروني</h3>
+                <p class="project-desc">منصة متكاملة لحجز الفنادق والمنتجعات مع لوحة تحكم متطورة.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Vue.js</span>
+                    <span class="tech-tag">Laravel</span>
+                    <span class="tech-tag">MongoDB</span>
+                    <span class="tech-tag">Tailwind CSS</span>
+                </div>
+                <a href="projects/booking-system/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 4. النظام المحاسبي -->
+            <div class="project-card">
+                <h3>النظام المالي والمحاسبي</h3>
+                <p class="project-desc">نظام محاسبي متكامل لإدارة الحسابات، الفواتير، والتقارير المالية.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">Chart.js</span>
+                    <span class="tech-tag">MySQL</span>
+                </div>
+                <a href="projects/financial-accountant/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 5. نظام المستشفيات -->
+            <div class="project-card">
+                <h3>نظام إدارة المستشفيات</h3>
+                <p class="project-desc">نظام متكامل لإدارة المرضى، المواعيد، السجلات الطبية، والتحاليل.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Bootstrap</span>
+                </div>
+                <a href="projects/health-system/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 6. وكالة السفر -->
+            <div class="project-card">
+                <h3>نظام وكالة السفر</h3>
+                <p class="project-desc">منصة متكاملة لحجز الرحلات، الفنادق، التأشيرات، والعمرة.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Bootstrap</span>
+                </div>
+                <a href="projects/travel-agency/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 7. تطبيق التوصيل -->
+            <div class="project-card">
+                <h3>تطبيق التوصيل الذكي</h3>
+                <p class="project-desc">تطبيق متكامل لتوصيل الطلبات مع تتبع مباشر للمندوبين.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Firebase</span>
+                    <span class="tech-tag">Google Maps API</span>
+                    <span class="tech-tag">Dart</span>
+                </div>
+                <a href="projects/delivery-app/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 8. التحاليل الطبية -->
+            <div class="project-card">
+                <h3>تحليل البيانات الطبية</h3>
+                <p class="project-desc">تطبيق متخصص لتحليل البيانات الطبية وإنشاء التقارير وإدارة المرضى.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">Chart.js</span>
+                    <span class="tech-tag">MySQL</span>
+                </div>
+                <a href="projects/MedicalAnalysisApp/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 9. حاسبة العمر -->
+            <div class="project-card">
+                <h3>حاسبة العمر المتطورة</h3>
+                <p class="project-desc">أداة متطورة لحساب العمر بدقة مع تفاصيل اليوم والشهر والسنة.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+                <a href="projects/age-calculator/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 10. خدمات التنظيف -->
+            <div class="project-card">
+                <h3>خدمات التنظيف المتكاملة</h3>
+                <p class="project-desc">منصة متكاملة لخدمات التنظيف مع نظام حجز وتتبع وتقييم الخدمات.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+                <a href="projects/Cleaning%20Services/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 11. محرر الأكواد -->
+            <div class="project-card">
+                <h3>محرر الأكواد المتقدم</h3>
+                <p class="project-desc">محرر أكواد متقدم مع تمييز الصيغ وتصحيح الأخطاء.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">CodeMirror</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+                <a href="projects/code-editor/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 12. منصة الاختبارات -->
+            <div class="project-card">
+                <h3>منصة الاختبارات</h3>
+                <p class="project-desc">منصة متكاملة لإنشاء وإجراء الاختبارات والمسابقات التعليمية.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+                <a href="projects/quiz-platform/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 13. متجر التطبيقات -->
+            <div class="project-card">
+                <h3>متجر التطبيقات</h3>
+                <p class="project-desc">منصة لعرض وتحميل التطبيقات مع نظام تقييم ومراجعات.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+                <a href="projects/app-store/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 14. الهوية التجارية -->
+            <div class="project-card">
+                <h3>هوية العلامة التجارية</h3>
+                <p class="project-desc">تصميم هوية بصرية متكاملة تشمل الشعار والألوان والخطوط.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Illustrator</span>
+                    <span class="tech-tag">Photoshop</span>
+                    <span class="tech-tag">Figma</span>
+                </div>
+                <a href="projects/brand-identity/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 15. لعبة الذاكرة -->
+            <div class="project-card">
+                <h3>لعبة الذاكرة</h3>
+                <p class="project-desc">لعبة ممتعة لتنشيط الذاكرة والتركيز مع مستويات متعددة.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+                <a href="projects/memory-game/index.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+            <!-- 16. مستكشف هيكلية المشاريع -->
+            <div class="project-card">
+                <h3>مستكشف هيكلية المشاريع</h3>
+                <p class="project-desc">أداة متقدمة لاستكشاف وعرض هيكلية أي مجلد مشروع بشكل شجري.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">AOS</span>
+                    <span class="tech-tag">Font Awesome</span>
+                </div>
+                <a href="projects/project-structure/structure-explorer.html" target="_blank" class="project-link"><i class="fas fa-arrow-left"></i> زيارة المشروع</a>
+            </div>
+
+        </div>
+
+        <!-- ===== رابط استعراض جميع المشاريع (مهم جداً) ===== -->
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="https://te-2026.netlify.app/portfolio.html" target="_blank" class="action-btn print" style="background: var(--primary); color: #fff; text-decoration: none; padding: 12px 40px; display: inline-flex; align-items: center; gap: 12px; border-radius: 50px; font-weight: 700; font-size: 1rem; transition: var(--transition);">
+                <i class="fas fa-th-large"></i> استعراض جميع المشاريع (160+)
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== الخبرات ===== -->
+    <section class="section">
+        <h2 class="section-title"><i class="fas fa-briefcase"></i> الخبرات العملية</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>مؤسس ورئيس تقني - TechNomads</h3>
+                <span class="date">2022 - الحاضر</span>
+                <p>قيادة فريق تقني لتطوير حلول رقمية مبتكرة، وإدارة أكثر من 150 مشروعاً ناجحاً لعملاء محليين ودوليين.</p>
+                <ul>
+                    <li>بناء وتطوير فريق من 30 خبيراً تقنياً.</li>
+                    <li>إدارة محفظة مشاريع متنوعة في مجالات الويب، التطبيقات، والتصميم.</li>
+                    <li>تقديم استشارات تقنية للشركات الناشئة والمؤسسات.</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <h3>متدرب مطور نظم - وزارة الاتصالات وتقنية المعلومات</h3>
+                <span class="date">يونيو 2023 - سبتمبر 2023</span>
+                <p>تطوير واجهات مستخدم وتحليل متطلبات المشاريع.</p>
+                <ul>
+                    <li>تطوير نظام إدارة المشاريع الداخلية.</li>
+                    <li>كتابة توثيق تقني للأنظمة المطورة.</li>
+                    <li>تحسين أداء التطبيقات الحالية.</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <h3>مطور ويب مستقل</h3>
+                <span class="date">2021 - الحاضر</span>
+                <p>تصميم وتطوير مواقع وتطبيقات ويب متنوعة للعملاء مع تقديم استشارات تقنية.</p>
+                <ul>
+                    <li>تصميم وتطوير أكثر من 50 مشروعاً للعملاء.</li>
+                    <li>تحسين أداء المواقع وتحسين محركات البحث (SEO).</li>
+                    <li>تقديم حلول برمجية مخصصة حسب احتياجات العملاء.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== التعليم والشهادات ===== -->
+    <section class="section">
+        <h2 class="section-title"><i class="fas fa-graduation-cap"></i> التعليم والشهادات</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>بكالوريوس تقنية المعلومات</h3>
+                <span class="date">2020 - 2024</span>
+                <p><strong>جامعة صنعاء</strong> - كلية علوم الحاسوب وتقنية المعلومات</p>
+                <p>معدل تراكمي: <strong>3.8/4.0</strong> (بتقدير امتياز)</p>
+                <p>مشروع التخرج: <strong>نظام إدارة الطلاب الذكي</strong> - نظام متكامل لإدارة شؤون الطلاب باستخدام تقنيات الذكاء الاصطناعي.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>دبلوم تطوير تطبيقات الويب المتقدمة</h3>
+                <span class="date">2023</span>
+                <p>منصة <strong>Udemy</strong> - دورة متقدمة</p>
+                <p>شهادة معتمدة في تطوير تطبيقات الويب باستخدام تقنيات حديثة مثل React وNode.js.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>شهادة إدارة قواعد البيانات Oracle</h3>
+                <span class="date">2022</span>
+                <p><strong>Oracle Academy</strong> - برنامج متخصص</p>
+                <p>تصميم وإدارة قواعد البيانات العلائقية باستخدام Oracle SQL وPL/SQL.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>شهادة إدارة المشاريع الاحترافية (PMP)</h3>
+                <span class="date">2024</span>
+                <p><strong>معهد إدارة المشاريع (PMI)</strong></p>
+                <p>منهجيات إدارة المشاريع وفق معايير PMBOK.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== اللغات والاهتمامات ===== -->
+    <section class="section">
+        <h2 class="section-title"><i class="fas fa-language"></i> اللغات والاهتمامات</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+            <div>
+                <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 1.1rem;"><i class="fas fa-comments" style="color: var(--secondary);"></i> اللغات</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 6px 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--secondary);"></i> العربية (اللغة الأم)
+                    </li>
+                    <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--secondary);"></i> الإنجليزية (مستوى متقدم - كتابة ومحادثة)
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 1.1rem;"><i class="fas fa-heart" style="color: var(--secondary);"></i> الاهتمامات</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 6px 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--secondary);"></i> حل التحديات البرمجية (LeetCode, HackerRank)
+                    </li>
+                    <li style="padding: 6px 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--secondary);"></i> قراءة كتب التقنية وتطوير الذات
+                    </li>
+                    <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--secondary);"></i> المشاركة في المجتمعات التقنية والهاكاثونات
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== المراجع ===== -->
+    <section class="section">
+        <h2 class="section-title"><i class="fas fa-user-check"></i> المراجع</h2>
+        <p style="font-size: 1.05rem;">متاحة عند الطلب. يرجى التواصل عبر البريد الإلكتروني: <a href="mailto:2025ooss@gmail.com" target="_blank" style="color: var(--secondary); text-decoration: none; font-weight: 600;">2025ooss@gmail.com</a></p>
+    </section>
+
+    <!-- ===== أزرار الإجراءات ===== -->
+    <div class="action-buttons">
+        <button class="action-btn print" onclick="window.print()"><i class="fas fa-print"></i> طباعة السيرة</button>
+        <button class="action-btn pdf" id="downloadPDF"><i class="fas fa-file-pdf"></i> تحميل PDF تفاعلي</button>
+        <a href="https://te-2026.netlify.app" target="_blank" class="action-btn website"><i class="fas fa-globe"></i> زيارة TechNomads</a>
+    </div>
+
+    <!-- ===== الفوتر ===== -->
+    <div class="footer">
+        <p>© <span id="year"></span> <a href="https://te-2026.netlify.app" target="_blank">TechNomads</a> | صنع بـ <i class="fas fa-heart" style="color: var(--secondary);"></i> في اليمن</p>
+        <p style="font-size: 0.85rem; margin-top: 4px; opacity: 0.8;">
+            <i class="fas fa-envelope"></i> <a href="mailto:2025ooss@gmail.com" target="_blank" style="color: var(--secondary);">2025ooss@gmail.com</a> &nbsp;|&nbsp;
+            <i class="fas fa-phone"></i> <a href="tel:+967770200970" target="_blank" style="color: var(--secondary);">+967 770 200 970</a>
+        </p>
+    </div>
+
+</div>
+
+<script>
+    // ===== بيانات التواصل =====
+    const contactData = {
+        nationality: { icon: 'fas fa-passport', text: 'الجنسية: يمني' },
+        birthdate: { icon: 'fas fa-birthday-cake', text: 'تاريخ الميلاد: 24 أكتوبر 2001' },
+        phone: { icon: 'fas fa-phone-alt', text: '<a href="tel:+967770200970" target="_blank">+967 770 200 970</a>' },
+        email: { icon: 'fas fa-envelope', text: '<a href="mailto:2025ooss@gmail.com" target="_blank">2025ooss@gmail.com</a>' },
+        linkedin: { icon: 'fab fa-linkedin', text: '<a href="https://linkedin.com/in/9o--sa" target="_blank">linkedin.com/in/9o--sa</a>' },
+        github: { icon: 'fab fa-github', text: '<a href="https://github.com/osama2020almorisi" target="_blank">github.com/osama2020almorisi</a>' },
+        website: { icon: 'fas fa-globe', text: '<a href="https://te-2026.netlify.app" target="_blank">te-2026.netlify.app</a>' }
+    };
+
+    function showInfo(key) {
+        const display = document.getElementById('infoDisplay');
+        const { icon, text } = contactData[key];
+        display.innerHTML = `
+            <div class="info-item">
+                <i class="${icon}"></i>
+                <span>${text}</span>
+            </div>
+        `;
+    }
+
+    function showAll() {
+        const display = document.getElementById('infoDisplay');
+        display.innerHTML = Object.entries(contactData).map(([key, { icon, text }]) => `
+            <div class="info-item">
+                <i class="${icon}"></i>
+                <span>${text}</span>
+            </div>
+        `).join('');
+    }
+
+    // ===== عرض البريد افتراضياً =====
+    document.addEventListener('DOMContentLoaded', function() {
+        showInfo('email');
+        document.getElementById('year').textContent = new Date().getFullYear();
+    });
+
+    // ===== تحميل PDF تفاعلي باستخدام html2pdf =====
+    document.getElementById('downloadPDF').addEventListener('click', function() {
+        const element = document.getElementById('cv-content');
+        const opt = {
+            margin:        [10, 10, 10, 10],
+            filename:     'السيرة_الذاتية_أسامة_المريسي.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+        // إظهار رسالة التحميل
+        const btn = this;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+        btn.disabled = true;
+        
+        html2pdf().set(opt).from(element).save().then(function() {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }).catch(function(err) {
+            console.error('PDF Error:', err);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            alert('حدث خطأ أثناء تحميل PDF. يمكنك استخدام زر الطباعة لحفظ السيرة كـ PDF.');
+        });
+    });
+</script>
+
+</body>
+</html>
