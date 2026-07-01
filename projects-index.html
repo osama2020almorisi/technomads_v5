@@ -353,17 +353,27 @@
             <span class="badge">✅ تم التدقيق الكامل</span>
         </header>
 
-        <!-- ===== الإحصائيات ===== -->
-        <div class="stats" id="statsContainer">
-            <div class="stat-card"><div class="number" id="totalProjects">0</div><div class="label">إجمالي المشاريع</div></div>
-            <div class="stat-card"><div class="number" id="totalPages">0</div><div class="label">إجمالي الصفحات</div></div>
-            <div class="stat-card"><div class="number" id="totalSections">0</div><div class="label">الأقسام</div></div>
+        <!-- ===== الإحصائيات (ثابتة) ===== -->
+        <div class="stats">
+            <div class="stat-card"><div class="number">127</div><div class="label">إجمالي المشاريع</div></div>
+            <div class="stat-card"><div class="number">127</div><div class="label">إجمالي الصفحات</div></div>
+            <div class="stat-card"><div class="number">12</div><div class="label">الأقسام</div></div>
         </div>
 
         <!-- ===== شريط التنقل السريع ===== -->
         <nav class="quick-nav" id="quickNav">
             <span class="label">⚡ انتقل إلى:</span>
-            <!-- سيتم ملؤه بواسطة الجافاسكريبت -->
+            <a href="#section-0">الرئيسية</a>
+            <a href="#section-1">الترفيه</a>
+            <a href="#section-2">حاسبة العمر</a>
+            <a href="#section-3">التحليلات الطبية</a>
+            <a href="#section-4">النظام المحاسبي</a>
+            <a href="#section-5">الصيدلية</a>
+            <a href="#section-6">وكالات السفر</a>
+            <a href="#section-7">خدمات التنظيف</a>
+            <a href="#section-8">التخزين المحلي</a>
+            <a href="#section-9">مشاريع متنوعة</a>
+            <a href="#section-10">صفحات إضافية</a>
         </nav>
 
         <!-- ===== صندوق البحث ===== -->
@@ -371,11 +381,327 @@
             <input type="text" id="searchInput" placeholder="🔍 ابحث عن مشروع أو صفحة..." />
         </div>
 
-        <!-- ===== حاوية الأقسام ===== -->
-        <div id="sectionsContainer"></div>
+        <!-- ===== جميع الأقسام (مكتوبة يدوياً لضمان الظهور) ===== -->
 
-        <!-- ===== زر الرجوع للأعلى ===== -->
-        <button class="back-to-top" id="backToTop" aria-label="العودة للأعلى">⬆</button>
+        <!-- القسم 0: الصفحات الرئيسية -->
+        <div class="section" id="section-0" data-section="الصفحات الرئيسية">
+            <div class="section-header">
+                <div class="section-title">🏠 الصفحات الرئيسية <span class="count">8 صفحات</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/" class="project-link"><span class="page-name">الصفحة الرئيسية</span></a>
+                <a href="https://te-2026.netlify.app/index.html" class="project-link"><span class="page-name">الرئيسية (index)</span></a>
+                <a href="https://te-2026.netlify.app/services.html" class="project-link"><span class="page-name">الخدمات</span></a>
+                <a href="https://te-2026.netlify.app/portfolio.html" class="project-link"><span class="page-name">معرض الأعمال</span></a>
+                <a href="https://te-2026.netlify.app/team.html" class="project-link"><span class="page-name">فريق العمل</span></a>
+                <a href="https://te-2026.netlify.app/contact.html" class="project-link"><span class="page-name">اتصل بنا</span></a>
+                <a href="https://te-2026.netlify.app/projects-index.html" class="project-link"><span class="page-name">دليل المشاريع</span></a>
+                <a href="https://te-2026.netlify.app/404.html" class="project-link"><span class="page-name">صفحة 404</span></a>
+            </div>
+        </div>
+
+        <!-- القسم 1: الترفيه -->
+        <div class="section" id="section-1" data-section="الترفيه">
+            <div class="section-header">
+                <div class="section-title">🎮 قسم الترفيه <span class="count">7 صفحات</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/entertainment/play.html" class="project-link"><span class="page-name">مركز الترفيه</span></a>
+                <a href="https://te-2026.netlify.app/entertainment/memory-game.html" class="project-link"><span class="page-name">لعبة الذاكرة</span></a>
+                <a href="https://te-2026.netlify.app/entertainment/the-age.html" class="project-link"><span class="page-name">حاسبة العمر</span></a>
+                <a href="https://te-2026.netlify.app/entertainment/code-lab.html" class="project-link"><span class="page-name">معمل الكود</span></a>
+                <a href="https://te-2026.netlify.app/entertainment/color-generator.html" class="project-link"><span class="page-name">مولد الألوان</span></a>
+                <a href="https://te-2026.netlify.app/entertainment/image-editor.html" class="project-link"><span class="page-name">محرر الصور</span></a>
+                <a href="https://te-2026.netlify.app/entertainment/quiz-game.html" class="project-link"><span class="page-name">لعبة الاختبارات</span></a>
+            </div>
+        </div>
+
+        <!-- القسم 2: حاسبة العمر -->
+        <div class="section" id="section-2" data-section="حاسبة العمر">
+            <div class="section-header">
+                <div class="section-title">🧮 مشاريع حاسبة العمر <span class="count">9 صفحات</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/projects/age-calculator/index.html" class="project-link"><span class="page-name">حاسبة العمر (رئيسي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/index.html" class="project-link"><span class="page-name">التطبيق V1</span></a>
+                <a href="https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/calculator.html" class="project-link"><span class="page-name">الحاسبة V1</span></a>
+                <a href="https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/add-birthday.html" class="project-link"><span class="page-name">إضافة ميلاد V1</span></a>
+                <a href="https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/upcoming.html" class="project-link"><span class="page-name">المناسبات V1</span></a>
+                <a href="https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/index.html" class="project-link"><span class="page-name">التطبيق V2</span></a>
+                <a href="https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/calculator.html" class="project-link"><span class="page-name">الحاسبة V2</span></a>
+                <a href="https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/add-birthday.html" class="project-link"><span class="page-name">إضافة ميلاد V2</span></a>
+                <a href="https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/upcoming.html" class="project-link"><span class="page-name">المناسبات V2</span></a>
+            </div>
+        </div>
+
+        <!-- القسم 3: التحليلات الطبية -->
+        <div class="section" id="section-3" data-section="التحليلات الطبية">
+            <div class="section-header">
+                <div class="section-title">🏥 التحليلات الطبية <span class="count">11 صفحة</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/index.html" class="project-link"><span class="page-name">الرئيسية</span></a>
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/dashboard.html" class="project-link"><span class="page-name">لوحة التحكم</span></a>
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/analysis.html" class="project-link"><span class="page-name">التحاليل</span></a>
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/patients.html" class="project-link"><span class="page-name">المرضى</span></a>
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/reports.html" class="project-link"><span class="page-name">التقارير</span></a>
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/notifications.html" class="project-link"><span class="page-name">الإشعارات</span></a>
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/settings.html" class="project-link"><span class="page-name">الإعدادات</span></a>
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/login.html" class="project-link"><span class="page-name">تسجيل الدخول</span></a>
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/register.html" class="project-link"><span class="page-name">إنشاء حساب</span></a>
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/forgot-password.html" class="project-link"><span class="page-name">نسيت كلمة المرور</span></a>
+                <a href="https://te-2026.netlify.app/projects/MedicalAnalysisApp/medication-manager/index.html" class="project-link"><span class="page-name">مدير الدواء</span></a>
+            </div>
+        </div>
+
+        <!-- القسم 4: النظام المحاسبي -->
+        <div class="section" id="section-4" data-section="النظام المحاسبي">
+            <div class="section-header">
+                <div class="section-title">💰 النظام المحاسبي <span class="count">29 صفحة</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/index.html" class="project-link"><span class="page-name">الرئيسية</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/dashboard.html" class="project-link"><span class="page-name">لوحة التحكم</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/account.html" class="project-link"><span class="page-name">الحسابات</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/emergency.html" class="project-link"><span class="page-name">الطوارئ</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/auth/login.html" class="project-link"><span class="page-name">تسجيل الدخول</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/auth/register.html" class="project-link"><span class="page-name">إنشاء حساب</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/customers/list.html" class="project-link"><span class="page-name">قائمة العملاء</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/customers/create.html" class="project-link"><span class="page-name">إضافة عميل</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/customers/edit.html" class="project-link"><span class="page-name">تعديل عميل</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/customers/view.html" class="project-link"><span class="page-name">عرض عميل</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/invoices/list.html" class="project-link"><span class="page-name">قائمة الفواتير</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/invoices/create.html" class="project-link"><span class="page-name">إنشاء فاتورة</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/invoices/edit.html" class="project-link"><span class="page-name">تعديل فاتورة</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/invoices/view.html" class="project-link"><span class="page-name">عرض فاتورة</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/products/list.html" class="project-link"><span class="page-name">قائمة المنتجات</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/products/create.html" class="project-link"><span class="page-name">إضافة منتج</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/products/edit.html" class="project-link"><span class="page-name">تعديل منتج</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/products/view.html" class="project-link"><span class="page-name">عرض منتج</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/expenses/list.html" class="project-link"><span class="page-name">قائمة المصروفات</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/expenses/create.html" class="project-link"><span class="page-name">إضافة مصروف</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/expenses/edit.html" class="project-link"><span class="page-name">تعديل مصروف</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/expenses/view.html" class="project-link"><span class="page-name">عرض مصروف</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/reports/financial.html" class="project-link"><span class="page-name">تقرير مالي</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/reports/sales.html" class="project-link"><span class="page-name">تقرير المبيعات</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/reports/tax.html" class="project-link"><span class="page-name">تقرير الضرائب</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/settings/company.html" class="project-link"><span class="page-name">إعدادات الشركة</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/settings/preferences.html" class="project-link"><span class="page-name">التفضيلات</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/settings/profile.html" class="project-link"><span class="page-name">الملف الشخصي</span></a>
+                <a href="https://te-2026.netlify.app/projects/financial-accountant/settings/users.html" class="project-link"><span class="page-name">المستخدمين</span></a>
+            </div>
+        </div>
+
+        <!-- القسم 5: الصيدلية -->
+        <div class="section" id="section-5" data-section="الصيدلية">
+            <div class="section-header">
+                <div class="section-title">💊 نظام الصيدلية <span class="count">11 صفحة</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/index.html" class="project-link"><span class="page-name">الرئيسية</span></a>
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/login.html" class="project-link"><span class="page-name">تسجيل الدخول</span></a>
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/medicines.html" class="project-link"><span class="page-name">الأدوية</span></a>
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/customers.html" class="project-link"><span class="page-name">العملاء</span></a>
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/sales.html" class="project-link"><span class="page-name">المبيعات</span></a>
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/purchases.html" class="project-link"><span class="page-name">المشتريات</span></a>
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/suppliers.html" class="project-link"><span class="page-name">الموردين</span></a>
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/reports.html" class="project-link"><span class="page-name">التقارير</span></a>
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/settings.html" class="project-link"><span class="page-name">الإعدادات</span></a>
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/profile.html" class="project-link"><span class="page-name">الملف الشخصي</span></a>
+                <a href="https://te-2026.netlify.app/projects/pharmacy-website/backup.html" class="project-link"><span class="page-name">النسخ الاحتياطي</span></a>
+            </div>
+        </div>
+
+        <!-- القسم 6: وكالات السفر -->
+        <div class="section" id="section-6" data-section="وكالات السفر">
+            <div class="section-header">
+                <div class="section-title">✈️ وكالات السفر <span class="count">47 صفحة</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/projects/travel-agency/index.html" class="project-link"><span class="page-name">الرئيسية</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/index.html" class="project-link"><span class="page-name">Aman System</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/flights.html" class="project-link"><span class="page-name">الرحلات</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/umrah.html" class="project-link"><span class="page-name">العمرة</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/visas.html" class="project-link"><span class="page-name">التأشيرات</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/clients.html" class="project-link"><span class="page-name">العملاء</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/notifications.html" class="project-link"><span class="page-name">الإشعارات</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/backup.html" class="project-link"><span class="page-name">النسخ الاحتياطي</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/Yemeni/index.html" class="project-link"><span class="page-name">الوكالة اليمنية</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/project_airline_booking/%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D8%AD%D8%AC%D8%B2-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86/index.html" class="project-link"><span class="page-name">حجز الطيران</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/index.html" class="project-link"><span class="page-name">Am-main</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/flights.html" class="project-link"><span class="page-name">الرحلات (Am)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/umrah.html" class="project-link"><span class="page-name">العمرة (Am)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/visas.html" class="project-link"><span class="page-name">التأشيرات (Am)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/clients.html" class="project-link"><span class="page-name">العملاء (Am)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/notifications.html" class="project-link"><span class="page-name">الإشعارات (Am)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/backup.html" class="project-link"><span class="page-name">النسخ الاحتياطي (Am)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/r.html" class="project-link"><span class="page-name">r (Am)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index.html" class="project-link"><span class="page-name">y-main الرئيسية</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index2.html" class="project-link"><span class="page-name">y-main 2</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index3.html" class="project-link"><span class="page-name">y-main 3</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index4.html" class="project-link"><span class="page-name">y-main 4</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index5.html" class="project-link"><span class="page-name">y-main 5</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index6.html" class="project-link"><span class="page-name">y-main 6</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index7.html" class="project-link"><span class="page-name">y-main 7</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index8.html" class="project-link"><span class="page-name">y-main 8</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/dashboard.html" class="project-link"><span class="page-name">لوحة التحكم (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/flight.html" class="project-link"><span class="page-name">الرحلات (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/hotel.html" class="project-link"><span class="page-name">الفنادق (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/embassy.html" class="project-link"><span class="page-name">السفارة (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/evisa.html" class="project-link"><span class="page-name">التأشيرة الإلكترونية (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/visa-packages.html" class="project-link"><span class="page-name">باقات التأشيرات (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/visa-req.html" class="project-link"><span class="page-name">متطلبات التأشيرة (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/trip.html" class="project-link"><span class="page-name">الرحلة (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/itinerary.html" class="project-link"><span class="page-name">جدول الرحلة (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/insurance.html" class="project-link"><span class="page-name">التأمين (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/sim.html" class="project-link"><span class="page-name">شريحة SIM (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/track.html" class="project-link"><span class="page-name">تتبع (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/A.html" class="project-link"><span class="page-name">A (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/B.html" class="project-link"><span class="page-name">B (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/o.html" class="project-link"><span class="page-name">o (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/s.html" class="project-link"><span class="page-name">s (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/travel-agency/index.html" class="project-link"><span class="page-name">Travel Agency (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/travel-agency/1.html" class="project-link"><span class="page-name">1 (y)</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/travel-agency/index.html" class="project-link"><span class="page-name">Travel Agency رئيسي</span></a>
+                <a href="https://te-2026.netlify.app/projects/travel-agency/travel-agency/flights.html" class="project-link"><span class="page-name">الرحلات (رئيسي)</span></a>
+            </div>
+        </div>
+
+        <!-- القسم 7: خدمات التنظيف -->
+        <div class="section" id="section-7" data-section="خدمات التنظيف">
+            <div class="section-header">
+                <div class="section-title">🧹 خدمات التنظيف <span class="count">13 صفحة</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/index.html" class="project-link"><span class="page-name">الرئيسية</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/index.html" class="project-link"><span class="page-name">HarMur PRO</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/about.html" class="project-link"><span class="page-name">من نحن (PRO)</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/contact.html" class="project-link"><span class="page-name">اتصل بنا (PRO)</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/services.html" class="project-link"><span class="page-name">الخدمات (PRO)</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/datenschutz.html" class="project-link"><span class="page-name">حماية البيانات (PRO)</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/impressum.html" class="project-link"><span class="page-name">إمبريسيوم (PRO)</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/index.html" class="project-link"><span class="page-name">Harmur V1</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/about.html" class="project-link"><span class="page-name">من نحن (V1)</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/contact.html" class="project-link"><span class="page-name">اتصل بنا (V1)</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/services.html" class="project-link"><span class="page-name">الخدمات (V1)</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/datenschutz.html" class="project-link"><span class="page-name">حماية البيانات (V1)</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/impressum.html" class="project-link"><span class="page-name">إمبريسيوم (V1)</span></a>
+            </div>
+        </div>
+
+        <!-- القسم 8: التخزين المحلي -->
+        <div class="section" id="section-8" data-section="التخزين المحلي">
+            <div class="section-header">
+                <div class="section-title">🗄️ التخزين المحلي <span class="count">3 صفحات</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/projects/localStorage/index.html" class="project-link"><span class="page-name">الرئيسية</span></a>
+                <a href="https://te-2026.netlify.app/projects/localStorage/localStorage-V1/index.html" class="project-link"><span class="page-name">الإصدار الأول</span></a>
+                <a href="https://te-2026.netlify.app/projects/localStorage/localStorage-V2/index.html" class="project-link"><span class="page-name">الإصدار الثاني</span></a>
+            </div>
+        </div>
+
+        <!-- القسم 9: مشاريع متنوعة -->
+        <div class="section" id="section-9" data-section="مشاريع متنوعة">
+            <div class="section-header">
+                <div class="section-title">📦 مشاريع متنوعة <span class="count">68 صفحة</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/projects/app-store/index.html" class="project-link"><span class="page-name">متجر التطبيقات</span></a>
+                <a href="https://te-2026.netlify.app/projects/booking-system/index.html" class="project-link"><span class="page-name">نظام الحجوزات</span></a>
+                <a href="https://te-2026.netlify.app/projects/brand-identity/index.html" class="project-link"><span class="page-name">الهوية التجارية</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cinema/index.html" class="project-link"><span class="page-name">نظام السينما</span></a>
+                <a href="https://te-2026.netlify.app/projects/Cinema/%D9%85%D8%AC%D9%84%D8%AF%20%D9%A1/index.html" class="project-link"><span class="page-name">السينما (مجلد ١)</span></a>
+                <a href="https://te-2026.netlify.app/projects/code-editor/index.html" class="project-link"><span class="page-name">محرر الأكواد</span></a>
+                <a href="https://te-2026.netlify.app/projects/color-generator/index.html" class="project-link"><span class="page-name">مولد الألوان</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/index.html" class="project-link"><span class="page-name">تطبيق توصيل</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/dashboard.html" class="project-link"><span class="page-name">لوحة تحكم المشرفين</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/login.html" class="project-link"><span class="page-name">دخول المشرفين</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/orders.html" class="project-link"><span class="page-name">الطلبات (المشرفين)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/drivers.html" class="project-link"><span class="page-name">السائقين (المشرفين)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/customers.html" class="project-link"><span class="page-name">العملاء (المشرفين)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/zones.html" class="project-link"><span class="page-name">المناطق (المشرفين)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/reports.html" class="project-link"><span class="page-name">التقارير (المشرفين)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/settings.html" class="project-link"><span class="page-name">الإعدادات (المشرفين)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/dashboard.html" class="project-link"><span class="page-name">لوحة تحكم العميل</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/earnings.html" class="project-link"><span class="page-name">الأرباح (العميل)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/history.html" class="project-link"><span class="page-name">السجل (العميل)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/home.html" class="project-link"><span class="page-name">الرئيسية (العميل)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/login.html" class="project-link"><span class="page-name">دخول العميل</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/new-order.html" class="project-link"><span class="page-name">طلب جديد (العميل)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/orders.html" class="project-link"><span class="page-name">الطلبات (العميل)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/payment.html" class="project-link"><span class="page-name">الدفع (العميل)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/profile.html" class="project-link"><span class="page-name">الملف الشخصي (العميل)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/register.html" class="project-link"><span class="page-name">تسجيل العميل</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/tracking.html" class="project-link"><span class="page-name">تتبع (العميل)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/index.html" class="project-link"><span class="page-name">الويب (العميل)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/about.html" class="project-link"><span class="page-name">من نحن (الويب)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/services.html" class="project-link"><span class="page-name">الخدمات (الويب)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/contact.html" class="project-link"><span class="page-name">اتصل بنا (الويب)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/track.html" class="project-link"><span class="page-name">تتبع (الويب)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/tracking.html" class="project-link"><span class="page-name">تتبع مفصل (الويب)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/login.html" class="project-link"><span class="page-name">دخول (الويب)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/register.html" class="project-link"><span class="page-name">تسجيل (الويب)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/new-order.html" class="project-link"><span class="page-name">طلب جديد (الويب)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/orders.html" class="project-link"><span class="page-name">الطلبات (الويب)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/404.html" class="project-link"><span class="page-name">404 (الويب)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/dashboard.html" class="project-link"><span class="page-name">لوحة تحكم السائق</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/earnings.html" class="project-link"><span class="page-name">الأرباح (السائق)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/history.html" class="project-link"><span class="page-name">السجل (السائق)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/login.html" class="project-link"><span class="page-name">دخول السائق</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/orders.html" class="project-link"><span class="page-name">الطلبات (السائق)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/profile.html" class="project-link"><span class="page-name">الملف الشخصي (السائق)</span></a>
+                <a href="https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/register.html" class="project-link"><span class="page-name">تسجيل السائق</span></a>
+                <a href="https://te-2026.netlify.app/projects/ecommerce-website/index.html" class="project-link"><span class="page-name">متجر إلكتروني</span></a>
+                <a href="https://te-2026.netlify.app/projects/educational-app/index.html" class="project-link"><span class="page-name">تطبيق تعليمي</span></a>
+                <a href="https://te-2026.netlify.app/projects/fileuploader/index.html" class="project-link"><span class="page-name">رفع الملفات</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/index.html" class="project-link"><span class="page-name">نظام صحي</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/dashboard.html" class="project-link"><span class="page-name">لوحة التحكم (الصحي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/analysis.html" class="project-link"><span class="page-name">التحاليل (الصحي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/patients.html" class="project-link"><span class="page-name">المرضى (الصحي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/reports.html" class="project-link"><span class="page-name">التقارير (الصحي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/notifications.html" class="project-link"><span class="page-name">الإشعارات (الصحي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/settings.html" class="project-link"><span class="page-name">الإعدادات (الصحي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/login.html" class="project-link"><span class="page-name">دخول (الصحي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/register.html" class="project-link"><span class="page-name">تسجيل (الصحي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/forgot-password.html" class="project-link"><span class="page-name">نسيت كلمة المرور (الصحي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/health-system/medication-manager/index.html" class="project-link"><span class="page-name">مدير الدواء (الصحي)</span></a>
+                <a href="https://te-2026.netlify.app/projects/image-editor/index.html" class="project-link"><span class="page-name">محرر الصور</span></a>
+                <a href="https://te-2026.netlify.app/projects/logo-design/index.html" class="project-link"><span class="page-name">تصميم شعارات</span></a>
+                <a href="https://te-2026.netlify.app/projects/marketing-campaign/index.html" class="project-link"><span class="page-name">حملة تسويقية</span></a>
+                <a href="https://te-2026.netlify.app/projects/memory-game/index.html" class="project-link"><span class="page-name">لعبة الذاكرة</span></a>
+                <a href="https://te-2026.netlify.app/projects/project-structure/index.html" class="project-link"><span class="page-name">هيكل المشروع</span></a>
+                <a href="https://te-2026.netlify.app/projects/quiz-platform/index.html" class="project-link"><span class="page-name">منصة اختبارات</span></a>
+                <a href="https://te-2026.netlify.app/projects/treemix_app/index.html" class="project-link"><span class="page-name">Treemix App</span></a>
+                <a href="https://te-2026.netlify.app/projects/treemix_app/admin.html" class="project-link"><span class="page-name">Treemix Admin</span></a>
+                <a href="https://te-2026.netlify.app/projects/wifi-auto-connect/index.html" class="project-link"><span class="page-name">Wifi Auto Connect</span></a>
+                <a href="https://te-2026.netlify.app/projects/wifi-extractor/index.html" class="project-link"><span class="page-name">Wifi Extractor</span></a>
+                <a href="https://te-2026.netlify.app/projects/wit/index.html" class="project-link"><span class="page-name">Wit Project</span></a>
+            </div>
+        </div>
+
+        <!-- القسم 10: صفحات إضافية -->
+        <div class="section" id="section-10" data-section="صفحات إضافية">
+            <div class="section-header">
+                <div class="section-title">📄 صفحات إضافية <span class="count">3 صفحات</span></div>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-body">
+                <a href="https://te-2026.netlify.app/cv/index.html" class="project-link"><span class="page-name">السيرة الذاتية</span></a>
+                <a href="https://te-2026.netlify.app/google0294c26effb6fa2a.html" class="project-link"><span class="page-name">التحقق من Google 1</span></a>
+                <a href="https://te-2026.netlify.app/google23a3dda0aed1b2cf.html" class="project-link"><span class="page-name">التحقق من Google 2</span></a>
+            </div>
+        </div>
 
         <!-- ===== الفوتر ===== -->
         <div class="footer">
@@ -383,377 +709,48 @@
         </div>
     </div>
 
+    <!-- ===== جافاسكريبت للتفاعلات (البحث، الطي، زر الرجوع) ===== -->
     <script>
-        // ================================================================
-        //  البيانات: جميع الأقسام والروابط (نفس البيانات السابقة)
-        // ================================================================
-        const data = {
-            "🏠 الصفحات الرئيسية": {
-                links: [
-                    "https://te-2026.netlify.app/",
-                    "https://te-2026.netlify.app/index.html",
-                    "https://te-2026.netlify.app/services.html",
-                    "https://te-2026.netlify.app/portfolio.html",
-                    "https://te-2026.netlify.app/team.html",
-                    "https://te-2026.netlify.app/contact.html",
-                    "https://te-2026.netlify.app/projects-index.html",
-                    "https://te-2026.netlify.app/404.html"
-                ]
-            },
-            "🎮 قسم الترفيه (Entertainment)": {
-                links: [
-                    "https://te-2026.netlify.app/entertainment/play.html",
-                    "https://te-2026.netlify.app/entertainment/memory-game.html",
-                    "https://te-2026.netlify.app/entertainment/the-age.html",
-                    "https://te-2026.netlify.app/entertainment/code-lab.html",
-                    "https://te-2026.netlify.app/entertainment/color-generator.html",
-                    "https://te-2026.netlify.app/entertainment/image-editor.html",
-                    "https://te-2026.netlify.app/entertainment/quiz-game.html"
-                ]
-            },
-            "🧮 مشاريع حاسبة العمر": {
-                links: [
-                    "https://te-2026.netlify.app/projects/age-calculator/index.html",
-                    "https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/index.html",
-                    "https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/calculator.html",
-                    "https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/add-birthday.html",
-                    "https://te-2026.netlify.app/projects/age-calculator/age-calculator-app/upcoming.html",
-                    "https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/index.html",
-                    "https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/calculator.html",
-                    "https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/add-birthday.html",
-                    "https://te-2026.netlify.app/projects/age-calculator/age-calculator-app-v2/upcoming.html"
-                ]
-            },
-            "🏥 التحليلات الطبية": {
-                links: [
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/index.html",
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/dashboard.html",
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/analysis.html",
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/patients.html",
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/reports.html",
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/notifications.html",
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/settings.html",
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/login.html",
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/register.html",
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/forgot-password.html",
-                    "https://te-2026.netlify.app/projects/MedicalAnalysisApp/medication-manager/index.html"
-                ]
-            },
-            "💰 النظام المحاسبي": {
-                links: [
-                    "https://te-2026.netlify.app/projects/financial-accountant/index.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/dashboard.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/account.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/emergency.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/auth/login.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/auth/register.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/customers/list.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/customers/create.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/customers/edit.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/customers/view.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/invoices/list.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/invoices/create.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/invoices/edit.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/invoices/view.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/products/list.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/products/create.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/products/edit.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/products/view.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/expenses/list.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/expenses/create.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/expenses/edit.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/expenses/view.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/reports/financial.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/reports/sales.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/reports/tax.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/settings/company.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/settings/preferences.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/settings/profile.html",
-                    "https://te-2026.netlify.app/projects/financial-accountant/settings/users.html"
-                ]
-            },
-            "💊 نظام الصيدلية": {
-                links: [
-                    "https://te-2026.netlify.app/projects/pharmacy-website/index.html",
-                    "https://te-2026.netlify.app/projects/pharmacy-website/login.html",
-                    "https://te-2026.netlify.app/projects/pharmacy-website/medicines.html",
-                    "https://te-2026.netlify.app/projects/pharmacy-website/customers.html",
-                    "https://te-2026.netlify.app/projects/pharmacy-website/sales.html",
-                    "https://te-2026.netlify.app/projects/pharmacy-website/purchases.html",
-                    "https://te-2026.netlify.app/projects/pharmacy-website/suppliers.html",
-                    "https://te-2026.netlify.app/projects/pharmacy-website/reports.html",
-                    "https://te-2026.netlify.app/projects/pharmacy-website/settings.html",
-                    "https://te-2026.netlify.app/projects/pharmacy-website/profile.html",
-                    "https://te-2026.netlify.app/projects/pharmacy-website/backup.html"
-                ]
-            },
-            "✈️ وكالات السفر": {
-                links: [
-                    "https://te-2026.netlify.app/projects/travel-agency/index.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/index.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/flights.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/umrah.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/visas.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/clients.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/notifications.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/aman_travel_system/backup.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/Yemeni/index.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/project_airline_booking/%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D8%AD%D8%AC%D8%B2-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86/index.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/index.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/flights.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/umrah.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/visas.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/clients.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/notifications.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/backup.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/Am-main/Am-main/r.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index2.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index3.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index4.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index5.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index6.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index7.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/index8.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/dashboard.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/flight.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/hotel.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/embassy.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/evisa.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/visa-packages.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/visa-req.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/trip.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/itinerary.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/insurance.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/sim.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/track.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/A.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/B.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/o.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/s.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/travel-agency/index.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/y-main/y-main/travel-agency/1.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/travel-agency/index.html",
-                    "https://te-2026.netlify.app/projects/travel-agency/travel-agency/flights.html"
-                ]
-            },
-            "🧹 خدمات التنظيف": {
-                links: [
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/index.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/index.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/about.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/contact.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/services.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/datenschutz.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/HarMur-Service-PRO/impressum.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/index.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/about.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/contact.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/services.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/datenschutz.html",
-                    "https://te-2026.netlify.app/projects/Cleaning%20Services/harmurservice-V1/impressum.html"
-                ]
-            },
-            "🗄️ التخزين المحلي": {
-                links: [
-                    "https://te-2026.netlify.app/projects/localStorage/index.html",
-                    "https://te-2026.netlify.app/projects/localStorage/localStorage-V1/index.html",
-                    "https://te-2026.netlify.app/projects/localStorage/localStorage-V2/index.html"
-                ]
-            },
-            "📦 مشاريع متنوعة": {
-                links: [
-                    "https://te-2026.netlify.app/projects/app-store/index.html",
-                    "https://te-2026.netlify.app/projects/booking-system/index.html",
-                    "https://te-2026.netlify.app/projects/brand-identity/index.html",
-                    "https://te-2026.netlify.app/projects/Cinema/index.html",
-                    "https://te-2026.netlify.app/projects/Cinema/%D9%85%D8%AC%D9%84%D8%AF%20%D9%A1/index.html",
-                    "https://te-2026.netlify.app/projects/code-editor/index.html",
-                    "https://te-2026.netlify.app/projects/color-generator/index.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/index.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/dashboard.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/login.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/orders.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/drivers.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/customers.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/zones.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/reports.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/admin-dashboard/pages/settings.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/dashboard.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/earnings.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/history.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/home.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/login.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/new-order.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/orders.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/payment.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/profile.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/register.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-app/pages/tracking.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/index.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/about.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/services.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/contact.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/track.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/tracking.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/login.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/register.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/new-order.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/orders.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/customer-web/pages/404.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/dashboard.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/earnings.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/history.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/login.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/orders.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/profile.html",
-                    "https://te-2026.netlify.app/projects/delivery-app/driver-app/pages/register.html",
-                    "https://te-2026.netlify.app/projects/ecommerce-website/index.html",
-                    "https://te-2026.netlify.app/projects/educational-app/index.html",
-                    "https://te-2026.netlify.app/projects/fileuploader/index.html",
-                    "https://te-2026.netlify.app/projects/health-system/index.html",
-                    "https://te-2026.netlify.app/projects/health-system/dashboard.html",
-                    "https://te-2026.netlify.app/projects/health-system/analysis.html",
-                    "https://te-2026.netlify.app/projects/health-system/patients.html",
-                    "https://te-2026.netlify.app/projects/health-system/reports.html",
-                    "https://te-2026.netlify.app/projects/health-system/notifications.html",
-                    "https://te-2026.netlify.app/projects/health-system/settings.html",
-                    "https://te-2026.netlify.app/projects/health-system/login.html",
-                    "https://te-2026.netlify.app/projects/health-system/register.html",
-                    "https://te-2026.netlify.app/projects/health-system/forgot-password.html",
-                    "https://te-2026.netlify.app/projects/health-system/medication-manager/index.html",
-                    "https://te-2026.netlify.app/projects/image-editor/index.html",
-                    "https://te-2026.netlify.app/projects/logo-design/index.html",
-                    "https://te-2026.netlify.app/projects/marketing-campaign/index.html",
-                    "https://te-2026.netlify.app/projects/memory-game/index.html",
-                    "https://te-2026.netlify.app/projects/project-structure/index.html",
-                    "https://te-2026.netlify.app/projects/quiz-platform/index.html",
-                    "https://te-2026.netlify.app/projects/treemix_app/index.html",
-                    "https://te-2026.netlify.app/projects/treemix_app/admin.html",
-                    "https://te-2026.netlify.app/projects/wifi-auto-connect/index.html",
-                    "https://te-2026.netlify.app/projects/wifi-extractor/index.html",
-                    "https://te-2026.netlify.app/projects/wit/index.html"
-                ]
-            },
-            "📄 صفحات إضافية": {
-                links: [
-                    "https://te-2026.netlify.app/cv/index.html",
-                    "https://te-2026.netlify.app/google0294c26effb6fa2a.html",
-                    "https://te-2026.netlify.app/google23a3dda0aed1b2cf.html"
-                ]
+        // 1. زر الرجوع للأعلى
+        const backBtn = document.createElement('button');
+        backBtn.className = 'back-to-top';
+        backBtn.id = 'backToTop';
+        backBtn.setAttribute('aria-label', 'العودة للأعلى');
+        backBtn.textContent = '⬆';
+        document.body.appendChild(backBtn);
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 400) {
+                backBtn.classList.add('show');
+            } else {
+                backBtn.classList.remove('show');
             }
-        };
+        });
+        backBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
-        // ================================================================
-        //  دوال مساعدة
-        // ================================================================
-        function getPageName(url) {
-            try {
-                const path = new URL(url).pathname;
-                const parts = path.split('/').filter(p => p !== '');
-                if (parts.length === 0) return 'الصفحة الرئيسية';
-                let last = parts[parts.length - 1];
-                if (last === 'index.html' || last === '') {
-                    if (parts.length >= 2) return parts[parts.length - 2];
-                    return 'الرئيسية';
-                }
-                // إزالة .html
-                return last.replace(/\.html$/, '').replace(/-/g, ' ').replace(/%20/g, ' ');
-            } catch (e) {
-                return url;
-            }
-        }
-
-        // ================================================================
-        //  بناء الصفحة
-        // ================================================================
-        const sectionsContainer = document.getElementById('sectionsContainer');
-        const quickNav = document.getElementById('quickNav');
-        const searchInput = document.getElementById('searchInput');
-        let allLinks = []; // لتخزين جميع الروابط للبحث
-
-        let totalProjects = 0;
-        let totalPages = 0;
-        const sectionNames = Object.keys(data);
-
-        // بناء الأقسام
-        sectionNames.forEach((sectionName, index) => {
-            const links = data[sectionName];
-            const count = links.length;
-            totalProjects += count;
-            totalPages += count;
-
-            // إنشاء عنصر القسم
-            const sectionDiv = document.createElement('div');
-            sectionDiv.className = 'section';
-            sectionDiv.dataset.section = sectionName;
-
-            // الهيدر (قابل للطي)
-            const headerDiv = document.createElement('div');
-            headerDiv.className = 'section-header';
-            headerDiv.innerHTML = `
-                <div class="section-title">
-                    ${sectionName}
-                    <span class="count">${count} صفحة</span>
-                </div>
-                <span class="section-toggle">▼</span>
-            `;
-            headerDiv.addEventListener('click', function() {
+        // 2. طي/فتح الأقسام
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', function() {
                 const body = this.nextElementSibling;
                 const toggle = this.querySelector('.section-toggle');
                 body.classList.toggle('hidden');
                 toggle.textContent = body.classList.contains('hidden') ? '▶' : '▼';
             });
-
-            // الجسم (الروابط)
-            const bodyDiv = document.createElement('div');
-            bodyDiv.className = 'section-body';
-
-            links.forEach((url) => {
-                const a = document.createElement('a');
-                a.href = url;
-                a.className = 'project-link';
-                a.target = '_blank';
-                a.innerHTML = `<span class="page-name">${getPageName(url)}</span>`;
-                bodyDiv.appendChild(a);
-                allLinks.push({ element: a, url: url, section: sectionName });
-            });
-
-            sectionDiv.appendChild(headerDiv);
-            sectionDiv.appendChild(bodyDiv);
-            sectionsContainer.appendChild(sectionDiv);
-
-            // إضافة إلى شريط التنقل السريع
-            const navLink = document.createElement('a');
-            navLink.href = `#section-${index}`;
-            navLink.textContent = sectionName.replace(/^[^\s]+\s/, '').substring(0, 15);
-            navLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(`.section[data-section="${sectionName}"]`);
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-            quickNav.appendChild(navLink);
-
-            // إضافة معرف للقسم للربط
-            sectionDiv.id = `section-${index}`;
         });
 
-        // تحديث الإحصائيات
-        document.getElementById('totalProjects').textContent = totalProjects;
-        document.getElementById('totalPages').textContent = totalPages;
-        document.getElementById('totalSections').textContent = sectionNames.length;
-
-        // ================================================================
-        //  وظيفة البحث
-        // ================================================================
+        // 3. وظيفة البحث
+        const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', function() {
             const query = this.value.trim().toLowerCase();
-            allLinks.forEach(item => {
-                const name = item.element.textContent.toLowerCase();
+            const allLinks = document.querySelectorAll('.project-link');
+            allLinks.forEach(link => {
+                const name = link.textContent.toLowerCase();
                 const show = name.includes(query);
-                item.element.style.display = show ? 'flex' : 'none';
+                link.style.display = show ? 'flex' : 'none';
             });
-            // إظهار/إخفاء الأقسام الفارغة
+            // إخفاء الأقسام الفارغة
             document.querySelectorAll('.section').forEach(section => {
                 const visibleLinks = section.querySelectorAll('.project-link[style*="display: flex"]');
                 const body = section.querySelector('.section-body');
@@ -771,24 +768,6 @@
                 }
             });
         });
-
-        // ================================================================
-        //  زر الرجوع للأعلى
-        // ================================================================
-        const backBtn = document.getElementById('backToTop');
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 400) {
-                backBtn.classList.add('show');
-            } else {
-                backBtn.classList.remove('show');
-            }
-        });
-        backBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // فتح القسم الأول افتراضياً (اختياري)
-        // نتركها كلها مفتوحة.
     </script>
 </body>
 </html>
