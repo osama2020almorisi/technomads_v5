@@ -1,18 +1,18 @@
-// JavaScript code for file upload
 document.addEventListener('DOMContentLoaded', () => {
+    // عناصر DOM
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('fileInput');
-    const targetFolder = document.getElementById('targetFolder');
-    const fileList = document.getElementById('fileList');
+    const folderPathInput = document.getElementById('folderPath');
+    const createFolderBtn = document.getElementById('createFolder');
+    const existingFoldersContainer = document.getElementById('existingFolders');
+    const fileListContainer = document.getElementById('fileList');
     const uploadBtn = document.getElementById('uploadBtn');
-    const progressContainer = document.getElementById('progressContainer');
-    const uploadProgress = document.getElementById('uploadProgress');
-    const progressText = document.getElementById('progressText');
     const statusMessage = document.getElementById('statusMessage');
 
     let filesToUpload = [];
+    let currentFolder = 'uploads';
 
-    // أحداث سحب وإسقاط الملفات
+    // أحداث السحب والإفلات
     uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         uploadArea.classList.add('highlight');
@@ -30,40 +30,71 @@ document.addEventListener('DOMContentLoaded', () => {
         handleFiles(e.dataTransfer.files);
     });
 
-    // حدث اختيار الملفات
+    // أحداث اختيار الملفات
     fileInput.addEventListener('change', () => {
         handleFiles(fileInput.files);
     });
 
+    // زر إنشاء مجلد
+    createFolderBtn.addEventListener('click', () => {
+        const folderName = folderPathInput.value.trim();
+        if (!folderName) {
+            showStatus('الرجاء إدخال اسم المجلد', 'error');
+            return;
+        }
+        currentFolder = folderName;
+        showStatus(`تم تحديد المجلد: ${folderName}`, 'success');
+    });
+
+    // تحميل المجلدات الموجودة
+    loadExistingFolders();
+
     // معالجة الملفات المختارة
     function handleFiles(files) {
-        filesToUpload = Array.from(files);
-        updateFileList();
+        const MAX_SIZE = 25 * 1024 * 1024; // 25MB
         
+        filesToUpload = Array.from(files).filter(file => {
+            if (file.size > MAX_SIZE) {
+                showStatus(`تم تخطي الملف ${file.name} (يتجاوز 25MB)`, 'error');
+                return false;
+            }
+            return true;
+        });
+        
+        updateFileList();
         uploadBtn.disabled = filesToUpload.length === 0;
     }
 
-    // تحديث قائمة الملفات المعروضة
+    // تحديث قائمة الملفات
     function updateFileList() {
-        fileList.innerHTML = '<h3>الملفات المحددة:</h3>';
-        
         if (filesToUpload.length === 0) {
-            fileList.innerHTML += '<p>لا توجد ملفات مختارة</p>';
+            fileListContainer.innerHTML = `
+                <h3><img src="https://cdn-icons-png.flaticon.com/512/2965/2965278.png" width="20"> الملفات المحددة:</h3>
+                <div class="empty-state">لا توجد ملفات مختارة</div>
+            `;
             return;
         }
         
+        let filesHTML = `
+            <h3><img src="https://cdn-icons-png.flaticon.com/512/2965/2965278.png" width="20"> الملفات المحددة:</h3>
+        `;
+        
         filesToUpload.forEach((file, index) => {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'file-item';
-            fileItem.innerHTML = `
-                <span>${file.name} (${formatFileSize(file.size)})</span>
-                <button onclick="removeFile(${index})">إزالة</button>
+            filesHTML += `
+                <div class="file-item">
+                    <div class="file-info">
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-size">(${formatFileSize(file.size)})</span>
+                    </div>
+                    <button class="remove-file" onclick="removeFile(${index})">إزالة</button>
+                </div>
             `;
-            fileList.appendChild(fileItem);
         });
+        
+        fileListContainer.innerHTML = filesHTML;
     }
 
-    // إزالة ملف من القائمة
+    // دالة إزالة ملف
     window.removeFile = (index) => {
         filesToUpload.splice(index, 1);
         updateFileList();
@@ -79,22 +110,70 @@ document.addEventListener('DOMContentLoaded', () => {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    // حدث رفع الملفات
+    // تحميل المجلدات الموجودة
+    async function loadExistingFolders() {
+        try {
+            const response = await fetch('https://api.github.com/repos/osama2020almorisi/file-uploader/contents');
+            
+            if (!response.ok) {
+                throw new Error('فشل في تحميل المجلدات');
+            }
+            
+            const data = await response.json();
+            const folders = data.filter(item => item.type === 'dir');
+            
+            let foldersHTML = `
+                <h3><img src="https://cdn-icons-png.flaticon.com/512/2965/2965300.png" width="20"> المجلدات المتاحة:</h3>
+            `;
+            
+            if (folders.length === 0) {
+                foldersHTML += '<div class="empty-state">لا توجد مجلدات بعد</div>';
+            } else {
+                folders.forEach(folder => {
+                    foldersHTML += `
+                        <div class="folder-item" onclick="selectFolder('${folder.path}')">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="مجلد">
+                            <span>${folder.path}</span>
+                        </div>
+                    `;
+                });
+            }
+            
+            existingFoldersContainer.innerHTML = foldersHTML;
+            
+        } catch (error) {
+            console.error('Error loading folders:', error);
+            existingFoldersContainer.innerHTML = `
+                <h3><img src="https://cdn-icons-png.flaticon.com/512/2965/2965300.png" width="20"> المجلدات المتاحة:</h3>
+                <div class="error">لا يمكن تحميل المجلدات: ${error.message}</div>
+            `;
+        }
+    }
+
+    // تحديد مجلد
+    window.selectFolder = (path) => {
+        folderPathInput.value = path;
+        currentFolder = path;
+        showStatus(`تم تحديد المجلد: ${path}`, 'success');
+    };
+
+    // رفع الملفات
     uploadBtn.addEventListener('click', async () => {
-        if (filesToUpload.length === 0) return;
+        if (filesToUpload.length === 0) {
+            showStatus('لم يتم اختيار أي ملفات', 'error');
+            return;
+        }
         
+        const folderPath = folderPathInput.value.trim() || 'uploads';
         const token = prompt('الرجاء إدخال توكن GitHub الخاص بك:');
+        
         if (!token) {
             showStatus('لم يتم إدخال التوكن', 'error');
             return;
         }
         
-        const folder = targetFolder.value.trim() || 'uploads';
-        
         uploadBtn.disabled = true;
-        progressContainer.classList.remove('hidden');
-        statusMessage.textContent = 'جاري معالجة الملفات...';
-        statusMessage.className = '';
+        showStatus('جاري معالجة الملفات...', '');
         
         try {
             // تحويل الملفات إلى base64
@@ -104,9 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // إعداد بيانات الطلب
             const payload = {
+                folder: folderPath,
                 files: filesToUpload.map((file, index) => ({
                     name: file.name,
-                    path: folder,
+                    folder: folderPath,
                     content: filesData[index],
                     size: file.size,
                     type: file.type
@@ -135,22 +215,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(error.message || 'فشل في رفع الملفات');
             }
             
-            showStatus('تم بدء عملية الرفع بنجاح! سيتم تحديث المستودع قريباً.', 'success');
+            showStatus('تم بدء عملية الرفع بنجاح! سيتم تحديث المستودع خلال دقائق.', 'success');
             
-            // إعادة تعيين الواجهة بعد 3 ثواني
+            // إعادة تعيين الواجهة
             setTimeout(() => {
                 filesToUpload = [];
                 fileInput.value = '';
                 updateFileList();
-                uploadProgress.value = 0;
-                progressText.textContent = '0%';
-                progressContainer.classList.add('hidden');
                 uploadBtn.disabled = true;
-                statusMessage.textContent = '';
+                loadExistingFolders();
             }, 3000);
             
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Upload Error:', error);
             showStatus(`حدث خطأ: ${error.message}`, 'error');
             uploadBtn.disabled = false;
         }
@@ -169,6 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // عرض رسالة الحالة
     function showStatus(message, type) {
         statusMessage.textContent = message;
-        statusMessage.className = type;
+        statusMessage.className = type ? `status-message ${type}` : 'status-message';
     }
 });

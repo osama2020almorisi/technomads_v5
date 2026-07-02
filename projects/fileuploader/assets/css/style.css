@@ -1,134 +1,282 @@
-/* CSS styles */
-/* CSS styles */
-body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
+:root {
+    --primary: #3498db;
+    --secondary: #2ecc71;
+    --danger: #e74c3c;
+    --dark: #2c3e50;
+    --light: #ecf0f1;
+}
+
+* {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
     padding: 20px;
-    background-color: #f5f5f5;
 }
 
 .container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 20px auto;
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-h1 {
-    color: #2c3e50;
-    text-align: center;
-}
-
-.upload-area {
-    border: 2px dashed #3498db;
     padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+}
+
+header {
     text-align: center;
-    margin: 20px 0;
-    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: var(--dark);
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    font-size: 16px;
+}
+
+/* عناصر التحكم بالمجلدات */
+.folder-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#folderPath {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Tajawal';
+    font-size: 16px;
     transition: all 0.3s;
 }
 
-.upload-area:hover {
-    background-color: #f0f8ff;
+#folderPath:focus {
+    border-color: var(--primary);
+    outline: none;
 }
 
-.upload-area.highlight {
-    border-color: #2ecc71;
-    background-color: #eafaf1;
-}
-
-input[type="file"] {
-    display: none;
-}
-
-label[for="fileInput"] {
-    background-color: #3498db;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
+/* الأزرار */
+.btn-primary, .btn-secondary, .btn-upload {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: 'Tajawal';
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
-    display: inline-block;
-    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
 }
 
-label[for="fileInput"]:hover {
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
     background-color: #2980b9;
 }
 
-.folder-input {
+.btn-secondary {
+    background-color: var(--light);
+    color: var(--dark);
+}
+
+.btn-secondary:hover {
+    background-color: #d5dbdb;
+}
+
+.btn-upload {
+    width: 100%;
+    justify-content: center;
+    background-color: var(--secondary);
+    color: white;
+    margin-top: 30px;
+    padding: 15px;
+    font-size: 18px;
+}
+
+.btn-upload:hover {
+    background-color: #27ae60;
+}
+
+.btn-upload:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* منطقة السحب والإفلات */
+.upload-area {
+    border: 3px dashed #bdc3c7;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    margin: 25px 0;
+    transition: all 0.3s;
+    background-color: #f8fafc;
+}
+
+.upload-area.highlight {
+    border-color: var(--secondary);
+    background-color: rgba(46, 204, 113, 0.05);
+}
+
+.drag-text {
+    font-size: 18px;
+    color: var(--dark);
     margin: 15px 0;
+    font-weight: 700;
 }
 
-.folder-input input {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 200px;
+.or-text {
+    color: #7f8c8d;
+    margin: 10px 0;
 }
 
-#fileList {
-    margin: 20px 0;
+/* قائمة المجلدات */
+.folders-list {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 1px solid #eee;
+}
+
+.folders-list h3 {
+    color: var(--dark);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.folder-item {
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.folder-item:hover {
+    background-color: var(--light);
+}
+
+.folder-item img {
+    width: 20px;
+}
+
+/* قائمة الملفات */
+.file-list {
+    margin: 25px 0;
+}
+
+.file-list h3 {
+    color: var(--dark);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .file-item {
     display: flex;
     justify-content: space-between;
-    padding: 8px;
+    align-items: center;
+    padding: 12px 15px;
     border-bottom: 1px solid #eee;
 }
 
-#uploadBtn {
-    background-color: #2ecc71;
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-name {
+    font-weight: 500;
+}
+
+.file-size {
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.remove-file {
+    background-color: var(--danger);
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 5px 12px;
     border-radius: 5px;
     cursor: pointer;
+    font-family: 'Tajawal';
+    transition: all 0.2s;
+}
+
+.remove-file:hover {
+    background-color: #c0392b;
+}
+
+.empty-state {
+    color: #7f8c8d;
+    text-align: center;
+    padding: 20px;
     font-size: 16px;
-    display: block;
-    width: 100%;
+}
+
+/* رسائل الحالة */
+.status-message {
+    padding: 15px;
+    border-radius: 8px;
     margin-top: 20px;
-}
-
-#uploadBtn:hover {
-    background-color: #27ae60;
-}
-
-#uploadBtn:disabled {
-    background-color: #95a5a6;
-    cursor: not-allowed;
-}
-
-.hidden {
-    display: none;
-}
-
-#progressContainer {
-    margin: 20px 0;
     text-align: center;
-}
-
-progress {
-    width: 100%;
-    height: 20px;
-}
-
-#statusMessage {
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 15px;
-    text-align: center;
+    font-weight: 500;
 }
 
 .success {
-    background-color: #d4edda;
-    color: #155724;
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #27ae60;
 }
 
 .error {
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #c0392b;
+}
+
+/* المتحمّل */
+.loader {
+    text-align: center;
+    padding: 20px;
+    color: #7f8c8d;
+}
+
+/* للجوال */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    .folder-controls {
+        flex-direction: column;
+    }
+    
+    .upload-area {
+        padding: 30px 15px;
+    }
 }
