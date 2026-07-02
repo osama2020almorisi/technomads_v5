@@ -1,0 +1,14 @@
+{
+  "id": "prod-1755462673184",
+  "name": "ma",
+  "price": 66,
+  "category": "electronics",
+  "description": "management",
+  "specs": {},
+  "created_at": "2025-08-17T20:32:04.253Z",
+  "updated_at": "2025-08-17T20:32:04.253Z",
+  "media": [
+    "media/main.jpg",
+    "media/gallery/1.jpg"
+  ]
+}

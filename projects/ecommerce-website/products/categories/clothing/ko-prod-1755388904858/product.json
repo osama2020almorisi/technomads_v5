@@ -1,0 +1,15 @@
+{
+  "id": "prod-1755388904858",
+  "name": "ko",
+  "price": 3019,
+  "category": "clothing",
+  "description": "iodl",
+  "specs": {},
+  "created_at": "2025-08-17T00:01:59.129Z",
+  "updated_at": "2025-08-17T00:01:59.133Z",
+  "media": [
+    "media/main.jpg",
+    "media/gallery/1.jpg",
+    "media/gallery/2.jpg"
+  ]
+}

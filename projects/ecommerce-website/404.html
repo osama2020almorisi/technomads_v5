@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,52 +7,6 @@
     <title>متجر إلكتروني | عرض المنتجات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Open Graph Meta Tags الأساسية للموقع -->
-    <meta property="og:site_name" content="متجر إلكتروني">
-    <meta property="og:title" content="متجر إلكتروني | أفضل المنتجات بأفضل الأسعار">
-    <meta property="og:description" content="اكتشف مجموعة واسعة من المنتجات عالية الجودة بأسعار منافسة">
-    <meta property="og:image" content="https://raw.githubusercontent.com/osama2020almorisi/fileuploader/main/logo.png">
-    <meta property="og:url" content="https://osama2020almorisi.github.io/fileuploader/">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ar_AR">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="متجر إلكتروني | أفضل المنتجات بأفضل الأسعار">
-    <meta name="twitter:description" content="اكتشف مجموعة واسعة من المنتجات عالية الجودة بأسعار منافسة">
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/osama2020almorisi/fileuploader/main/logo.png">
-    
-    <!-- Schema.org markup for Google -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Store",
-      "name": "متجر إلكتروني",
-      "image": "https://raw.githubusercontent.com/osama2020almorisi/fileuploader/main/logo.png",
-      "description": "أفضل المنتجات بأفضل الأسعار",
-      "url": "https://osama2020almorisi.github.io/fileuploader/",
-      "telephone": "+967770200970",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "YE"
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday"
-        ],
-        "opens": "08:00",
-        "closes": "22:00"
-      }
-    }
-    </script>
     
     <style>
         :root {
@@ -68,6 +23,28 @@
             --success-color: #2ecc71;
             --transition-speed: 0.3s;
             --animation-duration: 0.5s;
+            
+            /* ألوان الفئات */
+            --electronics-color: #3498db;
+            --clothing-color: #e74c3c;
+            --home-color: #2ecc71;
+            --books-color: #9b59b6;
+            --sports-color: #f1c40f;
+            --beauty-color: #e84393;
+            --food-color: #d35400;
+            --toys-color: #ff9ff3;
+            --jewelry-color: #ff9f43;
+            --cars-color: #636e72;
+            --health-color: #00cec9;
+            --arts-color: #6c5ce7;
+            --garden-color: #00b894;
+            --tools-color: #7986cb;
+            --pets-color: #fdcb6e;
+            --kids-color: #fd79a8;
+            --stationery-color: #48dbfb;
+            --music-color: #a29bfe;
+            --travel-color: #74b9ff;
+            --other-color: #7f8c8d;
             
             /* ألوان الوضع الداكن */
             --bg-color: #f5f7fa;
@@ -375,7 +352,6 @@
         }
 
         .category-title i {
-            color: var(--secondary-color);
             transition: transform 0.3s ease;
         }
 
@@ -489,7 +465,6 @@
             position: absolute;
             top: 0.5rem;
             left: 0.5rem;
-            background-color: var(--secondary-color);
             color: white;
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
@@ -547,7 +522,6 @@
         }
 
         .cart-icon-bottom:hover {
-            background: var(--secondary-color);
             color: white;
             transform: scale(1.1);
         }
@@ -571,7 +545,6 @@
         }
 
         .favorite-icon:hover, .favorite-icon.active {
-            background: var(--danger-color);
             color: white;
             transform: scale(1.1);
         }
@@ -711,7 +684,6 @@
         }
 
         .thumbnail.active {
-            border-color: var(--secondary-color);
             transform: scale(1.05);
         }
 
@@ -747,25 +719,21 @@
             right: 0;
             width: 80px;
             height: 3px;
-            background: var(--secondary-color);
             border-radius: 3px;
         }
 
         .product-category {
             display: inline-block;
-            background-color: var(--secondary-color);
             color: white;
             padding: 0.4rem 1.2rem;
             border-radius: 20px;
             font-size: 0.95rem;
             margin-bottom: 1.2rem;
             font-weight: 600;
-            box-shadow: 0 3px 10px rgba(26, 188, 156, 0.3);
         }
 
         .product-price {
             font-size: 2.2rem;
-            color: var(--secondary-color);
             margin-bottom: 1.8rem;
             font-weight: 800;
             position: relative;
@@ -779,7 +747,7 @@
             right: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(to right, var(--secondary-color), transparent);
+            background: linear-gradient(to right, currentColor, transparent);
         }
 
         .product-description {
@@ -871,17 +839,13 @@
         }
 
         .btn-primary {
-            background-color: var(--secondary-color);
             color: white;
             flex: 1;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.4);
         }
 
         .btn-primary:hover {
-            background-color: #16a085;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(26, 188, 156, 0.5);
         }
 
         .btn-secondary {
@@ -905,28 +869,21 @@
         }
 
         .btn-favorite.active {
-            background-color: var(--danger-color);
             color: white;
             border-color: var(--danger-color);
         }
 
         .btn-favorite:hover {
-            background-color: var(--danger-color);
             color: white;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
         }
 
         .btn-share {
-            background-color: var(--info-color);
             color: white;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
         }
 
         .btn-share:hover {
-            background-color: #2980b9;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.5);
         }
 
         /* شير بار - محسن */
@@ -1068,7 +1025,6 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background-color: var(--success-color);
             color: white;
             padding: 1rem 1.5rem;
             border-radius: 8px;
@@ -1316,23 +1272,17 @@
         }
 
         .cart-item-price {
-            color: var(--secondary-color);
             font-weight: 700;
             font-size: 1.1rem;
         }
 
         .cart-item-category {
-            background-color: #f1f8ff;
-            color: var(--info-color);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
             display: inline-block;
             margin-top: 0.5rem;
-        }
-
-        body.dark-theme .cart-item-category {
-            background-color: #1e3a5f;
+            color: white;
         }
 
         .cart-item-controls {
@@ -1367,9 +1317,8 @@
         }
 
         .quantity-btn:hover {
-            background-color: var(--secondary-color);
             color: white;
-            border-color: var(--secondary-color);
+            border-color: currentColor;
         }
 
         .quantity-value {
@@ -1430,7 +1379,6 @@
         .checkout-btn {
             width: 100%;
             padding: 1rem;
-            background-color: var(--secondary-color);
             color: white;
             border: none;
             border-radius: 10px;
@@ -1445,9 +1393,7 @@
         }
 
         .checkout-btn:hover {
-            background-color: #16a085;
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(26, 188, 156, 0.4);
         }
 
         .empty-cart {
@@ -1484,7 +1430,6 @@
         .continue-shopping:hover {
             background-color: #16a085;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.4);
         }
 
         /* نافذة إتمام الطلب */
@@ -1611,19 +1556,16 @@
         }
 
         .delivery-option:hover {
-            border-color: var(--secondary-color);
             transform: translateY(-3px);
         }
 
         .delivery-option.selected {
-            border-color: var(--secondary-color);
             background-color: rgba(26, 188, 156, 0.1);
         }
 
         .delivery-option i {
             font-size: 2rem;
             margin-bottom: 0.5rem;
-            color: var(--secondary-color);
         }
 
         .delivery-option p {
@@ -1668,14 +1610,11 @@
         }
 
         .checkout-btn-primary {
-            background-color: var(--secondary-color);
             color: white;
         }
 
         .checkout-btn-primary:hover {
-            background-color: #16a085;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(26, 188, 156, 0.5);
         }
 
         .checkout-btn-secondary {
@@ -1687,7 +1626,6 @@
         .checkout-btn-secondary:hover {
             background-color: var(--card-bg);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         /* صفحة السلة */
@@ -1915,6 +1853,207 @@
                 min-width: auto;
             }
         }
+
+        /* أنماط ألوان الفئات */
+        .electronics-color {
+            color: var(--electronics-color);
+        }
+        .electronics-bg {
+            background-color: var(--electronics-color);
+        }
+        .electronics-border {
+            border-color: var(--electronics-color);
+        }
+
+        .clothing-color {
+            color: var(--clothing-color);
+        }
+        .clothing-bg {
+            background-color: var(--clothing-color);
+        }
+        .clothing-border {
+            border-color: var(--clothing-color);
+        }
+
+        .home-color {
+            color: var(--home-color);
+        }
+        .home-bg {
+            background-color: var(--home-color);
+        }
+        .home-border {
+            border-color: var(--home-color);
+        }
+
+        .books-color {
+            color: var(--books-color);
+        }
+        .books-bg {
+            background-color: var(--books-color);
+        }
+        .books-border {
+            border-color: var(--books-color);
+        }
+
+        .sports-color {
+            color: var(--sports-color);
+        }
+        .sports-bg {
+            background-color: var(--sports-color);
+        }
+        .sports-border {
+            border-color: var(--sports-color);
+        }
+
+        .beauty-color {
+            color: var(--beauty-color);
+        }
+        .beauty-bg {
+            background-color: var(--beauty-color);
+        }
+        .beauty-border {
+            border-color: var(--beauty-color);
+        }
+
+        .food-color {
+            color: var(--food-color);
+        }
+        .food-bg {
+            background-color: var(--food-color);
+        }
+        .food-border {
+            border-color: var(--food-color);
+        }
+
+        .toys-color {
+            color: var(--toys-color);
+        }
+        .toys-bg {
+            background-color: var(--toys-color);
+        }
+        .toys-border {
+            border-color: var(--toys-color);
+        }
+
+        .jewelry-color {
+            color: var(--jewelry-color);
+        }
+        .jewelry-bg {
+            background-color: var(--jewelry-color);
+        }
+        .jewelry-border {
+            border-color: var(--jewelry-color);
+        }
+
+        .cars-color {
+            color: var(--cars-color);
+        }
+        .cars-bg {
+            background-color: var(--cars-color);
+        }
+        .cars-border {
+            border-color: var(--cars-color);
+        }
+
+        .health-color {
+            color: var(--health-color);
+        }
+        .health-bg {
+            background-color: var(--health-color);
+        }
+        .health-border {
+            border-color: var(--health-color);
+        }
+
+        .arts-color {
+            color: var(--arts-color);
+        }
+        .arts-bg {
+            background-color: var(--arts-color);
+        }
+        .arts-border {
+            border-color: var(--arts-color);
+        }
+
+        .garden-color {
+            color: var(--garden-color);
+        }
+        .garden-bg {
+            background-color: var(--garden-color);
+        }
+        .garden-border {
+            border-color: var(--garden-color);
+        }
+
+        .tools-color {
+            color: var(--tools-color);
+        }
+        .tools-bg {
+            background-color: var(--tools-color);
+        }
+        .tools-border {
+            border-color: var(--tools-color);
+        }
+
+        .pets-color {
+            color: var(--pets-color);
+        }
+        .pets-bg {
+            background-color: var(--pets-color);
+        }
+        .pets-border {
+            border-color: var(--pets-color);
+        }
+
+        .kids-color {
+            color: var(--kids-color);
+        }
+        .kids-bg {
+            background-color: var(--kids-color);
+        }
+        .kids-border {
+            border-color: var(--kids-color);
+        }
+
+        .stationery-color {
+            color: var(--stationery-color);
+        }
+        .stationery-bg {
+            background-color: var(--stationery-color);
+        }
+        .stationery-border {
+            border-color: var(--stationery-color);
+        }
+
+        .music-color {
+            color: var(--music-color);
+        }
+        .music-bg {
+            background-color: var(--music-color);
+        }
+        .music-border {
+            border-color: var(--music-color);
+        }
+
+        .travel-color {
+            color: var(--travel-color);
+        }
+        .travel-bg {
+            background-color: var(--travel-color);
+        }
+        .travel-border {
+            border-color: var(--travel-color);
+        }
+
+        .other-color {
+            color: var(--other-color);
+        }
+        .other-bg {
+            background-color: var(--other-color);
+        }
+        .other-border {
+            border-color: var(--other-color);
+        }
   
     </style>
 </head>
@@ -1923,7 +2062,7 @@
         <div class="header-content">
             <a href="#" class="logo" id="logo">
                 <!-- استبدل "logo.png" باسم ملف الشعار الخاص بك -->
-                <img src="https://raw.githubusercontent.com/osama2020almorisi/fileuploader/main/logo.png" alt="شعار المتجر" class="logo-image" onerror="this.src='https://via.placeholder.com/150x50/1abc9c/ffffff?text=شعار+المتجر'">
+                <img src="https://raw.githubusercontent.com/osama2020almorisi/fileuploader/main/logo2.png" alt="شعار المتجر" class="logo-image" onerror="this.src='https://via.placeholder.com/150x50/1abc9c/ffffff?text=شعار+المتجر'">
                 <h1 class="logo-text">متجر إلكتروني</h1>
             </a>
             <div class="header-icons">
@@ -2109,7 +2248,7 @@
         </div>
     </div>
 
-    <!-- شريط المشاركة -->
+    <!-- شير بار - محسن -->
     <div class="share-bar" id="shareBar">
         <i class="fas fa-times close-share" id="closeShare"></i>
         
@@ -2489,157 +2628,213 @@
             }
 
             // دالة للحصول على الأيقونة المناسبة للفئة
-// دالة للحصول على الأيقونة المناسبة للفئة
-function getCategoryIcon(category) {
-    // تحويل الفئة إلى نص عادي للتحقق منه
-    const categoryName = category.toLowerCase();
-    
-    if (categoryName.includes('electron') || categoryName.includes('إلكترون')) {
-        return 'fas fa-laptop';
-    } else if (categoryName.includes('clothing') || categoryName.includes('ملابس')) {
-        return 'fas fa-tshirt';
-    } else if (categoryName.includes('home') || categoryName.includes('منزل')) {
-        return 'fas fa-home';
-    } else if (categoryName.includes('book') || categoryName.includes('كتاب') || categoryName.includes('وسائل تعليمية')) {
-        return 'fas fa-book';
-    } else if (categoryName.includes('sport') || categoryName.includes('رياضة')) {
-        return 'fas fa-running';
-    } else if (categoryName.includes('beauty') || categoryName.includes('جمال')) {
-        return 'fas fa-spa';
-    } else if (categoryName.includes('food') || categoryName.includes('طعام')) {
-        return 'fas fa-utensils';
-    } else if (categoryName.includes('toy') || categoryName.includes('ألعاب')) {
-        return 'fas fa-gamepad';
-    } else if (categoryName.includes('jewelry') || categoryName.includes('مجوهرات')) {
-        return 'fas fa-gem';
-    } else if (categoryName.includes('car') || categoryName.includes('سيارات')) {
-        return 'fas fa-car';
-    } else if (categoryName.includes('health') || categoryName.includes('صحة')) {
-        return 'fas fa-heartbeat';
-    } else if (categoryName.includes('art') || categoryName.includes('فنون')) {
-        return 'fas fa-palette';
-    } else if (categoryName.includes('garden') || categoryName.includes('حديقة')) {
-        return 'fas fa-seedling';
-    } else if (categoryName.includes('tool') || categoryName.includes('أدوات')) {
-        return 'fas fa-tools';
-    } else if (categoryName.includes('pet') || categoryName.includes('حيوانات أليفة')) {
-        return 'fas fa-paw';
-    } else if (categoryName.includes('kid') || categoryName.includes('طفل') || categoryName.includes('أطفال')) {
-        return 'fas fa-baby';
-    } else if (categoryName.includes('stationery') || categoryName.includes('قرطاسية') || categoryName.includes('مكتب')) {
-        return 'fas fa-pencil-alt';
-    } else if (categoryName.includes('music') || categoryName.includes('موسيقى')) {
-        return 'fas fa-music';
-    } else if (categoryName.includes('travel') || categoryName.includes('سفر')) {
-        return 'fas fa-suitcase';
-    } else if (categoryName.includes('other') || categoryName.includes('أخرى')) {
-        return 'fas fa-box';
-    } else {
-        return 'fas fa-folder';
-    }
-}
+            function getCategoryIcon(category) {
+                // تحويل الفئة إلى نص عادي للتحقق منه
+                const categoryName = category.toLowerCase();
+                
+                if (categoryName.includes('electron') || categoryName.includes('إلكترون')) {
+                    return 'fas fa-laptop';
+                } else if (categoryName.includes('clothing') || categoryName.includes('ملابس')) {
+                    return 'fas fa-tshirt';
+                } else if (categoryName.includes('home') || categoryName.includes('منزل')) {
+                    return 'fas fa-home';
+                } else if (categoryName.includes('book') || categoryName.includes('كتاب') || categoryName.includes('وسائل تعليمية')) {
+                    return 'fas fa-book';
+                } else if (categoryName.includes('sport') || categoryName.includes('رياضة')) {
+                    return 'fas fa-running';
+                } else if (categoryName.includes('beauty') || categoryName.includes('جمال')) {
+                    return 'fas fa-spa';
+                } else if (categoryName.includes('food') || categoryName.includes('طعام')) {
+                    return 'fas fa-utensils';
+                } else if (categoryName.includes('toy') || categoryName.includes('ألعاب')) {
+                    return 'fas fa-gamepad';
+                } else if (categoryName.includes('jewelry') || categoryName.includes('مجوهرات')) {
+                    return 'fas fa-gem';
+                } else if (categoryName.includes('car') || categoryName.includes('سيارات')) {
+                    return 'fas fa-car';
+                } else if (categoryName.includes('health') || categoryName.includes('صحة')) {
+                    return 'fas fa-heartbeat';
+                } else if (categoryName.includes('art') || categoryName.includes('فنون')) {
+                    return 'fas fa-palette';
+                } else if (categoryName.includes('garden') || categoryName.includes('حديقة')) {
+                    return 'fas fa-seedling';
+                } else if (categoryName.includes('tool') || categoryName.includes('أدوات')) {
+                    return 'fas fa-tools';
+                } else if (categoryName.includes('pet') || categoryName.includes('حيوانات أليفة')) {
+                    return 'fas fa-paw';
+                } else if (categoryName.includes('kid') || categoryName.includes('طفل') || categoryName.includes('أطفال')) {
+                    return 'fas fa-baby';
+                } else if (categoryName.includes('stationery') || categoryName.includes('قرطاسية') || categoryName.includes('مكتب')) {
+                    return 'fas fa-pencil-alt';
+                } else if (categoryName.includes('music') || categoryName.includes('موسيقى')) {
+                    return 'fas fa-music';
+                } else if (categoryName.includes('travel') || categoryName.includes('سفر')) {
+                    return 'fas fa-suitcase';
+                } else if (categoryName.includes('other') || categoryName.includes('أخرى')) {
+                    return 'fas fa-box';
+                } else {
+                    return 'fas fa-folder';
+                }
+            }
           
+            // دالة للحصول على لون الفئة
+            function getCategoryColorClass(category) {
+                // تحويل الفئة إلى نص عادي للتحقق منه
+                const categoryName = category.toLowerCase();
+                
+                if (categoryName.includes('electron') || categoryName.includes('إلكترون')) {
+                    return 'electronics';
+                } else if (categoryName.includes('clothing') || categoryName.includes('ملابس')) {
+                    return 'clothing';
+                } else if (categoryName.includes('home') || categoryName.includes('منزل')) {
+                    return 'home';
+                } else if (categoryName.includes('book') || categoryName.includes('كتاب') || categoryName.includes('وسائل تعليمية')) {
+                    return 'books';
+                } else if (categoryName.includes('sport') || categoryName.includes('رياضة')) {
+                    return 'sports';
+                } else if (categoryName.includes('beauty') || categoryName.includes('جمال')) {
+                    return 'beauty';
+                } else if (categoryName.includes('food') || categoryName.includes('طعام')) {
+                    return 'food';
+                } else if (categoryName.includes('toy') || categoryName.includes('ألعاب')) {
+                    return 'toys';
+                } else if (categoryName.includes('jewelry') || categoryName.includes('مجوهرات')) {
+                    return 'jewelry';
+                } else if (categoryName.includes('car') || categoryName.includes('سيارات')) {
+                    return 'cars';
+                } else if (categoryName.includes('health') || categoryName.includes('صحة')) {
+                    return 'health';
+                } else if (categoryName.includes('art') || categoryName.includes('فنون')) {
+                    return 'arts';
+                } else if (categoryName.includes('garden') || categoryName.includes('حديقة')) {
+                    return 'garden';
+                } else if (categoryName.includes('tool') || categoryName.includes('أدوات')) {
+                    return 'tools';
+                } else if (categoryName.includes('pet') || categoryName.includes('حيوانات أليفة')) {
+                    return 'pets';
+                } else if (categoryName.includes('kid') || categoryName.includes('طفل') || categoryName.includes('أطفال')) {
+                    return 'kids';
+                } else if (categoryName.includes('stationery') || categoryName.includes('قرطاسية') || categoryName.includes('مكتب')) {
+                    return 'stationery';
+                } else if (categoryName.includes('music') || categoryName.includes('موسيقى')) {
+                    return 'music';
+                } else if (categoryName.includes('travel') || categoryName.includes('سفر')) {
+                    return 'travel';
+                } else if (categoryName.includes('other') || categoryName.includes('أخرى')) {
+                    return 'other';
+                } else {
+                    return 'other';
+                }
+            }
           
-          // دالة للحصول على لون الفئة
-function getCategoryColorClass(category) {
-    // تحويل الفئة إلى نص عادي للتحقق منه
-    const categoryName = category.toLowerCase();
-    
-    if (categoryName.includes('electron') || categoryName.includes('إلكترون')) {
-        return 'electronics';
-    } else if (categoryName.includes('clothing') || categoryName.includes('ملابس')) {
-        return 'clothing';
-    } else if (categoryName.includes('home') || categoryName.includes('منزل')) {
-        return 'home';
-    } else if (categoryName.includes('book') || categoryName.includes('كتاب') || categoryName.includes('وسائل تعليمية')) {
-        return 'books';
-    } else if (categoryName.includes('sport') || categoryName.includes('رياضة')) {
-        return 'sports';
-    } else if (categoryName.includes('beauty') || categoryName.includes('جمال')) {
-        return 'beauty';
-    } else if (categoryName.includes('food') || categoryName.includes('طعام')) {
-        return 'food';
-    } else if (categoryName.includes('toy') || categoryName.includes('ألعاب')) {
-        return 'toys';
-    } else if (categoryName.includes('jewelry') || categoryName.includes('مجوهرات')) {
-        return 'jewelry';
-    } else if (categoryName.includes('car') || categoryName.includes('سيارات')) {
-        return 'cars';
-    } else if (categoryName.includes('health') || categoryName.includes('صحة')) {
-        return 'health';
-    } else if (categoryName.includes('art') || categoryName.includes('فنون')) {
-        return 'arts';
-    } else if (categoryName.includes('garden') || categoryName.includes('حديقة')) {
-        return 'garden';
-    } else if (categoryName.includes('tool') || categoryName.includes('أدوات')) {
-        return 'tools';
-    } else if (categoryName.includes('pet') || categoryName.includes('حيوانات أليفة')) {
-        return 'pets';
-    } else if (categoryName.includes('kid') || categoryName.includes('طفل') || categoryName.includes('أطفال')) {
-        return 'kids';
-    } else if (categoryName.includes('stationery') || categoryName.includes('قرطاسية') || categoryName.includes('مكتب')) {
-        return 'stationery';
-    } else if (categoryName.includes('music') || categoryName.includes('موسيقى')) {
-        return 'music';
-    } else if (categoryName.includes('travel') || categoryName.includes('سفر')) {
-        return 'travel';
-    } else if (categoryName.includes('other') || categoryName.includes('أخرى')) {
-        return 'other';
-    } else {
-        return 'other';
-    }
-}
+            // دالة للحصول على اسم الفئة المعروض
+            function getCategoryDisplayName(category) {
+                // تحويل الفئة إلى نص عادي للتحقق منه
+                const categoryName = category.toLowerCase();
+                
+                if (categoryName.includes('electron') || categoryName.includes('إلكترون')) {
+                    return 'إلكترونيات';
+                } else if (categoryName.includes('clothing') || categoryName.includes('ملابس')) {
+                    return 'ملابس';
+                } else if (categoryName.includes('home') || categoryName.includes('منزل')) {
+                    return 'منزلية';
+                } else if (categoryName.includes('book') || categoryName.includes('كتاب') || categoryName.includes('وسائل تعليمية')) {
+                    return 'كتب ووسائل تعليمية';
+                } else if (categoryName.includes('sport') || categoryName.includes('رياضة')) {
+                    return 'رياضة';
+                } else if (categoryName.includes('beauty') || categoryName.includes('جمال')) {
+                    return 'جمال';
+                } else if (categoryName.includes('food') || categoryName.includes('طعام')) {
+                    return 'طعام';
+                } else if (categoryName.includes('toy') || categoryName.includes('ألعاب')) {
+                    return 'ألعاب';
+                } else if (categoryName.includes('jewelry') || categoryName.includes('مجوهرات')) {
+                    return 'مجوهرات';
+                } else if (categoryName.includes('car') || categoryName.includes('سيارات')) {
+                    return 'سيارات';
+                } else if (categoryName.includes('health') || categoryName.includes('صحة')) {
+                    return 'صحة';
+                } else if (categoryName.includes('art') || categoryName.includes('فنون')) {
+                    return 'فنون';
+                } else if (categoryName.includes('garden') || categoryName.includes('حديقة')) {
+                    return 'حديقة';
+                } else if (categoryName.includes('tool') || categoryName.includes('أدوات')) {
+                    return 'أدوات';
+                } else if (categoryName.includes('pet') || categoryName.includes('حيوانات أليفة')) {
+                    return 'حيوانات أليفة';
+                } else if (categoryName.includes('kid') || categoryName.includes('طفل') || categoryName.includes('أطفال')) {
+                    return 'مستلزمات أطفال';
+                } else if (categoryName.includes('stationery') || categoryName.includes('قرطاسية') || categoryName.includes('مكتب')) {
+                    return 'قرطاسية ومكتب';
+                } else if (categoryName.includes('music') || categoryName.includes('موسيقى')) {
+                    return 'موسيقى';
+                } else if (categoryName.includes('travel') || categoryName.includes('سفر')) {
+                    return 'سفر';
+                } else if (categoryName.includes('other') || categoryName.includes('أخرى')) {
+                    return 'أخرى';
+                } else {
+                    return category;
+                }
+            }
           
-          // دالة للحصول على اسم الفئة المعروض
-function getCategoryDisplayName(category) {
-    // تحويل الفئة إلى نص عادي للتحقق منه
-    const categoryName = category.toLowerCase();
-    
-    if (categoryName.includes('electron') || categoryName.includes('إلكترون')) {
-        return 'إلكترونيات';
-    } else if (categoryName.includes('clothing') || categoryName.includes('ملابس')) {
-        return 'ملابس';
-    } else if (categoryName.includes('home') || categoryName.includes('منزل')) {
-        return 'منزلية';
-    } else if (categoryName.includes('book') || categoryName.includes('كتاب') || categoryName.includes('وسائل تعليمية')) {
-        return 'كتب ووسائل تعليمية';
-    } else if (categoryName.includes('sport') || categoryName.includes('رياضة')) {
-        return 'رياضة';
-    } else if (categoryName.includes('beauty') || categoryName.includes('جمال')) {
-        return 'جمال';
-    } else if (categoryName.includes('food') || categoryName.includes('طعام')) {
-        return 'طعام';
-    } else if (categoryName.includes('toy') || categoryName.includes('ألعاب')) {
-        return 'ألعاب';
-    } else if (categoryName.includes('jewelry') || categoryName.includes('مجوهرات')) {
-        return 'مجوهرات';
-    } else if (categoryName.includes('car') || categoryName.includes('سيارات')) {
-        return 'سيارات';
-    } else if (categoryName.includes('health') || categoryName.includes('صحة')) {
-        return 'صحة';
-    } else if (categoryName.includes('art') || categoryName.includes('فنون')) {
-        return 'فنون';
-    } else if (categoryName.includes('garden') || categoryName.includes('حديقة')) {
-        return 'حديقة';
-    } else if (categoryName.includes('tool') || categoryName.includes('أدوات')) {
-        return 'أدوات';
-    } else if (categoryName.includes('pet') || categoryName.includes('حيوانات أليفة')) {
-        return 'حيوانات أليفة';
-    } else if (categoryName.includes('kid') || categoryName.includes('طفل') || categoryName.includes('أطفال')) {
-        return 'مستلزمات أطفال';
-    } else if (categoryName.includes('stationery') || categoryName.includes('قرطاسية') || categoryName.includes('مكتب')) {
-        return 'قرطاسية ومكتب';
-    } else if (categoryName.includes('music') || categoryName.includes('موسيقى')) {
-        return 'موسيقى';
-    } else if (categoryName.includes('travel') || categoryName.includes('سفر')) {
-        return 'سفر';
-    } else if (categoryName.includes('other') || categoryName.includes('أخرى')) {
-        return 'أخرى';
-    } else {
-        return category;
-    }
-}
-          
+            // تطبيق ألوان الفئة على العناصر
+            function applyCategoryColors(element, category) {
+                const colorClass = getCategoryColorClass(category);
+                
+                // تطبيق لون الفئة على الأيقونة
+                const icon = element.querySelector('i');
+                if (icon) {
+                    icon.classList.add(`${colorClass}-color`);
+                }
+                
+                // تطبيق لون الفئة على الأزرار والعناصر الأخرى
+                if (element.classList.contains('view-all')) {
+                    element.classList.add(`${colorClass}-color`);
+                    element.style.setProperty('--secondary-color', `var(--${colorClass}-color)`);
+                }
+                
+                if (element.classList.contains('product-badge-horizontal')) {
+                    element.classList.add(`${colorClass}-bg`);
+                }
+                
+                if (element.classList.contains('cart-icon-bottom')) {
+                    element.classList.add(`${colorClass}-bg`);
+                }
+                
+                if (element.classList.contains('favorite-icon')) {
+                    element.classList.add(`${colorClass}-bg`);
+                }
+                
+                if (element.classList.contains('product-category')) {
+                    element.classList.add(`${colorClass}-bg`);
+                }
+                
+                if (element.classList.contains('btn-primary')) {
+                    element.classList.add(`${colorClass}-bg`);
+                }
+                
+                if (element.classList.contains('cart-item-category')) {
+                    element.classList.add(`${colorClass}-bg`);
+                }
+                
+                if (element.classList.contains('quantity-btn')) {
+                    element.classList.add(`${colorClass}-color`);
+                    element.addEventListener('mouseover', function() {
+                        this.classList.add(`${colorClass}-bg`);
+                    });
+                    element.addEventListener('mouseout', function() {
+                        this.classList.remove(`${colorClass}-bg`);
+                    });
+                }
+                
+                if (element.classList.contains('checkout-btn')) {
+                    element.classList.add(`${colorClass}-bg`);
+                }
+                
+                if (element.classList.contains('checkout-btn-primary')) {
+                    element.classList.add(`${colorClass}-bg`);
+                }
+            }
           
             // عرض المنتجات حسب الفئات - النسخة المحسنة
             function renderProductsByCategory(products, categories) {
@@ -2689,6 +2884,10 @@ function getCategoryDisplayName(category) {
                     `;
                     
                     categoriesContainer.appendChild(categorySection);
+                    
+                    // تطبيق ألوان الفئة على عناصر القسم
+                    applyCategoryColors(categorySection.querySelector('.category-title'), category);
+                    applyCategoryColors(categorySection.querySelector('.view-all'), category);
                     
                     // عرض منتجات هذه الفئة
                     const productsScroll = document.getElementById(`products-${category}`);
@@ -2741,6 +2940,9 @@ function getCategoryDisplayName(category) {
                 `;
                 
                 categoriesContainer.appendChild(categoryHeader);
+                
+                // تطبيق ألوان الفئة على العنوان
+                applyCategoryColors(categoryHeader.querySelector('.category-title'), category);
                 
                 // عرض جميع منتجات الفئة
                 const productsGrid = document.createElement('div');
@@ -2795,6 +2997,10 @@ function getCategoryDisplayName(category) {
                     `;
                     
                     productCard.appendChild(overlay);
+                    
+                    // تطبيق ألوان الفئة على عناصر البطاقة
+                    applyCategoryColors(productCard.querySelector('.cart-icon-bottom'), product.category);
+                    applyCategoryColors(productCard.querySelector('.favorite-icon'), product.category);
                     
                     // حدث النقر على بطاقة المنتج
                     productCard.addEventListener('click', (e) => {
@@ -2885,6 +3091,15 @@ function getCategoryDisplayName(category) {
                 } else {
                     mainImage.src = 'https://via.placeholder.com/600x400?text=No+Image';
                 }
+                
+                // تطبيق ألوان الفئة على عناصر النافذة المنبثقة
+                const colorClass = getCategoryColorClass(product.category);
+                
+                // تطبيق اللون على عناصر التفاصيل
+                document.getElementById('detailCategory').classList.add(`${colorClass}-bg`);
+                document.getElementById('detailPrice').classList.add(`${colorClass}-color`);
+                document.querySelector('.product-title::after').style.background = `var(--${colorClass}-color)`;
+                document.getElementById('addToCartDetail').classList.add(`${colorClass}-bg`);
                 
                 // فتح النافذة المنبثقة
                 productModal.classList.add('active');
@@ -2983,6 +3198,15 @@ function getCategoryDisplayName(category) {
                 productModal.classList.remove('active');
                 document.body.style.overflow = 'auto';
                 
+                // إزالة ألوان الفئة من عناصر النافذة المنبثقة
+                const colorClasses = ['electronics', 'clothing', 'home', 'books', 'sports', 'beauty', 'food', 'toys', 'jewelry', 'cars', 'health', 'arts', 'garden', 'tools', 'pets', 'kids', 'stationery', 'music', 'travel', 'other'];
+                
+                colorClasses.forEach(colorClass => {
+                    document.getElementById('detailCategory').classList.remove(`${colorClass}-bg`);
+                    document.getElementById('detailPrice').classList.remove(`${colorClass}-color`);
+                    document.getElementById('addToCartDetail').classList.remove(`${colorClass}-bg`);
+                });
+                
                 // إظهار مؤشر التمرير عند إغلاق المودال
                 setTimeout(() => {
                     scrollIndicator.style.opacity = '0.7';
@@ -3011,11 +3235,9 @@ function getCategoryDisplayName(category) {
                 // تأثير زر الإضافة إذا كان متوفراً
                 if (button) {
                     button.innerHTML = '<i class="fas fa-check"></i>';
-                    button.style.backgroundColor = 'var(--success-color)';
                     
                     setTimeout(() => {
                         button.innerHTML = '<i class="fas fa-shopping-basket"></i>';
-                        button.style.backgroundColor = '';
                     }, 2000);
                 }
             }
@@ -3188,7 +3410,7 @@ function getCategoryDisplayName(category) {
                 });
             }
 
-            // إعداد أحداث التنقل между الصفحات
+            // إعداد أحداث التنقل بين الصفحات
             function setupNavigationEvents() {
                 // الانتقال إلى صفحة المفضلة
                 favoriteIconHeader.addEventListener('click', showFavoritesPage);
@@ -3303,6 +3525,9 @@ function getCategoryDisplayName(category) {
                     
                     favoritesContainer.appendChild(categorySection);
                     
+                    // تطبيق ألوان الفئة على عناصر القسم
+                    applyCategoryColors(categorySection.querySelector('.category-title'), category);
+                    
                     // عرض منتجات هذه الفئة
                     const productsScroll = document.getElementById(`favorites-${category}`);
                     renderCategoryProducts(productsByCategory[category], productsScroll);
@@ -3357,9 +3582,7 @@ function getCategoryDisplayName(category) {
                             <div class="summary-item">
                                 <span>عدد المنتجات:</span>
                                 <span>${cart.reduce((total, item) => total + item.quantity, 0)}</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>تكلفة الشحن:</span>
+                                                                <span>تكلفة الشحن:</span>
                                 <span>0 ر.ي</span>
                             </div>
                             <div class="summary-total">
@@ -3374,6 +3597,22 @@ function getCategoryDisplayName(category) {
                 `;
                 
                 cartContent.innerHTML = html;
+                
+                // تطبيق ألوان الفئة على عناصر السلة
+                cart.forEach(item => {
+                    const cartItem = document.querySelector(`.cart-item[data-id="${item.id}"]`);
+                    if (cartItem) {
+                        applyCategoryColors(cartItem.querySelector('.cart-item-category'), item.category);
+                        applyCategoryColors(cartItem.querySelector('.cart-item-price'), item.category);
+                        applyCategoryColors(cartItem.querySelector('.increase-btn'), item.category);
+                        applyCategoryColors(cartItem.querySelector('.decrease-btn'), item.category);
+                    }
+                });
+                
+                // تطبيق لون الفئة على زر الدفع
+                if (cart.length > 0) {
+                    applyCategoryColors(document.getElementById('checkoutBtn'), cart[0].category);
+                }
                 
                 // إضافة الأحداث
                 document.querySelectorAll('.increase-btn').forEach(btn => {
@@ -3575,11 +3814,9 @@ function getCategoryDisplayName(category) {
                     
                     // تأثير مرئي
                     addToCartDetail.innerHTML = '<i class="fas fa-check"></i> تمت الإضافة';
-                    addToCartDetail.style.backgroundColor = 'var(--success-color)';
                     
                     setTimeout(() => {
                         addToCartDetail.innerHTML = '<i class="fas fa-cart-plus"></i> أضف للسلة';
-                        addToCartDetail.style.backgroundColor = '';
                     }, 2000);
                 }
             });
@@ -3630,3 +3867,5 @@ function getCategoryDisplayName(category) {
     </script>
 </body>
 </html>
+                           
+                

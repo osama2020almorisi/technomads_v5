@@ -861,7 +861,7 @@
             left: 0;
             width: 0;
             height: 100%;
-            background: rgba(255,255,255,0.1);
+            background-color: rgba(255,255,255,0.1);
             transition: all 0.5s ease;
             z-index: -1;
         }
@@ -1915,7 +1915,6 @@
                 min-width: auto;
             }
         }
-  
     </style>
 </head>
 <body>
@@ -2422,7 +2421,7 @@
                 } catch (error) {
                     console.error('Error fetching categories:', error);
                     showNotification('حدث خطأ أثناء جلب الفئات', 'error');
-                    return ['clothing', 'electronics', 'home', 'other']; // فئات افتراضية في حالة الخطأ
+                    return ['إلكترونيات', 'ملابس', 'منزلية']; // فئات افتراضية في حالة الخطأ
                 }
             }
 
@@ -2488,159 +2487,6 @@
                 }
             }
 
-            // دالة للحصول على الأيقونة المناسبة للفئة
-// دالة للحصول على الأيقونة المناسبة للفئة
-function getCategoryIcon(category) {
-    // تحويل الفئة إلى نص عادي للتحقق منه
-    const categoryName = category.toLowerCase();
-    
-    if (categoryName.includes('electron') || categoryName.includes('إلكترون')) {
-        return 'fas fa-laptop';
-    } else if (categoryName.includes('clothing') || categoryName.includes('ملابس')) {
-        return 'fas fa-tshirt';
-    } else if (categoryName.includes('home') || categoryName.includes('منزل')) {
-        return 'fas fa-home';
-    } else if (categoryName.includes('book') || categoryName.includes('كتاب') || categoryName.includes('وسائل تعليمية')) {
-        return 'fas fa-book';
-    } else if (categoryName.includes('sport') || categoryName.includes('رياضة')) {
-        return 'fas fa-running';
-    } else if (categoryName.includes('beauty') || categoryName.includes('جمال')) {
-        return 'fas fa-spa';
-    } else if (categoryName.includes('food') || categoryName.includes('طعام')) {
-        return 'fas fa-utensils';
-    } else if (categoryName.includes('toy') || categoryName.includes('ألعاب')) {
-        return 'fas fa-gamepad';
-    } else if (categoryName.includes('jewelry') || categoryName.includes('مجوهرات')) {
-        return 'fas fa-gem';
-    } else if (categoryName.includes('car') || categoryName.includes('سيارات')) {
-        return 'fas fa-car';
-    } else if (categoryName.includes('health') || categoryName.includes('صحة')) {
-        return 'fas fa-heartbeat';
-    } else if (categoryName.includes('art') || categoryName.includes('فنون')) {
-        return 'fas fa-palette';
-    } else if (categoryName.includes('garden') || categoryName.includes('حديقة')) {
-        return 'fas fa-seedling';
-    } else if (categoryName.includes('tool') || categoryName.includes('أدوات')) {
-        return 'fas fa-tools';
-    } else if (categoryName.includes('pet') || categoryName.includes('حيوانات أليفة')) {
-        return 'fas fa-paw';
-    } else if (categoryName.includes('kid') || categoryName.includes('طفل') || categoryName.includes('أطفال')) {
-        return 'fas fa-baby';
-    } else if (categoryName.includes('stationery') || categoryName.includes('قرطاسية') || categoryName.includes('مكتب')) {
-        return 'fas fa-pencil-alt';
-    } else if (categoryName.includes('music') || categoryName.includes('موسيقى')) {
-        return 'fas fa-music';
-    } else if (categoryName.includes('travel') || categoryName.includes('سفر')) {
-        return 'fas fa-suitcase';
-    } else if (categoryName.includes('other') || categoryName.includes('أخرى')) {
-        return 'fas fa-box';
-    } else {
-        return 'fas fa-folder';
-    }
-}
-          
-          
-          // دالة للحصول على لون الفئة
-function getCategoryColorClass(category) {
-    // تحويل الفئة إلى نص عادي للتحقق منه
-    const categoryName = category.toLowerCase();
-    
-    if (categoryName.includes('electron') || categoryName.includes('إلكترون')) {
-        return 'electronics';
-    } else if (categoryName.includes('clothing') || categoryName.includes('ملابس')) {
-        return 'clothing';
-    } else if (categoryName.includes('home') || categoryName.includes('منزل')) {
-        return 'home';
-    } else if (categoryName.includes('book') || categoryName.includes('كتاب') || categoryName.includes('وسائل تعليمية')) {
-        return 'books';
-    } else if (categoryName.includes('sport') || categoryName.includes('رياضة')) {
-        return 'sports';
-    } else if (categoryName.includes('beauty') || categoryName.includes('جمال')) {
-        return 'beauty';
-    } else if (categoryName.includes('food') || categoryName.includes('طعام')) {
-        return 'food';
-    } else if (categoryName.includes('toy') || categoryName.includes('ألعاب')) {
-        return 'toys';
-    } else if (categoryName.includes('jewelry') || categoryName.includes('مجوهرات')) {
-        return 'jewelry';
-    } else if (categoryName.includes('car') || categoryName.includes('سيارات')) {
-        return 'cars';
-    } else if (categoryName.includes('health') || categoryName.includes('صحة')) {
-        return 'health';
-    } else if (categoryName.includes('art') || categoryName.includes('فنون')) {
-        return 'arts';
-    } else if (categoryName.includes('garden') || categoryName.includes('حديقة')) {
-        return 'garden';
-    } else if (categoryName.includes('tool') || categoryName.includes('أدوات')) {
-        return 'tools';
-    } else if (categoryName.includes('pet') || categoryName.includes('حيوانات أليفة')) {
-        return 'pets';
-    } else if (categoryName.includes('kid') || categoryName.includes('طفل') || categoryName.includes('أطفال')) {
-        return 'kids';
-    } else if (categoryName.includes('stationery') || categoryName.includes('قرطاسية') || categoryName.includes('مكتب')) {
-        return 'stationery';
-    } else if (categoryName.includes('music') || categoryName.includes('موسيقى')) {
-        return 'music';
-    } else if (categoryName.includes('travel') || categoryName.includes('سفر')) {
-        return 'travel';
-    } else if (categoryName.includes('other') || categoryName.includes('أخرى')) {
-        return 'other';
-    } else {
-        return 'other';
-    }
-}
-          
-          // دالة للحصول على اسم الفئة المعروض
-function getCategoryDisplayName(category) {
-    // تحويل الفئة إلى نص عادي للتحقق منه
-    const categoryName = category.toLowerCase();
-    
-    if (categoryName.includes('electron') || categoryName.includes('إلكترون')) {
-        return 'إلكترونيات';
-    } else if (categoryName.includes('clothing') || categoryName.includes('ملابس')) {
-        return 'ملابس';
-    } else if (categoryName.includes('home') || categoryName.includes('منزل')) {
-        return 'منزلية';
-    } else if (categoryName.includes('book') || categoryName.includes('كتاب') || categoryName.includes('وسائل تعليمية')) {
-        return 'كتب ووسائل تعليمية';
-    } else if (categoryName.includes('sport') || categoryName.includes('رياضة')) {
-        return 'رياضة';
-    } else if (categoryName.includes('beauty') || categoryName.includes('جمال')) {
-        return 'جمال';
-    } else if (categoryName.includes('food') || categoryName.includes('طعام')) {
-        return 'طعام';
-    } else if (categoryName.includes('toy') || categoryName.includes('ألعاب')) {
-        return 'ألعاب';
-    } else if (categoryName.includes('jewelry') || categoryName.includes('مجوهرات')) {
-        return 'مجوهرات';
-    } else if (categoryName.includes('car') || categoryName.includes('سيارات')) {
-        return 'سيارات';
-    } else if (categoryName.includes('health') || categoryName.includes('صحة')) {
-        return 'صحة';
-    } else if (categoryName.includes('art') || categoryName.includes('فنون')) {
-        return 'فنون';
-    } else if (categoryName.includes('garden') || categoryName.includes('حديقة')) {
-        return 'حديقة';
-    } else if (categoryName.includes('tool') || categoryName.includes('أدوات')) {
-        return 'أدوات';
-    } else if (categoryName.includes('pet') || categoryName.includes('حيوانات أليفة')) {
-        return 'حيوانات أليفة';
-    } else if (categoryName.includes('kid') || categoryName.includes('طفل') || categoryName.includes('أطفال')) {
-        return 'مستلزمات أطفال';
-    } else if (categoryName.includes('stationery') || categoryName.includes('قرطاسية') || categoryName.includes('مكتب')) {
-        return 'قرطاسية ومكتب';
-    } else if (categoryName.includes('music') || categoryName.includes('موسيقى')) {
-        return 'موسيقى';
-    } else if (categoryName.includes('travel') || categoryName.includes('سفر')) {
-        return 'سفر';
-    } else if (categoryName.includes('other') || categoryName.includes('أخرى')) {
-        return 'أخرى';
-    } else {
-        return category;
-    }
-}
-          
-          
             // عرض المنتجات حسب الفئات - النسخة المحسنة
             function renderProductsByCategory(products, categories) {
                 categoriesContainer.innerHTML = '';
@@ -2673,8 +2519,13 @@ function getCategoryDisplayName(category) {
                     categorySection.className = 'category-section';
                     categorySection.style.animationDelay = `${index * 0.1}s`;
                     
-                    // الحصول على الأيقونة المناسبة للفئة
-                    const categoryIcon = getCategoryIcon(category);
+                    // استخدام أيقونة مناسبة لكل فئة
+                    let categoryIcon = 'fas fa-folder';
+                    if (category.includes('إلكترون')) categoryIcon = 'fas fa-laptop';
+                    else if (category.includes('ملابس')) categoryIcon = 'fas fa-tshirt';
+                    else if (category.includes('منزل')) categoryIcon = 'fas fa-home';
+                    else if (category.includes('رياض')) categoryIcon = 'fas fa-running';
+                    else if (category.includes('جمال')) categoryIcon = 'fas fa-spa';
                     
                     categorySection.innerHTML = `
                         <div class="category-header">
@@ -2726,8 +2577,13 @@ function getCategoryDisplayName(category) {
                 
                 categoriesContainer.appendChild(backButton);
                 
-                // الحصول على الأيقونة المناسبة للفئة
-                const categoryIcon = getCategoryIcon(category);
+                // استخدام أيقونة مناسبة للفئة
+                let categoryIcon = 'fas fa-folder';
+                if (category.includes('إلكترون')) categoryIcon = 'fas fa-laptop';
+                else if (category.includes('ملابس')) categoryIcon = 'fas fa-tshirt';
+                else if (category.includes('منزل')) categoryIcon = 'fas fa-home';
+                else if (category.includes('رياض')) categoryIcon = 'fas fa-running';
+                else if (category.includes('جمال')) categoryIcon = 'fas fa-spa';
                 
                 // عرض عنوان الفئة
                 const categoryHeader = document.createElement('div');
@@ -2937,7 +2793,7 @@ function getCategoryDisplayName(category) {
                 
                 const twitterTitle = document.createElement('meta');
                 twitterTitle.setAttribute('name', 'twitter:title');
-                twitterTitle.content = product.name + ' | متجر إلكتروني';
+                twitterTitle.content = product.name + ' | متجر إlectronي';
                 document.head.appendChild(twitterTitle);
                 
                 const twitterDesc = document.createElement('meta');
@@ -3188,7 +3044,7 @@ function getCategoryDisplayName(category) {
                 });
             }
 
-            // إعداد أحداث التنقل между الصفحات
+            // إعداد أحداث التنقل بين الصفحات
             function setupNavigationEvents() {
                 // الانتقال إلى صفحة المفضلة
                 favoriteIconHeader.addEventListener('click', showFavoritesPage);
@@ -3286,8 +3142,13 @@ function getCategoryDisplayName(category) {
                     const categorySection = document.createElement('div');
                     categorySection.className = 'category-section';
                     
-                    // الحصول على الأيقونة المناسبة للفئة
-                    const categoryIcon = getCategoryIcon(category);
+                    // استخدام أيقونة مناسبة لكل فئة
+                    let categoryIcon = 'fas fa-folder';
+                    if (category.includes('إلكترون')) categoryIcon = 'fas fa-laptop';
+                    else if (category.includes('ملابس')) categoryIcon = 'fas fa-tshirt';
+                    else if (category.includes('منزل')) categoryIcon = 'fas fa-home';
+                    else if (category.includes('رياض')) categoryIcon = 'fas fa-running';
+                    else if (category.includes('جمال')) categoryIcon = 'fas fa-spa';
                     
                     categorySection.innerHTML = `
                         <div class="category-header">
