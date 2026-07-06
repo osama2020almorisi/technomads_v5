@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="theme-color" content="#1a365d">
+    <meta property="og:title" content="ديوان الحكمة | TechNomads">
+    <meta property="og:description" content="كنوز الحكمة والأشعار في تطبيق أنيق وسريع">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://te-2026.netlify.app/">
+    <meta property="og:image" content="https://te-2026.netlify.app/og-image.jpg">
+    <title>ديوان الحكمة | TechNomads</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        /* ===== قاعدة المتغيرات ===== */
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #d69e2e;
+            --accent-light: #ecc94b;
+            --bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text: #1a202c;
+            --text-muted: #718096;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --danger: #e53e3e;
+            --success: #38a169;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --header-bg: var(--primary);
+            --header-text: #ffffff;
+            --input-bg: var(--bg);
+            --hover-bg: rgba(255, 255, 255, 0.15);
+            --modal-overlay: rgba(0, 0, 0, 0.5);
+            --toast-bg: var(--primary);
+        }
+
+        /* ===== الوضع الليلي ===== */
+        [data-theme="dark"] {
+            --primary: #2d3748;
+            --primary-light: #4a5568;
+            --bg: #1a202c;
+            --card-bg: #2d3748;
+            --text: #e2e8f0;
+            --text-muted: #a0aec0;
+            --border: #4a5568;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            --header-bg: #1a202c;
+            --header-text: #e2e8f0;
+            --input-bg: #1a202c;
+            --hover-bg: rgba(255, 255, 255, 0.08);
+            --modal-overlay: rgba(0, 0, 0, 0.8);
+            --toast-bg: #2d3748;
+            --accent-light: #b7791f;
+            --search-highlight: #b7791f;
+        }
+
+        /* ===== إعدادات عامة ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Noto Naskh Arabic', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 1rem;
+            line-height: 1.7;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* ===== شاشة التحميل ===== */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease, background 0.3s ease;
+            color: white;
+            padding: 2rem;
+        }
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        [data-theme="dark"] .loading-screen {
+            background: var(--bg);
+        }
+        .loading-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        .loading-text {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .loading-sub {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+        .loading-bar-inner {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-light);
+            border-radius: 4px;
+            animation: load 1.5s ease forwards;
+        }
+        @keyframes load {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* ===== الهيدر ===== */
+        .header {
+            background: var(--header-bg);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            color: var(--header-text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .logo-icon {
+            font-size: 2.2rem;
+            line-height: 1;
+        }
+        .logo-text h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: 'Noto Naskh Arabic', serif;
+        }
+        .logo-text span {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            display: block;
+        }
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .btn-icon {
+            background: var(--hover-bg);
+            border: none;
+            color: var(--header-text);
+            padding: 0.4rem 0.9rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            backdrop-filter: blur(4px);
+        }
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        [data-theme="dark"] .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ===== زر الوضع الليلي ===== */
+        .theme-toggle {
+            background: var(--hover-bg);
+            border: none;
+            color: var(--header-text);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(20deg) scale(1.05);
+        }
+        [data-theme="dark"] .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ===== البحث ===== */
+        .search-section {
+            margin-bottom: 1.5rem;
+        }
+        .search-box {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+        .search-box:focus-within {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+        .search-icon {
+            font-size: 1.2rem;
+            opacity: 0.6;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 0.9rem 0;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 1.05rem;
+            color: var(--text);
+        }
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+        .results-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        /* ===== إحصائيات ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== المحتوى الرئيسي ===== */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* ===== بطاقات الاقتباسات ===== */
+        .quotes-section h2 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+        .categories-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .cat-chip {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-muted);
+        }
+        .cat-chip:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .cat-chip.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        [data-theme="dark"] .cat-chip:hover,
+        [data-theme="dark"] .cat-chip.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+
+        .quotes-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .quote-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            animation: fadeIn 0.4s ease forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .quote-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+        .quote-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 2;
+            margin-bottom: 0.75rem;
+            font-family: 'Noto Naskh Arabic', serif;
+        }
+        .quote-text .search-highlight {
+            background: var(--accent-light);
+            color: var(--primary);
+            padding: 0 4px;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+        [data-theme="dark"] .quote-text .search-highlight {
+            color: #1a202c;
+        }
+
+        .quote-meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+        .quote-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .quote-author {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .quote-category {
+            background: var(--bg);
+            padding: 0.1rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+        }
+        .quote-date {
+            font-size: 0.7rem;
+        }
+
+        .quote-actions {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+        .quote-actions button {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.6rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.7rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .quote-actions button:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .quote-actions .btn-delete:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+        }
+        [data-theme="dark"] .quote-actions button:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+        [data-theme="dark"] .quote-actions .btn-delete:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+        }
+
+        /* أزرار المشاركة والنسخ أسفل البطاقة (ظاهرة للجوال) */
+        .share-actions-mobile {
+            display: none;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--border);
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .share-actions-mobile .share-btn {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 0.3rem 0.9rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.75rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .share-actions-mobile .share-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        [data-theme="dark"] .share-actions-mobile .share-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ===== الشريط الجانبي (النماذج) ===== */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .form-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--text-muted);
+        }
+        .form-group textarea,
+        .form-group input {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: var(--input-bg);
+            resize: vertical;
+            color: var(--text);
+        }
+        .form-group textarea:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.2);
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        [data-theme="dark"] .btn-primary:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .btn-secondary {
+            background: var(--border);
+            color: var(--text);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        [data-theme="dark"] .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        /* ===== الفوتر ===== */
+        .footer {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ===== رسائل Toast ===== */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: var(--toast-bg);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 10000;
+            box-shadow: var(--shadow-lg);
+            max-width: 90%;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) scale(1);
+        }
+        .toast.success {
+            background: var(--success);
+        }
+        .toast.error {
+            background: var(--danger);
+        }
+        [data-theme="dark"] .toast.success {
+            background: #2f855a;
+        }
+        [data-theme="dark"] .toast.error {
+            background: #c53030;
+        }
+
+        /* ===== مودال الحذف ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--modal-overlay);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 1rem;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .modal h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .modal p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .modal-buttons button {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .modal-confirm {
+            background: var(--danger);
+            color: white;
+        }
+        .modal-confirm:hover {
+            background: #c53030;
+            transform: scale(1.03);
+        }
+        .modal-cancel {
+            background: var(--border);
+            color: var(--text);
+        }
+        .modal-cancel:hover {
+            background: #cbd5e0;
+        }
+        [data-theme="dark"] .modal-cancel:hover {
+            background: #4a5568;
+        }
+
+        /* ===== زر العودة للأعلى ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            transition: var(--transition);
+            z-index: 100;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .back-to-top:hover {
+            transform: scale(1.1);
+            background: var(--primary-light);
+        }
+        [data-theme="dark"] .back-to-top:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ===== رسالة عند عدم وجود نتائج ===== */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .empty-state h3 {
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+
+        /* ===== تثبيت التطبيق ===== */
+        .install-prompt {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 0.8rem 1.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto 1rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .install-prompt.show {
+            display: flex;
+        }
+        .install-prompt span {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .install-prompt button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .install-prompt button:hover {
+            transform: scale(1.05);
+        }
+        .install-prompt .skip-btn {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 0.4rem 0.8rem;
+        }
+        .install-prompt .skip-btn:hover {
+            background: var(--border);
+        }
+        [data-theme="dark"] .install-prompt .skip-btn:hover {
+            background: var(--border);
+        }
+
+        /* ===== استجابة للجوال ===== */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .logo-area {
+                justify-content: center;
+            }
+            .header-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 0.5rem;
+            }
+            .header {
+                padding: 0.8rem 1rem;
+                border-radius: var(--radius-sm);
+            }
+            .logo-text h1 {
+                font-size: 1.1rem;
+            }
+            .stats-bar {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+            .stat-number {
+                font-size: 1.4rem;
+            }
+            .stat-card {
+                padding: 0.6rem;
+            }
+            .quote-card {
+                padding: 1rem;
+            }
+            .quote-text {
+                font-size: 1rem;
+                line-height: 1.8;
+            }
+            .quote-actions {
+                display: none;
+            }
+            /* إظهار أزرار المشاركة والنسخ للجوال */
+            .share-actions-mobile {
+                display: flex;
+            }
+            .search-box input {
+                font-size: 0.95rem;
+                padding: 0.7rem 0;
+            }
+            .form-card {
+                padding: 1rem;
+            }
+            .modal {
+                padding: 1.5rem;
+            }
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 1.5rem;
+                right: 1rem;
+            }
+            .toast {
+                font-size: 0.8rem;
+                padding: 0.6rem 1.2rem;
+                bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .stats-bar {
+                grid-template-columns: 1fr;
+            }
+            .header-actions .btn-icon {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== شاشة التحميل ===== -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-icon">📜</div>
+        <div class="loading-text">ديوان الحكمة</div>
+        <div class="loading-sub">جارٍ تحميل كنوز الحكمة...</div>
+        <div class="loading-bar"><div class="loading-bar-inner"></div></div>
+    </div>
+
+    <!-- ===== تثبيت التطبيق ===== -->
+    <div class="install-prompt" id="installPrompt">
+        <span>📱 قم بتثبيت تطبيق "ديوان الحكمة" على جهازك</span>
+        <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+            <button onclick="installApp()">تثبيت</button>
+            <button class="skip-btn" onclick="document.getElementById('installPrompt').classList.remove('show')">تخطي</button>
+        </div>
+    </div>
+
+    <!-- ===== الهيدر ===== -->
+    <header class="header">
+        <div class="logo-area">
+            <div class="logo-icon">📜</div>
+            <div class="logo-text">
+                <h1>ديوان الحكمة</h1>
+                <span>TECHNOMADS — حلول رقمية رائدة</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="تبديل الوضع الليلي">🌙</button>
+            <button class="btn-icon" onclick="shareApp()">📤 مشاركة</button>
+            <button class="btn-icon" onclick="exportData()">📥 تصدير</button>
+            <button class="btn-icon" onclick="document.getElementById('importFile').click()">📤 استيراد</button>
+            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+        </div>
+    </header>
+
+    <!-- ===== البحث ===== -->
+    <div class="search-section">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="ابحث في الاقتباسات، القائلين، أو التصنيفات..." autocomplete="off">
+            <span class="results-count" id="resultsCount"></span>
+        </div>
+    </div>
+
+    <!-- ===== الإحصائيات ===== -->
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-number" id="statTotal">0</div>
+            <div class="stat-label">إجمالي الاقتباسات</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="statAuthors">0</div>
+            <div class="stat-label">عدد القائلين</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="statCategories">0</div>
+            <div class="stat-label">التصنيفات</div>
+        </div>
+    </div>
+
+    <!-- ===== المحتوى الرئيسي ===== -->
+    <div class="main-content">
+
+        <!-- ===== قسم الاقتباسات ===== -->
+        <div class="quotes-section">
+            <h2>✨ مقتطفات الحكمة</h2>
+            <div class="categories-filter" id="categoriesFilter"></div>
+            <div class="quotes-grid" id="quotesList"></div>
+        </div>
+
+        <!-- ===== الشريط الجانبي ===== -->
+        <div class="sidebar">
+
+            <!-- نموذج الإضافة -->
+            <div class="form-card">
+                <h3>➕ إضافة اقتباس جديد</h3>
+                <form id="quoteForm" onsubmit="addQuote(event)">
+                    <div class="form-group">
+                        <label>الاقتباس *</label>
+                        <textarea id="qText" placeholder="اكتب الاقتباس هنا..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>القائل *</label>
+                        <input type="text" id="qAuthor" placeholder="اسم القائل" required>
+                    </div>
+                    <div class="form-group">
+                        <label>التصنيف</label>
+                        <input type="text" id="qCategory" list="catList" placeholder="مثال: حكمة، شعر، فلسفة">
+                        <datalist id="catList"></datalist>
+                    </div>
+                    <button type="submit" class="btn-primary">إضافة الاقتباس</button>
+                </form>
+            </div>
+
+            <!-- نموذج التعديل -->
+            <div class="form-card" id="editFormCard" style="display:none">
+                <h3>✏️ تعديل الاقتباس</h3>
+                <form id="editForm" onsubmit="saveEdit(event)">
+                    <input type="hidden" id="editId">
+                    <div class="form-group">
+                        <label>الاقتباس</label>
+                        <textarea id="editText" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>القائل</label>
+                        <input type="text" id="editAuthor" required>
+                    </div>
+                    <div class="form-group">
+                        <label>التصنيف</label>
+                        <input type="text" id="editCategory">
+                    </div>
+                    <button type="submit" class="btn-primary">حفظ التعديلات</button>
+                    <button type="button" class="btn-secondary" onclick="cancelEdit()">إلغاء</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== الفوتر ===== -->
+    <footer class="footer">
+        <p>© 2026 <a href="https://te-2026.netlify.app/" target="_blank">TechNomads</a> — حلول رقمية رائدة من اليمن إلى العالم العربي</p>
+        <p style="margin-top:6px; font-size:0.78rem;">تم تطوير هذا المشروع كجزء من رؤية TechNomads في الابتكار والجودة</p>
+    </footer>
+
+    <!-- ===== رسائل Toast ===== -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ===== مودال الحذف ===== -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <div class="modal-icon">⚠️</div>
+            <h3>تأكيد الحذف</h3>
+            <p>هل أنت متأكد من حذف هذا الاقتباس؟ لا يمكن التراجع عن هذا الإجراء.</p>
+            <div class="modal-buttons">
+                <button class="modal-confirm" onclick="confirmDelete()">نعم، احذف</button>
+                <button class="modal-cancel" onclick="closeModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== زر العودة للأعلى ===== -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
+    <script>
+        // ================================================================
+        // 1. المتغيرات العامة
+        // ================================================================
+        let quotes = [];
+        let deleteId = null;
+        let activeCategory = 'all';
+        let installPromptEvent = null;
+        let searchTimeout = null;
+
+        // ================================================================
+        // 2. الوضع الليلي (Dark Mode)
+        // ================================================================
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // تحديث شكل الزر
+            const toggleBtn = document.getElementById('themeToggle');
+            toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+
+            // تحديث meta theme-color
+            const metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (newTheme === 'dark') {
+                metaTheme.setAttribute('content', '#1a202c');
+            } else {
+                metaTheme.setAttribute('content', '#1a365d');
+            }
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            // التحقق من تفضيلات النظام
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme === 'dark' || (savedTheme === 'system' && prefersDark) ? 'dark' : 'light';
+
+            document.documentElement.setAttribute('data-theme', theme);
+            const toggleBtn = document.getElementById('themeToggle');
+            toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+
+            // تحديث meta theme-color
+            const metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (theme === 'dark') {
+                metaTheme.setAttribute('content', '#1a202c');
+            } else {
+                metaTheme.setAttribute('content', '#1a365d');
+            }
+
+            // متابعة تغييرات النظام
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme') || localStorage.getItem('theme') === 'system') {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+                    const metaTheme = document.querySelector('meta[name="theme-color"]');
+                    metaTheme.setAttribute('content', newTheme === 'dark' ? '#1a202c' : '#1a365d');
+                }
+            });
+        }
+
+        // ================================================================
+        // 3. PWA (تثبيت التطبيق)
+        // ================================================================
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            installPromptEvent = e;
+            document.getElementById('installPrompt').classList.add('show');
+        });
+
+        function installApp() {
+            if (installPromptEvent) {
+                installPromptEvent.prompt();
+                installPromptEvent.userChoice.then((result) => {
+                    if (result.outcome === 'accepted') {
+                        document.getElementById('installPrompt').classList.remove('show');
+                        showToast('📱 تم تثبيت التطبيق بنجاح', 'success');
+                    }
+                });
+            }
+        }
+
+        // ================================================================
+        // 4. المشاركة العامة للتطبيق
+        // ================================================================
+        function shareApp() {
+            const url = window.location.href;
+            const title = 'ديوان الحكمة - كنوز من الحكمة والأشعار';
+            const text = 'اكتشف كنوز الحكمة والأشعار مع تطبيق "ديوان الحكمة" من TechNomads';
+
+            if (navigator.share) {
+                navigator.share({ title, text, url })
+                    .then(() => showToast('📤 تمت المشاركة', 'success'))
+                    .catch(() => {});
+            } else {
+                copyToClipboard(`${text}\n\n${url}`);
+                showToast('📋 تم نسخ الرابط للمشاركة', 'success');
+            }
+        }
+
+        // ================================================================
+        // 5. مشاركة اقتباس مع الرابط
+        // ================================================================
+        function shareQuote(quote) {
+            const formattedText = `"${quote.text}"\n— ${quote.author}`;
+            const url = window.location.href;
+            const fullMessage = `${formattedText}\n\n📖 للمزيد: ${url}`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'اقتباس من ديوان الحكمة',
+                    text: fullMessage,
+                    url: url
+                }).then(() => showToast('📤 تمت المشاركة', 'success'))
+                .catch(() => {});
+            } else {
+                copyToClipboard(fullMessage);
+                showToast('📋 تم نسخ الاقتباس مع الرابط للمشاركة', 'success');
+            }
+        }
+
+        // ================================================================
+        // 6. نسخ اقتباس مع الرابط
+        // ================================================================
+        function copyQuote(quote) {
+            const formattedText = `"${quote.text}"\n— ${quote.author}`;
+            const url = window.location.href;
+            const fullMessage = `${formattedText}\n\n📖 للمزيد: ${url}`;
+            copyToClipboard(fullMessage);
+            showToast('📋 تم نسخ الاقتباس مع الرابط!', 'success');
+        }
+
+        // ================================================================
+        // 7. دوال النسخ المساعدة
+        // ================================================================
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            textarea.style.top = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+            } catch (e) {}
+            document.body.removeChild(textarea);
+        }
+
+        // ================================================================
+        // 8. البحث مع debounce (تأخير لتحسين الأداء)
+        // ================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => renderQuotes(), 250);
+            });
+        });
+
+        // ================================================================
+        // 9. عرض الاقتباسات مع تمييز البحث
+        // ================================================================
+        function renderQuotes() {
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            const list = document.getElementById('quotesList');
+            const countDisplay = document.getElementById('resultsCount');
+
+            let filtered = quotes.filter(q => {
+                const matchesSearch = !search ||
+                    q.text.toLowerCase().includes(search) ||
+                    q.author.toLowerCase().includes(search) ||
+                    (q.category && q.category.toLowerCase().includes(search));
+                const matchesCat = activeCategory === 'all' || q.category === activeCategory;
+                return matchesSearch && matchesCat;
+            });
+
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            countDisplay.textContent = filtered.length > 0 ? `(${filtered.length})` : '';
+
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>لا توجد نتائج</h3>
+                        <p>جرب البحث بكلمات مختلفة أو أضف اقتباساً جديداً</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = filtered.map((q, i) => {
+                let displayText = q.text;
+                if (search) {
+                    const regex = new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                    displayText = q.text.replace(regex, '<span class="search-highlight">$1</span>');
+                }
+
+                // إعداد النص للمشاركة والنسخ (الهروب من علامات الاقتباس)
+                const safeText = q.text.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+                const safeAuthor = q.author.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+
+                return `
+                    <div class="quote-card" data-id="${q.id}" style="animation-delay: ${i * 0.05}s">
+                        <div class="quote-text">${displayText}</div>
+                        <div class="quote-meta">
+                            <div class="quote-info">
+                                <span class="quote-author">👤 ${escapeHtml(q.author)}</span>
+                                <span class="quote-category">${escapeHtml(q.category || 'عام')}</span>
+                                <span class="quote-date">📅 ${q.date}</span>
+                            </div>
+                            <div class="quote-actions">
+                                <button onclick="copyQuote({text:'${safeText}', author:'${safeAuthor}'})" title="نسخ الاقتباس مع الرابط">📋 نسخ</button>
+                                <button onclick="shareQuote({text:'${safeText}', author:'${safeAuthor}'})" title="مشاركة الاقتباس">📤 مشاركة</button>
+                                <button onclick="startEdit(${q.id})">✏️ تعديل</button>
+                                <button class="btn-delete" onclick="askDelete(${q.id})">🗑️ حذف</button>
+                            </div>
+                        </div>
+                        <!-- أزرار المشاركة والنسخ للجوال -->
+                        <div class="share-actions-mobile">
+                            <button class="share-btn" onclick="copyQuote({text:'${safeText}', author:'${safeAuthor}'})">📋 نسخ مع الرابط</button>
+                            <button class="share-btn" onclick="shareQuote({text:'${safeText}', author:'${safeAuthor}'})">📤 مشاركة</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ================================================================
+        // 10. دوال إدارة التصنيفات
+        // ================================================================
+        function renderCategoriesFilter() {
+            const cats = [...new Set(quotes.map(q => q.category).filter(Boolean))];
+            const container = document.getElementById('categoriesFilter');
+
+            let html = `<button class="cat-chip ${activeCategory === 'all' ? 'active' : ''}" onclick="setCategory('all')">الكل (${quotes.length})</button>`;
+            cats.forEach(cat => {
+                const count = quotes.filter(q => q.category === cat).length;
+                html += `<button class="cat-chip ${activeCategory === cat ? 'active' : ''}" onclick="setCategory('${cat}')">${cat} (${count})</button>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function setCategory(cat) {
+            activeCategory = cat;
+            renderQuotes();
+            renderCategoriesFilter();
+        }
+
+        function updateCatList() {
+            const cats = [...new Set(quotes.map(q => q.category).filter(Boolean))];
+            const datalist = document.getElementById('catList');
+            datalist.innerHTML = cats.map(c => `<option value="${escapeHtml(c)}">`).join('');
+        }
+
+        // ================================================================
+        // 11. دوال الإحصائيات
+        // ================================================================
+        function updateStats() {
+            document.getElementById('statTotal').textContent = quotes.length;
+            document.getElementById('statAuthors').textContent = new Set(quotes.map(q => q.author)).size;
+            document.getElementById('statCategories').textContent = new Set(quotes.map(q => q.category).filter(Boolean)).size;
+        }
+
+        // ================================================================
+        // 12. إضافة اقتباس
+        // ================================================================
+        function addQuote(e) {
+            e.preventDefault();
+            const text = document.getElementById('qText').value.trim();
+            const author = document.getElementById('qAuthor').value.trim();
+            const category = document.getElementById('qCategory').value.trim() || 'عام';
+
+            if (!text || !author) {
+                showToast('⚠️ الرجاء ملء جميع الحقول المطلوبة', 'error');
+                return;
+            }
+
+            const newQuote = {
+                id: Date.now(),
+                text,
+                author,
+                category,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            quotes.unshift(newQuote);
+            saveToLocal();
+
+            document.getElementById('quoteForm').reset();
+            renderQuotes();
+            updateStats();
+            updateCatList();
+            renderCategoriesFilter();
+            showToast('✅ تم إضافة الاقتباس بنجاح', 'success');
+        }
+
+        // ================================================================
+        // 13. تعديل اقتباس
+        // ================================================================
+        function startEdit(id) {
+            const q = quotes.find(x => x.id === id);
+            if (!q) return;
+
+            document.getElementById('editId').value = id;
+            document.getElementById('editText').value = q.text;
+            document.getElementById('editAuthor').value = q.author;
+            document.getElementById('editCategory').value = q.category || '';
+
+            document.getElementById('editFormCard').style.display = 'block';
+            document.getElementById('editFormCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function saveEdit(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('editId').value);
+            const q = quotes.find(x => x.id === id);
+            if (!q) return;
+
+            q.text = document.getElementById('editText').value.trim();
+            q.author = document.getElementById('editAuthor').value.trim();
+            q.category = document.getElementById('editCategory').value.trim() || 'عام';
+
+            saveToLocal();
+            cancelEdit();
+            renderQuotes();
+            updateStats();
+            updateCatList();
+            renderCategoriesFilter();
+            showToast('✅ تم تحديث الاقتباس', 'success');
+        }
+
+        function cancelEdit() {
+            document.getElementById('editFormCard').style.display = 'none';
+            document.getElementById('editForm').reset();
+        }
+
+        // ================================================================
+        // 14. حذف اقتباس
+        // ================================================================
+        function askDelete(id) {
+            deleteId = id;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function confirmDelete() {
+            if (deleteId) {
+                quotes = quotes.filter(q => q.id !== deleteId);
+                saveToLocal();
+                renderQuotes();
+                updateStats();
+                updateCatList();
+                renderCategoriesFilter();
+                showToast('🗑️ تم حذف الاقتباس', 'success');
+            }
+            closeModal();
+        }
+
+        function closeModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            deleteId = null;
+        }
+
+        // ================================================================
+        // 15. تصدير واستيراد البيانات
+        // ================================================================
+        function exportData() {
+            const dataStr = JSON.stringify({ quotes }, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `diwan_al_hikmah_backup_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('📥 تم تصدير النسخة الاحتياطية', 'success');
+        }
+
+        function importData(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported.quotes && Array.isArray(imported.quotes)) {
+                        quotes = imported.quotes;
+                    } else if (Array.isArray(imported)) {
+                        quotes = imported;
+                    } else {
+                        showToast('❌ ملف غير صالح', 'error');
+                        return;
+                    }
+                    saveToLocal();
+                    renderQuotes();
+                    updateStats();
+                    updateCatList();
+                    renderCategoriesFilter();
+                    showToast('📤 تم استيراد البيانات بنجاح', 'success');
+                } catch (err) {
+                    showToast('❌ خطأ في قراءة الملف', 'error');
+                }
+            };
+            reader.readAsText(file);
+            input.value = '';
+        }
+
+        // ================================================================
+        // 16. دوال مساعدة
+        // ================================================================
+        function saveToLocal() {
+            localStorage.setItem('diwan_quotes', JSON.stringify(quotes));
+        }
+
+        function showToast(msg, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast' + (type ? ' ' + type : '');
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ================================================================
+        // 17. زر العودة للأعلى
+        // ================================================================
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        // ================================================================
+        // 18. أحداث إضافية (إغلاق المودال بالخارج والـ Escape)
+        // ================================================================
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+                cancelEdit();
+            }
+        });
+
+        // ================================================================
+        // 19. تهيئة التطبيق
+        // ================================================================
+        async function init() {
+            try {
+                const response = await fetch('data.json');
+                if (!response.ok) throw new Error('Failed to load data');
+                const data = await response.json();
+                quotes = data.quotes || [];
+
+                // دمج البيانات من localStorage
+                const localQuotes = JSON.parse(localStorage.getItem('diwan_quotes') || '[]');
+                if (localQuotes.length > 0) {
+                    const existingIds = new Set(quotes.map(q => q.id));
+                    localQuotes.forEach(q => {
+                        if (!existingIds.has(q.id)) quotes.push(q);
+                    });
+                    saveToLocal();
+                } else {
+                    saveToLocal();
+                }
+
+                // تحميل الوضع الليلي
+                loadTheme();
+
+                // إخفاء شاشة التحميل وعرض المحتوى
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').classList.add('hidden');
+                    renderQuotes();
+                    updateStats();
+                    updateCatList();
+                    renderCategoriesFilter();
+                }, 500);
+
+            } catch (err) {
+                console.error('Error loading data:', err);
+                document.querySelector('.loading-text').textContent = 'خطأ في تحميل البيانات';
+                document.querySelector('.loading-sub').textContent = 'تأكد من وجود ملف data.json';
+                document.querySelector('.loading-bar-inner').style.background = '#e53e3e';
+            }
+        }
+
+        // بدء التطبيق
+        init();
+    </script>
+
+</body>
+</html>
