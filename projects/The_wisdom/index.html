@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
     <style>
-        /* ===== قاعدة المتغيرات والتصميم العام ===== */
+        /* ===== قاعدة المتغيرات ===== */
         :root {
             --primary: #1a365d;
             --primary-light: #2c5282;
@@ -33,8 +33,36 @@
             --danger: #e53e3e;
             --success: #38a169;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --header-bg: var(--primary);
+            --header-text: #ffffff;
+            --input-bg: var(--bg);
+            --hover-bg: rgba(255, 255, 255, 0.15);
+            --modal-overlay: rgba(0, 0, 0, 0.5);
+            --toast-bg: var(--primary);
         }
 
+        /* ===== الوضع الليلي ===== */
+        [data-theme="dark"] {
+            --primary: #2d3748;
+            --primary-light: #4a5568;
+            --bg: #1a202c;
+            --card-bg: #2d3748;
+            --text: #e2e8f0;
+            --text-muted: #a0aec0;
+            --border: #4a5568;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            --header-bg: #1a202c;
+            --header-text: #e2e8f0;
+            --input-bg: #1a202c;
+            --hover-bg: rgba(255, 255, 255, 0.08);
+            --modal-overlay: rgba(0, 0, 0, 0.8);
+            --toast-bg: #2d3748;
+            --accent-light: #b7791f;
+            --search-highlight: #b7791f;
+        }
+
+        /* ===== إعدادات عامة ===== */
         * {
             margin: 0;
             padding: 0;
@@ -48,6 +76,7 @@
             min-height: 100vh;
             padding: 1rem;
             line-height: 1.7;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         /* ===== شاشة التحميل ===== */
@@ -60,7 +89,7 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease, background 0.3s ease;
             color: white;
             padding: 2rem;
         }
@@ -68,6 +97,9 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
+        }
+        [data-theme="dark"] .loading-screen {
+            background: var(--bg);
         }
         .loading-icon {
             font-size: 4rem;
@@ -118,10 +150,10 @@
 
         /* ===== الهيدر ===== */
         .header {
-            background: var(--primary);
+            background: var(--header-bg);
             padding: 1rem 1.5rem;
             border-radius: var(--radius);
-            color: white;
+            color: var(--header-text);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -129,6 +161,7 @@
             gap: 1rem;
             margin-bottom: 1.5rem;
             box-shadow: var(--shadow-lg);
+            transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
         .logo-area {
             display: flex;
@@ -153,11 +186,12 @@
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
+            align-items: center;
         }
         .btn-icon {
-            background: rgba(255, 255, 255, 0.15);
+            background: var(--hover-bg);
             border: none;
-            color: white;
+            color: var(--header-text);
             padding: 0.4rem 0.9rem;
             border-radius: var(--radius-sm);
             cursor: pointer;
@@ -172,6 +206,32 @@
         .btn-icon:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
+        }
+        [data-theme="dark"] .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ===== زر الوضع الليلي ===== */
+        .theme-toggle {
+            background: var(--hover-bg);
+            border: none;
+            color: var(--header-text);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(20deg) scale(1.05);
+        }
+        [data-theme="dark"] .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
         }
 
         /* ===== البحث ===== */
@@ -231,11 +291,12 @@
             text-align: center;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .stat-number {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--accent);
         }
         .stat-label {
             font-size: 0.8rem;
@@ -255,6 +316,7 @@
             margin-bottom: 1rem;
             font-size: 1.3rem;
             color: var(--primary);
+            transition: color 0.3s ease;
         }
         .categories-filter {
             display: flex;
@@ -283,6 +345,12 @@
             background: var(--primary);
             color: white;
             border-color: var(--primary);
+        }
+        [data-theme="dark"] .cat-chip:hover,
+        [data-theme="dark"] .cat-chip.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
         }
 
         .quotes-grid {
@@ -329,6 +397,9 @@
             border-radius: 3px;
             font-weight: 700;
         }
+        [data-theme="dark"] .quote-text .search-highlight {
+            color: #1a202c;
+        }
 
         .quote-meta {
             display: flex;
@@ -348,7 +419,7 @@
         }
         .quote-author {
             font-weight: 600;
-            color: var(--primary);
+            color: var(--accent);
         }
         .quote-category {
             background: var(--bg);
@@ -389,6 +460,16 @@
             background: var(--danger);
             border-color: var(--danger);
         }
+        [data-theme="dark"] .quote-actions button:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+        [data-theme="dark"] .quote-actions .btn-delete:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+        }
 
         /* أزرار المشاركة والنسخ أسفل البطاقة (ظاهرة للجوال) */
         .share-actions-mobile {
@@ -418,6 +499,11 @@
             color: white;
             border-color: var(--primary);
         }
+        [data-theme="dark"] .share-actions-mobile .share-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
 
         /* ===== الشريط الجانبي (النماذج) ===== */
         .sidebar {
@@ -431,11 +517,13 @@
             padding: 1.5rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .form-card h3 {
             color: var(--primary);
             margin-bottom: 1rem;
             font-size: 1.1rem;
+            transition: color 0.3s ease;
         }
         .form-group {
             margin-bottom: 1rem;
@@ -456,8 +544,9 @@
             font-family: inherit;
             font-size: 0.95rem;
             transition: var(--transition);
-            background: var(--bg);
+            background: var(--input-bg);
             resize: vertical;
+            color: var(--text);
         }
         .form-group textarea:focus,
         .form-group input:focus {
@@ -481,6 +570,10 @@
             background: var(--primary-light);
             transform: translateY(-2px);
         }
+        [data-theme="dark"] .btn-primary:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
         .btn-secondary {
             background: var(--border);
             color: var(--text);
@@ -497,6 +590,9 @@
         .btn-secondary:hover {
             background: #cbd5e0;
         }
+        [data-theme="dark"] .btn-secondary:hover {
+            background: #4a5568;
+        }
 
         /* ===== الفوتر ===== */
         .footer {
@@ -505,9 +601,10 @@
             color: var(--text-muted);
             font-size: 0.85rem;
             border-top: 1px solid var(--border);
+            transition: border-color 0.3s ease, color 0.3s ease;
         }
         .footer a {
-            color: var(--primary);
+            color: var(--accent);
             text-decoration: none;
             font-weight: 600;
         }
@@ -518,7 +615,7 @@
             bottom: 2rem;
             left: 50%;
             transform: translateX(-50%) scale(0.9);
-            background: var(--primary);
+            background: var(--toast-bg);
             color: white;
             padding: 0.8rem 1.8rem;
             border-radius: var(--radius-sm);
@@ -530,6 +627,7 @@
             box-shadow: var(--shadow-lg);
             max-width: 90%;
             text-align: center;
+            border: 1px solid var(--border);
         }
         .toast.show {
             opacity: 1;
@@ -542,12 +640,18 @@
         .toast.error {
             background: var(--danger);
         }
+        [data-theme="dark"] .toast.success {
+            background: #2f855a;
+        }
+        [data-theme="dark"] .toast.error {
+            background: #c53030;
+        }
 
         /* ===== مودال الحذف ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: var(--modal-overlay);
             backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
@@ -571,6 +675,7 @@
             text-align: center;
             transform: scale(0.9);
             transition: var(--transition);
+            border: 1px solid var(--border);
         }
         .modal-overlay.active .modal {
             transform: scale(1);
@@ -617,6 +722,9 @@
         .modal-cancel:hover {
             background: #cbd5e0;
         }
+        [data-theme="dark"] .modal-cancel:hover {
+            background: #4a5568;
+        }
 
         /* ===== زر العودة للأعلى ===== */
         .back-to-top {
@@ -644,6 +752,10 @@
         .back-to-top:hover {
             transform: scale(1.1);
             background: var(--primary-light);
+        }
+        [data-theme="dark"] .back-to-top:hover {
+            background: var(--accent);
+            color: var(--bg);
         }
 
         /* ===== رسالة عند عدم وجود نتائج ===== */
@@ -675,6 +787,7 @@
             margin: 0 auto 1rem;
             flex-wrap: wrap;
             gap: 0.75rem;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
         .install-prompt.show {
             display: flex;
@@ -703,6 +816,9 @@
             padding: 0.4rem 0.8rem;
         }
         .install-prompt .skip-btn:hover {
+            background: var(--border);
+        }
+        [data-theme="dark"] .install-prompt .skip-btn:hover {
             background: var(--border);
         }
 
@@ -823,6 +939,7 @@
             </div>
         </div>
         <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="تبديل الوضع الليلي">🌙</button>
             <button class="btn-icon" onclick="shareApp()">📤 مشاركة</button>
             <button class="btn-icon" onclick="exportData()">📥 تصدير</button>
             <button class="btn-icon" onclick="document.getElementById('importFile').click()">📤 استيراد</button>
@@ -950,7 +1067,60 @@
         let searchTimeout = null;
 
         // ================================================================
-        // 2. PWA (تثبيت التطبيق)
+        // 2. الوضع الليلي (Dark Mode)
+        // ================================================================
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // تحديث شكل الزر
+            const toggleBtn = document.getElementById('themeToggle');
+            toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+
+            // تحديث meta theme-color
+            const metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (newTheme === 'dark') {
+                metaTheme.setAttribute('content', '#1a202c');
+            } else {
+                metaTheme.setAttribute('content', '#1a365d');
+            }
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            // التحقق من تفضيلات النظام
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme === 'dark' || (savedTheme === 'system' && prefersDark) ? 'dark' : 'light';
+
+            document.documentElement.setAttribute('data-theme', theme);
+            const toggleBtn = document.getElementById('themeToggle');
+            toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+
+            // تحديث meta theme-color
+            const metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (theme === 'dark') {
+                metaTheme.setAttribute('content', '#1a202c');
+            } else {
+                metaTheme.setAttribute('content', '#1a365d');
+            }
+
+            // متابعة تغييرات النظام
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme') || localStorage.getItem('theme') === 'system') {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+                    const metaTheme = document.querySelector('meta[name="theme-color"]');
+                    metaTheme.setAttribute('content', newTheme === 'dark' ? '#1a202c' : '#1a365d');
+                }
+            });
+        }
+
+        // ================================================================
+        // 3. PWA (تثبيت التطبيق)
         // ================================================================
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -971,7 +1141,7 @@
         }
 
         // ================================================================
-        // 3. المشاركة العامة للتطبيق
+        // 4. المشاركة العامة للتطبيق
         // ================================================================
         function shareApp() {
             const url = window.location.href;
@@ -989,7 +1159,7 @@
         }
 
         // ================================================================
-        // 4. مشاركة اقتباس مع الرابط
+        // 5. مشاركة اقتباس مع الرابط
         // ================================================================
         function shareQuote(quote) {
             const formattedText = `"${quote.text}"\n— ${quote.author}`;
@@ -1010,7 +1180,7 @@
         }
 
         // ================================================================
-        // 5. نسخ اقتباس مع الرابط
+        // 6. نسخ اقتباس مع الرابط
         // ================================================================
         function copyQuote(quote) {
             const formattedText = `"${quote.text}"\n— ${quote.author}`;
@@ -1021,7 +1191,7 @@
         }
 
         // ================================================================
-        // 6. دوال النسخ المساعدة
+        // 7. دوال النسخ المساعدة
         // ================================================================
         function copyToClipboard(text) {
             if (navigator.clipboard) {
@@ -1046,7 +1216,7 @@
         }
 
         // ================================================================
-        // 7. البحث مع debounce (تأخير لتحسين الأداء)
+        // 8. البحث مع debounce (تأخير لتحسين الأداء)
         // ================================================================
         document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.getElementById('searchInput');
@@ -1057,7 +1227,7 @@
         });
 
         // ================================================================
-        // 8. عرض الاقتباسات مع تمييز البحث
+        // 9. عرض الاقتباسات مع تمييز البحث
         // ================================================================
         function renderQuotes() {
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -1126,7 +1296,7 @@
         }
 
         // ================================================================
-        // 9. دوال إدارة التصنيفات
+        // 10. دوال إدارة التصنيفات
         // ================================================================
         function renderCategoriesFilter() {
             const cats = [...new Set(quotes.map(q => q.category).filter(Boolean))];
@@ -1153,7 +1323,7 @@
         }
 
         // ================================================================
-        // 10. دوال الإحصائيات
+        // 11. دوال الإحصائيات
         // ================================================================
         function updateStats() {
             document.getElementById('statTotal').textContent = quotes.length;
@@ -1162,7 +1332,7 @@
         }
 
         // ================================================================
-        // 11. إضافة اقتباس
+        // 12. إضافة اقتباس
         // ================================================================
         function addQuote(e) {
             e.preventDefault();
@@ -1195,7 +1365,7 @@
         }
 
         // ================================================================
-        // 12. تعديل اقتباس
+        // 13. تعديل اقتباس
         // ================================================================
         function startEdit(id) {
             const q = quotes.find(x => x.id === id);
@@ -1235,7 +1405,7 @@
         }
 
         // ================================================================
-        // 13. حذف اقتباس
+        // 14. حذف اقتباس
         // ================================================================
         function askDelete(id) {
             deleteId = id;
@@ -1261,7 +1431,7 @@
         }
 
         // ================================================================
-        // 14. تصدير واستيراد البيانات
+        // 15. تصدير واستيراد البيانات
         // ================================================================
         function exportData() {
             const dataStr = JSON.stringify({ quotes }, null, 2);
@@ -1306,7 +1476,7 @@
         }
 
         // ================================================================
-        // 15. دوال مساعدة
+        // 16. دوال مساعدة
         // ================================================================
         function saveToLocal() {
             localStorage.setItem('diwan_quotes', JSON.stringify(quotes));
@@ -1328,7 +1498,7 @@
         }
 
         // ================================================================
-        // 16. زر العودة للأعلى
+        // 17. زر العودة للأعلى
         // ================================================================
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('backToTop');
@@ -1340,7 +1510,7 @@
         });
 
         // ================================================================
-        // 17. أحداث إضافية (إغلاق المودال بالخارج والـ Escape)
+        // 18. أحداث إضافية (إغلاق المودال بالخارج والـ Escape)
         // ================================================================
         document.getElementById('deleteModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
@@ -1354,7 +1524,7 @@
         });
 
         // ================================================================
-        // 18. تهيئة التطبيق
+        // 19. تهيئة التطبيق
         // ================================================================
         async function init() {
             try {
@@ -1370,12 +1540,13 @@
                     localQuotes.forEach(q => {
                         if (!existingIds.has(q.id)) quotes.push(q);
                     });
-                    // حفظ الدمج
                     saveToLocal();
                 } else {
-                    // حفظ البيانات الأولية في localStorage
                     saveToLocal();
                 }
+
+                // تحميل الوضع الليلي
+                loadTheme();
 
                 // إخفاء شاشة التحميل وعرض المحتوى
                 setTimeout(() => {
