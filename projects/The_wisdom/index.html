@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ديوان الحكمة | TechNomads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a365d;
+  --primary-light: #2c5282;
+  --accent: #d69e2e;
+  --accent-light: #ecc94b;
+  --bg: #f7fafc;
+  --card-bg: #ffffff;
+  --text: #1a202c;
+  --text-muted: #718096;
+  --border: #e2e8f0;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+  --radius: 16px;
+  --radius-sm: 8px;
+  --danger: #e53e3e;
+  --success: #38a169;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+
+/* ===== LOADING SCREEN ===== */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-icon {
+  font-size: 4rem;
+  animation: float 2s ease-in-out infinite;
+  margin-bottom: 1.5rem;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.loading-text {
+  color: white;
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.loading-sub {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.loading-bar {
+  width: 200px;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  margin-top: 1.5rem;
+  overflow: hidden;
+}
+
+.loading-bar-inner {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: loadBar 1.5s ease forwards;
+}
+
+@keyframes loadBar {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: white;
+  padding: 2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 50%;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 6px 20px rgba(214,158,46,0.4);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 6px 20px rgba(214,158,46,0.4); }
+  50% { box-shadow: 0 6px 30px rgba(214,158,46,0.6); }
+}
+
+.logo-text h1 {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.logo-text span {
+  font-size: 0.78rem;
+  opacity: 0.8;
+  letter-spacing: 1px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-icon {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.btn-icon:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-2px);
+}
+
+/* ===== SEARCH ===== */
+.search-section {
+  max-width: 1200px;
+  margin: -24px auto 0;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.search-box {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--border);
+  transition: box-shadow 0.3s;
+}
+
+.search-box:focus-within {
+  box-shadow: 0 0 0 4px rgba(26,54,93,0.1), var(--shadow-lg);
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text);
+  background: transparent;
+}
+
+.search-box input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-icon {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+/* ===== STATS ===== */
+.stats-bar {
+  max-width: 1200px;
+  margin: 1.5rem auto 0;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Noto Naskh Arabic', serif;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ===== MAIN ===== */
+.main-content {
+  max-width: 1200px;
+  margin: 1.5rem auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .main-content { grid-template-columns: 1fr; }
+}
+
+/* ===== QUOTES ===== */
+.quotes-section h2 {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.categories-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.cat-chip {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.82rem;
+  transition: all 0.25s;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.cat-chip:hover {
+  border-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.cat-chip.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(26,54,93,0.3);
+}
+
+.quotes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.quote-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  animation: cardIn 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes cardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quote-card::before {
+  content: '"';
+  position: absolute;
+  top: -5px;
+  right: 15px;
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 6rem;
+  color: var(--accent);
+  opacity: 0.12;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.quote-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-light);
+}
+
+.quote-text {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1.15rem;
+  line-height: 2.2;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.quote-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.quote-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.quote-author {
+  font-weight: 700;
+  color: var(--primary-light);
+  font-size: 0.95rem;
+}
+
+.quote-category {
+  background: linear-gradient(135deg, var(--accent-light), var(--accent));
+  color: var(--primary);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.quote-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.quote-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.quote-actions button {
+  background: none;
+  border: 1px solid var(--border);
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quote-actions button:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
+.quote-actions .btn-delete:hover {
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 5rem 2rem;
+  color: var(--text-muted);
+}
+
+.empty-state-icon {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.4;
+}
+
+.empty-state h3 {
+  font-family: 'Noto Naskh Arabic', serif;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: sticky;
+  top: 1.5rem;
+  height: fit-content;
+}
+
+@media (max-width: 900px) {
+  .sidebar { position: static; }
+}
+
+.form-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.form-card h3 {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1.15rem;
+  margin-bottom: 1.25rem;
+  color: var(--primary);
+  padding-bottom: 0.75rem;
+  border-bottom: 3px solid var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-group {
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--bg);
+  transition: all 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 4px rgba(26,54,93,0.08);
+  background: white;
+}
+
+.form-group textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.8;
+}
+
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::after {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(26,54,93,0.35);
+}
+
+.btn-secondary {
+  width: 100%;
+  background: white;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 0.5rem;
+}
+
+.btn-secondary:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: var(--primary);
+  color: white;
+  padding: 16px 32px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  font-weight: 700;
+  z-index: 10000;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.toast.success { background: var(--success); }
+.toast.error { background: var(--danger); }
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 2rem;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-align: center;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal h3 {
+  font-family: 'Noto Naskh Arabic', serif;
+  margin-bottom: 0.75rem;
+  color: var(--primary);
+  font-size: 1.3rem;
+}
+
+.modal p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.modal-confirm {
+  background: var(--danger);
+  color: white;
+  border: none;
+}
+
+.modal-confirm:hover {
+  background: #c53030;
+  transform: scale(1.02);
+}
+
+.modal-cancel {
+  background: white;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+}
+
+.modal-cancel:hover {
+  background: var(--bg);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+  background: white;
+}
+
+.footer a {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+
+.footer a:hover {
+  color: var(--accent);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .header-top { flex-direction: column; gap: 1rem; text-align: center; }
+  .header-actions { width: 100%; justify-content: center; }
+  .search-box { flex-direction: column; padding: 1rem; }
+  .quote-meta { flex-direction: column; align-items: flex-start; }
+  .quote-actions { width: 100%; justify-content: flex-end; }
+  .stats-bar { grid-template-columns: repeat(3, 1fr); }
+  .stat-card { padding: 0.75rem; }
+  .stat-number { font-size: 1.4rem; }
+  .stat-label { font-size: 0.7rem; }
+  .modal-buttons { flex-direction: column; }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-icon">📜</div>
+  <div class="loading-text">ديوان الحكمة</div>
+  <div class="loading-sub">جارٍ تحميل كنوز الحكمة...</div>
+  <div class="loading-bar"><div class="loading-bar-inner"></div></div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-top">
+    <div class="logo-area">
+      <div class="logo-icon">📜</div>
+      <div class="logo-text">
+        <h1>ديوان الحكمة</h1>
+        <span>TECHNOMADS — حلول رقمية رائدة</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-icon" onclick="exportData()">📥 تصدير JSON</button>
+      <button class="btn-icon" onclick="document.getElementById('importFile').click()">📤 استيراد</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+    </div>
+  </div>
+</header>
+
+<!-- Search -->
+<div class="search-section">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="ابحث في الاقتباسات، القائلين، أو التصنيفات..." oninput="renderQuotes()">
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="stat-number" id="statTotal">0</div>
+    <div class="stat-label">إجمالي الاقتباسات</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="statAuthors">0</div>
+    <div class="stat-label">عدد القائلين</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="statCategories">0</div>
+    <div class="stat-label">التصنيفات</div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+
+  <!-- Quotes List -->
+  <div class="quotes-section">
+    <h2>✨ مقتطفات الحكمة</h2>
+    <div class="categories-filter" id="categoriesFilter"></div>
+    <div class="quotes-grid" id="quotesList"></div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Add Form -->
+    <div class="form-card">
+      <h3>➕ إضافة اقتباس جديد</h3>
+      <form id="quoteForm" onsubmit="addQuote(event)">
+        <div class="form-group">
+          <label>الاقتباس *</label>
+          <textarea id="qText" placeholder="اكتب الاقتباس هنا..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label>القائل *</label>
+          <input type="text" id="qAuthor" placeholder="اسم القائل" required>
+        </div>
+        <div class="form-group">
+          <label>التصنيف</label>
+          <input type="text" id="qCategory" list="catList" placeholder="مثال: حكمة، شعر، فلسفة">
+          <datalist id="catList"></datalist>
+        </div>
+        <button type="submit" class="btn-primary">إضافة الاقتباس</button>
+      </form>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="form-card" id="editFormCard" style="display:none">
+      <h3>✏️ تعديل الاقتباس</h3>
+      <form id="editForm" onsubmit="saveEdit(event)">
+        <input type="hidden" id="editId">
+        <div class="form-group">
+          <label>الاقتباس</label>
+          <textarea id="editText" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>القائل</label>
+          <input type="text" id="editAuthor" required>
+        </div>
+        <div class="form-group">
+          <label>التصنيف</label>
+          <input type="text" id="editCategory">
+        </div>
+        <button type="submit" class="btn-primary">حفظ التعديلات</button>
+        <button type="button" class="btn-secondary" onclick="cancelEdit()">إلغاء</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2026 <a href="https://te-2026.netlify.app/" target="_blank">TechNomads</a> — حلول رقمية رائدة من اليمن إلى العالم العربي</p>
+  <p style="margin-top:6px; font-size:0.78rem;">تم تطوير هذا المشروع كجزء من رؤية TechNomads في الابتكار والجودة</p>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <div class="modal-icon">⚠️</div>
+    <h3>تأكيد الحذف</h3>
+    <p>هل أنت متأكد من حذف هذا الاقتباس؟ لا يمكن التراجع عن هذا الإجراء.</p>
+    <div class="modal-buttons">
+      <button class="modal-confirm" onclick="confirmDelete()">نعم، احذف</button>
+      <button class="modal-cancel" onclick="closeModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== DATA ==========
+let quotes = [];
+let deleteId = null;
+let activeCategory = 'all';
+
+// ========== INIT ==========
+async function init() {
+  try {
+    const response = await fetch('data.json');
+    if (!response.ok) throw new Error('Failed to load data');
+    const data = await response.json();
+    quotes = data.quotes || [];
+
+    // Also load from localStorage if user added quotes
+    const localQuotes = JSON.parse(localStorage.getItem('diwan_quotes') || '[]');
+    if (localQuotes.length > 0) {
+      // Merge: keep local additions
+      const existingIds = new Set(quotes.map(q => q.id));
+      localQuotes.forEach(q => {
+        if (!existingIds.has(q.id)) quotes.push(q);
+      });
+    }
+
+    // Hide loading after delay
+    setTimeout(() => {
+      document.getElementById('loadingScreen').classList.add('hidden');
+      renderQuotes();
+      updateStats();
+      updateCatList();
+      renderCategoriesFilter();
+    }, 1200);
+
+  } catch (err) {
+    console.error('Error loading data:', err);
+    document.querySelector('.loading-text').textContent = 'خطأ في تحميل البيانات';
+    document.querySelector('.loading-sub').textContent = 'تأكد من وجود ملف data.json';
+    document.querySelector('.loading-bar-inner').style.background = '#e53e3e';
+  }
+}
+
+// ========== RENDER QUOTES ==========
+function renderQuotes() {
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  const list = document.getElementById('quotesList');
+
+  let filtered = quotes.filter(q => {
+    const matchesSearch = !search || 
+      q.text.toLowerCase().includes(search) ||
+      q.author.toLowerCase().includes(search) ||
+      (q.category && q.category.toLowerCase().includes(search));
+    const matchesCat = activeCategory === 'all' || q.category === activeCategory;
+    return matchesSearch && matchesCat;
+  });
+
+  filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  if (filtered.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <h3>لا توجد نتائج</h3>
+        <p>جرب البحث بكلمات مختلفة أو أضف اقتباساً جديداً</p>
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = filtered.map((q, i) => `
+    <div class="quote-card" data-id="${q.id}" style="animation-delay: ${i * 0.08}s">
+      <div class="quote-text">${escapeHtml(q.text)}</div>
+      <div class="quote-meta">
+        <div class="quote-info">
+          <span class="quote-author">👤 ${escapeHtml(q.author)}</span>
+          <span class="quote-category">${escapeHtml(q.category || 'عام')}</span>
+          <span class="quote-date">📅 ${q.date}</span>
+        </div>
+        <div class="quote-actions">
+          <button onclick="startEdit(${q.id})">✏️ تعديل</button>
+          <button class="btn-delete" onclick="askDelete(${q.id})">🗑️ حذف</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ========== ADD QUOTE ==========
+function addQuote(e) {
+  e.preventDefault();
+  const text = document.getElementById('qText').value.trim();
+  const author = document.getElementById('qAuthor').value.trim();
+  const category = document.getElementById('qCategory').value.trim() || 'عام';
+
+  const newQuote = {
+    id: Date.now(),
+    text,
+    author,
+    category,
+    date: new Date().toISOString().split('T')[0]
+  };
+
+  quotes.unshift(newQuote);
+  saveToLocal();
+
+  document.getElementById('quoteForm').reset();
+  renderQuotes();
+  updateStats();
+  updateCatList();
+  renderCategoriesFilter();
+  showToast('✅ تم إضافة الاقتباس بنجاح', 'success');
+}
+
+// ========== EDIT ==========
+function startEdit(id) {
+  const q = quotes.find(x => x.id === id);
+  if (!q) return;
+
+  document.getElementById('editId').value = id;
+  document.getElementById('editText').value = q.text;
+  document.getElementById('editAuthor').value = q.author;
+  document.getElementById('editCategory').value = q.category || '';
+
+  document.getElementById('editFormCard').style.display = 'block';
+  document.getElementById('editFormCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function saveEdit(e) {
+  e.preventDefault();
+  const id = parseInt(document.getElementById('editId').value);
+  const q = quotes.find(x => x.id === id);
+  if (!q) return;
+
+  q.text = document.getElementById('editText').value.trim();
+  q.author = document.getElementById('editAuthor').value.trim();
+  q.category = document.getElementById('editCategory').value.trim() || 'عام';
+
+  saveToLocal();
+  cancelEdit();
+  renderQuotes();
+  updateStats();
+  updateCatList();
+  renderCategoriesFilter();
+  showToast('✅ تم تحديث الاقتباس', 'success');
+}
+
+function cancelEdit() {
+  document.getElementById('editFormCard').style.display = 'none';
+  document.getElementById('editForm').reset();
+}
+
+// ========== DELETE ==========
+function askDelete(id) {
+  deleteId = id;
+  document.getElementById('deleteModal').classList.add('active');
+}
+
+function confirmDelete() {
+  if (deleteId) {
+    quotes = quotes.filter(q => q.id !== deleteId);
+    saveToLocal();
+    renderQuotes();
+    updateStats();
+    updateCatList();
+    renderCategoriesFilter();
+    showToast('🗑️ تم حذف الاقتباس', 'success');
+  }
+  closeModal();
+}
+
+function closeModal() {
+  document.getElementById('deleteModal').classList.remove('active');
+  deleteId = null;
+}
+
+// ========== CATEGORIES ==========
+function renderCategoriesFilter() {
+  const cats = [...new Set(quotes.map(q => q.category).filter(Boolean))];
+  const container = document.getElementById('categoriesFilter');
+
+  let html = `<button class="cat-chip ${activeCategory === 'all' ? 'active' : ''}" onclick="setCategory('all')">الكل (${quotes.length})</button>`;
+  cats.forEach(cat => {
+    const count = quotes.filter(q => q.category === cat).length;
+    html += `<button class="cat-chip ${activeCategory === cat ? 'active' : ''}" onclick="setCategory('${cat}')">${cat} (${count})</button>`;
+  });
+  container.innerHTML = html;
+}
+
+function setCategory(cat) {
+  activeCategory = cat;
+  renderQuotes();
+  renderCategoriesFilter();
+}
+
+// ========== STATS ==========
+function updateStats() {
+  document.getElementById('statTotal').textContent = quotes.length;
+  document.getElementById('statAuthors').textContent = new Set(quotes.map(q => q.author)).size;
+  document.getElementById('statCategories').textContent = new Set(quotes.map(q => q.category).filter(Boolean)).size;
+}
+
+// ========== DATALIST ==========
+function updateCatList() {
+  const cats = [...new Set(quotes.map(q => q.category).filter(Boolean))];
+  const datalist = document.getElementById('catList');
+  datalist.innerHTML = cats.map(c => `<option value="${escapeHtml(c)}">`).join('');
+}
+
+// ========== EXPORT / IMPORT ==========
+function exportData() {
+  const dataStr = JSON.stringify({ quotes }, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `diwan_al_hikmah_backup_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📥 تم تصدير النسخة الاحتياطية', 'success');
+}
+
+function importData(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (imported.quotes && Array.isArray(imported.quotes)) {
+        quotes = imported.quotes;
+        saveToLocal();
+        renderQuotes();
+        updateStats();
+        updateCatList();
+        renderCategoriesFilter();
+        showToast('📤 تم استيراد البيانات بنجاح', 'success');
+      } else if (Array.isArray(imported)) {
+        quotes = imported;
+        saveToLocal();
+        renderQuotes();
+        updateStats();
+        updateCatList();
+        renderCategoriesFilter();
+        showToast('📤 تم استيراد البيانات بنجاح', 'success');
+      } else {
+        showToast('❌ ملف غير صالح', 'error');
+      }
+    } catch (err) {
+      showToast('❌ خطأ في قراءة الملف', 'error');
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+// ========== UTILITIES ==========
+function saveToLocal() {
+  localStorage.setItem('diwan_quotes', JSON.stringify(quotes));
+}
+
+function showToast(msg, type = '') {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast' + (type ? ' ' + type : '');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Close modal on overlay click
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeModal();
+    cancelEdit();
+  }
+});
+
+// ========== START ==========
+init();
+</script>
+
+</body>
+</html>
