@@ -1,1647 +1,1977 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#1a365d">
-<meta name="description" content="ديوان الحكمة - كنوز من الحكم والاقتباسات العربية والعالمية">
-<meta property="og:title" content="ديوان الحكمة | TechNomads">
-<meta property="og:description" content="كنوز من الحكم والاقتباسات">
-<meta property="og:type" content="website">
-<title>ديوان الحكمة | TechNomads</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-<style>
-:root {
-  --primary: #1a365d;
-  --primary-light: #2c5282;
-  --primary-dark: #0f2744;
-  --accent: #d69e2e;
-  --accent-light: #ecc94b;
-  --accent-glow: rgba(214,158,46,0.3);
-  --bg: #f7fafc;
-  --card-bg: #ffffff;
-  --surface: #edf2f7;
-  --text: #1a202c;
-  --text-secondary: #4a5568;
-  --text-muted: #718096;
-  --border: #e2e8f0;
-  --border-light: #edf2f7;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow: 0 4px 12px rgba(0,0,0,0.08);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
-  --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --danger: #e53e3e;
-  --success: #38a169;
-  --info: #3182ce;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-[data-theme="dark"] {
-  --primary: #63b3ed;
-  --primary-light: #90cdf4;
-  --primary-dark: #2b6cb0;
-  --accent: #f6ad55;
-  --accent-light: #fbd38d;
-  --accent-glow: rgba(246,173,85,0.2);
-  --bg: #0d1117;
-  --card-bg: #161b22;
-  --surface: #21262d;
-  --text: #e6edf3;
-  --text-secondary: #8b949e;
-  --text-muted: #6e7681;
-  --border: #30363d;
-  --border-light: #21262d;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-  --shadow: 0 4px 12px rgba(0,0,0,0.3);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,0.4);
-  --shadow-xl: 0 20px 60px rgba(0,0,0,0.5);
-  --danger: #f56565;
-  --success: #48bb78;
-  --info: #4299e1;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-body {
-  font-family: 'Tajawal', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  line-height: 1.7;
-  transition: background 0.4s ease, color 0.4s ease;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-.loading-screen {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
-}
-
-.loading-screen.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.loading-icon {
-  font-size: 4.5rem;
-  animation: float 2.5s ease-in-out infinite;
-  margin-bottom: 1.5rem;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-18px) rotate(5deg); }
-}
-
-.loading-text {
-  color: white;
-  font-family: 'Noto Naskh Arabic', serif;
-  font-size: 1.6rem;
-  font-weight: 700;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.loading-sub {
-  color: rgba(255,255,255,0.75);
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  letter-spacing: 1px;
-}
-
-.loading-bar {
-  width: 180px;
-  height: 4px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 2px;
-  margin-top: 1.5rem;
-  overflow: hidden;
-}
-
-.loading-bar-inner {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--accent-light), var(--accent));
-  border-radius: 2px;
-  animation: loadBar 1.8s ease forwards;
-}
-
-@keyframes loadBar {
-  0% { width: 0%; }
-  60% { width: 75%; }
-  100% { width: 100%; }
-}
-
-.header {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-  color: white;
-  padding: 1.75rem 1.25rem;
-  position: relative;
-  overflow: hidden;
-  transition: var(--transition);
-}
-
-.header::before {
-  content: '';
-  position: absolute;
-  top: -60%;
-  right: -15%;
-  width: 350px;
-  height: 350px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 50%;
-}
-
-.header::after {
-  content: '';
-  position: absolute;
-  bottom: -40%;
-  left: -10%;
-  width: 250px;
-  height: 250px;
-  background: rgba(255,255,255,0.02);
-  border-radius: 50%;
-}
-
-.header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.logo-area {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo-icon {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  box-shadow: 0 6px 20px rgba(214,158,46,0.4);
-  animation: pulse 2.5s ease-in-out infinite;
-  flex-shrink: 0;
-}
-
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 6px 20px rgba(214,158,46,0.4); transform: scale(1); }
-  50% { box-shadow: 0 6px 30px rgba(214,158,46,0.6); transform: scale(1.05); }
-}
-
-.logo-text h1 {
-  font-family: 'Noto Naskh Arabic', serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1px;
-}
-
-.logo-text span {
-  font-size: 0.72rem;
-  opacity: 0.75;
-  letter-spacing: 0.5px;
-  display: block;
-}
-
-.header-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.btn-icon {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.18);
-  color: white;
-  padding: 9px 14px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.82rem;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  white-space: nowrap;
-  touch-action: manipulation;
-}
-
-.btn-icon:hover, .btn-icon:active {
-  background: rgba(255,255,255,0.22);
-  transform: translateY(-2px);
-}
-
-.btn-icon:active { transform: translateY(0) scale(0.97); }
-
-.theme-toggle {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  padding: 0;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.18);
-  color: white;
-  cursor: pointer;
-  transition: var(--transition);
-  flex-shrink: 0;
-}
-
-.theme-toggle:hover {
-  background: rgba(255,255,255,0.25);
-  transform: rotate(15deg) scale(1.1);
-}
-
-.search-section {
-  max-width: 1200px;
-  margin: -20px auto 0;
-  padding: 0 1.25rem;
-  position: relative;
-  z-index: 2;
-}
-
-.search-box {
-  background: var(--card-bg);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  padding: 0.75rem 1.25rem;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  border: 2px solid var(--border);
-  transition: var(--transition);
-}
-
-.search-box:focus-within {
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 4px var(--accent-glow), var(--shadow-lg);
-  transform: translateY(-1px);
-}
-
-.search-box input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-family: inherit;
-  font-size: 1rem;
-  color: var(--text);
-  background: transparent;
-  padding: 8px 0;
-  min-width: 0;
-}
-
-.search-box input::placeholder { color: var(--text-muted); }
-
-.search-icon {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
-.search-clear {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-size: 1.1rem;
-  padding: 4px;
-  display: none;
-  transition: var(--transition);
-  flex-shrink: 0;
-}
-
-.search-clear.visible { display: block; }
-
-.search-clear:hover {
-  color: var(--danger);
-  transform: scale(1.2);
-}
-
-.stats-bar {
-  max-width: 1200px;
-  margin: 1.25rem auto 0;
-  padding: 0 1.25rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-}
-
-.stat-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 1rem 0.75rem;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  text-align: center;
-  transition: var(--transition-bounce);
-  cursor: default;
-}
-
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--accent);
-}
-
-.stat-number {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--primary);
-  font-family: 'Noto Naskh Arabic', serif;
-  transition: var(--transition);
-}
-
-.stat-label {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  margin-top: 2px;
-  font-weight: 500;
-}
-
-.main-content {
-  max-width: 1200px;
-  margin: 1.25rem auto;
-  padding: 0 1.25rem;
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 1.5rem;
-}
-
-@media (max-width: 900px) {
-  .main-content { grid-template-columns: 1fr; }
-}
-
-.quotes-section h2 {
-  font-family: 'Noto Naskh Arabic', serif;
-  font-size: 1.2rem;
-  margin-bottom: 0.75rem;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.categories-filter {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.categories-filter::-webkit-scrollbar { display: none; }
-
-.cat-chip {
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1.5px solid var(--border);
-  background: var(--card-bg);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.8rem;
-  transition: var(--transition);
-  color: var(--text-secondary);
-  font-weight: 600;
-  white-space: nowrap;
-  touch-action: manipulation;
-  flex-shrink: 0;
-}
-
-.cat-chip:hover {
-  border-color: var(--primary-light);
-  color: var(--primary);
-  transform: translateY(-1px);
-}
-
-.cat-chip.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  color: white;
-  border-color: transparent;
-  box-shadow: 0 4px 12px var(--accent-glow);
-}
-
-.quotes-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.875rem;
-}
-
-.quote-card {
-  background: var(--card-bg);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  transition: var(--transition-bounce);
-  position: relative;
-  overflow: hidden;
-  animation: cardIn 0.5s ease forwards;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-@keyframes cardIn {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.quote-card::before {
-  content: '"';
-  position: absolute;
-  top: -2px;
-  right: 12px;
-  font-family: 'Noto Naskh Arabic', serif;
-  font-size: 6rem;
-  color: var(--accent);
-  opacity: 0.1;
-  line-height: 1;
-  pointer-events: none;
-  transition: var(--transition);
-}
-
-.quote-card:hover::before {
-  opacity: 0.18;
-  transform: scale(1.1);
-}
-
-.quote-card:hover {
-  transform: translateY(-4px) scale(1.005);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--accent);
-}
-
-.quote-text {
-  font-family: 'Noto Naskh Arabic', serif;
-  font-size: 1.1rem;
-  line-height: 2.2;
-  color: var(--text);
-  margin-bottom: 1.25rem;
-  position: relative;
-  z-index: 1;
-  user-select: text;
-  -webkit-user-select: text;
-}
-
-.quote-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.quote-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.quote-author {
-  font-weight: 700;
-  color: var(--primary-light);
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.quote-category {
-  background: linear-gradient(135deg, var(--accent-light), var(--accent));
-  color: var(--primary-dark);
-  padding: 3px 12px;
-  border-radius: 20px;
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-
-.quote-date {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-}
-
-.quote-source {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  font-style: italic;
-  margin-top: 4px;
-  display: block;
-}
-
-.quote-actions {
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-}
-
-.action-btn {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 7px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  touch-action: manipulation;
-  white-space: nowrap;
-}
-
-.action-btn:hover, .action-btn:active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-  transform: scale(1.05);
-}
-
-.action-btn:active { transform: scale(0.97); }
-
-.action-btn.copied {
-  background: var(--success) !important;
-  border-color: var(--success) !important;
-  color: white !important;
-}
-
-.action-btn.share-btn:hover {
-  background: var(--info);
-  border-color: var(--info);
-}
-
-.share-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-  z-index: 10000;
-  padding: 0;
-}
-
-.share-modal-overlay.active { display: flex; }
-
-.share-modal {
-  background: var(--card-bg);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  padding: 1.5rem;
-  max-width: 500px;
-  width: 100%;
-  box-shadow: var(--shadow-xl);
-  animation: slideUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  max-height: 85vh;
-  overflow-y: auto;
-}
-
-@keyframes slideUp {
-  from { transform: translateY(100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.share-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.share-modal-header h3 {
-  font-family: 'Noto Naskh Arabic', serif;
-  color: var(--text);
-  font-size: 1.1rem;
-}
-
-.share-close {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 4px;
-  transition: var(--transition);
-}
-
-.share-close:hover { color: var(--danger); transform: rotate(90deg); }
-
-.share-preview {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 1rem 1.25rem;
-  margin-bottom: 1.25rem;
-  border: 1px solid var(--border);
-  position: relative;
-}
-
-.share-preview-text {
-  font-family: 'Noto Naskh Arabic', serif;
-  font-size: 1rem;
-  line-height: 2;
-  color: var(--text);
-  margin-bottom: 0.5rem;
-}
-
-.share-preview-author {
-  color: var(--primary-light);
-  font-weight: 700;
-  font-size: 0.85rem;
-}
-
-.share-preview-watermark {
-  position: absolute;
-  bottom: 8px;
-  left: 12px;
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  opacity: 0.6;
-}
-
-.share-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 1.25rem;
-}
-
-.share-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 8px;
-  border-radius: var(--radius);
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  cursor: pointer;
-  transition: var(--transition);
-  text-decoration: none;
-  color: var(--text);
-  touch-action: manipulation;
-}
-
-.share-item:hover, .share-item:active {
-  border-color: var(--primary-light);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
-}
-
-.share-item:active { transform: scale(0.95); }
-
-.share-item-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-}
-
-.share-item-label {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.share-item.whatsapp .share-item-icon { background: #25D366; color: white; }
-.share-item.facebook .share-item-icon { background: #1877F2; color: white; }
-.share-item.twitter .share-item-icon { background: #1DA1F2; color: white; }
-.share-item.telegram .share-item-icon { background: #0088cc; color: white; }
-.share-item.instagram .share-item-icon { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
-.share-item.linkedin .share-item-icon { background: #0A66C2; color: white; }
-.share-item.email .share-item-icon { background: #EA4335; color: white; }
-.share-item.sms .share-item-icon { background: var(--accent); color: var(--primary-dark); }
-.share-item.copy .share-item-icon { background: var(--primary); color: white; }
-.share-item.native .share-item-icon { background: var(--success); color: white; }
-
-.share-link-section { margin-top: 0.5rem; }
-
-.share-link-section label {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-  display: block;
-  margin-bottom: 6px;
-}
-
-.share-link-box {
-  display: flex;
-  gap: 8px;
-}
-
-.share-link-box input {
-  flex: 1;
-  padding: 10px 12px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-size: 0.85rem;
-  color: var(--text);
-  background: var(--surface);
-  outline: none;
-}
-
-.share-link-box button {
-  padding: 10px 16px;
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
-  touch-action: manipulation;
-}
-
-.share-link-box button:hover { background: var(--primary-light); }
-
-.empty-state {
-  text-align: center;
-  padding: 4rem 1.5rem;
-  color: var(--text-muted);
-}
-
-.empty-state-icon {
-  font-size: 4.5rem;
-  margin-bottom: 1.25rem;
-  opacity: 0.35;
-  animation: float 3s ease-in-out infinite;
-}
-
-.empty-state h3 {
-  font-family: 'Noto Naskh Arabic', serif;
-  color: var(--text);
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
-}
-
-.empty-state p {
-  font-size: 0.9rem;
-  max-width: 300px;
-  margin: 0 auto;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  position: sticky;
-  top: 1rem;
-  height: fit-content;
-}
-
-@media (max-width: 900px) {
-  .sidebar { position: static; }
-}
-
-.form-card {
-  background: var(--card-bg);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  transition: var(--transition);
-}
-
-.form-card:hover { box-shadow: var(--shadow-lg); }
-
-.form-card h3 {
-  font-family: 'Noto Naskh Arabic', serif;
-  font-size: 1.05rem;
-  margin-bottom: 1.1rem;
-  color: var(--text);
-  padding-bottom: 0.6rem;
-  border-bottom: 3px solid var(--accent);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.form-group { margin-bottom: 1rem; }
-
-.form-group label {
-  display: block;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-  margin-bottom: 5px;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 11px 13px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-size: 0.95rem;
-  color: var(--text);
-  background: var(--surface);
-  transition: var(--transition);
-  -webkit-appearance: none;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 4px var(--accent-glow);
-  background: var(--card-bg);
-}
-
-.form-group textarea {
-  min-height: 100px;
-  resize: vertical;
-  line-height: 1.8;
-}
-
-.btn-primary {
-  width: 100%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  color: white;
-  border: none;
-  padding: 13px;
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-  margin-top: 0.25rem;
-  position: relative;
-  overflow: hidden;
-  touch-action: manipulation;
-}
-
-.btn-primary::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.6s;
-}
-
-.btn-primary:hover::after { left: 100%; }
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(26,54,93,0.3);
-}
-
-.btn-primary:active { transform: translateY(0) scale(0.98); }
-
-.btn-secondary {
-  width: 100%;
-  background: var(--card-bg);
-  color: var(--primary);
-  border: 2px solid var(--primary);
-  padding: 11px;
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-  margin-top: 0.5rem;
-  touch-action: manipulation;
-}
-
-.btn-secondary:hover {
-  background: var(--primary);
-  color: white;
-  transform: translateY(-1px);
-}
-
-.toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(120px);
-  background: var(--primary);
-  color: white;
-  padding: 14px 28px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-xl);
-  font-weight: 700;
-  z-index: 10001;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.92rem;
-  max-width: 90vw;
-  text-align: center;
-}
-
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
-
-.toast.success { background: var(--success); }
-.toast.error { background: var(--danger); }
-.toast.info { background: var(--info); }
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  padding: 1rem;
-}
-
-.modal-overlay.active { display: flex; }
-
-.modal {
-  background: var(--card-bg);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  max-width: 420px;
-  width: 100%;
-  box-shadow: var(--shadow-xl);
-  animation: modalIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  text-align: center;
-}
-
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.85) translateY(20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.modal-icon {
-  font-size: 3.5rem;
-  margin-bottom: 0.75rem;
-}
-
-.modal h3 {
-  font-family: 'Noto Naskh Arabic', serif;
-  margin-bottom: 0.5rem;
-  color: var(--text);
-  font-size: 1.2rem;
-}
-
-.modal p {
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-  line-height: 1.7;
-  font-size: 0.9rem;
-}
-
-.modal-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 0.5rem;
-}
-
-.modal-buttons button {
-  flex: 1;
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-  font-size: 0.9rem;
-  touch-action: manipulation;
-}
-
-.modal-confirm {
-  background: var(--danger);
-  color: white;
-  border: none;
-}
-
-.modal-confirm:hover { background: #c53030; transform: scale(1.02); }
-
-.modal-cancel {
-  background: var(--surface);
-  color: var(--text);
-  border: 1.5px solid var(--border);
-}
-
-.modal-cancel:hover { background: var(--border-light); }
-
-.footer {
-  text-align: center;
-  padding: 2.5rem 1rem;
-  color: var(--text-muted);
-  font-size: 0.82rem;
-  border-top: 1px solid var(--border);
-  margin-top: 2rem;
-  background: var(--card-bg);
-}
-
-.footer a {
-  color: var(--primary-light);
-  text-decoration: none;
-  font-weight: 700;
-  transition: var(--transition);
-}
-
-.footer a:hover { color: var(--accent); }
-
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--primary); }
-
-@media (max-width: 640px) {
-  .header { padding: 1.25rem 1rem; }
-  .logo-text h1 { font-size: 1.25rem; }
-  .logo-text span { font-size: 0.65rem; }
-  .logo-icon { width: 42px; height: 42px; font-size: 22px; }
-  .btn-icon { padding: 7px 10px; font-size: 0.75rem; }
-  .btn-icon span:nth-child(2) { display: none; }
-  .search-section { padding: 0 1rem; margin-top: -16px; }
-  .search-box { padding: 0.6rem 1rem; }
-  .stats-bar { padding: 0 1rem; gap: 0.5rem; }
-  .stat-card { padding: 0.75rem 0.5rem; }
-  .stat-number { font-size: 1.3rem; }
-  .stat-label { font-size: 0.65rem; }
-  .main-content { padding: 0 1rem; gap: 1rem; }
-  .quote-card { padding: 1.25rem; }
-  .quote-text { font-size: 1rem; line-height: 2; }
-  .quote-actions { width: 100%; justify-content: flex-end; margin-top: 0.5rem; }
-  .share-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .share-item { padding: 10px 4px; }
-  .share-item-icon { width: 36px; height: 36px; font-size: 1.1rem; }
-  .share-item-label { font-size: 0.65rem; }
-  .modal { padding: 1.5rem; }
-  .modal-buttons { flex-direction: column; }
-  .form-card { padding: 1.25rem; }
-  .theme-toggle { width: 40px; height: 40px; font-size: 1.1rem; }
-}
-
-.fab {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
-  color: var(--primary-dark);
-  border: none;
-  font-size: 1.8rem;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 20px var(--accent-glow);
-  cursor: pointer;
-  z-index: 100;
-  transition: var(--transition-bounce);
-  touch-action: manipulation;
-}
-
-.fab:hover, .fab:active {
-  transform: scale(1.1) rotate(90deg);
-  box-shadow: 0 8px 30px var(--accent-glow);
-}
-
-.fab:active { transform: scale(0.95); }
-
-@media (max-width: 900px) {
-  .fab { display: flex; }
-}
-
-::selection {
-  background: var(--accent);
-  color: var(--primary-dark);
-}
-
-[data-theme="dark"] ::selection {
-  background: var(--accent);
-  color: var(--primary-dark);
-}
-</style>
-<base target="_blank">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="theme-color" content="#1a365d">
+    <meta property="og:title" content="ديوان الحكمة | TechNomads">
+    <meta property="og:description" content="كنوز الحكمة والأشعار في تطبيق أنيق وسريع">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://te-2026.netlify.app/">
+    <meta property="og:image" content="https://te-2026.netlify.app/og-image.jpg">
+    <title>ديوان الحكمة | TechNomads</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="images/icon-57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/icon-72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/icon-114.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/icon-144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/icon-152.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/icon-192.png">
+    <style>
+        /* ===== المتغيرات والثيمات ===== */
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #d69e2e;
+            --accent-light: #ecc94b;
+            --bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text: #1a202c;
+            --text-muted: #718096;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --danger: #e53e3e;
+            --success: #38a169;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --header-bg: var(--primary);
+            --header-text: #ffffff;
+            --input-bg: var(--bg);
+            --hover-bg: rgba(255, 255, 255, 0.15);
+            --modal-overlay: rgba(0, 0, 0, 0.5);
+            --toast-bg: var(--primary);
+            --sidebar-width: 280px;
+            --sidebar-bg: var(--card-bg);
+        }
+
+        [data-theme="dark"] {
+            --primary: #2d3748;
+            --primary-light: #4a5568;
+            --bg: #1a202c;
+            --card-bg: #2d3748;
+            --text: #e2e8f0;
+            --text-muted: #a0aec0;
+            --border: #4a5568;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            --header-bg: #1a202c;
+            --header-text: #e2e8f0;
+            --input-bg: #1a202c;
+            --hover-bg: rgba(255, 255, 255, 0.08);
+            --modal-overlay: rgba(0, 0, 0, 0.8);
+            --toast-bg: #2d3748;
+            --accent-light: #b7791f;
+            --search-highlight: #b7791f;
+            --sidebar-bg: #1a202c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Noto Naskh Arabic', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.7;
+            transition: background 0.3s ease, color 0.3s ease;
+            display: flex;
+        }
+
+        /* ===== شاشة التحميل ===== */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease, background 0.3s ease;
+            color: white;
+            padding: 2rem;
+        }
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        [data-theme="dark"] .loading-screen {
+            background: var(--bg);
+        }
+        .loading-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        .loading-text {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .loading-sub {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+        .loading-bar-inner {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-light);
+            border-radius: 4px;
+            animation: load 1.5s ease forwards;
+        }
+        @keyframes load {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* ===== الشريط الجانبي (Sidebar) ===== */
+        .sidebar-nav {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            border-left: 1px solid var(--border);
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+        .sidebar-nav.open {
+            transform: translateX(0);
+        }
+        .sidebar-nav .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sidebar-nav .close-btn:hover {
+            color: var(--accent);
+        }
+        .sidebar-nav .nav-section {
+            margin-bottom: 2rem;
+        }
+        .sidebar-nav .nav-section h4 {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+        .sidebar-nav .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .sidebar-nav .nav-item:hover {
+            background: var(--hover-bg);
+            color: var(--accent);
+        }
+        .sidebar-nav .nav-item.active {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .sidebar-nav .nav-item .icon {
+            font-size: 1.2rem;
+        }
+        .sidebar-nav .nav-item .badge {
+            margin-right: auto;
+            background: var(--border);
+            padding: 0.1rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== زر فتح القائمة ===== */
+        .menu-toggle {
+            background: var(--hover-bg);
+            border: none;
+            color: var(--header-text);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+        [data-theme="dark"] .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ===== المحتوى الرئيسي ===== */
+        .main-wrapper {
+            flex: 1;
+            padding: 1rem;
+            margin-right: 0;
+            transition: margin-right 0.3s ease;
+        }
+        .main-wrapper.shifted {
+            margin-right: var(--sidebar-width);
+        }
+
+        /* ===== الهيدر ===== */
+        .header {
+            background: var(--header-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius);
+            color: var(--header-text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .logo-icon {
+            font-size: 2rem;
+            line-height: 1;
+        }
+        .logo-text h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: 'Noto Naskh Arabic', serif;
+        }
+        .logo-text span {
+            font-size: 0.65rem;
+            opacity: 0.8;
+            display: block;
+        }
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .btn-icon {
+            background: var(--hover-bg);
+            border: none;
+            color: var(--header-text);
+            padding: 0.4rem 0.9rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            backdrop-filter: blur(4px);
+        }
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        [data-theme="dark"] .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ===== لوحة الحكمة اليومية ===== */
+        .daily-wisdom {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+        [data-theme="dark"] .daily-wisdom {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+        }
+        .daily-wisdom::before {
+            content: '📜';
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            opacity: 0.1;
+        }
+        .daily-wisdom .label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .daily-wisdom .label .refresh-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: var(--transition);
+        }
+        .daily-wisdom .label .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .daily-wisdom .quote {
+            font-size: 1.4rem;
+            font-weight: 600;
+            font-family: 'Noto Naskh Arabic', serif;
+            line-height: 2;
+            margin-bottom: 0.5rem;
+            padding-left: 2rem;
+        }
+        .daily-wisdom .author {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .daily-wisdom .author .share-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: var(--transition);
+        }
+        .daily-wisdom .author .share-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* ===== البحث المتقدم ===== */
+        .search-advanced {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .search-advanced .search-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        .search-advanced .search-row input,
+        .search-advanced .search-row select {
+            flex: 1;
+            min-width: 140px;
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--input-bg);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .search-advanced .search-row input:focus,
+        .search-advanced .search-row select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.2);
+        }
+        .search-advanced .search-row .search-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+        .search-advanced .search-row .search-btn:hover {
+            background: var(--primary-light);
+            transform: scale(1.03);
+        }
+        [data-theme="dark"] .search-advanced .search-row .search-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .search-advanced .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+        .search-advanced .filter-chips .chip {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-muted);
+        }
+        .search-advanced .filter-chips .chip:hover,
+        .search-advanced .filter-chips .chip.active {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+        .search-advanced .filter-chips .chip .count {
+            font-size: 0.65rem;
+            opacity: 0.7;
+        }
+
+        /* ===== الإحصائيات ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== قائمة الاقتباسات ===== */
+        .quotes-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .quote-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            animation: fadeIn 0.4s ease forwards;
+            opacity: 0;
+            position: relative;
+        }
+        .quote-card.favorited {
+            border-right: 4px solid var(--accent);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .quote-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        .quote-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 2;
+            margin-bottom: 0.75rem;
+            font-family: 'Noto Naskh Arabic', serif;
+        }
+        .quote-text .search-highlight {
+            background: var(--accent-light);
+            color: var(--primary);
+            padding: 0 4px;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+        [data-theme="dark"] .quote-text .search-highlight {
+            color: #1a202c;
+        }
+        .quote-meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+        .quote-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .quote-author {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .quote-category {
+            background: var(--bg);
+            padding: 0.1rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+        }
+        .quote-date {
+            font-size: 0.7rem;
+        }
+        .quote-actions {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+        .quote-actions button {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.6rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.7rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .quote-actions button:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .quote-actions .btn-delete:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+        }
+        .quote-actions .btn-fav {
+            color: var(--accent);
+        }
+        .quote-actions .btn-fav:hover {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+        [data-theme="dark"] .quote-actions button:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+        [data-theme="dark"] .quote-actions .btn-delete:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+        }
+
+        /* ===== الأزرار السريعة للجوال ===== */
+        .share-actions-mobile {
+            display: none;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--border);
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .share-actions-mobile .share-btn {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 0.3rem 0.9rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.75rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .share-actions-mobile .share-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        [data-theme="dark"] .share-actions-mobile .share-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ===== النماذج ===== */
+        .form-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 1.5rem;
+        }
+        .form-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--text-muted);
+        }
+        .form-group textarea,
+        .form-group input {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: var(--input-bg);
+            resize: vertical;
+            color: var(--text);
+        }
+        .form-group textarea:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.2);
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        [data-theme="dark"] .btn-primary:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .btn-secondary {
+            background: var(--border);
+            color: var(--text);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        [data-theme="dark"] .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        /* ===== الفوتر ===== */
+        .footer {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            transition: border-color 0.3s ease, color 0.3s ease;
+            margin-top: 2rem;
+        }
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: var(--toast-bg);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 10000;
+            box-shadow: var(--shadow-lg);
+            max-width: 90%;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) scale(1);
+        }
+        .toast.success {
+            background: var(--success);
+        }
+        .toast.error {
+            background: var(--danger);
+        }
+        [data-theme="dark"] .toast.success {
+            background: #2f855a;
+        }
+        [data-theme="dark"] .toast.error {
+            background: #c53030;
+        }
+
+        /* ===== مودال الحذف ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--modal-overlay);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 1rem;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .modal h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .modal p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .modal-buttons button {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .modal-confirm {
+            background: var(--danger);
+            color: white;
+        }
+        .modal-confirm:hover {
+            background: #c53030;
+            transform: scale(1.03);
+        }
+        .modal-cancel {
+            background: var(--border);
+            color: var(--text);
+        }
+        .modal-cancel:hover {
+            background: #cbd5e0;
+        }
+        [data-theme="dark"] .modal-cancel:hover {
+            background: #4a5568;
+        }
+
+        /* ===== زر العودة للأعلى ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            transition: var(--transition);
+            z-index: 100;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .back-to-top:hover {
+            transform: scale(1.1);
+            background: var(--primary-light);
+        }
+        [data-theme="dark"] .back-to-top:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ===== رسالة عند عدم وجود نتائج ===== */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .empty-state h3 {
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+
+        /* ===== تثبيت التطبيق ===== */
+        .install-prompt {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 0.8rem 1.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto 1rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .install-prompt.show {
+            display: flex;
+        }
+        .install-prompt span {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .install-prompt button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .install-prompt button:hover {
+            transform: scale(1.05);
+        }
+        .install-prompt .skip-btn {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 0.4rem 0.8rem;
+        }
+        .install-prompt .skip-btn:hover {
+            background: var(--border);
+        }
+        [data-theme="dark"] .install-prompt .skip-btn:hover {
+            background: var(--border);
+        }
+
+        /* ===== استجابة للجوال ===== */
+        @media (max-width: 900px) {
+            .main-wrapper.shifted {
+                margin-right: 0;
+            }
+            .sidebar-nav {
+                width: 280px;
+            }
+            .sidebar-nav.open {
+                transform: translateX(0);
+            }
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .logo-area {
+                justify-content: center;
+            }
+            .header-actions {
+                justify-content: center;
+            }
+            .daily-wisdom .quote {
+                font-size: 1.1rem;
+                padding-left: 0;
+            }
+            .daily-wisdom::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main-wrapper {
+                padding: 0.5rem;
+            }
+            .header {
+                padding: 0.8rem 1rem;
+                border-radius: var(--radius-sm);
+            }
+            .logo-text h1 {
+                font-size: 1.1rem;
+            }
+            .stats-bar {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+            .stat-number {
+                font-size: 1.4rem;
+            }
+            .stat-card {
+                padding: 0.6rem;
+            }
+            .quote-card {
+                padding: 1rem;
+            }
+            .quote-text {
+                font-size: 1rem;
+                line-height: 1.8;
+            }
+            .quote-actions {
+                display: none;
+            }
+            .share-actions-mobile {
+                display: flex;
+            }
+            .search-advanced .search-row input,
+            .search-advanced .search-row select {
+                min-width: 100%;
+            }
+            .form-card {
+                padding: 1rem;
+            }
+            .modal {
+                padding: 1.5rem;
+            }
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 1.5rem;
+                right: 1rem;
+            }
+            .toast {
+                font-size: 0.8rem;
+                padding: 0.6rem 1.2rem;
+                bottom: 1rem;
+            }
+            .daily-wisdom {
+                padding: 1rem;
+            }
+            .daily-wisdom .quote {
+                font-size: 1rem;
+            }
+            .sidebar-nav {
+                width: 100%;
+                border-left: none;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .stats-bar {
+                grid-template-columns: 1fr;
+            }
+            .header-actions .btn-icon {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="loading-screen" id="loadingScreen">
-  <div class="loading-icon">📜</div>
-  <div class="loading-text">ديوان الحكمة</div>
-  <div class="loading-sub">جارٍ تحميل كنوز الحكمة...</div>
-  <div class="loading-bar"><div class="loading-bar-inner"></div></div>
-</div>
-
-<header class="header">
-  <div class="header-top">
-    <div class="logo-area">
-      <div class="logo-icon">📜</div>
-      <div class="logo-text">
-        <h1>ديوان الحكمة</h1>
-        <span>TECHNOMADS — حلول رقمية رائدة</span>
-      </div>
-    </div>
-    <div class="header-actions">
-      <button class="btn-icon" onclick="exportData()" title="تصدير JSON"><span>📥</span><span>تصدير</span></button>
-      <button class="btn-icon" onclick="document.getElementById('importFile').click()" title="استيراد"><span>📤</span><span>استيراد</span></button>
-      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
-      <button class="theme-toggle" onclick="toggleTheme()" title="تبديل الوضع" id="themeBtn">🌙</button>
-    </div>
-  </div>
-</header>
-
-<div class="search-section">
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="searchInput" placeholder="ابحث في الاقتباسات، القائلين، أو التصنيفات..." oninput="handleSearch()" autocomplete="off">
-    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
-  </div>
-</div>
-
-<div class="stats-bar">
-  <div class="stat-card"><div class="stat-number" id="statTotal">0</div><div class="stat-label">إجمالي الاقتباسات</div></div>
-  <div class="stat-card"><div class="stat-number" id="statAuthors">0</div><div class="stat-label">عدد القائلين</div></div>
-  <div class="stat-card"><div class="stat-number" id="statCategories">0</div><div class="stat-label">التصنيفات</div></div>
-</div>
-
-<div class="main-content">
-  <div class="quotes-section">
-    <h2>✨ مقتطفات الحكمة</h2>
-    <div class="categories-filter" id="categoriesFilter"></div>
-    <div class="quotes-grid" id="quotesList"></div>
-  </div>
-
-  <div class="sidebar" id="sidebar">
-    <div class="form-card">
-      <h3>➕ إضافة اقتباس</h3>
-      <form id="quoteForm" onsubmit="addQuote(event)">
-        <div class="form-group"><label>الاقتباس *</label><textarea id="qText" placeholder="اكتب الاقتباس هنا..." required></textarea></div>
-        <div class="form-group"><label>القائل *</label><input type="text" id="qAuthor" placeholder="اسم القائل" required></div>
-        <div class="form-group"><label>التصنيف</label><input type="text" id="qCategory" list="catList" placeholder="مثال: حكمة، شعر، فلسفة"><datalist id="catList"></datalist></div>
-        <div class="form-group"><label>المصدر (اختياري)</label><input type="text" id="qSource" placeholder="كتاب، مقالة، إلخ"></div>
-        <button type="submit" class="btn-primary">إضافة الاقتباس</button>
-      </form>
+    <!-- ===== شاشة التحميل ===== -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-icon">📜</div>
+        <div class="loading-text">ديوان الحكمة</div>
+        <div class="loading-sub">جارٍ تحميل كنوز الحكمة...</div>
+        <div class="loading-bar"><div class="loading-bar-inner"></div></div>
     </div>
 
-    <div class="form-card" id="editFormCard" style="display:none">
-      <h3>✏️ تعديل الاقتباس</h3>
-      <form id="editForm" onsubmit="saveEdit(event)">
-        <input type="hidden" id="editId">
-        <div class="form-group"><label>الاقتباس</label><textarea id="editText" required></textarea></div>
-        <div class="form-group"><label>القائل</label><input type="text" id="editAuthor" required></div>
-        <div class="form-group"><label>التصنيف</label><input type="text" id="editCategory"></div>
-        <div class="form-group"><label>المصدر</label><input type="text" id="editSource"></div>
-        <button type="submit" class="btn-primary">حفظ التعديلات</button>
-        <button type="button" class="btn-secondary" onclick="cancelEdit()">إلغاء</button>
-      </form>
+    <!-- ===== الشريط الجانبي (Sidebar) ===== -->
+    <nav class="sidebar-nav" id="sidebarNav">
+        <button class="close-btn" onclick="toggleSidebar()">✕ إغلاق</button>
+        <div class="nav-section">
+            <h4>📚 الأبواب</h4>
+            <div class="nav-item active" onclick="setCategory('all')"><span class="icon">🏠</span>الكل <span class="badge" id="countAll">0</span></div>
+            <div id="categoryList"></div>
+        </div>
+        <div class="nav-section">
+            <h4>⭐ المفضلة</h4>
+            <div class="nav-item" onclick="filterFavorites()"><span class="icon">❤️</span>المفضلة <span class="badge" id="countFav">0</span></div>
+        </div>
+        <div class="nav-section">
+            <h4>📊 إحصائيات</h4>
+            <div class="nav-item"><span class="icon">📝</span>إجمالي الاقتباسات <span class="badge" id="statTotalSide">0</span></div>
+            <div class="nav-item"><span class="icon">👤</span>عدد القائلين <span class="badge" id="statAuthorsSide">0</span></div>
+        </div>
+        <div class="nav-section">
+            <h4>🔗 روابط سريعة</h4>
+            <a href="https://te-2026.netlify.app/" target="_blank" class="nav-item"><span class="icon">🌐</span>TechNomads</a>
+            <a href="https://te-2026.netlify.app/projects/the_wisdom/" target="_blank" class="nav-item"><span class="icon">📜</span>ديوان الحكمة</a>
+        </div>
+    </nav>
+
+    <!-- ===== المحتوى الرئيسي ===== -->
+    <div class="main-wrapper" id="mainWrapper">
+
+        <!-- ===== تثبيت التطبيق ===== -->
+        <div class="install-prompt" id="installPrompt">
+            <span>📱 قم بتثبيت تطبيق "ديوان الحكمة" على جهازك</span>
+            <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+                <button onclick="installApp()">تثبيت</button>
+                <button class="skip-btn" onclick="document.getElementById('installPrompt').classList.remove('show')">تخطي</button>
+            </div>
+        </div>
+
+        <!-- ===== الهيدر ===== -->
+        <header class="header">
+            <div class="logo-area">
+                <button class="menu-toggle" onclick="toggleSidebar()" title="القائمة">☰</button>
+                <div class="logo-icon">📜</div>
+                <div class="logo-text">
+                    <h1>ديوان الحكمة</h1>
+                    <span>TECHNOMADS — حلول رقمية رائدة</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="تبديل الوضع الليلي">🌙</button>
+                <button class="btn-icon" onclick="shareApp()">📤 مشاركة</button>
+                <button class="btn-icon" onclick="exportData()">📥 تصدير</button>
+                <button class="btn-icon" onclick="document.getElementById('importFile').click()">📤 استيراد</button>
+                <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+            </div>
+        </header>
+
+        <!-- ===== لوحة الحكمة اليومية ===== -->
+        <div class="daily-wisdom" id="dailyWisdom">
+            <div class="label">
+                🌟 حكمة اليوم
+                <button class="refresh-btn" onclick="loadDailyWisdom()">🔄 تحديث</button>
+            </div>
+            <div class="quote" id="dailyQuote">"..."</div>
+            <div class="author">
+                <span id="dailyAuthor">— ...</span>
+                <button class="share-btn" onclick="shareDailyWisdom()">📤 مشاركة</button>
+                <button class="share-btn" onclick="copyDailyWisdom()">📋 نسخ</button>
+            </div>
+        </div>
+
+        <!-- ===== البحث المتقدم ===== -->
+        <div class="search-advanced">
+            <div class="search-row">
+                <input type="text" id="searchInput" placeholder="🔍 ابحث في الاقتباسات..." autocomplete="off">
+                <select id="searchAuthor">
+                    <option value="">جميع القائلين</option>
+                </select>
+                <select id="searchCategory">
+                    <option value="">جميع التصنيفات</option>
+                </select>
+                <input type="date" id="searchDate" title="بحث بالتاريخ">
+                <button class="search-btn" onclick="performSearch()">بحث</button>
+                <button class="search-btn" style="background:var(--border);color:var(--text);" onclick="clearSearch()">مسح</button>
+            </div>
+            <div class="filter-chips" id="filterChips">
+                <span class="chip active" data-filter="all" onclick="setQuickFilter('all')">الكل <span class="count" id="chipAll">0</span></span>
+                <span class="chip" data-filter="favorites" onclick="setQuickFilter('favorites')">⭐ المفضلة <span class="count" id="chipFav">0</span></span>
+                <span class="chip" data-filter="today" onclick="setQuickFilter('today')">📅 اليوم <span class="count" id="chipToday">0</span></span>
+            </div>
+        </div>
+
+        <!-- ===== الإحصائيات ===== -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-number" id="statTotal">0</div>
+                <div class="stat-label">إجمالي الاقتباسات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statAuthors">0</div>
+                <div class="stat-label">عدد القائلين</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statCategories">0</div>
+                <div class="stat-label">التصنيفات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statFavorites">0</div>
+                <div class="stat-label">المفضلة</div>
+            </div>
+        </div>
+
+        <!-- ===== قائمة الاقتباسات ===== -->
+        <div class="quotes-grid" id="quotesList"></div>
+
+        <!-- ===== نموذج الإضافة ===== -->
+        <div class="form-card">
+            <h3>➕ إضافة اقتباس جديد</h3>
+            <form id="quoteForm" onsubmit="addQuote(event)">
+                <div class="form-group">
+                    <label>الاقتباس *</label>
+                    <textarea id="qText" placeholder="اكتب الاقتباس هنا..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>القائل *</label>
+                    <input type="text" id="qAuthor" placeholder="اسم القائل" required>
+                </div>
+                <div class="form-group">
+                    <label>التصنيف</label>
+                    <input type="text" id="qCategory" list="catList" placeholder="مثال: حكمة، شعر، فلسفة">
+                    <datalist id="catList"></datalist>
+                </div>
+                <button type="submit" class="btn-primary">إضافة الاقتباس</button>
+            </form>
+        </div>
+
+        <!-- ===== نموذج التعديل ===== -->
+        <div class="form-card" id="editFormCard" style="display:none">
+            <h3>✏️ تعديل الاقتباس</h3>
+            <form id="editForm" onsubmit="saveEdit(event)">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>الاقتباس</label>
+                    <textarea id="editText" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>القائل</label>
+                    <input type="text" id="editAuthor" required>
+                </div>
+                <div class="form-group">
+                    <label>التصنيف</label>
+                    <input type="text" id="editCategory">
+                </div>
+                <button type="submit" class="btn-primary">حفظ التعديلات</button>
+                <button type="button" class="btn-secondary" onclick="cancelEdit()">إلغاء</button>
+            </form>
+        </div>
+
+        <!-- ===== الفوتر ===== -->
+        <footer class="footer">
+            <p>© 2026 <a href="https://te-2026.netlify.app/" target="_blank">TechNomads</a> — حلول رقمية رائدة من اليمن إلى العالم العربي</p>
+            <p style="margin-top:6px; font-size:0.78rem;">تم تطوير هذا المشروع كجزء من رؤية TechNomads في الابتكار والجودة</p>
+        </footer>
     </div>
-  </div>
-</div>
 
-<button class="fab" onclick="scrollToAdd()" title="إضافة اقتباس">+</button>
+    <!-- ===== رسائل Toast ===== -->
+    <div class="toast" id="toast"></div>
 
-<footer class="footer">
-  <p>© 2026 <a href="https://te-2026.netlify.app/" target="_blank">TechNomads</a> — حلول رقمية رائدة من اليمن إلى العالم العربي</p>
-  <p style="margin-top:6px; font-size:0.75rem;">تم تطوير هذا المشروع كجزء من رؤية TechNomads في الابتكار والجودة</p>
-</footer>
-
-<div class="toast" id="toast"></div>
-
-<div class="modal-overlay" id="deleteModal" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="modal-icon">⚠️</div>
-    <h3>تأكيد الحذف</h3>
-    <p>هل أنت متأكد من حذف هذا الاقتباس؟ لا يمكن التراجع عن هذا الإجراء.</p>
-    <div class="modal-buttons">
-      <button class="modal-confirm" onclick="confirmDelete()">نعم، احذف</button>
-      <button class="modal-cancel" onclick="closeModal()">إلغاء</button>
+    <!-- ===== مودال الحذف ===== -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <div class="modal-icon">⚠️</div>
+            <h3>تأكيد الحذف</h3>
+            <p>هل أنت متأكد من حذف هذا الاقتباس؟ لا يمكن التراجع عن هذا الإجراء.</p>
+            <div class="modal-buttons">
+                <button class="modal-confirm" onclick="confirmDelete()">نعم، احذف</button>
+                <button class="modal-cancel" onclick="closeModal()">إلغاء</button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<div class="share-modal-overlay" id="shareModal" onclick="closeShareModal(event)">
-  <div class="share-modal" onclick="event.stopPropagation()">
-    <div class="share-modal-header">
-      <h3>🔗 مشاركة الاقتباس</h3>
-      <button class="share-close" onclick="closeShareModal()">✕</button>
-    </div>
-    <div class="share-preview" id="sharePreview">
-      <div class="share-preview-text" id="sharePreviewText"></div>
-      <div class="share-preview-author" id="sharePreviewAuthor"></div>
-      <div class="share-preview-watermark">diwan.technomads.com</div>
-    </div>
-    <div class="share-grid" id="shareGrid"></div>
-    <div class="share-link-section">
-      <label>رابط المشاركة</label>
-      <div class="share-link-box">
-        <input type="text" id="shareLinkInput" readonly>
-        <button onclick="copyShareLink()">نسخ</button>
-      </div>
-    </div>
-  </div>
-</div>
+    <!-- ===== زر العودة للأعلى ===== -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
 
-<script>
-const SITE_URL = 'https://te-2026.netlify.app/';
-const APP_NAME = 'ديوان الحكمة';
+    <script>
+        // ================================================================
+        // 1. المتغيرات العامة
+        // ================================================================
+        let quotes = [];
+        let favorites = JSON.parse(localStorage.getItem('diwan_favorites') || '[]');
+        let deleteId = null;
+        let activeCategory = 'all';
+        let quickFilter = 'all';
+        let installPromptEvent = null;
+        let searchTimeout = null;
 
-let quotes = [];
-let deleteId = null;
-let activeCategory = 'all';
-let currentShareQuote = null;
-let searchDebounce = null;
+        // ================================================================
+        // 2. الوضع الليلي (Dark Mode)
+        // ================================================================
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            const toggleBtn = document.getElementById('themeToggle');
+            toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            const metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (newTheme === 'dark') {
+                metaTheme.setAttribute('content', '#1a202c');
+            } else {
+                metaTheme.setAttribute('content', '#1a365d');
+            }
+        }
 
-function initTheme() {
-  const saved = localStorage.getItem('diwan_theme');
-  if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    document.getElementById('themeBtn').textContent = '☀️';
-  }
-}
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme === 'dark' || (savedTheme === 'system' && prefersDark) ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+            const metaTheme = document.querySelector('meta[name="theme-color"]');
+            metaTheme.setAttribute('content', theme === 'dark' ? '#1a202c' : '#1a365d');
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme') || localStorage.getItem('theme') === 'system') {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    document.getElementById('themeToggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+                    document.querySelector('meta[name="theme-color"]').setAttribute('content', newTheme === 'dark' ?
+                        '#1a202c' : '#1a365d');
+                }
+            });
+        }
 
-function toggleTheme() {
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  if (isDark) {
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.setItem('diwan_theme', 'light');
-    document.getElementById('themeBtn').textContent = '🌙';
-  } else {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    localStorage.setItem('diwan_theme', 'dark');
-    document.getElementById('themeBtn').textContent = '☀️';
-  }
-}
+        // ================================================================
+        // 3. PWA (تثبيت التطبيق)
+        // ================================================================
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            installPromptEvent = e;
+            document.getElementById('installPrompt').classList.add('show');
+        });
 
-async function init() {
-  initTheme();
-  try {
-    const response = await fetch('data.json');
-    if (!response.ok) throw new Error('Failed to load data');
-    const data = await response.json();
-    quotes = data.quotes || [];
-    const localQuotes = JSON.parse(localStorage.getItem('diwan_quotes') || '[]');
-    if (localQuotes.length > 0) {
-      const existingIds = new Set(quotes.map(q => q.id));
-      localQuotes.forEach(q => { if (!existingIds.has(q.id)) quotes.push(q); });
-    }
-    handleSharedQuote();
-    setTimeout(() => {
-      document.getElementById('loadingScreen').classList.add('hidden');
-      renderQuotes();
-      updateStats();
-      updateCatList();
-      renderCategoriesFilter();
-    }, 1500);
-  } catch (err) {
-    console.error('Error:', err);
-    document.querySelector('.loading-text').textContent = '⚠️ خطأ في التحميل';
-    document.querySelector('.loading-sub').textContent = 'تأكد من وجود ملف data.json';
-    document.querySelector('.loading-bar-inner').style.background = '#e53e3e';
-  }
-}
+        function installApp() {
+            if (installPromptEvent) {
+                installPromptEvent.prompt();
+                installPromptEvent.userChoice.then((result) => {
+                    if (result.outcome === 'accepted') {
+                        document.getElementById('installPrompt').classList.remove('show');
+                        showToast('📱 تم تثبيت التطبيق بنجاح', 'success');
+                    }
+                });
+            }
+        }
 
-function handleSearch() {
-  const input = document.getElementById('searchInput');
-  const clearBtn = document.getElementById('searchClear');
-  clearBtn.classList.toggle('visible', input.value.length > 0);
-  clearTimeout(searchDebounce);
-  searchDebounce = setTimeout(() => { renderQuotes(); }, 120);
-}
+        // ================================================================
+        // 4. الشريط الجانبي
+        // ================================================================
+        function toggleSidebar() {
+            document.getElementById('sidebarNav').classList.toggle('open');
+            document.getElementById('mainWrapper').classList.toggle('shifted');
+        }
 
-function clearSearch() {
-  document.getElementById('searchInput').value = '';
-  document.getElementById('searchClear').classList.remove('visible');
-  renderQuotes();
-  document.getElementById('searchInput').focus();
-}
+        // إغلاق الشريط عند النقر خارجها (للجوال)
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebarNav');
+            const toggle = document.querySelector('.menu-toggle');
+            if (window.innerWidth <= 900) {
+                if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                    document.getElementById('mainWrapper').classList.remove('shifted');
+                }
+            }
+        });
 
-function renderQuotes() {
-  const search = document.getElementById('searchInput').value.toLowerCase().trim();
-  const list = document.getElementById('quotesList');
-  let filtered = quotes.filter(q => {
-    const text = (q.text || '').toLowerCase();
-    const author = (q.author || '').toLowerCase();
-    const category = (q.category || '').toLowerCase();
-    const source = (q.source || '').toLowerCase();
-    const matchesSearch = !search || text.includes(search) || author.includes(search) || category.includes(search) || source.includes(search);
-    const matchesCat = activeCategory === 'all' || q.category === activeCategory;
-    return matchesSearch && matchesCat;
-  });
-  filtered.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
-  if (filtered.length === 0) {
-    list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><h3>لا توجد نتائج</h3><p>جرب البحث بكلمات مختلفة أو أضف اقتباساً جديداً</p></div>';
-    return;
-  }
-  list.innerHTML = filtered.map((q, i) => `<div class="quote-card" data-id="${q.id}" style="animation-delay:${Math.min(i*0.06,0.5)}s"><div class="quote-text">${escapeHtml(q.text)}</div><div class="quote-meta"><div class="quote-info"><span class="quote-author">👤 ${escapeHtml(q.author)}</span><span class="quote-category">${escapeHtml(q.category||'عام')}</span><span class="quote-date">📅 ${q.date}</span>${q.source?`<span class="quote-source">📖 ${escapeHtml(q.source)}</span>`:''}</div><div class="quote-actions"><button class="action-btn share-btn" onclick="openShareModal(${q.id})" title="مشاركة">🔗 مشاركة</button><button class="action-btn" onclick="copyQuoteText(${q.id})" title="نسخ النص">📋 نسخ</button><button class="action-btn" onclick="startEdit(${q.id})" title="تعديل">✏️</button><button class="action-btn btn-delete" onclick="askDelete(${q.id})" title="حذف">🗑️</button></div></div></div>`).join('');
-}
+        // ================================================================
+        // 5. المشاركة العامة للتطبيق
+        // ================================================================
+        function shareApp() {
+            const url = window.location.href;
+            const title = 'ديوان الحكمة - كنوز من الحكمة والأشعار';
+            const text = 'اكتشف كنوز الحكمة والأشعار مع تطبيق "ديوان الحكمة" من TechNomads';
+            if (navigator.share) {
+                navigator.share({ title, text, url })
+                    .then(() => showToast('📤 تمت المشاركة', 'success'))
+                    .catch(() => {});
+            } else {
+                copyToClipboard(`${text}\n\n${url}`);
+                showToast('📋 تم نسخ الرابط للمشاركة', 'success');
+            }
+        }
 
-async function copyQuoteText(id) {
-  const q = quotes.find(x => x.id === id);
-  if (!q) return;
-  const text = q.text + '\n\n— ' + q.author + '\n\n📜 ' + APP_NAME + ' | ' + SITE_URL;
-  try {
-    await navigator.clipboard.writeText(text);
-    showToast('📋 تم نسخ الاقتباس!', 'success');
-  } catch (err) {
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast('📋 تم نسخ الاقتباس!', 'success');
-  }
-}
+        // ================================================================
+        // 6. دوال المشاركة والنسخ
+        // ================================================================
+        function shareQuote(quote) {
+            const formattedText = `"${quote.text}"\n— ${quote.author}`;
+            const url = window.location.href;
+            const fullMessage = `${formattedText}\n\n📖 للمزيد: ${url}`;
+            if (navigator.share) {
+                navigator.share({ title: 'اقتباس من ديوان الحكمة', text: fullMessage, url })
+                    .then(() => showToast('📤 تمت المشاركة', 'success'))
+                    .catch(() => {});
+            } else {
+                copyToClipboard(fullMessage);
+                showToast('📋 تم نسخ الاقتباس مع الرابط', 'success');
+            }
+        }
 
-function openShareModal(id) {
-  const q = quotes.find(x => x.id === id);
-  if (!q) return;
-  currentShareQuote = q;
-  document.getElementById('sharePreviewText').textContent = q.text;
-  document.getElementById('sharePreviewAuthor').textContent = '— ' + q.author;
-  const shareUrl = SITE_URL + '?quote=' + id;
-  document.getElementById('shareLinkInput').value = shareUrl;
-  const shareText = encodeURIComponent(q.text + '\n\n— ' + q.author);
-  const shareUrlEnc = encodeURIComponent(shareUrl);
-  const grid = document.getElementById('shareGrid');
-  grid.innerHTML = `
-    <a href="https://wa.me/?text=${shareText}%0A%0A${shareUrlEnc}" target="_blank" class="share-item whatsapp" onclick="trackShare('whatsapp')"><div class="share-item-icon">💬</div><span class="share-item-label">واتساب</span></a>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrlEnc}&quote=${shareText}" target="_blank" class="share-item facebook" onclick="trackShare('facebook')"><div class="share-item-icon">f</div><span class="share-item-label">فيسبوك</span></a>
-    <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrlEnc}" target="_blank" class="share-item twitter" onclick="trackShare('twitter')"><div class="share-item-icon">𝕏</div><span class="share-item-label">تويتر</span></a>
-    <a href="https://t.me/share/url?url=${shareUrlEnc}&text=${shareText}" target="_blank" class="share-item telegram" onclick="trackShare('telegram')"><div class="share-item-icon">✈️</div><span class="share-item-label">تيليجرام</span></a>
-    <a href="https://www.instagram.com/?url=${shareUrlEnc}" target="_blank" class="share-item instagram" onclick="trackShare('instagram')"><div class="share-item-icon">📷</div><span class="share-item-label">انستغرام</span></a>
-    <a href="https://www.linkedin.com/sharing/share-offsite/?url=${shareUrlEnc}" target="_blank" class="share-item linkedin" onclick="trackShare('linkedin')"><div class="share-item-icon">in</div><span class="share-item-label">لينكدإن</span></a>
-    <a href="mailto:?subject=${encodeURIComponent(APP_NAME+' | '+q.author)}&body=${shareText}%0A%0A${shareUrlEnc}" class="share-item email" onclick="trackShare('email')"><div class="share-item-icon">✉️</div><span class="share-item-label">بريد</span></a>
-    <button class="share-item copy" onclick="copyShareLink()"><div class="share-item-icon">🔗</div><span class="share-item-label">نسخ الرابط</span></button>
-    ${navigator.share?`<button class="share-item native" onclick="nativeShare()"><div class="share-item-icon">📤</div><span class="share-item-label">مشاركة</span></button>`:''}
-    <button class="share-item sms" onclick="shareViaSMS()"><div class="share-item-icon">💬</div><span class="share-item-label">رسالة</span></button>
-  `;
-  document.getElementById('shareModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
+        function copyQuote(quote) {
+            const formattedText = `"${quote.text}"\n— ${quote.author}`;
+            const url = window.location.href;
+            copyToClipboard(`${formattedText}\n\n📖 للمزيد: ${url}`);
+            showToast('📋 تم نسخ الاقتباس مع الرابط!', 'success');
+        }
 
-function closeShareModal(e) {
-  if (e && e.target !== e.currentTarget) return;
-  document.getElementById('shareModal').classList.remove('active');
-  document.body.style.overflow = '';
-  currentShareQuote = null;
-}
+        function shareDailyWisdom() {
+            const text = document.getElementById('dailyQuote').textContent;
+            const author = document.getElementById('dailyAuthor').textContent;
+            const full = `"${text}"\n${author}\n📖 للمزيد: ${window.location.href}`;
+            if (navigator.share) {
+                navigator.share({ title: 'حكمة اليوم', text: full, url: window.location.href })
+                    .then(() => showToast('📤 تمت المشاركة', 'success'))
+                    .catch(() => {});
+            } else {
+                copyToClipboard(full);
+                showToast('📋 تم نسخ حكمة اليوم', 'success');
+            }
+        }
 
-function copyShareLink() {
-  const input = document.getElementById('shareLinkInput');
-  input.select(); input.setSelectionRange(0, 99999);
-  try { navigator.clipboard.writeText(input.value); } catch(e) { document.execCommand('copy'); }
-  showToast('🔗 تم نسخ الرابط!', 'success');
-}
+        function copyDailyWisdom() {
+            const text = document.getElementById('dailyQuote').textContent;
+            const author = document.getElementById('dailyAuthor').textContent;
+            copyToClipboard(`"${text}"\n${author}`);
+            showToast('📋 تم نسخ حكمة اليوم', 'success');
+        }
 
-function nativeShare() {
-  if (!currentShareQuote) return;
-  const q = currentShareQuote;
-  if (navigator.share) {
-    navigator.share({
-      title: APP_NAME + ' | ' + q.author,
-      text: q.text + '\n\n— ' + q.author,
-      url: SITE_URL + '?quote=' + q.id
-    }).catch(()=>{});
-  }
-}
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        }
 
-function shareViaSMS() {
-  if (!currentShareQuote) return;
-  const q = currentShareQuote;
-  const text = encodeURIComponent(q.text + '\n\n— ' + q.author + '\n' + SITE_URL + '?quote=' + q.id);
-  window.location.href = 'sms:?body=' + text;
-}
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            textarea.style.top = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try { document.execCommand('copy'); } catch (e) {}
+            document.body.removeChild(textarea);
+        }
 
-function trackShare(platform) {
-  showToast('📤 تمت المشاركة على ' + platform, 'success');
-}
+        // ================================================================
+        // 7. المفضلة
+        // ================================================================
+        function toggleFavorite(id) {
+            const index = favorites.indexOf(id);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(id);
+            }
+            localStorage.setItem('diwan_favorites', JSON.stringify(favorites));
+            renderQuotes();
+            updateStats();
+            updateSidebarStats();
+            updateChips();
+        }
 
-function handleSharedQuote() {
-  const params = new URLSearchParams(window.location.search);
-  const quoteId = params.get('quote');
-  if (quoteId) {
-    setTimeout(() => {
-      const el = document.querySelector('[data-id="' + quoteId + '"]');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        el.style.borderColor = 'var(--accent)';
-        el.style.boxShadow = '0 0 0 4px var(--accent-glow), var(--shadow-lg)';
-        setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 3000);
-      }
-    }, 2000);
-  }
-}
+        function isFavorite(id) {
+            return favorites.includes(id);
+        }
 
-function addQuote(e) {
-  e.preventDefault();
-  const text = document.getElementById('qText').value.trim();
-  const author = document.getElementById('qAuthor').value.trim();
-  const category = document.getElementById('qCategory').value.trim() || 'عام';
-  const source = document.getElementById('qSource').value.trim();
-  const newQuote = { id: Date.now(), text, author, category, source: source || undefined, date: new Date().toISOString().split('T')[0] };
-  quotes.unshift(newQuote);
-  saveToLocal();
-  document.getElementById('quoteForm').reset();
-  renderQuotes(); updateStats(); updateCatList(); renderCategoriesFilter();
-  showToast('✅ تم إضافة الاقتباس بنجاح', 'success');
-}
+        // ================================================================
+        // 8. الحكمة اليومية
+        // ================================================================
+        function loadDailyWisdom() {
+            if (quotes.length === 0) return;
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const q = quotes[randomIndex];
+            document.getElementById('dailyQuote').textContent = q.text;
+            document.getElementById('dailyAuthor').textContent = `— ${q.author}`;
+        }
 
-function startEdit(id) {
-  const q = quotes.find(x => x.id === id);
-  if (!q) return;
-  document.getElementById('editId').value = id;
-  document.getElementById('editText').value = q.text;
-  document.getElementById('editAuthor').value = q.author;
-  document.getElementById('editCategory').value = q.category || '';
-  document.getElementById('editSource').value = q.source || '';
-  document.getElementById('editFormCard').style.display = 'block';
-  document.getElementById('sidebar').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
+        // ================================================================
+        // 9. البحث المتقدم
+        // ================================================================
+        function performSearch() {
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            const authorFilter = document.getElementById('searchAuthor').value;
+            const categoryFilter = document.getElementById('searchCategory').value;
+            const dateFilter = document.getElementById('searchDate').value;
 
-function saveEdit(e) {
-  e.preventDefault();
-  const id = parseInt(document.getElementById('editId').value);
-  const q = quotes.find(x => x.id === id);
-  if (!q) return;
-  q.text = document.getElementById('editText').value.trim();
-  q.author = document.getElementById('editAuthor').value.trim();
-  q.category = document.getElementById('editCategory').value.trim() || 'عام';
-  q.source = document.getElementById('editSource').value.trim() || undefined;
-  saveToLocal(); cancelEdit();
-  renderQuotes(); updateStats(); updateCatList(); renderCategoriesFilter();
-  showToast('✅ تم تحديث الاقتباس', 'success');
-}
+            let filtered = quotes.filter(q => {
+                const matchSearch = !search || q.text.toLowerCase().includes(search) || q.author.toLowerCase()
+                    .includes(search) || (q.category && q.category.toLowerCase().includes(search));
+                const matchAuthor = !authorFilter || q.author === authorFilter;
+                const matchCategory = !categoryFilter || q.category === categoryFilter;
+                const matchDate = !dateFilter || q.date === dateFilter;
+                return matchSearch && matchAuthor && matchCategory && matchDate;
+            });
 
-function cancelEdit() {
-  document.getElementById('editFormCard').style.display = 'none';
-  document.getElementById('editForm').reset();
-}
+            if (quickFilter === 'favorites') {
+                filtered = filtered.filter(q => favorites.includes(q.id));
+            } else if (quickFilter === 'today') {
+                const today = new Date().toISOString().split('T')[0];
+                filtered = filtered.filter(q => q.date === today);
+            }
 
-function askDelete(id) {
-  deleteId = id;
-  document.getElementById('deleteModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
+            renderFilteredQuotes(filtered);
+            document.getElementById('resultsCount').textContent = `(${filtered.length})`;
+        }
 
-function confirmDelete() {
-  if (deleteId) {
-    quotes = quotes.filter(q => q.id !== deleteId);
-    saveToLocal();
-    renderQuotes(); updateStats(); updateCatList(); renderCategoriesFilter();
-    showToast('🗑️ تم حذف الاقتباس', 'success');
-  }
-  closeModal();
-}
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchAuthor').value = '';
+            document.getElementById('searchCategory').value = '';
+            document.getElementById('searchDate').value = '';
+            quickFilter = 'all';
+            activeCategory = 'all';
+            renderQuotes();
+            updateChips();
+            updateSidebarCategories();
+        }
 
-function closeModal() {
-  document.getElementById('deleteModal').classList.remove('active');
-  document.body.style.overflow = '';
-  deleteId = null;
-}
+        // ================================================================
+        // 10. الفلترة السريعة
+        // ================================================================
+        function setQuickFilter(filter) {
+            quickFilter = filter;
+            document.querySelectorAll('.filter-chips .chip').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.filter-chips .chip[data-filter="${filter}"]`)?.classList.add('active');
+            if (filter === 'all') {
+                activeCategory = 'all';
+                renderQuotes();
+            } else {
+                renderQuotes();
+            }
+            updateSidebarCategories();
+        }
 
-function renderCategoriesFilter() {
-  const cats = [...new Set(quotes.map(q => q.category).filter(Boolean))];
-  const container = document.getElementById('categoriesFilter');
-  let html = '<button class="cat-chip ' + (activeCategory==='all'?'active':'') + '" onclick="setCategory('all')">الكل (' + quotes.length + ')</button>';
-  cats.forEach(cat => {
-    const count = quotes.filter(q => q.category === cat).length;
-    html += '<button class="cat-chip ' + (activeCategory===cat?'active':'') + '" onclick="setCategory('' + cat + '')">' + cat + ' (' + count + ')</button>';
-  });
-  container.innerHTML = html;
-}
+        function setCategory(cat) {
+            activeCategory = cat;
+            quickFilter = 'all';
+            document.querySelectorAll('.filter-chips .chip').forEach(c => c.classList.remove('active'));
+            document.querySelector('.filter-chips .chip[data-filter="all"]')?.classList.add('active');
+            renderQuotes();
+            updateSidebarCategories();
+            toggleSidebar();
+        }
 
-function setCategory(cat) {
-  activeCategory = cat;
-  renderQuotes();
-  renderCategoriesFilter();
-}
+        function filterFavorites() {
+            setQuickFilter('favorites');
+            toggleSidebar();
+        }
 
-function updateStats() {
-  document.getElementById('statTotal').textContent = quotes.length;
-  document.getElementById('statAuthors').textContent = new Set(quotes.map(q => q.author)).size;
-  document.getElementById('statCategories').textContent = new Set(quotes.map(q => q.category).filter(Boolean)).size;
-}
+        // ================================================================
+        // 11. عرض الاقتباسات
+        // ================================================================
+        function renderQuotes() {
+            let filtered = quotes;
 
-function updateCatList() {
-  const cats = [...new Set(quotes.map(q => q.category).filter(Boolean))];
-  document.getElementById('catList').innerHTML = cats.map(c => '<option value="' + escapeHtml(c) + '">').join('');
-}
+            if (quickFilter === 'favorites') {
+                filtered = filtered.filter(q => favorites.includes(q.id));
+            } else if (quickFilter === 'today') {
+                const today = new Date().toISOString().split('T')[0];
+                filtered = filtered.filter(q => q.date === today);
+            } else if (activeCategory !== 'all') {
+                filtered = filtered.filter(q => q.category === activeCategory);
+            }
 
-function exportData() {
-  const dataStr = JSON.stringify({ quotes }, null, 2);
-  const blob = new Blob([dataStr], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'diwan_al_hikmah_backup_' + new Date().toISOString().split('T')[0] + '.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('📥 تم تصدير النسخة الاحتياطية', 'success');
-}
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (search) {
+                filtered = filtered.filter(q =>
+                    q.text.toLowerCase().includes(search) ||
+                    q.author.toLowerCase().includes(search) ||
+                    (q.category && q.category.toLowerCase().includes(search))
+                );
+            }
 
-function importData(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const imported = JSON.parse(e.target.result);
-      if (imported.quotes && Array.isArray(imported.quotes)) {
-        quotes = imported.quotes;
-      } else if (Array.isArray(imported)) {
-        quotes = imported;
-      } else {
-        showToast('❌ ملف غير صالح', 'error'); return;
-      }
-      saveToLocal();
-      renderQuotes(); updateStats(); updateCatList(); renderCategoriesFilter();
-      showToast('📤 تم استيراد البيانات بنجاح', 'success');
-    } catch (err) {
-      showToast('❌ خطأ في قراءة الملف', 'error');
-    }
-  };
-  reader.readAsText(file);
-  input.value = '';
-}
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+            renderFilteredQuotes(filtered);
+            document.getElementById('resultsCount').textContent = `(${filtered.length})`;
+        }
 
-function saveToLocal() {
-  localStorage.setItem('diwan_quotes', JSON.stringify(quotes));
-}
+        function renderFilteredQuotes(filtered) {
+            const list = document.getElementById('quotesList');
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
-function showToast(msg, type) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.className = 'toast' + (type ? ' ' + type : '');
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 3000);
-}
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>لا توجد نتائج</h3>
+                        <p>جرب البحث بكلمات مختلفة أو أضف اقتباساً جديداً</p>
+                    </div>
+                `;
+                return;
+            }
 
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
+            list.innerHTML = filtered.map((q, i) => {
+                let displayText = q.text;
+                if (search) {
+                    const regex = new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                    displayText = q.text.replace(regex, '<span class="search-highlight">$1</span>');
+                }
 
-function scrollToAdd() {
-  document.getElementById('sidebar').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  document.getElementById('qText').focus();
-}
+                const safeText = q.text.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+                const safeAuthor = q.author.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+                const isFav = isFavorite(q.id);
 
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeModal();
-    closeShareModal();
-    cancelEdit();
-  }
-});
+                return `
+                    <div class="quote-card ${isFav ? 'favorited' : ''}" data-id="${q.id}" style="animation-delay: ${i * 0.03}s">
+                        <div class="quote-text">${displayText}</div>
+                        <div class="quote-meta">
+                            <div class="quote-info">
+                                <span class="quote-author">👤 ${escapeHtml(q.author)}</span>
+                                <span class="quote-category">${escapeHtml(q.category || 'عام')}</span>
+                                <span class="quote-date">📅 ${q.date}</span>
+                            </div>
+                            <div class="quote-actions">
+                                <button class="btn-fav" onclick="toggleFavorite(${q.id})">${isFav ? '❤️' : '🤍'} ${isFav ? 'مفضلة' : 'أضف للمفضلة'}</button>
+                                <button onclick="copyQuote({text:'${safeText}', author:'${safeAuthor}'})">📋 نسخ</button>
+                                <button onclick="shareQuote({text:'${safeText}', author:'${safeAuthor}'})">📤 مشاركة</button>
+                                <button onclick="startEdit(${q.id})">✏️ تعديل</button>
+                                <button class="btn-delete" onclick="askDelete(${q.id})">🗑️ حذف</button>
+                            </div>
+                        </div>
+                        <div class="share-actions-mobile">
+                            <button class="share-btn" onclick="toggleFavorite(${q.id})">${isFav ? '❤️' : '🤍'}</button>
+                            <button class="share-btn" onclick="copyQuote({text:'${safeText}', author:'${safeAuthor}'})">📋 نسخ</button>
+                            <button class="share-btn" onclick="shareQuote({text:'${safeText}', author:'${safeAuthor}'})">📤 مشاركة</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
-init();
-</script>
+        // ================================================================
+        // 12. دوال التصنيفات
+        // ================================================================
+        function updateSidebarCategories() {
+            const cats = [...new Set(quotes.map(q => q.category).filter(Boolean))];
+            const container = document.getElementById('categoryList');
+            let html = '';
+            cats.forEach(cat => {
+                const count = quotes.filter(q => q.category === cat).length;
+                const active = activeCategory === cat && quickFilter === 'all' ? 'active' : '';
+                html += `<div class="nav-item ${active}" onclick="setCategory('${cat}')"><span class="icon">📂</span>${cat} <span class="badge">${count}</span></div>`;
+            });
+            container.innerHTML = html;
+            document.getElementById('countAll').textContent = quotes.length;
+        }
+
+        function updateChips() {
+            const total = quotes.length;
+            const favCount = quotes.filter(q => favorites.includes(q.id)).length;
+            const today = new Date().toISOString().split('T')[0];
+            const todayCount = quotes.filter(q => q.date === today).length;
+
+            document.getElementById('chipAll').textContent = total;
+            document.getElementById('chipFav').textContent = favCount;
+            document.getElementById('chipToday').textContent = todayCount;
+        }
+
+        function updateCatList() {
+            const cats = [...new Set(quotes.map(q => q.category).filter(Boolean))];
+            const datalist = document.getElementById('catList');
+            datalist.innerHTML = cats.map(c => `<option value="${escapeHtml(c)}">`).join('');
+
+            // تحديث قائمة القائلين في البحث
+            const authors = [...new Set(quotes.map(q => q.author).filter(Boolean))];
+            const authorSelect = document.getElementById('searchAuthor');
+            const currentVal = authorSelect.value;
+            authorSelect.innerHTML = `<option value="">جميع القائلين</option>` +
+                authors.map(a => `<option value="${escapeHtml(a)}">${escapeHtml(a)}</option>`).join('');
+            authorSelect.value = currentVal;
+
+            // تحديث قائمة التصنيفات في البحث
+            const catSelect = document.getElementById('searchCategory');
+            const currentCat = catSelect.value;
+            catSelect.innerHTML = `<option value="">جميع التصنيفات</option>` +
+                cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+            catSelect.value = currentCat;
+        }
+
+        // ================================================================
+        // 13. الإحصائيات
+        // ================================================================
+        function updateStats() {
+            const total = quotes.length;
+            const authors = new Set(quotes.map(q => q.author)).size;
+            const categories = new Set(quotes.map(q => q.category).filter(Boolean)).size;
+            const favCount = quotes.filter(q => favorites.includes(q.id)).length;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statAuthors').textContent = authors;
+            document.getElementById('statCategories').textContent = categories;
+            document.getElementById('statFavorites').textContent = favCount;
+        }
+
+        function updateSidebarStats() {
+            document.getElementById('statTotalSide').textContent = quotes.length;
+            document.getElementById('statAuthorsSide').textContent = new Set(quotes.map(q => q.author)).size;
+            document.getElementById('countFav').textContent = quotes.filter(q => favorites.includes(q.id)).length;
+        }
+
+        // ================================================================
+        // 14. إضافة اقتباس
+        // ================================================================
+        function addQuote(e) {
+            e.preventDefault();
+            const text = document.getElementById('qText').value.trim();
+            const author = document.getElementById('qAuthor').value.trim() || 'حكمة عربية';
+            const category = document.getElementById('qCategory').value.trim() || 'عام';
+
+            if (!text) {
+                showToast('⚠️ الرجاء كتابة الاقتباس', 'error');
+                return;
+            }
+
+            const newQuote = {
+                id: Date.now(),
+                text,
+                author,
+                category,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            quotes.unshift(newQuote);
+            saveToLocal();
+            document.getElementById('quoteForm').reset();
+            renderQuotes();
+            updateStats();
+            updateSidebarStats();
+            updateCatList();
+            updateSidebarCategories();
+            updateChips();
+            showToast('✅ تم إضافة الاقتباس بنجاح', 'success');
+        }
+
+        // ================================================================
+        // 15. تعديل اقتباس
+        // ================================================================
+        function startEdit(id) {
+            const q = quotes.find(x => x.id === id);
+            if (!q) return;
+            document.getElementById('editId').value = id;
+            document.getElementById('editText').value = q.text;
+            document.getElementById('editAuthor').value = q.author;
+            document.getElementById('editCategory').value = q.category || '';
+            document.getElementById('editFormCard').style.display = 'block';
+            document.getElementById('editFormCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function saveEdit(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('editId').value);
+            const q = quotes.find(x => x.id === id);
+            if (!q) return;
+            q.text = document.getElementById('editText').value.trim();
+            q.author = document.getElementById('editAuthor').value.trim() || 'حكمة عربية';
+            q.category = document.getElementById('editCategory').value.trim() || 'عام';
+            saveToLocal();
+            cancelEdit();
+            renderQuotes();
+            updateStats();
+            updateSidebarStats();
+            updateCatList();
+            updateSidebarCategories();
+            updateChips();
+            showToast('✅ تم تحديث الاقتباس', 'success');
+        }
+
+        function cancelEdit() {
+            document.getElementById('editFormCard').style.display = 'none';
+            document.getElementById('editForm').reset();
+        }
+
+        // ================================================================
+        // 16. حذف اقتباس
+        // ================================================================
+        function askDelete(id) {
+            deleteId = id;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function confirmDelete() {
+            if (deleteId) {
+                quotes = quotes.filter(q => q.id !== deleteId);
+                favorites = favorites.filter(id => id !== deleteId);
+                localStorage.setItem('diwan_favorites', JSON.stringify(favorites));
+                saveToLocal();
+                renderQuotes();
+                updateStats();
+                updateSidebarStats();
+                updateCatList();
+                updateSidebarCategories();
+                updateChips();
+                showToast('🗑️ تم حذف الاقتباس', 'success');
+            }
+            closeModal();
+        }
+
+        function closeModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            deleteId = null;
+        }
+
+        // ================================================================
+        // 17. تصدير واستيراد البيانات
+        // ================================================================
+        function exportData() {
+            const data = { quotes, favorites };
+            const dataStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `diwan_al_hikmah_backup_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('📥 تم تصدير النسخة الاحتياطية', 'success');
+        }
+
+        function importData(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported.quotes && Array.isArray(imported.quotes)) {
+                        quotes = imported.quotes;
+                        if (imported.favorites) favorites = imported.favorites;
+                    } else if (Array.isArray(imported)) {
+                        quotes = imported;
+                    } else {
+                        showToast('❌ ملف غير صالح', 'error');
+                        return;
+                    }
+                    localStorage.setItem('diwan_favorites', JSON.stringify(favorites));
+                    saveToLocal();
+                    renderQuotes();
+                    updateStats();
+                    updateSidebarStats();
+                    updateCatList();
+                    updateSidebarCategories();
+                    updateChips();
+                    loadDailyWisdom();
+                    showToast('📤 تم استيراد البيانات بنجاح', 'success');
+                } catch (err) {
+                    showToast('❌ خطأ في قراءة الملف', 'error');
+                }
+            };
+            reader.readAsText(file);
+            input.value = '';
+        }
+
+        // ================================================================
+        // 18. دوال مساعدة
+        // ================================================================
+        function saveToLocal() {
+            localStorage.setItem('diwan_quotes', JSON.stringify(quotes));
+        }
+
+        function showToast(msg, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast' + (type ? ' ' + type : '');
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ================================================================
+        // 19. أحداث إضافية
+        // ================================================================
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { closeModal();
+                cancelEdit(); }
+        });
+
+        // بحث مع debounce
+        document.getElementById('searchInput').addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => performSearch(), 300);
+        });
+
+        // زر العودة للأعلى
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        // ================================================================
+        // 20. تهيئة التطبيق
+        // ================================================================
+        async function init() {
+            try {
+                const response = await fetch('data.json');
+                if (!response.ok) throw new Error('Failed to load data');
+                const data = await response.json();
+                quotes = data.quotes || [];
+
+                // دمج البيانات من localStorage
+                const localQuotes = JSON.parse(localStorage.getItem('diwan_quotes') || '[]');
+                if (localQuotes.length > 0) {
+                    const existingIds = new Set(quotes.map(q => q.id));
+                    localQuotes.forEach(q => {
+                        if (!existingIds.has(q.id)) quotes.push(q);
+                    });
+                    saveToLocal();
+                } else {
+                    saveToLocal();
+                }
+
+                // تحميل المفضلة
+                favorites = JSON.parse(localStorage.getItem('diwan_favorites') || '[]');
+
+                loadTheme();
+                loadDailyWisdom();
+
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').classList.add('hidden');
+                    renderQuotes();
+                    updateStats();
+                    updateSidebarStats();
+                    updateCatList();
+                    updateSidebarCategories();
+                    updateChips();
+                }, 500);
+
+            } catch (err) {
+                console.error('Error loading data:', err);
+                document.querySelector('.loading-text').textContent = 'خطأ في تحميل البيانات';
+                document.querySelector('.loading-sub').textContent = 'تأكد من وجود ملف data.json';
+                document.querySelector('.loading-bar-inner').style.background = '#e53e3e';
+            }
+        }
+
+        // بدء التطبيق
+        init();
+    </script>
+
 </body>
 </html>
