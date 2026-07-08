@@ -278,9 +278,6 @@
         }
 
         /* ===== زر تحديث البيانات ===== */
-        .btn-update {
-            position: relative;
-        }
         .btn-update.has-update {
             background: rgba(214, 158, 46, 0.25) !important;
             border-color: var(--accent) !important;
@@ -312,7 +309,7 @@
             margin: 0 auto;
         }
 
-        /* ===== الهيدر الاحترافي ===== */
+        /* ===== الهيدر ===== */
         .header {
             background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
             padding: 0.8rem 1.5rem;
@@ -386,42 +383,6 @@
             opacity: 0.7;
             display: block;
             -webkit-text-fill-color: rgba(255,255,255,0.7);
-        }
-        .header .header-actions {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-        .header .header-actions .btn-icon {
-            background: var(--hover-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--header-text);
-            padding: 0.35rem 0.9rem;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.75rem;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            backdrop-filter: blur(4px);
-        }
-        .header .header-actions .btn-icon:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            border-color: var(--accent);
-        }
-        .header .header-actions .btn-icon .icon-text {
-            display: none;
-        }
-        @media (min-width: 600px) {
-            .header .header-actions .btn-icon .icon-text {
-                display: inline;
-            }
         }
         .header .header-hint {
             font-size: 0.7rem;
@@ -498,6 +459,8 @@
             line-height: 2;
             margin-bottom: 0.4rem;
             padding-left: 1.5rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
         .daily-wisdom .author {
             font-size: 0.85rem;
@@ -633,6 +596,8 @@
             line-height: 2;
             margin-bottom: 0.6rem;
             font-family: 'Noto Naskh Arabic', serif;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
         .quote-text .search-highlight {
             background: var(--accent-light);
@@ -1185,9 +1150,6 @@
             .header .logo-area .logo-text h1 {
                 font-size: 1rem;
             }
-            .header .header-actions {
-                justify-content: center;
-            }
             .stats-bar {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 0.4rem;
@@ -1333,6 +1295,9 @@
             <button class="nav-item" onclick="exportData()">
                 <span class="icon">📥</span>تصدير البيانات
             </button>
+            <button class="nav-item btn-update" id="updateBtn" onclick="checkForUpdates()">
+                <span class="icon">🔄</span>تحديث البيانات
+            </button>
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
         </div>
         <div class="nav-divider"></div>
@@ -1359,7 +1324,7 @@
             </div>
         </div>
 
-        <!-- ===== الهيدر الاحترافي ===== -->
+        <!-- ===== الهيدر ===== -->
         <header class="header" onclick="toggleSidebar()" title="اضغط لفتح القائمة">
             <div class="logo-area">
                 <div class="logo-icon">📜</div>
@@ -1367,15 +1332,6 @@
                     <h1>ديوان الحكمة</h1>
                     <span>TechNomads — حلول رقمية رائدة</span>
                 </div>
-            </div>
-            <div class="header-actions">
-                <button class="btn-icon" onclick="shareApp(); event.stopPropagation();">📤 <span class="icon-text">مشاركة</span></button>
-                <button class="btn-icon" onclick="exportData(); event.stopPropagation();">📥 <span class="icon-text">تصدير</span></button>
-                <button class="btn-icon" onclick="document.getElementById('importFile').click(); event.stopPropagation();">📤 <span class="icon-text">استيراد</span></button>
-                <button class="btn-icon btn-update" id="updateBtn" onclick="checkForUpdates(); event.stopPropagation();" title="التحقق من تحديثات البيانات">
-                    🔄 <span class="icon-text">تحديث</span>
-                </button>
-                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme(); event.stopPropagation();" title="تبديل الوضع الليلي">🌙</button>
             </div>
             <div class="header-hint">
                 <span>☰ القائمة</span>
@@ -1611,7 +1567,7 @@
         }
 
         // ================================================================
-        // 6. دوال المشاركة والنسخ
+        // 6. دوال المشاركة والنسخ (تم الإصلاح)
         // ================================================================
         function shareQuote(quote) {
             const formattedText = `"${quote.text}"\n— ${quote.author}`;
@@ -1630,7 +1586,8 @@
         function copyQuote(quote) {
             const formattedText = `"${quote.text}"\n— ${quote.author}`;
             const url = window.location.href;
-            copyToClipboard(`${formattedText}\n\n📖 للمزيد: ${url}`);
+            const fullMessage = `${formattedText}\n\n📖 للمزيد: ${url}`;
+            copyToClipboard(fullMessage);
             showToast('📋 تم نسخ الاقتباس مع الرابط!', 'success');
         }
 
@@ -1651,7 +1608,8 @@
         function copyDailyWisdom() {
             const text = document.getElementById('dailyQuote').textContent;
             const author = document.getElementById('dailyAuthor').textContent;
-            copyToClipboard(`"${text}"\n${author}`);
+            const full = `"${text}"\n${author}`;
+            copyToClipboard(full);
             showToast('📋 تم نسخ حكمة اليوم', 'success');
         }
 
@@ -1780,7 +1738,7 @@
         }
 
         // ================================================================
-        // 12. عرض الاقتباسات
+        // 12. عرض الاقتباسات (تم إصلاح عرض الأسطر)
         // ================================================================
         function renderQuotes() {
             let filtered = quotes;
@@ -1827,6 +1785,9 @@
                     displayText = q.text.replace(regex, '<span class="search-highlight">$1</span>');
                 }
 
+                // استخدام replace لتحويل \n إلى <br> لعرض الأسطر بشكل صحيح
+                const displayTextWithBreaks = displayText.replace(/\n/g, '<br>');
+
                 const safeText = q.text.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
                 const safeAuthor = q.author.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
                 const isFav = isFavorite(q.id);
@@ -1835,7 +1796,7 @@
 
                 return `
                     <div class="quote-card ${isFav ? 'favorited' : ''}" data-id="${q.id}" style="animation-delay: ${i * 0.03}s">
-                        <div class="quote-text">${displayText}</div>
+                        <div class="quote-text">${displayTextWithBreaks}</div>
                         <div class="quote-meta">
                             <div class="quote-info">
                                 <span class="quote-author">${isAuto ? '🤖 ' : '👤 '}${escapeHtml(q.author)} ${isAuto ? '<span class="auto-icon">(تلقائي)</span>' : ''}</span>
