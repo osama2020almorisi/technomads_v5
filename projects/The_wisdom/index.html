@@ -1567,12 +1567,17 @@
         }
 
         // ================================================================
-        // 6. دوال المشاركة والنسخ (تم الإصلاح)
+        // 6. دوال المشاركة والنسخ (الإصدار النهائي - تستقبل id)
         // ================================================================
-        
-        // دالة مشاركة الاقتباس
-        function shareQuote(text, author) {
-            const formattedText = `"${text}"\n— ${author}`;
+
+        // دالة مشاركة الاقتباس - تستقبل id
+        function shareQuote(id) {
+            const q = quotes.find(item => item.id === id);
+            if (!q) {
+                showToast('❌ لم يتم العثور على الاقتباس', 'error');
+                return;
+            }
+            const formattedText = `"${q.text}"\n— ${q.author}`;
             const url = window.location.href;
             const fullMessage = `${formattedText}\n\n📖 للمزيد: ${url}`;
             
@@ -1590,9 +1595,14 @@
             }
         }
 
-        // دالة نسخ الاقتباس
-        function copyQuote(text, author) {
-            const formattedText = `"${text}"\n— ${author}`;
+        // دالة نسخ الاقتباس - تستقبل id
+        function copyQuote(id) {
+            const q = quotes.find(item => item.id === id);
+            if (!q) {
+                showToast('❌ لم يتم العثور على الاقتباس', 'error');
+                return;
+            }
+            const formattedText = `"${q.text}"\n— ${q.author}`;
             const url = window.location.href;
             const fullMessage = `${formattedText}\n\n📖 للمزيد: ${url}`;
             copyToClipboard(fullMessage);
@@ -1754,7 +1764,7 @@
         }
 
         // ================================================================
-        // 12. عرض الاقتباسات (تم إصلاح عرض الأسطر ودوال النسخ)
+        // 12. عرض الاقتباسات (تم الإصلاح النهائي)
         // ================================================================
         function renderQuotes() {
             let filtered = quotes;
@@ -1804,9 +1814,6 @@
                 // تحويل \n إلى <br> لعرض الأسطر بشكل صحيح
                 const displayTextWithBreaks = displayText.replace(/\n/g, '<br>');
 
-                // إعداد النص للنسخ (الهروب من علامات الاقتباس)
-                const safeText = q.text.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
-                const safeAuthor = q.author.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
                 const isFav = isFavorite(q.id);
                 const isAuto = q.author.startsWith('💬') || q.author.startsWith('🗣️') || q.author.startsWith('📝') || q
                     .author.startsWith('✍️');
@@ -1822,16 +1829,16 @@
                             </div>
                             <div class="quote-actions">
                                 <button class="btn-fav" onclick="toggleFavorite(${q.id})">${isFav ? '❤️' : '🤍'}</button>
-                                <button onclick="copyQuote('${safeText}', '${safeAuthor}')">📋</button>
-                                <button onclick="shareQuote('${safeText}', '${safeAuthor}')">📤</button>
+                                <button onclick="copyQuote(${q.id})">📋</button>
+                                <button onclick="shareQuote(${q.id})">📤</button>
                                 <button onclick="openEditModal(${q.id})">✏️</button>
                                 <button class="btn-delete" onclick="askDelete(${q.id})">🗑️</button>
                             </div>
                         </div>
                         <div class="share-actions-mobile">
                             <button class="share-btn" onclick="toggleFavorite(${q.id})">${isFav ? '❤️' : '🤍'} ${isFav ? 'مفضلة' : 'أضف'}</button>
-                            <button class="share-btn" onclick="copyQuote('${safeText}', '${safeAuthor}')">📋 نسخ</button>
-                            <button class="share-btn" onclick="shareQuote('${safeText}', '${safeAuthor}')">📤 مشاركة</button>
+                            <button class="share-btn" onclick="copyQuote(${q.id})">📋 نسخ</button>
+                            <button class="share-btn" onclick="shareQuote(${q.id})">📤 مشاركة</button>
                         </div>
                     </div>
                 `;
