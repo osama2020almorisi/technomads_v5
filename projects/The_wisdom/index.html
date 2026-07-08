@@ -1569,42 +1569,56 @@
         // ================================================================
         // 6. دوال المشاركة والنسخ (تم الإصلاح)
         // ================================================================
-        function shareQuote(quote) {
-            const formattedText = `"${quote.text}"\n— ${quote.author}`;
+        
+        // دالة مشاركة الاقتباس
+        function shareQuote(text, author) {
+            const formattedText = `"${text}"\n— ${author}`;
             const url = window.location.href;
             const fullMessage = `${formattedText}\n\n📖 للمزيد: ${url}`;
+            
             if (navigator.share) {
-                navigator.share({ title: 'اقتباس من ديوان الحكمة', text: fullMessage, url })
-                    .then(() => showToast('📤 تمت المشاركة', 'success'))
-                    .catch(() => {});
+                navigator.share({ 
+                    title: 'اقتباس من ديوان الحكمة', 
+                    text: fullMessage, 
+                    url: url 
+                })
+                .then(() => showToast('📤 تمت المشاركة', 'success'))
+                .catch(() => {});
             } else {
                 copyToClipboard(fullMessage);
                 showToast('📋 تم نسخ الاقتباس مع الرابط', 'success');
             }
         }
 
-        function copyQuote(quote) {
-            const formattedText = `"${quote.text}"\n— ${quote.author}`;
+        // دالة نسخ الاقتباس
+        function copyQuote(text, author) {
+            const formattedText = `"${text}"\n— ${author}`;
             const url = window.location.href;
             const fullMessage = `${formattedText}\n\n📖 للمزيد: ${url}`;
             copyToClipboard(fullMessage);
             showToast('📋 تم نسخ الاقتباس مع الرابط!', 'success');
         }
 
+        // دالة مشاركة حكمة اليوم
         function shareDailyWisdom() {
             const text = document.getElementById('dailyQuote').textContent;
             const author = document.getElementById('dailyAuthor').textContent;
             const full = `"${text}"\n${author}\n📖 للمزيد: ${window.location.href}`;
             if (navigator.share) {
-                navigator.share({ title: 'حكمة اليوم', text: full, url: window.location.href })
-                    .then(() => showToast('📤 تمت المشاركة', 'success'))
-                    .catch(() => {});
+                navigator.share({ 
+                    title: 'حكمة اليوم', 
+                    text: full, 
+                    url: window.location.href 
+                })
+                .then(() => showToast('📤 تمت المشاركة', 'success'))
+                .catch(() => {});
             } else {
                 copyToClipboard(full);
                 showToast('📋 تم نسخ حكمة اليوم', 'success');
             }
         }
 
+        // دالة نسخ حكمة اليوم
         function copyDailyWisdom() {
             const text = document.getElementById('dailyQuote').textContent;
             const author = document.getElementById('dailyAuthor').textContent;
@@ -1613,6 +1627,7 @@
             showToast('📋 تم نسخ حكمة اليوم', 'success');
         }
 
+        // دالة النسخ الأساسية
         function copyToClipboard(text) {
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
@@ -1621,6 +1636,7 @@
             }
         }
 
+        // دالة النسخ البديلة
         function fallbackCopy(text) {
             const textarea = document.createElement('textarea');
             textarea.value = text;
@@ -1738,7 +1754,7 @@
         }
 
         // ================================================================
-        // 12. عرض الاقتباسات (تم إصلاح عرض الأسطر)
+        // 12. عرض الاقتباسات (تم إصلاح عرض الأسطر ودوال النسخ)
         // ================================================================
         function renderQuotes() {
             let filtered = quotes;
@@ -1785,9 +1801,10 @@
                     displayText = q.text.replace(regex, '<span class="search-highlight">$1</span>');
                 }
 
-                // استخدام replace لتحويل \n إلى <br> لعرض الأسطر بشكل صحيح
+                // تحويل \n إلى <br> لعرض الأسطر بشكل صحيح
                 const displayTextWithBreaks = displayText.replace(/\n/g, '<br>');
 
+                // إعداد النص للنسخ (الهروب من علامات الاقتباس)
                 const safeText = q.text.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
                 const safeAuthor = q.author.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
                 const isFav = isFavorite(q.id);
@@ -1805,16 +1822,16 @@
                             </div>
                             <div class="quote-actions">
                                 <button class="btn-fav" onclick="toggleFavorite(${q.id})">${isFav ? '❤️' : '🤍'}</button>
-                                <button onclick="copyQuote({text:'${safeText}', author:'${safeAuthor}'})">📋</button>
-                                <button onclick="shareQuote({text:'${safeText}', author:'${safeAuthor}'})">📤</button>
+                                <button onclick="copyQuote('${safeText}', '${safeAuthor}')">📋</button>
+                                <button onclick="shareQuote('${safeText}', '${safeAuthor}')">📤</button>
                                 <button onclick="openEditModal(${q.id})">✏️</button>
                                 <button class="btn-delete" onclick="askDelete(${q.id})">🗑️</button>
                             </div>
                         </div>
                         <div class="share-actions-mobile">
                             <button class="share-btn" onclick="toggleFavorite(${q.id})">${isFav ? '❤️' : '🤍'} ${isFav ? 'مفضلة' : 'أضف'}</button>
-                            <button class="share-btn" onclick="copyQuote({text:'${safeText}', author:'${safeAuthor}'})">📋 نسخ</button>
-                            <button class="share-btn" onclick="shareQuote({text:'${safeText}', author:'${safeAuthor}'})">📤 مشاركة</button>
+                            <button class="share-btn" onclick="copyQuote('${safeText}', '${safeAuthor}')">📋 نسخ</button>
+                            <button class="share-btn" onclick="shareQuote('${safeText}', '${safeAuthor}')">📤 مشاركة</button>
                         </div>
                     </div>
                 `;
