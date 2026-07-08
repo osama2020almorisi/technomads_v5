@@ -277,6 +277,34 @@
             margin: 1rem 0;
         }
 
+        /* ===== زر تحديث البيانات ===== */
+        .btn-update {
+            position: relative;
+        }
+        .btn-update.has-update {
+            background: rgba(214, 158, 46, 0.25) !important;
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 15px rgba(214, 158, 46, 0.3);
+        }
+        .btn-update.has-update::after {
+            content: '●';
+            color: var(--accent);
+            font-size: 0.6rem;
+            margin-right: 3px;
+            animation: pulse-dot 1.5s infinite;
+        }
+        .btn-update.updating {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
         /* ===== المحتوى الرئيسي ===== */
         .main-wrapper {
             padding: 1rem;
@@ -358,6 +386,42 @@
             opacity: 0.7;
             display: block;
             -webkit-text-fill-color: rgba(255,255,255,0.7);
+        }
+        .header .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .header .header-actions .btn-icon {
+            background: var(--hover-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--header-text);
+            padding: 0.35rem 0.9rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.75rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            backdrop-filter: blur(4px);
+        }
+        .header .header-actions .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        .header .header-actions .btn-icon .icon-text {
+            display: none;
+        }
+        @media (min-width: 600px) {
+            .header .header-actions .btn-icon .icon-text {
+                display: inline;
+            }
         }
         .header .header-hint {
             font-size: 0.7rem;
@@ -1121,6 +1185,9 @@
             .header .logo-area .logo-text h1 {
                 font-size: 1rem;
             }
+            .header .header-actions {
+                justify-content: center;
+            }
             .stats-bar {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 0.4rem;
@@ -1292,7 +1359,7 @@
             </div>
         </div>
 
-        <!-- ===== الهيدر الاحترافي (بدون زر القائمة) ===== -->
+        <!-- ===== الهيدر الاحترافي ===== -->
         <header class="header" onclick="toggleSidebar()" title="اضغط لفتح القائمة">
             <div class="logo-area">
                 <div class="logo-icon">📜</div>
@@ -1300,6 +1367,15 @@
                     <h1>ديوان الحكمة</h1>
                     <span>TechNomads — حلول رقمية رائدة</span>
                 </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" onclick="shareApp(); event.stopPropagation();">📤 <span class="icon-text">مشاركة</span></button>
+                <button class="btn-icon" onclick="exportData(); event.stopPropagation();">📥 <span class="icon-text">تصدير</span></button>
+                <button class="btn-icon" onclick="document.getElementById('importFile').click(); event.stopPropagation();">📤 <span class="icon-text">استيراد</span></button>
+                <button class="btn-icon btn-update" id="updateBtn" onclick="checkForUpdates(); event.stopPropagation();" title="التحقق من تحديثات البيانات">
+                    🔄 <span class="icon-text">تحديث</span>
+                </button>
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme(); event.stopPropagation();" title="تبديل الوضع الليلي">🌙</button>
             </div>
             <div class="header-hint">
                 <span>☰ القائمة</span>
@@ -2000,7 +2076,146 @@
         }
 
         // ================================================================
-        // 19. أحداث إضافية
+        // 19. تحديث البيانات من السيرفر
+        // ================================================================
+        let isUpdating = false;
+        let lastUpdateCheck = localStorage.getItem('lastUpdateCheck') || null;
+
+        async function checkForUpdates() {
+            if (isUpdating) return;
+            
+            isUpdating = true;
+            const updateBtn = document.getElementById('updateBtn');
+            const originalText = updateBtn.innerHTML;
+            updateBtn.innerHTML = '⏳ جاري...';
+            updateBtn.classList.add('updating');
+            updateBtn.disabled = true;
+            
+            try {
+                const response = await fetch('data.json?' + new Date().getTime());
+                if (!response.ok) throw new Error('فشل في جلب البيانات');
+                
+                const serverData = await response.json();
+                
+                if (!serverData.quotes || !Array.isArray(serverData.quotes)) {
+                    throw new Error('ملف البيانات غير صالح');
+                }
+                
+                const currentIds = new Set(quotes.map(q => q.id));
+                const newQuotes = serverData.quotes.filter(q => !currentIds.has(q.id));
+                
+                if (newQuotes.length === 0) {
+                    showToast('✅ البيانات محدثة! لا توجد اقتباسات جديدة.', 'success');
+                    updateBtn.innerHTML = '✅ محدث';
+                    updateBtn.classList.remove('has-update');
+                    setTimeout(() => {
+                        updateBtn.innerHTML = originalText;
+                        updateBtn.classList.remove('updating');
+                        updateBtn.disabled = false;
+                        isUpdating = false;
+                    }, 2000);
+                    return;
+                }
+                
+                const confirmUpdate = confirm(
+                    `📢 تم العثور على ${newQuotes.length} اقتباساً جديداً!\n` +
+                    `هل تريد تحديث البيانات الآن؟\n\n` +
+                    `⚠️ سيتم حفظ بياناتك الحالية (المفضلة)`
+                );
+                
+                if (!confirmUpdate) {
+                    updateBtn.innerHTML = originalText;
+                    updateBtn.classList.remove('updating');
+                    updateBtn.disabled = false;
+                    isUpdating = false;
+                    return;
+                }
+                
+                const allQuotes = [...quotes];
+                newQuotes.forEach(q => {
+                    if (!allQuotes.some(existing => existing.id === q.id)) {
+                        allQuotes.push(q);
+                    }
+                });
+                
+                quotes = allQuotes;
+                saveToLocal();
+                
+                renderQuotes();
+                updateStats();
+                updateSidebarStats();
+                updateCatList();
+                updateSidebarCategories();
+                loadDailyWisdom();
+                
+                localStorage.setItem('lastUpdateCheck', new Date().toISOString());
+                lastUpdateCheck = localStorage.getItem('lastUpdateCheck');
+                
+                showToast(`✅ تم تحديث البيانات! تم إضافة ${newQuotes.length} اقتباساً جديداً.`, 'success');
+                
+                updateBtn.innerHTML = `✅ ${newQuotes.length} جديد`;
+                updateBtn.classList.remove('has-update');
+                setTimeout(() => {
+                    updateBtn.innerHTML = originalText;
+                    updateBtn.classList.remove('updating');
+                    updateBtn.disabled = false;
+                    isUpdating = false;
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Error updating data:', error);
+                showToast('❌ حدث خطأ أثناء تحديث البيانات. تأكد من اتصال الإنترنت.', 'error');
+                updateBtn.innerHTML = '❌ خطأ';
+                setTimeout(() => {
+                    updateBtn.innerHTML = originalText;
+                    updateBtn.classList.remove('updating');
+                    updateBtn.disabled = false;
+                    isUpdating = false;
+                }, 2000);
+            }
+        }
+
+        // ================================================================
+        // 20. التحقق التلقائي من التحديثات
+        // ================================================================
+        function autoCheckUpdates() {
+            const lastCheck = localStorage.getItem('lastUpdateCheck');
+            const now = new Date();
+            
+            if (lastCheck) {
+                const lastCheckDate = new Date(lastCheck);
+                const hoursDiff = (now - lastCheckDate) / (1000 * 60 * 60);
+                if (hoursDiff < 24) return;
+            }
+            
+            setTimeout(async () => {
+                try {
+                    const response = await fetch('data.json?' + new Date().getTime());
+                    if (!response.ok) return;
+                    const serverData = await response.json();
+                    if (!serverData.quotes) return;
+                    
+                    const currentIds = new Set(quotes.map(q => q.id));
+                    const newQuotes = serverData.quotes.filter(q => !currentIds.has(q.id));
+                    
+                    if (newQuotes.length > 0) {
+                        showToast(`📢 يوجد ${newQuotes.length} اقتباسات جديدة! اضغط زر التحديث.`, 'success');
+                        const updateBtn = document.getElementById('updateBtn');
+                        if (updateBtn) {
+                            updateBtn.classList.add('has-update');
+                            setTimeout(() => {
+                                updateBtn.classList.remove('has-update');
+                            }, 30000);
+                        }
+                    }
+                    
+                    localStorage.setItem('lastUpdateCheck', now.toISOString());
+                } catch (e) {}
+            }, 3000);
+        }
+
+        // ================================================================
+        // 21. أحداث إضافية
         // ================================================================
         document.getElementById('deleteModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
@@ -2028,14 +2243,13 @@
             }
         });
 
-        // منع فتح القائمة عند النقر على الأزرار داخل الهيدر
         document.querySelector('.header .logo-area')?.addEventListener('click', function(e) {
             e.stopPropagation();
             toggleSidebar();
         });
 
         // ================================================================
-        // 20. تهيئة التطبيق
+        // 22. تهيئة التطبيق
         // ================================================================
         async function init() {
             try {
@@ -2068,6 +2282,9 @@
                     updateCatList();
                     updateSidebarCategories();
                 }, 500);
+
+                // التحقق التلقائي من التحديثات
+                setTimeout(autoCheckUpdates, 3000);
 
             } catch (err) {
                 console.error('Error loading data:', err);
