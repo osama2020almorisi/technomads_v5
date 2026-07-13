@@ -497,15 +497,14 @@
         .search-box {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 0 0.8rem;
+            padding: 0 1rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
             box-shadow: var(--shadow);
             border: 2px solid transparent;
             transition: var(--transition);
             flex-wrap: wrap;
-            position: relative;
         }
         .search-box:focus-within {
             border-color: var(--accent);
@@ -515,81 +514,48 @@
             font-size: 1.1rem;
             opacity: 0.6;
             flex-shrink: 0;
-            order: 1;
         }
         .search-box input {
             flex: 1;
-            padding: 0.7rem 0.3rem;
+            padding: 0.7rem 0;
             border: none;
             outline: none;
             background: transparent;
             font-family: inherit;
             font-size: 0.95rem;
             color: var(--text);
-            min-width: 120px;
-            order: 2;
+            min-width: 150px;
         }
         .search-box input::placeholder {
             color: var(--text-muted);
         }
-
-        /* ===== أزرار التنقل في البحث (في أقصى اليسار) ===== */
-        .search-nav-buttons {
-            display: none;
-            align-items: center;
-            gap: 0.3rem;
-            padding: 0.2rem 0;
-            flex-shrink: 0;
-            order: 3;
-            border-right: 1px solid var(--border);
-            padding-right: 0.6rem;
-            margin-right: 0.2rem;
-        }
-        .search-nav-buttons.visible {
-            display: flex;
-        }
-        .search-nav-buttons button {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 0.15rem 0.5rem;
-            font-size: 0.8rem;
-            cursor: pointer;
-            color: var(--text);
-            transition: var(--transition);
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            min-width: 2rem;
-            justify-content: center;
-        }
-        .search-nav-buttons button:hover:not(:disabled) {
-            background: var(--accent);
-            color: var(--bg);
-            border-color: var(--accent);
-        }
-        .search-nav-buttons button:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-        .search-nav-buttons .nav-counter {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            min-width: 2.2rem;
-            text-align: center;
-            font-weight: 600;
-            direction: ltr;
-        }
-
         .search-box .results-count {
             font-size: 0.75rem;
             color: var(--text-muted);
             white-space: nowrap;
             font-weight: 500;
             padding: 0 0.3rem;
-            order: 4;
             flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .search-box {
+                padding: 0.3rem 0.7rem;
+                flex-wrap: wrap;
+            }
+            .search-box input {
+                font-size: 0.85rem;
+                padding: 0.4rem 0;
+                min-width: 100px;
+                flex: 1 1 100%;
+                order: 2;
+            }
+            .search-box .search-icon {
+                order: 1;
+            }
+            .search-box .results-count {
+                order: 3;
+            }
         }
 
         /* ===== الإحصائيات ===== */
@@ -817,6 +783,56 @@
         }
         [data-theme="dark"] .fab-add {
             color: var(--bg);
+        }
+
+        /* ===== أزرار التنقل العائمة (أسفل يمين) ===== */
+        .search-nav-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 1.5rem;
+            display: none;
+            flex-direction: column;
+            gap: 0.4rem;
+            z-index: 99;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 0.4rem 0.3rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .search-nav-float.visible {
+            display: flex;
+        }
+        .search-nav-float button {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.3rem 0.6rem;
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--text);
+            transition: var(--transition);
+            font-family: inherit;
+            min-width: 2.5rem;
+            text-align: center;
+        }
+        .search-nav-float button:hover:not(:disabled) {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+        .search-nav-float button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .search-nav-float .nav-counter {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-align: center;
+            font-weight: 600;
+            padding: 0.2rem 0;
+            direction: ltr;
         }
 
         /* ===== مودال الإضافة ===== */
@@ -1091,7 +1107,7 @@
         /* ===== زر العودة للأعلى ===== */
         .back-to-top {
             position: fixed;
-            bottom: 2rem;
+            bottom: 5.5rem;
             right: 1.5rem;
             background: var(--primary);
             color: white;
@@ -1273,27 +1289,7 @@
                 order: 1;
             }
             .search-box .results-count {
-                order: 4;
-            }
-            .search-nav-buttons {
                 order: 3;
-                border-right: none;
-                border-top: 1px solid var(--border);
-                padding-right: 0;
-                margin-right: 0;
-                padding-top: 0.3rem;
-                width: 100%;
-                justify-content: center;
-                padding-bottom: 0.2rem;
-            }
-            .search-nav-buttons button {
-                padding: 0.1rem 0.4rem;
-                font-size: 0.7rem;
-                min-width: 1.8rem;
-            }
-            .search-nav-buttons .nav-counter {
-                font-size: 0.65rem;
-                min-width: 2rem;
             }
             .daily-wisdom {
                 padding: 0.8rem 1rem;
@@ -1308,11 +1304,21 @@
                 bottom: 1.2rem;
                 left: 1rem;
             }
+            .search-nav-float {
+                bottom: 1.2rem;
+                right: 1rem;
+                padding: 0.3rem 0.2rem;
+            }
+            .search-nav-float button {
+                padding: 0.2rem 0.4rem;
+                font-size: 0.8rem;
+                min-width: 2rem;
+            }
             .back-to-top {
                 width: 36px;
                 height: 36px;
                 font-size: 1rem;
-                bottom: 1.2rem;
+                bottom: 4.5rem;
                 right: 1rem;
             }
             .toast {
@@ -1345,11 +1351,6 @@
             }
             .search-box input {
                 font-size: 0.8rem;
-            }
-            .search-nav-buttons button {
-                font-size: 0.65rem;
-                padding: 0.05rem 0.3rem;
-                min-width: 1.5rem;
             }
         }
     </style>
@@ -1481,11 +1482,6 @@
             <div class="search-box">
                 <span class="search-icon">🔍</span>
                 <input type="text" id="searchInput" placeholder="ابحث في الاقتباسات، القائلين، أو التصنيفات..." autocomplete="off">
-                <div class="search-nav-buttons" id="searchNavButtons">
-                    <button id="searchPrevBtn" onclick="navigateSearch('prev')" disabled title="السابق">◀</button>
-                    <span class="nav-counter" id="searchCounter">0/0</span>
-                    <button id="searchNextBtn" onclick="navigateSearch('next')" disabled title="التالي">▶</button>
-                </div>
                 <span class="results-count" id="resultsCount"></span>
             </div>
         </div>
@@ -1519,8 +1515,15 @@
         </footer>
     </div>
 
-    <!-- ===== زر إضافة اقتباس ===== -->
+    <!-- ===== زر إضافة اقتباس (أسفل يسار) ===== -->
     <button class="fab-add" onclick="openAddModal()" title="إضافة اقتباس جديد">➕</button>
+
+    <!-- ===== أزرار التنقل في البحث (أسفل يمين) ===== -->
+    <div class="search-nav-float" id="searchNavFloat">
+        <button id="searchPrevBtn" onclick="navigateSearch('prev')" disabled title="السابق">◀</button>
+        <span class="nav-counter" id="searchCounter">0/0</span>
+        <button id="searchNextBtn" onclick="navigateSearch('next')" disabled title="التالي">▶</button>
+    </div>
 
     <!-- ===== مودال الإضافة ===== -->
     <div class="add-modal" id="addModal">
@@ -1982,12 +1985,12 @@
 
             document.getElementById('resultsCount').textContent = filtered.length > 0 ? `(${filtered.length})` : '';
 
-            // ===== إظهار/إخفاء أزرار التنقل =====
-            const navButtons = document.getElementById('searchNavButtons');
+            // ===== إظهار/إخفاء أزرار التنقل العائمة =====
+            const navFloat = document.getElementById('searchNavFloat');
             if (search && searchMatches.length > 0) {
-                navButtons.classList.add('visible');
+                navFloat.classList.add('visible');
             } else {
-                navButtons.classList.remove('visible');
+                navFloat.classList.remove('visible');
             }
 
             updateSearchButtons();
