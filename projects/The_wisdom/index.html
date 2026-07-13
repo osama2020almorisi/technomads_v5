@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <meta name="theme-color" content="#1a365d">
-    <meta property="og:title" content="ديوان الحكمة | TechNomads">
-    <meta property="og:description" content="كنوز الحكمة والأشعار في تطبيق أنيق وسريع">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://te-2026.netlify.app/">
-    <meta property="og:image" content="https://te-2026.netlify.app/og-image.jpg">
     <title>ديوان الحكمة | TechNomads</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,12 +37,6 @@
             --danger: #e53e3e;
             --success: #38a169;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --header-bg: var(--primary);
-            --header-text: #ffffff;
-            --input-bg: var(--bg);
-            --hover-bg: rgba(255, 255, 255, 0.15);
-            --modal-overlay: rgba(0, 0, 0, 0.5);
-            --toast-bg: var(--primary);
             --sidebar-width: 300px;
             --sidebar-bg: var(--card-bg);
             --search-highlight: #d69e2e;
@@ -65,12 +54,6 @@
             --border: #4a5568;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-            --header-bg: #1a202c;
-            --header-text: #e2e8f0;
-            --input-bg: #1a202c;
-            --hover-bg: rgba(255, 255, 255, 0.08);
-            --modal-overlay: rgba(0, 0, 0, 0.8);
-            --toast-bg: #2d3748;
             --accent-light: #b7791f;
             --search-highlight: #ecc94b;
             --search-highlight-bg: rgba(214, 158, 46, 0.25);
@@ -102,7 +85,7 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s ease, background 0.3s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
             color: white;
             padding: 2rem;
         }
@@ -110,9 +93,6 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-        }
-        [data-theme="dark"] .loading-screen {
-            background: var(--bg);
         }
         .loading-icon {
             font-size: 4rem;
@@ -161,7 +141,7 @@
             }
         }
 
-        /* ===== الشريط الجانبي (Sidebar) ===== */
+        /* ===== الشريط الجانبي ===== */
         .sidebar-overlay {
             position: fixed;
             inset: 0;
@@ -317,7 +297,7 @@
             background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
             padding: 0.8rem 1.5rem;
             border-radius: var(--radius);
-            color: var(--header-text);
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1368,7 +1348,7 @@
     <!-- ===== خلفية الشريط الجانبي ===== -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-    <!-- ===== الشريط الجانبي (Sidebar) ===== -->
+    <!-- ===== الشريط الجانبي ===== -->
     <nav class="sidebar-nav" id="sidebarNav">
         <div class="sidebar-header">
             <h3>📜 القائمة</h3>
@@ -1993,6 +1973,18 @@
                 navFloat.classList.remove('visible');
             }
 
+            // ===== إخفاء/إظهار سهم العودة للأعلى =====
+            const backToTop = document.getElementById('backToTop');
+            if (search && searchMatches.length > 0) {
+                backToTop.classList.remove('visible');
+            } else {
+                if (window.scrollY > 400) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            }
+
             updateSearchButtons();
             updateSearchCounter();
         }
@@ -2482,6 +2474,16 @@
 
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('backToTop');
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            const hasResults = searchMatches.length > 0;
+
+            // إذا كان هناك بحث نشط، لا نظهر السهم
+            if (search && hasResults) {
+                btn.classList.remove('visible');
+                return;
+            }
+
+            // إذا لم يكن هناك بحث، نظهر السهم عند التمرير
             if (window.scrollY > 400) {
                 btn.classList.add('visible');
             } else {
