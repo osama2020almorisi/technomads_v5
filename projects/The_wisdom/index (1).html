@@ -8,6 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="images/icon-57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/icon-72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/icon-114.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/icon-144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/icon-152.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/icon-192.png">
     <style>
         /* ===== المتغيرات والثيمات ===== */
         :root {
@@ -28,12 +37,6 @@
             --danger: #e53e3e;
             --success: #38a169;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --header-bg: var(--primary);
-            --header-text: #ffffff;
-            --input-bg: var(--bg);
-            --hover-bg: rgba(255, 255, 255, 0.15);
-            --modal-overlay: rgba(0, 0, 0, 0.5);
-            --toast-bg: var(--primary);
             --sidebar-width: 300px;
             --sidebar-bg: var(--card-bg);
             --search-highlight: #d69e2e;
@@ -51,12 +54,6 @@
             --border: #4a5568;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-            --header-bg: #1a202c;
-            --header-text: #e2e8f0;
-            --input-bg: #1a202c;
-            --hover-bg: rgba(255, 255, 255, 0.08);
-            --modal-overlay: rgba(0, 0, 0, 0.8);
-            --toast-bg: #2d3748;
             --accent-light: #b7791f;
             --search-highlight: #ecc94b;
             --search-highlight-bg: rgba(214, 158, 46, 0.25);
@@ -853,7 +850,7 @@
             transform: scale(1);
         }
         .add-modal .modal-content h3 {
-            color: var(--text);
+            color: var(--primary);
             margin-bottom: 1rem;
             font-size: 1.2rem;
             display: flex;
@@ -1008,7 +1005,7 @@
         }
 
         /* ===== مودال الحذف ===== */
-        .modal-overlay-delete {
+        .modal-overlay {
             position: fixed;
             inset: 0;
             background: var(--modal-overlay);
@@ -1022,11 +1019,11 @@
             transition: var(--transition);
             padding: 1rem;
         }
-        .modal-overlay-delete.active {
+        .modal-overlay.active {
             opacity: 1;
             visibility: visible;
         }
-        .modal-delete {
+        .modal {
             background: var(--card-bg);
             border-radius: var(--radius);
             padding: 2rem;
@@ -1037,28 +1034,28 @@
             transition: var(--transition);
             border: 1px solid var(--border);
         }
-        .modal-overlay-delete.active .modal-delete {
+        .modal-overlay.active .modal {
             transform: scale(1);
         }
-        .modal-delete .modal-icon {
+        .modal-icon {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
         }
-        .modal-delete h3 {
+        .modal h3 {
             font-size: 1.2rem;
             margin-bottom: 0.4rem;
             color: var(--text);
         }
-        .modal-delete p {
+        .modal p {
             color: var(--text-muted);
             margin-bottom: 1.2rem;
             font-size: 0.9rem;
         }
-        .modal-delete .modal-buttons {
+        .modal-buttons {
             display: flex;
             gap: 0.6rem;
         }
-        .modal-delete .modal-buttons button {
+        .modal-buttons button {
             flex: 1;
             padding: 0.5rem;
             border: none;
@@ -1068,22 +1065,22 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        .modal-delete .modal-confirm {
+        .modal-confirm {
             background: var(--danger);
             color: white;
         }
-        .modal-delete .modal-confirm:hover {
+        .modal-confirm:hover {
             background: #c53030;
             transform: scale(1.03);
         }
-        .modal-delete .modal-cancel {
+        .modal-cancel {
             background: var(--border);
             color: var(--text);
         }
-        .modal-delete .modal-cancel:hover {
+        .modal-cancel:hover {
             background: #cbd5e0;
         }
-        [data-theme="dark"] .modal-delete .modal-cancel:hover {
+        [data-theme="dark"] .modal-cancel:hover {
             background: #4a5568;
         }
 
@@ -1313,7 +1310,7 @@
                 padding: 1.2rem;
                 margin: 0.5rem;
             }
-            .modal-delete {
+            .modal {
                 padding: 1.2rem;
             }
         }
@@ -1563,8 +1560,8 @@
     <div class="toast" id="toast"></div>
 
     <!-- ===== مودال الحذف ===== -->
-    <div class="modal-overlay-delete" id="deleteModal">
-        <div class="modal-delete">
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
             <div class="modal-icon">⚠️</div>
             <h3>تأكيد الحذف</h3>
             <p>هل أنت متأكد من حذف هذا الاقتباس؟ لا يمكن التراجع عن هذا الإجراء.</p>
