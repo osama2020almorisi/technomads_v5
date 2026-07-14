@@ -298,15 +298,15 @@
         /* ===== الهيدر ===== */
         .header {
             background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
-            padding: 0.8rem 1.5rem;
+            padding: 0.6rem 1.5rem;
             border-radius: var(--radius);
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-bottom: 1.2rem;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
             box-shadow: var(--shadow-lg);
             transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
             position: relative;
@@ -347,7 +347,7 @@
             cursor: pointer;
         }
         .header .logo-area .logo-icon {
-            font-size: 2rem;
+            font-size: 1.8rem;
             line-height: 1;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             transition: transform 0.3s ease;
@@ -356,7 +356,7 @@
             transform: scale(1.1) rotate(-5deg);
         }
         .header .logo-area .logo-text h1 {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 700;
             font-family: 'Noto Naskh Arabic', serif;
             background: linear-gradient(to left, #ffffff, var(--accent-light));
@@ -365,7 +365,7 @@
             background-clip: text;
         }
         .header .logo-area .logo-text span {
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             opacity: 0.7;
             display: block;
             -webkit-text-fill-color: rgba(255,255,255,0.7);
@@ -398,8 +398,8 @@
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
             border-radius: var(--radius);
-            padding: 1.2rem 1.5rem;
-            margin-bottom: 1.2rem;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 0.8rem;
             box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
@@ -414,56 +414,56 @@
             left: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             opacity: 0.1;
         }
         .daily-wisdom .label {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             opacity: 0.8;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.2rem;
         }
         .daily-wisdom .label .refresh-btn {
             background: rgba(255, 255, 255, 0.15);
             border: none;
             color: white;
-            padding: 0.15rem 0.6rem;
+            padding: 0.1rem 0.5rem;
             border-radius: var(--radius-sm);
             cursor: pointer;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             transition: var(--transition);
         }
         .daily-wisdom .label .refresh-btn:hover {
             background: rgba(255, 255, 255, 0.3);
         }
         .daily-wisdom .quote {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
             font-family: 'Noto Naskh Arabic', serif;
-            line-height: 2;
-            margin-bottom: 0.4rem;
-            padding-left: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 0.2rem;
+            padding-left: 1rem;
             white-space: pre-wrap;
             word-wrap: break-word;
         }
         .daily-wisdom .author {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             opacity: 0.9;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.6rem;
             flex-wrap: wrap;
         }
         .daily-wisdom .author .action-btn {
             background: rgba(255, 255, 255, 0.15);
             border: none;
             color: white;
-            padding: 0.15rem 0.7rem;
+            padding: 0.1rem 0.6rem;
             border-radius: var(--radius-sm);
             cursor: pointer;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             transition: var(--transition);
             display: flex;
             align-items: center;
@@ -473,71 +473,130 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
-        /* ===== البحث ===== */
+        /* ===== البحث (سطر واحد) ===== */
         .search-section {
-            margin-bottom: 1.2rem;
+            margin-bottom: 0.8rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: var(--bg);
+            padding: 0.3rem 0;
+            transition: background 0.3s ease;
+        }
+        [data-theme="dark"] .search-section {
+            background: var(--bg);
         }
         .search-box {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 0 1rem;
+            padding: 0 0.8rem;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.4rem;
             box-shadow: var(--shadow);
             border: 2px solid transparent;
             transition: var(--transition);
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            height: 42px;
         }
         .search-box:focus-within {
             border-color: var(--accent);
             box-shadow: var(--shadow-lg);
         }
         .search-box .search-icon {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.6;
             flex-shrink: 0;
         }
         .search-box input {
             flex: 1;
-            padding: 0.7rem 0;
+            padding: 0.3rem 0;
             border: none;
             outline: none;
             background: transparent;
             font-family: inherit;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text);
-            min-width: 150px;
+            min-width: 100px;
+            height: 36px;
         }
         .search-box input::placeholder {
             color: var(--text-muted);
+            font-size: 0.85rem;
         }
         .search-box .results-count {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             white-space: nowrap;
             font-weight: 500;
-            padding: 0 0.3rem;
+            padding: 0 0.2rem;
             flex-shrink: 0;
+        }
+
+        /* ===== أزرار البحث (في صندوق البحث) ===== */
+        .search-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-shrink: 0;
+        }
+        .search-actions .search-btn {
+            background: var(--accent);
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 0.2rem 0.6rem;
+            font-size: 0.7rem;
+            color: var(--bg);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            font-weight: 600;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .search-actions .search-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        .search-actions .clear-btn {
+            background: transparent;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            padding: 0 0.2rem;
+            display: none;
+        }
+        .search-actions .clear-btn.visible {
+            display: block;
+        }
+        .search-actions .clear-btn:hover {
+            color: var(--danger);
+            transform: scale(1.2);
         }
 
         @media (max-width: 600px) {
             .search-box {
-                padding: 0.3rem 0.7rem;
-                flex-wrap: wrap;
+                height: 38px;
+                padding: 0 0.5rem;
             }
             .search-box input {
-                font-size: 0.85rem;
-                padding: 0.4rem 0;
-                min-width: 100px;
-                flex: 1 1 100%;
-                order: 2;
+                font-size: 0.8rem;
+                height: 32px;
             }
             .search-box .search-icon {
-                order: 1;
+                font-size: 0.85rem;
+            }
+            .search-actions .search-btn {
+                font-size: 0.6rem;
+                padding: 0.15rem 0.4rem;
+                height: 24px;
             }
             .search-box .results-count {
-                order: 3;
+                font-size: 0.6rem;
             }
         }
 
@@ -545,25 +604,25 @@
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0.8rem;
-            margin-bottom: 1.2rem;
+            gap: 0.6rem;
+            margin-bottom: 0.8rem;
         }
         .stat-card {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 0.8rem;
+            padding: 0.5rem;
             text-align: center;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .stat-number {
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--accent);
         }
         .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: var(--text-muted);
         }
 
@@ -571,16 +630,16 @@
         .quotes-grid {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 0.6rem;
         }
         .quote-card {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 1.2rem;
+            padding: 0.8rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             transition: var(--transition);
-            animation: fadeIn 0.4s ease forwards;
+            animation: fadeIn 0.3s ease forwards;
             opacity: 0;
             position: relative;
         }
@@ -590,7 +649,7 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(12px);
+                transform: translateY(8px);
             }
             to {
                 opacity: 1;
@@ -602,18 +661,20 @@
             transform: translateY(-2px);
         }
         .quote-text {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            line-height: 2;
-            margin-bottom: 0.6rem;
+            line-height: 1.8;
+            margin-bottom: 0.4rem;
             font-family: 'Noto Naskh Arabic', serif;
             white-space: pre-wrap;
             word-wrap: break-word;
+            max-height: 300px;
+            overflow-y: auto;
         }
         .quote-text .search-highlight {
             background: var(--search-highlight-bg);
             color: var(--search-highlight);
-            padding: 0 4px;
+            padding: 0 3px;
             border-radius: 3px;
             font-weight: 700;
             border-bottom: 2px solid var(--search-highlight);
@@ -629,15 +690,15 @@
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 0.5rem;
-            padding-top: 0.6rem;
+            gap: 0.3rem;
+            padding-top: 0.4rem;
             border-top: 1px solid var(--border);
         }
         .quote-info {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            font-size: 0.8rem;
+            gap: 0.4rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             align-items: center;
         }
@@ -646,36 +707,36 @@
             color: var(--accent);
         }
         .quote-author .auto-icon {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             opacity: 0.6;
         }
         .quote-category {
             background: var(--bg);
-            padding: 0.05rem 0.5rem;
+            padding: 0.05rem 0.4rem;
             border-radius: 12px;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
         }
         .quote-date {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
         }
         .quote-actions {
             display: flex;
-            gap: 0.3rem;
+            gap: 0.2rem;
             flex-wrap: wrap;
         }
         .quote-actions button {
             background: none;
             border: 1px solid var(--border);
-            padding: 0.15rem 0.5rem;
+            padding: 0.1rem 0.4rem;
             border-radius: var(--radius-sm);
             font-family: inherit;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             cursor: pointer;
             color: var(--text-muted);
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 2px;
         }
         .quote-actions button:hover {
             background: var(--primary);
@@ -709,25 +770,25 @@
         /* ===== أزرار الجوال ===== */
         .share-actions-mobile {
             display: none;
-            margin-top: 0.6rem;
-            padding-top: 0.6rem;
+            margin-top: 0.4rem;
+            padding-top: 0.4rem;
             border-top: 1px dashed var(--border);
-            gap: 0.4rem;
+            gap: 0.3rem;
             flex-wrap: wrap;
         }
         .share-actions-mobile .share-btn {
             background: var(--bg);
             border: 1px solid var(--border);
-            padding: 0.2rem 0.7rem;
+            padding: 0.15rem 0.5rem;
             border-radius: var(--radius-sm);
             font-family: inherit;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             cursor: pointer;
             color: var(--text-muted);
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
         .share-actions-mobile .share-btn:hover {
             background: var(--primary);
@@ -743,15 +804,15 @@
         /* ===== زر إضافة اقتباس ===== */
         .fab-add {
             position: fixed;
-            bottom: 2rem;
+            bottom: 1.5rem;
             left: 1.5rem;
             background: linear-gradient(135deg, var(--accent), var(--accent-light));
             color: var(--primary-dark);
             border: none;
-            width: 56px;
-            height: 56px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             cursor: pointer;
             box-shadow: 0 8px 25px rgba(214, 158, 46, 0.4);
             transition: var(--transition);
@@ -771,15 +832,15 @@
         /* ===== أزرار التنقل العائمة (أسفل يمين) ===== */
         .search-nav-float {
             position: fixed;
-            bottom: 2rem;
+            bottom: 1.5rem;
             right: 1.5rem;
             display: none;
             flex-direction: column;
-            gap: 0.4rem;
+            gap: 0.3rem;
             z-index: 99;
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 0.4rem 0.3rem;
+            padding: 0.3rem 0.2rem;
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--border);
             transition: var(--transition);
@@ -791,13 +852,13 @@
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: var(--radius-sm);
-            padding: 0.3rem 0.6rem;
-            font-size: 1rem;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.9rem;
             cursor: pointer;
             color: var(--text);
             transition: var(--transition);
             font-family: inherit;
-            min-width: 2.5rem;
+            min-width: 2.2rem;
             text-align: center;
         }
         .search-nav-float button:hover:not(:disabled) {
@@ -810,11 +871,11 @@
             cursor: not-allowed;
         }
         .search-nav-float .nav-counter {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             text-align: center;
             font-weight: 600;
-            padding: 0.2rem 0;
+            padding: 0.15rem 0;
             direction: ltr;
         }
 
@@ -840,7 +901,7 @@
         .add-modal .modal-content {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 1.5rem;
             max-width: 500px;
             width: 100%;
             transform: scale(0.9);
@@ -854,8 +915,8 @@
         }
         .add-modal .modal-content h3 {
             color: var(--text);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -863,7 +924,7 @@
         .add-modal .modal-content .close-modal {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--text-muted);
             cursor: pointer;
             float: left;
@@ -874,28 +935,28 @@
             transform: rotate(90deg);
         }
         .add-modal .form-group {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
         .add-modal .form-group label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.15rem;
             color: var(--text-muted);
         }
         .add-modal .form-group label .optional {
             font-weight: 400;
             opacity: 0.6;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
         .add-modal .form-group textarea,
         .add-modal .form-group input {
             width: 100%;
-            padding: 0.5rem 0.7rem;
+            padding: 0.4rem 0.6rem;
             border: 1px solid var(--border);
             border-radius: var(--radius-sm);
             font-family: inherit;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: var(--transition);
             background: var(--input-bg);
             resize: vertical;
@@ -911,7 +972,7 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.5rem 1.5rem;
+            padding: 0.4rem 1.5rem;
             border-radius: var(--radius-sm);
             font-family: inherit;
             font-weight: 700;
@@ -928,23 +989,23 @@
             color: var(--bg);
         }
         .add-modal .hint {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
-            margin-top: 0.3rem;
+            margin-top: 0.2rem;
             opacity: 0.7;
         }
         .btn-secondary {
             background: var(--border);
             color: var(--text);
             border: none;
-            padding: 0.5rem 1.5rem;
+            padding: 0.4rem 1.5rem;
             border-radius: var(--radius-sm);
             font-family: inherit;
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
-            margin-top: 0.5rem;
+            margin-top: 0.4rem;
         }
         .btn-secondary:hover {
             background: #cbd5e0;
@@ -956,12 +1017,12 @@
         /* ===== الفوتر ===== */
         .footer {
             text-align: center;
-            padding: 1.5rem 0 0.5rem;
+            padding: 1rem 0 0.3rem;
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             border-top: 1px solid var(--border);
             transition: border-color 0.3s ease, color 0.3s ease;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
         .footer a {
             color: var(--accent);
@@ -972,14 +1033,14 @@
         /* ===== Toast ===== */
         .toast {
             position: fixed;
-            bottom: 2rem;
+            bottom: 1.5rem;
             left: 50%;
             transform: translateX(-50%) scale(0.9);
             background: var(--toast-bg);
             color: white;
-            padding: 0.7rem 1.5rem;
+            padding: 0.5rem 1.2rem;
             border-radius: var(--radius-sm);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             opacity: 0;
             visibility: hidden;
             transition: var(--transition);
@@ -1029,7 +1090,7 @@
         .modal-delete {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 1.5rem;
             max-width: 400px;
             width: 100%;
             text-align: center;
@@ -1041,26 +1102,26 @@
             transform: scale(1);
         }
         .modal-delete .modal-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
         }
         .modal-delete h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.4rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
             color: var(--text);
         }
         .modal-delete p {
             color: var(--text-muted);
-            margin-bottom: 1.2rem;
-            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
         }
         .modal-delete .modal-buttons {
             display: flex;
-            gap: 0.6rem;
+            gap: 0.5rem;
         }
         .modal-delete .modal-buttons button {
             flex: 1;
-            padding: 0.5rem;
+            padding: 0.4rem;
             border: none;
             border-radius: var(--radius-sm);
             font-family: inherit;
@@ -1090,15 +1151,15 @@
         /* ===== زر العودة للأعلى ===== */
         .back-to-top {
             position: fixed;
-            bottom: 5.5rem;
+            bottom: 5rem;
             right: 1.5rem;
             background: var(--primary);
             color: white;
             border: none;
-            width: 44px;
-            height: 44px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             cursor: pointer;
             box-shadow: var(--shadow-lg);
             opacity: 0;
@@ -1122,53 +1183,53 @@
         /* ===== رسالة عند عدم وجود نتائج ===== */
         .empty-state {
             text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
             color: var(--text-muted);
         }
         .empty-state-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
         }
         .empty-state h3 {
             color: var(--text);
-            margin-bottom: 0.3rem;
-            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
         }
 
         /* ===== تثبيت التطبيق ===== */
         .install-prompt {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 0.6rem 1.2rem;
+            padding: 0.4rem 1rem;
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--border);
             display: none;
             align-items: center;
             justify-content: space-between;
             max-width: 1200px;
-            margin: 0 auto 0.8rem;
+            margin: 0 auto 0.6rem;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.3rem;
             transition: background 0.3s ease, border-color 0.3s ease;
         }
         .install-prompt.show {
             display: flex;
         }
         .install-prompt span {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text);
         }
         .install-prompt button {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.3rem 1rem;
+            padding: 0.2rem 0.8rem;
             border-radius: var(--radius-sm);
             font-family: inherit;
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
         .install-prompt button:hover {
             transform: scale(1.05);
@@ -1176,7 +1237,7 @@
         .install-prompt .skip-btn {
             background: transparent;
             color: var(--text-muted);
-            padding: 0.3rem 0.6rem;
+            padding: 0.2rem 0.5rem;
         }
         .install-prompt .skip-btn:hover {
             background: var(--border);
@@ -1193,16 +1254,16 @@
             .header {
                 flex-direction: row;
                 flex-wrap: wrap;
-                padding: 0.6rem 1rem;
+                padding: 0.4rem 1rem;
             }
             .header .logo-area .logo-text h1 {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
             .header .logo-area .logo-text span {
-                font-size: 0.55rem;
+                font-size: 0.45rem;
             }
             .daily-wisdom .quote {
-                font-size: 1rem;
+                font-size: 0.9rem;
                 padding-left: 0;
             }
             .daily-wisdom::before {
@@ -1215,41 +1276,42 @@
 
         @media (max-width: 600px) {
             .main-wrapper {
-                padding: 0.5rem;
+                padding: 0.4rem;
             }
             .header {
-                padding: 0.5rem 0.8rem;
+                padding: 0.3rem 0.6rem;
                 border-radius: var(--radius-sm);
                 flex-direction: column;
                 align-items: stretch;
-                gap: 0.3rem;
+                gap: 0.2rem;
                 text-align: center;
             }
             .header .logo-area {
                 justify-content: center;
             }
             .header .logo-area .logo-icon {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
             }
             .header .logo-area .logo-text h1 {
-                font-size: 1rem;
+                font-size: 0.85rem;
             }
             .stats-bar {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 0.4rem;
+                gap: 0.3rem;
             }
             .stat-number {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
             .stat-card {
-                padding: 0.5rem;
+                padding: 0.3rem;
             }
             .quote-card {
-                padding: 0.8rem;
+                padding: 0.6rem;
             }
             .quote-text {
-                font-size: 0.95rem;
-                line-height: 1.8;
+                font-size: 0.85rem;
+                line-height: 1.6;
+                max-height: 150px;
             }
             .quote-actions {
                 display: none;
@@ -1258,82 +1320,85 @@
                 display: flex;
             }
             .search-box {
-                padding: 0.3rem 0.7rem;
-                flex-wrap: wrap;
+                height: 34px;
+                padding: 0 0.4rem;
             }
             .search-box input {
-                font-size: 0.85rem;
-                padding: 0.4rem 0;
-                min-width: 80px;
-                flex: 1 1 100%;
-                order: 2;
+                font-size: 0.75rem;
+                height: 28px;
+                min-width: 60px;
             }
             .search-box .search-icon {
-                order: 1;
+                font-size: 0.75rem;
+            }
+            .search-actions .search-btn {
+                font-size: 0.55rem;
+                padding: 0.1rem 0.35rem;
+                height: 22px;
             }
             .search-box .results-count {
-                order: 3;
+                font-size: 0.55rem;
             }
             .daily-wisdom {
-                padding: 0.8rem 1rem;
+                padding: 0.5rem 0.8rem;
             }
             .daily-wisdom .quote {
-                font-size: 0.95rem;
+                font-size: 0.85rem;
             }
             .fab-add {
-                width: 48px;
-                height: 48px;
-                font-size: 1.5rem;
-                bottom: 1.2rem;
-                left: 1rem;
+                width: 42px;
+                height: 42px;
+                font-size: 1.3rem;
+                bottom: 1rem;
+                left: 0.8rem;
             }
             .search-nav-float {
-                bottom: 1.2rem;
-                right: 1rem;
-                padding: 0.3rem 0.2rem;
+                bottom: 1rem;
+                right: 0.8rem;
+                padding: 0.2rem 0.15rem;
             }
             .search-nav-float button {
-                padding: 0.2rem 0.4rem;
-                font-size: 0.8rem;
-                min-width: 2rem;
+                padding: 0.15rem 0.35rem;
+                font-size: 0.7rem;
+                min-width: 1.8rem;
             }
             .back-to-top {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
-                bottom: 4.5rem;
-                right: 1rem;
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+                bottom: 4rem;
+                right: 0.8rem;
             }
             .toast {
-                font-size: 0.75rem;
-                padding: 0.5rem 1rem;
-                bottom: 0.8rem;
+                font-size: 0.7rem;
+                padding: 0.4rem 0.8rem;
+                bottom: 0.6rem;
             }
             .add-modal .modal-content {
-                padding: 1.2rem;
-                margin: 0.5rem;
+                padding: 1rem;
+                margin: 0.3rem;
             }
             .modal-delete {
-                padding: 1.2rem;
+                padding: 1rem;
             }
         }
 
         @media (max-width: 400px) {
             .stats-bar {
                 grid-template-columns: 1fr 1fr;
-                gap: 0.3rem;
+                gap: 0.2rem;
             }
             .stat-number {
-                font-size: 1rem;
-            }
-            .stat-label {
-                font-size: 0.6rem;
-            }
-            .header .logo-area .logo-text h1 {
                 font-size: 0.9rem;
             }
+            .stat-label {
+                font-size: 0.5rem;
+            }
+            .header .logo-area .logo-text h1 {
+                font-size: 0.75rem;
+            }
             .search-box input {
-                font-size: 0.8rem;
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -1425,7 +1490,7 @@
         <!-- ===== تثبيت التطبيق ===== -->
         <div class="install-prompt" id="installPrompt">
             <span>📱 قم بتثبيت تطبيق "ديوان الحكمة" على جهازك</span>
-            <div style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap;">
+            <div style="display:flex;gap:0.3rem;align-items:center;flex-wrap:wrap;">
                 <button onclick="installApp()">تثبيت</button>
                 <button class="skip-btn" onclick="document.getElementById('installPrompt').classList.remove('show')">تخطي</button>
             </div>
@@ -1460,12 +1525,16 @@
             </div>
         </div>
 
-        <!-- ===== البحث ===== -->
-        <div class="search-section">
+        <!-- ===== البحث (سطر واحد مع أزرار) ===== -->
+        <div class="search-section" id="searchSection">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
                 <input type="text" id="searchInput" placeholder="ابحث في الاقتباسات، القائلين، أو التصنيفات..." autocomplete="off">
                 <span class="results-count" id="resultsCount"></span>
+                <div class="search-actions">
+                    <button class="clear-btn" id="clearBtn" onclick="clearSearch()" title="مسح البحث">✕</button>
+                    <button class="search-btn" onclick="performSearchAndHideKeyboard()">🔍 بحث</button>
+                </div>
             </div>
         </div>
 
@@ -1594,11 +1663,22 @@
         let currentMatchIndex = -1;
         let currentSearchTerm = '';
 
+        // متغيرات التحميل التدريجي
+        let allFilteredQuotes = [];
+        let currentPage = 0;
+        const PAGE_SIZE = 30;
+        let isLoadingMore = false;
+        let hasMoreData = true;
+
+        // ===== تحسين الأداء =====
+        let quotesListElement = document.getElementById('quotesList');
+        let isRendering = false;
+
         // رموز تلقائية للقائل
         const AUTO_ICONS = ['💬', '🗣️', '📝', '✍️', '🎭', '🌟', '💫', '⭐', '🌈', '🔥', '💎', '🕊️', '🌺', '🍃', '📜'];
 
         // ================================================================
-        // 2. الوضع الليلي (Dark Mode)
+        // 2. الوضع الليلي
         // ================================================================
         function toggleTheme() {
             const html = document.documentElement;
@@ -1783,9 +1863,25 @@
                 favorites.push(id);
             }
             localStorage.setItem('diwan_favorites', JSON.stringify(favorites));
-            renderQuotes();
+            updateFavoriteUI(id);
             updateStats();
             updateSidebarStats();
+        }
+
+        function updateFavoriteUI(id) {
+            const card = document.querySelector(`.quote-card[data-id="${id}"]`);
+            if (card) {
+                const isFav = isFavorite(id);
+                card.classList.toggle('favorited', isFav);
+                const favBtn = card.querySelector('.btn-fav');
+                if (favBtn) {
+                    favBtn.innerHTML = isFav ? '❤️' : '🤍';
+                }
+                const mobileBtn = card.querySelector('.share-actions-mobile .share-btn:first-child');
+                if (mobileBtn) {
+                    mobileBtn.innerHTML = `${isFav ? '❤️' : '🤍'} ${isFav ? 'مفضلة' : 'أضف'}`;
+                }
+            }
         }
 
         function isFavorite(id) {
@@ -1826,8 +1922,15 @@
         }
 
         // ================================================================
-        // 10. البحث المتقدم مع التنقل بين النتائج
+        // 10. البحث والتنقل
         // ================================================================
+
+        // دالة البحث مع إخفاء الكيبورد
+        function performSearchAndHideKeyboard() {
+            // إخفاء الكيبورد
+            document.activeElement?.blur();
+            performSearch();
+        }
 
         function performSearch() {
             renderQuotes();
@@ -1836,7 +1939,6 @@
         function navigateSearch(direction) {
             if (searchMatches.length === 0) return;
 
-            // إزالة التمييز النشط من النتيجة الحالية
             if (currentMatchIndex >= 0 && currentMatchIndex < searchMatches.length) {
                 const prevMatch = searchMatches[currentMatchIndex];
                 const prevElement = document.querySelector(`[data-match-id="${prevMatch.id}"]`);
@@ -1879,6 +1981,14 @@
             nextBtn.disabled = !hasMatches;
         }
 
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('clearBtn').classList.remove('visible');
+            clearSearchMatches();
+            performSearch();
+            document.getElementById('searchInput').focus();
+        }
+
         function clearSearchMatches() {
             document.querySelectorAll('.search-highlight.active-match').forEach(el => {
                 el.classList.remove('active-match');
@@ -1896,6 +2006,7 @@
             activeCategory = cat;
             document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById('searchInput').value = '';
+            document.getElementById('clearBtn').classList.remove('visible');
             clearSearchMatches();
             renderQuotes();
             updateSidebarCategories();
@@ -1906,6 +2017,7 @@
             activeCategory = 'favorites';
             document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById('searchInput').value = '';
+            document.getElementById('clearBtn').classList.remove('visible');
             clearSearchMatches();
             renderQuotes();
             updateSidebarCategories();
@@ -1938,77 +2050,104 @@
         }
 
         // ================================================================
-        // 12. عرض الاقتباسات مع دعم التمييز والتنقل
+        // 12. عرض الاقتباسات (تحميل تدريجي)
         // ================================================================
+
         function renderQuotes() {
-            let filtered = quotes;
+            if (isRendering) return;
+            isRendering = true;
 
-            if (activeCategory === 'favorites') {
-                filtered = filtered.filter(q => favorites.includes(q.id));
-            } else if (activeCategory !== 'all') {
-                filtered = filtered.filter(q => q.category === activeCategory);
-            }
+            requestAnimationFrame(() => {
+                let filtered = quotes;
 
-            const search = document.getElementById('searchInput').value.toLowerCase().trim();
-            currentSearchTerm = search;
-
-            searchMatches = [];
-            currentMatchIndex = -1;
-
-            if (search) {
-                filtered = filtered.filter(q =>
-                    q.text.toLowerCase().includes(search) ||
-                    q.author.toLowerCase().includes(search) ||
-                    (q.category && q.category.toLowerCase().includes(search))
-                );
-            }
-
-            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-            renderFilteredQuotes(filtered, search);
-
-            document.getElementById('resultsCount').textContent = filtered.length > 0 ? `(${filtered.length})` : '';
-
-            // ===== إظهار/إخفاء أزرار التنقل العائمة =====
-            const navFloat = document.getElementById('searchNavFloat');
-            if (search && searchMatches.length > 0) {
-                navFloat.classList.add('visible');
-            } else {
-                navFloat.classList.remove('visible');
-            }
-
-            // ===== إخفاء/إظهار سهم العودة للأعلى =====
-            const backToTop = document.getElementById('backToTop');
-            if (search && searchMatches.length > 0) {
-                backToTop.classList.remove('visible');
-            } else {
-                if (window.scrollY > 400) {
-                    backToTop.classList.add('visible');
-                } else {
-                    backToTop.classList.remove('visible');
+                if (activeCategory === 'favorites') {
+                    filtered = filtered.filter(q => favorites.includes(q.id));
+                } else if (activeCategory !== 'all') {
+                    filtered = filtered.filter(q => q.category === activeCategory);
                 }
-            }
 
-            updateSearchButtons();
-            updateSearchCounter();
+                const search = document.getElementById('searchInput').value.toLowerCase().trim();
+                currentSearchTerm = search;
+
+                // تحديث زر المسح
+                const clearBtn = document.getElementById('clearBtn');
+                if (search) {
+                    clearBtn.classList.add('visible');
+                } else {
+                    clearBtn.classList.remove('visible');
+                }
+
+                searchMatches = [];
+                currentMatchIndex = -1;
+
+                if (search) {
+                    filtered = filtered.filter(q =>
+                        q.text.toLowerCase().includes(search) ||
+                        q.author.toLowerCase().includes(search) ||
+                        (q.category && q.category.toLowerCase().includes(search))
+                    );
+                }
+
+                filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+                allFilteredQuotes = filtered;
+                currentPage = 0;
+                hasMoreData = true;
+
+                // مسح القائمة
+                quotesListElement.innerHTML = '';
+
+                if (filtered.length === 0) {
+                    quotesListElement.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <h3>لا توجد نتائج</h3>
+                            <p>جرب البحث بكلمات مختلفة أو أضف اقتباساً جديداً</p>
+                        </div>
+                    `;
+                    isRendering = false;
+                    updateSearchButtons();
+                    updateSearchCounter();
+                    updateNavButtons();
+                    return;
+                }
+
+                // عرض الدفعة الأولى
+                loadMoreQuotes();
+
+                // تحديث العداد
+                document.getElementById('resultsCount').textContent = filtered.length > 0 ? `(${filtered.length})` : '';
+
+                // تحديث أزرار التنقل
+                updateSearchButtons();
+                updateSearchCounter();
+                updateNavButtons();
+
+                isRendering = false;
+            });
         }
 
-        function renderFilteredQuotes(filtered, search) {
-            const list = document.getElementById('quotesList');
+        function loadMoreQuotes() {
+            if (!hasMoreData || isLoadingMore) return;
+            isLoadingMore = true;
 
-            if (filtered.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📭</div>
-                        <h3>لا توجد نتائج</h3>
-                        <p>جرب البحث بكلمات مختلفة أو أضف اقتباساً جديداً</p>
-                    </div>
-                `;
+            const start = currentPage * PAGE_SIZE;
+            const end = Math.min(start + PAGE_SIZE, allFilteredQuotes.length);
+            const pageItems = allFilteredQuotes.slice(start, end);
+
+            if (pageItems.length === 0) {
+                hasMoreData = false;
+                isLoadingMore = false;
                 return;
             }
 
-            let matchIdCounter = 0;
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
-            list.innerHTML = filtered.map((q, i) => {
+            const fragment = document.createDocumentFragment();
+            const tempDiv = document.createElement('div');
+            let matchIdCounter = searchMatches.length;
+
+            let html = '';
+            pageItems.forEach((q, i) => {
                 let displayText = q.text;
                 let matchFound = false;
 
@@ -2038,11 +2177,12 @@
                 const displayTextWithBreaks = displayText.replace(/\n/g, '<br>');
 
                 const isFav = isFavorite(q.id);
-                const isAuto = q.author.startsWith('💬') || q.author.startsWith('🗣️') || q.author.startsWith('📝') || q
-                    .author.startsWith('✍️');
+                const isAuto = q.author.startsWith('💬') || q.author.startsWith('🗣️') || q.author
+                    .startsWith('📝') || q.author.startsWith('✍️');
 
-                return `
-                    <div class="quote-card ${isFav ? 'favorited' : ''}" data-id="${q.id}" style="animation-delay: ${i * 0.03}s">
+                const globalIndex = start + i;
+                html += `
+                    <div class="quote-card ${isFav ? 'favorited' : ''}" data-id="${q.id}" style="animation-delay: ${(globalIndex % PAGE_SIZE) * 0.02}s">
                         <div class="quote-text">${displayTextWithBreaks}</div>
                         <div class="quote-meta">
                             <div class="quote-info">
@@ -2065,9 +2205,20 @@
                         </div>
                     </div>
                 `;
-            }).join('');
+            });
 
-            if (searchMatches.length > 0) {
+            tempDiv.innerHTML = html;
+            while (tempDiv.firstChild) {
+                fragment.appendChild(tempDiv.firstChild);
+            }
+
+            quotesListElement.appendChild(fragment);
+
+            currentPage++;
+            hasMoreData = end < allFilteredQuotes.length;
+
+            // إذا كانت هناك نتائج بحث، اجعل المؤشر على الأولى
+            if (searchMatches.length > 0 && currentPage === 1) {
                 currentMatchIndex = 0;
                 const firstMatch = searchMatches[0];
                 const firstElement = document.querySelector(`[data-match-id="${firstMatch.id}"]`);
@@ -2076,6 +2227,70 @@
                 }
                 updateSearchCounter();
                 updateSearchButtons();
+            }
+
+            isLoadingMore = false;
+
+            // إذا كان هناك المزيد، أضف مستمع للتمرير
+            if (hasMoreData) {
+                setupInfiniteScroll();
+            }
+
+            updateNavButtons();
+        }
+
+        // ===== التحميل عند التمرير =====
+        let scrollTimeout = null;
+
+        function setupInfiniteScroll() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && hasMoreData && !isLoadingMore) {
+                        // إضافة عنصر وهمي للتحميل
+                        const loadMoreDiv = document.createElement('div');
+                        loadMoreDiv.id = 'loadMoreTrigger';
+                        loadMoreDiv.style.textAlign = 'center';
+                        loadMoreDiv.style.padding = '0.5rem';
+                        loadMoreDiv.style.color = 'var(--text-muted)';
+                        loadMoreDiv.textContent = '⏳ جاري تحميل المزيد...';
+                        quotesListElement.appendChild(loadMoreDiv);
+
+                        setTimeout(() => {
+                            loadMoreQuotes();
+                            const trigger = document.getElementById('loadMoreTrigger');
+                            if (trigger) trigger.remove();
+                        }, 200);
+                    }
+                });
+            }, { rootMargin: '200px' });
+
+            // مراقبة آخر عنصر
+            const lastCard = quotesListElement.lastElementChild;
+            if (lastCard) {
+                observer.observe(lastCard);
+            }
+        }
+
+        function updateNavButtons() {
+            const navFloat = document.getElementById('searchNavFloat');
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            if (search && searchMatches.length > 0) {
+                navFloat.classList.add('visible');
+            } else {
+                navFloat.classList.remove('visible');
+            }
+
+            // سهم العودة للأعلى
+            const backToTop = document.getElementById('backToTop');
+            if (search && searchMatches.length > 0) {
+                backToTop.classList.remove('visible');
+            } else {
+                if (window.scrollY > 400) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
             }
         }
 
@@ -2102,7 +2317,7 @@
         }
 
         // ================================================================
-        // 14. مودال الإضافة
+        // 14. مودال الإضافة (محسّن للتحديث الجزئي)
         // ================================================================
         function openAddModal() {
             document.getElementById('addModal').classList.add('active');
@@ -2116,6 +2331,7 @@
 
         function addQuote(e) {
             e.preventDefault();
+
             const text = document.getElementById('qText').value.trim();
             let author = document.getElementById('qAuthor').value.trim();
             let category = document.getElementById('qCategory').value.trim();
@@ -2130,20 +2346,78 @@
 
             const newQuote = {
                 id: Date.now(),
-                text,
-                author,
-                category,
+                text: text,
+                author: author,
+                category: category,
                 date: new Date().toISOString().split('T')[0]
             };
 
+            // إضافة للقائمة
             quotes.unshift(newQuote);
+
+            // حفظ
             saveToLocal();
+
+            // إغلاق المودال
             closeAddModal();
-            renderQuotes();
+
+            // ===== إضافة البطاقة في الأعلى (تحديث جزئي) =====
+            // إزالة رسالة "لا توجد نتائج"
+            const emptyState = quotesListElement.querySelector('.empty-state');
+            if (emptyState) {
+                quotesListElement.innerHTML = '';
+            }
+
+            // إنشاء البطاقة
+            const card = document.createElement('div');
+            card.className = 'quote-card';
+            card.dataset.id = newQuote.id;
+
+            const isAuto = newQuote.author.startsWith('💬') || newQuote.author.startsWith('🗣️') ||
+                newQuote.author.startsWith('📝') || newQuote.author.startsWith('✍️');
+
+            card.innerHTML = `
+                <div class="quote-text">${escapeHtml(newQuote.text).replace(/\n/g, '<br>')}</div>
+                <div class="quote-meta">
+                    <div class="quote-info">
+                        <span class="quote-author">${isAuto ? '🤖 ' : '👤 '}${escapeHtml(newQuote.author)} ${isAuto ? '<span class="auto-icon">(تلقائي)</span>' : ''}</span>
+                        <span class="quote-category">${escapeHtml(newQuote.category)}</span>
+                        <span class="quote-date">📅 ${newQuote.date}</span>
+                    </div>
+                    <div class="quote-actions">
+                        <button class="btn-fav" onclick="toggleFavorite(${newQuote.id})">🤍</button>
+                        <button onclick="copyQuote(${newQuote.id})">📋</button>
+                        <button onclick="shareQuote(${newQuote.id})">📤</button>
+                        <button onclick="openEditModal(${newQuote.id})">✏️</button>
+                        <button class="btn-delete" onclick="askDelete(${newQuote.id})">🗑️</button>
+                    </div>
+                </div>
+                <div class="share-actions-mobile">
+                    <button class="share-btn" onclick="toggleFavorite(${newQuote.id})">🤍 أضف</button>
+                    <button class="share-btn" onclick="copyQuote(${newQuote.id})">📋 نسخ</button>
+                    <button class="share-btn" onclick="shareQuote(${newQuote.id})">📤 مشاركة</button>
+                </div>
+            `;
+
+            // إضافة في الأعلى
+            card.style.animation = 'none';
+            quotesListElement.prepend(card);
+
+            // تفعيل تأثير الظهور
+            requestAnimationFrame(() => {
+                card.style.animation = '';
+                card.style.animationName = 'fadeIn';
+                card.style.animationDuration = '0.3s';
+                card.style.animationFillMode = 'forwards';
+            });
+
+            // تحديث الإحصائيات
             updateStats();
             updateSidebarStats();
             updateCatList();
             updateSidebarCategories();
+            loadDailyWisdom();
+
             showToast('✅ تم إضافة الاقتباس بنجاح', 'success');
         }
 
@@ -2184,12 +2458,47 @@
             q.category = category || 'عام';
             saveToLocal();
             closeEditModal();
-            renderQuotes();
+
+            updateQuoteCard(id);
             updateStats();
             updateSidebarStats();
             updateCatList();
             updateSidebarCategories();
             showToast('✅ تم تحديث الاقتباس', 'success');
+        }
+
+        function updateQuoteCard(id) {
+            const q = quotes.find(x => x.id === id);
+            if (!q) return;
+
+            const card = document.querySelector(`.quote-card[data-id="${id}"]`);
+            if (!card) {
+                renderQuotes();
+                return;
+            }
+
+            const isAuto = q.author.startsWith('💬') || q.author.startsWith('🗣️') ||
+                q.author.startsWith('📝') || q.author.startsWith('✍️');
+
+            const textDiv = card.querySelector('.quote-text');
+            if (textDiv) {
+                textDiv.innerHTML = escapeHtml(q.text).replace(/\n/g, '<br>');
+            }
+
+            const authorSpan = card.querySelector('.quote-author');
+            if (authorSpan) {
+                authorSpan.innerHTML = `${isAuto ? '🤖 ' : '👤 '}${escapeHtml(q.author)} ${isAuto ? '<span class="auto-icon">(تلقائي)</span>' : ''}`;
+            }
+
+            const categorySpan = card.querySelector('.quote-category');
+            if (categorySpan) {
+                categorySpan.textContent = q.category || 'عام';
+            }
+
+            const dateSpan = card.querySelector('.quote-date');
+            if (dateSpan) {
+                dateSpan.textContent = `📅 ${q.date}`;
+            }
         }
 
         // ================================================================
@@ -2206,11 +2515,33 @@
                 favorites = favorites.filter(id => id !== deleteId);
                 localStorage.setItem('diwan_favorites', JSON.stringify(favorites));
                 saveToLocal();
-                renderQuotes();
+
+                const card = document.querySelector(`.quote-card[data-id="${deleteId}"]`);
+                if (card) {
+                    card.style.transition = 'all 0.3s ease';
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        card.remove();
+                        if (quotesListElement.children.length === 0) {
+                            quotesListElement.innerHTML = `
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">📭</div>
+                                    <h3>لا توجد اقتباسات</h3>
+                                    <p>أضف اقتباساً جديداً باستخدام زر ➕</p>
+                                </div>
+                            `;
+                        }
+                    }, 300);
+                } else {
+                    renderQuotes();
+                }
+
                 updateStats();
                 updateSidebarStats();
                 updateCatList();
                 updateSidebarCategories();
+                loadDailyWisdom();
                 showToast('🗑️ تم حذف الاقتباس', 'success');
             }
             closeModal();
@@ -2241,28 +2572,62 @@
         function importData(input) {
             const file = input.files[0];
             if (!file) return;
+
+            showToast('⏳ جاري استيراد البيانات...', 'success');
+
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const imported = JSON.parse(e.target.result);
                     if (imported.quotes && Array.isArray(imported.quotes)) {
-                        quotes = imported.quotes;
-                        if (imported.favorites) favorites = imported.favorites;
+                        // دمج البيانات
+                        const existingIds = new Set(quotes.map(q => q.id));
+                        let newCount = 0;
+                        imported.quotes.forEach(q => {
+                            if (!existingIds.has(q.id)) {
+                                quotes.push(q);
+                                existingIds.add(q.id);
+                                newCount++;
+                            }
+                        });
+                        if (imported.favorites) {
+                            imported.favorites.forEach(id => {
+                                if (!favorites.includes(id) && quotes.some(q => q.id === id)) {
+                                    favorites.push(id);
+                                }
+                            });
+                            localStorage.setItem('diwan_favorites', JSON.stringify(favorites));
+                        }
+                        saveToLocal();
+                        renderQuotes();
+                        updateStats();
+                        updateSidebarStats();
+                        updateCatList();
+                        updateSidebarCategories();
+                        loadDailyWisdom();
+                        showToast(`📤 تم استيراد ${newCount} اقتباساً جديداً`, 'success');
                     } else if (Array.isArray(imported)) {
-                        quotes = imported;
+                        const existingIds = new Set(quotes.map(q => q.id));
+                        let newCount = 0;
+                        imported.forEach(q => {
+                            if (!existingIds.has(q.id)) {
+                                quotes.push(q);
+                                existingIds.add(q.id);
+                                newCount++;
+                            }
+                        });
+                        saveToLocal();
+                        renderQuotes();
+                        updateStats();
+                        updateSidebarStats();
+                        updateCatList();
+                        updateSidebarCategories();
+                        loadDailyWisdom();
+                        showToast(`📤 تم استيراد ${newCount} اقتباساً جديداً`, 'success');
                     } else {
                         showToast('❌ ملف غير صالح', 'error');
                         return;
                     }
-                    localStorage.setItem('diwan_favorites', JSON.stringify(favorites));
-                    saveToLocal();
-                    renderQuotes();
-                    updateStats();
-                    updateSidebarStats();
-                    updateCatList();
-                    updateSidebarCategories();
-                    loadDailyWisdom();
-                    showToast('📤 تم استيراد البيانات بنجاح', 'success');
                 } catch (err) {
                     showToast('❌ خطأ في قراءة الملف', 'error');
                 }
@@ -2276,7 +2641,11 @@
         // 18. دوال مساعدة
         // ================================================================
         function saveToLocal() {
-            localStorage.setItem('diwan_quotes', JSON.stringify(quotes));
+            try {
+                localStorage.setItem('diwan_quotes', JSON.stringify(quotes));
+            } catch (e) {
+                showToast('⚠️ مساحة التخزين ممتلئة، احذف بعض الاقتباسات', 'error');
+            }
         }
 
         function showToast(msg, type = '') {
@@ -2445,6 +2814,11 @@
                 closeModal();
                 closeAddModal();
                 closeEditModal();
+                document.activeElement?.blur();
+            }
+            if (e.key === 'Enter' && document.activeElement === document.getElementById('searchInput')) {
+                e.preventDefault();
+                performSearchAndHideKeyboard();
             }
             if (e.key === 'n' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
                 e.preventDefault();
@@ -2458,11 +2832,17 @@
 
         document.getElementById('searchInput').addEventListener('input', () => {
             clearTimeout(searchTimeout);
+            const search = document.getElementById('searchInput').value.trim();
+            const clearBtn = document.getElementById('clearBtn');
+            if (search) {
+                clearBtn.classList.add('visible');
+            } else {
+                clearBtn.classList.remove('visible');
+                clearSearchMatches();
+            }
             searchTimeout = setTimeout(() => {
-                searchMatches = [];
-                currentMatchIndex = -1;
                 performSearch();
-            }, 300);
+            }, 400);
         });
 
         document.getElementById('searchInput').addEventListener('keydown', function(e) {
@@ -2475,18 +2855,25 @@
             }
         });
 
+        // ===== إخفاء الكيبورد عند النقر خارج حقل البحث =====
+        document.addEventListener('click', function(e) {
+            const searchInput = document.getElementById('searchInput');
+            const searchSection = document.getElementById('searchSection');
+            if (searchInput && !searchSection.contains(e.target)) {
+                searchInput.blur();
+            }
+        });
+
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('backToTop');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
             const hasResults = searchMatches.length > 0;
 
-            // إذا كان هناك بحث نشط، لا نظهر السهم
             if (search && hasResults) {
                 btn.classList.remove('visible');
                 return;
             }
 
-            // إذا لم يكن هناك بحث، نظهر السهم عند التمرير
             if (window.scrollY > 400) {
                 btn.classList.add('visible');
             } else {
