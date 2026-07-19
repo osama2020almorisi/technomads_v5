@@ -4,9 +4,6 @@
    مع بحث متقدم وفلاتر متجاوبة للجوال
    مع دعم الروابط العميقة (Deep Links)
    مع دعم Open Graph للمشاركة
-   مع خاصية تكبير/تصغير البطاقات
-   مع عرض شبكة/قائمة
-   مع ترقيم المشاريع في وضع القائمة
    ============================================ */
 
 (function() {
@@ -207,10 +204,11 @@
             cover: 'https://picsum.photos/id/196/800/600',
             gallery: ['https://picsum.photos/id/197/800/600', 'https://picsum.photos/id/198/800/600', 'https://picsum.photos/id/199/800/600']
         },
+        // ===== المشروع الجديد: مستكشف هيكلية المشاريع =====
         'structure-explorer': {
             cover: 'https://picsum.photos/id/204/800/600',
             gallery: ['https://picsum.photos/id/205/800/600','https://picsum.photos/id/206/800/600','https://picsum.photos/id/207/800/600']
-        }
+       }
     };
 
     // ============================================
@@ -763,6 +761,10 @@
             link: 'projects/localStorage/localStorage-V2/index.html',
             rating: 4.2
         },
+
+        // ================================================================
+        // ===== المشروع الجديد: مستكشف هيكلية المشاريع =====
+        // ================================================================
         { 
             id: 'structure-explorer', 
             name: 'مستكشف هيكلية المشاريع', 
@@ -771,12 +773,12 @@
             technologies: ['HTML', 'CSS', 'JavaScript', 'AOS', 'Font Awesome', 'Local File API'], 
             date: '2024-06-24', 
             featured: true,
-            hasVersions: true,
             keywords: ['هيكلية', 'مشاريع', 'استكشاف', 'مجلدات', 'ملفات', 'شجري', 'نسخ', 'طي', 'فتح', 'مطورين', 'أداة'],
             link: 'projects/project-structure/structure-explorer.html',
             rating: 5.0,
             version: '2.0'
         }
+        // ================================================================
     ];
 
     const CATEGORIES = {
@@ -813,117 +815,59 @@
         setupTechToggle();
         initDeepLinks();
         initOpenGraphFromUrl();
-        setupBackToTopProgress();
     });
-
-    // ============================================
-    // BACK TO TOP WITH PROGRESS
-    // ============================================
-    function setupBackToTopProgress() {
-        var backToTop = document.getElementById('backToTop');
-        if (!backToTop) return;
-        
-        var ticking = false;
-        
-        window.addEventListener('scroll', function() {
-            if (!ticking) {
-                window.requestAnimationFrame(function() {
-                    var scrollY = window.scrollY;
-                    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                    var progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
-                    
-                    if (scrollY > 500) {
-                        backToTop.classList.add('visible');
-                    } else {
-                        backToTop.classList.remove('visible');
-                        backToTop.classList.remove('scrolling');
-                    }
-                    
-                    if (scrollY > 100 && progress < 100) {
-                        backToTop.classList.add('scrolling');
-                        backToTop.style.setProperty('--progress', progress + '%');
-                    } else {
-                        backToTop.classList.remove('scrolling');
-                    }
-                    
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-        
-        backToTop.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
 
     // ============================================
     // DEEP LINKS - الروابط العميقة للمشاريع
     // ============================================
 
     function shareProject(projectId) {
-        var project = projects.find(function(p) { return p.id === projectId; });
+        const project = projects.find(p => p.id === projectId);
         if (!project) {
             showNotification('المشروع غير موجود', 'error');
             return;
         }
         
-        var url = window.location.origin + window.location.pathname + '#project-' + projectId;
-        var shareText = 'شاهد مشروع ' + project.name + ' على TechNomads';
+        const url = window.location.origin + window.location.pathname + '#project-' + projectId;
+        const shareText = 'شاهد مشروع ' + project.name + ' على TechNomads';
         
         if (navigator.share) {
             navigator.share({
                 title: project.name,
                 text: shareText,
                 url: url
-            }).catch(function() {});
+            }).catch(() => {});
             return;
         }
         
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(url).then(function() {
-                showNotification('✅ تم نسخ رابط المشروع: ' + project.name, 'success');
-            }).catch(function() {
-                fallbackCopy(url, project.name);
-            });
-        } else {
-            fallbackCopy(url, project.name);
-        }
-    }
-
-    function fallbackCopy(url, projectName) {
-        var textArea = document.createElement('textarea');
-        textArea.value = url;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-9999px';
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
+        navigator.clipboard.writeText(url).then(() => {
+            showNotification('✅ تم نسخ رابط المشروع: ' + project.name, 'success');
+        }).catch(() => {
+            const textArea = document.createElement('textarea');
+            textArea.value = url;
+            document.body.appendChild(textArea);
+            textArea.select();
             document.execCommand('copy');
-            showNotification('✅ تم نسخ رابط المشروع: ' + projectName, 'success');
-        } catch (e) {
-            showNotification('⚠️ فشل النسخ، الرابط: ' + url, 'error');
-        }
-        document.body.removeChild(textArea);
+            document.body.removeChild(textArea);
+            showNotification('✅ تم نسخ رابط المشروع: ' + project.name, 'success');
+        });
     }
 
     function initDeepLinks() {
-        var hash = window.location.hash;
+        const hash = window.location.hash;
         if (hash && hash.startsWith('#project-')) {
-            var projectId = hash.replace('#project-', '');
+            const projectId = hash.replace('#project-', '');
             
-            var checkProjects = setInterval(function() {
+            const checkProjects = setInterval(() => {
                 if (projects.length > 0) {
                     clearInterval(checkProjects);
-                    var project = projects.find(function(p) { return p.id === projectId; });
+                    const project = projects.find(p => p.id === projectId);
                     if (project) {
-                        setTimeout(function() {
+                        setTimeout(() => {
                             openModal(projectId);
-                            if (window.updateOpenGraph) {
-                                window.updateOpenGraph(project);
-                            }
+                            updateOpenGraph(project);
                             
-                            var card = document.querySelector('[data-project-id="' + projectId + '"]');
+                            const card = document.querySelector('[data-project-id="' + projectId + '"]');
                             if (card) {
                                 card.scrollIntoView({ behavior: 'smooth', block: 'center' });
                                 card.classList.add('highlight');
@@ -1359,7 +1303,17 @@
         var backToTop = document.getElementById('backToTop');
         if (!backToTop) return;
         
-        // تم نقل هذه الوظيفة إلى setupBackToTopProgress
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     }
 
     function renderProjects() {
@@ -1404,7 +1358,7 @@
         }
         
         grid.innerHTML = displayProjects.map(function(project, index) {
-            return createProjectCard(project, index, start + index);
+            return createProjectCard(project, index);
         }).join('');
         
         setTimeout(function() {
@@ -1438,13 +1392,12 @@
         });
     }
 
-    function createProjectCard(project, index, globalIndex) {
+    function createProjectCard(project, index) {
         var categoryInfo = CATEGORIES[project.category] || { label: 'مشروع', icon: 'fa-folder' };
         var dateFormatted = formatDate(project.date);
         var stars = renderStars(project.rating || 0);
-        var displayIndex = (globalIndex !== undefined ? globalIndex + 1 : index + 1);
         
-        return '<article class="project-card" data-project-id="' + project.id + '" data-category="' + project.category + '" data-index="' + displayIndex + '" data-aos="fade-up" data-aos-delay="' + Math.min(index * 50, 300) + '">' +
+        return '<article class="project-card" data-project-id="' + project.id + '" data-category="' + project.category + '" data-aos="fade-up" data-aos-delay="' + Math.min(index * 50, 300) + '">' +
             '<div class="project-card-media">' +
                 '<img src="' + project.coverImage + '" alt="' + project.name + '" class="project-card-image" loading="lazy" width="800" height="600">' +
                 '<div class="project-card-overlay">' +
@@ -1514,9 +1467,7 @@
         if (!modal || !modalContent) return;
         
         modalContent.innerHTML = buildModalContent(project);
-        if (window.updateOpenGraph) {
-            window.updateOpenGraph(project);
-        }
+        updateOpenGraph(project);
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         
@@ -1525,9 +1476,7 @@
     }
 
     function closeModal() {
-        if (window.resetOpenGraph) {
-            window.resetOpenGraph();
-        }
+        resetOpenGraph();
         updateUrlWithProject(null);
         
         var modal = document.getElementById('projectModal');
@@ -1681,13 +1630,9 @@
                         shareUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
                         break;
                     case 'copy':
-                        if (navigator.clipboard) {
-                            navigator.clipboard.writeText(window.location.href).then(function() {
-                                showNotification('✅ تم نسخ الرابط!', 'success');
-                            });
-                        } else {
-                            fallbackCopy(window.location.href, 'الرابط');
-                        }
+                        navigator.clipboard.writeText(window.location.href).then(function() {
+                            showNotification('✅ تم نسخ الرابط!', 'success');
+                        });
                         return;
                 }
                 
@@ -1838,10 +1783,5 @@
         resetOpenGraph: resetOpenGraph,
         initOpenGraphFromUrl: initOpenGraphFromUrl
     };
-
-    // ربط دوال Open Graph بالنافذة للاستخدام من HTML
-    window.updateOpenGraph = updateOpenGraph;
-    window.resetOpenGraph = resetOpenGraph;
-    window.initOpenGraphFromUrl = initOpenGraphFromUrl;
 
 })();
