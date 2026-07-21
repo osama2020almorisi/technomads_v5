@@ -13,17 +13,18 @@
     <meta property="og:url" content="https://te-2026.netlify.app/portfolio.html">
     <meta property="og:image" content="https://te-2026.netlify.app/images/og-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
+    
     <!-- ===== Open Graph الأساسية (سيتم تحديثها ديناميكياً) ===== -->
-<meta property="og:title" content="TechNomads | معرض الأعمال" id="ogTitle">
-<meta property="og:description" content="استعرض أكثر من 160 مشروعاً تقنياً متنوعاً" id="ogDescription">
-<meta property="og:image" content="https://te-2026.netlify.app/images/og-image.jpg" id="ogImage">
-<meta property="og:url" content="https://te-2026.netlify.app/portfolio.html" id="ogUrl">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="TechNomads">
-<meta name="twitter:card" content="summary_large_image" id="twitterCard">
-<meta name="twitter:title" content="TechNomads | معرض الأعمال" id="twitterTitle">
-<meta name="twitter:description" content="استعرض أكثر من 160 مشروعاً تقنياً متنوعاً" id="twitterDescription">
-<meta name="twitter:image" content="https://te-2026.netlify.app/images/og-image.jpg" id="twitterImage">
+    <meta property="og:title" content="TechNomads | معرض الأعمال" id="ogTitle">
+    <meta property="og:description" content="استعرض أكثر من 160 مشروعاً تقنياً متنوعاً" id="ogDescription">
+    <meta property="og:image" content="https://te-2026.netlify.app/images/og-image.jpg" id="ogImage">
+    <meta property="og:url" content="https://te-2026.netlify.app/portfolio.html" id="ogUrl">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TechNomads">
+    <meta name="twitter:card" content="summary_large_image" id="twitterCard">
+    <meta name="twitter:title" content="TechNomads | معرض الأعمال" id="twitterTitle">
+    <meta name="twitter:description" content="استعرض أكثر من 160 مشروعاً تقنياً متنوعاً" id="twitterDescription">
+    <meta name="twitter:image" content="https://te-2026.netlify.app/images/og-image.jpg" id="twitterImage">
     
     <title>معرض الأعمال | TechNomads - أكثر من 160 مشروعاً تقنياً</title>
     
@@ -426,768 +427,948 @@
                 max-width: 95%;
             }
         }
+
+        /* ============================================
+           أدوات التحكم في حجم البطاقات - تنسيق إضافي
+           ============================================ */
+        .projects-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .projects-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .card-size-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--bg-card);
+            padding: 4px 6px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        body.dark-mode .card-size-controls {
+            background: rgba(255,255,255,0.02);
+            border-color: rgba(255,255,255,0.04);
+        }
+        .card-size-controls button {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+        }
+        .card-size-controls button:hover {
+            background: rgba(78,205,196,0.06);
+            color: var(--portfolio-accent);
+        }
+        .card-size-controls button.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(42,45,124,0.15);
+        }
+        body.dark-mode .card-size-controls button.active {
+            box-shadow: 0 4px 12px rgba(78,205,196,0.06);
+        }
+        .card-size-controls .size-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            padding: 0 4px;
+            font-weight: 500;
+            min-width: 18px;
+            text-align: center;
+        }
+        .view-toggle-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .view-toggle-btn:hover {
+            background: rgba(78,205,196,0.06);
+            color: var(--portfolio-accent);
+        }
+        .view-toggle-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(42,45,124,0.15);
+        }
+        body.dark-mode .view-toggle-btn.active {
+            box-shadow: 0 4px 12px rgba(78,205,196,0.06);
+        }
+        .separator-dot {
+            color: var(--border-color);
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        @media (max-width: 576px) {
+            .card-size-controls button {
+                width: 28px;
+                height: 28px;
+                font-size: 0.7rem;
+            }
+            .view-toggle-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 0.7rem;
+            }
+            .card-size-controls .size-label {
+                font-size: 0.5rem;
+                min-width: 14px;
+            }
+            .projects-header {
+                gap: 0.5rem;
+            }
+            .projects-header-left {
+                gap: 0.5rem;
+            }
+        }
+    
     </style>
 </head>
 <body>
     <noscript>
-    <style>
-        .loading-overlay { display: none !important; }
-        body { opacity: 1 !important; }
-    </style>
-</noscript>
+        <style>
+            .loading-overlay { display: none !important; }
+            body { opacity: 1 !important; }
+        </style>
+    </noscript>
 
-<div class="loading-overlay" id="loadingOverlay">
-    <div class="loader">
-        <svg viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="90" fill="none" stroke="#2A2D7C" stroke-width="6" stroke-dasharray="565" stroke-dashoffset="565" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="565" to="0" dur="1.5s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="100" cy="100" r="60" fill="none" stroke="#4ECDC4" stroke-width="4" stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="377" to="0" dur="1.2s" repeatCount="indefinite"/>
-            </circle>
-        </svg>
-    </div>
-</div>
-
-<header class="smart-header" id="main-header">
-    <div class="nav-container">
-        <a href="index.html" class="logo">
-            <div class="logo-wrapper">
-                <svg class="logo-svg" viewBox="0 0 200 200">
-                    <defs>
-                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#2A2D7C"/>
-                            <stop offset="100%" stop-color="#4ECDC4"/>
-                        </linearGradient>
-                    </defs>
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8" class="logo-circle"/>
-                    <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="logo-triangle"/>
-                    <circle cx="100" cy="110" r="15" fill="url(#logoGrad)" class="logo-dot"/>
-                </svg>
-            </div>
-            <span class="logo-text">TechNomads</span>
-        </a>
-
-        <nav class="desktop-nav">
-            <ul class="nav-list">
-                <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
-                <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
-                <li><a href="team.html" class="nav-link"><i class="fas fa-users"></i><span>الفريق</span></a></li>
-                <li><a href="portfolio.html" class="nav-link active"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
-                <li><a href="contact.html" class="nav-link cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
-            </ul>
-        </nav>
-
-        <div class="desktop-tools">
-            <div class="language-switcher">
-                <button class="lang-btn active" data-lang="ar">عربي</button>
-                <button class="lang-btn" data-lang="en">EN</button>
-            </div>
-        </div>
-
-        <button class="hamburger" id="hamburgerBtn" aria-label="القائمة">
-            <span class="hamburger-box"><span class="hamburger-inner"></span></span>
-        </button>
-    </div>
-
-    <nav class="mobile-nav" id="mobileNav">
-        <div class="mobile-nav-header">
-            <div class="mobile-logo-wrapper">
-                <svg class="mobile-logo-svg" viewBox="0 0 200 200" width="40" height="40">
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
-                    <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
-                    <circle cx="100" cy="110" r="15" fill="url(#logoGrad)"/>
-                </svg>
-            </div>
-            <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
-        </div>
-        <ul class="mobile-nav-list">
-            <li><a href="index.html" class="mobile-nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
-            <li><a href="services.html" class="mobile-nav-link"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
-            <li><a href="team.html" class="mobile-nav-link"><i class="fas fa-users"></i><span>الفريق</span></a></li>
-            <li><a href="portfolio.html" class="mobile-nav-link active"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
-            <li><a href="contact.html" class="mobile-nav-link cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
-        </ul>
-        <div class="mobile-nav-footer">
-            <div class="mobile-theme-toggle-wrapper">
-                <span class="mobile-theme-label"><i class="fas fa-adjust"></i> الوضع</span>
-                <button class="mobile-theme-toggle" id="mobileThemeToggle">
-                    <i class="fas fa-moon"></i>
-                    <span class="mobile-theme-text">داكن</span>
-                </button>
-            </div>
-            <div class="mobile-language-switcher">
-                <button class="mobile-lang-btn active" data-lang="ar">العربية</button>
-                <button class="mobile-lang-btn" data-lang="en">English</button>
-            </div>
-        </div>
-    </nav>
-</header>
-
-<main>
-
-    <section class="portfolio-hero">
-        <div class="hero-backdrop"></div>
-        <div class="hero-container">
-            <div class="hero-badge" data-aos="fade-down">
-                <i class="fas fa-crown"></i>
-                <span>معرض أعمالنا</span>
-            </div>
-            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
-                مشاريع <span class="gradient-text">أبدعنا</span> في تقديمها
-            </h1>
-            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
-                أكثر من 160 مشروعاً تقنياً نفتخر بتقديمها لعملائنا
-            </p>
-            <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
-                <div class="stat-card">
-                    <span class="stat-number" id="statTotal">0</span>
-                    <span class="stat-label">مشروع</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" id="statClients">0</span>
-                    <span class="stat-label">عميل</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" id="statTech">0</span>
-                    <span class="stat-label">تقنية</span>
-                </div>
-            </div>
-        </div>
-        <div class="hero-wave">
-            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-                <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,58.7C1248,64,1344,64,1392,64L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" fill="var(--bg-light)"/>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader">
+            <svg viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="90" fill="none" stroke="#2A2D7C" stroke-width="6" stroke-dasharray="565" stroke-dashoffset="565" stroke-linecap="round">
+                    <animate attributeName="stroke-dashoffset" from="565" to="0" dur="1.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="100" cy="100" r="60" fill="none" stroke="#4ECDC4" stroke-width="4" stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round">
+                    <animate attributeName="stroke-dashoffset" from="377" to="0" dur="1.2s" repeatCount="indefinite"/>
+                </circle>
             </svg>
         </div>
-    </section>
+    </div>
 
-    <section class="portfolio-search-section">
-        <div class="search-container">
-            <div class="search-wrapper">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن مشروع..." aria-label="بحث في المشاريع">
-                <button class="search-clear" id="searchClear" aria-label="مسح البحث"><i class="fas fa-times"></i></button>
-            </div>
-            
-            <div class="search-filters-wrapper">
-                <div class="search-filters" id="searchFilters">
-                    <button class="filter-btn active" data-filter="all">الكل</button>
-                    <button class="filter-btn" data-filter="web">مواقع ويب</button>
-                    <button class="filter-btn" data-filter="app">تطبيقات</button>
-                    <button class="filter-btn" data-filter="design">تصميم</button>
-                    <button class="filter-btn" data-filter="tool">أدوات</button>
-                    <button class="filter-btn" data-filter="game">ألعاب</button>
-                    <button class="filter-btn" data-filter="marketing">تسويق</button>
+    <header class="smart-header" id="main-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-wrapper">
+                    <svg class="logo-svg" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2A2D7C"/>
+                                <stop offset="100%" stop-color="#4ECDC4"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8" class="logo-circle"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="logo-triangle"/>
+                        <circle cx="100" cy="110" r="15" fill="url(#logoGrad)" class="logo-dot"/>
+                    </svg>
                 </div>
-                
-                <div class="filter-tech-toggle" id="techToggle">
-                    <button class="tech-toggle-btn">
-                        <i class="fas fa-code"></i> التقنيات <i class="fas fa-chevron-down"></i>
+                <span class="logo-text">TechNomads</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                    <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
+                    <li><a href="team.html" class="nav-link"><i class="fas fa-users"></i><span>الفريق</span></a></li>
+                    <li><a href="portfolio.html" class="nav-link active"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
+                    <li><a href="contact.html" class="nav-link cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="desktop-tools">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ar">عربي</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+            </div>
+
+            <button class="hamburger" id="hamburgerBtn" aria-label="القائمة">
+                <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+            </button>
+        </div>
+
+        <nav class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="mobile-logo-wrapper">
+                    <svg class="mobile-logo-svg" viewBox="0 0 200 200" width="40" height="40">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="url(#logoGrad)" stroke-width="8"/>
+                        <circle cx="100" cy="110" r="15" fill="url(#logoGrad)"/>
+                    </svg>
+                </div>
+                <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <ul class="mobile-nav-list">
+                <li><a href="index.html" class="mobile-nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                <li><a href="services.html" class="mobile-nav-link"><i class="fas fa-cogs"></i><span>الخدمات</span></a></li>
+                <li><a href="team.html" class="mobile-nav-link"><i class="fas fa-users"></i><span>الفريق</span></a></li>
+                <li><a href="portfolio.html" class="mobile-nav-link active"><i class="fas fa-briefcase"></i><span>الأعمال</span></a></li>
+                <li><a href="contact.html" class="mobile-nav-link cta"><i class="fas fa-paper-plane"></i><span>اتصل بنا</span></a></li>
+            </ul>
+            <div class="mobile-nav-footer">
+                <div class="mobile-theme-toggle-wrapper">
+                    <span class="mobile-theme-label"><i class="fas fa-adjust"></i> الوضع</span>
+                    <button class="mobile-theme-toggle" id="mobileThemeToggle">
+                        <i class="fas fa-moon"></i>
+                        <span class="mobile-theme-text">داكن</span>
                     </button>
                 </div>
-                <div class="filter-tech-section" id="filterTechSection" style="display: none;"></div>
-            </div>
-            
-            <div class="search-results-info" id="searchResultsInfo"></div>
-        </div>
-    </section>
-
-    <div class="search-suggestions" id="searchSuggestions" style="display: none;">
-        <div class="suggestions-list" id="suggestionsList"></div>
-    </div>
-
-    <section class="portfolio-projects-section">
-        <div class="projects-container">
-            <div class="projects-header">
-                <div class="projects-count">
-                    <i class="fas fa-layer-group"></i>
-                    <span id="projectsCount">0</span>
-                    <span>مشروع</span>
+                <div class="mobile-language-switcher">
+                    <button class="mobile-lang-btn active" data-lang="ar">العربية</button>
+                    <button class="mobile-lang-btn" data-lang="en">English</button>
                 </div>
             </div>
+        </nav>
+    </header>
 
-            <div class="projects-grid" id="projectsGrid"></div>
+    <main>
 
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <div class="empty-icon"><i class="fas fa-folder-open"></i></div>
-                <h3>لا توجد مشاريع مطابقة</h3>
-                <p>جرب البحث بكلمات مختلفة أو إزالة الفلاتر</p>
-                <button class="reset-btn" id="resetSearchBtn"><i class="fas fa-sync-alt"></i> مسح البحث</button>
+        <section class="portfolio-hero">
+            <div class="hero-backdrop"></div>
+            <div class="hero-container">
+                <div class="hero-badge" data-aos="fade-down">
+                    <i class="fas fa-crown"></i>
+                    <span>معرض أعمالنا</span>
+                </div>
+                <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+                    مشاريع <span class="gradient-text">أبدعنا</span> في تقديمها
+                </h1>
+                <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+                    أكثر من 160 مشروعاً تقنياً نفتخر بتقديمها لعملائنا
+                </p>
+                <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-card">
+                        <span class="stat-number" id="statTotal">0</span>
+                        <span class="stat-label">مشروع</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="statClients">0</span>
+                        <span class="stat-label">عميل</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="statTech">0</span>
+                        <span class="stat-label">تقنية</span>
+                    </div>
+                </div>
             </div>
-
-            <div class="load-more-container" id="loadMoreContainer" style="display: none;">
-                <button class="load-more-btn" id="loadMoreBtn"><i class="fas fa-arrow-down"></i> تحميل المزيد</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================ -->
-    <!-- قسم العرض العميق - جميع المشاريع كاملة -->
-    <!-- ============================================ -->
-    <section class="deep-links-section" data-aos="fade-up" aria-label="قائمة جميع المشاريع">
-        <h2><i class="fas fa-code-branch"></i> استعراض جميع المشاريع</h2>
-        <p class="subtitle">هنا يمكنك تصفح جميع مشاريعنا وتفاصيلها الكاملة - أكثر من 160 مشروعاً</p>
-        
-        <div class="deep-grid">
-            
-            <!-- 1. حاسبة العمر -->
-            <div class="deep-category">
-                <h3><i class="fas fa-calculator"></i> حاسبة العمر</h3>
-                <ul>
-                    <li><a href="projects/age-calculator/index.html"><i class="fas fa-arrow-left"></i> الرئيسية</a></li>
-                    <details>
-                        <summary>📁 الإصدار الأول (V1)</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/age-calculator/age-calculator-app/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                            <li><a href="projects/age-calculator/age-calculator-app/calculator.html"><i class="fas fa-calculator"></i> حاسبة العمر</a></li>
-                            <li><a href="projects/age-calculator/age-calculator-app/add-birthday.html"><i class="fas fa-plus-circle"></i> إضافة عيد ميلاد</a></li>
-                            <li><a href="projects/age-calculator/age-calculator-app/upcoming.html"><i class="fas fa-calendar-week"></i> المناسبات القادمة</a></li>
-                        </ul>
-                    </details>
-                    <details>
-                        <summary>📁 الإصدار الثاني (V2)</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/age-calculator/age-calculator-app-v2/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                            <li><a href="projects/age-calculator/age-calculator-app-v2/calculator.html"><i class="fas fa-calculator"></i> حاسبة العمر</a></li>
-                            <li><a href="projects/age-calculator/age-calculator-app-v2/add-birthday.html"><i class="fas fa-plus-circle"></i> إضافة عيد ميلاد</a></li>
-                            <li><a href="projects/age-calculator/age-calculator-app-v2/upcoming.html"><i class="fas fa-calendar-week"></i> المناسبات القادمة</a></li>
-                        </ul>
-                    </details>
-                </ul>
-            </div>
-
-            <!-- 2. النظام المحاسبي -->
-            <div class="deep-category">
-                <h3><i class="fas fa-chart-line"></i> النظام المحاسبي</h3>
-                <ul>
-                    <li><a href="projects/financial-accountant/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="projects/financial-accountant/dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
-                    <li><a href="projects/financial-accountant/account.html"><i class="fas fa-user"></i> الحسابات</a></li>
-                    <li><a href="projects/financial-accountant/emergency.html"><i class="fas fa-exclamation-triangle"></i> الطوارئ</a></li>
-                    <details>
-                        <summary>📁 العملاء</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/financial-accountant/customers/list.html"><i class="fas fa-list"></i> القائمة</a></li>
-                            <li><a href="projects/financial-accountant/customers/create.html"><i class="fas fa-plus"></i> إضافة</a></li>
-                            <li><a href="projects/financial-accountant/customers/edit.html"><i class="fas fa-edit"></i> تعديل</a></li>
-                            <li><a href="projects/financial-accountant/customers/view.html"><i class="fas fa-eye"></i> عرض</a></li>
-                        </ul>
-                    </details>
-                    <details>
-                        <summary>📁 الفواتير</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/financial-accountant/invoices/list.html"><i class="fas fa-list"></i> القائمة</a></li>
-                            <li><a href="projects/financial-accountant/invoices/create.html"><i class="fas fa-plus"></i> إضافة</a></li>
-                            <li><a href="projects/financial-accountant/invoices/edit.html"><i class="fas fa-edit"></i> تعديل</a></li>
-                            <li><a href="projects/financial-accountant/invoices/view.html"><i class="fas fa-eye"></i> عرض</a></li>
-                        </ul>
-                    </details>
-                    <details>
-                        <summary>📁 المنتجات</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/financial-accountant/products/list.html"><i class="fas fa-list"></i> القائمة</a></li>
-                            <li><a href="projects/financial-accountant/products/create.html"><i class="fas fa-plus"></i> إضافة</a></li>
-                            <li><a href="projects/financial-accountant/products/edit.html"><i class="fas fa-edit"></i> تعديل</a></li>
-                            <li><a href="projects/financial-accountant/products/view.html"><i class="fas fa-eye"></i> عرض</a></li>
-                        </ul>
-                    </details>
-                    <details>
-                        <summary>📁 المصروفات</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/financial-accountant/expenses/list.html"><i class="fas fa-list"></i> القائمة</a></li>
-                            <li><a href="projects/financial-accountant/expenses/create.html"><i class="fas fa-plus"></i> إضافة</a></li>
-                            <li><a href="projects/financial-accountant/expenses/edit.html"><i class="fas fa-edit"></i> تعديل</a></li>
-                            <li><a href="projects/financial-accountant/expenses/view.html"><i class="fas fa-eye"></i> عرض</a></li>
-                        </ul>
-                    </details>
-                    <details>
-                        <summary>📁 التقارير</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/financial-accountant/reports/financial.html"><i class="fas fa-file-invoice-dollar"></i> مالية</a></li>
-                            <li><a href="projects/financial-accountant/reports/sales.html"><i class="fas fa-chart-simple"></i> مبيعات</a></li>
-                            <li><a href="projects/financial-accountant/reports/tax.html"><i class="fas fa-percent"></i> ضرائب</a></li>
-                        </ul>
-                    </details>
-                    <details>
-                        <summary>📁 الإعدادات</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/financial-accountant/settings/company.html"><i class="fas fa-building"></i> الشركة</a></li>
-                            <li><a href="projects/financial-accountant/settings/preferences.html"><i class="fas fa-sliders-h"></i> التفضيلات</a></li>
-                            <li><a href="projects/financial-accountant/settings/profile.html"><i class="fas fa-user-cog"></i> الملف الشخصي</a></li>
-                            <li><a href="projects/financial-accountant/settings/users.html"><i class="fas fa-users-cog"></i> المستخدمين</a></li>
-                        </ul>
-                    </details>
-                    <li><a href="projects/financial-accountant/auth/login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
-                    <li><a href="projects/financial-accountant/auth/register.html"><i class="fas fa-user-plus"></i> إنشاء حساب</a></li>
-                </ul>
-            </div>
-
-            <!-- 3. التحاليل الطبية -->
-            <div class="deep-category">
-                <h3><i class="fas fa-microscope"></i> التحاليل الطبية</h3>
-                <ul>
-                    <li><a href="projects/MedicalAnalysisApp/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="projects/MedicalAnalysisApp/dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
-                    <li><a href="projects/MedicalAnalysisApp/analysis.html"><i class="fas fa-flask"></i> التحاليل</a></li>
-                    <li><a href="projects/MedicalAnalysisApp/patients.html"><i class="fas fa-users"></i> المرضى</a></li>
-                    <li><a href="projects/MedicalAnalysisApp/reports.html"><i class="fas fa-file-alt"></i> التقارير</a></li>
-                    <li><a href="projects/MedicalAnalysisApp/notifications.html"><i class="fas fa-bell"></i> الإشعارات</a></li>
-                    <li><a href="projects/MedicalAnalysisApp/settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
-                    <li><a href="projects/MedicalAnalysisApp/login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
-                    <li><a href="projects/MedicalAnalysisApp/register.html"><i class="fas fa-user-plus"></i> إنشاء حساب</a></li>
-                    <li><a href="projects/MedicalAnalysisApp/forgot-password.html"><i class="fas fa-key"></i> نسيت كلمة المرور</a></li>
-                    <li><a href="projects/MedicalAnalysisApp/medication-manager/index.html"><i class="fas fa-pills"></i> مدير الأدوية</a></li>
-                </ul>
-            </div>
-
-            <!-- 4. الصيدلية -->
-            <div class="deep-category">
-                <h3><i class="fas fa-prescription-bottle"></i> نظام الصيدلية</h3>
-                <ul>
-                    <li><a href="projects/pharmacy-website/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="projects/pharmacy-website/medicines.html"><i class="fas fa-capsules"></i> الأدوية</a></li>
-                    <li><a href="projects/pharmacy-website/customers.html"><i class="fas fa-users"></i> العملاء</a></li>
-                    <li><a href="projects/pharmacy-website/sales.html"><i class="fas fa-chart-line"></i> المبيعات</a></li>
-                    <li><a href="projects/pharmacy-website/purchases.html"><i class="fas fa-shopping-cart"></i> المشتريات</a></li>
-                    <li><a href="projects/pharmacy-website/suppliers.html"><i class="fas fa-truck"></i> الموردين</a></li>
-                    <li><a href="projects/pharmacy-website/reports.html"><i class="fas fa-file-alt"></i> التقارير</a></li>
-                    <li><a href="projects/pharmacy-website/settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
-                    <li><a href="projects/pharmacy-website/login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
-                    <li><a href="projects/pharmacy-website/profile.html"><i class="fas fa-user"></i> الملف الشخصي</a></li>
-                    <li><a href="projects/pharmacy-website/backup.html"><i class="fas fa-archive"></i> النسخ الاحتياطي</a></li>
-                </ul>
-            </div>
-
-            <!-- 5. خدمات التنظيف -->
-            <div class="deep-category">
-                <h3><i class="fas fa-broom"></i> خدمات التنظيف</h3>
-                <ul>
-                    <li><a href="projects/Cleaning%20Services/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <details>
-                        <summary>📁 HarMur-Service-PRO</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                            <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
-                            <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-                            <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/services.html"><i class="fas fa-concierge-bell"></i> الخدمات</a></li>
-                            <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/datenschutz.html"><i class="fas fa-shield-alt"></i> الخصوصية</a></li>
-                            <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/impressum.html"><i class="fas fa-print"></i> المطبوعات</a></li>
-                        </ul>
-                    </details>
-                    <details>
-                        <summary>📁 harmurservice-V1</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/Cleaning%20Services/harmurservice-V1/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                            <li><a href="projects/Cleaning%20Services/harmurservice-V1/about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
-                            <li><a href="projects/Cleaning%20Services/harmurservice-V1/contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-                            <li><a href="projects/Cleaning%20Services/harmurservice-V1/services.html"><i class="fas fa-concierge-bell"></i> الخدمات</a></li>
-                            <li><a href="projects/Cleaning%20Services/harmurservice-V1/datenschutz.html"><i class="fas fa-shield-alt"></i> الخصوصية</a></li>
-                            <li><a href="projects/Cleaning%20Services/harmurservice-V1/impressum.html"><i class="fas fa-print"></i> المطبوعات</a></li>
-                        </ul>
-                    </details>
-                </ul>
-            </div>
-
-            <!-- 6. وكالات السفر -->
-            <div class="deep-category">
-                <h3><i class="fas fa-plane"></i> وكالات السفر</h3>
-                <ul>
-                    <li><a href="projects/travel-agency/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <details>
-                        <summary>📁 Aman Travel System</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/travel-agency/aman_travel_system/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                            <li><a href="projects/travel-agency/aman_travel_system/flights.html"><i class="fas fa-plane-departure"></i> الرحلات</a></li>
-                            <li><a href="projects/travel-agency/aman_travel_system/umrah.html"><i class="fas fa-mosque"></i> العمرة</a></li>
-                            <li><a href="projects/travel-agency/aman_travel_system/visas.html"><i class="fas fa-passport"></i> التأشيرات</a></li>
-                            <li><a href="projects/travel-agency/aman_travel_system/clients.html"><i class="fas fa-users"></i> العملاء</a></li>
-                            <li><a href="projects/travel-agency/aman_travel_system/notifications.html"><i class="fas fa-bell"></i> الإشعارات</a></li>
-                            <li><a href="projects/travel-agency/aman_travel_system/backup.html"><i class="fas fa-archive"></i> النسخ الاحتياطي</a></li>
-                        </ul>
-                    </details>
-                    <details>
-                        <summary>📁 Am-main (النظام الرئيسي)</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/travel-agency/Am-main/Am-main/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                            <li><a href="projects/travel-agency/Am-main/Am-main/flights.html"><i class="fas fa-plane-departure"></i> الرحلات</a></li>
-                            <li><a href="projects/travel-agency/Am-main/Am-main/umrah.html"><i class="fas fa-mosque"></i> العمرة</a></li>
-                            <li><a href="projects/travel-agency/Am-main/Am-main/visas.html"><i class="fas fa-passport"></i> التأشيرات</a></li>
-                            <li><a href="projects/travel-agency/Am-main/Am-main/clients.html"><i class="fas fa-users"></i> العملاء</a></li>
-                            <li><a href="projects/travel-agency/Am-main/Am-main/backup.html"><i class="fas fa-archive"></i> النسخ الاحتياطي</a></li>
-                        </ul>
-                    </details>
-                    <details>
-                        <summary>📁 y-main (النظام اليمني)</summary>
-                        <ul style="margin-top: 10px; padding-right: 20px;">
-                            <li><a href="projects/travel-agency/y-main/y-main/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/flight.html"><i class="fas fa-plane-departure"></i> الرحلات</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/hotel.html"><i class="fas fa-hotel"></i> الفنادق</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/evisa.html"><i class="fas fa-passport"></i> التأشيرات</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/insurance.html"><i class="fas fa-shield-alt"></i> التأمين</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/trip.html"><i class="fas fa-route"></i> الرحلات</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/visa-packages.html"><i class="fas fa-box"></i> باقات التأشيرات</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/visa-req.html"><i class="fas fa-file-alt"></i> متطلبات التأشيرة</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/itinerary.html"><i class="fas fa-calendar-alt"></i> جدول الرحلة</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/embassy.html"><i class="fas fa-building"></i> السفارة</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/sim.html"><i class="fas fa-sim-card"></i> بطاقة SIM</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/track.html"><i class="fas fa-map-marker-alt"></i> تتبع الرحلة</a></li>
-                            <li><a href="projects/travel-agency/y-main/y-main/travel-agency/index.html"><i class="fas fa-briefcase"></i> وكالة السفر</a></li>
-                        </ul>
-                    </details>
-                    <li><a href="projects/travel-agency/Yemeni/index.html"><i class="fas fa-flag"></i> الوكالة اليمنية</a></li>
-                    <li><a href="projects/travel-agency/project_airline_booking/%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D8%AD%D8%AC%D8%B2-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86/index.html"><i class="fas fa-ticket-alt"></i> حجز الطيران</a></li>
-                </ul>
-            </div>
-
-            <!-- 7. الألعاب والترفيه -->
-            <div class="deep-category">
-                <h3><i class="fas fa-gamepad"></i> الألعاب والترفيه</h3>
-                <ul>
-                    <li><a href="entertainment/play.html"><i class="fas fa-play"></i> Play - Entertainment</a></li>
-                    <li><a href="entertainment/memory-game.html"><i class="fas fa-brain"></i> لعبة الذاكرة - Entertainment</a></li>
-                    <li><a href="entertainment/the-age.html"><i class="fas fa-calculator"></i> The Age</a></li>
-                    <li><a href="entertainment/code-lab.html"><i class="fas fa-code"></i> Code Lab</a></li>
-                    <li><a href="entertainment/color-generator.html"><i class="fas fa-palette"></i> Color Generator</a></li>
-                    <li><a href="entertainment/image-editor.html"><i class="fas fa-image"></i> Image Editor</a></li>
-                    <li><a href="entertainment/quiz-game.html"><i class="fas fa-question-circle"></i> Quiz Game</a></li>
-                    <li><a href="projects/memory-game/index.html"><i class="fas fa-brain"></i> لعبة الذاكرة - Projects</a></li>
-                </ul>
-            </div>
-
-            <!-- 8. التخزين المحلي -->
-            <div class="deep-category">
-                <h3><i class="fas fa-database"></i> التخزين المحلي</h3>
-                <ul>
-                    <li><a href="projects/localStorage/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="projects/localStorage/localStorage-V1/index.html"><i class="fas fa-code-branch"></i> الإصدار الأول</a></li>
-                    <li><a href="projects/localStorage/localStorage-V2/index.html"><i class="fas fa-code-branch"></i> الإصدار الثاني</a></li>
-                </ul>
-            </div>
-
-            <!-- 9. تطبيق التوصيل -->
-            <div class="deep-category">
-                <h3><i class="fas fa-truck"></i> تطبيق التوصيل</h3>
-                <ul>
-                    <li><a href="projects/delivery-app/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="projects/delivery-app/customer-web/pages/index.html"><i class="fas fa-user"></i> بوابة العميل</a></li>
-                    <li><a href="projects/delivery-app/admin-dashboard/pages/dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
-                    <li><a href="projects/delivery-app/driver-app/pages/dashboard.html"><i class="fas fa-motorcycle"></i> تطبيق السائق</a></li>
-                </ul>
-            </div>
-
-            <!-- 10. نظام إدارة المستشفيات -->
-            <div class="deep-category">
-                <h3><i class="fas fa-hospital"></i> نظام إدارة المستشفيات</h3>
-                <ul>
-                    <li><a href="projects/health-system/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="projects/health-system/dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
-                    <li><a href="projects/health-system/patients.html"><i class="fas fa-users"></i> المرضى</a></li>
-                    <li><a href="projects/health-system/analysis.html"><i class="fas fa-flask"></i> التحاليل</a></li>
-                    <li><a href="projects/health-system/reports.html"><i class="fas fa-file-alt"></i> التقارير</a></li>
-                    <li><a href="projects/health-system/notifications.html"><i class="fas fa-bell"></i> الإشعارات</a></li>
-                    <li><a href="projects/health-system/settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
-                    <li><a href="projects/health-system/login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
-                    <li><a href="projects/health-system/register.html"><i class="fas fa-user-plus"></i> إنشاء حساب</a></li>
-                    <li><a href="projects/health-system/forgot-password.html"><i class="fas fa-key"></i> نسيت كلمة المرور</a></li>
-                    <li><a href="projects/health-system/medication-manager/index.html"><i class="fas fa-pills"></i> مدير الأدوية</a></li>
-                </ul>
-            </div>
-
-            <!-- 11. مشاريع أخرى -->
-            <div class="deep-category">
-                <h3><i class="fas fa-store"></i> مشاريع أخرى</h3>
-                <ul>
-                    <li><a href="projects/app-store/index.html"><i class="fas fa-app-store"></i> متجر التطبيقات</a></li>
-                    <li><a href="projects/booking-system/index.html"><i class="fas fa-calendar-check"></i> نظام الحجوزات</a></li>
-                    <li><a href="projects/brand-identity/index.html"><i class="fas fa-trademark"></i> الهوية التجارية</a></li>
-                    <li><a href="projects/Cinema/index.html"><i class="fas fa-film"></i> نظام السينما</a></li>
-                    <li><a href="projects/code-editor/index.html"><i class="fas fa-code"></i> محرر الأكواد</a></li>
-                    <li><a href="projects/ecommerce-website/index.html"><i class="fas fa-shopping-cart"></i> متجر إلكتروني</a></li>
-                    <li><a href="projects/educational-app/index.html"><i class="fas fa-graduation-cap"></i> تطبيق تعليمي</a></li>
-                    <li><a href="projects/fileuploader/index.html"><i class="fas fa-upload"></i> رافع الملفات</a></li>
-                    <li><a href="projects/logo-design/index.html"><i class="fas fa-paint-brush"></i> تصميم شعارات</a></li>
-                    <li><a href="projects/marketing-campaign/index.html"><i class="fas fa-chart-line"></i> حملة تسويقية</a></li>
-                    <li><a href="projects/project-structure/index.html"><i class="fas fa-folder-tree"></i> هيكل المشاريع</a></li>
-                    <li><a href="projects/quiz-platform/index.html"><i class="fas fa-question-circle"></i> منصة اختبارات</a></li>
-                    <li><a href="projects/treemix_app/index.html"><i class="fas fa-chart-pie"></i> Treemix App</a></li>
-                    <li><a href="projects/treemix_app/admin.html"><i class="fas fa-user-shield"></i> لوحة تحكم Treemix</a></li>
-                    <li><a href="projects/wifi-auto-connect/index.html"><i class="fas fa-wifi"></i> Wifi Auto Connect</a></li>
-                    <li><a href="projects/wifi-extractor/index.html"><i class="fas fa-wifi"></i> Wifi Extractor</a></li>
-                    <li><a href="projects/wit/index.html"><i class="fas fa-microchip"></i> Wit Project</a></li>
-                </ul>
-            </div>
-
-        </div>
-        <div class="deep-note">
-            <i class="fas fa-info-circle"></i> هذه قائمة شاملة بجميع مشاريعنا وأقسامها - أكثر من 180 صفحة وخدمة تقنية
-        </div>
-    </section>
-
-    <div class="project-modal" id="projectModal">
-        <div class="modal-container">
-            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
-            <div class="modal-content" id="modalContent"></div>
-        </div>
-    </div>
-
-</main>
-
-<footer class="smart-footer">
-    <div class="footer-waves">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-            <path fill="var(--primary)" fill-opacity="1" d="M0,192L48,186.7C96,181,192,171,288,181.3C384,192,480,224,576,218.7C672,213,768,171,864,165.3C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-        </svg>
-    </div>
-    <div class="footer-container">
-        <div class="footer-section footer-brand">
-            <div class="footer-logo-wrapper">
-                <svg class="footer-logo-svg" viewBox="0 0 200 200">
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8" opacity="0.9"/>
-                    <path d="M60 140 L100 60 L140 140" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-                    <circle cx="100" cy="110" r="15" fill="white" opacity="0.9"/>
+            <div class="hero-wave">
+                <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                    <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,58.7C1248,64,1344,64,1392,64L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" fill="var(--bg-light)"/>
                 </svg>
             </div>
-            <h3 class="footer-brand-title">TechNomads</h3>
-            <p class="footer-about">نصنع التقنية بإبداع، نقدم حلولاً رقمية متكاملة تلبي احتياجات عملائنا بأعلى معايير الجودة.</p>
-        </div>
-        <div class="footer-section">
-            <h3 class="footer-title">روابط سريعة</h3>
-            <ul class="footer-links">
-                <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية </a></li>
-                <li><a href="services.html"><i class="fas fa-cogs"></i> الخدمات</a></li>
-                <li><a href="team.html"><i class="fas fa-users"></i> فريق العمل</a></li>
-                <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> معرض الأعمال</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3 class="footer-title">تواصل معنا</h3>
-            <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>صنعاء، اليمن</span></div>
-                <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:+967770200970">+967770200970</a></div>
-                <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:2025ooss@gmail.com">2025ooss@gmail.com</a></div>
-            </div>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
-            </div>
-        </div>
-        <div class="footer-section">
-            <h3 class="footer-title">النشرة البريدية</h3>
-            <form class="newsletter-form" id="newsletterForm">
-                <div class="newsletter-input-wrapper">
-                    <i class="fas fa-envelope newsletter-icon"></i>
-                    <input type="email" placeholder="بريدك الإلكتروني" required>
+        </section>
+
+        <section class="portfolio-search-section">
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن مشروع..." aria-label="بحث في المشاريع">
+                    <button class="search-clear" id="searchClear" aria-label="مسح البحث"><i class="fas fa-times"></i></button>
                 </div>
-                <button type="submit" class="subscribe-btn">اشترك <i class="fas fa-paper-plane"></i></button>
-            </form>
-        </div>
-    </div>
-    <div class="copyright-section">
-        <div class="copyright-content">
-            <p>© <span class="current-year">2024</span> TechNomads. جميع الحقوق محفوظة</p>
-            <div class="footer-links-inline">
-                <a href="#">شروط الخدمة</a><span class="separator">|</span><a href="#">سياسة الخصوصية</a>
+                
+                <div class="search-filters-wrapper">
+                    <div class="search-filters" id="searchFilters">
+                        <button class="filter-btn active" data-filter="all">الكل</button>
+                        <button class="filter-btn" data-filter="web">مواقع ويب</button>
+                        <button class="filter-btn" data-filter="app">تطبيقات</button>
+                        <button class="filter-btn" data-filter="design">تصميم</button>
+                        <button class="filter-btn" data-filter="tool">أدوات</button>
+                        <button class="filter-btn" data-filter="game">ألعاب</button>
+                        <button class="filter-btn" data-filter="marketing">تسويق</button>
+                    </div>
+                    
+                    <div class="filter-tech-toggle" id="techToggle">
+                        <button class="tech-toggle-btn">
+                            <i class="fas fa-code"></i> التقنيات <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="filter-tech-section" id="filterTechSection" style="display: none;"></div>
+                </div>
+                
+                <div class="search-results-info" id="searchResultsInfo"></div>
+            </div>
+        </section>
+
+        <div class="search-suggestions" id="searchSuggestions" style="display: none;">
+    <div class="suggestions-list" id="suggestionsList"></div>
+</div>
+
+        <section class="portfolio-projects-section">
+            <div class="projects-container">
+                <div class="projects-header">
+                    <div class="projects-header-left">
+                        <div class="projects-count">
+                            <i class="fas fa-layer-group"></i>
+                            <span id="projectsCount">0</span>
+                            <span>مشروع</span>
+                        </div>
+                        
+                        <!-- ===== أدوات التحكم في حجم البطاقات ===== -->
+                        <div class="card-size-controls" id="cardSizeControls">
+                            <button class="size-btn" data-size="small" aria-label="بطاقات صغيرة" title="بطاقات صغيرة">
+                                <i class="fas fa-th"></i>
+                            </button>
+                            <button class="size-btn active" data-size="medium" aria-label="بطاقات متوسطة" title="بطاقات متوسطة">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                            <button class="size-btn" data-size="large" aria-label="بطاقات كبيرة" title="بطاقات كبيرة">
+                                <i class="fas fa-th-large" style="font-size: 1.1rem;"></i>
+                            </button>
+                            <span class="separator-dot">|</span>
+                            <button class="view-toggle-btn" id="viewToggleBtn" aria-label="تبديل العرض" title="تبديل العرض (شبكة/قائمة)">
+                                <i class="fas fa-list"></i>
+                            </button>
+                            <span class="size-label" id="sizeLabel">متوسط</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="projects-grid" id="projectsGrid"></div>
+
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon"><i class="fas fa-folder-open"></i></div>
+                    <h3>لا توجد مشاريع مطابقة</h3>
+                    <p>جرب البحث بكلمات مختلفة أو إزالة الفلاتر</p>
+                    <button class="reset-btn" id="resetSearchBtn"><i class="fas fa-sync-alt"></i> مسح البحث</button>
+                </div>
+
+                <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+                    <button class="load-more-btn" id="loadMoreBtn"><i class="fas fa-arrow-down"></i> تحميل المزيد</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- قسم العرض العميق - جميع المشاريع كاملة -->
+        <!-- ============================================ -->
+        <section class="deep-links-section" data-aos="fade-up" aria-label="قائمة جميع المشاريع">
+            <h2><i class="fas fa-code-branch"></i> استعراض جميع المشاريع</h2>
+            <p class="subtitle">هنا يمكنك تصفح جميع مشاريعنا وتفاصيلها الكاملة - أكثر من 160 مشروعاً</p>
+            
+            <div class="deep-grid">
+                
+                <!-- 1. حاسبة العمر -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-calculator"></i> حاسبة العمر</h3>
+                    <ul>
+                        <li><a href="projects/age-calculator/index.html"><i class="fas fa-arrow-left"></i> الرئيسية</a></li>
+                        <details>
+                            <summary>📁 الإصدار الأول (V1)</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/age-calculator/age-calculator-app/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                                <li><a href="projects/age-calculator/age-calculator-app/calculator.html"><i class="fas fa-calculator"></i> حاسبة العمر</a></li>
+                                <li><a href="projects/age-calculator/age-calculator-app/add-birthday.html"><i class="fas fa-plus-circle"></i> إضافة عيد ميلاد</a></li>
+                                <li><a href="projects/age-calculator/age-calculator-app/upcoming.html"><i class="fas fa-calendar-week"></i> المناسبات القادمة</a></li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>📁 الإصدار الثاني (V2)</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/age-calculator/age-calculator-app-v2/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                                <li><a href="projects/age-calculator/age-calculator-app-v2/calculator.html"><i class="fas fa-calculator"></i> حاسبة العمر</a></li>
+                                <li><a href="projects/age-calculator/age-calculator-app-v2/add-birthday.html"><i class="fas fa-plus-circle"></i> إضافة عيد ميلاد</a></li>
+                                <li><a href="projects/age-calculator/age-calculator-app-v2/upcoming.html"><i class="fas fa-calendar-week"></i> المناسبات القادمة</a></li>
+                            </ul>
+                        </details>
+                    </ul>
+                </div>
+
+                <!-- 2. النظام المحاسبي -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-chart-line"></i> النظام المحاسبي</h3>
+                    <ul>
+                        <li><a href="projects/financial-accountant/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="projects/financial-accountant/dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
+                        <li><a href="projects/financial-accountant/account.html"><i class="fas fa-user"></i> الحسابات</a></li>
+                        <li><a href="projects/financial-accountant/emergency.html"><i class="fas fa-exclamation-triangle"></i> الطوارئ</a></li>
+                        <details>
+                            <summary>📁 العملاء</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/financial-accountant/customers/list.html"><i class="fas fa-list"></i> القائمة</a></li>
+                                <li><a href="projects/financial-accountant/customers/create.html"><i class="fas fa-plus"></i> إضافة</a></li>
+                                <li><a href="projects/financial-accountant/customers/edit.html"><i class="fas fa-edit"></i> تعديل</a></li>
+                                <li><a href="projects/financial-accountant/customers/view.html"><i class="fas fa-eye"></i> عرض</a></li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>📁 الفواتير</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/financial-accountant/invoices/list.html"><i class="fas fa-list"></i> القائمة</a></li>
+                                <li><a href="projects/financial-accountant/invoices/create.html"><i class="fas fa-plus"></i> إضافة</a></li>
+                                <li><a href="projects/financial-accountant/invoices/edit.html"><i class="fas fa-edit"></i> تعديل</a></li>
+                                <li><a href="projects/financial-accountant/invoices/view.html"><i class="fas fa-eye"></i> عرض</a></li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>📁 المنتجات</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/financial-accountant/products/list.html"><i class="fas fa-list"></i> القائمة</a></li>
+                                <li><a href="projects/financial-accountant/products/create.html"><i class="fas fa-plus"></i> إضافة</a></li>
+                                <li><a href="projects/financial-accountant/products/edit.html"><i class="fas fa-edit"></i> تعديل</a></li>
+                                <li><a href="projects/financial-accountant/products/view.html"><i class="fas fa-eye"></i> عرض</a></li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>📁 المصروفات</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/financial-accountant/expenses/list.html"><i class="fas fa-list"></i> القائمة</a></li>
+                                <li><a href="projects/financial-accountant/expenses/create.html"><i class="fas fa-plus"></i> إضافة</a></li>
+                                <li><a href="projects/financial-accountant/expenses/edit.html"><i class="fas fa-edit"></i> تعديل</a></li>
+                                <li><a href="projects/financial-accountant/expenses/view.html"><i class="fas fa-eye"></i> عرض</a></li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>📁 التقارير</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/financial-accountant/reports/financial.html"><i class="fas fa-file-invoice-dollar"></i> مالية</a></li>
+                                <li><a href="projects/financial-accountant/reports/sales.html"><i class="fas fa-chart-simple"></i> مبيعات</a></li>
+                                <li><a href="projects/financial-accountant/reports/tax.html"><i class="fas fa-percent"></i> ضرائب</a></li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>📁 الإعدادات</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/financial-accountant/settings/company.html"><i class="fas fa-building"></i> الشركة</a></li>
+                                <li><a href="projects/financial-accountant/settings/preferences.html"><i class="fas fa-sliders-h"></i> التفضيلات</a></li>
+                                <li><a href="projects/financial-accountant/settings/profile.html"><i class="fas fa-user-cog"></i> الملف الشخصي</a></li>
+                                <li><a href="projects/financial-accountant/settings/users.html"><i class="fas fa-users-cog"></i> المستخدمين</a></li>
+                            </ul>
+                        </details>
+                        <li><a href="projects/financial-accountant/auth/login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
+                        <li><a href="projects/financial-accountant/auth/register.html"><i class="fas fa-user-plus"></i> إنشاء حساب</a></li>
+                    </ul>
+                </div>
+
+                <!-- 3. التحاليل الطبية -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-microscope"></i> التحاليل الطبية</h3>
+                    <ul>
+                        <li><a href="projects/MedicalAnalysisApp/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="projects/MedicalAnalysisApp/dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
+                        <li><a href="projects/MedicalAnalysisApp/analysis.html"><i class="fas fa-flask"></i> التحاليل</a></li>
+                        <li><a href="projects/MedicalAnalysisApp/patients.html"><i class="fas fa-users"></i> المرضى</a></li>
+                        <li><a href="projects/MedicalAnalysisApp/reports.html"><i class="fas fa-file-alt"></i> التقارير</a></li>
+                        <li><a href="projects/MedicalAnalysisApp/notifications.html"><i class="fas fa-bell"></i> الإشعارات</a></li>
+                        <li><a href="projects/MedicalAnalysisApp/settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                        <li><a href="projects/MedicalAnalysisApp/login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
+                        <li><a href="projects/MedicalAnalysisApp/register.html"><i class="fas fa-user-plus"></i> إنشاء حساب</a></li>
+                        <li><a href="projects/MedicalAnalysisApp/forgot-password.html"><i class="fas fa-key"></i> نسيت كلمة المرور</a></li>
+                        <li><a href="projects/MedicalAnalysisApp/medication-manager/index.html"><i class="fas fa-pills"></i> مدير الأدوية</a></li>
+                    </ul>
+                </div>
+
+                <!-- 4. الصيدلية -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-prescription-bottle"></i> نظام الصيدلية</h3>
+                    <ul>
+                        <li><a href="projects/pharmacy-website/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="projects/pharmacy-website/medicines.html"><i class="fas fa-capsules"></i> الأدوية</a></li>
+                        <li><a href="projects/pharmacy-website/customers.html"><i class="fas fa-users"></i> العملاء</a></li>
+                        <li><a href="projects/pharmacy-website/sales.html"><i class="fas fa-chart-line"></i> المبيعات</a></li>
+                        <li><a href="projects/pharmacy-website/purchases.html"><i class="fas fa-shopping-cart"></i> المشتريات</a></li>
+                        <li><a href="projects/pharmacy-website/suppliers.html"><i class="fas fa-truck"></i> الموردين</a></li>
+                        <li><a href="projects/pharmacy-website/reports.html"><i class="fas fa-file-alt"></i> التقارير</a></li>
+                        <li><a href="projects/pharmacy-website/settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                        <li><a href="projects/pharmacy-website/login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
+                        <li><a href="projects/pharmacy-website/profile.html"><i class="fas fa-user"></i> الملف الشخصي</a></li>
+                        <li><a href="projects/pharmacy-website/backup.html"><i class="fas fa-archive"></i> النسخ الاحتياطي</a></li>
+                    </ul>
+                </div>
+
+                <!-- 5. خدمات التنظيف -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-broom"></i> خدمات التنظيف</h3>
+                    <ul>
+                        <li><a href="projects/Cleaning%20Services/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <details>
+                            <summary>📁 HarMur-Service-PRO</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                                <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
+                                <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+                                <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/services.html"><i class="fas fa-concierge-bell"></i> الخدمات</a></li>
+                                <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/datenschutz.html"><i class="fas fa-shield-alt"></i> الخصوصية</a></li>
+                                <li><a href="projects/Cleaning%20Services/HarMur-Service-PRO/impressum.html"><i class="fas fa-print"></i> المطبوعات</a></li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>📁 harmurservice-V1</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/Cleaning%20Services/harmurservice-V1/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                                <li><a href="projects/Cleaning%20Services/harmurservice-V1/about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
+                                <li><a href="projects/Cleaning%20Services/harmurservice-V1/contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+                                <li><a href="projects/Cleaning%20Services/harmurservice-V1/services.html"><i class="fas fa-concierge-bell"></i> الخدمات</a></li>
+                                <li><a href="projects/Cleaning%20Services/harmurservice-V1/datenschutz.html"><i class="fas fa-shield-alt"></i> الخصوصية</a></li>
+                                <li><a href="projects/Cleaning%20Services/harmurservice-V1/impressum.html"><i class="fas fa-print"></i> المطبوعات</a></li>
+                            </ul>
+                        </details>
+                    </ul>
+                </div>
+
+                <!-- 6. وكالات السفر -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-plane"></i> وكالات السفر</h3>
+                    <ul>
+                        <li><a href="projects/travel-agency/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <details>
+                            <summary>📁 Aman Travel System</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/travel-agency/aman_travel_system/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                                <li><a href="projects/travel-agency/aman_travel_system/flights.html"><i class="fas fa-plane-departure"></i> الرحلات</a></li>
+                                <li><a href="projects/travel-agency/aman_travel_system/umrah.html"><i class="fas fa-mosque"></i> العمرة</a></li>
+                                <li><a href="projects/travel-agency/aman_travel_system/visas.html"><i class="fas fa-passport"></i> التأشيرات</a></li>
+                                <li><a href="projects/travel-agency/aman_travel_system/clients.html"><i class="fas fa-users"></i> العملاء</a></li>
+                                <li><a href="projects/travel-agency/aman_travel_system/notifications.html"><i class="fas fa-bell"></i> الإشعارات</a></li>
+                                <li><a href="projects/travel-agency/aman_travel_system/backup.html"><i class="fas fa-archive"></i> النسخ الاحتياطي</a></li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>📁 Am-main (النظام الرئيسي)</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/travel-agency/Am-main/Am-main/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                                <li><a href="projects/travel-agency/Am-main/Am-main/flights.html"><i class="fas fa-plane-departure"></i> الرحلات</a></li>
+                                <li><a href="projects/travel-agency/Am-main/Am-main/umrah.html"><i class="fas fa-mosque"></i> العمرة</a></li>
+                                <li><a href="projects/travel-agency/Am-main/Am-main/visas.html"><i class="fas fa-passport"></i> التأشيرات</a></li>
+                                <li><a href="projects/travel-agency/Am-main/Am-main/clients.html"><i class="fas fa-users"></i> العملاء</a></li>
+                                <li><a href="projects/travel-agency/Am-main/Am-main/backup.html"><i class="fas fa-archive"></i> النسخ الاحتياطي</a></li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>📁 y-main (النظام اليمني)</summary>
+                            <ul style="margin-top: 10px; padding-right: 20px;">
+                                <li><a href="projects/travel-agency/y-main/y-main/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/flight.html"><i class="fas fa-plane-departure"></i> الرحلات</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/hotel.html"><i class="fas fa-hotel"></i> الفنادق</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/evisa.html"><i class="fas fa-passport"></i> التأشيرات</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/insurance.html"><i class="fas fa-shield-alt"></i> التأمين</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/trip.html"><i class="fas fa-route"></i> الرحلات</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/visa-packages.html"><i class="fas fa-box"></i> باقات التأشيرات</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/visa-req.html"><i class="fas fa-file-alt"></i> متطلبات التأشيرة</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/itinerary.html"><i class="fas fa-calendar-alt"></i> جدول الرحلة</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/embassy.html"><i class="fas fa-building"></i> السفارة</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/sim.html"><i class="fas fa-sim-card"></i> بطاقة SIM</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/track.html"><i class="fas fa-map-marker-alt"></i> تتبع الرحلة</a></li>
+                                <li><a href="projects/travel-agency/y-main/y-main/travel-agency/index.html"><i class="fas fa-briefcase"></i> وكالة السفر</a></li>
+                            </ul>
+                        </details>
+                        <li><a href="projects/travel-agency/Yemeni/index.html"><i class="fas fa-flag"></i> الوكالة اليمنية</a></li>
+                        <li><a href="projects/travel-agency/project_airline_booking/%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D8%AD%D8%AC%D8%B2-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86/index.html"><i class="fas fa-ticket-alt"></i> حجز الطيران</a></li>
+                    </ul>
+                </div>
+
+                <!-- 7. الألعاب والترفيه -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-gamepad"></i> الألعاب والترفيه</h3>
+                    <ul>
+                        <li><a href="entertainment/play.html"><i class="fas fa-play"></i> Play - Entertainment</a></li>
+                        <li><a href="entertainment/memory-game.html"><i class="fas fa-brain"></i> لعبة الذاكرة - Entertainment</a></li>
+                        <li><a href="entertainment/the-age.html"><i class="fas fa-calculator"></i> The Age</a></li>
+                        <li><a href="entertainment/code-lab.html"><i class="fas fa-code"></i> Code Lab</a></li>
+                        <li><a href="entertainment/color-generator.html"><i class="fas fa-palette"></i> Color Generator</a></li>
+                        <li><a href="entertainment/image-editor.html"><i class="fas fa-image"></i> Image Editor</a></li>
+                        <li><a href="entertainment/quiz-game.html"><i class="fas fa-question-circle"></i> Quiz Game</a></li>
+                        <li><a href="projects/memory-game/index.html"><i class="fas fa-brain"></i> لعبة الذاكرة - Projects</a></li>
+                    </ul>
+                </div>
+
+                <!-- 8. التخزين المحلي -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-database"></i> التخزين المحلي</h3>
+                    <ul>
+                        <li><a href="projects/localStorage/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="projects/localStorage/localStorage-V1/index.html"><i class="fas fa-code-branch"></i> الإصدار الأول</a></li>
+                        <li><a href="projects/localStorage/localStorage-V2/index.html"><i class="fas fa-code-branch"></i> الإصدار الثاني</a></li>
+                    </ul>
+                </div>
+
+                <!-- 9. تطبيق التوصيل -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-truck"></i> تطبيق التوصيل</h3>
+                    <ul>
+                        <li><a href="projects/delivery-app/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="projects/delivery-app/customer-web/pages/index.html"><i class="fas fa-user"></i> بوابة العميل</a></li>
+                        <li><a href="projects/delivery-app/admin-dashboard/pages/dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
+                        <li><a href="projects/delivery-app/driver-app/pages/dashboard.html"><i class="fas fa-motorcycle"></i> تطبيق السائق</a></li>
+                    </ul>
+                </div>
+
+                <!-- 10. نظام إدارة المستشفيات -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-hospital"></i> نظام إدارة المستشفيات</h3>
+                    <ul>
+                        <li><a href="projects/health-system/index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="projects/health-system/dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
+                        <li><a href="projects/health-system/patients.html"><i class="fas fa-users"></i> المرضى</a></li>
+                        <li><a href="projects/health-system/analysis.html"><i class="fas fa-flask"></i> التحاليل</a></li>
+                        <li><a href="projects/health-system/reports.html"><i class="fas fa-file-alt"></i> التقارير</a></li>
+                        <li><a href="projects/health-system/notifications.html"><i class="fas fa-bell"></i> الإشعارات</a></li>
+                        <li><a href="projects/health-system/settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                        <li><a href="projects/health-system/login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
+                        <li><a href="projects/health-system/register.html"><i class="fas fa-user-plus"></i> إنشاء حساب</a></li>
+                        <li><a href="projects/health-system/forgot-password.html"><i class="fas fa-key"></i> نسيت كلمة المرور</a></li>
+                        <li><a href="projects/health-system/medication-manager/index.html"><i class="fas fa-pills"></i> مدير الأدوية</a></li>
+                    </ul>
+                </div>
+
+                <!-- 11. مشاريع أخرى -->
+                <div class="deep-category">
+                    <h3><i class="fas fa-store"></i> مشاريع أخرى</h3>
+                    <ul>
+                        <li><a href="projects/app-store/index.html"><i class="fas fa-app-store"></i> متجر التطبيقات</a></li>
+                        <li><a href="projects/booking-system/index.html"><i class="fas fa-calendar-check"></i> نظام الحجوزات</a></li>
+                        <li><a href="projects/brand-identity/index.html"><i class="fas fa-trademark"></i> الهوية التجارية</a></li>
+                        <li><a href="projects/Cinema/index.html"><i class="fas fa-film"></i> نظام السينما</a></li>
+                        <li><a href="projects/code-editor/index.html"><i class="fas fa-code"></i> محرر الأكواد</a></li>
+                        <li><a href="projects/ecommerce-website/index.html"><i class="fas fa-shopping-cart"></i> متجر إلكتروني</a></li>
+                        <li><a href="projects/educational-app/index.html"><i class="fas fa-graduation-cap"></i> تطبيق تعليمي</a></li>
+                        <li><a href="projects/fileuploader/index.html"><i class="fas fa-upload"></i> رافع الملفات</a></li>
+                        <li><a href="projects/logo-design/index.html"><i class="fas fa-paint-brush"></i> تصميم شعارات</a></li>
+                        <li><a href="projects/marketing-campaign/index.html"><i class="fas fa-chart-line"></i> حملة تسويقية</a></li>
+                        <li><a href="projects/project-structure/index.html"><i class="fas fa-folder-tree"></i> هيكل المشاريع</a></li>
+                        <li><a href="projects/quiz-platform/index.html"><i class="fas fa-question-circle"></i> منصة اختبارات</a></li>
+                        <li><a href="projects/treemix_app/index.html"><i class="fas fa-chart-pie"></i> Treemix App</a></li>
+                        <li><a href="projects/treemix_app/admin.html"><i class="fas fa-user-shield"></i> لوحة تحكم Treemix</a></li>
+                        <li><a href="projects/wifi-auto-connect/index.html"><i class="fas fa-wifi"></i> Wifi Auto Connect</a></li>
+                        <li><a href="projects/wifi-extractor/index.html"><i class="fas fa-wifi"></i> Wifi Extractor</a></li>
+                        <li><a href="projects/wit/index.html"><i class="fas fa-microchip"></i> Wit Project</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="deep-note">
+                <i class="fas fa-info-circle"></i> هذه قائمة شاملة بجميع مشاريعنا وأقسامها - أكثر من 180 صفحة وخدمة تقنية
+            </div>
+        </section>
+
+        <div class="project-modal" id="projectModal">
+            <div class="modal-container">
+                <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+                <div class="modal-content" id="modalContent"></div>
             </div>
         </div>
-        <div class="footer-bottom-bar"><span>صُنع بـ <i class="fas fa-heart"></i> في اليمن</span></div>
-    </div>
-</footer>
 
-<button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+    </main>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="js/main.js"></script>
-<script src="js/portfolio.js"></script>
+    <footer class="smart-footer">
+        <div class="footer-waves">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="var(--primary)" fill-opacity="1" d="M0,192L48,186.7C96,181,192,171,288,181.3C384,192,480,224,576,218.7C672,213,768,171,864,165.3C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
+        <div class="footer-container">
+            <div class="footer-section footer-brand">
+                <div class="footer-logo-wrapper">
+                    <svg class="footer-logo-svg" viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8" opacity="0.9"/>
+                        <path d="M60 140 L100 60 L140 140" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+                        <circle cx="100" cy="110" r="15" fill="white" opacity="0.9"/>
+                    </svg>
+                </div>
+                <h3 class="footer-brand-title">TechNomads</h3>
+                <p class="footer-about">نصنع التقنية بإبداع، نقدم حلولاً رقمية متكاملة تلبي احتياجات عملائنا بأعلى معايير الجودة.</p>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية </a></li>
+                    <li><a href="services.html"><i class="fas fa-cogs"></i> الخدمات</a></li>
+                    <li><a href="team.html"><i class="fas fa-users"></i> فريق العمل</a></li>
+                    <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> معرض الأعمال</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">تواصل معنا</h3>
+                <div class="contact-info">
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>صنعاء، اليمن</span></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:+967770200970">+967770200970</a></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:2025ooss@gmail.com">2025ooss@gmail.com</a></div>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">النشرة البريدية</h3>
+                <form class="newsletter-form" id="newsletterForm">
+                    <div class="newsletter-input-wrapper">
+                        <i class="fas fa-envelope newsletter-icon"></i>
+                        <input type="email" placeholder="بريدك الإلكتروني" required>
+                    </div>
+                    <button type="submit" class="subscribe-btn">اشترك <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright-section">
+            <div class="copyright-content">
+                <p>© <span class="current-year">2024</span> TechNomads. جميع الحقوق محفوظة</p>
+                <div class="footer-links-inline">
+                    <a href="#">شروط الخدمة</a><span class="separator">|</span><a href="#">سياسة الخصوصية</a>
+                </div>
+            </div>
+            <div class="footer-bottom-bar"><span>صُنع بـ <i class="fas fa-heart"></i> في اليمن</span></div>
+        </div>
+    </footer>
 
-<script>
-    // ===== إزالة شاشة التحميل =====
-    window.addEventListener('load', function() {
-        document.body.classList.add('loaded');
-        var overlay = document.getElementById('loadingOverlay');
-        if (overlay) {
-            overlay.style.opacity = '0';
-            setTimeout(function() { overlay.remove(); }, 500);
-        }
-    });
-    
-    // ===== تحديث سنة حقوق النشر =====
-    document.querySelectorAll('.current-year').forEach(function(el) {
-        el.textContent = new Date().getFullYear();
-    });
-    
-    // ===== تهيئة AOS =====
-    AOS.init({ duration: 800, once: true, offset: 100, easing: 'ease-out-cubic' });
-    
-    // ===== نظام القائمة الجانبية =====
-    (function() {
-        var hamburger = document.getElementById('hamburgerBtn');
-        var mobileNav = document.getElementById('mobileNav');
-        var closeBtn = document.getElementById('closeNavBtn');
+    <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/portfolio.js"></script>
+
+    <script>
+        // ===== إزالة شاشة التحميل =====
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+            var overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                setTimeout(function() { overlay.remove(); }, 500);
+            }
+        });
         
-        if (hamburger && mobileNav) {
-            function toggleMenu() {
-                mobileNav.classList.toggle('active');
-                hamburger.classList.toggle('active');
-                var isOpen = mobileNav.classList.contains('active');
-                hamburger.setAttribute('aria-expanded', isOpen);
-                document.body.style.overflow = isOpen ? 'hidden' : '';
-            }
+        // ===== تحديث سنة حقوق النشر =====
+        document.querySelectorAll('.current-year').forEach(function(el) {
+            el.textContent = new Date().getFullYear();
+        });
+        
+        // ===== تهيئة AOS =====
+        AOS.init({ duration: 800, once: true, offset: 100, easing: 'ease-out-cubic' });
+        
+        // ===== نظام القائمة الجانبية =====
+        (function() {
+            var hamburger = document.getElementById('hamburgerBtn');
+            var mobileNav = document.getElementById('mobileNav');
+            var closeBtn = document.getElementById('closeNavBtn');
             
-            hamburger.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleMenu();
-            });
-            
-            if (closeBtn) {
-                closeBtn.addEventListener('click', toggleMenu);
-            }
-            
-            document.addEventListener('click', function(e) {
-                if (mobileNav.classList.contains('active') && 
-                    !mobileNav.contains(e.target) && 
-                    !hamburger.contains(e.target)) {
+            if (hamburger && mobileNav) {
+                function toggleMenu() {
+                    mobileNav.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                    var isOpen = mobileNav.classList.contains('active');
+                    hamburger.setAttribute('aria-expanded', isOpen);
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                }
+                
+                hamburger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     toggleMenu();
+                });
+                
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', toggleMenu);
                 }
+                
+                document.addEventListener('click', function(e) {
+                    if (mobileNav.classList.contains('active') && 
+                        !mobileNav.contains(e.target) && 
+                        !hamburger.contains(e.target)) {
+                        toggleMenu();
+                    }
+                });
+                
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
+                
+                mobileNav.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+                    link.addEventListener('click', toggleMenu);
+                });
+            }
+        })();
+
+        // ============================================
+        // ===== أدوات التحكم في حجم البطاقات =====
+        // ============================================
+        (function() {
+            var sizeBtns = document.querySelectorAll('.size-btn');
+            var viewToggleBtn = document.getElementById('viewToggleBtn');
+            var sizeLabel = document.getElementById('sizeLabel');
+            
+            // استعادة الإعدادات المحفوظة
+            var savedSize = localStorage.getItem('portfolio_card_size') || 'medium';
+            var savedView = localStorage.getItem('portfolio_card_view') || 'grid';
+            
+            // تطبيق الإعدادات المحفوظة
+            function applySize(size) {
+                document.body.classList.remove('card-size-small', 'card-size-medium', 'card-size-large');
+                document.body.classList.add('card-size-' + size);
+                
+                sizeBtns.forEach(function(btn) {
+                    btn.classList.toggle('active', btn.dataset.size === size);
+                });
+                
+                var labels = { small: 'صغير', medium: 'متوسط', large: 'كبير' };
+                if (sizeLabel) sizeLabel.textContent = labels[size] || 'متوسط';
+                
+                localStorage.setItem('portfolio_card_size', size);
+            }
+            
+            function applyView(view) {
+                document.body.classList.toggle('card-view-list', view === 'list');
+                if (viewToggleBtn) {
+                    viewToggleBtn.classList.toggle('active', view === 'list');
+                    var icon = viewToggleBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = view === 'list' ? 'fas fa-th-large' : 'fas fa-list';
+                    }
+                }
+                localStorage.setItem('portfolio_card_view', view);
+            }
+            
+            // أحداث أزرار الحجم
+            sizeBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    applySize(this.dataset.size);
+                });
             });
             
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-                    toggleMenu();
-                }
-            });
+            // حدث تبديل العرض
+            if (viewToggleBtn) {
+                viewToggleBtn.addEventListener('click', function() {
+                    var currentView = document.body.classList.contains('card-view-list') ? 'list' : 'grid';
+                    var newView = currentView === 'grid' ? 'list' : 'grid';
+                    applyView(newView);
+                });
+            }
             
-            mobileNav.querySelectorAll('.mobile-nav-link').forEach(function(link) {
-                link.addEventListener('click', toggleMenu);
-            });
-        }
-    })();
-    
-    
-    // ============================================
-// تحديث Open Graph حسب المشروع المحدد
-// ============================================
-function updateOpenGraph(project) {
-    if (!project) return;
-    
-    // تحديد الصورة المناسبة
-    var imageUrl = project.coverImage || 'https://te-2026.netlify.app/images/og-image.jpg';
-    var title = project.name + ' | TechNomads';
-    var description = project.description.substring(0, 200);
-    var url = window.location.origin + window.location.pathname + '#project-' + project.id;
-    
-    // تحديث Open Graph
-    var ogTitle = document.getElementById('ogTitle');
-    var ogDescription = document.getElementById('ogDescription');
-    var ogImage = document.getElementById('ogImage');
-    var ogUrl = document.getElementById('ogUrl');
-    var twitterTitle = document.getElementById('twitterTitle');
-    var twitterDescription = document.getElementById('twitterDescription');
-    var twitterImage = document.getElementById('twitterImage');
-    
-    if (ogTitle) ogTitle.setAttribute('content', title);
-    if (ogDescription) ogDescription.setAttribute('content', description);
-    if (ogImage) ogImage.setAttribute('content', imageUrl);
-    if (ogUrl) ogUrl.setAttribute('content', url);
-    if (twitterTitle) twitterTitle.setAttribute('content', title);
-    if (twitterDescription) twitterDescription.setAttribute('content', description);
-    if (twitterImage) twitterImage.setAttribute('content', imageUrl);
-    
-    // تحديث عنوان الصفحة
-    document.title = title;
-}
+            // تطبيق الإعدادات المحفوظة
+            applySize(savedSize);
+            applyView(savedView);
+        })();
 
-// ============================================
-// قراءة المشروع من الرابط وتحديث Open Graph
-// ============================================
-function initOpenGraphFromUrl() {
-    var hash = window.location.hash;
-    if (hash && hash.startsWith('#project-')) {
-        var projectId = hash.replace('#project-', '');
-        
-        // البحث عن المشروع في البيانات
-        if (window.PortfolioSystem && window.PortfolioSystem.projects) {
-            var projects = window.PortfolioSystem.projects();
-            var project = projects.find(function(p) { return p.id === projectId; });
-            if (project) {
-                updateOpenGraph(project);
-                return;
-            }
+        // ============================================
+        // تحديث Open Graph حسب المشروع المحدد
+        // ============================================
+        function updateOpenGraph(project) {
+            if (!project) return;
+            
+            var imageUrl = project.coverImage || 'https://te-2026.netlify.app/images/og-image.jpg';
+            var title = project.name + ' | TechNomads';
+            var description = project.description.substring(0, 200);
+            var url = window.location.origin + window.location.pathname + '#project-' + project.id;
+            
+            var ogTitle = document.getElementById('ogTitle');
+            var ogDescription = document.getElementById('ogDescription');
+            var ogImage = document.getElementById('ogImage');
+            var ogUrl = document.getElementById('ogUrl');
+            var twitterTitle = document.getElementById('twitterTitle');
+            var twitterDescription = document.getElementById('twitterDescription');
+            var twitterImage = document.getElementById('twitterImage');
+            
+            if (ogTitle) ogTitle.setAttribute('content', title);
+            if (ogDescription) ogDescription.setAttribute('content', description);
+            if (ogImage) ogImage.setAttribute('content', imageUrl);
+            if (ogUrl) ogUrl.setAttribute('content', url);
+            if (twitterTitle) twitterTitle.setAttribute('content', title);
+            if (twitterDescription) twitterDescription.setAttribute('content', description);
+            if (twitterImage) twitterImage.setAttribute('content', imageUrl);
+            
+            document.title = title;
         }
-        
-        // محاولة البحث من PROJECTS_DB مباشرة
-        // (سيتم استدعاؤها بعد تحميل البيانات)
-        setTimeout(function() {
-            if (window.PortfolioSystem && window.PortfolioSystem.projects) {
-                var projects = window.PortfolioSystem.projects();
-                var project = projects.find(function(p) { return p.id === projectId; });
-                if (project) {
-                    updateOpenGraph(project);
+
+        function resetOpenGraph() {
+            var defaultTitle = 'معرض الأعمال | TechNomads - أكثر من 160 مشروعاً تقنياً';
+            var defaultDescription = 'استعرض أكثر من 160 مشروعاً تقنياً متنوعاً في مجالات الويب والتطبيقات والتصميم والأدوات والألعاب';
+            var defaultImage = 'https://te-2026.netlify.app/images/og-image.jpg';
+            var defaultUrl = window.location.origin + window.location.pathname;
+            
+            var ogTitle = document.getElementById('ogTitle');
+            var ogDescription = document.getElementById('ogDescription');
+            var ogImage = document.getElementById('ogImage');
+            var ogUrl = document.getElementById('ogUrl');
+            var twitterTitle = document.getElementById('twitterTitle');
+            var twitterDescription = document.getElementById('twitterDescription');
+            var twitterImage = document.getElementById('twitterImage');
+            
+            if (ogTitle) ogTitle.setAttribute('content', defaultTitle);
+            if (ogDescription) ogDescription.setAttribute('content', defaultDescription);
+            if (ogImage) ogImage.setAttribute('content', defaultImage);
+            if (ogUrl) ogUrl.setAttribute('content', defaultUrl);
+            if (twitterTitle) twitterTitle.setAttribute('content', defaultTitle);
+            if (twitterDescription) twitterDescription.setAttribute('content', defaultDescription);
+            if (twitterImage) twitterImage.setAttribute('content', defaultImage);
+            
+            document.title = 'معرض الأعمال | TechNomads';
+        }
+
+        function initOpenGraphFromUrl() {
+            var hash = window.location.hash;
+            if (hash && hash.startsWith('#project-')) {
+                var projectId = hash.replace('#project-', '');
+                
+                if (window.PortfolioSystem && window.PortfolioSystem.projects) {
+                    var projects = window.PortfolioSystem.projects();
+                    var project = projects.find(function(p) { return p.id === projectId; });
+                    if (project) {
+                        updateOpenGraph(project);
+                        return;
+                    }
                 }
+                
+                setTimeout(function() {
+                    if (window.PortfolioSystem && window.PortfolioSystem.projects) {
+                        var projects = window.PortfolioSystem.projects();
+                        var project = projects.find(function(p) { return p.id === projectId; });
+                        if (project) {
+                            updateOpenGraph(project);
+                        }
+                    }
+                }, 1000);
             }
-        }, 1000);
-    }
-}
+        }
 
-// ============================================
-// تحديث Open Graph عند فتح المودال
-// ============================================
-// أضف هذا السطر داخل دالة openModal الموجودة في portfolio.js
-// بعد العثور على المشروع:
-// updateOpenGraph(project);
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                initOpenGraphFromUrl();
+            }, 500);
+        });
 
-// ============================================
-// تحديث Open Graph عند إغلاق المودال
-// ============================================
-// أضف هذا السطر داخل دالة closeModal:
-// resetOpenGraph();
+        window.addEventListener('hashchange', function() {
+            initOpenGraphFromUrl();
+        });
 
-function resetOpenGraph() {
-    var defaultTitle = 'معرض الأعمال | TechNomads - أكثر من 160 مشروعاً تقنياً';
-    var defaultDescription = 'استعرض أكثر من 160 مشروعاً تقنياً متنوعاً في مجالات الويب والتطبيقات والتصميم والأدوات والألعاب';
-    var defaultImage = 'https://te-2026.netlify.app/images/og-image.jpg';
-    var defaultUrl = window.location.origin + window.location.pathname;
-    
-    var ogTitle = document.getElementById('ogTitle');
-    var ogDescription = document.getElementById('ogDescription');
-    var ogImage = document.getElementById('ogImage');
-    var ogUrl = document.getElementById('ogUrl');
-    var twitterTitle = document.getElementById('twitterTitle');
-    var twitterDescription = document.getElementById('twitterDescription');
-    var twitterImage = document.getElementById('twitterImage');
-    
-    if (ogTitle) ogTitle.setAttribute('content', defaultTitle);
-    if (ogDescription) ogDescription.setAttribute('content', defaultDescription);
-    if (ogImage) ogImage.setAttribute('content', defaultImage);
-    if (ogUrl) ogUrl.setAttribute('content', defaultUrl);
-    if (twitterTitle) twitterTitle.setAttribute('content', defaultTitle);
-    if (twitterDescription) twitterDescription.setAttribute('content', defaultDescription);
-    if (twitterImage) twitterImage.setAttribute('content', defaultImage);
-    
-    document.title = 'معرض الأعمال | TechNomads';
-}
-
-// ============================================
-// تهيئة Open Graph عند تحميل الصفحة
-// ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    // انتظار تحميل المشاريع
-    setTimeout(function() {
-        initOpenGraphFromUrl();
-    }, 500);
-});
-
-// ============================================
-// مراقبة تغيير الرابط (للمتصفحات الحديثة)
-// ============================================
-window.addEventListener('hashchange', function() {
-    initOpenGraphFromUrl();
-});
-</script>
+        // ============================================
+        // ربط دالة shareProject بالنافذة
+        // ============================================
+        window.shareProject = function(projectId) {
+            if (window.PortfolioSystem && window.PortfolioSystem.shareProject) {
+                window.PortfolioSystem.shareProject(projectId);
+            }
+        };
+    </script>
 </body>
 </html>

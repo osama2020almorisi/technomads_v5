@@ -715,8 +715,8 @@
         </section>
 
         <div class="search-suggestions" id="searchSuggestions" style="display: none;">
-    <div class="suggestions-list" id="suggestionsList"></div>
-</div>
+            <div class="suggestions-list" id="suggestionsList"></div>
+        </div>
 
         <section class="portfolio-projects-section">
             <div class="projects-container">
@@ -1142,233 +1142,253 @@
 
     <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
 
+    <!-- ===== تحميل المكتبات والملفات ===== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/main.js"></script>
     <script src="js/portfolio.js"></script>
 
+    <!-- ============================================ -->
+    <!-- ===== كود التهيئة المضمن - مع إصلاح مشكلة التحميل ===== -->
+    <!-- ============================================ -->
     <script>
-        // ===== إزالة شاشة التحميل =====
-        window.addEventListener('load', function() {
+        // ============================================
+        // دالة تهيئة كل شيء بعد تحميل الملفات
+        // ============================================
+        function initPortfolio() {
+            // ----- إزالة شاشة التحميل -----
             document.body.classList.add('loaded');
             var overlay = document.getElementById('loadingOverlay');
             if (overlay) {
                 overlay.style.opacity = '0';
                 setTimeout(function() { overlay.remove(); }, 500);
             }
-        });
-        
-        // ===== تحديث سنة حقوق النشر =====
-        document.querySelectorAll('.current-year').forEach(function(el) {
-            el.textContent = new Date().getFullYear();
-        });
-        
-        // ===== تهيئة AOS =====
-        AOS.init({ duration: 800, once: true, offset: 100, easing: 'ease-out-cubic' });
-        
-        // ===== نظام القائمة الجانبية =====
-        (function() {
-            var hamburger = document.getElementById('hamburgerBtn');
-            var mobileNav = document.getElementById('mobileNav');
-            var closeBtn = document.getElementById('closeNavBtn');
-            
-            if (hamburger && mobileNav) {
-                function toggleMenu() {
-                    mobileNav.classList.toggle('active');
-                    hamburger.classList.toggle('active');
-                    var isOpen = mobileNav.classList.contains('active');
-                    hamburger.setAttribute('aria-expanded', isOpen);
-                    document.body.style.overflow = isOpen ? 'hidden' : '';
-                }
-                
-                hamburger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleMenu();
-                });
-                
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', toggleMenu);
-                }
-                
-                document.addEventListener('click', function(e) {
-                    if (mobileNav.classList.contains('active') && 
-                        !mobileNav.contains(e.target) && 
-                        !hamburger.contains(e.target)) {
-                        toggleMenu();
-                    }
-                });
-                
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-                        toggleMenu();
-                    }
-                });
-                
-                mobileNav.querySelectorAll('.mobile-nav-link').forEach(function(link) {
-                    link.addEventListener('click', toggleMenu);
-                });
-            }
-        })();
 
-        // ============================================
-        // ===== أدوات التحكم في حجم البطاقات =====
-        // ============================================
-        (function() {
-            var sizeBtns = document.querySelectorAll('.size-btn');
-            var viewToggleBtn = document.getElementById('viewToggleBtn');
-            var sizeLabel = document.getElementById('sizeLabel');
-            
-            // استعادة الإعدادات المحفوظة
-            var savedSize = localStorage.getItem('portfolio_card_size') || 'medium';
-            var savedView = localStorage.getItem('portfolio_card_view') || 'grid';
-            
-            // تطبيق الإعدادات المحفوظة
-            function applySize(size) {
-                document.body.classList.remove('card-size-small', 'card-size-medium', 'card-size-large');
-                document.body.classList.add('card-size-' + size);
-                
-                sizeBtns.forEach(function(btn) {
-                    btn.classList.toggle('active', btn.dataset.size === size);
-                });
-                
-                var labels = { small: 'صغير', medium: 'متوسط', large: 'كبير' };
-                if (sizeLabel) sizeLabel.textContent = labels[size] || 'متوسط';
-                
-                localStorage.setItem('portfolio_card_size', size);
-            }
-            
-            function applyView(view) {
-                document.body.classList.toggle('card-view-list', view === 'list');
-                if (viewToggleBtn) {
-                    viewToggleBtn.classList.toggle('active', view === 'list');
-                    var icon = viewToggleBtn.querySelector('i');
-                    if (icon) {
-                        icon.className = view === 'list' ? 'fas fa-th-large' : 'fas fa-list';
-                    }
-                }
-                localStorage.setItem('portfolio_card_view', view);
-            }
-            
-            // أحداث أزرار الحجم
-            sizeBtns.forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    applySize(this.dataset.size);
-                });
+            // ----- تحديث سنة حقوق النشر -----
+            document.querySelectorAll('.current-year').forEach(function(el) {
+                el.textContent = new Date().getFullYear();
             });
-            
-            // حدث تبديل العرض
-            if (viewToggleBtn) {
-                viewToggleBtn.addEventListener('click', function() {
-                    var currentView = document.body.classList.contains('card-view-list') ? 'list' : 'grid';
-                    var newView = currentView === 'grid' ? 'list' : 'grid';
-                    applyView(newView);
-                });
+
+            // ----- تهيئة AOS -----
+            if (typeof AOS !== 'undefined') {
+                AOS.init({ duration: 800, once: true, offset: 100, easing: 'ease-out-cubic' });
             }
-            
-            // تطبيق الإعدادات المحفوظة
-            applySize(savedSize);
-            applyView(savedView);
-        })();
 
-        // ============================================
-        // تحديث Open Graph حسب المشروع المحدد
-        // ============================================
-        function updateOpenGraph(project) {
-            if (!project) return;
-            
-            var imageUrl = project.coverImage || 'https://te-2026.netlify.app/images/og-image.jpg';
-            var title = project.name + ' | TechNomads';
-            var description = project.description.substring(0, 200);
-            var url = window.location.origin + window.location.pathname + '#project-' + project.id;
-            
-            var ogTitle = document.getElementById('ogTitle');
-            var ogDescription = document.getElementById('ogDescription');
-            var ogImage = document.getElementById('ogImage');
-            var ogUrl = document.getElementById('ogUrl');
-            var twitterTitle = document.getElementById('twitterTitle');
-            var twitterDescription = document.getElementById('twitterDescription');
-            var twitterImage = document.getElementById('twitterImage');
-            
-            if (ogTitle) ogTitle.setAttribute('content', title);
-            if (ogDescription) ogDescription.setAttribute('content', description);
-            if (ogImage) ogImage.setAttribute('content', imageUrl);
-            if (ogUrl) ogUrl.setAttribute('content', url);
-            if (twitterTitle) twitterTitle.setAttribute('content', title);
-            if (twitterDescription) twitterDescription.setAttribute('content', description);
-            if (twitterImage) twitterImage.setAttribute('content', imageUrl);
-            
-            document.title = title;
-        }
+            // ----- نظام القائمة الجانبية -----
+            (function() {
+                var hamburger = document.getElementById('hamburgerBtn');
+                var mobileNav = document.getElementById('mobileNav');
+                var closeBtn = document.getElementById('closeNavBtn');
 
-        function resetOpenGraph() {
-            var defaultTitle = 'معرض الأعمال | TechNomads - أكثر من 160 مشروعاً تقنياً';
-            var defaultDescription = 'استعرض أكثر من 160 مشروعاً تقنياً متنوعاً في مجالات الويب والتطبيقات والتصميم والأدوات والألعاب';
-            var defaultImage = 'https://te-2026.netlify.app/images/og-image.jpg';
-            var defaultUrl = window.location.origin + window.location.pathname;
-            
-            var ogTitle = document.getElementById('ogTitle');
-            var ogDescription = document.getElementById('ogDescription');
-            var ogImage = document.getElementById('ogImage');
-            var ogUrl = document.getElementById('ogUrl');
-            var twitterTitle = document.getElementById('twitterTitle');
-            var twitterDescription = document.getElementById('twitterDescription');
-            var twitterImage = document.getElementById('twitterImage');
-            
-            if (ogTitle) ogTitle.setAttribute('content', defaultTitle);
-            if (ogDescription) ogDescription.setAttribute('content', defaultDescription);
-            if (ogImage) ogImage.setAttribute('content', defaultImage);
-            if (ogUrl) ogUrl.setAttribute('content', defaultUrl);
-            if (twitterTitle) twitterTitle.setAttribute('content', defaultTitle);
-            if (twitterDescription) twitterDescription.setAttribute('content', defaultDescription);
-            if (twitterImage) twitterImage.setAttribute('content', defaultImage);
-            
-            document.title = 'معرض الأعمال | TechNomads';
-        }
-
-        function initOpenGraphFromUrl() {
-            var hash = window.location.hash;
-            if (hash && hash.startsWith('#project-')) {
-                var projectId = hash.replace('#project-', '');
-                
-                if (window.PortfolioSystem && window.PortfolioSystem.projects) {
-                    var projects = window.PortfolioSystem.projects();
-                    var project = projects.find(function(p) { return p.id === projectId; });
-                    if (project) {
-                        updateOpenGraph(project);
-                        return;
+                if (hamburger && mobileNav) {
+                    function toggleMenu() {
+                        mobileNav.classList.toggle('active');
+                        hamburger.classList.toggle('active');
+                        var isOpen = mobileNav.classList.contains('active');
+                        hamburger.setAttribute('aria-expanded', isOpen);
+                        document.body.style.overflow = isOpen ? 'hidden' : '';
                     }
+
+                    hamburger.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleMenu();
+                    });
+
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', toggleMenu);
+                    }
+
+                    document.addEventListener('click', function(e) {
+                        if (mobileNav.classList.contains('active') &&
+                            !mobileNav.contains(e.target) &&
+                            !hamburger.contains(e.target)) {
+                            toggleMenu();
+                        }
+                    });
+
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                            toggleMenu();
+                        }
+                    });
+
+                    mobileNav.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+                        link.addEventListener('click', toggleMenu);
+                    });
                 }
-                
-                setTimeout(function() {
+            })();
+
+            // ----- أدوات التحكم في حجم البطاقات -----
+            (function() {
+                var sizeBtns = document.querySelectorAll('.size-btn');
+                var viewToggleBtn = document.getElementById('viewToggleBtn');
+                var sizeLabel = document.getElementById('sizeLabel');
+
+                var savedSize = localStorage.getItem('portfolio_card_size') || 'medium';
+                var savedView = localStorage.getItem('portfolio_card_view') || 'grid';
+
+                function applySize(size) {
+                    document.body.classList.remove('card-size-small', 'card-size-medium', 'card-size-large');
+                    document.body.classList.add('card-size-' + size);
+
+                    sizeBtns.forEach(function(btn) {
+                        btn.classList.toggle('active', btn.dataset.size === size);
+                    });
+
+                    var labels = { small: 'صغير', medium: 'متوسط', large: 'كبير' };
+                    if (sizeLabel) sizeLabel.textContent = labels[size] || 'متوسط';
+
+                    localStorage.setItem('portfolio_card_size', size);
+                }
+
+                function applyView(view) {
+                    document.body.classList.toggle('card-view-list', view === 'list');
+                    if (viewToggleBtn) {
+                        viewToggleBtn.classList.toggle('active', view === 'list');
+                        var icon = viewToggleBtn.querySelector('i');
+                        if (icon) {
+                            icon.className = view === 'list' ? 'fas fa-th-large' : 'fas fa-list';
+                        }
+                    }
+                    localStorage.setItem('portfolio_card_view', view);
+                }
+
+                sizeBtns.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        applySize(this.dataset.size);
+                    });
+                });
+
+                if (viewToggleBtn) {
+                    viewToggleBtn.addEventListener('click', function() {
+                        var currentView = document.body.classList.contains('card-view-list') ? 'list' : 'grid';
+                        var newView = currentView === 'grid' ? 'list' : 'grid';
+                        applyView(newView);
+                    });
+                }
+
+                applySize(savedSize);
+                applyView(savedView);
+            })();
+
+            // ============================================
+            // ===== ربط دوال Open Graph والمشاركة =====
+            // ============================================
+            if (window.PortfolioSystem) {
+                window.updateOpenGraph = window.PortfolioSystem.updateOpenGraph || function() {};
+                window.resetOpenGraph = window.PortfolioSystem.resetOpenGraph || function() {};
+                window.shareProject = window.PortfolioSystem.shareProject || function(id) {
+                    if (window.PortfolioSystem && window.PortfolioSystem.shareProject) {
+                        window.PortfolioSystem.shareProject(id);
+                    }
+                };
+            }
+
+            // تهيئة Open Graph من الرابط
+            function initOpenGraphFromUrl() {
+                var hash = window.location.hash;
+                if (hash && hash.startsWith('#project-')) {
+                    var projectId = hash.replace('#project-', '');
+
                     if (window.PortfolioSystem && window.PortfolioSystem.projects) {
                         var projects = window.PortfolioSystem.projects();
                         var project = projects.find(function(p) { return p.id === projectId; });
-                        if (project) {
-                            updateOpenGraph(project);
+                        if (project && window.updateOpenGraph) {
+                            window.updateOpenGraph(project);
+                            return;
                         }
                     }
-                }, 1000);
+
+                    // محاولة مرة أخرى بعد تأخير
+                    setTimeout(function() {
+                        if (window.PortfolioSystem && window.PortfolioSystem.projects) {
+                            var projects = window.PortfolioSystem.projects();
+                            var project = projects.find(function(p) { return p.id === projectId; });
+                            if (project && window.updateOpenGraph) {
+                                window.updateOpenGraph(project);
+                            }
+                        }
+                    }, 1000);
+                }
             }
+
+            // تنفيذ initOpenGraphFromUrl بعد تحميل المشاريع
+            if (window.PortfolioSystem && window.PortfolioSystem.projects) {
+                setTimeout(initOpenGraphFromUrl, 300);
+            } else {
+                var checkProjects = setInterval(function() {
+                    if (window.PortfolioSystem && window.PortfolioSystem.projects && window.PortfolioSystem.projects().length > 0) {
+                        clearInterval(checkProjects);
+                        initOpenGraphFromUrl();
+                    }
+                }, 200);
+            }
+
+            window.addEventListener('hashchange', function() {
+                initOpenGraphFromUrl();
+            });
+
+            console.log('✅ Portfolio initialized successfully');
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                initOpenGraphFromUrl();
-            }, 500);
-        });
-
-        window.addEventListener('hashchange', function() {
-            initOpenGraphFromUrl();
-        });
-
         // ============================================
-        // ربط دالة shareProject بالنافذة
+        // انتظر تحميل portfolio.js ثم نفذ التهيئة
         // ============================================
-        window.shareProject = function(projectId) {
-            if (window.PortfolioSystem && window.PortfolioSystem.shareProject) {
-                window.PortfolioSystem.shareProject(projectId);
+        var portfolioLoaded = false;
+        var initAttempted = false;
+
+        function tryInit() {
+            if (initAttempted) return;
+            if (typeof window.PortfolioSystem !== 'undefined' && window.PortfolioSystem) {
+                initAttempted = true;
+                initPortfolio();
+                return true;
             }
-        };
+            return false;
+        }
+
+        // محاولة التهيئة فوراً
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(function() {
+                if (!tryInit()) {
+                    // إذا لم يتم تحميل portfolio.js، ننتظر
+                    var checkInterval = setInterval(function() {
+                        if (tryInit()) {
+                            clearInterval(checkInterval);
+                        }
+                    }, 100);
+                    
+                    // مهلة أمان بعد 3 ثواني
+                    setTimeout(function() {
+                        if (!initAttempted) {
+                            initAttempted = true;
+                            console.warn('⚠️ Portfolio.js not loaded, initializing anyway...');
+                            initPortfolio();
+                        }
+                    }, 3000);
+                }
+            }, 100);
+        } else {
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    if (!tryInit()) {
+                        var checkInterval = setInterval(function() {
+                            if (tryInit()) {
+                                clearInterval(checkInterval);
+                            }
+                        }, 100);
+                        
+                        setTimeout(function() {
+                            if (!initAttempted) {
+                                initAttempted = true;
+                                console.warn('⚠️ Portfolio.js not loaded, initializing anyway...');
+                                initPortfolio();
+                            }
+                        }, 3000);
+                    }
+                }, 100);
+            });
+        }
     </script>
 </body>
 </html>

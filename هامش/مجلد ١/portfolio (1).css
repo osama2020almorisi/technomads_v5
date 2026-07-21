@@ -3,6 +3,7 @@
    متوافق مع main.css ويدعم جميع الأجهزة
    مع تحسين كامل للوضع الليلي والجوال
    مع دعم الروابط العميقة (Deep Links)
+   مع تحسينات صندوق البحث والبطاقات
    ============================================ */
 
 /* ---------- Portfolio Variables ---------- */
@@ -36,18 +37,22 @@
     --border-color: rgba(0,0,0,0.05);
     --bg-light: #ffffff;
     --bg-dark: #0d0d1a;
+    
+    /* ===== متغيرات التحكم في حجم البطاقات ===== */
+    --grid-min-width: 280px;
+    --card-gap: 1.5rem;
 }
 
 /* ============================================
-   DARK MODE VARIABLES - إصلاح كامل
+   DARK MODE VARIABLES
    ============================================ */
 body.dark-mode {
     --bg-card: rgba(255,255,255,0.03);
-    --bg-input: rgba(255,255,255,0.05);
+    --bg-input: rgba(255,255,255,0.04);
     --text-primary: #4ECDC4;
     --text-secondary: #e0e0e0;
     --text-muted: #999999;
-    --border-color: rgba(255,255,255,0.05);
+    --border-color: rgba(255,255,255,0.04);
     --bg-light: #0d0d1a;
     --shadow-sm: 0 4px 15px rgba(0,0,0,0.3);
     --shadow-md: 0 10px 30px rgba(0,0,0,0.4);
@@ -215,7 +220,7 @@ body.dark-mode .hero-wave svg path {
 }
 
 /* ============================================
-   SEARCH SECTION - إصلاح للجوال
+   SEARCH SECTION - صندوق بحث احترافي (زوايا منحنية بالكامل)
    ============================================ */
 .portfolio-search-section {
     padding: 1.2rem 0;
@@ -230,7 +235,7 @@ body.dark-mode .hero-wave svg path {
 
 body.dark-mode .portfolio-search-section {
     background: rgba(13, 13, 26, 0.95);
-    border-bottom-color: rgba(255,255,255,0.03);
+    border-bottom-color: rgba(255,255,255,0.02);
 }
 
 .search-container {
@@ -239,24 +244,44 @@ body.dark-mode .portfolio-search-section {
     padding: 0 1rem;
 }
 
+/* ===== صندوق البحث - زوايا منحنية بالكامل ===== */
 .search-wrapper {
     position: relative;
     width: 100%;
     background: var(--bg-input);
     border-radius: 60px;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 
+        0 4px 20px rgba(78, 205, 196, 0.08),
+        0 8px 40px rgba(78, 205, 196, 0.04);
     transition: var(--transition-bounce);
-    border: 2px solid transparent;
+    border: 2px solid rgba(78, 205, 196, 0.08);
 }
 
 body.dark-mode .search-wrapper {
-    background: rgba(255,255,255,0.04);
-    border-color: rgba(255,255,255,0.04);
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(78, 205, 196, 0.04);
+    box-shadow: 0 4px 30px rgba(78, 205, 196, 0.02);
 }
 
+/* ===== إطار التركيز - منحني بالكامل باستخدام box-shadow ===== */
 .search-wrapper:focus-within {
     border-color: var(--portfolio-accent);
-    box-shadow: 0 0 0 4px rgba(78,205,196,0.1), var(--shadow-md);
+    box-shadow: 
+        0 0 0 4px rgba(78, 205, 196, 0.15),
+        0 8px 40px rgba(78, 205, 196, 0.12),
+        0 20px 60px rgba(78, 205, 196, 0.04);
+    transform: translateY(-1px);
+}
+
+body.dark-mode .search-wrapper:focus-within {
+    box-shadow: 
+        0 0 0 4px rgba(78, 205, 196, 0.08),
+        0 8px 40px rgba(78, 205, 196, 0.06);
+}
+
+/* ===== إزالة أي ::before قد يسبب زوايا حادة ===== */
+.search-wrapper::before {
+    display: none !important;
 }
 
 .search-icon {
@@ -267,6 +292,11 @@ body.dark-mode .search-wrapper {
     color: var(--text-muted);
     pointer-events: none;
     font-size: 1.1rem;
+    transition: var(--transition-base);
+}
+
+.search-wrapper:focus-within .search-icon {
+    color: var(--portfolio-accent);
 }
 
 .search-input {
@@ -279,6 +309,7 @@ body.dark-mode .search-wrapper {
     color: var(--text-secondary);
     outline: none;
     direction: rtl;
+    letter-spacing: 0.3px;
 }
 
 body.dark-mode .search-input {
@@ -288,6 +319,7 @@ body.dark-mode .search-input {
 .search-input::placeholder {
     color: #aaa;
     font-size: 0.95rem;
+    font-weight: 300;
 }
 
 body.dark-mode .search-input::placeholder {
@@ -306,7 +338,7 @@ body.dark-mode .search-input::placeholder {
     opacity: 0;
     visibility: hidden;
     transition: var(--transition-base);
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding: 4px;
     display: none;
 }
@@ -320,6 +352,7 @@ body.dark-mode .search-input::placeholder {
 
 .search-clear:hover {
     color: #e74c3c;
+    transform: translateY(-50%) scale(1.1);
 }
 
 .search-filters-wrapper {
@@ -354,6 +387,7 @@ body.dark-mode .filter-btn {
 .filter-btn:hover {
     border-color: var(--portfolio-accent);
     color: var(--portfolio-primary);
+    transform: translateY(-1px);
 }
 
 body.dark-mode .filter-btn:hover {
@@ -481,7 +515,128 @@ body.dark-mode .search-results-info {
 }
 
 /* ============================================
-   PROJECTS SECTION
+   SEARCH SUGGESTIONS - صندوق الاقتراحات (زوايا منحنية)
+   ============================================ */
+.search-suggestions {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: 0;
+    background: var(--bg-card, #ffffff);
+    border-radius: 24px !important;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    border: 1px solid var(--border-color, rgba(0,0,0,0.05));
+    max-height: 380px;
+    overflow-y: auto;
+    z-index: 1000;
+    padding: 8px 0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+    display: none;
+}
+
+body.dark-mode .search-suggestions {
+    background: rgba(26, 26, 46, 0.98);
+    border-color: rgba(255,255,255,0.04);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 12px;
+    margin: 2px 8px;
+    color: var(--text-secondary, #333);
+}
+
+body.dark-mode .suggestion-item {
+    color: var(--text-secondary, #e0e0e0);
+}
+
+.suggestion-item:hover {
+    background: rgba(78, 205, 196, 0.06);
+}
+
+.suggestion-item.active {
+    background: var(--gradient-primary);
+    color: white;
+    border-radius: 12px;
+}
+
+body.dark-mode .suggestion-item.active {
+    background: linear-gradient(135deg, #2A2D7C, #4ECDC4);
+    color: white;
+}
+
+.suggestion-item i {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(78, 205, 196, 0.08);
+    border-radius: 8px;
+    color: var(--portfolio-accent, #4ECDC4);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.suggestion-item.active i {
+    background: rgba(255,255,255,0.15);
+    color: white;
+}
+
+.suggestion-text {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.suggestion-category {
+    font-size: 0.65rem;
+    color: var(--text-muted, #888);
+    background: var(--bg-light, #f5f5f5);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+body.dark-mode .suggestion-category {
+    background: rgba(255,255,255,0.04);
+    color: #999;
+}
+
+.suggestion-item.active .suggestion-category {
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8);
+}
+
+.search-suggestions::-webkit-scrollbar {
+    width: 4px;
+}
+
+.search-suggestions::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 10px;
+}
+
+body.dark-mode .search-suggestions::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #4ECDC4, #2A2D7C);
+}
+
+/* ============================================
+   PROJECTS SECTION - مع خاصية التكبير والتصغير
    ============================================ */
 .portfolio-projects-section {
     padding: 2rem 0 4rem;
@@ -500,8 +655,19 @@ body.dark-mode .portfolio-projects-section {
 }
 
 .projects-header {
-    margin-bottom: 2rem;
-    text-align: center;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.projects-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
 }
 
 .projects-count {
@@ -522,20 +688,367 @@ body.dark-mode .projects-count {
     border-color: rgba(78,205,196,0.04);
 }
 
-/* Projects Grid */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.8rem;
+/* ===== أدوات التحكم في حجم البطاقات ===== */
+.card-size-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg-card);
+    padding: 4px 6px;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
-/* Project Card */
+body.dark-mode .card-size-controls {
+    background: rgba(255,255,255,0.02);
+    border-color: rgba(255,255,255,0.04);
+}
+
+.card-size-controls button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition-bounce);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+}
+
+.card-size-controls button:hover {
+    background: rgba(78,205,196,0.06);
+    color: var(--portfolio-accent);
+}
+
+.card-size-controls button.active {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(42,45,124,0.15);
+}
+
+body.dark-mode .card-size-controls button.active {
+    box-shadow: 0 4px 12px rgba(78,205,196,0.06);
+}
+
+.card-size-controls .size-label {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    padding: 0 4px;
+    font-weight: 500;
+    min-width: 18px;
+    text-align: center;
+}
+
+.view-toggle-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition-bounce);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.view-toggle-btn:hover {
+    background: rgba(78,205,196,0.06);
+    color: var(--portfolio-accent);
+}
+
+.view-toggle-btn.active {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(42,45,124,0.15);
+}
+
+body.dark-mode .view-toggle-btn.active {
+    box-shadow: 0 4px 12px rgba(78,205,196,0.06);
+}
+
+.separator-dot {
+    color: var(--border-color);
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+/* ============================================
+   PROJECTS GRID - مع التحكم بالحجم الحقيقي
+   ============================================ */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-width), 1fr));
+    gap: var(--card-gap);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   أحجام مختلفة للبطاقات
+   ============================================ */
+
+/* ----- الحجم الصغير ----- */
+body.card-size-small {
+    --grid-min-width: 200px;
+    --card-gap: 0.8rem;
+}
+
+body.card-size-small .project-card {
+    border-radius: 12px;
+}
+
+body.card-size-small .project-card-media {
+    height: 140px;
+}
+
+body.card-size-small .project-card-content {
+    padding: 0.5rem 0.7rem 0.7rem;
+}
+
+body.card-size-small .project-card-title {
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+}
+
+body.card-size-small .project-card-description {
+    font-size: 0.65rem;
+    -webkit-line-clamp: 2;
+    margin-bottom: 0.3rem;
+}
+
+body.card-size-small .project-rating {
+    margin-bottom: 0.3rem;
+}
+
+body.card-size-small .project-rating .stars {
+    font-size: 0.6rem;
+}
+
+body.card-size-small .project-rating .rating-count {
+    font-size: 0.6rem;
+}
+
+body.card-size-small .project-card-footer {
+    padding-top: 0.3rem;
+}
+
+body.card-size-small .project-date,
+body.card-size-small .project-views {
+    font-size: 0.5rem;
+}
+
+body.card-size-small .project-link {
+    width: 24px;
+    height: 24px;
+    font-size: 0.6rem;
+}
+
+body.card-size-small .project-category-badge {
+    font-size: 0.5rem;
+    padding: 0.15rem 0.5rem;
+    top: 0.4rem;
+    right: 0.4rem;
+}
+
+body.card-size-small .project-featured,
+body.card-size-small .project-version-badge {
+    font-size: 0.45rem;
+    padding: 0.1rem 0.4rem;
+    top: 0.4rem;
+    left: 0.4rem;
+}
+
+body.card-size-small .view-project-btn {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.6rem;
+}
+
+/* ----- الحجم المتوسط (الافتراضي) ----- */
+body.card-size-medium {
+    --grid-min-width: 280px;
+    --card-gap: 1.5rem;
+}
+
+body.card-size-medium .project-card-media {
+    height: 200px;
+}
+
+body.card-size-medium .project-card-content {
+    padding: 0.8rem 1rem 1rem;
+}
+
+body.card-size-medium .project-card-title {
+    font-size: 1rem;
+}
+
+body.card-size-medium .project-card-description {
+    font-size: 0.8rem;
+}
+
+body.card-size-medium .project-rating .stars {
+    font-size: 0.75rem;
+}
+
+body.card-size-medium .project-date,
+body.card-size-medium .project-views {
+    font-size: 0.6rem;
+}
+
+/* ----- الحجم الكبير ----- */
+body.card-size-large {
+    --grid-min-width: 360px;
+    --card-gap: 2rem;
+}
+
+body.card-size-large .project-card {
+    border-radius: 20px;
+}
+
+body.card-size-large .project-card-media {
+    height: 260px;
+}
+
+body.card-size-large .project-card-content {
+    padding: 1.2rem 1.5rem 1.5rem;
+}
+
+body.card-size-large .project-card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+body.card-size-large .project-card-description {
+    font-size: 0.95rem;
+    -webkit-line-clamp: 3;
+    margin-bottom: 0.8rem;
+}
+
+body.card-size-large .project-rating {
+    margin-bottom: 0.8rem;
+}
+
+body.card-size-large .project-rating .stars {
+    font-size: 0.95rem;
+}
+
+body.card-size-large .project-rating .rating-count {
+    font-size: 0.85rem;
+}
+
+body.card-size-large .project-card-footer {
+    padding-top: 0.8rem;
+}
+
+body.card-size-large .project-date,
+body.card-size-large .project-views {
+    font-size: 0.75rem;
+}
+
+body.card-size-large .project-link {
+    width: 34px;
+    height: 34px;
+    font-size: 0.9rem;
+}
+
+body.card-size-large .project-category-badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 1rem;
+    top: 1rem;
+    right: 1rem;
+}
+
+body.card-size-large .project-featured,
+body.card-size-large .project-version-badge {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.8rem;
+    top: 1rem;
+    left: 1rem;
+}
+
+body.card-size-large .view-project-btn {
+    padding: 0.7rem 1.8rem;
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   عرض القائمة (تخطيط أفقي)
+   ============================================ */
+body.card-view-list .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+body.card-view-list .project-card {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    min-height: 180px;
+    position: relative;
+}
+
+body.card-view-list .project-card-media {
+    height: 100%;
+    min-height: 180px;
+}
+
+body.card-view-list .project-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 1.2rem;
+}
+
+body.card-view-list .project-card-description {
+    -webkit-line-clamp: 3;
+}
+
+/* قائمة مع حجم صغير */
+body.card-view-list.card-size-small .project-card {
+    grid-template-columns: 160px 1fr;
+    min-height: 140px;
+}
+
+body.card-view-list.card-size-small .project-card-media {
+    min-height: 140px;
+}
+
+body.card-view-list.card-size-small .project-card-content {
+    padding: 0.6rem 0.8rem;
+}
+
+/* قائمة مع حجم كبير */
+body.card-view-list.card-size-large .project-card {
+    grid-template-columns: 300px 1fr;
+    min-height: 240px;
+}
+
+body.card-view-list.card-size-large .project-card-media {
+    min-height: 240px;
+}
+
+body.card-view-list.card-size-large .project-card-content {
+    padding: 1.5rem 2rem;
+}
+
+/* ============================================
+   PROJECT CARD
+   ============================================ */
 .project-card {
     background: var(--bg-card);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    transition: var(--transition-bounce);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
     opacity: 0;
@@ -544,7 +1057,7 @@ body.dark-mode .projects-count {
 }
 
 body.dark-mode .project-card {
-    border-color: rgba(255,255,255,0.03);
+    border-color: rgba(255,255,255,0.02);
 }
 
 .project-card.visible {
@@ -562,9 +1075,6 @@ body.dark-mode .project-card:hover {
     border-color: rgba(78,205,196,0.05);
 }
 
-/* ============================================
-   PROJECT CARD HIGHLIGHT - تمييز المشروع (Deep Link)
-   ============================================ */
 .project-card.highlight {
     box-shadow: 0 0 0 4px #4ECDC4, 0 20px 60px rgba(78,205,196,0.3) !important;
     transform: scale(1.02) !important;
@@ -580,13 +1090,13 @@ body.dark-mode .project-card.highlight .project-card-title {
     color: #FF6B6B !important;
 }
 
-/* Card Media */
 .project-card-media {
     position: relative;
     width: 100%;
     height: 220px;
     overflow: hidden;
     background: var(--gradient-primary);
+    transition: height 0.4s ease;
 }
 
 body.dark-mode .project-card-media {
@@ -696,7 +1206,6 @@ body.dark-mode .view-project-btn:hover {
     color: white;
 }
 
-/* Badges */
 .project-category-badge {
     position: absolute;
     top: 0.8rem;
@@ -740,10 +1249,10 @@ body.dark-mode .project-category-badge {
 
 .project-version-badge {
     position: absolute;
-    bottom: 0.8rem;
+    top: 0.8rem;
     left: 0.8rem;
-    padding: 0.2rem 0.6rem;
-    background: var(--portfolio-secondary);
+    padding: 0.25rem 0.7rem;
+    background: var(--gradient-secondary);
     color: white;
     border-radius: 30px;
     font-size: 0.55rem;
@@ -752,15 +1261,29 @@ body.dark-mode .project-category-badge {
     display: flex;
     align-items: center;
     gap: 4px;
+    box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+    border: 1px solid rgba(255,255,255,0.15);
 }
 
 body.dark-mode .project-version-badge {
-    background: #e74c3c;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
 
-/* Card Content */
+.project-featured + .project-version-badge {
+    top: 3rem;
+}
+
+body.card-size-small .project-featured + .project-version-badge {
+    top: 2.2rem;
+}
+
+body.card-size-large .project-featured + .project-version-badge {
+    top: 3.5rem;
+}
+
 .project-card-content {
     padding: 1rem 1.2rem 1.2rem;
+    transition: padding 0.4s ease;
 }
 
 .project-card-title {
@@ -793,6 +1316,7 @@ body.dark-mode .project-card:hover .project-card-title {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    transition: font-size 0.3s ease;
 }
 
 .project-rating {
@@ -819,6 +1343,8 @@ body.dark-mode .project-card:hover .project-card-title {
     align-items: center;
     padding-top: 0.6rem;
     border-top: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
 .project-date {
@@ -875,9 +1401,6 @@ body.dark-mode .project-link:hover {
     color: white;
 }
 
-/* ============================================
-   SHARE BUTTON - زر المشاركة
-   ============================================ */
 .share-btn {
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1022,7 +1545,6 @@ body.dark-mode .modal-close {
     overflow-y: auto;
 }
 
-/* Modal Gallery */
 .modal-gallery {
     position: relative;
     width: 100%;
@@ -1129,7 +1651,6 @@ body.dark-mode .gallery-counter {
     background: rgba(0,0,0,0.6);
 }
 
-/* Modal Body */
 .modal-body {
     padding: 1.5rem;
 }
@@ -1330,7 +1851,6 @@ body.dark-mode .modal-btn.share-btn:hover {
     color: white;
 }
 
-/* Modal Share */
 .modal-share {
     display: flex;
     gap: 8px;
@@ -1358,54 +1878,19 @@ body.dark-mode .modal-btn.share-btn:hover {
     transform: translateY(-2px);
 }
 
-.share-facebook { 
-    background: #1877F2; 
-    color: white; 
-}
-
-.share-facebook:hover { 
-    background: #1663c7; 
-}
-
-.share-twitter { 
-    background: #000000; 
-    color: white; 
-}
-
-body.dark-mode .share-twitter {
-    background: #1a1a2e;
-}
-
-.share-twitter:hover { 
-    background: #1a1a1a; 
-}
-
-.share-linkedin { 
-    background: #0A66C2; 
-    color: white; 
-}
-
-.share-linkedin:hover { 
-    background: #0854a0; 
-}
-
-.share-copy { 
-    background: #e9ecef; 
-    color: #333; 
-}
-
-body.dark-mode .share-copy {
-    background: rgba(255,255,255,0.03);
-    color: #eee;
-}
-
-.share-copy:hover { 
-    background: var(--portfolio-accent); 
-    color: white;
-}
+.share-facebook { background: #1877F2; color: white; }
+.share-facebook:hover { background: #1663c7; }
+.share-twitter { background: #000000; color: white; }
+body.dark-mode .share-twitter { background: #1a1a2e; }
+.share-twitter:hover { background: #1a1a1a; }
+.share-linkedin { background: #0A66C2; color: white; }
+.share-linkedin:hover { background: #0854a0; }
+.share-copy { background: #e9ecef; color: #333; }
+body.dark-mode .share-copy { background: rgba(255,255,255,0.03); color: #eee; }
+.share-copy:hover { background: var(--portfolio-accent); color: white; }
 
 /* ============================================
-   TOAST NOTIFICATION - إشعارات منبثقة
+   TOAST NOTIFICATION
    ============================================ */
 .toast-notification {
     position: fixed;
@@ -1440,25 +1925,11 @@ body.dark-mode .toast-notification {
     transform: translateX(-50%) translateY(0);
 }
 
-.toast-notification.success {
-    border-right: 4px solid #4ECDC4;
-}
-
-.toast-notification.error {
-    border-right: 4px solid #FF6B6B;
-}
-
-.toast-notification i {
-    font-size: 1.2rem;
-}
-
-.toast-notification .fa-check-circle {
-    color: #4ECDC4;
-}
-
-.toast-notification .fa-exclamation-circle {
-    color: #FF6B6B;
-}
+.toast-notification.success { border-right: 4px solid #4ECDC4; }
+.toast-notification.error { border-right: 4px solid #FF6B6B; }
+.toast-notification i { font-size: 1.2rem; }
+.toast-notification .fa-check-circle { color: #4ECDC4; }
+.toast-notification .fa-exclamation-circle { color: #FF6B6B; }
 
 /* ============================================
    EMPTY STATE
@@ -1531,8 +2002,8 @@ body.dark-mode .reset-btn:hover {
     position: fixed;
     bottom: 25px;
     left: 25px;
-    width: 46px;
-    height: 46px;
+    width: 50px;
+    height: 50px;
     background: var(--gradient-primary);
     color: white;
     border: none;
@@ -1546,11 +2017,34 @@ body.dark-mode .reset-btn:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 body.dark-mode .back-to-top {
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.back-to-top::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #FFD700;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.back-to-top.scrolling::after {
+    opacity: 1;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 .back-to-top.visible {
@@ -1564,7 +2058,7 @@ body.dark-mode .back-to-top {
 }
 
 /* ============================================
-   DEEP LINKS SECTION - إصلاح الوضع الليلي
+   DEEP LINKS SECTION
    ============================================ */
 .deep-links-section {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -1762,7 +2256,6 @@ body.dark-mode .deep-note {
    RESPONSIVE DESIGN
    ============================================ */
 
-/* Tablets */
 @media (max-width: 992px) {
     .portfolio-hero {
         padding: 120px 1.5rem 70px;
@@ -1781,19 +2274,36 @@ body.dark-mode .deep-note {
     .stat-number {
         font-size: 1.8rem;
     }
-    .projects-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.5rem;
-    }
     .modal-gallery {
         height: 300px;
     }
     .modal-body {
         padding: 1.2rem;
     }
+    
+    body.card-size-small {
+        --grid-min-width: 180px;
+        --card-gap: 0.7rem;
+    }
+    body.card-size-medium {
+        --grid-min-width: 240px;
+        --card-gap: 1.2rem;
+    }
+    body.card-size-large {
+        --grid-min-width: 310px;
+        --card-gap: 1.5rem;
+    }
+    body.card-size-large .project-card-media {
+        height: 220px;
+    }
+    body.card-size-large .project-card-content {
+        padding: 1rem 1.2rem 1.2rem;
+    }
+    body.card-size-large .project-card-title {
+        font-size: 1.1rem;
+    }
 }
 
-/* Mobile */
 @media (max-width: 768px) {
     .portfolio-hero {
         padding: 110px 1rem 60px;
@@ -1828,10 +2338,52 @@ body.dark-mode .deep-note {
         position: relative !important;
         top: auto !important;
     }
+    
+    .search-wrapper {
+        border-radius: 40px;
+        border-width: 1.5px;
+    }
+    .search-wrapper:focus-within {
+        transform: translateY(-1px);
+    }
     .search-input {
         padding: 0.7rem 2.8rem 0.7rem 0.8rem;
         font-size: 0.9rem;
     }
+    .search-icon {
+        right: 0.9rem;
+        font-size: 0.9rem;
+    }
+    .search-clear {
+        left: 0.9rem;
+        font-size: 0.9rem;
+    }
+    
+    .search-suggestions {
+        border-radius: 16px;
+        max-height: 300px;
+        padding: 6px 0;
+        top: calc(100% + 6px);
+    }
+    
+    .suggestion-item {
+        padding: 8px 14px;
+        border-radius: 10px;
+        margin: 2px 6px;
+    }
+    .suggestion-text {
+        font-size: 0.8rem;
+    }
+    .suggestion-category {
+        font-size: 0.55rem;
+        padding: 1px 8px;
+    }
+    .suggestion-item i {
+        width: 24px;
+        height: 24px;
+        font-size: 0.7rem;
+    }
+    
     .search-filters {
         gap: 4px;
     }
@@ -1845,25 +2397,84 @@ body.dark-mode .deep-note {
         font-size: 0.6rem;
     }
     
+    .projects-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+    .projects-header-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .card-size-controls {
+        padding: 3px 4px;
+    }
+    .card-size-controls button {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+    }
+    .card-size-controls .size-label {
+        font-size: 0.5rem;
+        min-width: 16px;
+    }
+    .view-toggle-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+    }
+    
     .projects-grid {
-        gap: 1.2rem;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+    }
+    
+    body.card-size-small {
+        --grid-min-width: 150px;
+        --card-gap: 0.5rem;
+    }
+    body.card-size-medium {
+        --grid-min-width: 200px;
+        --card-gap: 0.8rem;
+    }
+    body.card-size-large {
+        --grid-min-width: 280px;
+        --card-gap: 1rem;
+    }
+    
+    body.card-size-small .projects-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    body.card-size-medium .projects-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    body.card-size-large .projects-grid {
         grid-template-columns: 1fr;
     }
-    .project-card-media {
-        height: 200px;
+    
+    body.card-size-small .project-card-media {
+        height: 120px;
     }
+    body.card-size-medium .project-card-media {
+        height: 160px;
+    }
+    body.card-size-large .project-card-media {
+        height: 220px;
+    }
+    
     .project-card-content {
         padding: 0.8rem 1rem 1rem;
     }
     .project-card-title {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
     .project-card-description {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
     .project-card-footer {
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 4px;
     }
     .project-links {
         gap: 4px;
@@ -1872,6 +2483,24 @@ body.dark-mode .deep-note {
         width: 28px;
         height: 28px;
         font-size: 0.7rem;
+    }
+    
+    body.card-view-list .project-card {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+    body.card-view-list .project-card-media {
+        height: 160px;
+        min-height: 120px;
+    }
+    body.card-view-list .project-card-content {
+        padding: 0.8rem 1rem;
+    }
+    body.card-view-list.card-size-small .project-card-media {
+        height: 120px;
+    }
+    body.card-view-list.card-size-large .project-card-media {
+        height: 200px;
     }
     
     .modal-gallery {
@@ -1927,7 +2556,6 @@ body.dark-mode .deep-note {
     }
 }
 
-/* Small phones */
 @media (max-width: 576px) {
     .portfolio-hero {
         padding: 100px 0.8rem 50px;
@@ -1962,6 +2590,34 @@ body.dark-mode .deep-note {
         left: 0.7rem;
         font-size: 0.85rem;
     }
+    
+    .search-suggestions {
+        border-radius: 14px;
+        max-height: 250px;
+        padding: 4px 0;
+        top: calc(100% + 4px);
+    }
+    
+    .suggestion-item {
+        padding: 6px 12px;
+        border-radius: 8px;
+        margin: 1px 4px;
+        gap: 8px;
+    }
+    .suggestion-text {
+        font-size: 0.75rem;
+    }
+    .suggestion-category {
+        font-size: 0.5rem;
+        padding: 1px 6px;
+    }
+    .suggestion-item i {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6rem;
+        border-radius: 6px;
+    }
+    
     .filter-btn {
         padding: 3px 8px;
         font-size: 0.65rem;
@@ -1971,14 +2627,56 @@ body.dark-mode .deep-note {
         font-size: 0.55rem;
     }
     
-    .projects-count {
-        font-size: 0.75rem;
-        padding: 0.3rem 1rem;
+    .projects-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
     }
     
-    .project-card-media {
-        height: 180px;
+    body.card-size-small {
+        --grid-min-width: 130px;
+        --card-gap: 0.4rem;
     }
+    body.card-size-medium {
+        --grid-min-width: 160px;
+        --card-gap: 0.6rem;
+    }
+    body.card-size-large {
+        --grid-min-width: 260px;
+        --card-gap: 0.8rem;
+    }
+    body.card-size-large .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    body.card-size-small .project-card-media {
+        height: 100px;
+    }
+    body.card-size-medium .project-card-media {
+        height: 140px;
+    }
+    body.card-size-large .project-card-media {
+        height: 200px;
+    }
+    
+    body.card-size-small .project-card-title {
+        font-size: 0.7rem;
+    }
+    body.card-size-small .project-card-description {
+        font-size: 0.55rem;
+    }
+    body.card-size-small .project-rating .stars {
+        font-size: 0.5rem;
+    }
+    body.card-size-small .project-date,
+    body.card-size-small .project-views {
+        font-size: 0.45rem;
+    }
+    body.card-size-small .project-link {
+        width: 20px;
+        height: 20px;
+        font-size: 0.5rem;
+    }
+    
     .project-category-badge {
         padding: 0.2rem 0.6rem;
         font-size: 0.55rem;
@@ -2009,18 +2707,28 @@ body.dark-mode .deep-note {
     .back-to-top {
         bottom: 15px;
         left: 15px;
-        width: 40px;
-        height: 40px;
-        font-size: 0.9rem;
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
     }
     
     .load-more-btn {
         padding: 0.7rem 1.8rem;
         font-size: 0.85rem;
     }
+    
+    .card-size-controls button {
+        width: 26px;
+        height: 26px;
+        font-size: 0.7rem;
+    }
+    .view-toggle-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 0.7rem;
+    }
 }
 
-/* Extra small phones */
 @media (max-width: 380px) {
     .hero-title {
         font-size: 1.3rem;
@@ -2032,14 +2740,23 @@ body.dark-mode .deep-note {
         font-size: 1rem;
     }
     .project-card-media {
-        height: 160px;
+        height: 180px;
     }
     .modal-gallery {
         height: 180px;
     }
+    
+    body.card-size-small .project-card-media {
+        height: 90px;
+    }
+    body.card-size-medium .project-card-media {
+        height: 120px;
+    }
+    body.card-size-large .project-card-media {
+        height: 180px;
+    }
 }
 
-/* Touch devices hover fix */
 @media (hover: none) {
     .project-card:hover {
         transform: none !important;
@@ -2061,7 +2778,6 @@ body.dark-mode .deep-note {
     }
 }
 
-/* Print styles */
 @media print {
     .portfolio-hero,
     .portfolio-search-section,
@@ -2073,7 +2789,9 @@ body.dark-mode .deep-note {
     .project-card .project-links,
     .modal-share,
     .search-filters-wrapper,
-    .deep-links-section {
+    .deep-links-section,
+    .card-size-controls,
+    .view-toggle-btn {
         display: none !important;
     }
     
@@ -2098,7 +2816,6 @@ body.dark-mode .deep-note {
     }
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -2121,7 +2838,6 @@ body.dark-mode ::-webkit-scrollbar-track {
     background: var(--portfolio-secondary);
 }
 
-/* Image loading */
 img[loading="lazy"] {
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -2153,7 +2869,6 @@ body.dark-mode .project-card-media::after {
     opacity: 0;
 }
 
-/* Animations */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
@@ -2176,4 +2891,213 @@ body.dark-mode .project-card-media::after {
 .hero-badge i { 
     color: #FFD700;
     animation: starPulse 2s ease-in-out infinite;
+}
+
+/* ============================================
+   ترقيم المشاريع في وضع القائمة
+   ============================================ */
+body.card-view-list .projects-grid {
+    counter-reset: project-counter;
+}
+
+body.card-view-list .project-card {
+    position: relative;
+    counter-increment: project-counter;
+}
+
+body.card-view-list .project-card::before {
+    content: counter(project-counter);
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--gradient-primary);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    z-index: 5;
+    box-shadow: 0 4px 12px rgba(42,45,124,0.2);
+}
+
+body.card-view-list.card-size-small .project-card::before {
+    width: 22px;
+    height: 22px;
+    font-size: 0.6rem;
+    top: 8px;
+    right: 8px;
+}
+
+body.card-view-list.card-size-large .project-card::before {
+    width: 34px;
+    height: 34px;
+    font-size: 0.85rem;
+    top: 16px;
+    right: 16px;
+}
+
+/* ============================================
+   تحسينات إضافية للجوال
+   ============================================ */
+@media (max-width: 576px) {
+    .search-filters {
+        gap: 3px;
+    }
+    .filter-btn {
+        padding: 2px 6px;
+        font-size: 0.6rem;
+        border-width: 1px;
+    }
+    .filter-tech-btn {
+        padding: 2px 5px;
+        font-size: 0.5rem;
+    }
+    .tech-toggle-btn {
+        padding: 2px 10px;
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body.card-view-list .project-card::before {
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
+        font-size: 0.6rem;
+    }
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 10px;
+}
+
+/* ============================================
+   إصلاح نهائي لصندوق البحث ومنع التعارض مع main.css
+   ============================================ */
+
+/* منع أي تعارض من main.css */
+.portfolio-search-section .search-wrapper {
+    border-radius: 60px !important;
+    border: 2px solid rgba(78, 205, 196, 0.08) !important;
+    box-shadow: 
+        0 4px 20px rgba(78, 205, 196, 0.08),
+        0 8px 40px rgba(78, 205, 196, 0.04) !important;
+    background: var(--bg-input) !important;
+    transition: var(--transition-bounce) !important;
+}
+
+/* إطار التركيز - منحني بالكامل */
+.portfolio-search-section .search-wrapper:focus-within {
+    border-color: var(--portfolio-accent) !important;
+    box-shadow: 
+        0 0 0 4px rgba(78, 205, 196, 0.15),
+        0 8px 40px rgba(78, 205, 196, 0.12),
+        0 20px 60px rgba(78, 205, 196, 0.04) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* إزالة أي ::before قد يسبب زوايا حادة */
+.portfolio-search-section .search-wrapper::before {
+    display: none !important;
+    content: none !important;
+}
+
+/* منع أي أنماط من main.css من التأثير على صندوق الاقتراحات */
+.portfolio-search-section .search-suggestions {
+    border-radius: 24px !important;
+}
+
+.portfolio-search-section .search-suggestions .suggestion-item {
+    border-radius: 12px !important;
+}
+
+/* ===== إصلاح صندوق البحث في وضع الجوال ===== */
+@media (max-width: 768px) {
+    .portfolio-search-section .search-wrapper {
+        border-radius: 40px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .portfolio-search-section .search-wrapper {
+        border-radius: 30px !important;
+    }
+    .portfolio-search-section .search-suggestions {
+        border-radius: 16px !important;
+    }
+}
+
+/* ===== منع أي تعارض مع .search-box من main.css ===== */
+.search-box {
+    /* إعادة تعيين أي أنماط من main.css قد تسبب مشكلة */
+    border-radius: 60px !important;
+}
+
+.search-box:focus-within {
+    border-color: var(--portfolio-accent) !important;
+    box-shadow: 
+        0 0 0 4px rgba(78, 205, 196, 0.15),
+        0 8px 40px rgba(78, 205, 196, 0.12) !important;
+}
+
+.search-box::before {
+    display: none !important;
+}
+
+/* ============================================
+   إزالة المربع الإضافي ذو الزوايا الحادة
+   ============================================ */
+
+/* 1. إزالة أي outline من المتصفح */
+.portfolio-search-section .search-wrapper input:focus,
+.portfolio-search-section .search-wrapper input:focus-visible {
+    outline: none !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
+}
+
+/* 2. إزالة أي box-shadow إضافي من main.css */
+.portfolio-search-section .search-wrapper:focus-within,
+.portfolio-search-section .search-wrapper:focus {
+    outline: none !important;
+    outline-offset: 0 !important;
+}
+
+/* 3. إزالة أي تأثير focus من المتصفح على عناصر input */
+.portfolio-search-section .search-wrapper input {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* 4. إزالة أي ::focus-visible من المتصفح */
+.portfolio-search-section .search-wrapper input:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* 5. منع أي تأثير من main.css على .search-box */
+.search-box input:focus,
+.search-box input:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* 6. إزالة أي border-radius من الصندوق الإضافي */
+.portfolio-search-section .search-wrapper:focus-within::after {
+    display: none !important;
 }

@@ -1358,8 +1358,6 @@
     function setupScrollEffects() {
         var backToTop = document.getElementById('backToTop');
         if (!backToTop) return;
-        
-        // تم نقل هذه الوظيفة إلى setupBackToTopProgress
     }
 
     function renderProjects() {
@@ -1827,7 +1825,10 @@
     
     window.PortfolioSystem = {
         projects: function() { return projects; },
-        refresh: function() { localStorage.removeItem('portfolio_projects'); loadProjects().then(function() { renderProjects(); }); },
+        refresh: function() { 
+            localStorage.removeItem('portfolio_projects'); 
+            loadProjects().then(function() { renderProjects(); }); 
+        },
         addProject: function(project) {
             PROJECTS_DB.push(project);
             localStorage.removeItem('portfolio_projects');
@@ -1836,12 +1837,15 @@
         shareProject: shareProject,
         updateOpenGraph: updateOpenGraph,
         resetOpenGraph: resetOpenGraph,
-        initOpenGraphFromUrl: initOpenGraphFromUrl
+        initOpenGraphFromUrl: initOpenGraphFromUrl,
+        renderProjects: renderProjects
     };
 
-    // ربط دوال Open Graph بالنافذة للاستخدام من HTML
     window.updateOpenGraph = updateOpenGraph;
     window.resetOpenGraph = resetOpenGraph;
     window.initOpenGraphFromUrl = initOpenGraphFromUrl;
+    window.shareProject = shareProject;
+
+    console.log('✅ Portfolio System Ready with ' + projects.length + ' projects');
 
 })();

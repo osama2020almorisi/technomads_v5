@@ -782,208 +782,223 @@ body.dark-mode .view-toggle-btn.active {
 }
 
 /* ============================================
-   PROJECTS GRID - مع التحكم بالحجم الحقيقي
+   PROJECTS GRID - القاعدة الأساسية
    ============================================ */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-width), 1fr));
-    gap: var(--card-gap);
+    grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-width, 280px), 1fr));
+    gap: var(--card-gap, 1.5rem);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================
-   أحجام مختلفة للبطاقات
+   أحجام مختلفة للبطاقات - إصلاح كامل
    ============================================ */
 
 /* ----- الحجم الصغير ----- */
 body.card-size-small {
-    --grid-min-width: 200px;
-    --card-gap: 0.8rem;
+    --grid-min-width: 200px !important;
+    --card-gap: 0.8rem !important;
 }
 
 body.card-size-small .project-card {
-    border-radius: 12px;
+    border-radius: 12px !important;
 }
 
 body.card-size-small .project-card-media {
-    height: 140px;
+    height: 140px !important;
 }
 
 body.card-size-small .project-card-content {
-    padding: 0.5rem 0.7rem 0.7rem;
+    padding: 0.5rem 0.7rem 0.7rem !important;
 }
 
 body.card-size-small .project-card-title {
-    font-size: 0.85rem;
-    margin-bottom: 0.2rem;
+    font-size: 0.85rem !important;
+    margin-bottom: 0.2rem !important;
 }
 
 body.card-size-small .project-card-description {
-    font-size: 0.65rem;
-    -webkit-line-clamp: 2;
-    margin-bottom: 0.3rem;
+    font-size: 0.65rem !important;
+    -webkit-line-clamp: 2 !important;
+    margin-bottom: 0.3rem !important;
 }
 
 body.card-size-small .project-rating {
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.3rem !important;
 }
 
 body.card-size-small .project-rating .stars {
-    font-size: 0.6rem;
+    font-size: 0.6rem !important;
 }
 
 body.card-size-small .project-rating .rating-count {
-    font-size: 0.6rem;
+    font-size: 0.6rem !important;
 }
 
 body.card-size-small .project-card-footer {
-    padding-top: 0.3rem;
+    padding-top: 0.3rem !important;
 }
 
 body.card-size-small .project-date,
 body.card-size-small .project-views {
-    font-size: 0.5rem;
+    font-size: 0.5rem !important;
 }
 
 body.card-size-small .project-link {
-    width: 24px;
-    height: 24px;
-    font-size: 0.6rem;
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 0.6rem !important;
 }
 
 body.card-size-small .project-category-badge {
-    font-size: 0.5rem;
-    padding: 0.15rem 0.5rem;
-    top: 0.4rem;
-    right: 0.4rem;
+    font-size: 0.5rem !important;
+    padding: 0.15rem 0.5rem !important;
+    top: 0.4rem !important;
+    right: 0.4rem !important;
 }
 
 body.card-size-small .project-featured,
 body.card-size-small .project-version-badge {
-    font-size: 0.45rem;
-    padding: 0.1rem 0.4rem;
-    top: 0.4rem;
-    left: 0.4rem;
+    font-size: 0.45rem !important;
+    padding: 0.1rem 0.4rem !important;
+    top: 0.4rem !important;
+    left: 0.4rem !important;
 }
 
 body.card-size-small .view-project-btn {
-    padding: 0.3rem 0.8rem;
-    font-size: 0.6rem;
+    padding: 0.3rem 0.8rem !important;
+    font-size: 0.6rem !important;
+}
+
+body.card-size-small .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+    gap: 0.8rem !important;
 }
 
 /* ----- الحجم المتوسط (الافتراضي) ----- */
 body.card-size-medium {
-    --grid-min-width: 280px;
-    --card-gap: 1.5rem;
+    --grid-min-width: 280px !important;
+    --card-gap: 1.5rem !important;
 }
 
 body.card-size-medium .project-card-media {
-    height: 200px;
+    height: 200px !important;
 }
 
 body.card-size-medium .project-card-content {
-    padding: 0.8rem 1rem 1rem;
+    padding: 0.8rem 1rem 1rem !important;
 }
 
 body.card-size-medium .project-card-title {
-    font-size: 1rem;
+    font-size: 1rem !important;
 }
 
 body.card-size-medium .project-card-description {
-    font-size: 0.8rem;
+    font-size: 0.8rem !important;
 }
 
 body.card-size-medium .project-rating .stars {
-    font-size: 0.75rem;
+    font-size: 0.75rem !important;
 }
 
 body.card-size-medium .project-date,
 body.card-size-medium .project-views {
-    font-size: 0.6rem;
+    font-size: 0.6rem !important;
+}
+
+body.card-size-medium .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 1.5rem !important;
 }
 
 /* ----- الحجم الكبير ----- */
 body.card-size-large {
-    --grid-min-width: 360px;
-    --card-gap: 2rem;
+    --grid-min-width: 360px !important;
+    --card-gap: 2rem !important;
 }
 
 body.card-size-large .project-card {
-    border-radius: 20px;
+    border-radius: 20px !important;
 }
 
 body.card-size-large .project-card-media {
-    height: 260px;
+    height: 260px !important;
 }
 
 body.card-size-large .project-card-content {
-    padding: 1.2rem 1.5rem 1.5rem;
+    padding: 1.2rem 1.5rem 1.5rem !important;
 }
 
 body.card-size-large .project-card-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.2rem !important;
+    margin-bottom: 0.5rem !important;
 }
 
 body.card-size-large .project-card-description {
-    font-size: 0.95rem;
-    -webkit-line-clamp: 3;
-    margin-bottom: 0.8rem;
+    font-size: 0.95rem !important;
+    -webkit-line-clamp: 3 !important;
+    margin-bottom: 0.8rem !important;
 }
 
 body.card-size-large .project-rating {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.8rem !important;
 }
 
 body.card-size-large .project-rating .stars {
-    font-size: 0.95rem;
+    font-size: 0.95rem !important;
 }
 
 body.card-size-large .project-rating .rating-count {
-    font-size: 0.85rem;
+    font-size: 0.85rem !important;
 }
 
 body.card-size-large .project-card-footer {
-    padding-top: 0.8rem;
+    padding-top: 0.8rem !important;
 }
 
 body.card-size-large .project-date,
 body.card-size-large .project-views {
-    font-size: 0.75rem;
+    font-size: 0.75rem !important;
 }
 
 body.card-size-large .project-link {
-    width: 34px;
-    height: 34px;
-    font-size: 0.9rem;
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 0.9rem !important;
 }
 
 body.card-size-large .project-category-badge {
-    font-size: 0.75rem;
-    padding: 0.3rem 1rem;
-    top: 1rem;
-    right: 1rem;
+    font-size: 0.75rem !important;
+    padding: 0.3rem 1rem !important;
+    top: 1rem !important;
+    right: 1rem !important;
 }
 
 body.card-size-large .project-featured,
 body.card-size-large .project-version-badge {
-    font-size: 0.65rem;
-    padding: 0.25rem 0.8rem;
-    top: 1rem;
-    left: 1rem;
+    font-size: 0.65rem !important;
+    padding: 0.25rem 0.8rem !important;
+    top: 1rem !important;
+    left: 1rem !important;
 }
 
 body.card-size-large .view-project-btn {
-    padding: 0.7rem 1.8rem;
-    font-size: 0.95rem;
+    padding: 0.7rem 1.8rem !important;
+    font-size: 0.95rem !important;
+}
+
+body.card-size-large .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)) !important;
+    gap: 2rem !important;
 }
 
 /* ============================================
    عرض القائمة (تخطيط أفقي)
    ============================================ */
 body.card-view-list .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
 }
 
 body.card-view-list .project-card {
@@ -997,47 +1012,55 @@ body.card-view-list .project-card {
 }
 
 body.card-view-list .project-card-media {
-    height: 100%;
-    min-height: 180px;
+    height: 100% !important;
+    min-height: 180px !important;
 }
 
 body.card-view-list .project-card-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1rem 1.2rem;
+    padding: 1rem 1.2rem !important;
 }
 
 body.card-view-list .project-card-description {
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 3 !important;
 }
 
 /* قائمة مع حجم صغير */
 body.card-view-list.card-size-small .project-card {
-    grid-template-columns: 160px 1fr;
-    min-height: 140px;
+    grid-template-columns: 160px 1fr !important;
+    min-height: 140px !important;
 }
 
 body.card-view-list.card-size-small .project-card-media {
-    min-height: 140px;
+    min-height: 140px !important;
 }
 
 body.card-view-list.card-size-small .project-card-content {
-    padding: 0.6rem 0.8rem;
+    padding: 0.6rem 0.8rem !important;
+}
+
+body.card-view-list.card-size-small .projects-grid {
+    gap: 0.6rem !important;
 }
 
 /* قائمة مع حجم كبير */
 body.card-view-list.card-size-large .project-card {
-    grid-template-columns: 300px 1fr;
-    min-height: 240px;
+    grid-template-columns: 300px 1fr !important;
+    min-height: 240px !important;
 }
 
 body.card-view-list.card-size-large .project-card-media {
-    min-height: 240px;
+    min-height: 240px !important;
 }
 
 body.card-view-list.card-size-large .project-card-content {
-    padding: 1.5rem 2rem;
+    padding: 1.5rem 2rem !important;
+}
+
+body.card-view-list.card-size-large .projects-grid {
+    gap: 1.5rem !important;
 }
 
 /* ============================================
@@ -2281,26 +2304,26 @@ body.dark-mode .deep-note {
         padding: 1.2rem;
     }
     
-    body.card-size-small {
-        --grid-min-width: 180px;
-        --card-gap: 0.7rem;
+    body.card-size-small .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+        gap: 0.7rem !important;
     }
-    body.card-size-medium {
-        --grid-min-width: 240px;
-        --card-gap: 1.2rem;
+    body.card-size-medium .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+        gap: 1.2rem !important;
     }
-    body.card-size-large {
-        --grid-min-width: 310px;
-        --card-gap: 1.5rem;
+    body.card-size-large .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)) !important;
+        gap: 1.5rem !important;
     }
     body.card-size-large .project-card-media {
-        height: 220px;
+        height: 220px !important;
     }
     body.card-size-large .project-card-content {
-        padding: 1rem 1.2rem 1.2rem;
+        padding: 1rem 1.2rem 1.2rem !important;
     }
     body.card-size-large .project-card-title {
-        font-size: 1.1rem;
+        font-size: 1.1rem !important;
     }
 }
 
@@ -2425,52 +2448,37 @@ body.dark-mode .deep-note {
         font-size: 0.75rem;
     }
     
-    .projects-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.8rem;
-    }
-    
-    body.card-size-small {
-        --grid-min-width: 150px;
-        --card-gap: 0.5rem;
-    }
-    body.card-size-medium {
-        --grid-min-width: 200px;
-        --card-gap: 0.8rem;
-    }
-    body.card-size-large {
-        --grid-min-width: 280px;
-        --card-gap: 1rem;
-    }
-    
     body.card-size-small .projects-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+        gap: 0.5rem !important;
     }
     body.card-size-medium .projects-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+        gap: 0.8rem !important;
     }
     body.card-size-large .projects-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+        gap: 1rem !important;
     }
     
     body.card-size-small .project-card-media {
-        height: 120px;
+        height: 120px !important;
     }
     body.card-size-medium .project-card-media {
-        height: 160px;
+        height: 160px !important;
     }
     body.card-size-large .project-card-media {
-        height: 220px;
+        height: 220px !important;
     }
     
     .project-card-content {
-        padding: 0.8rem 1rem 1rem;
+        padding: 0.8rem 1rem 1rem !important;
     }
     .project-card-title {
-        font-size: 0.9rem;
+        font-size: 0.9rem !important;
     }
     .project-card-description {
-        font-size: 0.75rem;
+        font-size: 0.75rem !important;
     }
     .project-card-footer {
         flex-wrap: wrap;
@@ -2486,21 +2494,21 @@ body.dark-mode .deep-note {
     }
     
     body.card-view-list .project-card {
-        grid-template-columns: 1fr;
-        min-height: auto;
+        grid-template-columns: 1fr !important;
+        min-height: auto !important;
     }
     body.card-view-list .project-card-media {
-        height: 160px;
-        min-height: 120px;
+        height: 160px !important;
+        min-height: 120px !important;
     }
     body.card-view-list .project-card-content {
-        padding: 0.8rem 1rem;
+        padding: 0.8rem 1rem !important;
     }
     body.card-view-list.card-size-small .project-card-media {
-        height: 120px;
+        height: 120px !important;
     }
     body.card-view-list.card-size-large .project-card-media {
-        height: 200px;
+        height: 200px !important;
     }
     
     .modal-gallery {
@@ -2627,54 +2635,49 @@ body.dark-mode .deep-note {
         font-size: 0.55rem;
     }
     
-    .projects-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.6rem;
+    body.card-size-small .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important;
+        gap: 0.4rem !important;
     }
-    
-    body.card-size-small {
-        --grid-min-width: 130px;
-        --card-gap: 0.4rem;
-    }
-    body.card-size-medium {
-        --grid-min-width: 160px;
-        --card-gap: 0.6rem;
-    }
-    body.card-size-large {
-        --grid-min-width: 260px;
-        --card-gap: 0.8rem;
+    body.card-size-medium .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+        gap: 0.6rem !important;
     }
     body.card-size-large .projects-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+        gap: 0.8rem !important;
+    }
+    body.card-size-large .projects-grid {
+        grid-template-columns: 1fr !important;
     }
     
     body.card-size-small .project-card-media {
-        height: 100px;
+        height: 100px !important;
     }
     body.card-size-medium .project-card-media {
-        height: 140px;
+        height: 140px !important;
     }
     body.card-size-large .project-card-media {
-        height: 200px;
+        height: 200px !important;
     }
     
     body.card-size-small .project-card-title {
-        font-size: 0.7rem;
+        font-size: 0.7rem !important;
     }
     body.card-size-small .project-card-description {
-        font-size: 0.55rem;
+        font-size: 0.55rem !important;
     }
     body.card-size-small .project-rating .stars {
-        font-size: 0.5rem;
+        font-size: 0.5rem !important;
     }
     body.card-size-small .project-date,
     body.card-size-small .project-views {
-        font-size: 0.45rem;
+        font-size: 0.45rem !important;
     }
     body.card-size-small .project-link {
-        width: 20px;
-        height: 20px;
-        font-size: 0.5rem;
+        width: 20px !important;
+        height: 20px !important;
+        font-size: 0.5rem !important;
     }
     
     .project-category-badge {
@@ -2747,13 +2750,13 @@ body.dark-mode .deep-note {
     }
     
     body.card-size-small .project-card-media {
-        height: 90px;
+        height: 90px !important;
     }
     body.card-size-medium .project-card-media {
-        height: 120px;
+        height: 120px !important;
     }
     body.card-size-large .project-card-media {
-        height: 180px;
+        height: 180px !important;
     }
 }
 
@@ -3043,7 +3046,6 @@ body.card-view-list.card-size-large .project-card::before {
 
 /* ===== منع أي تعارض مع .search-box من main.css ===== */
 .search-box {
-    /* إعادة تعيين أي أنماط من main.css قد تسبب مشكلة */
     border-radius: 60px !important;
 }
 
