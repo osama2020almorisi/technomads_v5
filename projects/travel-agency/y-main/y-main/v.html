@@ -108,12 +108,6 @@
             margin-top: 4px;
         }
 
-        .stat-card .sub-label {
-            font-size: 0.7rem;
-            color: var(--muted);
-            opacity: 0.6;
-        }
-
         .section-title {
             font-size: 1.2rem;
             font-weight: 700;
@@ -354,9 +348,28 @@
             color: #1e40af;
         }
 
-        .badge-info {
-            background: #e0f2fe;
-            color: #0369a1;
+        .file-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-radius: 10px;
+            margin: 8px 0;
+        }
+
+        .file-status i {
+            font-size: 1.5rem;
+        }
+
+        .file-status .name {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .file-status .size {
+            color: var(--muted);
+            font-size: 0.85rem;
         }
 
         .toast {
@@ -377,15 +390,12 @@
         .toast-success {
             background: linear-gradient(90deg, #059669, var(--success));
         }
-
         .toast-error {
             background: linear-gradient(90deg, #dc2626, var(--danger));
         }
-
         .toast-info {
             background: linear-gradient(90deg, var(--primary-dark), var(--primary));
         }
-
         .toast-warning {
             background: linear-gradient(90deg, #d97706, var(--accent));
         }
@@ -414,28 +424,12 @@
             transform: translateY(-3px);
         }
 
-        .file-status {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            background: #f8fafc;
-            border-radius: 10px;
-            margin: 8px 0;
-        }
-
-        .file-status i {
-            font-size: 1.5rem;
-        }
-
-        .file-status .name {
-            font-weight: 600;
-            color: #0f172a;
-        }
-
-        .file-status .size {
-            color: var(--muted);
-            font-size: 0.85rem;
+        .table-wrapper {
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
         }
 
         @keyframes fadeInUp {
@@ -474,13 +468,6 @@
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
             }
-            .preview-table {
-                font-size: 0.7rem;
-            }
-            .preview-table th,
-            .preview-table td {
-                padding: 4px 6px;
-            }
             .back-home {
                 bottom: 15px;
                 right: 15px;
@@ -500,15 +487,6 @@
                 padding: 30px 16px;
             }
         }
-
-        /* شريط تمرير للجدول */
-        .table-wrapper {
-            overflow-x: auto;
-            max-height: 500px;
-            overflow-y: auto;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-        }
     </style>
 </head>
 <body>
@@ -521,7 +499,6 @@
     <div class="wrap">
         <div class="card">
 
-            <!-- الهيدر -->
             <header class="hero">
                 <div class="brand">
                     <i class="fas fa-language"></i>
@@ -540,22 +517,18 @@
                     <div class="stat-card">
                         <div class="number" id="countryCount">0</div>
                         <div class="label">🇺🇳 عدد الدول</div>
-                        <div class="sub-label" id="countryDetail"></div>
                     </div>
                     <div class="stat-card">
                         <div class="number" id="cityCount">0</div>
                         <div class="label">🏙️ عدد المدن</div>
-                        <div class="sub-label" id="cityDetail"></div>
                     </div>
                     <div class="stat-card">
                         <div class="number" id="airportCount">0</div>
                         <div class="label">✈️ عدد المطارات</div>
-                        <div class="sub-label" id="airportDetail"></div>
                     </div>
                     <div class="stat-card">
                         <div class="number" id="translatedCount">0</div>
                         <div class="label">✅ مترجم بالعربية</div>
-                        <div class="sub-label" id="translatedDetail"></div>
                     </div>
                 </div>
 
@@ -565,7 +538,7 @@
                     <span>1. استيراد الملف الأصلي (airports.json)</span>
                 </div>
                 <p class="section-desc">
-                    قم باستيراد ملف <strong>airports.json</strong> الأصلي الذي يحتوي على جميع بيانات المطارات باللغة الإنجليزية.
+                    قم باستيراد ملف <strong>airports.json</strong> الأصلي الذي يحتوي على جميع بيانات المطارات.
                 </p>
 
                 <div class="upload-area" id="originalUploadArea">
@@ -586,8 +559,6 @@
                         <i class="fas fa-times"></i> إزالة
                     </button>
                 </div>
-
-                <div id="originalAlertContainer"></div>
 
                 <hr class="divider">
 
@@ -622,7 +593,7 @@
                     <span>3. استيراد الملف المترجم من Excel</span>
                 </div>
                 <p class="section-desc">
-                    بعد ترجمة الملف، قم برفعه هنا لاستبدال البيانات القديمة بالجديدة.
+                    بعد ترجمة الملف بواسطة الذكاء الاصطناعي، قم برفعه هنا لاستبدال البيانات القديمة بالجديدة.
                 </p>
 
                 <div class="upload-area" id="translatedUploadArea">
@@ -651,8 +622,6 @@
                     </div>
                     <div class="progress-text" id="progressText">جاري المعالجة...</div>
                 </div>
-
-                <div id="translatedAlertContainer"></div>
 
                 <!-- معاينة البيانات المترجمة -->
                 <div id="previewContainer" style="display:none;">
@@ -724,8 +693,6 @@
         let originalData = null;
         let currentData = null;
         let translatedData = null;
-        let fileName = 'airports.json';
-        let originalFileName = '';
 
         // ============================================================
         //  تحميل البيانات الأولية (افتراضي)
@@ -741,36 +708,9 @@
             } catch (e) {
                 showToast('لم يتم العثور على ملف airports.json، قم باستيراده', 'warning');
                 console.error(e);
-                // بيانات تجريبية
-                originalData = getFallbackData();
-                currentData = JSON.parse(JSON.stringify(originalData));
+                currentData = [];
                 updateStats(currentData);
             }
-        }
-
-        function getFallbackData() {
-            return [{
-                "الدولة": "Algeria",
-                "رمز الدولة": "DZ",
-                "مدن": [{
-                    "المدينة": "Algiers",
-                    "المطارات": [{ "الاسم": "Houari Boumediene Airport", "الرمز": "ALG" }]
-                }]
-            }, {
-                "الدولة": "Egypt",
-                "رمز الدولة": "EG",
-                "مدن": [{
-                    "المدينة": "Cairo",
-                    "المطارات": [{ "الاسم": "Cairo International Airport", "الرمز": "CAI" }]
-                }]
-            }, {
-                "الدولة": "Saudi Arabia",
-                "رمز الدولة": "SA",
-                "مدن": [{
-                    "المدينة": "Riyadh",
-                    "المطارات": [{ "الاسم": "King Khalid International Airport", "الرمز": "RUH" }]
-                }]
-            }];
         }
 
         // ============================================================
@@ -806,13 +746,6 @@
             document.getElementById('cityCount').textContent = cities;
             document.getElementById('airportCount').textContent = airports;
             document.getElementById('translatedCount').textContent = translated;
-
-            const pct = airports > 0 ? Math.round((translated / airports) * 100) : 0;
-            document.getElementById('translatedDetail').textContent = `${pct}% من المطارات`;
-
-            document.getElementById('countryDetail').textContent = `من ${countries} دولة`;
-            document.getElementById('cityDetail').textContent = `من ${cities} مدينة`;
-            document.getElementById('airportDetail').textContent = `من ${airports} مطار`;
         }
 
         // ============================================================
@@ -867,11 +800,9 @@
                     currentData = JSON.parse(JSON.stringify(originalData));
                     updateStats(currentData);
 
-                    // عرض حالة الملف
                     document.getElementById('originalFileStatus').style.display = 'flex';
                     document.getElementById('originalFileName').textContent = file.name;
                     document.getElementById('originalFileSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
-                    originalFileName = file.name;
 
                     showToast(`تم استيراد ${jsonData.length} دولة بنجاح`, 'success');
 
@@ -885,13 +816,10 @@
 
         function clearOriginalFile() {
             originalData = null;
-            currentData = null;
+            currentData = [];
             document.getElementById('originalFileStatus').style.display = 'none';
             document.getElementById('originalFileInput').value = '';
-            document.getElementById('countryCount').textContent = '0';
-            document.getElementById('cityCount').textContent = '0';
-            document.getElementById('airportCount').textContent = '0';
-            document.getElementById('translatedCount').textContent = '0';
+            updateStats(currentData);
             showToast('تم إزالة الملف', 'info');
         }
 
@@ -904,124 +832,188 @@
                 return;
             }
 
-            showToast('جاري تحضير ملف Excel...', 'info');
+            try {
+                showToast('جاري تحضير ملف Excel...', 'info');
 
-            const rows = [];
-            let index = 0;
+                const rows = [];
+                let index = 0;
 
-            currentData.forEach(country => {
-                const countryName = typeof country["الدولة"] === 'string' ? country["الدولة"] : country["الدولة"]
-                    ?.en || '';
-                const countryCode = country["رمز الدولة"] || '';
+                currentData.forEach(country => {
+                    const countryName = typeof country["الدولة"] === 'string' ? country["الدولة"] : country[
+                        "الدولة"]?.en || '';
+                    const countryCode = country["رمز الدولة"] || '';
 
-                if (country["مدن"] && Array.isArray(country["مدن"])) {
-                    country["مدن"].forEach(city => {
-                        const cityName = typeof city["المدينة"] === 'string' ? city["المدينة"] : city[
-                            "المدينة"]?.en || '';
+                    if (country["مدن"] && Array.isArray(country["مدن"])) {
+                        country["مدن"].forEach(city => {
+                            const cityName = typeof city["المدينة"] === 'string' ? city["المدينة"] : city[
+                                "المدينة"]?.en || '';
 
-                        if (city["المطارات"] && Array.isArray(city["المطارات"])) {
-                            city["المطارات"].forEach(airport => {
-                                const airportName = typeof airport["الاسم"] === 'string' ? airport[
-                                    "الاسم"] : airport["الاسم"]?.en || '';
-                                const airportCode = airport["الرمز"] || '';
+                            if (city["المطارات"] && Array.isArray(city["المطارات"])) {
+                                city["المطارات"].forEach(airport => {
+                                    const airportName = typeof airport["الاسم"] === 'string' ? airport[
+                                        "الاسم"] : airport["الاسم"]?.en || '';
+                                    const airportCode = airport["الرمز"] || '';
 
-                                rows.push({
-                                    '#': ++index,
-                                    'الدولة (إنجليزي)': countryName,
-                                    'الدولة (عربي)': '',
-                                    'رمز الدولة': countryCode,
-                                    'المدينة (إنجليزي)': cityName,
-                                    'المدينة (عربي)': '',
-                                    'المطار (إنجليزي)': airportName,
-                                    'المطار (عربي)': '',
-                                    'رمز المطار': airportCode
+                                    rows.push({
+                                        '#': ++index,
+                                        'الدولة (إنجليزي)': countryName,
+                                        'الدولة (عربي)': '',
+                                        'رمز الدولة': countryCode,
+                                        'المدينة (إنجليزي)': cityName,
+                                        'المدينة (عربي)': '',
+                                        'المطار (إنجليزي)': airportName,
+                                        'المطار (عربي)': '',
+                                        'رمز المطار': airportCode
+                                    });
                                 });
-                            });
-                        }
-                    });
-                }
-            });
+                            }
+                        });
+                    }
+                });
 
-            const ws = XLSX.utils.json_to_sheet(rows);
-            ws['!cols'] = [
-                { wch: 6 }, { wch: 28 }, { wch: 28 }, { wch: 12 },
-                { wch: 28 }, { wch: 28 }, { wch: 35 }, { wch: 35 }, { wch: 12 }
-            ];
+                // إنشاء ورقة العمل
+                const ws = XLSX.utils.json_to_sheet(rows);
 
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'المطارات');
+                // ضبط عرض الأعمدة
+                ws['!cols'] = [
+                    { wch: 6 }, { wch: 30 }, { wch: 30 }, { wch: 12 },
+                    { wch: 30 }, { wch: 30 }, { wch: 40 }, { wch: 40 }, { wch: 12 }
+                ];
 
-            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-            const blob = new Blob([wbout], { type: 'application/octet-stream' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'airports_for_translation.xlsx';
-            link.click();
-            URL.revokeObjectURL(link.href);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'المطارات');
 
-            showToast(`تم تصدير ${rows.length} صف بنجاح`, 'success');
+                // إنشاء ملف Excel
+                const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+                // تحميل الملف
+                const blob = new Blob([wbout], { type: 'application/octet-stream' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'airports_for_translation.xlsx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+
+                showToast(`تم تصدير ${rows.length} صف بنجاح`, 'success');
+
+            } catch (err) {
+                showToast('خطأ في التصدير: ' + err.message, 'error');
+                console.error(err);
+            }
         }
 
         // ============================================================
-        //  تحميل القالب
+        //  تحميل القالب الفارغ
         // ============================================================
         function downloadTemplate() {
-            const rows = [{
-                '#': 1,
-                'الدولة (إنجليزي)': 'Saudi Arabia',
-                'الدولة (عربي)': 'السعودية',
-                'رمز الدولة': 'SA',
-                'المدينة (إنجليزي)': 'Riyadh',
-                'المدينة (عربي)': 'الرياض',
-                'المطار (إنجليزي)': 'King Khalid International Airport',
-                'المطار (عربي)': 'مطار الملك خالد الدولي',
-                'رمز المطار': 'RUH'
-            }, {
-                '#': 2,
-                'الدولة (إنجليزي)': 'Egypt',
-                'الدولة (عربي)': 'مصر',
-                'رمز الدولة': 'EG',
-                'المدينة (إنجليزي)': 'Cairo',
-                'المدينة (عربي)': 'القاهرة',
-                'المطار (إنجليزي)': 'Cairo International Airport',
-                'المطار (عربي)': 'مطار القاهرة الدولي',
-                'رمز المطار': 'CAI'
-            }];
+            try {
+                const rows = [{
+                    '#': 1,
+                    'الدولة (إنجليزي)': 'مثال / Example',
+                    'الدولة (عربي)': 'اكتب الترجمة هنا',
+                    'رمز الدولة': 'XX',
+                    'المدينة (إنجليزي)': 'مثال / Example',
+                    'المدينة (عربي)': 'اكتب الترجمة هنا',
+                    'المطار (إنجليزي)': 'مثال / Example',
+                    'المطار (عربي)': 'اكتب الترجمة هنا',
+                    'رمز المطار': 'XXX'
+                }, {
+                    '#': 2,
+                    'الدولة (إنجليزي)': 'Saudi Arabia',
+                    'الدولة (عربي)': 'السعودية',
+                    'رمز الدولة': 'SA',
+                    'المدينة (إنجليزي)': 'Riyadh',
+                    'المدينة (عربي)': 'الرياض',
+                    'المطار (إنجليزي)': 'King Khalid International Airport',
+                    'المطار (عربي)': 'مطار الملك خالد الدولي',
+                    'رمز المطار': 'RUH'
+                }, {
+                    '#': 3,
+                    'الدولة (إنجليزي)': 'Egypt',
+                    'الدولة (عربي)': 'مصر',
+                    'رمز الدولة': 'EG',
+                    'المدينة (إنجليزي)': 'Cairo',
+                    'المدينة (عربي)': 'القاهرة',
+                    'المطار (إنجليزي)': 'Cairo International Airport',
+                    'المطار (عربي)': 'مطار القاهرة الدولي',
+                    'رمز المطار': 'CAI'
+                }];
 
-            const ws = XLSX.utils.json_to_sheet(rows);
-            ws['!cols'] = [
-                { wch: 6 }, { wch: 28 }, { wch: 28 }, { wch: 12 },
-                { wch: 28 }, { wch: 28 }, { wch: 35 }, { wch: 35 }, { wch: 12 }
-            ];
+                const ws = XLSX.utils.json_to_sheet(rows);
 
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'الترجمة');
+                ws['!cols'] = [
+                    { wch: 6 }, { wch: 30 }, { wch: 30 }, { wch: 12 },
+                    { wch: 30 }, { wch: 30 }, { wch: 40 }, { wch: 40 }, { wch: 12 }
+                ];
 
-            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-            const blob = new Blob([wbout], { type: 'application/octet-stream' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'translation_template.xlsx';
-            link.click();
-            URL.revokeObjectURL(link.href);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'الترجمة');
 
-            showToast('تم تحميل القالب بنجاح', 'success');
+                const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+                const blob = new Blob([wbout], { type: 'application/octet-stream' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'translation_template.xlsx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+
+                showToast('تم تحميل القالب بنجاح', 'success');
+
+            } catch (err) {
+                showToast('خطأ في تحميل القالب: ' + err.message, 'error');
+                console.error(err);
+            }
         }
 
         // ============================================================
         //  عرض JSON
         // ============================================================
         function viewJSON() {
-            if (!currentData) {
+            if (!currentData || currentData.length === 0) {
                 showToast('لا توجد بيانات للعرض', 'error');
                 return;
             }
             const json = JSON.stringify(currentData, null, 2);
-            const win = window.open('', '_blank', 'width=800,height=600');
+            const win = window.open('', '_blank', 'width=900,height=700,scrollbars=yes');
             win.document.write(`
-                <html><head><title>عرض JSON</title></head>
-                <body style="direction:ltr;font-family:monospace;padding:20px;background:#1e1e1e;color:#d4d4d4;">
-                    <pre style="white-space:pre-wrap;word-wrap:break-word;">${json}</pre>
+                <html><head>
+                    <title>عرض JSON</title>
+                    <style>
+                        body { direction:ltr; font-family: 'Courier New', monospace; 
+                               padding:20px; background:#1e1e1e; color:#d4d4d4; margin:0; }
+                        pre { white-space:pre-wrap; word-wrap:break-word; margin:0; }
+                        .header { background:#2d2d2d; padding:12px 20px; color:#fff; 
+                                  font-family: Arial, sans-serif; border-bottom:2px solid #2563eb; }
+                        .btn-copy { float:right; background:#2563eb; color:#fff; border:none;
+                                    padding:6px 16px; border-radius:6px; cursor:pointer; }
+                        .btn-copy:hover { background:#1d4ed8; }
+                    </style>
+                </head><body>
+                    <div class="header">
+                        <span>📄 JSON Preview</span>
+                        <button class="btn-copy" onclick="copyJSON()">📋 نسخ</button>
+                    </div>
+                    <pre id="jsonContent">${json}</pre>
+                    <script>
+                        function copyJSON() {
+                            const text = document.getElementById('jsonContent').textContent;
+                            navigator.clipboard.writeText(text).then(() => {
+                                alert('تم نسخ JSON إلى الحافظة!');
+                            }).catch(() => {
+                                const area = document.createElement('textarea');
+                                area.value = text;
+                                document.body.appendChild(area);
+                                area.select();
+                                document.execCommand('copy');
+                                document.body.removeChild(area);
+                                alert('تم نسخ JSON إلى الحافظة!');
+                            });
+                        }
+                    <\/script>
                 </body></html>
             `);
         }
@@ -1060,17 +1052,11 @@
         }
 
         function handleTranslatedFile(file) {
-            const validTypes = [
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'application/vnd.ms-excel'
-            ];
-
-            if (!validTypes.includes(file.type) && !file.name.match(/\.(xlsx|xls)$/)) {
+            if (!file.name.match(/\.(xlsx|xls)$/)) {
                 showToast('الرجاء رفع ملف Excel بصيغة .xlsx أو .xls', 'error');
                 return;
             }
 
-            // عرض حالة الملف
             document.getElementById('translatedFileStatus').style.display = 'flex';
             document.getElementById('translatedFileName').textContent = file.name;
             document.getElementById('translatedFileSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
@@ -1309,7 +1295,7 @@
         //  تحميل الملف الجديد
         // ============================================================
         function downloadNewJSON() {
-            if (!currentData) {
+            if (!currentData || currentData.length === 0) {
                 showToast('لا توجد بيانات للتحميل', 'error');
                 return;
             }
@@ -1319,7 +1305,9 @@
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = 'airports_translated.json';
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
             URL.revokeObjectURL(link.href);
 
             showToast('تم تحميل الملف المترجم بنجاح', 'success');
@@ -1329,7 +1317,7 @@
         //  نسخ إلى الحافظة
         // ============================================================
         function copyToClipboard() {
-            if (!currentData) {
+            if (!currentData || currentData.length === 0) {
                 showToast('لا توجد بيانات للنسخ', 'error');
                 return;
             }
