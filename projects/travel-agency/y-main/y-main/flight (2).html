@@ -2,7 +2,6 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>نظام حجز الطيران — أمان للسفريات</title>
 
@@ -1643,7 +1642,7 @@
     <div id="toast" class="toast"></div>
 
     <!-- ============================================================ -->
-    <!-- ===== جافا سكريبت - النسخة المعدلة للاستضافة ===== -->
+    <!-- ===== جافا سكريبت - النسخة المعدلة بالكامل ===== -->
     <!-- ============================================================ -->
     <script>
         // ============================================================
@@ -1655,16 +1654,12 @@
         let recentSearchesData = JSON.parse(localStorage.getItem('recentSearches')) || [];
 
         // ============================================================
-        //  دوال اللغة - مع دعم UTF-8
+        //  دوال اللغة الجديدة - لعرض النصوص العربية بشكل صحيح
         // ============================================================
         function getArabicText(obj) {
             if (!obj) return '';
-            // إذا كان الكائن يحتوي على ar و en
             if (typeof obj === 'object' && obj.ar !== undefined) {
-                // محاولة إزالة أي ترميز غريب
-                let text = obj.ar || obj.en || '';
-                // التأكد من أن النص يظهر بشكل صحيح
-                return text;
+                return obj.ar || obj.en || '';
             }
             if (typeof obj === 'string') return obj;
             return String(obj);
@@ -1694,42 +1689,20 @@
         }
 
         // ============================================================
-        //  تحميل البيانات من JSON - نسخة معدلة للاستضافة
+        //  تحميل البيانات من JSON
         // ============================================================
         async function loadData() {
             showLoading(true);
 
             try {
-                // 🔧 إضافة رأس الطلب مع charset
-                const response = await fetch('airports.json', {
-                    headers: {
-                        'Accept': 'application/json; charset=utf-8'
-                    }
-                });
-
+                const response = await fetch('airports.json');
                 if (!response.ok) throw new Error('فشل في تحميل البيانات');
 
-                // 🔧 الحل السحري: قراءة النص ثم تحويله إلى JSON
-                const text = await response.text();
-                
-                // محاولة تنظيف النص من أي أحرف غير مرغوب فيها
-                const cleanText = text.replace(/^\uFEFF/, ''); // إزالة BOM إن وجد
-                
-                try {
-                    data = JSON.parse(cleanText);
-                } catch (parseError) {
-                    // محاولة مرة أخرى مع معالجة مختلفة
-                    console.warn('محاولة تحليل JSON مرة أخرى...');
-                    data = JSON.parse(text);
-                }
+                data = await response.json();
 
                 if (!Array.isArray(data) || data.length === 0) {
                     throw new Error('البيانات فارغة أو غير صحيحة');
                 }
-
-                // ✅ اختبار قراءة البيانات
-                console.log('✅ تم تحميل البيانات بنجاح');
-                console.log('عينة من البيانات:', data[0]);
 
                 populateCountries();
                 setupCustomSelects();
@@ -1741,10 +1714,10 @@
 
             } catch (e) {
                 showLoading(false);
-                console.error('❌ خطأ في تحميل البيانات:', e);
-                showToast('❌ فشل تحميل بيانات المطارات. سيتم استخدام بيانات تجريبية.', 'error');
+                showToast('❌ فشل تحميل بيانات المطارات. تأكد من وجود ملف airports.json', 'error');
+                console.error('Error loading data:', e);
 
-                // استخدام بيانات تجريبية للاختبار
+                // بيانات تجريبية للاختبار
                 data = getFallbackData();
                 populateCountries();
                 setupCustomSelects();
@@ -1752,33 +1725,14 @@
             }
         }
 
-        // ============================================================
-        //  بيانات تجريبية للاختبار
-        // ============================================================
         function getFallbackData() {
             return [{
-                "الدولة": { "ar": "اليمن", "en": "Yemen" },
-                "رمز الدولة": "YE",
+                "الدولة": { "ar": "الجزائر", "en": "Algeria" },
+                "رمز الدولة": "DZ",
                 "مدن": [{
-                    "المدينة": { "ar": "عدن", "en": "Aden" },
-                    "المطارات": [{ "الاسم": { "ar": "مطار عدن الدولي", "en": "Aden International Airport" },
-                        "الرمز": "ADE" }]
-                }, {
-                    "المدينة": { "ar": "صنعاء", "en": "Sanaa" },
-                    "المطارات": [{ "الاسم": { "ar": "مطار صنعاء الدولي", "en": "Sana\'a International Airport" },
-                        "الرمز": "SAH" }]
-                }]
-            }, {
-                "الدولة": { "ar": "السعودية", "en": "Saudi Arabia" },
-                "رمز الدولة": "SA",
-                "مدن": [{
-                    "المدينة": { "ar": "الرياض", "en": "Riyadh" },
-                    "المطارات": [{ "الاسم": { "ar": "مطار الملك خالد الدولي",
-                            "en": "King Khalid International Airport" }, "الرمز": "RUH" }]
-                }, {
-                    "المدينة": { "ar": "جدة", "en": "Jeddah" },
-                    "المطارات": [{ "الاسم": { "ar": "مطار الملك عبدالعزيز الدولي",
-                            "en": "King Abdulaziz International Airport" }, "الرمز": "JED" }]
+                    "المدينة": { "ar": "الجزائر العاصمة", "en": "Algiers" },
+                    "المطارات": [{ "الاسم": { "ar": "مطار هواري بومدين", "en": "Houari Boumediene Airport" },
+                        "الرمز": "ALG" }]
                 }]
             }, {
                 "الدولة": { "ar": "مصر", "en": "Egypt" },
@@ -1787,6 +1741,14 @@
                     "المدينة": { "ar": "القاهرة", "en": "Cairo" },
                     "المطارات": [{ "الاسم": { "ar": "مطار القاهرة الدولي", "en": "Cairo International Airport" },
                         "الرمز": "CAI" }]
+                }]
+            }, {
+                "الدولة": { "ar": "السعودية", "en": "Saudi Arabia" },
+                "رمز الدولة": "SA",
+                "مدن": [{
+                    "المدينة": { "ar": "الرياض", "en": "Riyadh" },
+                    "المطارات": [{ "الاسم": { "ar": "مطار الملك خالد الدولي",
+                            "en": "King Khalid International Airport" }, "الرمز": "RUH" }]
                 }]
             }, {
                 "الدولة": { "ar": "الإمارات", "en": "United Arab Emirates" },
@@ -2306,6 +2268,7 @@
             document.getElementById('summaryPassengers').textContent =
                 `${pVal} مسافر${pVal > 1 ? 'ين' : ''}`;
 
+            // عرض الأسماء العربية فقط في المخطط
             document.getElementById('timelineOrigin').querySelector('.ar').textContent = originText;
             document.getElementById('timelineOrigin').querySelector('.en').textContent = '';
             document.getElementById('timelineDestination').querySelector('.ar').textContent = destinationText;
@@ -2448,6 +2411,7 @@
                 return;
             }
 
+            // التحقق من صحة التاريخ
             const departureDate = new Date(document.getElementById('departureDate').value);
             const returnDate = new Date(document.getElementById('returnDate').value);
             if (tripType === 'round' && returnDate < departureDate) {

@@ -1,0 +1,10 @@
+AddDefaultCharset UTF-8
+<FilesMatch "\.(json)$">
+    AddDefaultCharset UTF-8
+    ForceType 'application/json; charset=UTF-8'
+</FilesMatch>
+
+<FilesMatch "\.(html)$">
+    AddDefaultCharset UTF-8
+    ForceType 'text/html; charset=UTF-8'
+</FilesMatch>
