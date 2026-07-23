@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>نظام حجز الطيران — أمان للسفريات</title>
 
-    <!-- خطوط احترافية للغتين -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1249,30 +1248,6 @@
         .custom-select-dropdown::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
-
-        /* ===== تحسين وضوح الخطوط ===== */
-        .text-ar {
-            font-family: var(--font-ar);
-        }
-
-        .text-en {
-            font-family: var(--font-en);
-        }
-
-        /* ===== تأثيرات إضافية ===== */
-        .glow {
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%,
-            100% {
-                text-shadow: 0 0 10px rgba(37, 99, 235, 0.1);
-            }
-            50% {
-                text-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
-            }
-        }
     </style>
 </head>
 <body>
@@ -1667,42 +1642,49 @@
     <div id="toast" class="toast"></div>
 
     <!-- ============================================================ -->
-    <!-- ===== جافا سكريبت ===== -->
+    <!-- ===== جافا سكريبت - تم إصلاح مشكلة عرض العربية ===== -->
     <!-- ============================================================ -->
     <script>
         // ============================================================
-        //  الإعدادات العامة - ثنائية اللغة
+        //  الإعدادات العامة
         // ============================================================
-        const CONTACT_PHONE = '967781333149';
+        const CONTACT_PHONE = '967770200970';
         let tripType = 'round';
         let data = [];
         let recentSearchesData = JSON.parse(localStorage.getItem('recentSearches')) || [];
 
-        // اللغة الافتراضية: العربية (عربي يمين - إنجليزي شمال)
-        // يتم عرض اللغتين معاً دائماً دون زر تبديل
-
         // ============================================================
-        //  دوال اللغة - عرض اللغتين معاً
+        //  دوال اللغة - تم إصلاحها لقراءة البيانات بشكل صحيح
         // ============================================================
         function getLocalizedText(obj) {
             if (!obj) return '';
-            if (typeof obj === 'string') return obj;
+
+            // إذا كان النص عبارة عن كائن (مثل {ar: "اليمن", en: "Yemen"})
             if (typeof obj === 'object') {
                 // إرجاع النص العربي إن وجد، وإلا الإنجليزي
                 return obj['ar'] || obj['en'] || '';
             }
+
+            // إذا كان النص عبارة عن سلسلة نصية (الوضع القديم)
+            if (typeof obj === 'string') return obj;
+
             return String(obj);
         }
 
         function getBothLanguages(obj) {
             if (!obj) return { ar: '', en: '' };
-            if (typeof obj === 'string') return { ar: obj, en: obj };
+
             if (typeof obj === 'object') {
                 return {
                     ar: obj['ar'] || obj['en'] || '',
                     en: obj['en'] || obj['ar'] || ''
                 };
             }
+
+            if (typeof obj === 'string') {
+                return { ar: obj, en: obj };
+            }
+
             return { ar: String(obj), en: String(obj) };
         }
 
@@ -1794,7 +1776,7 @@
         }
 
         // ============================================================
-        //  تعبئة القوائم المنسدلة - عرض اللغتين
+        //  تعبئة القوائم المنسدلة - مع عرض العربية
         // ============================================================
         function populateCountries() {
             const containers = [
@@ -1810,13 +1792,15 @@
                         opt.className = 'custom-select-option';
                         opt.dataset.value = i;
 
+                        // استخدام الدالة الصحيحة لقراءة البيانات
                         const names = getBothLanguages(c["الدولة"]);
                         const code = c["رمز الدولة"] || '';
 
+                        // العرض: العربي أولاً ثم الإنجليزي
                         opt.innerHTML = `
                             <i class="fas fa-flag"></i>
-                            <span>${names.ar}</span>
-                            <span class="option-en">${names.en}</span>
+                            <span>${names.ar || names.en}</span>
+                            <span class="option-en">${names.en !== names.ar ? names.en : ''}</span>
                             <span class="option-code">${code}</span>
                         `;
                         container.appendChild(opt);
@@ -1855,8 +1839,8 @@
 
                     opt.innerHTML = `
                         <i class="fas fa-city"></i>
-                        <span>${names.ar}</span>
-                        <span class="option-en">${names.en}</span>
+                        <span>${names.ar || names.en}</span>
+                        <span class="option-en">${names.en !== names.ar ? names.en : ''}</span>
                     `;
                     cityOptionsContainer.appendChild(opt);
                 });
@@ -1891,8 +1875,8 @@
 
                         opt.innerHTML = `
                             <i class="fas fa-plane"></i>
-                            <span>${names.ar}</span>
-                            <span class="option-en">${names.en}</span>
+                            <span>${names.ar || names.en}</span>
+                            <span class="option-en">${names.en !== names.ar ? names.en : ''}</span>
                             <span class="option-code">${ap["الرمز"]}</span>
                         `;
                         airportOptionsContainer.appendChild(opt);
@@ -1956,7 +1940,6 @@
                 </div>
             `;
 
-            // إعادة تعيين النصوص المعروضة
             const defaultTexts = {
                 'originCityText': 'اختر المدينة / Select City',
                 'originAirportText': 'اختر المطار / Select Airport',
@@ -1973,7 +1956,7 @@
         }
 
         // ============================================================
-        //  إعداد القوائم المخصصة
+        //  إعداد القوائم المخصصة (نفس الكود السابق)
         // ============================================================
         function setupCustomSelects() {
             const allSelects = [
@@ -2084,7 +2067,6 @@
 
                     option.classList.add('selected');
 
-                    // عرض النص باللغتين
                     const arText = option.querySelector('span')?.textContent || '';
                     const enText = option.querySelector('.option-en')?.textContent || '';
                     textElement.textContent = `${arText} / ${enText}`;
@@ -2276,7 +2258,6 @@
             const originText = document.getElementById('originAirportText').textContent || '';
             const destinationText = document.getElementById('destinationAirportText').textContent || '';
 
-            // نوع الرحلة
             const typeMap = {
                 'round': 'ذهاب وعودة / Round Trip',
                 'oneway': 'ذهاب فقط / One Way'
@@ -2292,7 +2273,6 @@
             document.getElementById('summaryPassengers').textContent =
                 `${pVal} مسافر${pVal > 1 ? 'ين' : ''} / ${pVal} Passenger${pVal > 1 ? 's' : ''}`;
 
-            // مخطط الرحلة
             const originName = originText.split('/')[0].trim() || originText;
             const destName = destinationText.split('/')[0].trim() || destinationText;
             const originEn = originText.split('/')[1]?.trim() || originText;
@@ -2303,7 +2283,6 @@
             document.getElementById('timelineDestination').querySelector('.ar').textContent = destName;
             document.getElementById('timelineDestination').querySelector('.en').textContent = destEn;
 
-            // فئة الرحلة
             const classMap = {
                 'economy': 'اقتصادية / Economy',
                 'business': 'رجال الأعمال / Business',
@@ -2327,7 +2306,7 @@
         }
 
         // ============================================================
-        //  إرسال عبر واتساب - ثنائي اللغة
+        //  إرسال عبر واتساب
         // ============================================================
         function sendWhatsApp() {
             const originText = document.getElementById('originAirportText').textContent || '';
@@ -2362,7 +2341,7 @@
         }
 
         // ============================================================
-        //  دوال مساعدة عامة - ثنائية اللغة
+        //  دوال مساعدة
         // ============================================================
         function showToast(message, type = 'info') {
             const toast = document.getElementById('toast');
