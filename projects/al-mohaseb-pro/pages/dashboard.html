@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم - المحاسب المالي Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/design-system.css">
+</head>
+<body>
+  <script src="../js/core/storage.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/core/ui.js"></script>
+  <script src="../js/core/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../js/modules/dashboard.js"></script>
+
+  <div class="content-area">
+    <!-- Stats Grid -->
+    <div class="grid-4" id="statsGrid" style="margin-bottom: var(--space-6);">
+      <!-- Stats will be loaded by JS -->
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid-2" style="margin-bottom: var(--space-6);">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-header-title">الإيرادات والمصروفات</h3>
+        </div>
+        <div class="card-body">
+          <div style="height: 300px;">
+            <canvas id="revenueChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-header-title">حالة الفواتير</h3>
+        </div>
+        <div class="card-body">
+          <div style="height: 300px;">
+            <canvas id="statusChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second Row -->
+    <div class="grid-2" style="margin-bottom: var(--space-6);">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-header-title">أحدث الفواتير</h3>
+          <a href="invoices/list.html" class="btn btn-ghost btn-sm">عرض الكل <i class="fas fa-arrow-left"></i></a>
+        </div>
+        <div class="card-body" id="recentInvoices">
+          <!-- Loaded by JS -->
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-header-title">النشاط الأخير</h3>
+        </div>
+        <div class="card-body" id="recentActivity">
+          <!-- Loaded by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Third Row -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-header-title">أفضل العملاء</h3>
+        </div>
+        <div class="card-body" id="topCustomers">
+          <!-- Loaded by JS -->
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-header-title">توزيع المصروفات</h3>
+        </div>
+        <div class="card-body" id="expenseBreakdown">
+          <!-- Loaded by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

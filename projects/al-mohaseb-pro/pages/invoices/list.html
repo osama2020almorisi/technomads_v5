@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الفواتير - المحاسب المالي Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../../css/design-system.css">
+</head>
+<body>
+  <script src="../../js/core/storage.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/core/ui.js"></script>
+  <script src="../../js/core/app.js"></script>
+  <script src="../../js/modules/invoices.js"></script>
+
+  <div class="content-area">
+    <div class="page-header">
+      <div class="page-header-left">
+        <h1 class="page-header-title">الفواتير</h1>
+        <p class="page-header-subtitle">إدارة وعرض جميع الفواتير</p>
+      </div>
+      <div class="page-header-actions">
+        <a href="create.html" class="btn btn-primary">
+          <i class="fas fa-plus"></i> إنشاء فاتورة
+        </a>
+      </div>
+    </div>
+
+    <div class="filters-bar">
+      <div class="input-icon-wrapper" style="flex: 1; max-width: 300px;">
+        <input type="text" class="form-input" id="invoiceSearch" placeholder="البحث في الفواتير...">
+        <i class="fas fa-search"></i>
+      </div>
+      <select class="form-select" id="statusFilter" style="width: 160px;">
+        <option value="">جميع الحالات</option>
+        <option value="paid">مدفوعة</option>
+        <option value="pending">معلقة</option>
+        <option value="overdue">متأخرة</option>
+        <option value="draft">مسودة</option>
+      </select>
+      <input type="date" class="form-input" id="dateFrom" placeholder="من">
+      <input type="date" class="form-input" id="dateTo" placeholder="إلى">
+    </div>
+
+    <div id="invoicesTable">
+      <!-- Loaded by JS -->
+    </div>
+  </div>
+</body>
+</html>

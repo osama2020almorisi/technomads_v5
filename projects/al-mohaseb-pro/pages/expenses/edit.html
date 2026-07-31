@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل مصروف - المحاسب المالي Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../../css/design-system.css">
+</head>
+<body>
+  <script src="../../js/core/storage.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/core/ui.js"></script>
+  <script src="../../js/core/app.js"></script>
+  <script src="../../js/modules/expenses.js"></script>
+
+  <div class="content-area">
+    <div class="page-header">
+      <div class="page-header-left">
+        <h1 class="page-header-title">تعديل مصروف</h1>
+      </div>
+      <div class="page-header-actions">
+        <a href="list.html" class="btn btn-secondary"><i class="fas fa-arrow-right"></i> العودة</a>
+      </div>
+    </div>
+
+    <div class="card" style="max-width: 800px;">
+      <div class="card-body">
+        <form id="expenseForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">الوصف <span class="required">*</span></label>
+              <input type="text" class="form-input" name="description" placeholder="مثال: إيجار المكتب" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">المبلغ <span class="required">*</span></label>
+              <input type="number" class="form-input" name="amount" min="0" step="0.01" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">الفئة</label>
+              <select class="form-select" name="category">
+                <option value="إيجار">إيجار</option>
+                <option value="رواتب">رواتب</option>
+                <option value="خدمات">خدمات</option>
+                <option value="مستلزمات">مستلزمات</option>
+                <option value="نقل">نقل</option>
+                <option value="أخرى">أخرى</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">التاريخ <span class="required">*</span></label>
+              <input type="date" class="form-input" name="date" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">طريقة الدفع</label>
+              <select class="form-select" name="paymentMethod">
+                <option value="cash">نقدي</option>
+                <option value="bank_transfer">تحويل بنكي</option>
+                <option value="credit_card">بطاقة ائتمان</option>
+                <option value="check">شيك</option>
+                <option value="other">أخرى</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">رقم الإيصال</label>
+              <input type="text" class="form-input" name="receiptNumber">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">ملاحظات</label>
+            <textarea class="form-textarea" name="notes" rows="2"></textarea>
+          </div>
+          <div style="display: flex; gap: 12px; margin-top: 16px;">
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> حفظ</button>
+            <a href="list.html" class="btn btn-secondary btn-lg">إلغاء</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

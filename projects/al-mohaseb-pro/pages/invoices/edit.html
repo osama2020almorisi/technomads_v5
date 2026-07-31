@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تعديل فاتورة - المحاسب المالي Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../../css/design-system.css">
+</head>
+<body>
+  <script src="../../js/core/storage.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/core/ui.js"></script>
+  <script src="../../js/core/app.js"></script>
+  <script src="../../js/modules/invoices.js"></script>
+
+  <div class="content-area">
+    <div class="page-header">
+      <div class="page-header-left">
+        <h1 class="page-header-title">تعديل الفاتورة</h1>
+      </div>
+      <div class="page-header-actions">
+        <a href="list.html" class="btn btn-secondary">
+          <i class="fas fa-arrow-right"></i> العودة
+        </a>
+      </div>
+    </div>
+
+    <form id="invoiceForm">
+      <div class="grid-2">
+        <div>
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-header"><h3 class="card-header-title">بيانات الفاتورة</h3></div>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">رقم الفاتورة</label>
+                  <input type="text" class="form-input" name="invoiceNumber" readonly style="background: var(--gray-100);">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">العميل <span class="required">*</span></label>
+                  <select class="form-select" name="customerId" id="customerSelect" required>
+                    <option value="">اختر العميل...</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">تاريخ الإصدار</label>
+                  <input type="date" class="form-input" name="issueDate" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">تاريخ الاستحقاق</label>
+                  <input type="date" class="form-input" name="dueDate" required>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-header"><h3 class="card-header-title">المنتجات والخدمات</h3></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="form-label">إضافة منتج/خدمة</label>
+                <select class="form-select" id="productSelect">
+                  <option value="">اختر من القائمة...</option>
+                </select>
+              </div>
+              <div id="invoiceItemsList" style="margin-top: 16px;"></div>
+            </div>
+          </div>
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-header"><h3 class="card-header-title">ملخص الفاتورة</h3></div>
+            <div class="card-body">
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-100);">
+                <span style="color: var(--gray-500);">المجموع الفرعي</span>
+                <span id="subtotalAmount">0.00 ر.س</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-100);">
+                <span style="color: var(--gray-500);">الخصم</span>
+                <span id="discountAmount">0.00 ر.س</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-100);">
+                <span style="color: var(--gray-500);">الضريبة</span>
+                <span id="taxAmount">0.00 ر.س</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 16px 0; margin-top: 8px; border-top: 2px solid var(--gray-200);">
+                <span style="font-size: 18px; font-weight: bold;">الإجمالي</span>
+                <span id="totalAmount" style="font-size: 18px; font-weight: bold; color: var(--primary-700);">0.00 ر.س</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; margin-bottom: 32px;">
+        <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> حفظ التغييرات</button>
+        <a href="list.html" class="btn btn-secondary btn-lg"><i class="fas fa-times"></i> إلغاء</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

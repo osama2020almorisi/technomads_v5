@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المصروفات - المحاسب المالي Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../../css/design-system.css">
+</head>
+<body>
+  <script src="../../js/core/storage.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/core/ui.js"></script>
+  <script src="../../js/core/app.js"></script>
+  <script src="../../js/modules/expenses.js"></script>
+
+  <div class="content-area">
+    <div class="page-header">
+      <div class="page-header-left">
+        <h1 class="page-header-title">المصروفات</h1>
+        <p class="page-header-subtitle">تتبع وإدارة المصروفات</p>
+      </div>
+      <div class="page-header-actions">
+        <a href="create.html" class="btn btn-primary"><i class="fas fa-plus"></i> تسجيل مصروف</a>
+      </div>
+    </div>
+
+    <div class="filters-bar">
+      <div class="input-icon-wrapper" style="flex: 1; max-width: 300px;">
+        <input type="text" class="form-input" id="expenseSearch" placeholder="البحث في المصروفات...">
+        <i class="fas fa-search"></i>
+      </div>
+      <select class="form-select" id="categoryFilter" style="width: 180px;">
+        <option value="">جميع الفئات</option>
+        <option value="إيجار">إيجار</option>
+        <option value="رواتب">رواتب</option>
+        <option value="خدمات">خدمات</option>
+        <option value="مستلزمات">مستلزمات</option>
+        <option value="نقل">نقل</option>
+        <option value="أخرى">أخرى</option>
+      </select>
+    </div>
+
+    <div id="expensesTable"></div>
+  </div>
+</body>
+</html>

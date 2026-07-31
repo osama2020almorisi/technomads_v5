@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>محول JSON إلى SQLite | TechNomads</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Tajawal', sans-serif; background: #f0f4f8; color: #1a202c; padding: 1.5rem; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 950px; width: 100%; background: #ffffff; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.08); padding: 2rem; }
+        h1 { font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.3rem; color: #1a365d; }
+        h1 small { font-size: 0.9rem; font-weight: 400; color: #718096; }
+        .sub { color: #718096; font-size: 0.95rem; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.8rem; }
+        .drop-zone { border: 3px dashed #cbd5e0; border-radius: 20px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease; background: #f7fafc; margin-bottom: 1.5rem; }
+        .drop-zone:hover, .drop-zone.dragover { border-color: #d69e2e; background: #fffff0; transform: scale(1.01); }
+        .drop-zone .icon { font-size: 3.5rem; display: block; margin-bottom: 0.5rem; }
+        .drop-zone p { font-size: 1rem; color: #4a5568; }
+        .drop-zone .hint { font-size: 0.85rem; color: #a0aec0; margin-top: 0.3rem; }
+        .drop-zone input[type="file"] { display: none; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin: 1.5rem 0; }
+        .stat-card { background: #f7fafc; border-radius: 16px; padding: 1rem; text-align: center; border: 1px solid #e2e8f0; }
+        .stat-card .num { font-size: 2rem; font-weight: 700; color: #1a365d; }
+        .stat-card .label { font-size: 0.75rem; color: #718096; margin-top: 0.1rem; }
+        .btn { border: none; padding: 0.6rem 1.8rem; border-radius: 12px; font-family: inherit; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: #1a365d; color: white; }
+        .btn-primary:hover { background: #2c5282; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(26,54,93,0.25); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-success { background: #38a169; color: white; }
+        .btn-success:hover { background: #2f855a; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(56,161,105,0.25); }
+        .btn-success:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-outline { background: transparent; border: 2px solid #e2e8f0; color: #4a5568; }
+        .btn-outline:hover { border-color: #1a365d; color: #1a365d; }
+        .actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.5rem; justify-content: center; }
+        .preview-area { margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1.2rem; }
+        .preview-area h3 { font-size: 1rem; color: #4a5568; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .preview-box { background: #f7fafc; border-radius: 12px; padding: 1rem; max-height: 300px; overflow-y: auto; font-size: 0.85rem; line-height: 1.8; border: 1px solid #e2e8f0; white-space: pre-wrap; word-wrap: break-word; color: #2d3748; }
+        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) scale(0.9); background: #1a365d; color: white; padding: 0.6rem 1.5rem; border-radius: 14px; font-size: 0.9rem; opacity: 0; visibility: hidden; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 999; max-width: 90%; text-align: center; }
+        .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); }
+        .toast.success { background: #38a169; }
+        .toast.error { background: #e53e3e; }
+        .footer { margin-top: 2rem; font-size: 0.8rem; color: #a0aec0; text-align: center; }
+        .footer a { color: #1a365d; text-decoration: none; font-weight: 600; }
+        .progress-bar { width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px; margin: 0.8rem 0; overflow: hidden; display: none; }
+        .progress-bar .fill { height: 100%; width: 0%; background: linear-gradient(to right, #d69e2e, #38a169); border-radius: 10px; transition: width 0.3s ease; }
+        @media (max-width: 600px) { body { padding: 0.8rem; } .container { padding: 1.2rem; } h1 { font-size: 1.4rem; flex-wrap: wrap; } .stats-grid { grid-template-columns: 1fr 1fr; } .drop-zone { padding: 1.5rem 1rem; } .actions { flex-direction: column; align-items: stretch; } .btn { justify-content: center; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>
+            🗄️ محول JSON إلى SQLite
+            <small>— تحويل data.json إلى diwan.sql (ثم إلى .db)</small>
+        </h1>
+        <p class="sub">
+            🔹 استورد ملف <code>data.json</code> وسنقوم بتحويله إلى ملف SQL يمكنك تحويله بسهولة إلى <code>.db</code>.
+        </p>
+
+        <div class="drop-zone" id="dropZone">
+            <span class="icon">📁</span>
+            <p><strong>اسحب ملف <code>data.json</code> هنا</strong></p>
+            <p class="hint">أو اضغط للتصفح</p>
+            <input type="file" id="fileInput" accept=".json" />
+        </div>
+
+        <div class="progress-bar" id="progressBar">
+            <div class="fill" id="progressFill"></div>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card"><div class="num" id="statQuotes">0</div><div class="label">الاقتباسات</div></div>
+            <div class="stat-card"><div class="num" id="statAuthors">0</div><div class="label">المؤلفون</div></div>
+            <div class="stat-card"><div class="num" id="statCategories">0</div><div class="label">التصنيفات</div></div>
+            <div class="stat-card"><div class="num" id="statSize">0</div><div class="label">حجم الملف (KB)</div></div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" id="convertBtn" disabled>🔄 تحويل إلى SQL</button>
+            <button class="btn btn-success" id="downloadBtn" disabled>📥 تحميل diwan.sql</button>
+            <button class="btn btn-outline" id="resetBtn">🗑️ إعادة تعيين</button>
+        </div>
+
+        <div class="preview-area" id="previewArea" style="display:none;">
+            <h3>📊 تفاصيل التحويل</h3>
+            <div class="preview-box" id="previewBox"></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="footer">
+        © 2026 <a href="https://te-2026.netlify.app/" target="_blank">TechNomads</a> — حلول رقمية رائدة
+    </div>
+
+    <script>
+        // ================================================================
+        // 1. المتغيرات العامة
+        // ================================================================
+        let jsonData = null;
+        let sqlContent = '';
+        let sqlBlob = null;
+
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const convertBtn = document.getElementById('convertBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const previewArea = document.getElementById('previewArea');
+        const previewBox = document.getElementById('previewBox');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+
+        // ================================================================
+        // 2. دوال المساعدة
+        // ================================================================
+        function showToast(msg, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast' + (type ? ' ' + type : '');
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function escapeSql(text) {
+            if (!text) return '';
+            return text.replace(/'/g, "''").replace(/\n/g, ' ');
+        }
+
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+        }
+
+        function updateStats(quotes, authors, categories, size) {
+            document.getElementById('statQuotes').textContent = quotes || 0;
+            document.getElementById('statAuthors').textContent = authors || 0;
+            document.getElementById('statCategories').textContent = categories || 0;
+            document.getElementById('statSize').textContent = size ? (size / 1024).toFixed(1) : 0;
+        }
+
+        function resetAll() {
+            jsonData = null;
+            sqlContent = '';
+            sqlBlob = null;
+            updateStats(0, 0, 0, 0);
+            previewArea.style.display = 'none';
+            previewBox.textContent = '';
+            convertBtn.disabled = true;
+            downloadBtn.disabled = true;
+            fileInput.value = '';
+            progressBar.style.display = 'none';
+            progressFill.style.width = '0%';
+            showToast('🔄 تم إعادة التعيين', '');
+        }
+
+        // ================================================================
+        // 3. إنشاء ملف SQL
+        // ================================================================
+        function generateSQL(quotes) {
+            const lines = [];
+            const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
+
+            // ===== إنشاء الجداول =====
+            lines.push('-- ============================================================');
+            lines.push('-- إنشاء جداول قاعدة بيانات ديوان الحكمة');
+            lines.push('-- ============================================================');
+            lines.push('');
+
+            lines.push('-- جدول الاقتباسات');
+            lines.push(`CREATE TABLE IF NOT EXISTS quotes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                text TEXT NOT NULL,
+                author TEXT NOT NULL DEFAULT 'مجهول',
+                category TEXT DEFAULT 'عام',
+                date TEXT NOT NULL,
+                source TEXT,
+                language TEXT DEFAULT 'ar',
+                views INTEGER DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );`);
+            lines.push('');
+
+            lines.push('-- جدول المؤلفين');
+            lines.push(`CREATE TABLE IF NOT EXISTS authors (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT UNIQUE NOT NULL,
+                bio TEXT,
+                birth_year INTEGER,
+                death_year INTEGER,
+                nationality TEXT,
+                photo_url TEXT,
+                quotes_count INTEGER DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );`);
+            lines.push('');
+
+            lines.push('-- جدول التصنيفات');
+            lines.push(`CREATE TABLE IF NOT EXISTS categories (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT UNIQUE NOT NULL,
+                description TEXT,
+                icon TEXT DEFAULT '📂',
+                color TEXT DEFAULT '#d69e2e',
+                count INTEGER DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );`);
+            lines.push('');
+
+            lines.push('-- جدول المفضلة');
+            lines.push(`CREATE TABLE IF NOT EXISTS favorites (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                quote_id INTEGER NOT NULL,
+                user_id TEXT DEFAULT 'default',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (quote_id) REFERENCES quotes(id) ON DELETE CASCADE,
+                UNIQUE(quote_id, user_id)
+            );`);
+            lines.push('');
+
+            lines.push('-- جدول سجل البحث');
+            lines.push(`CREATE TABLE IF NOT EXISTS search_history (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                query TEXT NOT NULL,
+                results_count INTEGER DEFAULT 0,
+                user_id TEXT DEFAULT 'default',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );`);
+            lines.push('');
+
+            lines.push('-- جدول الإعدادات');
+            lines.push(`CREATE TABLE IF NOT EXISTS settings (
+                key TEXT PRIMARY KEY,
+                value TEXT,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );`);
+            lines.push('');
+
+            lines.push('-- جدول النسخ الاحتياطي');
+            lines.push(`CREATE TABLE IF NOT EXISTS backups (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                filename TEXT NOT NULL,
+                size INTEGER,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );`);
+            lines.push('');
+
+            // ===== الفهارس =====
+            lines.push('-- الفهارس للبحث السريع');
+            lines.push('CREATE INDEX IF NOT EXISTS idx_quotes_text ON quotes(text);');
+            lines.push('CREATE INDEX IF NOT EXISTS idx_quotes_author ON quotes(author);');
+            lines.push('CREATE INDEX IF NOT EXISTS idx_quotes_category ON quotes(category);');
+            lines.push('CREATE INDEX IF NOT EXISTS idx_quotes_date ON quotes(date);');
+            lines.push('CREATE INDEX IF NOT EXISTS idx_favorites_quote ON favorites(quote_id);');
+            lines.push('CREATE INDEX IF NOT EXISTS idx_search_query ON search_history(query);');
+            lines.push('');
+
+            // ===== إدراج البيانات =====
+            lines.push('-- ============================================================');
+            lines.push('-- إدراج البيانات');
+            lines.push('-- ============================================================');
+            lines.push('');
+
+            // استخراج المؤلفين والتصنيفات
+            const authorMap = {};
+            const categoryMap = {};
+
+            quotes.forEach(q => {
+                const author = (q.author || 'مجهول').trim();
+                const category = (q.category || 'عام').trim();
+
+                if (!authorMap[author]) {
+                    authorMap[author] = { name: author, count: 0 };
+                }
+                authorMap[author].count++;
+
+                if (!categoryMap[category]) {
+                    categoryMap[category] = { name: category, count: 0 };
+                }
+                categoryMap[category].count++;
+            });
+
+            // إدراج التصنيفات
+            lines.push('-- إدراج التصنيفات');
+            const categoryList = Object.values(categoryMap);
+            categoryList.forEach((c, idx) => {
+                const id = idx + 1;
+                lines.push(
+                    `INSERT OR IGNORE INTO categories (id, name, description, icon, color, count, created_at) ` +
+                    `VALUES (${id}, '${escapeSql(c.name)}', '', '📂', '#d69e2e', ${c.count}, '${now}');`
+                );
+            });
+            lines.push('');
+
+            // إدراج المؤلفين
+            lines.push('-- إدراج المؤلفين');
+            const authorList = Object.values(authorMap);
+            authorList.forEach((a, idx) => {
+                const id = idx + 1;
+                lines.push(
+                    `INSERT OR IGNORE INTO authors (id, name, bio, birth_year, death_year, nationality, photo_url, quotes_count, created_at) ` +
+                    `VALUES (${id}, '${escapeSql(a.name)}', '', NULL, NULL, '', '', ${a.count}, '${now}');`
+                );
+            });
+            lines.push('');
+
+            // إدراج الاقتباسات
+            lines.push('-- إدراج الاقتباسات');
+            quotes.forEach((q, idx) => {
+                const id = q.id || idx + 1;
+                const text = escapeSql(q.text || '');
+                const author = escapeSql((q.author || 'مجهول').trim());
+                const category = escapeSql((q.category || 'عام').trim());
+                const date = q.date || new Date().toISOString().split('T')[0];
+                const source = q.source ? escapeSql(q.source) : '';
+                const language = q.language || 'ar';
+                const views = q.views || 0;
+
+                lines.push(
+                    `INSERT OR IGNORE INTO quotes (id, text, author, category, date, source, language, views, created_at, updated_at) ` +
+                    `VALUES (${id}, '${text}', '${author}', '${category}', '${date}', '${source}', '${language}', ${views}, '${now}', '${now}');`
+                );
+            });
+            lines.push('');
+
+            // إدراج الإعدادات
+            lines.push('-- إدراج الإعدادات الافتراضية');
+            const settings = {
+                theme: 'light',
+                language: 'ar',
+                page_size: '30',
+                daily_wisdom_enabled: 'true',
+                auto_backup: 'false',
+                app_name: 'ديوان الحكمة',
+                app_version: '2.0.0'
+            };
+            Object.entries(settings).forEach(([key, value]) => {
+                lines.push(
+                    `INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES ('${key}', '${value}', '${now}');`
+                );
+            });
+            lines.push('');
+
+            lines.push('-- ============================================================');
+            lines.push(`-- تم إدراج ${quotes.length} اقتباساً بنجاح`);
+            lines.push('-- ============================================================');
+
+            return lines.join('\n');
+        }
+
+        // ================================================================
+        // 4. معالجة الملف
+        // ================================================================
+        function processFile(file) {
+            if (!file) return;
+
+            showToast('⏳ جاري قراءة الملف...', '');
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    progressBar.style.display = 'block';
+                    progressFill.style.width = '10%';
+
+                    const content = e.target.result;
+                    jsonData = JSON.parse(content);
+
+                    if (!jsonData.quotes || !Array.isArray(jsonData.quotes)) {
+                        showToast('❌ ملف JSON غير صالح! يجب أن يحتوي على حقل "quotes"', 'error');
+                        progressBar.style.display = 'none';
+                        return;
+                    }
+
+                    const quotes = jsonData.quotes;
+                    if (quotes.length === 0) {
+                        showToast('⚠️ لا توجد اقتباسات في الملف', 'error');
+                        progressBar.style.display = 'none';
+                        return;
+                    }
+
+                    progressFill.style.width = '40%';
+
+                    // إنشاء محتوى SQL
+                    sqlContent = generateSQL(quotes);
+
+                    progressFill.style.width = '70%';
+
+                    // تحويل إلى Blob
+                    sqlBlob = new Blob([sqlContent], { type: 'text/plain;charset=utf-8' });
+                    const size = sqlBlob.size;
+
+                    // استخراج الإحصائيات
+                    const authors = new Set(quotes.map(q => (q.author || 'مجهول').trim()));
+                    const categories = new Set(quotes.map(q => (q.category || 'عام').trim()));
+
+                    // عرض التفاصيل
+                    previewArea.style.display = 'block';
+                    previewBox.innerHTML = `
+                        <div style="background:#edf2f7;border-radius:8px;padding:1rem;text-align:center;">
+                            <div style="font-size:2rem;margin-bottom:0.5rem;">✅</div>
+                            <h3 style="color:#1a365d;">تم التحويل بنجاح!</h3>
+                            <p style="color:#4a5568;">📝 <strong>${quotes.length}</strong> اقتباس</p>
+                            <p style="color:#4a5568;">👤 <strong>${authors.size}</strong> مؤلف</p>
+                            <p style="color:#4a5568;">📂 <strong>${categories.size}</strong> تصنيف</p>
+                            <p style="color:#718096;font-size:0.85rem;">📄 حجم ملف SQL: <strong>${formatSize(size)}</strong></p>
+                            <div style="margin-top:0.8rem;background:#1a202c;padding:0.8rem;border-radius:8px;text-align:right;">
+                                <p style="color:#e2e8f0;font-size:0.75rem;direction:ltr;">
+                                    <strong style="color:#d69e2e;">💡 لتحويل هذا الملف إلى .db:</strong><br>
+                                    <span style="color:#a0aec0;">1. انقل الملف إلى Termux</span><br>
+                                    <span style="color:#a0aec0;">2. شغّل الأمر:</span><br>
+                                    <span style="color:#38a169;">sqlite3 diwan.db &lt; diwan.sql</span>
+                                </p>
+                            </div>
+                        </div>
+                    `;
+
+                    updateStats(quotes.length, authors.size, categories.size, size);
+
+                    convertBtn.disabled = false;
+                    downloadBtn.disabled = false;
+
+                    progressFill.style.width = '100%';
+                    setTimeout(() => { progressBar.style.display = 'none'; }, 500);
+
+                    showToast(`✅ تم تحويل ${quotes.length} اقتباس إلى diwan.sql`, 'success');
+
+                } catch (err) {
+                    console.error(err);
+                    progressBar.style.display = 'none';
+                    showToast('❌ خطأ: ' + err.message, 'error');
+                    resetAll();
+                }
+            };
+            reader.onerror = function() {
+                showToast('❌ خطأ في قراءة الملف', 'error');
+            };
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        // ================================================================
+        // 5. تحميل الملف
+        // ================================================================
+        function downloadSQL() {
+            if (!sqlBlob) {
+                showToast('⚠️ لا توجد بيانات للتحميل', 'error');
+                return;
+            }
+
+            try {
+                const url = URL.createObjectURL(sqlBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'diwan.sql';
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 5000);
+                showToast('📥 تم تحميل ملف diwan.sql', 'success');
+            } catch (e) {
+                showToast('❌ تعذر تحميل الملف: ' + e.message, 'error');
+            }
+        }
+
+        // ================================================================
+        // 6. أحداث السحب والإفلات
+        // ================================================================
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].name.endsWith('.json')) {
+                processFile(files[0]);
+            } else {
+                showToast('⚠️ الرجاء إسقاط ملف .json فقط', 'error');
+            }
+        });
+
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                processFile(e.target.files[0]);
+            }
+        });
+
+        // ================================================================
+        // 7. أحداث الأزرار
+        // ================================================================
+        convertBtn.addEventListener('click', () => {
+            showToast('✅ تم التحويل مسبقاً، يمكنك تحميل الملف', 'success');
+        });
+
+        downloadBtn.addEventListener('click', downloadSQL);
+        resetBtn.addEventListener('click', resetAll);
+
+        // ================================================================
+        // 8. التهيئة
+        // ================================================================
+        resetAll();
+        showToast('📂 قم بتحميل ملف data.json للتحويل', '');
+    </script>
+
+</body>
+</html>
