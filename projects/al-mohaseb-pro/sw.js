@@ -5,6 +5,7 @@
 
 const CACHE_NAME = 'almohaseb-pro-v1';
 const STATIC_ASSETS = [
+  '/',
   '/index.html',
   '/css/design-system.css',
   '/js/core/storage.js',

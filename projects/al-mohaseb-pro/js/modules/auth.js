@@ -40,8 +40,13 @@ class AuthModule {
 
       Storage.setCurrentUser(user);
 
-      // Redirect to dashboard
-      window.location.href = '../pages/dashboard.html';
+      // Redirect based on current path depth
+      const path = window.location.pathname;
+      if (path.includes('/pages/')) {
+        window.location.href = 'dashboard.html';
+      } else {
+        window.location.href = 'pages/dashboard.html';
+      }
     });
   }
 
@@ -87,7 +92,12 @@ class AuthModule {
 
       UI.success('تم إنشاء الحساب بنجاح!');
       setTimeout(() => {
-        window.location.href = '../pages/dashboard.html';
+        const path = window.location.pathname;
+        if (path.includes('/pages/')) {
+          window.location.href = '../dashboard.html';
+        } else {
+          window.location.href = 'pages/dashboard.html';
+        }
       }, 1000);
     });
   }

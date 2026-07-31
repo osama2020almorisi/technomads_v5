@@ -1,12 +1,9 @@
 /**
  * المحاسب المالي Pro - App Core
- * Main application controller
  */
 
 class AppCore {
   constructor() {
-    this.currentPage = '';
-    this.modules = new Map();
     this.init();
   }
 
@@ -21,58 +18,54 @@ class AppCore {
   async bootstrap() {
     if (window.Storage) await Storage.init();
     this.checkAuth();
-    
-    // Only render layout and load modules for authenticated pages
-    if (!this.isAuthPage()) {
-      this.renderLayout();
-      this.initUI();
-      this.loadPageModule();
-    }
+    this.renderLayout();
+    this.initUI();
+    this.loadPageModule();
   }
 
-  isAuthPage() {
-    const path = window.location.pathname;
-    return path.includes('/auth/') || path.endsWith('index.html') || path === '/' || path === '';
-  }
-
+  // ===== AUTH =====
   checkAuth() {
-    const isAuthPage = this.isAuthPage();
+    const path = window.location.pathname;
+    const isAuthPage = path.includes('/auth/') || path.endsWith('index.html') || path === '/' || path.endsWith('/');
 
     if (!Storage.isAuthenticated() && !isAuthPage) {
-      window.location.href = '../index.html';
+      window.location.href = 'index.html';
       return false;
     }
     if (Storage.isAuthenticated() && isAuthPage) {
-      window.location.href = '../pages/dashboard.html';
+      window.location.href = 'pages/dashboard.html';
       return false;
     }
     return true;
   }
 
-  renderLayout() {
-    if (this.isAuthPage()) return;
+  // ===== PATH HELPERS =====
+  getBasePath() {
+    const path = window.location.pathname;
+    // If we're inside pages/ folder, go up one level to reach root
+    if (path.includes('/pages/')) {
+      return '../';
+    }
+    return '';
+  }
 
-    const layoutHTML = this.getLayoutHTML();
+  // ===== LAYOUT =====
+  renderLayout() {
+    if (window.location.pathname.includes('/auth/') || 
+        window.location.pathname.endsWith('index.html') ||
+        window.location.pathname === '/') {
+      return;
+    }
+
+    const base = this.getBasePath();
+    const layoutHTML = this.getLayoutHTML(base);
     document.body.insertAdjacentHTML('afterbegin', layoutHTML);
     this.updateUserInfo();
     this.markActiveNav();
   }
 
-  getPathPrefix() {
-    const path = window.location.pathname;
-    // If we're in a subfolder, go up accordingly
-    if (path.includes('/pages/')) {
-      const depth = (path.match(/\//g) || []).length - 2; // pages/sub/file.html = 2 levels
-      return '../'.repeat(Math.max(1, depth));
-    }
-    return '';
-  }
-
-  getLayoutHTML() {
+  getLayoutHTML(base) {
     const user = Storage.getCurrentUser();
-    const settings = Storage.getSettings();
-    const company = settings?.company || {};
-    const prefix = this.getPathPrefix();
 
     return `
       <aside class="app-sidebar" id="appSidebar">
@@ -83,23 +76,23 @@ class AppCore {
         <nav class="sidebar-nav">
           <div class="nav-section">
             <div class="nav-section-title">القائمة الرئيسية</div>
-            <a href="${prefix}pages/dashboard.html" class="nav-item" data-page="dashboard"><i class="fas fa-chart-pie"></i><span class="nav-label">لوحة التحكم</span></a>
-            <a href="${prefix}pages/invoices/list.html" class="nav-item" data-page="invoices"><i class="fas fa-file-invoice-dollar"></i><span class="nav-label">الفواتير</span><span class="nav-badge" id="invoiceBadge">0</span></a>
-            <a href="${prefix}pages/customers/list.html" class="nav-item" data-page="customers"><i class="fas fa-users"></i><span class="nav-label">العملاء</span></a>
-            <a href="${prefix}pages/products/list.html" class="nav-item" data-page="products"><i class="fas fa-boxes"></i><span class="nav-label">المنتجات</span></a>
-            <a href="${prefix}pages/expenses/list.html" class="nav-item" data-page="expenses"><i class="fas fa-wallet"></i><span class="nav-label">المصروفات</span></a>
+            <a href="${base}pages/dashboard.html" class="nav-item" data-page="dashboard"><i class="fas fa-chart-pie"></i><span class="nav-label">لوحة التحكم</span></a>
+            <a href="${base}pages/invoices/list.html" class="nav-item" data-page="invoices"><i class="fas fa-file-invoice-dollar"></i><span class="nav-label">الفواتير</span><span class="nav-badge" id="invoiceBadge">0</span></a>
+            <a href="${base}pages/customers/list.html" class="nav-item" data-page="customers"><i class="fas fa-users"></i><span class="nav-label">العملاء</span></a>
+            <a href="${base}pages/products/list.html" class="nav-item" data-page="products"><i class="fas fa-boxes"></i><span class="nav-label">المنتجات</span></a>
+            <a href="${base}pages/expenses/list.html" class="nav-item" data-page="expenses"><i class="fas fa-wallet"></i><span class="nav-label">المصروفات</span></a>
           </div>
           <div class="nav-section">
             <div class="nav-section-title">التقارير</div>
-            <a href="${prefix}pages/reports/financial.html" class="nav-item" data-page="reports-financial"><i class="fas fa-chart-line"></i><span class="nav-label">الأرباح والخسائر</span></a>
-            <a href="${prefix}pages/reports/sales.html" class="nav-item" data-page="reports-sales"><i class="fas fa-chart-bar"></i><span class="nav-label">المبيعات</span></a>
-            <a href="${prefix}pages/reports/expenses.html" class="nav-item" data-page="reports-expenses"><i class="fas fa-chart-area"></i><span class="nav-label">المصروفات</span></a>
+            <a href="${base}pages/reports/financial.html" class="nav-item" data-page="reports-financial"><i class="fas fa-chart-line"></i><span class="nav-label">الأرباح والخسائر</span></a>
+            <a href="${base}pages/reports/sales.html" class="nav-item" data-page="reports-sales"><i class="fas fa-chart-bar"></i><span class="nav-label">المبيعات</span></a>
+            <a href="${base}pages/reports/expenses.html" class="nav-item" data-page="reports-expenses"><i class="fas fa-chart-area"></i><span class="nav-label">المصروفات</span></a>
           </div>
           <div class="nav-section">
             <div class="nav-section-title">الإعدادات</div>
-            <a href="${prefix}pages/settings/company.html" class="nav-item" data-page="settings-company"><i class="fas fa-building"></i><span class="nav-label">الشركة</span></a>
-            <a href="${prefix}pages/settings/users.html" class="nav-item" data-page="settings-users"><i class="fas fa-user-shield"></i><span class="nav-label">المستخدمون</span></a>
-            <a href="${prefix}pages/settings/backup.html" class="nav-item" data-page="settings-backup"><i class="fas fa-database"></i><span class="nav-label">النسخ الاحتياطي</span></a>
+            <a href="${base}pages/settings/company.html" class="nav-item" data-page="settings-company"><i class="fas fa-building"></i><span class="nav-label">الشركة</span></a>
+            <a href="${base}pages/settings/users.html" class="nav-item" data-page="settings-users"><i class="fas fa-user-shield"></i><span class="nav-label">المستخدمون</span></a>
+            <a href="${base}pages/settings/backup.html" class="nav-item" data-page="settings-backup"><i class="fas fa-database"></i><span class="nav-label">النسخ الاحتياطي</span></a>
           </div>
         </nav>
         <div class="sidebar-footer">
@@ -115,7 +108,7 @@ class AppCore {
           <button class="header-action-btn d-md-none" onclick="App.toggleSidebar()" aria-label="القائمة">
             <i class="fas fa-bars"></i>
           </button>
-          <div id="pageHeaderContent" style="display: flex; flex-direction: column; gap: 2px;"></div>
+          <div id="pageHeaderContent"></div>
         </div>
         <div class="header-right">
           <button class="header-action-btn" id="themeToggle" onclick="App.toggleTheme()" aria-label="تبديل الوضع">
@@ -133,8 +126,8 @@ class AppCore {
             </div>
             <i class="fas fa-chevron-down" style="color: var(--gray-400); font-size: 12px;"></i>
             <div class="dropdown-menu" id="userDropdown" style="position: absolute; top: 100%; left: 0; margin-top: 8px; background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--gray-200); min-width: 200px; padding: 8px 0; display: none; z-index: var(--z-dropdown);">
-              <a href="${prefix}pages/settings/profile.html" class="dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; color: var(--gray-700); text-decoration: none; font-size: var(--font-size-sm); transition: background var(--transition-fast);"><i class="fas fa-user" style="width: 20px; text-align: center; color: var(--gray-400);"></i>الملف الشخصي</a>
-              <a href="${prefix}pages/settings/company.html" class="dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; color: var(--gray-700); text-decoration: none; font-size: var(--font-size-sm); transition: background var(--transition-fast);"><i class="fas fa-building" style="width: 20px; text-align: center; color: var(--gray-400);"></i>إعدادات الشركة</a>
+              <a href="${base}pages/settings/profile.html" class="dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; color: var(--gray-700); text-decoration: none; font-size: var(--font-size-sm); transition: background var(--transition-fast);"><i class="fas fa-user" style="width: 20px; text-align: center; color: var(--gray-400);"></i>الملف الشخصي</a>
+              <a href="${base}pages/settings/company.html" class="dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; color: var(--gray-700); text-decoration: none; font-size: var(--font-size-sm); transition: background var(--transition-fast);"><i class="fas fa-building" style="width: 20px; text-align: center; color: var(--gray-400);"></i>إعدادات الشركة</a>
               <div style="border-top: 1px solid var(--gray-100); margin: 8px 0;"></div>
               <button onclick="App.logout()" class="dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; color: var(--danger-600); background: none; border: none; width: 100%; text-align: right; font-family: var(--font-family); font-size: var(--font-size-sm); cursor: pointer; transition: background var(--transition-fast);"><i class="fas fa-sign-out-alt" style="width: 20px; text-align: center;"></i>تسجيل الخروج</button>
             </div>
@@ -149,13 +142,14 @@ class AppCore {
     `;
   }
 
+  // ===== UI =====
   updateUserInfo() {
     const user = Storage.getCurrentUser();
     if (!user) return;
     const avatar = document.getElementById('headerAvatar');
     const name = document.getElementById('headerUserName');
-    if (avatar) { avatar.textContent = user.name.split(' ').map(n => n[0]).join('').toUpperCase(); }
-    if (name) { name.textContent = user.name; }
+    if (avatar) avatar.textContent = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+    if (name) name.textContent = user.name;
   }
 
   markActiveNav() {
@@ -186,8 +180,7 @@ class AppCore {
 
   initUI() {
     document.addEventListener('click', (e) => {
-      const dropdowns = document.querySelectorAll('.dropdown-menu');
-      dropdowns.forEach(d => {
+      document.querySelectorAll('.dropdown-menu').forEach(d => {
         if (!d.contains(e.target) && !e.target.closest('.user-menu')) d.style.display = 'none';
       });
     });
@@ -209,8 +202,7 @@ class AppCore {
 
   updateThemeIcon() {
     const icon = document.getElementById('themeIcon');
-    const isDark = document.documentElement.classList.contains('dark');
-    if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    if (icon) icon.className = document.documentElement.classList.contains('dark') ? 'fas fa-sun' : 'fas fa-moon';
   }
 
   updateBadges() {
@@ -220,6 +212,7 @@ class AppCore {
     if (badge) { badge.textContent = pendingCount; badge.style.display = pendingCount > 0 ? 'flex' : 'none'; }
   }
 
+  // ===== MODULE LOADER =====
   loadPageModule() {
     const path = window.location.pathname;
     const pageName = path.split('/').pop().replace('.html', '');
@@ -255,6 +248,7 @@ class AppCore {
     if (moduleMap[pageName]) setTimeout(() => moduleMap[pageName](), 100);
   }
 
+  // ===== ACTIONS =====
   toggleSidebar() {
     const sidebar = document.getElementById('appSidebar');
     const overlay = document.getElementById('sidebarOverlay');
@@ -270,7 +264,7 @@ class AppCore {
   logout() {
     if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
       Storage.logout();
-      window.location.href = '../index.html';
+      window.location.href = 'index.html';
     }
   }
 
@@ -289,12 +283,11 @@ class AppCore {
   }
 
   showSearchResults(results, query) {
-    const prefix = this.getPathPrefix();
     let html = '<div style="display: flex; flex-direction: column; gap: 16px;">';
     const sections = [
-      { key: 'invoices', title: 'الفواتير', icon: 'fa-file-invoice-dollar', link: `${prefix}pages/invoices/view.html?id=` },
-      { key: 'customers', title: 'العملاء', icon: 'fa-users', link: `${prefix}pages/customers/list.html` },
-      { key: 'products', title: 'المنتجات', icon: 'fa-boxes', link: `${prefix}pages/products/list.html` }
+      { key: 'invoices', title: 'الفواتير', icon: 'fa-file-invoice-dollar' },
+      { key: 'customers', title: 'العملاء', icon: 'fa-users' },
+      { key: 'products', title: 'المنتجات', icon: 'fa-boxes' }
     ];
     let hasResults = false;
     sections.forEach(section => {
@@ -304,8 +297,7 @@ class AppCore {
         html += `<div><h4 style="font-size: 14px; color: var(--gray-500); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fas ${section.icon}"></i> ${section.title}</h4><div style="display: flex; flex-direction: column; gap: 4px;">`;
         items.slice(0, 5).forEach(item => {
           const name = item.invoiceNumber || item.name || item.description || 'غير معروف';
-          const link = section.key === 'invoices' ? section.link + item.id : section.link;
-          html += `<a href="${link}" style="padding: 10px 12px; border-radius: var(--radius-md); background: var(--gray-50); color: var(--gray-700); text-decoration: none; font-size: 14px; transition: background var(--transition-fast); display: flex; align-items: center; gap: 8px;" onmouseover="this.style.background='var(--primary-50)'" onmouseout="this.style.background='var(--gray-50)'"><i class="fas fa-arrow-left" style="color: var(--primary-500); font-size: 12px;"></i>${name}</a>`;
+          html += `<div style="padding: 10px 12px; border-radius: var(--radius-md); background: var(--gray-50); color: var(--gray-700); font-size: 14px;">${name}</div>`;
         });
         html += '</div></div>';
       }
@@ -322,8 +314,7 @@ class AppCore {
     else {
       const icons = { create: 'fa-plus-circle', update: 'fa-edit', delete: 'fa-trash-alt' };
       activities.forEach(act => {
-        const time = Utils.formatRelativeTime(act.timestamp);
-        html += `<div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px; border-radius: var(--radius-lg); background: var(--gray-50);"><div style="width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--primary-50); color: var(--primary-600); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i class="fas ${icons[act.action] || 'fa-info'}"></i></div><div style="flex: 1;"><p style="font-size: 14px; color: var(--gray-800); margin: 0;">${act.title}</p><p style="font-size: 12px; color: var(--gray-400); margin-top: 4px;">${time} · ${act.user}</p></div></div>`;
+        html += `<div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px; border-radius: var(--radius-lg); background: var(--gray-50);"><div style="width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--primary-50); color: var(--primary-600); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i class="fas ${icons[act.action] || 'fa-info'}"></i></div><div style="flex: 1;"><p style="font-size: 14px; color: var(--gray-800); margin: 0;">${act.title}</p><p style="font-size: 12px; color: var(--gray-400); margin-top: 4px;">${Utils.formatRelativeTime(act.timestamp)} · ${act.user}</p></div></div>`;
       });
     }
     html += '</div>';
