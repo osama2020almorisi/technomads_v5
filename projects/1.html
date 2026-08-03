@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>معرض الروابط الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0e14;
+            min-height: 100vh;
+            padding: 20px 16px;
+            background-image: 
+                radial-gradient(circle at 20% 50%, #1a1f2e 0%, #0b0e14 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255,255,255,0.02) 49px, rgba(255,255,255,0.02) 50px),
+                repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(255,255,255,0.02) 49px, rgba(255,255,255,0.02) 50px);
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px 28px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 28px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            gap: 16px;
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f0f4ff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header h1 i {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            padding: 12px;
+            border-radius: 16px;
+            font-size: 22px;
+            -webkit-text-fill-color: white;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+        .header .stats {
+            color: #64748b;
+            font-size: 15px;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header .stats span {
+            color: #e2e8f0;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .tools {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+        .tools input,
+        .tools button {
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            color: #e2e8f0;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s;
+            cursor: pointer;
+            outline: none;
+            flex: 1;
+            min-width: 100px;
+        }
+        .tools input {
+            flex: 3;
+            min-width: 200px;
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.04);
+            font-size: 15px;
+            padding: 14px 24px;
+        }
+        .tools input::placeholder {
+            color: #64748b;
+            font-size: 15px;
+        }
+        .tools input:focus {
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .tools button {
+            font-size: 14px;
+            padding: 12px 24px;
+            min-width: 100px;
+        }
+        .tools button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(0.96);
+        }
+        .tools button.danger:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+        .tools button.primary {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
+        }
+        .tools button.primary:hover {
+            transform: scale(0.96);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Add Form */
+        .add-form {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+            padding: 20px 26px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 28px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: center;
+        }
+        .add-form input,
+        .add-form select {
+            flex: 1;
+            min-width: 160px;
+            padding: 14px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
+            color: #e2e8f0;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+        .add-form input::placeholder {
+            color: #475569;
+            font-size: 15px;
+        }
+        .add-form input:focus,
+        .add-form select:focus {
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .add-form select option {
+            background: #1a1f2e;
+            color: #e2e8f0;
+        }
+        .add-form button {
+            padding: 14px 36px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+        .add-form button:hover {
+            transform: scale(0.96);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Categories */
+        .category {
+            margin-bottom: 28px;
+            animation: fadeUp 0.4s ease;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .category-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e2e8f0;
+            padding: 10px 0 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .category-title span {
+            font-size: 15px;
+            font-weight: 400;
+            color: #94a3b8;
+        }
+        .category-title .count {
+            background: rgba(59, 130, 246, 0.12);
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .category-title i {
+            transition: 0.3s;
+            color: #475569;
+            font-size: 18px;
+        }
+        .category-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 18px;
+            transition: 0.3s;
+        }
+        .category-links.hidden {
+            display: none;
+        }
+
+        /* Link Card */
+        .link-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            position: relative;
+            cursor: pointer;
+        }
+        .link-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(59, 130, 246, 0.25);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.1);
+        }
+        .link-card.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+        .link-card.drag-over {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px #3b82f6;
+        }
+
+        /* Thumbnail */
+        .thumbnail {
+            width: 100%;
+            height: 180px;
+            background: #0f1219;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+        .link-card:hover .thumbnail img {
+            transform: scale(1.05);
+        }
+        .thumbnail .fallback {
+            display: none;
+            font-size: 50px;
+            color: rgba(255, 255, 255, 0.06);
+            position: absolute;
+            inset: 0;
+            align-items: center;
+            justify-content: center;
+            background: #0f1219;
+        }
+        .thumbnail .domain-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .thumbnail .badge-actions {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            left: 12px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .thumbnail .badge-actions button,
+        .thumbnail .badge-actions a {
+            padding: 8px 18px;
+            border-radius: 30px;
+            border: none;
+            font-size: 13px;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .thumbnail .badge-actions button:hover,
+        .thumbnail .badge-actions a:hover {
+            background: rgba(59, 130, 246, 0.85);
+            transform: scale(1.05);
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 18px 20px 20px;
+        }
+        .card-content .title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            gap: 12px;
+        }
+        .card-content h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f1f5f9;
+            flex: 1;
+        }
+        .card-content .category-tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 30px;
+            background: rgba(59, 130, 246, 0.12);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.08);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .card-content .url-preview {
+            font-size: 13px;
+            color: #475569;
+            margin-bottom: 14px;
+            word-break: break-all;
+            font-weight: 400;
+        }
+        .card-content .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .card-content .actions button,
+        .card-content .actions a {
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(10px);
+        }
+        .card-content .actions button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+        .card-content .actions a:hover {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        .card-content .actions .delete-btn:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+
+        /* ========== INLINE PREVIEW ========== */
+        .preview-container {
+            display: none;
+            padding: 18px 20px 20px;
+            background: rgba(59, 130, 246, 0.05);
+            border-top: 1px solid rgba(59, 130, 246, 0.1);
+            animation: slideDown 0.3s ease;
+        }
+        .preview-container.active {
+            display: block;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .preview-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .preview-inner .preview-thumb {
+            width: 100%;
+            height: 220px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #0a0d12;
+        }
+        .preview-inner .preview-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .preview-inner .preview-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .preview-inner .preview-info .p-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+        .preview-inner .preview-info .p-cat {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 30px;
+            background: rgba(59, 130, 246, 0.12);
+            color: #60a5fa;
+        }
+        .preview-inner .preview-url {
+            color: #64748b;
+            font-size: 14px;
+            word-break: break-all;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        .preview-inner .preview-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .preview-inner .preview-actions button,
+        .preview-inner .preview-actions a {
+            padding: 10px 24px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .preview-inner .preview-actions button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .preview-inner .preview-actions a:hover {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        .preview-inner .preview-actions .delete-btn:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+        .preview-inner .preview-close {
+            align-self: flex-end;
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 6px 14px;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+        .preview-inner .preview-close:hover {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .empty-msg {
+            text-align: center;
+            padding: 60px 20px;
+            color: #475569;
+            grid-column: 1 / -1;
+        }
+        .empty-msg i {
+            font-size: 60px;
+            margin-bottom: 16px;
+            opacity: 0.2;
+        }
+        .empty-msg h2 {
+            color: #64748b;
+            font-weight: 400;
+            font-size: 18px;
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 15px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: 0.4s;
+            z-index: 99999;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            pointer-events: none;
+            max-width: 90%;
+            text-align: center;
+        }
+        #toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 650px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 18px;
+            }
+            .tools input,
+            .tools button {
+                flex: 1;
+                min-width: 70px;
+                font-size: 13px;
+                padding: 10px 16px;
+            }
+            .tools input {
+                min-width: 120px;
+                font-size: 14px;
+                padding: 12px 18px;
+            }
+            .add-form {
+                flex-direction: column;
+                padding: 18px;
+            }
+            .add-form input,
+            .add-form select {
+                width: 100%;
+                min-width: auto;
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+            .add-form button {
+                width: 100%;
+                justify-content: center;
+                font-size: 14px;
+                padding: 12px 20px;
+            }
+            .category-links {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .thumbnail {
+                height: 150px;
+            }
+            .preview-inner .preview-thumb {
+                height: 150px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .header .stats {
+                font-size: 13px;
+            }
+            .category-title {
+                font-size: 17px;
+            }
+            .card-content h3 {
+                font-size: 16px;
+            }
+        }
+
+        @media (min-width: 900px) {
+            .category-links {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-th-large"></i> معرض الروابط</h1>
+            <div class="stats">
+                <i class="fas fa-link"></i> <span id="totalCount">0</span> رابط
+            </div>
+            <div class="tools">
+                <input type="text" id="searchInput" placeholder="🔍 ابحث عن رابط..." oninput="renderLinks()" />
+                <button class="primary" onclick="exportLinks()"><i class="fas fa-download"></i> تصدير</button>
+                <button onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> استيراد</button>
+                <input type="file" id="importFile" accept=".json" style="display:none" onchange="importLinks(event)" />
+                <button class="danger" onclick="clearAll()"><i class="fas fa-trash-alt"></i> حذف الكل</button>
+            </div>
+        </div>
+
+        <!-- Add Form -->
+        <div class="add-form">
+            <input type="text" id="linkTitle" placeholder="🏷️ العنوان (مثال: فيسبوك)" />
+            <input type="url" id="linkUrl" placeholder="🔗 الرابط (https://...)" />
+            <select id="linkCategory">
+                <option value="عام">📂 عام</option>
+                <option value="تواصل">💬 تواصل</option>
+                <option value="عمل">💼 عمل</option>
+                <option value="تعليم">📚 تعليم</option>
+                <option value="تسوق">🛒 تسوق</option>
+                <option value="ترفيه">🎮 ترفيه</option>
+                <option value="أخبار">📰 أخبار</option>
+            </select>
+            <button onclick="addLink()"><i class="fas fa-plus-circle"></i> إضافة</button>
+        </div>
+
+        <!-- Links -->
+        <div id="linksContainer"></div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+        // ========== DATA ==========
+        let links = [];
+        let expandedCardId = null;
+
+        const categoryIcons = {
+            'عام': '📂',
+            'تواصل': '💬',
+            'عمل': '💼',
+            'تعليم': '📚',
+            'تسوق': '🛒',
+            'ترفيه': '🎮',
+            'أخبار': '📰'
+        };
+
+        function loadLinks() {
+            const stored = localStorage.getItem('galleryDarkLinks2');
+            if (stored) {
+                try { links = JSON.parse(stored); } catch (e) { links = []; }
+            } else {
+                links = [
+                    { id: 1, title: 'GitHub', url: 'https://github.com', category: 'عمل' },
+                    { id: 2, title: 'YouTube', url: 'https://youtube.com', category: 'ترفيه' },
+                    { id: 3, title: 'X (Twitter)', url: 'https://x.com', category: 'تواصل' },
+                    { id: 4, title: 'Wikipedia', url: 'https://wikipedia.org', category: 'تعليم' },
+                ];
+                saveLinks();
+            }
+        }
+
+        function saveLinks() {
+            localStorage.setItem('galleryDarkLinks2', JSON.stringify(links));
+        }
+
+        // ========== HELPERS ==========
+        function getDomain(url) {
+            try {
+                const u = new URL(url);
+                return u.hostname.replace('www.', '');
+            } catch {
+                return url.split('/')[2] || url;
+            }
+        }
+
+        function getThumbnail(url) {
+            return `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&embed=screenshot.url&meta=false`;
+        }
+
+        function getCategoryIcon(cat) {
+            return categoryIcons[cat] || '📁';
+        }
+
+        // ========== RENDER ==========
+        function renderLinks() {
+            const container = document.getElementById('linksContainer');
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            let filtered = links.filter(l =>
+                l.title.toLowerCase().includes(search) ||
+                l.url.toLowerCase().includes(search) ||
+                l.category.toLowerCase().includes(search)
+            );
+
+            document.getElementById('totalCount').textContent = links.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-msg">
+                        <i class="fas fa-images"></i>
+                        <h2>${search ? '🔍 لا توجد نتائج مطابقة' : '✨ أضف روابطك الأولى لتبدأ المعرض'}</h2>
+                    </div>
+                `;
+                return;
+            }
+
+            const groups = {};
+            filtered.forEach(l => {
+                if (!groups[l.category]) groups[l.category] = [];
+                groups[l.category].push(l);
+            });
+
+            let html = '';
+            for (const [cat, items] of Object.entries(groups)) {
+                html += `<div class="category">`;
+                html += `<div class="category-title" onclick="toggleCategory(this)">
+                            <span>${getCategoryIcon(cat)} ${cat} <span class="count">${items.length}</span></span>
+                            <i class="fas fa-chevron-down"></i>
+                         </div>`;
+                html += `<div class="category-links" data-category="${cat}">`;
+
+                items.forEach((l) => {
+                    const domain = getDomain(l.url);
+                    const thumb = getThumbnail(l.url);
+                    const isExpanded = expandedCardId === l.id;
+                    html += `
+                        <div class="link-card" data-id="${l.id}" draggable="true" 
+                             onclick="togglePreview(${l.id})"
+                             ondragstart="dragStart(event)" 
+                             ondragend="dragEnd(event)"
+                             ondragover="dragOver(event)" 
+                             ondrop="drop(event)">
+                            <div class="thumbnail">
+                                <img src="${thumb}" alt="${l.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                                <div class="fallback" style="display:none; position:absolute; inset:0; align-items:center; justify-content:center; background:#0f1219;">
+                                    <i class="fas fa-globe" style="font-size:60px; color:#1e293b;"></i>
+                                </div>
+                                <div class="domain-badge">
+                                    <i class="fas fa-link"></i> ${domain}
+                                </div>
+                                <div class="badge-actions">
+                                    <button onclick="event.stopPropagation(); togglePreview(${l.id})"><i class="fas fa-eye"></i> ${isExpanded ? 'إغلاق' : 'معاينة'}</button>
+                                    <a href="${l.url}" target="_blank" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i> فتح</a>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="title-row">
+                                    <h3>${l.title}</h3>
+                                    <span class="category-tag">${getCategoryIcon(l.category)} ${l.category}</span>
+                                </div>
+                                <div class="url-preview">${l.url}</div>
+                                <div class="actions">
+                                    <button onclick="event.stopPropagation(); copyLink('${l.url}')"><i class="fas fa-copy"></i> نسخ</button>
+                                    <button class="delete-btn" onclick="event.stopPropagation(); deleteLink(${l.id})"><i class="fas fa-trash"></i> حذف</button>
+                                </div>
+                            </div>
+                            <div class="preview-container ${isExpanded ? 'active' : ''}">
+                                <div class="preview-inner">
+                                    <button class="preview-close" onclick="event.stopPropagation(); closePreview()"><i class="fas fa-times"></i></button>
+                                    <div class="preview-thumb">
+                                        <img src="${thumb}" alt="${l.title}" onerror="this.style.display='none'" />
+                                    </div>
+                                    <div class="preview-info">
+                                        <span class="p-title">${l.title}</span>
+                                        <span class="p-cat">${getCategoryIcon(l.category)} ${l.category}</span>
+                                    </div>
+                                    <div class="preview-url">${l.url}</div>
+                                    <div class="preview-actions">
+                                        <button onclick="event.stopPropagation(); copyLink('${l.url}')"><i class="fas fa-copy"></i> نسخ</button>
+                                        <a href="${l.url}" target="_blank" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i> زيارة</a>
+                                        <button class="delete-btn" onclick="event.stopPropagation(); deleteLink(${l.id})"><i class="fas fa-trash"></i> حذف</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div></div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function toggleCategory(el) {
+            const linksDiv = el.nextElementSibling;
+            linksDiv.classList.toggle('hidden');
+            const icon = el.querySelector('i:last-child');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+
+        // ========== PREVIEW ==========
+        function togglePreview(id) {
+            if (expandedCardId === id) {
+                expandedCardId = null;
+            } else {
+                expandedCardId = id;
+            }
+            renderLinks();
+            setTimeout(() => {
+                const card = document.querySelector(`.link-card[data-id="${id}"]`);
+                if (card) {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+        }
+
+        function closePreview() {
+            expandedCardId = null;
+            renderLinks();
+        }
+
+        // ========== DRAG & DROP ==========
+        let draggedId = null;
+
+        function dragStart(e) {
+            const card = e.target.closest('.link-card');
+            if (!card) return;
+            draggedId = parseInt(card.dataset.id);
+            card.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', draggedId);
+        }
+
+        function dragEnd(e) {
+            const card = e.target.closest('.link-card');
+            if (card) card.classList.remove('dragging');
+            document.querySelectorAll('.link-card').forEach(c => c.classList.remove('drag-over'));
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            const card = e.target.closest('.link-card');
+            if (card) {
+                document.querySelectorAll('.link-card').forEach(c => c.classList.remove('drag-over'));
+                card.classList.add('drag-over');
+            }
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            const card = e.target.closest('.link-card');
+            if (!card) return;
+            const targetId = parseInt(card.dataset.id);
+            if (draggedId === targetId) return;
+
+            const draggedIndex = links.findIndex(l => l.id === draggedId);
+            const targetIndex = links.findIndex(l => l.id === targetId);
+            if (draggedIndex === -1 || targetIndex === -1) return;
+
+            const [removed] = links.splice(draggedIndex, 1);
+            links.splice(targetIndex, 0, removed);
+            saveLinks();
+            renderLinks();
+            showToast('🔄 تم إعادة الترتيب');
+        }
+
+        // ========== CRUD ==========
+        function addLink() {
+            const title = document.getElementById('linkTitle').value.trim();
+            const url = document.getElementById('linkUrl').value.trim();
+            const category = document.getElementById('linkCategory').value;
+
+            if (!title || !url) {
+                showToast('⚠️ الرجاء إدخال العنوان والرابط');
+                return;
+            }
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                showToast('⚠️ الرابط يجب أن يبدأ بـ http:// أو https://');
+                return;
+            }
+
+            links.push({ id: Date.now(), title, url, category });
+            saveLinks();
+            renderLinks();
+            document.getElementById('linkTitle').value = '';
+            document.getElementById('linkUrl').value = '';
+            showToast('✅ تم إضافة الرابط');
+        }
+
+        function deleteLink(id) {
+            if (!confirm('هل تريد حذف هذا الرابط؟')) return;
+            links = links.filter(l => l.id !== id);
+            if (expandedCardId === id) expandedCardId = null;
+            saveLinks();
+            renderLinks();
+            showToast('🗑️ تم الحذف');
+        }
+
+        function copyLink(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('📋 تم نسخ الرابط');
+            }).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = url;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                ta.remove();
+                showToast('📋 تم نسخ الرابط');
+            });
+        }
+
+        function clearAll() {
+            if (!confirm('⚠️ حذف جميع الروابط نهائياً؟')) return;
+            links = [];
+            expandedCardId = null;
+            saveLinks();
+            renderLinks();
+            showToast('🗑️ تم حذف الكل');
+        }
+
+        // ========== EXPORT / IMPORT ==========
+        function exportLinks() {
+            const data = JSON.stringify(links, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'معرض_روابطي.json';
+            a.click();
+            showToast('📤 تم التصدير');
+        }
+
+        function importLinks(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (Array.isArray(data)) {
+                        links = data;
+                        saveLinks();
+                        renderLinks();
+                        showToast('📥 تم الاستيراد (' + links.length + ' رابط)');
+                    } else {
+                        showToast('⚠️ الملف غير صالح');
+                    }
+                } catch (err) {
+                    showToast('⚠️ خطأ في قراءة الملف');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // ========== TOAST ==========
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // ========== INIT ==========
+        loadLinks();
+        renderLinks();
+    </script>
+</body>
+</html>

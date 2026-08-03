@@ -1711,7 +1711,6 @@
                 document.getElementById('userInfo').classList.add('hidden');
                 document.querySelectorAll('.auth-btn:not(.logout)').forEach(btn => btn.classList.remove('hidden'));
                 updateSyncStatus('offline');
-                // عرض رسالة بأن المستخدم غير مسجل
                 quotes = [];
                 renderQuotes();
                 updateStats();
@@ -1777,14 +1776,6 @@
         // ================================================================
         // 📝 دوال التطبيق الأساسية
         // ================================================================
-        function saveToLocal() {
-            try {
-                localStorage.setItem('diwan_quotes_cloud', JSON.stringify(quotes));
-            } catch (e) {
-                showToast('⚠️ مساحة التخزين ممتلئة', 'error');
-            }
-        }
-
         function getAutoIcon(index) {
             return AUTO_ICONS[index % AUTO_ICONS.length];
         }
@@ -1928,11 +1919,13 @@
         function renderQuotes() {
             if (isRendering) return;
             isRendering = true;
+            
             requestAnimationFrame(() => {
+                // ننسخ المصفوفة لتجنب التعديل المباشر
                 let filtered = [...quotes];
                 
-                // إذا لم تكن هناك بيانات ولم يتم تحميل البيانات بعد
-                if (!isDataLoaded && !currentUser) {
+                // إذا لم يكن هناك مستخدم
+                if (!currentUser) {
                     quotesListElement.innerHTML = `
                         <div class="empty-state">
                             <div class="empty-state-icon">🔐</div>
@@ -1945,12 +1938,14 @@
                     return;
                 }
                 
+                // تطبيق الفلترة حسب التصنيف
                 if (activeCategory === 'favorites') {
                     filtered = filtered.filter(q => favorites.includes(q.id));
                 } else if (activeCategory !== 'all') {
                     filtered = filtered.filter(q => q.category === activeCategory);
                 }
                 
+                // تطبيق البحث
                 const search = document.getElementById('searchInput').value.toLowerCase().trim();
                 currentSearchTerm = search;
                 document.getElementById('clearBtn').classList.toggle('visible', !!search);
@@ -1965,23 +1960,19 @@
                     );
                 }
                 
+                // ترتيب حسب التاريخ (الأحدث أولاً)
                 filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
                 allFilteredQuotes = filtered;
                 currentPage = 0;
                 hasMoreData = true;
+                
+                // مسح القائمة
                 quotesListElement.innerHTML = '';
                 
+                // إذا لم تكن هناك نتائج
                 if (filtered.length === 0) {
                     let message = '';
-                    if (!currentUser) {
-                        message = `
-                            <div class="empty-state">
-                                <div class="empty-state-icon">🔐</div>
-                                <h3>سجل الدخول لعرض الاقتباسات</h3>
-                                <p>اضغط على "زائر" أو "جوجل" لتسجيل الدخول</p>
-                            </div>
-                        `;
-                    } else if (quotes.length === 0) {
+                    if (quotes.length === 0) {
                         message = `
                             <div class="empty-state">
                                 <div class="empty-state-icon">📭</div>
@@ -2004,11 +1995,13 @@
                     updateSearchButtons();
                     updateSearchCounter();
                     updateNavButtons();
+                    document.getElementById('resultsCount').textContent = '';
                     return;
                 }
                 
+                // تحميل الدفعة الأولى
                 loadMoreQuotes();
-                document.getElementById('resultsCount').textContent = filtered.length > 0 ? `(${filtered.length})` : '';
+                document.getElementById('resultsCount').textContent = `(${filtered.length})`;
                 updateSearchButtons();
                 updateSearchCounter();
                 updateNavButtons();
@@ -2019,29 +2012,36 @@
         function loadMoreQuotes() {
             if (!hasMoreData || isLoadingMore) return;
             isLoadingMore = true;
+            
             const start = currentPage * PAGE_SIZE;
             const end = Math.min(start + PAGE_SIZE, allFilteredQuotes.length);
             const pageItems = allFilteredQuotes.slice(start, end);
-            if (pageItems.length === 0) { hasMoreData = false;
-                isLoadingMore = false; return; }
+            
+            if (pageItems.length === 0) { 
+                hasMoreData = false;
+                isLoadingMore = false; 
+                return; 
+            }
+            
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
             const fragment = document.createDocumentFragment();
             let matchIdCounter = searchMatches.length;
+            
             pageItems.forEach((q, i) => {
                 let displayText = q.text;
                 let matchFound = false;
+                
+                // تطبيق تمييز البحث
                 if (search) {
                     const regex = new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
                     const parts = q.text.split(regex);
                     let highlighted = '';
-                    let matchIndex = 0;
                     for (let part of parts) {
                         if (part && regex.test(part)) {
                             const matchId = `match-${q.id}-${matchIdCounter++}`;
                             highlighted +=
                                 `<span class="search-highlight" data-match-id="${matchId}" data-quote-id="${q.id}">${escapeHtml(part)}</span>`;
                             searchMatches.push({ id: matchId, quoteId: q.id, text: part });
-                            matchIndex++;
                             matchFound = true;
                         } else if (part) {
                             highlighted += escapeHtml(part);
@@ -2049,11 +2049,14 @@
                     }
                     displayText = highlighted;
                 }
+                
                 if (search && !matchFound) displayText = escapeHtml(q.text);
+                
                 const displayTextWithBreaks = displayText.replace(/\n/g, '<br>');
                 const isFav = favorites.includes(q.id);
                 const isAuto = q.author.startsWith('💬') || q.author.startsWith('🗣️');
                 const globalIndex = start + i;
+                
                 const card = document.createElement('div');
                 card.className = `quote-card ${isFav ? 'favorited' : ''}`;
                 card.dataset.id = q.id;
@@ -2082,9 +2085,12 @@
                 `;
                 fragment.appendChild(card);
             });
+            
             quotesListElement.appendChild(fragment);
             currentPage++;
             hasMoreData = end < allFilteredQuotes.length;
+            
+            // إذا كانت هناك نتائج بحث، نضع المؤشر على الأولى
             if (searchMatches.length > 0 && currentPage === 1) {
                 currentMatchIndex = 0;
                 const firstMatch = searchMatches[0];
@@ -2093,6 +2099,7 @@
                 updateSearchCounter();
                 updateSearchButtons();
             }
+            
             isLoadingMore = false;
             if (hasMoreData) setupInfiniteScroll();
             updateNavButtons();
@@ -2116,6 +2123,7 @@
                     }
                 });
             }, { rootMargin: '200px' });
+            
             const lastCard = quotesListElement.lastElementChild;
             if (lastCard) observer.observe(lastCard);
         }
@@ -2136,18 +2144,21 @@
             }
         }
 
-        function updateUIAfterAdd(quote) {
+        function addQuoteToUI(quote) {
+            // إزالة رسالة "لا توجد اقتباسات"
             const emptyState = quotesListElement.querySelector('.empty-state');
             if (emptyState) quotesListElement.innerHTML = '';
+            
             const card = document.createElement('div');
             card.className = 'quote-card';
             card.dataset.id = quote.id;
+            const isAuto = quote.author.startsWith('💬') || quote.author.startsWith('🗣️');
             card.innerHTML = `
                 <div class="quote-text">${escapeHtml(quote.text).replace(/\n/g, '<br>')}</div>
                 <div class="quote-meta">
                     <div class="quote-info">
-                        <span class="quote-author">${escapeHtml(quote.author)}</span>
-                        <span class="quote-category">${escapeHtml(quote.category)}</span>
+                        <span class="quote-author">${isAuto ? '🤖 ' : '👤 '}${escapeHtml(quote.author)}</span>
+                        <span class="quote-category">${escapeHtml(quote.category || 'عام')}</span>
                         <span class="quote-date">📅 ${quote.date}</span>
                     </div>
                     <div class="quote-actions">
@@ -2182,7 +2193,7 @@
             const textDiv = card.querySelector('.quote-text');
             if (textDiv) textDiv.innerHTML = escapeHtml(q.text).replace(/\n/g, '<br>');
             const authorSpan = card.querySelector('.quote-author');
-            if (authorSpan) authorSpan.textContent = q.author;
+            if (authorSpan) authorSpan.innerHTML = `${q.author.startsWith('💬') || q.author.startsWith('🗣️') ? '🤖 ' : '👤 '}${escapeHtml(q.author)}`;
             const categorySpan = card.querySelector('.quote-category');
             if (categorySpan) categorySpan.textContent = q.category || 'عام';
             const dateSpan = card.querySelector('.quote-date');
@@ -2293,9 +2304,9 @@
             };
             closeAddModal();
             
-            // إضافة محلياً لتظهر فوراً
+            // إضافة محلياً فوراً
             quotes.unshift(newQuote);
-            updateUIAfterAdd(newQuote);
+            addQuoteToUI(newQuote);
             updateStats();
             updateSidebarStats();
             updateCatList();
@@ -2375,11 +2386,12 @@
         function confirmDelete() {
             if (deleteId) {
                 const id = deleteId;
-                // حذف محلياً
+                // حذف من المصفوفة المحلية
                 quotes = quotes.filter(q => q.id !== id);
                 favorites = favorites.filter(fid => fid !== id);
                 localStorage.setItem('diwan_favorites', JSON.stringify(favorites));
                 
+                // حذف البطاقة من الواجهة
                 const card = document.querySelector(`.quote-card[data-id="${id}"]`);
                 if (card) {
                     card.style.transition = 'all 0.3s ease';
@@ -2387,6 +2399,7 @@
                     card.style.transform = 'scale(0.8)';
                     setTimeout(() => {
                         card.remove();
+                        // إذا لم يتبقى أي اقتباسات
                         if (quotesListElement.children.length === 0) {
                             quotesListElement.innerHTML = `
                                 <div class="empty-state">
@@ -2401,6 +2414,7 @@
                 } else {
                     renderQuotes();
                 }
+                
                 updateStats();
                 updateSidebarStats();
                 updateCatList();
@@ -2491,8 +2505,7 @@
             html.setAttribute('data-theme', next);
             localStorage.setItem('theme', next);
             document.getElementById('themeIcon').textContent = next === 'dark' ? '☀️' : '🌙';
-            document.querySelector('meta[name="theme-color"]').setAttribute('content', next === 'dark' ? '#1a202c' :
-                '#1a365d');
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', next === 'dark' ? '#1a202c' : '#1a365d');
             toggleSidebar();
         }
 
@@ -2525,7 +2538,6 @@
                 try {
                     const imported = JSON.parse(e.target.result);
                     if (imported.quotes && Array.isArray(imported.quotes)) {
-                        // نضيف الاقتباسات المستوردة إلى السحابة
                         if (currentUser) {
                             const userRef = db.collection('users').doc(currentUser.uid);
                             const batch = db.batch();
@@ -2667,19 +2679,13 @@
         });
 
         document.getElementById('searchInput').addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault();
-                navigateSearch('next'); }
-            if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault();
-                navigateSearch('prev'); }
-            if (e.key === 'Enter') { e.preventDefault();
-                performSearchAndHideKeyboard(); }
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); navigateSearch('next'); }
+            if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); navigateSearch('prev'); }
+            if (e.key === 'Enter') { e.preventDefault(); performSearchAndHideKeyboard(); }
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') { closeModal();
-                closeAddModal();
-                closeEditModal();
-                document.activeElement?.blur(); }
+            if (e.key === 'Escape') { closeModal(); closeAddModal(); closeEditModal(); document.activeElement?.blur(); }
         });
 
         window.addEventListener('scroll', () => {
@@ -2700,13 +2706,12 @@
 
         loadTheme();
         
-        // إخفاء شاشة التحميل بعد ثانية
+        // إخفاء شاشة التحميل
         setTimeout(() => {
             document.getElementById('loadingScreen').classList.add('hidden');
         }, 1000);
 
-        // ===== بدء التطبيق - السحابة فقط =====
-        // نعرض رسالة للمستخدم لتسجيل الدخول
+        // ===== بدء التطبيق =====
         quotes = [];
         renderQuotes();
         updateStats();
@@ -2715,8 +2720,6 @@
         updateSidebarCategories();
         loadDailyWisdom();
         
-        // محاولة تسجيل الدخول التلقائي (إذا كان هناك مستخدم مخزن)
-        // لكن لا نقوم بتسجيل دخول تلقائي - المستخدم يختار
         console.log('✅ ديوان الحكمة السحابي جاهز! ☁️');
         console.log('🔑 مشروع Firebase:', firebaseConfig.projectId);
         console.log('👤 الحالة:', currentUser ? 'مسجل الدخول' : 'غير مسجل - سجل الدخول لعرض الاقتباسات');
