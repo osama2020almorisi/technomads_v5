@@ -1600,7 +1600,7 @@
 
     <script>
         // ================================================================
-        // 🔥 بيانات Firebase الخاصة بك (ضعها هنا)
+        // 🔥 بيانات Firebase الخاصة بك
         // ================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyDSJoEcdLZiIBR1aJGQx1Lwi5lFuS3cKmk",
@@ -1662,7 +1662,8 @@
             auth.signOut()
                 .then(() => {
                     showToast('🚪 تم تسجيل الخروج', 'success');
-                    loadLocalData();
+                    // بعد الخروج، حاول تسجيل الدخول مجدداً كزائر
+                    auth.signInAnonymously().catch(() => {});
                 })
                 .catch(error => showToast('❌ خطأ في تسجيل الخروج: ' + error.message, 'error'));
         }
@@ -1683,7 +1684,10 @@
                 document.getElementById('userInfo').classList.add('hidden');
                 document.querySelectorAll('.auth-btn:not(.logout)').forEach(btn => btn.classList.remove('hidden'));
                 updateSyncStatus('offline');
-                loadLocalData();
+                // محاولة تسجيل الدخول تلقائياً كزائر
+                auth.signInAnonymously().catch(() => {
+                    loadDefaultData();
+                });
             }
         });
 
@@ -1698,7 +1702,12 @@
         }
 
         function loadQuotesFromCloud() {
-            if (!currentUser) return;
+            if (!currentUser) {
+                // إذا لم يكن هناك مستخدم، حاول تسجيل الدخول
+                auth.signInAnonymously().catch(() => loadDefaultData());
+                return;
+            }
+            
             if (unsubscribeQuotes) unsubscribeQuotes();
 
             const userRef = db.collection('users').doc(currentUser.uid);
@@ -1707,6 +1716,7 @@
                 .orderBy('date', 'desc')
                 .onSnapshot(snapshot => {
                     if (snapshot.empty) {
+                        // لا توجد بيانات، جرب تحميل البيانات الافتراضية
                         loadDefaultData();
                         return;
                     }
@@ -1734,126 +1744,8 @@
                     console.error('Error loading quotes:', error);
                     updateSyncStatus('offline');
                     showToast('⚠️ خطأ في تحميل البيانات من السحابة', 'error');
-                    loadLocalData();
+                    loadDefaultData();
                 });
-        }
-
-        function loadLocalData() {
-            const localData = localStorage.getItem('diwan_quotes_cloud');
-            if (localData) {
-                try {
-                    quotes = JSON.parse(localData);
-                    renderQuotes();
-                    updateStats();
-                    updateSidebarStats();
-                    updateCatList();
-                    updateSidebarCategories();
-                    loadDailyWisdom();
-                } catch (e) { loadDefaultData(); }
-            } else {
-                loadDefaultData();
-            }
-        }
-
-        function loadDefaultData() {
-            fetch('data.json')
-                .then(res => res.json())
-                .then(data => {
-                    quotes = data.quotes || [];
-                    saveToLocal();
-                    renderQuotes();
-                    updateStats();
-                    updateSidebarStats();
-                    updateCatList();
-                    updateSidebarCategories();
-                    loadDailyWisdom();
-                })
-                .catch(() => {
-                    quotes = [
-                        { id: '1', text: 'العلم نور والجهل ظلام', author: 'الحكمة العربية', category: 'حكم', date: new Date()
-                                .toISOString().split('T')[0] },
-                        { id: '2', text: 'من تعلم لغة قوم أمن شرهم', author: 'عمر بن الخطاب', category: 'حكم', date: new Date()
-                                .toISOString().split('T')[0] }
-                    ];
-                    renderQuotes();
-                    updateStats();
-                    updateSidebarStats();
-                    updateCatList();
-                    updateSidebarCategories();
-                    loadDailyWisdom();
-                });
-        }
-
-        // ================================================================
-        // 💾 حفظ في السحابة
-        // ================================================================
-        async function saveQuoteToCloud(quote) {
-            if (!currentUser) {
-                quotes.unshift(quote);
-                saveToLocal();
-                updateUIAfterAdd(quote);
-                showToast('✅ تمت الإضافة محلياً (غير متصل)', 'success');
-                return;
-            }
-            try {
-                updateSyncStatus('syncing');
-                const userRef = db.collection('users').doc(currentUser.uid);
-                await userRef.collection('quotes').add({
-                    text: quote.text,
-                    author: quote.author,
-                    category: quote.category,
-                    date: quote.date || new Date().toISOString().split('T')[0],
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                showToast('✅ تم حفظ الاقتباس في السحابة', 'success');
-                updateSyncStatus('online');
-            } catch (error) {
-                console.error('Error saving quote:', error);
-                quotes.unshift(quote);
-                saveToLocal();
-                showToast('⚠️ حفظ محلياً (فشل الاتصال بالسحابة)', 'error');
-            }
-        }
-
-        async function deleteQuoteFromCloud(quoteId) {
-            if (!currentUser) {
-                quotes = quotes.filter(q => q.id !== quoteId);
-                saveToLocal();
-                renderQuotes();
-                return;
-            }
-            try {
-                updateSyncStatus('syncing');
-                const userRef = db.collection('users').doc(currentUser.uid);
-                await userRef.collection('quotes').doc(quoteId).delete();
-                showToast('🗑️ تم الحذف من السحابة', 'success');
-                updateSyncStatus('online');
-            } catch (error) {
-                console.error('Error deleting quote:', error);
-                showToast('❌ خطأ في الحذف', 'error');
-            }
-        }
-
-        async function updateQuoteInCloud(quoteId, updatedData) {
-            if (!currentUser) {
-                const index = quotes.findIndex(q => q.id === quoteId);
-                if (index !== -1) {
-                    quotes[index] = { ...quotes[index], ...updatedData };
-                    saveToLocal();
-                    updateQuoteCard(quoteId);
-                }
-                return;
-            }
-            try {
-                updateSyncStatus('syncing');
-                const userRef = db.collection('users').doc(currentUser.uid);
-                await userRef.collection('quotes').doc(quoteId).update(updatedData);
-                showToast('✅ تم التحديث في السحابة', 'success');
-                updateSyncStatus('online');
-            } catch (error) {
-                console.error('Error updating quote:', error);
-                showToast('❌ خطأ في التحديث', 'error');
-            }
         }
 
         // ================================================================
@@ -1877,6 +1769,149 @@
             let index = 0;
             while (usedIcons.some(a => a.includes(getAutoIcon(index)))) index++;
             return `${getAutoIcon(index)} متحدث حكيم`;
+        }
+
+        // ================================================================
+        // 📂 تحميل البيانات الافتراضية
+        // ================================================================
+        function loadDefaultData() {
+            // محاولة تحميل من data.json
+            fetch('data.json')
+                .then(res => {
+                    if (!res.ok) throw new Error('File not found');
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.quotes && Array.isArray(data.quotes)) {
+                        quotes = data.quotes;
+                    } else {
+                        quotes = getDefaultQuotes();
+                    }
+                    saveToLocal();
+                    renderQuotes();
+                    updateStats();
+                    updateSidebarStats();
+                    updateCatList();
+                    updateSidebarCategories();
+                    loadDailyWisdom();
+                })
+                .catch(() => {
+                    quotes = getDefaultQuotes();
+                    saveToLocal();
+                    renderQuotes();
+                    updateStats();
+                    updateSidebarStats();
+                    updateCatList();
+                    updateSidebarCategories();
+                    loadDailyWisdom();
+                });
+        }
+
+        function getDefaultQuotes() {
+            return [
+                { id: '1', text: 'العلم نور والجهل ظلام.', author: 'الحكمة العربية', category: 'حكم', date: new Date().toISOString().split('T')[0] },
+                { id: '2', text: 'من جدّ وجد، ومن زرع حصد.', author: 'الحكمة العربية', category: 'حكم', date: new Date().toISOString().split('T')[0] },
+                { id: '3', text: 'خير الكلام ما قل ودل.', author: 'الحكمة العربية', category: 'أقوال', date: new Date().toISOString().split('T')[0] },
+                { id: '4', text: 'لا تؤجل عمل اليوم إلى الغد.', author: 'الحكمة العربية', category: 'حياة', date: new Date().toISOString().split('T')[0] },
+                { id: '5', text: 'اطلب العلم من المهد إلى اللحد.', author: 'الحكمة العربية', category: 'علم', date: new Date().toISOString().split('T')[0] },
+                { id: '6', text: 'الوقت كالسيف إن لم تقطعه قطعك.', author: 'الحكمة العربية', category: 'وقت', date: new Date().toISOString().split('T')[0] }
+            ];
+        }
+
+        // ================================================================
+        // 💾 حفظ في السحابة
+        // ================================================================
+        async function saveQuoteToCloud(quote) {
+            if (!currentUser) {
+                // محاولة تسجيل الدخول أولاً
+                try {
+                    await auth.signInAnonymously();
+                } catch (e) {
+                    quotes.unshift(quote);
+                    saveToLocal();
+                    updateUIAfterAdd(quote);
+                    showToast('✅ تمت الإضافة محلياً (غير متصل)', 'success');
+                    return;
+                }
+            }
+            
+            if (!currentUser) {
+                quotes.unshift(quote);
+                saveToLocal();
+                updateUIAfterAdd(quote);
+                showToast('✅ تمت الإضافة محلياً (غير متصل)', 'success');
+                return;
+            }
+            
+            try {
+                updateSyncStatus('syncing');
+                const userRef = db.collection('users').doc(currentUser.uid);
+                await userRef.collection('quotes').add({
+                    text: quote.text,
+                    author: quote.author,
+                    category: quote.category,
+                    date: quote.date || new Date().toISOString().split('T')[0],
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                showToast('✅ تم حفظ الاقتباس في السحابة', 'success');
+                updateSyncStatus('online');
+            } catch (error) {
+                console.error('Error saving quote:', error);
+                quotes.unshift(quote);
+                saveToLocal();
+                updateUIAfterAdd(quote);
+                showToast('⚠️ حفظ محلياً (فشل الاتصال بالسحابة)', 'error');
+            }
+        }
+
+        async function deleteQuoteFromCloud(quoteId) {
+            if (!currentUser) {
+                quotes = quotes.filter(q => q.id !== quoteId);
+                saveToLocal();
+                renderQuotes();
+                return;
+            }
+            try {
+                updateSyncStatus('syncing');
+                const userRef = db.collection('users').doc(currentUser.uid);
+                await userRef.collection('quotes').doc(quoteId).delete();
+                showToast('🗑️ تم الحذف من السحابة', 'success');
+                updateSyncStatus('online');
+            } catch (error) {
+                console.error('Error deleting quote:', error);
+                quotes = quotes.filter(q => q.id !== quoteId);
+                saveToLocal();
+                renderQuotes();
+                showToast('⚠️ تم الحذف محلياً (فشل الاتصال بالسحابة)', 'error');
+            }
+        }
+
+        async function updateQuoteInCloud(quoteId, updatedData) {
+            if (!currentUser) {
+                const index = quotes.findIndex(q => q.id === quoteId);
+                if (index !== -1) {
+                    quotes[index] = { ...quotes[index], ...updatedData };
+                    saveToLocal();
+                    updateQuoteCard(quoteId);
+                }
+                return;
+            }
+            try {
+                updateSyncStatus('syncing');
+                const userRef = db.collection('users').doc(currentUser.uid);
+                await userRef.collection('quotes').doc(quoteId).update(updatedData);
+                showToast('✅ تم التحديث في السحابة', 'success');
+                updateSyncStatus('online');
+            } catch (error) {
+                console.error('Error updating quote:', error);
+                const index = quotes.findIndex(q => q.id === quoteId);
+                if (index !== -1) {
+                    quotes[index] = { ...quotes[index], ...updatedData };
+                    saveToLocal();
+                    updateQuoteCard(quoteId);
+                }
+                showToast('⚠️ تم التحديث محلياً (فشل الاتصال بالسحابة)', 'error');
+            }
         }
 
         // ================================================================
@@ -2253,6 +2288,7 @@
             };
             closeAddModal();
             saveQuoteToCloud(newQuote);
+            // نضيفها محلياً لتظهر فوراً
             quotes.unshift(newQuote);
             updateUIAfterAdd(newQuote);
             updateStats();
@@ -2629,16 +2665,28 @@
         });
 
         loadTheme();
+        
+        // إخفاء شاشة التحميل بعد ثانية
         setTimeout(() => {
             document.getElementById('loadingScreen').classList.add('hidden');
-        }, 1500);
+        }, 1000);
 
-        // تحميل البيانات الأولية
-        loadLocalData();
+        // ===== بدء التطبيق =====
+        // محاولة تسجيل الدخول تلقائياً كزائر
+        auth.signInAnonymously()
+            .then(() => {
+                console.log('✅ تم تسجيل الدخول تلقائياً كزائر');
+                // المستخدم مسجل، نحمّل البيانات من السحابة
+                // loadQuotesFromCloud() سيتم استدعاؤها تلقائياً عبر onAuthStateChanged
+            })
+            .catch(error => {
+                console.warn('⚠️ فشل التسجيل التلقائي:', error.message);
+                // نحمّل البيانات المحلية كحل احتياطي
+                loadDefaultData();
+            });
 
         console.log('✅ ديوان الحكمة السحابي جاهز! ☁️');
         console.log('🔑 مشروع Firebase:', firebaseConfig.projectId);
-        console.log('👤 الحالة:', currentUser ? 'مسجل الدخول' : 'غير مسجل');
     </script>
 
 </body>
