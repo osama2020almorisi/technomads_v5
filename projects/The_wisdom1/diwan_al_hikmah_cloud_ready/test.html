@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>اختبار Firebase</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <h1>🧪 اختبار Firebase</h1>
+    <button onclick="test()">اختبار الاتصال</button>
+    <pre id="result"></pre>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSJoEcdLZiIBR1aJGQx1Lwi5lFuS3cKmk",
+            authDomain: "diwan-al-hikmah.firebaseapp.com",
+            projectId: "diwan-al-hikmah",
+            storageBucket: "diwan-al-hikmah.firebasestorage.app",
+            messagingSenderId: "1081410233938",
+            appId: "1:1081410233938:web:a76cb34738ab40e392618b"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        function test() {
+            document.getElementById('result').textContent = '🔄 جاري الاتصال...';
+            
+            auth.signInAnonymously()
+                .then(() => {
+                    document.getElementById('result').textContent = '✅ نجح الاتصال!';
+                })
+                .catch(error => {
+                    document.getElementById('result').textContent = '❌ خطأ: ' + error.message;
+                });
+        }
+    </script>
+</body>
+</html>
