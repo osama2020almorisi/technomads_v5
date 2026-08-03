@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ===== المتغيرات والثيمات ===== */
+        /* ===== جميع الأنماط كما هي (لم تتغير) ===== */
         :root {
             --primary: #1a365d;
             --primary-light: #2c5282;
@@ -1245,17 +1245,38 @@
 
         .empty-state {
             text-align: center;
-            padding: 1.5rem;
+            padding: 2rem 1rem;
             color: var(--text-muted);
         }
         .empty-state-icon {
-            font-size: 2rem;
-            margin-bottom: 0.3rem;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
         }
         .empty-state h3 {
             color: var(--text);
-            margin-bottom: 0.2rem;
-            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+        .empty-state p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .empty-state .btn-add-first {
+            margin-top: 1rem;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .empty-state .btn-add-first:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
         }
 
         .install-prompt {
@@ -1639,6 +1660,7 @@
         let isLoadingMore = false;
         let hasMoreData = true;
         let isRendering = false;
+        let isDataLoaded = false;
 
         const AUTO_ICONS = ['💬', '🗣️', '📝', '✍️', '🎭', '🌟', '💫', '⭐', '🌈', '🔥', '💎', '🕊️', '🌺', '🍃', '📜'];
 
@@ -1662,8 +1684,13 @@
             auth.signOut()
                 .then(() => {
                     showToast('🚪 تم تسجيل الخروج', 'success');
-                    // بعد الخروج، حاول تسجيل الدخول مجدداً كزائر
-                    auth.signInAnonymously().catch(() => {});
+                    quotes = [];
+                    renderQuotes();
+                    updateStats();
+                    updateSidebarStats();
+                    updateCatList();
+                    updateSidebarCategories();
+                    loadDailyWisdom();
                 })
                 .catch(error => showToast('❌ خطأ في تسجيل الخروج: ' + error.message, 'error'));
         }
@@ -1684,10 +1711,15 @@
                 document.getElementById('userInfo').classList.add('hidden');
                 document.querySelectorAll('.auth-btn:not(.logout)').forEach(btn => btn.classList.remove('hidden'));
                 updateSyncStatus('offline');
-                // محاولة تسجيل الدخول تلقائياً كزائر
-                auth.signInAnonymously().catch(() => {
-                    loadDefaultData();
-                });
+                // عرض رسالة بأن المستخدم غير مسجل
+                quotes = [];
+                renderQuotes();
+                updateStats();
+                updateSidebarStats();
+                updateCatList();
+                updateSidebarCategories();
+                loadDailyWisdom();
+                showToast('👤 سجل الدخول لعرض الاقتباسات', '');
             }
         });
 
@@ -1703,8 +1735,6 @@
 
         function loadQuotesFromCloud() {
             if (!currentUser) {
-                // إذا لم يكن هناك مستخدم، حاول تسجيل الدخول
-                auth.signInAnonymously().catch(() => loadDefaultData());
                 return;
             }
             
@@ -1715,11 +1745,6 @@
             unsubscribeQuotes = userRef.collection('quotes')
                 .orderBy('date', 'desc')
                 .onSnapshot(snapshot => {
-                    if (snapshot.empty) {
-                        // لا توجد بيانات، جرب تحميل البيانات الافتراضية
-                        loadDefaultData();
-                        return;
-                    }
                     const newQuotes = [];
                     snapshot.forEach(doc => {
                         const data = doc.data();
@@ -1732,6 +1757,7 @@
                         });
                     });
                     quotes = newQuotes;
+                    isDataLoaded = true;
                     updateSyncStatus('online');
                     renderQuotes();
                     updateStats();
@@ -1739,12 +1765,12 @@
                     updateCatList();
                     updateSidebarCategories();
                     loadDailyWisdom();
-                    localStorage.setItem('diwan_quotes_cloud', JSON.stringify(quotes));
                 }, error => {
                     console.error('Error loading quotes:', error);
                     updateSyncStatus('offline');
                     showToast('⚠️ خطأ في تحميل البيانات من السحابة', 'error');
-                    loadDefaultData();
+                    isDataLoaded = true;
+                    renderQuotes();
                 });
         }
 
@@ -1772,75 +1798,12 @@
         }
 
         // ================================================================
-        // 📂 تحميل البيانات الافتراضية
-        // ================================================================
-        function loadDefaultData() {
-            // محاولة تحميل من data.json
-            fetch('data.json')
-                .then(res => {
-                    if (!res.ok) throw new Error('File not found');
-                    return res.json();
-                })
-                .then(data => {
-                    if (data.quotes && Array.isArray(data.quotes)) {
-                        quotes = data.quotes;
-                    } else {
-                        quotes = getDefaultQuotes();
-                    }
-                    saveToLocal();
-                    renderQuotes();
-                    updateStats();
-                    updateSidebarStats();
-                    updateCatList();
-                    updateSidebarCategories();
-                    loadDailyWisdom();
-                })
-                .catch(() => {
-                    quotes = getDefaultQuotes();
-                    saveToLocal();
-                    renderQuotes();
-                    updateStats();
-                    updateSidebarStats();
-                    updateCatList();
-                    updateSidebarCategories();
-                    loadDailyWisdom();
-                });
-        }
-
-        function getDefaultQuotes() {
-            return [
-                { id: '1', text: 'العلم نور والجهل ظلام.', author: 'الحكمة العربية', category: 'حكم', date: new Date().toISOString().split('T')[0] },
-                { id: '2', text: 'من جدّ وجد، ومن زرع حصد.', author: 'الحكمة العربية', category: 'حكم', date: new Date().toISOString().split('T')[0] },
-                { id: '3', text: 'خير الكلام ما قل ودل.', author: 'الحكمة العربية', category: 'أقوال', date: new Date().toISOString().split('T')[0] },
-                { id: '4', text: 'لا تؤجل عمل اليوم إلى الغد.', author: 'الحكمة العربية', category: 'حياة', date: new Date().toISOString().split('T')[0] },
-                { id: '5', text: 'اطلب العلم من المهد إلى اللحد.', author: 'الحكمة العربية', category: 'علم', date: new Date().toISOString().split('T')[0] },
-                { id: '6', text: 'الوقت كالسيف إن لم تقطعه قطعك.', author: 'الحكمة العربية', category: 'وقت', date: new Date().toISOString().split('T')[0] }
-            ];
-        }
-
-        // ================================================================
         // 💾 حفظ في السحابة
         // ================================================================
         async function saveQuoteToCloud(quote) {
             if (!currentUser) {
-                // محاولة تسجيل الدخول أولاً
-                try {
-                    await auth.signInAnonymously();
-                } catch (e) {
-                    quotes.unshift(quote);
-                    saveToLocal();
-                    updateUIAfterAdd(quote);
-                    showToast('✅ تمت الإضافة محلياً (غير متصل)', 'success');
-                    return;
-                }
-            }
-            
-            if (!currentUser) {
-                quotes.unshift(quote);
-                saveToLocal();
-                updateUIAfterAdd(quote);
-                showToast('✅ تمت الإضافة محلياً (غير متصل)', 'success');
-                return;
+                showToast('⚠️ الرجاء تسجيل الدخول أولاً', 'error');
+                return false;
             }
             
             try {
@@ -1855,21 +1818,18 @@
                 });
                 showToast('✅ تم حفظ الاقتباس في السحابة', 'success');
                 updateSyncStatus('online');
+                return true;
             } catch (error) {
                 console.error('Error saving quote:', error);
-                quotes.unshift(quote);
-                saveToLocal();
-                updateUIAfterAdd(quote);
-                showToast('⚠️ حفظ محلياً (فشل الاتصال بالسحابة)', 'error');
+                showToast('❌ فشل حفظ الاقتباس في السحابة', 'error');
+                return false;
             }
         }
 
         async function deleteQuoteFromCloud(quoteId) {
             if (!currentUser) {
-                quotes = quotes.filter(q => q.id !== quoteId);
-                saveToLocal();
-                renderQuotes();
-                return;
+                showToast('⚠️ الرجاء تسجيل الدخول أولاً', 'error');
+                return false;
             }
             try {
                 updateSyncStatus('syncing');
@@ -1877,24 +1837,18 @@
                 await userRef.collection('quotes').doc(quoteId).delete();
                 showToast('🗑️ تم الحذف من السحابة', 'success');
                 updateSyncStatus('online');
+                return true;
             } catch (error) {
                 console.error('Error deleting quote:', error);
-                quotes = quotes.filter(q => q.id !== quoteId);
-                saveToLocal();
-                renderQuotes();
-                showToast('⚠️ تم الحذف محلياً (فشل الاتصال بالسحابة)', 'error');
+                showToast('❌ فشل الحذف من السحابة', 'error');
+                return false;
             }
         }
 
         async function updateQuoteInCloud(quoteId, updatedData) {
             if (!currentUser) {
-                const index = quotes.findIndex(q => q.id === quoteId);
-                if (index !== -1) {
-                    quotes[index] = { ...quotes[index], ...updatedData };
-                    saveToLocal();
-                    updateQuoteCard(quoteId);
-                }
-                return;
+                showToast('⚠️ الرجاء تسجيل الدخول أولاً', 'error');
+                return false;
             }
             try {
                 updateSyncStatus('syncing');
@@ -1902,15 +1856,11 @@
                 await userRef.collection('quotes').doc(quoteId).update(updatedData);
                 showToast('✅ تم التحديث في السحابة', 'success');
                 updateSyncStatus('online');
+                return true;
             } catch (error) {
                 console.error('Error updating quote:', error);
-                const index = quotes.findIndex(q => q.id === quoteId);
-                if (index !== -1) {
-                    quotes[index] = { ...quotes[index], ...updatedData };
-                    saveToLocal();
-                    updateQuoteCard(quoteId);
-                }
-                showToast('⚠️ تم التحديث محلياً (فشل الاتصال بالسحابة)', 'error');
+                showToast('❌ فشل التحديث في السحابة', 'error');
+                return false;
             }
         }
 
@@ -1980,16 +1930,33 @@
             isRendering = true;
             requestAnimationFrame(() => {
                 let filtered = [...quotes];
+                
+                // إذا لم تكن هناك بيانات ولم يتم تحميل البيانات بعد
+                if (!isDataLoaded && !currentUser) {
+                    quotesListElement.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🔐</div>
+                            <h3>سجل الدخول لعرض الاقتباسات</h3>
+                            <p>اضغط على "زائر" أو "جوجل" لتسجيل الدخول</p>
+                        </div>
+                    `;
+                    isRendering = false;
+                    updateNavButtons();
+                    return;
+                }
+                
                 if (activeCategory === 'favorites') {
                     filtered = filtered.filter(q => favorites.includes(q.id));
                 } else if (activeCategory !== 'all') {
                     filtered = filtered.filter(q => q.category === activeCategory);
                 }
+                
                 const search = document.getElementById('searchInput').value.toLowerCase().trim();
                 currentSearchTerm = search;
                 document.getElementById('clearBtn').classList.toggle('visible', !!search);
                 searchMatches = [];
                 currentMatchIndex = -1;
+                
                 if (search) {
                     filtered = filtered.filter(q =>
                         q.text.toLowerCase().includes(search) ||
@@ -1997,20 +1964,49 @@
                         (q.category && q.category.toLowerCase().includes(search))
                     );
                 }
+                
                 filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
                 allFilteredQuotes = filtered;
                 currentPage = 0;
                 hasMoreData = true;
                 quotesListElement.innerHTML = '';
+                
                 if (filtered.length === 0) {
-                    quotesListElement.innerHTML =
-                        `<div class="empty-state"><div class="empty-state-icon">📭</div><h3>لا توجد نتائج</h3><p>جرب البحث بكلمات مختلفة</p></div>`;
+                    let message = '';
+                    if (!currentUser) {
+                        message = `
+                            <div class="empty-state">
+                                <div class="empty-state-icon">🔐</div>
+                                <h3>سجل الدخول لعرض الاقتباسات</h3>
+                                <p>اضغط على "زائر" أو "جوجل" لتسجيل الدخول</p>
+                            </div>
+                        `;
+                    } else if (quotes.length === 0) {
+                        message = `
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📭</div>
+                                <h3>لا توجد اقتباسات</h3>
+                                <p>أضف أول اقتباس باستخدام زر ➕</p>
+                                <button class="btn-add-first" onclick="openAddModal()">➕ أضف اقتباساً الآن</button>
+                            </div>
+                        `;
+                    } else {
+                        message = `
+                            <div class="empty-state">
+                                <div class="empty-state-icon">🔍</div>
+                                <h3>لا توجد نتائج</h3>
+                                <p>جرب البحث بكلمات مختلفة</p>
+                            </div>
+                        `;
+                    }
+                    quotesListElement.innerHTML = message;
                     isRendering = false;
                     updateSearchButtons();
                     updateSearchCounter();
                     updateNavButtons();
                     return;
                 }
+                
                 loadMoreQuotes();
                 document.getElementById('resultsCount').textContent = filtered.length > 0 ? `(${filtered.length})` : '';
                 updateSearchButtons();
@@ -2262,6 +2258,10 @@
         // 📝 إضافة اقتباس
         // ================================================================
         function openAddModal() {
+            if (!currentUser) {
+                showToast('⚠️ الرجاء تسجيل الدخول أولاً', 'error');
+                return;
+            }
             document.getElementById('addModal').classList.add('active');
             document.getElementById('qText').focus();
         }
@@ -2273,6 +2273,11 @@
 
         function addQuote(e) {
             e.preventDefault();
+            if (!currentUser) {
+                showToast('⚠️ الرجاء تسجيل الدخول أولاً', 'error');
+                return;
+            }
+            
             const text = document.getElementById('qText').value.trim();
             let author = document.getElementById('qAuthor').value.trim();
             let category = document.getElementById('qCategory').value.trim();
@@ -2287,8 +2292,8 @@
                 date: new Date().toISOString().split('T')[0]
             };
             closeAddModal();
-            saveQuoteToCloud(newQuote);
-            // نضيفها محلياً لتظهر فوراً
+            
+            // إضافة محلياً لتظهر فوراً
             quotes.unshift(newQuote);
             updateUIAfterAdd(newQuote);
             updateStats();
@@ -2296,12 +2301,19 @@
             updateCatList();
             updateSidebarCategories();
             loadDailyWisdom();
+            
+            // حفظ في السحابة
+            saveQuoteToCloud(newQuote);
         }
 
         // ================================================================
         // ✏️ تعديل اقتباس
         // ================================================================
         function openEditModal(id) {
+            if (!currentUser) {
+                showToast('⚠️ الرجاء تسجيل الدخول أولاً', 'error');
+                return;
+            }
             const q = quotes.find(x => x.id === id);
             if (!q) return;
             document.getElementById('editId').value = id;
@@ -2318,6 +2330,11 @@
 
         function saveEdit(e) {
             e.preventDefault();
+            if (!currentUser) {
+                showToast('⚠️ الرجاء تسجيل الدخول أولاً', 'error');
+                return;
+            }
+            
             const id = document.getElementById('editId').value;
             const q = quotes.find(x => x.id === id);
             if (!q) return;
@@ -2328,21 +2345,29 @@
             author = getAutoAuthor(author);
             category = category || 'عام';
             const updatedData = { text, author, category };
+            
+            // تحديث محلياً
             Object.assign(q, updatedData);
             closeEditModal();
-            updateQuoteInCloud(id, updatedData);
             updateQuoteCard(id);
             updateStats();
             updateSidebarStats();
             updateCatList();
             updateSidebarCategories();
             showToast('✅ تم تحديث الاقتباس', 'success');
+            
+            // تحديث في السحابة
+            updateQuoteInCloud(id, updatedData);
         }
 
         // ================================================================
         // 🗑️ حذف اقتباس
         // ================================================================
         function askDelete(id) {
+            if (!currentUser) {
+                showToast('⚠️ الرجاء تسجيل الدخول أولاً', 'error');
+                return;
+            }
             deleteId = id;
             document.getElementById('deleteModal').classList.add('active');
         }
@@ -2350,10 +2375,11 @@
         function confirmDelete() {
             if (deleteId) {
                 const id = deleteId;
+                // حذف محلياً
                 quotes = quotes.filter(q => q.id !== id);
                 favorites = favorites.filter(fid => fid !== id);
                 localStorage.setItem('diwan_favorites', JSON.stringify(favorites));
-                deleteQuoteFromCloud(id);
+                
                 const card = document.querySelector(`.quote-card[data-id="${id}"]`);
                 if (card) {
                     card.style.transition = 'all 0.3s ease';
@@ -2362,8 +2388,14 @@
                     setTimeout(() => {
                         card.remove();
                         if (quotesListElement.children.length === 0) {
-                            quotesListElement.innerHTML =
-                                `<div class="empty-state"><div class="empty-state-icon">📭</div><h3>لا توجد اقتباسات</h3><p>أضف اقتباساً جديداً</p></div>`;
+                            quotesListElement.innerHTML = `
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">📭</div>
+                                    <h3>لا توجد اقتباسات</h3>
+                                    <p>أضف أول اقتباس باستخدام زر ➕</p>
+                                    <button class="btn-add-first" onclick="openAddModal()">➕ أضف اقتباساً الآن</button>
+                                </div>
+                            `;
                         }
                     }, 300);
                 } else {
@@ -2375,6 +2407,9 @@
                 updateSidebarCategories();
                 loadDailyWisdom();
                 showToast('🗑️ تم حذف الاقتباس', 'success');
+                
+                // حذف من السحابة
+                deleteQuoteFromCloud(id);
             }
             closeModal();
         }
@@ -2490,31 +2525,30 @@
                 try {
                     const imported = JSON.parse(e.target.result);
                     if (imported.quotes && Array.isArray(imported.quotes)) {
-                        const existingIds = new Set(quotes.map(q => q.id));
-                        let newCount = 0;
-                        imported.quotes.forEach(q => {
-                            if (!existingIds.has(q.id)) {
-                                quotes.push(q);
-                                existingIds.add(q.id);
-                                newCount++;
-                            }
-                        });
-                        if (imported.favorites) {
-                            imported.favorites.forEach(id => {
-                                if (!favorites.includes(id) && quotes.some(q => q.id === id)) {
-                                    favorites.push(id);
-                                }
+                        // نضيف الاقتباسات المستوردة إلى السحابة
+                        if (currentUser) {
+                            const userRef = db.collection('users').doc(currentUser.uid);
+                            const batch = db.batch();
+                            let count = 0;
+                            imported.quotes.forEach(q => {
+                                const docRef = userRef.collection('quotes').doc();
+                                batch.set(docRef, {
+                                    text: q.text,
+                                    author: q.author,
+                                    category: q.category || 'عام',
+                                    date: q.date || new Date().toISOString().split('T')[0],
+                                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                                });
+                                count++;
                             });
-                            localStorage.setItem('diwan_favorites', JSON.stringify(favorites));
+                            batch.commit().then(() => {
+                                showToast(`📤 تم استيراد ${count} اقتباساً إلى السحابة`, 'success');
+                            }).catch(err => {
+                                showToast('❌ فشل استيراد البيانات', 'error');
+                            });
+                        } else {
+                            showToast('⚠️ الرجاء تسجيل الدخول أولاً', 'error');
                         }
-                        saveToLocal();
-                        renderQuotes();
-                        updateStats();
-                        updateSidebarStats();
-                        updateCatList();
-                        updateSidebarCategories();
-                        loadDailyWisdom();
-                        showToast(`📤 تم استيراد ${newCount} اقتباساً`, 'success');
                     } else {
                         showToast('❌ ملف غير صالح', 'error');
                     }
@@ -2671,22 +2705,21 @@
             document.getElementById('loadingScreen').classList.add('hidden');
         }, 1000);
 
-        // ===== بدء التطبيق =====
-        // محاولة تسجيل الدخول تلقائياً كزائر
-        auth.signInAnonymously()
-            .then(() => {
-                console.log('✅ تم تسجيل الدخول تلقائياً كزائر');
-                // المستخدم مسجل، نحمّل البيانات من السحابة
-                // loadQuotesFromCloud() سيتم استدعاؤها تلقائياً عبر onAuthStateChanged
-            })
-            .catch(error => {
-                console.warn('⚠️ فشل التسجيل التلقائي:', error.message);
-                // نحمّل البيانات المحلية كحل احتياطي
-                loadDefaultData();
-            });
-
+        // ===== بدء التطبيق - السحابة فقط =====
+        // نعرض رسالة للمستخدم لتسجيل الدخول
+        quotes = [];
+        renderQuotes();
+        updateStats();
+        updateSidebarStats();
+        updateCatList();
+        updateSidebarCategories();
+        loadDailyWisdom();
+        
+        // محاولة تسجيل الدخول التلقائي (إذا كان هناك مستخدم مخزن)
+        // لكن لا نقوم بتسجيل دخول تلقائي - المستخدم يختار
         console.log('✅ ديوان الحكمة السحابي جاهز! ☁️');
         console.log('🔑 مشروع Firebase:', firebaseConfig.projectId);
+        console.log('👤 الحالة:', currentUser ? 'مسجل الدخول' : 'غير مسجل - سجل الدخول لعرض الاقتباسات');
     </script>
 
 </body>
