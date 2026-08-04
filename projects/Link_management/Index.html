@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>معرض الروابط الذكي - برو</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ========== ROOT ========== */
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --border-card: rgba(255, 255, 255, 0.06);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            --gradient-green: linear-gradient(135deg, #10b981, #059669);
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --shadow: 0 8px 32px rgba(0,0,0,0.4);
+            --radius: 20px;
+            --radius-sm: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 10px 8px;
+            background-image: 
+                radial-gradient(circle at 20% 30%, #1a1f2e 0%, #0a0e17 100%),
+                radial-gradient(circle at 80% 70%, #0f1420 0%, transparent 60%),
+                repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255,255,255,0.01) 49px, rgba(255,255,255,0.01) 50px),
+                repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(255,255,255,0.01) 49px, rgba(255,255,255,0.01) 50px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 20px; }
+
+        /* ========== HEADER ========== */
+        .header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: var(--shadow);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h1 i {
+            background: var(--gradient);
+            padding: 8px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            -webkit-text-fill-color: white;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+        }
+
+        .header .stats {
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.03);
+            padding: 6px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .header .stats span {
+            color: var(--text-primary);
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        /* ========== SEARCH ========== */
+        .search-bar {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 44px 12px 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            font-size: 13px;
+            outline: none;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-bar input::placeholder { color: var(--text-secondary); }
+        .search-bar input:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+        .search-bar i {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* ========== TOOLS ========== */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+        }
+
+        .tools-grid button {
+            padding: 10px 6px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tools-grid button i { font-size: 12px; }
+        .tools-grid button:active { transform: scale(0.93); }
+
+        .tools-grid .btn-categories {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.3);
+            color: #c4b5fd;
+        }
+        .tools-grid .btn-categories:hover { background: rgba(139, 92, 246, 0.4); color: white; }
+
+        .tools-grid .btn-export {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+            color: #93c5fd;
+        }
+        .tools-grid .btn-export:hover {
+            background: var(--gradient);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .tools-grid .btn-import {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+        }
+        .tools-grid .btn-import:hover { background: rgba(16, 185, 129, 0.3); color: white; }
+
+        .tools-grid .btn-danger {
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+        }
+        .tools-grid .btn-danger:hover { background: var(--danger); border-color: var(--danger); color: white; }
+
+        .tools-grid .btn-add-current {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.35);
+            color: #6ee7b7;
+        }
+        .tools-grid .btn-add-current:hover { 
+            background: var(--gradient-green); 
+            border-color: transparent; 
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* ========== ADD FORM ========== */
+        .add-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .add-form input,
+        .add-form select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            font-size: 13px;
+            outline: none;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .add-form input::placeholder { color: var(--text-secondary); }
+        .add-form input:focus,
+        .add-form select:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .add-form select option { background: var(--bg-secondary); color: var(--text-primary); }
+
+        .add-form button {
+            padding: 12px;
+            border-radius: 50px;
+            border: none;
+            background: var(--gradient);
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+        .add-form button:active { transform: scale(0.96); }
+
+        /* ========== CATEGORY ========== */
+        .category {
+            margin-bottom: 16px;
+            animation: fadeUp 0.4s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            padding: 6px 0 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .category-title span { display: flex; align-items: center; gap: 6px; font-size: 15px; }
+        .category-title .count {
+            background: rgba(59, 130, 246, 0.15);
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .category-title i { transition: 0.3s; color: var(--text-secondary); font-size: 14px; }
+
+        .category-links {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 12px;
+            transition: 0.3s;
+        }
+        .category-links.hidden { display: none; }
+
+        /* ========== LINK CARD ========== */
+        .link-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        .link-card:active { transform: scale(0.97); }
+        .link-card.dragging { opacity: 0.4; transform: scale(0.95); }
+        .link-card.drag-over { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,0.3); }
+
+        .thumbnail {
+            width: 100%;
+            height: 140px;
+            background: #0f1219;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+        .thumbnail img:hover { transform: scale(1.02); }
+
+        .thumbnail .fallback {
+            display: none;
+            position: absolute;
+            inset: 0;
+            align-items: center;
+            justify-content: center;
+            background: #0f1219;
+            font-size: 40px;
+            color: rgba(255,255,255,0.05);
+        }
+
+        .thumbnail .domain-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            max-width: calc(100% - 16px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .thumbnail .badge-actions {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            left: 8px;
+            display: flex;
+            gap: 6px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail .badge-actions button,
+        .thumbnail .badge-actions a {
+            padding: 5px 12px;
+            border-radius: 30px;
+            border: none;
+            font-size: 10px;
+            font-weight: 600;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(4px);
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Inter', sans-serif;
+        }
+        .thumbnail .badge-actions button:active,
+        .thumbnail .badge-actions a:active { transform: scale(0.93); }
+
+        .card-content {
+            padding: 12px 14px 14px;
+        }
+
+        .card-content .title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4px;
+            gap: 8px;
+        }
+
+        .card-content h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            flex: 1;
+            line-height: 1.3;
+        }
+
+        .card-content .category-tag {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 30px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .card-content .url-preview {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            word-break: break-all;
+            font-weight: 400;
+            line-height: 1.4;
+            opacity: 0.7;
+        }
+
+        .card-content .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 5px;
+        }
+
+        .card-content .actions button {
+            padding: 7px 4px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.02);
+            color: var(--text-secondary);
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            font-family: 'Inter', sans-serif;
+        }
+        .card-content .actions button i { font-size: 10px; }
+        .card-content .actions button:active { transform: scale(0.93); }
+
+        .card-content .actions .copy-btn { color: #93c5fd; }
+        .card-content .actions .edit-btn { color: #c4b5fd; }
+        .card-content .actions .delete-btn { color: #fca5a5; }
+        .card-content .actions .delete-btn:active { background: var(--danger); border-color: var(--danger); color: white; }
+
+        /* ========== PREVIEW MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(16px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            animation: fadeIn 0.25s ease;
+            padding: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .preview-modal {
+            background: linear-gradient(160deg, #0f172a 0%, #0a0e17 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 1000px;
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.9);
+            animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .preview-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-radius: var(--radius) var(--radius) 0 0;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .preview-modal-header .modal-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 30px;
+            background: rgba(59,130,246,0.2);
+            color: #93c5fd;
+            border: 1px solid rgba(59,130,246,0.2);
+        }
+
+        .preview-modal-header .modal-title-sm {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 14px;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .preview-modal-header .modal-close {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 6px 14px;
+            border-radius: 40px;
+            transition: 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+        }
+        .preview-modal-header .modal-close:hover { background: rgba(255,255,255,0.1); }
+
+        .preview-modal-body {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* ===== IFrame Container ===== */
+        .preview-iframe-container {
+            width: 100%;
+            height: 50vh;
+            min-height: 250px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: #0a0e17;
+            border: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+        }
+
+        .preview-iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .preview-iframe-container .iframe-loader {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            background: #0a0e17;
+            z-index: 5;
+        }
+
+        .preview-iframe-container .iframe-loader .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .preview-iframe-container .iframe-loader span {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .preview-iframe-container .iframe-error {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
+            background: #0a0e17;
+            z-index: 6;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .preview-iframe-container .iframe-error i {
+            font-size: 40px;
+            color: var(--danger);
+            opacity: 0.5;
+        }
+
+        .preview-iframe-container .iframe-error h4 {
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .preview-iframe-container .iframe-error p {
+            color: var(--text-secondary);
+            font-size: 12px;
+            max-width: 80%;
+        }
+
+        .preview-iframe-container .iframe-error .error-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .preview-iframe-container .iframe-error .error-actions button,
+        .preview-iframe-container .iframe-error .error-actions a {
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
+        }
+
+        .preview-iframe-container .iframe-error .error-actions .retry-btn {
+            background: rgba(59,130,246,0.2);
+            color: #93c5fd;
+            border: 1px solid rgba(59,130,246,0.2);
+        }
+
+        .preview-iframe-container .iframe-error .error-actions .open-btn {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .preview-iframe-container .iframe-controls {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            left: 10px;
+            display: flex;
+            gap: 6px;
+            justify-content: flex-end;
+            z-index: 10;
+            flex-wrap: wrap;
+        }
+
+        .preview-iframe-container .iframe-controls button {
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.25s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .preview-iframe-container .iframe-controls button:hover {
+            background: rgba(59,130,246,0.6);
+        }
+
+        .preview-iframe-container .iframe-controls .add-current-btn {
+            background: var(--gradient-green);
+            border-color: transparent;
+        }
+        .preview-iframe-container .iframe-controls .add-current-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(16,185,129,0.4);
+        }
+
+        /* ===== Screenshot View ===== */
+        .preview-screenshot {
+            width: 100%;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: #0a0e17;
+        }
+
+        .preview-screenshot img {
+            width: 100%;
+            display: block;
+        }
+
+        .preview-screenshot .screenshot-fallback {
+            padding: 30px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .preview-screenshot .screenshot-fallback i {
+            font-size: 40px;
+            opacity: 0.3;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* ===== Preview Info ===== */
+        .preview-info {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .preview-info .info-domain {
+            color: var(--text-secondary);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .preview-info .info-url {
+            color: var(--text-secondary);
+            font-size: 11px;
+            word-break: break-all;
+            direction: ltr;
+            text-align: left;
+            font-family: 'SF Mono', monospace;
+            opacity: 0.7;
+            grid-column: 1 / -1;
+        }
+
+        .preview-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+        }
+
+        .preview-actions button,
+        .preview-actions a {
+            padding: 10px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .preview-actions .visit-btn {
+            background: var(--gradient);
+            border: none;
+            color: white;
+            grid-column: 1 / -1;
+        }
+        .preview-actions .visit-btn:hover { box-shadow: 0 4px 20px rgba(59,130,246,0.4); }
+        .preview-actions .delete-btn:active { background: var(--danger); border-color: var(--danger); color: white; }
+
+        /* ========== CATEGORIES MODAL ========== */
+        .categories-modal {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius);
+            padding: 18px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+            animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .categories-modal h2 {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .categories-modal .subtitle {
+            color: var(--text-secondary);
+            font-size: 11px;
+            margin-bottom: 14px;
+        }
+
+        .categories-modal .add-category-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 14px;
+            background: rgba(255,255,255,0.02);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .categories-modal .add-category-form input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-primary);
+            font-size: 13px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .categories-modal .add-category-form input:focus { border-color: var(--accent); }
+
+        .icon-picker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+            max-height: 100px;
+            overflow-y: auto;
+            padding: 4px;
+        }
+
+        .icon-picker .icon-option {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            background: rgba(255,255,255,0.03);
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .icon-picker .icon-option:active { transform: scale(0.9); }
+        .icon-picker .icon-option.selected {
+            border-color: var(--accent);
+            background: rgba(59,130,246,0.2);
+            transform: scale(1.1);
+        }
+
+        .categories-modal .add-category-form button {
+            padding: 10px;
+            border-radius: 50px;
+            border: none;
+            background: var(--gradient-green);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .categories-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .categories-list .cat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.02);
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .categories-list .cat-item .cat-icon-display {
+            font-size: 24px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .categories-list .cat-item .cat-details { flex: 1; min-width: 0; }
+        .categories-list .cat-item .cat-name { color: var(--text-primary); font-weight: 600; font-size: 13px; }
+        .categories-list .cat-item .cat-count { color: var(--text-secondary); font-size: 10px; }
+
+        .categories-list .cat-item .cat-actions { display: flex; gap: 4px; flex-shrink: 0; }
+        .categories-list .cat-item .cat-actions button {
+            padding: 5px 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 10px;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+        }
+        .categories-list .cat-item .cat-actions .delete-cat:active { background: var(--danger); border-color: var(--danger); color: white; }
+
+        .modal-close-btn {
+            padding: 10px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            margin-top: 12px;
+            width: 100%;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ========== EDIT MODAL ========== */
+        .edit-modal {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius);
+            padding: 18px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+            animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .edit-modal h2 {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .edit-modal .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .edit-modal input,
+        .edit-modal select {
+            padding: 10px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-primary);
+            font-size: 13px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .edit-modal select option { background: var(--bg-secondary); color: var(--text-primary); }
+
+        .edit-modal .modal-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .edit-modal .modal-buttons button {
+            padding: 10px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .edit-modal .modal-buttons button.save-btn {
+            background: var(--gradient);
+            border: none;
+            color: white;
+        }
+
+        /* ========== EMPTY ========== */
+        .empty-msg {
+            text-align: center;
+            padding: 40px 16px;
+            color: var(--text-secondary);
+            grid-column: 1 / -1;
+        }
+
+        .empty-msg i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            opacity: 0.2;
+        }
+        .empty-msg h2 { color: var(--text-secondary); font-weight: 400; font-size: 15px; }
+
+        /* ========== TOAST ========== */
+        #toast {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 13px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: 0.4s;
+            z-index: 99999;
+            border: 1px solid rgba(255,255,255,0.05);
+            pointer-events: none;
+            max-width: 90%;
+            text-align: center;
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ========== RESPONSIVE ========== */
+        @media (min-width: 600px) {
+            body { padding: 16px 20px; }
+            .header { padding: 18px 20px; border-radius: 24px; }
+            .header h1 { font-size: 24px; }
+            .tools-grid { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+            .tools-grid button { padding: 12px 10px; font-size: 12px; border-radius: 14px; }
+            .add-form { flex-direction: row; flex-wrap: wrap; padding: 16px 18px; gap: 8px; }
+            .add-form input { flex: 1; min-width: 120px; }
+            .add-form select { flex: 0 0 120px; }
+            .add-form button { flex: 0 0 auto; padding: 12px 24px; }
+            .category-links { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+            .card-content .actions { grid-template-columns: 1fr 1fr 1fr; }
+            .preview-iframe-container { height: 55vh; }
+        }
+
+        @media (min-width: 900px) {
+            .header { flex-direction: row; align-items: center; gap: 12px; flex-wrap: wrap; }
+            .header-top { flex: 0 0 auto; }
+            .search-bar { flex: 1; min-width: 160px; }
+            .tools-grid { flex: 0 0 auto; grid-template-columns: auto auto auto auto auto; gap: 6px; }
+            .tools-grid button { padding: 10px 16px; font-size: 12px; }
+            .category-links { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+            .add-form { flex-wrap: nowrap; }
+        }
+
+        @media (min-width: 1200px) {
+            .category-links { grid-template-columns: repeat(4, 1fr); }
+            .preview-modal { max-width: 1100px; }
+            .preview-iframe-container { height: 60vh; }
+        }
+
+        @media (max-width: 400px) {
+            .header h1 { font-size: 17px; }
+            .header h1 i { font-size: 14px; padding: 6px 8px; }
+            .tools-grid button { font-size: 10px; padding: 8px 4px; }
+            .tools-grid button i { font-size: 10px; }
+            .tools-grid button span { display: none; }
+            .thumbnail { height: 120px; }
+            .card-content h3 { font-size: 13px; }
+            .preview-modal-header .modal-title-sm { font-size: 12px; }
+            .preview-iframe-container { height: 40vh; min-height: 180px; }
+            .preview-info .info-domain { font-size: 10px; }
+            .preview-info .info-url { font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-top">
+                <h1><i class="fas fa-th-large"></i> معرض الروابط</h1>
+                <div class="stats">
+                    <i class="fas fa-link"></i> <span id="totalCount">0</span>
+                </div>
+            </div>
+            
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="ابحث عن رابط..." oninput="renderLinks()" />
+            </div>
+            
+            <div class="tools-grid">
+                <button class="btn-categories" onclick="openCategoriesModal()">
+                    <i class="fas fa-tags"></i> <span>تصنيفات</span>
+                </button>
+                <button class="btn-export" onclick="exportLinks()">
+                    <i class="fas fa-download"></i> <span>تصدير</span>
+                </button>
+                <button class="btn-import" onclick="document.getElementById('importFile').click()">
+                    <i class="fas fa-upload"></i> <span>استيراد</span>
+                </button>
+                <input type="file" id="importFile" accept=".json" style="display:none" onchange="importLinks(event)" />
+                <button class="btn-add-current" onclick="addCurrentPage()">
+                    <i class="fas fa-plus-circle"></i> <span>إضافة</span>
+                </button>
+                <button class="btn-danger" onclick="clearAll()">
+                    <i class="fas fa-trash-alt"></i> <span>حذف</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ADD FORM -->
+        <div class="add-form">
+            <input type="text" id="linkTitle" placeholder="🏷️ العنوان" />
+            <input type="url" id="linkUrl" placeholder="🔗 الرابط (https://...)" />
+            <select id="linkCategory"></select>
+            <button onclick="addLink()"><i class="fas fa-plus-circle"></i> إضافة</button>
+        </div>
+
+        <!-- LINKS -->
+        <div id="linksContainer"></div>
+    </div>
+
+    <!-- PREVIEW MODAL -->
+    <div id="previewModal" class="modal-overlay">
+        <div class="preview-modal" id="previewModalContent"></div>
+    </div>
+
+    <!-- CATEGORIES MODAL -->
+    <div id="categoriesModal" class="modal-overlay">
+        <div class="categories-modal">
+            <h2><i class="fas fa-tags"></i> إدارة التصنيفات</h2>
+            <p class="subtitle">أضف، عدل أو احذف التصنيفات واختر أيقونة</p>
+            <div class="add-category-form">
+                <input type="text" id="newCatName" placeholder="✍️ اسم التصنيف الجديد..." />
+                <div class="icon-picker" id="iconPicker"></div>
+                <button onclick="addCategory()"><i class="fas fa-plus"></i> إضافة تصنيف</button>
+            </div>
+            <div class="categories-list" id="categoriesList"></div>
+            <button class="modal-close-btn" onclick="closeCategoriesModal()"><i class="fas fa-check-circle"></i> تم - إغلاق</button>
+        </div>
+    </div>
+
+    <!-- EDIT MODAL -->
+    <div id="editModal" class="modal-overlay">
+        <div class="edit-modal">
+            <h2><i class="fas fa-pen-to-square"></i> تعديل الرابط</h2>
+            <div class="form-group">
+                <input type="text" id="editTitle" placeholder="العنوان" />
+                <input type="url" id="editUrl" placeholder="الرابط" />
+                <select id="editCategory"></select>
+            </div>
+            <div class="modal-buttons">
+                <button onclick="closeEditModal()">إلغاء</button>
+                <button class="save-btn" onclick="saveEdit()">💾 حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+        // ========== DATA ==========
+        let links = [];
+        let categories = [];
+        let editingId = null;
+        let selectedIcon = '📂';
+        let currentPreviewUrl = '';
+        let currentPreviewTitle = '';
+        let iframeLoadTimeout = null;
+        let viewMode = 'iframe'; // 'iframe' | 'screenshot'
+
+        const iconOptions = [
+            '📂', '💬', '💼', '📚', '🛒', '🎮', '📰', '🏠', '❤️', '⭐',
+            '🔥', '💡', '🎯', '🚀', '💎', '🌍', '📱', '🎨', '🎵', '📸',
+            '✈️', '🏆', '💰', '🔧', '📝', '☕', '🍕', '🎓', '🏥', '⚽',
+            '🎪', '🎭', '🌮', '🎸', '📡', '🔬', '🗺️', '🎁', '🏗️', '🧠'
+        ];
+
+        const defaultCategories = [
+            { name: 'عام', icon: '📂' },
+            { name: 'تواصل', icon: '💬' },
+            { name: 'عمل', icon: '💼' },
+            { name: 'تعليم', icon: '📚' },
+            { name: 'تسوق', icon: '🛒' },
+            { name: 'ترفيه', icon: '🎮' },
+            { name: 'أخبار', icon: '📰' }
+        ];
+
+        function loadData() {
+            const storedLinks = localStorage.getItem('galleryLinksV8');
+            const storedCategories = localStorage.getItem('galleryCategoriesV8');
+            if (storedLinks) { try { links = JSON.parse(storedLinks); } catch (e) { links = []; } }
+            else {
+                links = [
+                    { id: 1, title: 'GitHub', url: 'https://github.com', category: 'عمل' },
+                    { id: 2, title: 'YouTube', url: 'https://youtube.com', category: 'ترفيه' },
+                    { id: 3, title: 'X (Twitter)', url: 'https://x.com', category: 'تواصل' },
+                    { id: 4, title: 'Wikipedia', url: 'https://wikipedia.org', category: 'تعليم' },
+                ];
+                saveLinks();
+            }
+            if (storedCategories) { try { categories = JSON.parse(storedCategories); } catch (e) { categories = []; } }
+            if (categories.length === 0) { categories = [...defaultCategories]; saveCategories(); }
+        }
+
+        function saveLinks() { localStorage.setItem('galleryLinksV8', JSON.stringify(links)); }
+        function saveCategories() { localStorage.setItem('galleryCategoriesV8', JSON.stringify(categories)); }
+        function getCategoryIcon(catName) { const cat = categories.find(c => c.name === catName); return cat ? cat.icon : '📁'; }
+        function getDomain(url) { try { return new URL(url).hostname.replace('www.', ''); } catch { return url.split('/')[2] || url; } }
+        function getThumbnail(url) { return `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&embed=screenshot.url&meta=false`; }
+
+        function populateCategorySelects() {
+            ['linkCategory', 'editCategory'].forEach(id => {
+                const s = document.getElementById(id);
+                if (s) s.innerHTML = categories.map(c => `<option value="${c.name}">${c.icon} ${c.name}</option>`).join('');
+            });
+        }
+
+        function renderIconPicker() {
+            const p = document.getElementById('iconPicker');
+            if (p) p.innerHTML = iconOptions.map(i => `<span class="icon-option${i===selectedIcon?' selected':''}" onclick="selectIcon('${i}')">${i}</span>`).join('');
+        }
+        function selectIcon(icon) { selectedIcon = icon; renderIconPicker(); }
+
+        // ========== RENDER ==========
+        function renderLinks() {
+            const container = document.getElementById('linksContainer');
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            let filtered = links.filter(l => l.title.toLowerCase().includes(search) || l.url.toLowerCase().includes(search) || l.category.toLowerCase().includes(search));
+            document.getElementById('totalCount').textContent = links.length;
+            if (!filtered.length) {
+                container.innerHTML = `<div class="empty-msg"><i class="fas fa-images"></i><h2>${search?'🔍 لا توجد نتائج':'✨ أضف روابطك الأولى'}</h2></div>`;
+                return;
+            }
+            const groups = {};
+            filtered.forEach(l => { if (!groups[l.category]) groups[l.category] = []; groups[l.category].push(l); });
+            let html = '';
+            for (const [cat, items] of Object.entries(groups)) {
+                html += `<div class="category"><div class="category-title" onclick="toggleCategory(this)"><span>${getCategoryIcon(cat)} ${cat} <span class="count">${items.length}</span></span><i class="fas fa-chevron-down"></i></div><div class="category-links">`;
+                items.forEach(l => {
+                    const domain = getDomain(l.url);
+                    html += `
+                    <div class="link-card" data-id="${l.id}" draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ondragover="dragOver(event)" ondrop="drop(event)">
+                        <div class="thumbnail" onclick="openPreviewModal(${l.id})">
+                            <img src="${getThumbnail(l.url)}" alt="${l.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                            <div class="fallback"><i class="fas fa-globe"></i></div>
+                            <div class="domain-badge"><i class="fas fa-link"></i> ${domain}</div>
+                            <div class="badge-actions">
+                                <button onclick="event.stopPropagation();openPreviewModal(${l.id})"><i class="fas fa-eye"></i> معاينة</button>
+                                <a href="${l.url}" target="_blank" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i> فتح</a>
+                            </div>
+                        </div>
+                        <div class="card-content" onclick="openPreviewModal(${l.id})">
+                            <div class="title-row"><h3>${l.title}</h3><span class="category-tag">${getCategoryIcon(l.category)} ${l.category}</span></div>
+                            <div class="url-preview">${l.url}</div>
+                            <div class="actions">
+                                <button class="copy-btn" onclick="event.stopPropagation();copyLink('${l.url}')"><i class="fas fa-copy"></i> نسخ</button>
+                                <button class="edit-btn" onclick="event.stopPropagation();openEditModal(${l.id})"><i class="fas fa-pen"></i> تعديل</button>
+                                <button class="delete-btn" onclick="event.stopPropagation();deleteLink(${l.id})"><i class="fas fa-trash"></i> حذف</button>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                html += `</div></div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function toggleCategory(el) {
+            const div = el.nextElementSibling;
+            div.classList.toggle('hidden');
+            const icon = el.querySelector('i:last-child');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+
+        // ========== ADD CURRENT PAGE ==========
+        function addCurrentPage() {
+            if (!currentPreviewUrl) {
+                showToast('⚠️ لا يوجد رابط معروض في المعاينة');
+                return;
+            }
+            const title = prompt('أدخل عنوان الرابط:', currentPreviewTitle || getDomain(currentPreviewUrl));
+            if (!title) return;
+            const category = document.getElementById('linkCategory').value;
+            if (links.find(l => l.url === currentPreviewUrl)) {
+                showToast('⚠️ هذا الرابط موجود بالفعل');
+                return;
+            }
+            links.push({ id: Date.now(), title: title.trim(), url: currentPreviewUrl, category });
+            saveLinks();
+            renderLinks();
+            showToast('✅ تم إضافة الرابط بنجاح');
+        }
+
+        // ========== PREVIEW MODAL ==========
+        function openPreviewModal(id) {
+            const link = links.find(l => l.id === id);
+            if (!link) return;
+            currentPreviewUrl = link.url;
+            currentPreviewTitle = link.title;
+            viewMode = 'iframe';
+
+            const modal = document.getElementById('previewModal');
+            modal.querySelector('#previewModalContent').innerHTML = `
+                <div class="preview-modal-header">
+                    <div class="modal-badge"><i class="fas fa-tag"></i> ${getCategoryIcon(link.category)} ${link.category}</div>
+                    <div class="modal-title-sm">${link.title}</div>
+                    <button class="modal-close" onclick="closePreviewModal()"><i class="fas fa-times"></i> إغلاق</button>
+                </div>
+                <div class="preview-modal-body">
+                    <div class="preview-iframe-container" id="iframeContainer">
+                        <div class="iframe-loader" id="iframeLoader">
+                            <div class="spinner"></div>
+                            <span>جاري تحميل الصفحة...</span>
+                        </div>
+                        <div class="iframe-error" id="iframeError">
+                            <i class="fas fa-ban"></i>
+                            <h4>تعذر تحميل الموقع</h4>
+                            <p>الموقع يمنع العرض في إطار لأسباب أمنية</p>
+                            <div class="error-actions">
+                                <button class="retry-btn" onclick="retryIframe()"><i class="fas fa-redo"></i> إعادة محاولة</button>
+                                <button class="retry-btn" onclick="toggleViewMode()"><i class="fas fa-image"></i> عرض الصورة</button>
+                                <a href="${link.url}" target="_blank" class="open-btn"><i class="fas fa-external-link-alt"></i> فتح في تبويب</a>
+                            </div>
+                        </div>
+                        <iframe src="${link.url}" onload="iframeLoaded()" onerror="iframeError()" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
+                        <div class="iframe-controls">
+                            <button onclick="reloadIframe()"><i class="fas fa-redo"></i> إعادة تحميل</button>
+                            <button onclick="toggleViewMode()"><i class="fas fa-image"></i> عرض الصورة</button>
+                            <button class="add-current-btn" onclick="addCurrentPage()"><i class="fas fa-plus-circle"></i> إضافة الرابط</button>
+                            <button onclick="openInNewTab()"><i class="fas fa-external-link-alt"></i> فتح جديد</button>
+                        </div>
+                    </div>
+                    <div class="preview-info">
+                        <div class="info-domain"><i class="fas fa-globe"></i> ${getDomain(link.url)}</div>
+                        <button onclick="copyLink('${link.url}')" style="background:rgba(255,255,255,0.05);border:none;color:var(--text-secondary);padding:4px 12px;border-radius:30px;cursor:pointer;font-size:11px;font-family:inherit;"><i class="fas fa-copy"></i> نسخ</button>
+                        <div class="info-url">${link.url}</div>
+                    </div>
+                    <div class="preview-actions">
+                        <a href="${link.url}" target="_blank" class="visit-btn"><i class="fas fa-external-link-alt"></i> فتح في تبويب جديد</a>
+                        <button onclick="closePreviewModal();openEditModal(${link.id})"><i class="fas fa-pen"></i> تعديل</button>
+                        <button class="delete-btn" onclick="deleteLinkFromPreview(${link.id})"><i class="fas fa-trash"></i> حذف</button>
+                    </div>
+                </div>
+            `;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // Set timeout for error detection
+            clearTimeout(iframeLoadTimeout);
+            iframeLoadTimeout = setTimeout(() => {
+                const loader = document.getElementById('iframeLoader');
+                if (loader && loader.style.display !== 'none') {
+                    iframeError();
+                }
+            }, 8000);
+        }
+
+        function iframeLoaded() {
+            clearTimeout(iframeLoadTimeout);
+            const loader = document.getElementById('iframeLoader');
+            const error = document.getElementById('iframeError');
+            if (loader) loader.style.display = 'none';
+            if (error) error.style.display = 'none';
+        }
+
+        function iframeError() {
+            clearTimeout(iframeLoadTimeout);
+            const loader = document.getElementById('iframeLoader');
+            const error = document.getElementById('iframeError');
+            if (loader) loader.style.display = 'none';
+            if (error) error.style.display = 'flex';
+        }
+
+        function reloadIframe() {
+            const container = document.getElementById('iframeContainer');
+            const iframe = container.querySelector('iframe');
+            const loader = document.getElementById('iframeLoader');
+            const error = document.getElementById('iframeError');
+            
+            // Remove screenshot if exists
+            const ss = container.querySelector('.preview-screenshot');
+            if (ss) ss.remove();
+            
+            if (iframe) {
+                loader.style.display = 'flex';
+                error.style.display = 'none';
+                iframe.style.display = '';
+                iframe.src = iframe.src;
+                
+                clearTimeout(iframeLoadTimeout);
+                iframeLoadTimeout = setTimeout(() => {
+                    if (loader && loader.style.display !== 'none') {
+                        iframeError();
+                    }
+                }, 8000);
+            }
+        }
+
+        function retryIframe() {
+            reloadIframe();
+        }
+
+        function toggleViewMode() {
+            const container = document.getElementById('iframeContainer');
+            const iframe = container.querySelector('iframe');
+            const error = document.getElementById('iframeError');
+            const loader = document.getElementById('iframeLoader');
+            
+            // If screenshot view is active, switch back to iframe
+            if (container.querySelector('.preview-screenshot')) {
+                const ss = container.querySelector('.preview-screenshot');
+                ss.remove();
+                iframe.style.display = '';
+                error.style.display = 'none';
+                loader.style.display = 'none';
+                viewMode = 'iframe';
+                showToast('🔄 عرض iframe');
+                return;
+            }
+            
+            // Switch to screenshot
+            iframe.style.display = 'none';
+            error.style.display = 'none';
+            loader.style.display = 'none';
+            viewMode = 'screenshot';
+            
+            const ssDiv = document.createElement('div');
+            ssDiv.className = 'preview-screenshot';
+            ssDiv.innerHTML = `
+                <img src="${getThumbnail(currentPreviewUrl)}" alt="لقطة شاشة" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'screenshot-fallback\\'><i class=\\'fas fa-image\\'></i>تعذر تحميل لقطة الشاشة<br/><span style=\\'font-size:12px;color:#475569;\\'>حاول فتح الموقع في تبويب جديد</span></div>'" />
+            `;
+            container.appendChild(ssDiv);
+            showToast('📷 عرض لقطة الشاشة');
+        }
+
+        function openInNewTab() {
+            if (currentPreviewUrl) {
+                window.open(currentPreviewUrl, '_blank');
+            }
+        }
+
+        function closePreviewModal() {
+            document.getElementById('previewModal').style.display = 'none';
+            document.body.style.overflow = '';
+            clearTimeout(iframeLoadTimeout);
+        }
+
+        function deleteLinkFromPreview(id) {
+            if (!confirm('حذف هذا الرابط؟')) return;
+            links = links.filter(l => l.id !== id);
+            saveLinks();
+            closePreviewModal();
+            renderLinks();
+            showToast('🗑️ تم الحذف');
+        }
+
+        // ========== EDIT MODAL ==========
+        function openEditModal(id) {
+            const link = links.find(l => l.id === id);
+            if (!link) return;
+            editingId = id;
+            populateCategorySelects();
+            document.getElementById('editTitle').value = link.title;
+            document.getElementById('editUrl').value = link.url;
+            document.getElementById('editCategory').value = link.category;
+            document.getElementById('editModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEditModal() { document.getElementById('editModal').style.display = 'none'; document.body.style.overflow = ''; editingId = null; }
+
+        function saveEdit() {
+            if (!editingId) return;
+            const title = document.getElementById('editTitle').value.trim();
+            const url = document.getElementById('editUrl').value.trim();
+            const category = document.getElementById('editCategory').value;
+            if (!title || !url) { showToast('⚠️ العنوان والرابط مطلوبان'); return; }
+            if (!url.startsWith('http://') && !url.startsWith('https://')) { showToast('⚠️ رابط غير صالح'); return; }
+            const link = links.find(l => l.id === editingId);
+            if (link) { link.title = title; link.url = url; link.category = category; }
+            saveLinks(); closeEditModal(); renderLinks(); showToast('✏️ تم التعديل');
+        }
+
+        // ========== CATEGORIES ==========
+        function openCategoriesModal() {
+            document.getElementById('categoriesModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            selectedIcon = '📂';
+            renderIconPicker();
+            renderCategoriesList();
+        }
+
+        function closeCategoriesModal() {
+            document.getElementById('categoriesModal').style.display = 'none';
+            document.body.style.overflow = '';
+            populateCategorySelects();
+            renderLinks();
+        }
+
+        function renderCategoriesList() {
+            document.getElementById('categoriesList').innerHTML = categories.map((c, i) => `
+                <div class="cat-item">
+                    <div class="cat-icon-display">${c.icon}</div>
+                    <div class="cat-details"><div class="cat-name">${c.name}</div><div class="cat-count">${links.filter(l=>l.category===c.name).length} روابط</div></div>
+                    <div class="cat-actions">
+                        <button onclick="editCategory(${i})"><i class="fas fa-pen"></i></button>
+                        <button class="delete-cat" onclick="deleteCategory(${i})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>`).join('');
+        }
+
+        function addCategory() {
+            const name = document.getElementById('newCatName').value.trim();
+            if (!name) { showToast('⚠️ أدخل اسم التصنيف'); return; }
+            if (categories.find(c => c.name === name)) { showToast('⚠️ موجود مسبقاً'); return; }
+            categories.push({ name, icon: selectedIcon });
+            saveCategories();
+            document.getElementById('newCatName').value = '';
+            selectedIcon = '📂';
+            renderIconPicker();
+            renderCategoriesList();
+            populateCategorySelects();
+            showToast('✅ تمت الإضافة');
+        }
+
+        function editCategory(index) {
+            const cat = categories[index];
+            const newName = prompt('اسم التصنيف:', cat.name);
+            if (!newName || !newName.trim()) return;
+            const trimmed = newName.trim();
+            if (categories.find((c, i) => i !== index && c.name === trimmed)) { showToast('⚠️ مكرر'); return; }
+            const newIcon = prompt('الأيقونة (إيموجي):', cat.icon);
+            const oldName = cat.name;
+            categories[index].name = trimmed;
+            categories[index].icon = newIcon || cat.icon;
+            links.forEach(l => { if (l.category === oldName) l.category = trimmed; });
+            saveCategories(); saveLinks();
+            renderCategoriesList(); populateCategorySelects(); renderLinks();
+            showToast('✏️ تم التعديل');
+        }
+
+        function deleteCategory(index) {
+            if (categories.length <= 1) { showToast('⚠️ يجب بقاء تصنيف واحد'); return; }
+            const cat = categories[index];
+            if (!confirm(`حذف "${cat.name}"؟`)) return;
+            links.forEach(l => { if (l.category === cat.name) l.category = categories[0].name; });
+            categories.splice(index, 1);
+            saveCategories(); saveLinks();
+            renderCategoriesList(); populateCategorySelects(); renderLinks();
+            showToast('🗑️ تم الحذف');
+        }
+
+        // ========== DRAG & DROP ==========
+        let draggedId = null;
+        function dragStart(e) { const c = e.target.closest('.link-card'); if (!c) return; draggedId = parseInt(c.dataset.id); c.classList.add('dragging'); }
+        function dragEnd(e) { document.querySelectorAll('.link-card').forEach(c => c.classList.remove('dragging','drag-over')); }
+        function dragOver(e) { e.preventDefault(); const c = e.target.closest('.link-card'); if (c) { document.querySelectorAll('.link-card').forEach(x => x.classList.remove('drag-over')); c.classList.add('drag-over'); } }
+        function drop(e) {
+            e.preventDefault();
+            const c = e.target.closest('.link-card');
+            if (!c || !draggedId) return;
+            const tid = parseInt(c.dataset.id);
+            if (draggedId === tid) return;
+            const from = links.findIndex(l => l.id === draggedId);
+            const to = links.findIndex(l => l.id === tid);
+            if (from===-1||to===-1) return;
+            const [m] = links.splice(from, 1);
+            links.splice(to, 0, m);
+            saveLinks(); renderLinks(); showToast('🔄 تم الترتيب');
+        }
+
+        // ========== CRUD ==========
+        function addLink() {
+            const title = document.getElementById('linkTitle').value.trim();
+            const url = document.getElementById('linkUrl').value.trim();
+            const category = document.getElementById('linkCategory').value;
+            if (!title || !url) { showToast('⚠️ أدخل العنوان والرابط'); return; }
+            if (!url.startsWith('http://') && !url.startsWith('https://')) { showToast('⚠️ رابط غير صالح'); return; }
+            if (links.find(l => l.url === url)) { showToast('⚠️ هذا الرابط موجود بالفعل'); return; }
+            links.push({ id: Date.now(), title, url, category });
+            saveLinks(); renderLinks();
+            document.getElementById('linkTitle').value = '';
+            document.getElementById('linkUrl').value = '';
+            showToast('✅ تمت الإضافة');
+        }
+
+        function deleteLink(id) { if (!confirm('حذف هذا الرابط؟')) return; links = links.filter(l => l.id !== id); saveLinks(); renderLinks(); showToast('🗑️ تم الحذف'); }
+        function copyLink(url) { navigator.clipboard.writeText(url).then(() => showToast('📋 تم النسخ')).catch(() => showToast('📋 تم النسخ')); }
+        function clearAll() { if (!confirm('⚠️ حذف جميع الروابط؟')) return; links = []; saveLinks(); renderLinks(); showToast('🗑️ تم حذف الكل'); }
+
+        function exportLinks() {
+            const data = JSON.stringify({ links, categories }, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'معرض_روابطي.json';
+            a.click();
+            showToast('📤 تم التصدير');
+        }
+
+        function importLinks(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.links) { links = data.links; if (data.categories) categories = data.categories; }
+                    else if (Array.isArray(data)) links = data;
+                    else { showToast('⚠️ ملف غير صالح'); return; }
+                    saveLinks(); saveCategories();
+                    populateCategorySelects(); renderLinks();
+                    showToast('📥 تم الاستيراد');
+                } catch { showToast('⚠️ خطأ في الملف'); }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // ========== EVENTS ==========
+        document.addEventListener('click', e => {
+            if (e.target.id === 'previewModal') closePreviewModal();
+            if (e.target.id === 'editModal') closeEditModal();
+            if (e.target.id === 'categoriesModal') closeCategoriesModal();
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closePreviewModal(); closeEditModal(); closeCategoriesModal(); } });
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(t._timer);
+            t._timer = setTimeout(() => t.classList.remove('show'), 2500);
+        }
+
+        // ========== INIT ==========
+        loadData();
+        populateCategorySelects();
+        renderLinks();
+    </script>
+</body>
+</html>
