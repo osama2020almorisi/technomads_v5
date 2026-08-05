@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>🚀 لوحة التحكم - إدارة التخزين المتقدمة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/lz-string.min.js"></script>
+    <style>
+        /* ========== ROOT ========== */
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --border-card: rgba(255, 255, 255, 0.06);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            --gradient-green: linear-gradient(135deg, #10b981, #059669);
+            --gradient-orange: linear-gradient(135deg, #f59e0b, #ef4444);
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --shadow: 0 8px 32px rgba(0,0,0,0.5);
+            --radius: 20px;
+            --radius-sm: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 12px;
+            background-image: 
+                radial-gradient(circle at 20% 30%, #1a1f2e 0%, #0a0e17 100%),
+                radial-gradient(circle at 80% 70%, #0f1420 0%, transparent 60%);
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 20px; }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: rgba(255,255,255,0.02);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header h1 i {
+            background: var(--gradient);
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 18px;
+            -webkit-text-fill-color: white;
+            box-shadow: 0 4px 16px rgba(59,130,246,0.3);
+        }
+
+        .header .subtitle {
+            color: var(--text-secondary);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .header .subtitle .badge {
+            background: rgba(59,130,246,0.15);
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            color: #93c5fd;
+            border: 1px solid rgba(59,130,246,0.1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header .subtitle .badge.success {
+            background: rgba(16,185,129,0.15);
+            color: #6ee7b7;
+            border-color: rgba(16,185,129,0.1);
+        }
+
+        .header .subtitle .badge.danger {
+            background: rgba(239,68,68,0.15);
+            color: #fca5a5;
+            border-color: rgba(239,68,68,0.1);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .header-actions button {
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-actions button:hover { background: rgba(255,255,255,0.06); color: var(--text-primary); }
+        .header-actions button:active { transform: scale(0.95); }
+
+        .header-actions .btn-danger { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.2); color: #fca5a5; }
+        .header-actions .btn-danger:hover { background: var(--danger); color: white; border-color: var(--danger); }
+
+        .header-actions .btn-success { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.2); color: #6ee7b7; }
+        .header-actions .btn-success:hover { background: var(--success); color: white; border-color: var(--success); }
+
+        .header-actions .btn-accent { background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.2); color: #93c5fd; }
+        .header-actions .btn-accent:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+        /* ========== STATS ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.02);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .stat-card:hover { background: rgba(255,255,255,0.04); transform: translateY(-2px); }
+
+        .stat-card .number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-primary);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-card .label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .stat-card .number.danger { color: var(--danger); }
+        .stat-card .number.warning { color: var(--warning); }
+        .stat-card .number.success { color: var(--success); }
+        .stat-card .number.accent { color: var(--accent); }
+
+        /* ========== PROGRESS BAR ========== */
+        .progress-container {
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar-wrapper {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar .fill {
+            height: 100%;
+            border-radius: 20px;
+            background: var(--gradient);
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+
+        .progress-bar .fill.danger { background: var(--gradient-orange); }
+        .progress-bar .fill.warning { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+        .progress-bar .fill.success { background: var(--gradient-green); }
+
+        .progress-info {
+            color: var(--text-secondary);
+            font-size: 12px;
+            white-space: nowrap;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .progress-info strong { color: var(--text-primary); }
+
+        /* ========== TABS ========== */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+            background: rgba(255,255,255,0.02);
+            border-radius: var(--radius-sm);
+            padding: 4px;
+            border: 1px solid rgba(255,255,255,0.04);
+            overflow-x: auto;
+        }
+
+        .tabs button {
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tabs button:hover { color: var(--text-primary); background: rgba(255,255,255,0.03); }
+        .tabs button.active { background: rgba(59,130,246,0.2); color: #93c5fd; }
+
+        .tab-content { display: none; animation: fadeUp 0.3s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== TABLE ========== */
+        .table-container {
+            background: rgba(255,255,255,0.02);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+        }
+
+        .table-toolbar {
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .table-toolbar .left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .table-toolbar .left h3 {
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .table-toolbar .left .count {
+            background: rgba(255,255,255,0.05);
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .table-toolbar input {
+            padding: 6px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-primary);
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+            width: 160px;
+        }
+
+        .table-toolbar input:focus {
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.06);
+        }
+
+        .table-toolbar input::placeholder { color: var(--text-secondary); }
+
+        .table-toolbar select {
+            padding: 6px 12px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            padding: 0 4px 4px 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead {
+            background: rgba(255,255,255,0.02);
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        th {
+            text-align: right;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 11px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 8px 14px;
+            color: var(--text-primary);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            vertical-align: middle;
+            word-break: break-word;
+            font-size: 12px;
+        }
+
+        tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .key-cell {
+            font-weight: 600;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 12px;
+            color: #93c5fd;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .key-cell:hover { color: #60a5fa; }
+
+        .value-cell {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 11px;
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--text-secondary);
+        }
+
+        .value-cell .preview {
+            background: rgba(255,255,255,0.03);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .size-cell {
+            font-weight: 600;
+            font-size: 12px;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .size-cell.small { color: var(--success); }
+        .size-cell.medium { color: var(--warning); }
+        .size-cell.large { color: var(--danger); }
+
+        .type-cell {
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .type-cell.object { background: rgba(59,130,246,0.1); color: #93c5fd; }
+        .type-cell.array { background: rgba(16,185,129,0.1); color: #6ee7b7; }
+        .type-cell.string { background: rgba(245,158,11,0.1); color: #fcd34d; }
+        .type-cell.number { background: rgba(239,68,68,0.1); color: #fca5a5; }
+        .type-cell.boolean { background: rgba(139,92,246,0.1); color: #c4b5fd; }
+
+        .actions-cell {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .actions-cell button {
+            padding: 4px 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.02);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 10px;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .actions-cell button:hover { background: rgba(255,255,255,0.06); color: var(--text-primary); }
+        .actions-cell .view-btn:hover { background: rgba(59,130,246,0.2); color: #93c5fd; }
+        .actions-cell .copy-btn:hover { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+        .actions-cell .delete-btn:hover { background: var(--danger); color: white; border-color: var(--danger); }
+        .actions-cell .compress-btn:hover { background: rgba(245,158,11,0.2); color: #fcd34d; }
+
+        /* ========== DETAIL MODAL ========== */
+        .detail-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .detail-modal.active { display: flex; }
+
+        .detail-content {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius);
+            padding: 24px;
+            max-width: 750px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+            animation: modalPop 0.3s ease;
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .detail-content h2 {
+            color: var(--text-primary);
+            font-size: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-content .detail-key {
+            background: rgba(59,130,246,0.1);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-family: 'SF Mono', monospace;
+            font-size: 13px;
+            color: #93c5fd;
+            margin-bottom: 12px;
+            word-break: break-all;
+        }
+
+        .detail-content .detail-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .detail-content .detail-value {
+            background: rgba(0,0,0,0.4);
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 400px;
+            overflow-y: auto;
+            color: var(--text-secondary);
+            border: 1px solid rgba(255,255,255,0.04);
+            direction: ltr;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .detail-content .detail-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .detail-content .detail-actions button {
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .detail-content .detail-actions button:hover { background: rgba(255,255,255,0.06); }
+        .detail-content .detail-actions .close-btn:hover { background: rgba(239,68,68,0.2); color: #fca5a5; }
+
+        /* ========== TOAST ========== */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(15,23,42,0.95);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 13px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 9999;
+            border: 1px solid rgba(255,255,255,0.05);
+            pointer-events: none;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ========== EMPTY ========== */
+        .empty-msg {
+            text-align: center;
+            padding: 40px 16px;
+            color: var(--text-secondary);
+        }
+
+        .empty-msg i {
+            font-size: 40px;
+            opacity: 0.2;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .empty-msg h3 { font-weight: 400; font-size: 15px; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            body { padding: 8px; }
+            .header { padding: 14px 16px; }
+            .header h1 { font-size: 18px; }
+            .header h1 i { font-size: 14px; padding: 8px 10px; }
+            .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+            .stat-card { padding: 10px; }
+            .stat-card .number { font-size: 18px; }
+            .stat-card .label { font-size: 10px; }
+            .progress-container { flex-direction: column; align-items: stretch; gap: 8px; }
+            .progress-info { text-align: center; }
+            .tabs button { font-size: 11px; padding: 8px 12px; }
+            .tabs button span { display: none; }
+            .table-toolbar { flex-direction: column; align-items: stretch; gap: 8px; }
+            .table-toolbar .left { flex-wrap: wrap; }
+            .table-toolbar input { width: 100%; }
+            .key-cell { max-width: 80px; }
+            .value-cell { max-width: 80px; }
+            .actions-cell button span { display: none; }
+            .detail-content { padding: 16px; margin: 8px; }
+            .detail-content .detail-value { font-size: 11px; max-height: 250px; }
+        }
+
+        @media (max-width: 400px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .header-actions button { font-size: 10px; padding: 6px 10px; }
+            .header-actions button span { display: none; }
+            th, td { padding: 6px 8px; font-size: 10px; }
+            .type-cell { font-size: 9px; padding: 1px 6px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="header">
+            <div class="header-top">
+                <h1><i class="fas fa-database"></i> مدير التخزين المتقدم</h1>
+                <div class="header-actions">
+                    <button class="btn-accent" onclick="refreshAll()"><i class="fas fa-sync"></i> <span>تحديث</span></button>
+                    <button class="btn-success" onclick="exportAll()"><i class="fas fa-download"></i> <span>تصدير</span></button>
+                    <button class="btn-accent" onclick="importData()"><i class="fas fa-upload"></i> <span>استيراد</span></button>
+                    <button class="btn-danger" onclick="clearAll()"><i class="fas fa-trash-alt"></i> <span>حذف الكل</span></button>
+                </div>
+            </div>
+            <div class="subtitle">
+                <span><i class="fas fa-globe"></i> <span id="currentUrl">جاري التحليل...</span></span>
+                <span class="badge"><i class="fas fa-calendar"></i> <span id="currentTime"></span></span>
+                <span class="badge success"><i class="fas fa-database"></i> localStorage + IndexedDB</span>
+                <span class="badge" id="storageStatus"><i class="fas fa-circle" style="color:var(--success);"></i> نشط</span>
+            </div>
+        </div>
+
+        <!-- ===== STATS ===== -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="number accent" id="totalKeys">0</div>
+                <div class="label">📝 عدد المفاتيح</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="totalSize">0</div>
+                <div class="label">📊 الحجم (كيلوبايت)</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="totalSizeMB">0</div>
+                <div class="label">📊 الحجم (ميجابايت)</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="remainingSpace">0</div>
+                <div class="label">💾 المساحة المتبقية</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="largestKey">-</div>
+                <div class="label">🏆 أكبر مفتاح</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="usagePercent">0%</div>
+                <div class="label">📈 نسبة الاستخدام</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="compressedSize">0</div>
+                <div class="label">📦 حجم مضغوط</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="savings">0%</div>
+                <div class="label">🎯 نسبة التوفير</div>
+            </div>
+        </div>
+
+        <!-- ===== PROGRESS ===== -->
+        <div class="progress-container">
+            <div class="progress-bar-wrapper">
+                <div class="progress-bar">
+                    <div class="fill" id="progressFill" style="width: 0%;"></div>
+                </div>
+            </div>
+            <div class="progress-info">
+                <strong id="progressText">0%</strong> من السعة
+            </div>
+        </div>
+
+        <!-- ===== TABS ===== -->
+        <div class="tabs" id="tabs">
+            <button class="active" data-tab="localStorage"><i class="fas fa-database"></i> <span>LocalStorage</span></button>
+            <button data-tab="indexedDB"><i class="fas fa-cloud"></i> <span>IndexedDB</span></button>
+            <button data-tab="backup"><i class="fas fa-archive"></i> <span>النسخ الاحتياطي</span></button>
+            <button data-tab="compression"><i class="fas fa-compress-alt"></i> <span>الضغط</span></button>
+            <button data-tab="analytics"><i class="fas fa-chart-bar"></i> <span>تحليلات</span></button>
+        </div>
+
+        <!-- ===== TAB: localStorage ===== -->
+        <div class="tab-content active" id="tab-localStorage">
+            <div class="table-container">
+                <div class="table-toolbar">
+                    <div class="left">
+                        <h3><i class="fas fa-list-ul"></i> جميع المفاتيح <span class="count" id="localCount">0</span></h3>
+                    </div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <input type="text" id="searchLocal" placeholder="🔍 بحث..." oninput="filterLocal()" />
+                        <select id="sortLocal" onchange="renderLocal()">
+                            <option value="size">ترتيب حسب الحجم</option>
+                            <option value="name">ترتيب حسب الاسم</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:20%;">🔑 المفتاح</th>
+                                <th style="width:35%;">📦 القيمة</th>
+                                <th style="width:10%;">📊 الحجم</th>
+                                <th style="width:10%;">🏷️ النوع</th>
+                                <th style="width:25%;">⚙️ الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="localBody">
+                            <tr><td colspan="5" style="text-align:center;color:var(--text-secondary);padding:30px;">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== TAB: IndexedDB ===== -->
+        <div class="tab-content" id="tab-indexedDB">
+            <div class="table-container">
+                <div class="table-toolbar">
+                    <div class="left">
+                        <h3><i class="fas fa-cloud"></i> قواعد IndexedDB <span class="count" id="indexedCount">0</span></h3>
+                    </div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <input type="text" id="searchIndexed" placeholder="🔍 بحث..." oninput="renderIndexedDB()" />
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>📁 اسم القاعدة</th>
+                                <th>📊 عدد السجلات</th>
+                                <th>📦 الحجم التقريبي</th>
+                                <th>⚙️ الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="indexedBody">
+                            <tr><td colspan="4" style="text-align:center;color:var(--text-secondary);padding:30px;">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== TAB: Backup ===== -->
+        <div class="tab-content" id="tab-backup">
+            <div class="table-container">
+                <div class="table-toolbar">
+                    <div class="left">
+                        <h3><i class="fas fa-archive"></i> النسخ الاحتياطية <span class="count" id="backupCount">0</span></h3>
+                    </div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button class="btn-success" onclick="createBackup()"><i class="fas fa-plus"></i> إنشاء نسخة</button>
+                        <button class="btn-accent" onclick="restoreBackup()"><i class="fas fa-undo"></i> استعادة</button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>📋 اسم النسخة</th>
+                                <th>📊 الحجم</th>
+                                <th>📅 التاريخ</th>
+                                <th>⚙️ الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="backupBody">
+                            <tr><td colspan="4" style="text-align:center;color:var(--text-secondary);padding:30px;">لا توجد نسخ احتياطية</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== TAB: Compression ===== -->
+        <div class="tab-content" id="tab-compression">
+            <div class="table-container">
+                <div class="table-toolbar">
+                    <div class="left">
+                        <h3><i class="fas fa-compress-alt"></i> أداة الضغط</h3>
+                    </div>
+                </div>
+                <div style="padding:20px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                        <div>
+                            <label style="color:var(--text-secondary);font-size:12px;display:block;margin-bottom:4px;">🔑 المفتاح المراد ضغطه</label>
+                            <select id="compressKeySelect" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03);color:var(--text-primary);font-family:inherit;font-size:13px;"></select>
+                        </div>
+                        <div style="display:flex;align-items:flex-end;gap:8px;">
+                            <button class="btn-success" onclick="compressKey()" style="padding:10px 24px;border-radius:50px;border:none;background:var(--gradient-green);color:white;font-weight:600;cursor:pointer;font-family:inherit;flex:1;"><i class="fas fa-compress"></i> ضغط</button>
+                            <button class="btn-accent" onclick="decompressKey()" style="padding:10px 24px;border-radius:50px;border:none;background:rgba(59,130,246,0.2);color:#93c5fd;font-weight:600;cursor:pointer;font-family:inherit;flex:1;"><i class="fas fa-expand"></i> فك</button>
+                        </div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div style="background:rgba(255,255,255,0.02);border-radius:var(--radius-sm);padding:14px;border:1px solid rgba(255,255,255,0.04);">
+                            <div style="color:var(--text-secondary);font-size:11px;margin-bottom:4px;">📊 الحجم الأصلي</div>
+                            <div style="font-size:20px;font-weight:700;color:var(--text-primary);" id="originalSize">-</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.02);border-radius:var(--radius-sm);padding:14px;border:1px solid rgba(255,255,255,0.04);">
+                            <div style="color:var(--text-secondary);font-size:11px;margin-bottom:4px;">📦 الحجم بعد الضغط</div>
+                            <div style="font-size:20px;font-weight:700;color:var(--success);" id="compressedSizeDisplay">-</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;background:rgba(255,255,255,0.02);border-radius:var(--radius-sm);padding:14px;border:1px solid rgba(255,255,255,0.04);">
+                        <div style="color:var(--text-secondary);font-size:11px;margin-bottom:4px;">📈 نسبة التوفير</div>
+                        <div style="font-size:24px;font-weight:800;" id="compressionRatio">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== TAB: Analytics ===== -->
+        <div class="tab-content" id="tab-analytics">
+            <div class="table-container">
+                <div class="table-toolbar">
+                    <div class="left">
+                        <h3><i class="fas fa-chart-bar"></i> تحليلات التخزين</h3>
+                    </div>
+                </div>
+                <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div style="background:rgba(255,255,255,0.02);border-radius:var(--radius-sm);padding:16px;border:1px solid rgba(255,255,255,0.04);">
+                        <div style="color:var(--text-secondary);font-size:12px;margin-bottom:8px;">📊 توزيع أنواع البيانات</div>
+                        <div id="typeDistribution">جاري التحليل...</div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.02);border-radius:var(--radius-sm);padding:16px;border:1px solid rgba(255,255,255,0.04);">
+                        <div style="color:var(--text-secondary);font-size:12px;margin-bottom:8px;">🏆 أكبر 5 مفاتيح</div>
+                        <div id="topKeys">جاري التحليل...</div>
+                    </div>
+                    <div style="grid-column:1/-1;background:rgba(255,255,255,0.02);border-radius:var(--radius-sm);padding:16px;border:1px solid rgba(255,255,255,0.04);">
+                        <div style="color:var(--text-secondary);font-size:12px;margin-bottom:8px;">📋 تقرير شامل</div>
+                        <div id="fullReport" style="font-size:13px;color:var(--text-secondary);line-height:1.8;white-space:pre-wrap;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DETAIL MODAL ===== -->
+    <div class="detail-modal" id="detailModal">
+        <div class="detail-content">
+            <h2><i class="fas fa-file-code"></i> تفاصيل المفتاح</h2>
+            <div class="detail-key" id="detailKey"></div>
+            <div class="detail-meta">
+                <span>📊 الحجم: <strong id="detailSize"></strong></span>
+                <span>🏷️ النوع: <strong id="detailType"></strong></span>
+                <span>📅 التحديث: <strong id="detailDate"></strong></span>
+            </div>
+            <div class="detail-value" id="detailValue"></div>
+            <div class="detail-actions">
+                <button onclick="copyDetail()"><i class="fas fa-copy"></i> نسخ</button>
+                <button onclick="downloadDetail()"><i class="fas fa-download"></i> تحميل</button>
+                <button class="close-btn" onclick="closeDetail()"><i class="fas fa-times"></i> إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div id="toast"></div>
+
+    <script>
+        // ============================================
+        // ===== DATA =====
+        // ============================================
+        let currentData = [];
+        let currentDetailKey = '';
+        let currentDetailValue = '';
+
+        // ============================================
+        // ===== HYBRID STORAGE CLASS =====
+        // ============================================
+        class HybridStorage {
+            constructor(storeName = 'quotes') {
+                this.storeName = storeName;
+                this.dbReady = false;
+                this.db = null;
+                this.initDB();
+            }
+
+            async initDB() {
+                try {
+                    this.db = await this.openDB();
+                    this.dbReady = true;
+                    console.log('✅ IndexedDB جاهز للاستخدام');
+                } catch (error) {
+                    console.warn('⚠️ IndexedDB غير متاح');
+                    this.dbReady = false;
+                }
+            }
+
+            openDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open('DiwanDB', 1);
+                    request.onupgradeneeded = (event) => {
+                        const db = event.target.result;
+                        if (!db.objectStoreNames.contains(this.storeName)) {
+                            db.createObjectStore(this.storeName, { keyPath: 'id' });
+                        }
+                        if (!db.objectStoreNames.contains('metadata')) {
+                            db.createObjectStore('metadata');
+                        }
+                    };
+                    request.onsuccess = (event) => resolve(event.target.result);
+                    request.onerror = (event) => reject(event.target.error);
+                });
+            }
+
+            async saveData(data) {
+                if (!data || data.length === 0) return;
+                if (this.dbReady) {
+                    try {
+                        const transaction = this.db.transaction(this.storeName, 'readwrite');
+                        const store = transaction.objectStore(this.storeName);
+                        store.clear();
+                        data.forEach(item => store.put(item));
+                        const metaStore = transaction.objectStore('metadata');
+                        metaStore.put({ total: data.length, lastUpdate: new Date().toISOString() }, 'info');
+                        await new Promise((resolve, reject) => {
+                            transaction.oncomplete = () => resolve();
+                            transaction.onerror = (event) => reject(event.target.error);
+                        });
+                        console.log(`✅ حفظ ${data.length} عنصر في IndexedDB`);
+                    } catch (error) {
+                        console.warn('⚠️ فشل IndexedDB:', error);
+                    }
+                }
+                this.saveBackup(data);
+            }
+
+            saveBackup(data) {
+                try {
+                    const json = JSON.stringify(data);
+                    const compressed = LZString.compressToUTF16(json);
+                    localStorage.setItem(`${this.storeName}_backup`, compressed);
+                } catch (error) {
+                    console.warn('⚠️ فشل النسخ الاحتياطي:', error);
+                }
+            }
+
+            async loadData() {
+                if (this.dbReady) {
+                    try {
+                        const data = await this.loadFromIndexedDB();
+                        if (data && data.length > 0) return data;
+                    } catch (error) {
+                        console.warn('⚠️ فشل IndexedDB:', error);
+                    }
+                }
+                const backup = localStorage.getItem(`${this.storeName}_backup`);
+                if (backup) {
+                    try {
+                        const json = LZString.decompressFromUTF16(backup);
+                        return JSON.parse(json);
+                    } catch (error) {
+                        console.warn('⚠️ فشل فك الضغط:', error);
+                    }
+                }
+                return [];
+            }
+
+            loadFromIndexedDB() {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction(this.storeName, 'readonly');
+                    const store = transaction.objectStore(this.storeName);
+                    const request = store.getAll();
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = (event) => reject(event.target.error);
+                });
+            }
+        }
+
+        const storage = new HybridStorage('quotes');
+
+        // ============================================
+        // ===== MAIN FUNCTIONS =====
+        // ============================================
+
+        function analyzeStorage() {
+            const keys = Object.keys(localStorage);
+            let totalBytes = 0;
+            const items = [];
+
+            keys.forEach(key => {
+                const value = localStorage[key];
+                const bytes = value.length * 2;
+                totalBytes += bytes;
+                const kb = bytes / 1024;
+                const mb = kb / 1024;
+
+                let type = 'string';
+                let preview = value;
+                try {
+                    const parsed = JSON.parse(value);
+                    if (Array.isArray(parsed)) type = 'array';
+                    else if (typeof parsed === 'object') type = 'object';
+                    preview = JSON.stringify(parsed, null, 2);
+                } catch {}
+
+                items.push({
+                    key,
+                    value,
+                    bytes,
+                    kb,
+                    mb,
+                    type,
+                    preview: preview.length > 200 ? preview.substring(0, 200) + '...' : preview,
+                    fullPreview: preview
+                });
+            });
+
+            items.sort((a, b) => b.bytes - a.bytes);
+            currentData = items;
+
+            // Stats
+            const totalKB = totalBytes / 1024;
+            const totalMB = totalKB / 1024;
+            const maxSizeMB = 5;
+            const remaining = maxSizeMB - totalMB;
+            const percent = (totalMB / maxSizeMB) * 100;
+
+            document.getElementById('totalKeys').textContent = keys.length;
+            document.getElementById('totalSize').textContent = totalKB.toFixed(2);
+            document.getElementById('totalSizeMB').textContent = totalMB.toFixed(4);
+            document.getElementById('remainingSpace').textContent = remaining > 0 ? remaining.toFixed(4) : '0';
+            document.getElementById('largestKey').textContent = items.length > 0 ? `${items[0].kb.toFixed(2)} ك.ب` : '-';
+            
+            const percentEl = document.getElementById('usagePercent');
+            percentEl.textContent = `${percent.toFixed(1)}%`;
+            percentEl.style.color = percent > 80 ? 'var(--danger)' : percent > 50 ? 'var(--warning)' : 'var(--success)';
+
+            document.getElementById('currentUrl').textContent = window.location.href;
+            document.getElementById('currentTime').textContent = new Date().toLocaleString('ar-EG');
+
+            // Progress
+            const fill = document.getElementById('progressFill');
+            fill.style.width = `${Math.min(percent, 100)}%`;
+            fill.className = 'fill';
+            if (percent > 80) fill.classList.add('danger');
+            else if (percent > 50) fill.classList.add('warning');
+            else fill.classList.add('success');
+            document.getElementById('progressText').textContent = `${percent.toFixed(1)}%`;
+
+            // Compression stats
+            let compressedTotal = 0;
+            items.forEach(item => {
+                try {
+                    const compressed = LZString.compressToUTF16(item.value);
+                    compressedTotal += compressed.length * 2;
+                } catch {}
+            });
+            const compressedKB = compressedTotal / 1024;
+            document.getElementById('compressedSize').textContent = compressedKB.toFixed(2);
+            const savings = totalKB > 0 ? ((1 - compressedKB / totalKB) * 100) : 0;
+            document.getElementById('savings').textContent = `${savings.toFixed(1)}%`;
+
+            renderLocal();
+            renderIndexedDB();
+            renderBackups();
+            updateCompressSelect();
+            updateAnalytics();
+
+            // Storage status
+            const status = document.getElementById('storageStatus');
+            if (storage.dbReady) {
+                status.innerHTML = '<i class="fas fa-circle" style="color:var(--success);"></i> IndexedDB نشط';
+                status.className = 'badge success';
+            } else {
+                status.innerHTML = '<i class="fas fa-circle" style="color:var(--warning);"></i> localStorage فقط';
+                status.className = 'badge';
+            }
+        }
+
+        // ============================================
+        // ===== RENDER LOCAL =====
+        // ============================================
+        function renderLocal() {
+            const tbody = document.getElementById('localBody');
+            const search = document.getElementById('searchLocal').value.toLowerCase().trim();
+            const sortBy = document.getElementById('sortLocal').value;
+
+            let filtered = [...currentData];
+            if (search) {
+                filtered = filtered.filter(item => 
+                    item.key.toLowerCase().includes(search) || 
+                    item.value.toLowerCase().includes(search)
+                );
+            }
+
+            if (sortBy === 'name') {
+                filtered.sort((a, b) => a.key.localeCompare(b.key));
+            } else {
+                filtered.sort((a, b) => b.bytes - a.bytes);
+            }
+
+            document.getElementById('localCount').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-secondary);padding:30px;">${search ? '🔍 لا توجد نتائج' : '📭 لا توجد مفاتيح'}</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(item => {
+                let sizeClass = 'small';
+                if (item.kb > 50) sizeClass = 'large';
+                else if (item.kb > 10) sizeClass = 'medium';
+
+                const sizeDisplay = item.kb > 1024 ? `${item.mb.toFixed(2)} م.ب` : `${item.kb.toFixed(2)} ك.ب`;
+                const typeClass = item.type === 'object' ? 'object' : item.type === 'array' ? 'array' : 'string';
+
+                return `
+                    <tr>
+                        <td class="key-cell" title="${item.key}" onclick="showDetail('${item.key}')">${item.key}</td>
+                        <td class="value-cell"><span class="preview">${item.preview}</span></td>
+                        <td class="size-cell ${sizeClass}">${sizeDisplay}</td>
+                        <td><span class="type-cell ${typeClass}">${item.type}</span></td>
+                        <td class="actions-cell">
+                            <button class="view-btn" onclick="showDetail('${item.key}')"><i class="fas fa-eye"></i> <span>عرض</span></button>
+                            <button class="copy-btn" onclick="copyKey('${item.key}')"><i class="fas fa-copy"></i> <span>نسخ</span></button>
+                            <button class="compress-btn" onclick="compressSingleKey('${item.key}')"><i class="fas fa-compress"></i> <span>ضغط</span></button>
+                            <button class="delete-btn" onclick="deleteKey('${item.key}')"><i class="fas fa-trash"></i> <span>حذف</span></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterLocal() { renderLocal(); }
+
+        // ============================================
+        // ===== RENDER INDEXEDDB =====
+        // ============================================
+        async function renderIndexedDB() {
+            const tbody = document.getElementById('indexedBody');
+            try {
+                const dbNames = await indexedDB.databases ? await indexedDB.databases() : [];
+                const names = dbNames.map(d => d.name).filter(Boolean);
+                
+                if (names.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--text-secondary);padding:30px;">📭 لا توجد قواعد IndexedDB</td></tr>`;
+                    document.getElementById('indexedCount').textContent = '0';
+                    return;
+                }
+
+                let html = '';
+                for (const name of names) {
+                    try {
+                        const count = await getDBRecordCount(name);
+                        html += `
+                            <tr>
+                                <td style="font-weight:600;color:#93c5fd;">${name}</td>
+                                <td>${count}</td>
+                                <td>~ ${(count * 0.5).toFixed(1)} ك.ب</td>
+                                <td class="actions-cell">
+                                    <button class="view-btn" onclick="viewIndexedDB('${name}')"><i class="fas fa-eye"></i> عرض</button>
+                                    <button class="delete-btn" onclick="deleteIndexedDB('${name}')"><i class="fas fa-trash"></i> حذف</button>
+                                </td>
+                            </tr>
+                        `;
+                    } catch {}
+                }
+
+                tbody.innerHTML = html || `<tr><td colspan="4" style="text-align:center;color:var(--text-secondary);padding:30px;">📭 لا توجد بيانات</td></tr>`;
+                document.getElementById('indexedCount').textContent = names.length;
+            } catch (error) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--text-secondary);padding:30px;">⚠️ تعذر قراءة IndexedDB</td></tr>`;
+            }
+        }
+
+        function getDBRecordCount(dbName) {
+            return new Promise((resolve) => {
+                try {
+                    const request = indexedDB.open(dbName);
+                    request.onsuccess = (event) => {
+                        const db = event.target.result;
+                        if (db.objectStoreNames.length === 0) { resolve(0); return; }
+                        const storeName = db.objectStoreNames[0];
+                        const transaction = db.transaction(storeName, 'readonly');
+                        const store = transaction.objectStore(storeName);
+                        const count = store.count();
+                        count.onsuccess = () => resolve(count.result);
+                        count.onerror = () => resolve(0);
+                    };
+                    request.onerror = () => resolve(0);
+                } catch { resolve(0); }
+            });
+        }
+
+        function viewIndexedDB(name) {
+            showToast(`📊 عرض قاعدة: ${name}`);
+        }
+
+        function deleteIndexedDB(name) {
+            if (!confirm(`🗑️ حذف قاعدة IndexedDB "${name}"؟`)) return;
+            indexedDB.deleteDatabase(name);
+            showToast(`🗑️ تم حذف: ${name}`);
+            renderIndexedDB();
+        }
+
+        // ============================================
+        // ===== BACKUPS =====
+        // ============================================
+        function renderBackups() {
+            const tbody = document.getElementById('backupBody');
+            const backups = [];
+            
+            for (let key in localStorage) {
+                if (key.includes('_backup') || key.includes('_compressed')) {
+                    const value = localStorage[key];
+                    const bytes = value.length * 2;
+                    backups.push({ key, bytes, kb: bytes / 1024, mb: bytes / (1024 * 1024) });
+                }
+            }
+
+            document.getElementById('backupCount').textContent = backups.length;
+
+            if (backups.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--text-secondary);padding:30px;">📭 لا توجد نسخ احتياطية</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = backups.map(b => `
+                <tr>
+                    <td style="font-weight:600;color:#93c5fd;">${b.key}</td>
+                    <td>${b.kb.toFixed(2)} ك.ب</td>
+                    <td>${new Date().toLocaleString('ar-EG')}</td>
+                    <td class="actions-cell">
+                        <button class="view-btn" onclick="showDetail('${b.key}')"><i class="fas fa-eye"></i> عرض</button>
+                        <button class="copy-btn" onclick="copyKey('${b.key}')"><i class="fas fa-copy"></i> نسخ</button>
+                        <button class="delete-btn" onclick="deleteKey('${b.key}')"><i class="fas fa-trash"></i> حذف</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function createBackup() {
+            const data = {};
+            for (let key in localStorage) {
+                data[key] = localStorage[key];
+            }
+            const json = JSON.stringify(data, null, 2);
+            const compressed = LZString.compressToUTF16(json);
+            const backupKey = `backup_${Date.now()}`;
+            localStorage.setItem(backupKey, compressed);
+            showToast(`✅ تم إنشاء نسخة احتياطية: ${backupKey}`);
+            analyzeStorage();
+        }
+
+        function restoreBackup() {
+            const backupKeys = Object.keys(localStorage).filter(k => k.startsWith('backup_'));
+            if (backupKeys.length === 0) {
+                showToast('⚠️ لا توجد نسخ احتياطية');
+                return;
+            }
+            const latest = backupKeys.sort().pop();
+            if (!confirm(`🔄 استعادة النسخة "${latest}"؟ سيتم استبدال جميع البيانات الحالية.`)) return;
+            try {
+                const compressed = localStorage.getItem(latest);
+                const json = LZString.decompressFromUTF16(compressed);
+                const data = JSON.parse(json);
+                for (let key in data) {
+                    localStorage.setItem(key, data[key]);
+                }
+                showToast(`✅ تم استعادة النسخة: ${latest}`);
+                analyzeStorage();
+            } catch (error) {
+                showToast('❌ فشل استعادة النسخة');
+                console.error(error);
+            }
+        }
+
+        // ============================================
+        // ===== COMPRESSION =====
+        // ============================================
+        function updateCompressSelect() {
+            const select = document.getElementById('compressKeySelect');
+            select.innerHTML = currentData.map(item => 
+                `<option value="${item.key}">${item.key} (${item.kb.toFixed(2)} ك.ب)</option>`
+            ).join('');
+        }
+
+        function compressKey() {
+            const key = document.getElementById('compressKeySelect').value;
+            if (!key) { showToast('⚠️ اختر مفتاحاً'); return; }
+            compressSingleKey(key);
+        }
+
+        function compressSingleKey(key) {
+            const value = localStorage.getItem(key);
+            if (!value) { showToast('⚠️ المفتاح غير موجود'); return; }
+            
+            const originalSize = value.length * 2;
+            const compressed = LZString.compressToUTF16(value);
+            const compressedSize = compressed.length * 2;
+            
+            document.getElementById('originalSize').textContent = `${(originalSize / 1024).toFixed(2)} ك.ب`;
+            document.getElementById('compressedSizeDisplay').textContent = `${(compressedSize / 1024).toFixed(2)} ك.ب`;
+            
+            const ratio = ((1 - compressedSize / originalSize) * 100);
+            const ratioEl = document.getElementById('compressionRatio');
+            ratioEl.textContent = `${ratio.toFixed(1)}% توفير`;
+            ratioEl.style.color = ratio > 50 ? 'var(--success)' : ratio > 20 ? 'var(--warning)' : 'var(--danger)';
+            
+            if (confirm(`💾 ضغط المفتاح "${key}"؟\nالحجم الأصلي: ${(originalSize/1024).toFixed(2)} ك.ب\nبعد الضغط: ${(compressedSize/1024).toFixed(2)} ك.ب\nنسبة التوفير: ${ratio.toFixed(1)}%`)) {
+                localStorage.setItem(`${key}_compressed`, compressed);
+                localStorage.removeItem(key);
+                showToast(`✅ تم ضغط: ${key}`);
+                analyzeStorage();
+            }
+        }
+
+        function decompressKey() {
+            const key = document.getElementById('compressKeySelect').value;
+            if (!key) { showToast('⚠️ اختر مفتاحاً'); return; }
+            
+            const compressed = localStorage.getItem(`${key}_compressed`) || localStorage.getItem(key);
+            if (!compressed) { showToast('⚠️ لا توجد بيانات مضغوطة'); return; }
+            
+            try {
+                const decompressed = LZString.decompressFromUTF16(compressed);
+                if (!decompressed) { showToast('⚠️ فشل فك الضغط'); return; }
+                
+                const newKey = key.replace('_compressed', '');
+                localStorage.setItem(newKey, decompressed);
+                localStorage.removeItem(`${key}_compressed`);
+                showToast(`✅ تم فك ضغط: ${newKey}`);
+                analyzeStorage();
+            } catch (error) {
+                showToast('❌ فشل فك الضغط');
+                console.error(error);
+            }
+        }
+
+        // ============================================
+        // ===== ANALYTICS =====
+        // ============================================
+        function updateAnalytics() {
+            // Type distribution
+            const types = {};
+            currentData.forEach(item => {
+                types[item.type] = (types[item.type] || 0) + 1;
+            });
+            const typeHtml = Object.entries(types).map(([type, count]) => 
+                `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+                    <span>${type}</span>
+                    <span style="color:var(--text-primary);font-weight:600;">${count}</span>
+                </div>`
+            ).join('');
+            document.getElementById('typeDistribution').innerHTML = typeHtml || 'لا توجد بيانات';
+
+            // Top 5 keys
+            const top5 = currentData.slice(0, 5);
+            const topHtml = top5.map(item => 
+                `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+                    <span style="color:#93c5fd;font-size:12px;">${item.key}</span>
+                    <span style="color:var(--text-secondary);font-size:12px;">${item.kb.toFixed(2)} ك.ب</span>
+                </div>`
+            ).join('');
+            document.getElementById('topKeys').innerHTML = topHtml || 'لا توجد بيانات';
+
+            // Full report
+            const totalKB = currentData.reduce((sum, i) => sum + i.kb, 0);
+            const totalMB = totalKB / 1024;
+            const report = `
+📊 تقرير التخزين المحلي
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 عدد المفاتيح: ${currentData.length}
+📊 الحجم الإجمالي: ${totalKB.toFixed(2)} ك.ب (${totalMB.toFixed(4)} م.ب)
+🏆 أكبر مفتاح: ${currentData.length > 0 ? currentData[0].key : '-'}
+📦 حجم مضغوط: ${document.getElementById('compressedSize').textContent} ك.ب
+🎯 نسبة التوفير: ${document.getElementById('savings').textContent}
+
+📁 توزيع الأنواع:
+${Object.entries(currentData.reduce((acc, i) => { acc[i.type] = (acc[i.type] || 0) + 1; return acc; }, {})).map(([k,v]) => `  ${k}: ${v}`).join('\n')}
+
+🔑 أكبر 5 مفاتيح:
+${currentData.slice(0, 5).map((i, idx) => `  ${idx+1}. ${i.key} (${i.kb.toFixed(2)} ك.ب)`).join('\n')}
+
+💾 الحالة: ${storage.dbReady ? '✅ IndexedDB نشط' : '⚠️ localStorage فقط'}
+📅 تاريخ التقرير: ${new Date().toLocaleString('ar-EG')}
+            `;
+            document.getElementById('fullReport').textContent = report;
+        }
+
+        // ============================================
+        // ===== ACTIONS =====
+        // ============================================
+        function showDetail(key) {
+            const item = currentData.find(d => d.key === key);
+            if (!item) { showToast('⚠️ المفتاح غير موجود'); return; }
+
+            currentDetailKey = key;
+            currentDetailValue = item.fullPreview || item.value;
+
+            document.getElementById('detailKey').textContent = key;
+            document.getElementById('detailSize').textContent = `${item.kb.toFixed(2)} ك.ب (${item.mb.toFixed(4)} م.ب)`;
+            document.getElementById('detailType').textContent = item.type;
+            document.getElementById('detailDate').textContent = new Date().toLocaleString('ar-EG');
+            document.getElementById('detailValue').textContent = item.fullPreview || item.value;
+            document.getElementById('detailModal').classList.add('active');
+        }
+
+        function closeDetail() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) closeDetail();
+        });
+
+        function copyDetail() {
+            copyKey(currentDetailKey);
+        }
+
+        function downloadDetail() {
+            const blob = new Blob([currentDetailValue], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${currentDetailKey}_${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('📥 تم التحميل');
+        }
+
+        function copyKey(key) {
+            const value = localStorage[key];
+            navigator.clipboard.writeText(value).then(() => {
+                showToast(`📋 تم نسخ: ${key}`);
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = value;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast(`📋 تم نسخ: ${key}`);
+            });
+        }
+
+        function deleteKey(key) {
+            if (!confirm(`🗑️ حذف المفتاح "${key}"؟`)) return;
+            localStorage.removeItem(key);
+            showToast(`🗑️ تم حذف: ${key}`);
+            analyzeStorage();
+        }
+
+        function clearAll() {
+            if (!confirm('⚠️ حذف جميع البيانات من localStorage؟ هذا الإجراء لا يمكن التراجع عنه!')) return;
+            localStorage.clear();
+            showToast('🗑️ تم حذف جميع البيانات');
+            analyzeStorage();
+        }
+
+        function exportAll() {
+            const data = {};
+            for (let key in localStorage) {
+                data[key] = localStorage[key];
+            }
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `storage_export_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('📥 تم تصدير البيانات');
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        for (let key in data) {
+                            localStorage.setItem(key, data[key]);
+                        }
+                        showToast(`📥 تم استيراد ${Object.keys(data).length} مفتاح`);
+                        analyzeStorage();
+                    } catch (error) {
+                        showToast('❌ ملف غير صالح');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function refreshAll() {
+            showToast('🔄 جاري التحديث...');
+            analyzeStorage();
+        }
+
+        // ============================================
+        // ===== TABS =====
+        // ============================================
+        document.querySelectorAll('.tabs button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                document.getElementById(`tab-${this.dataset.tab}`).classList.add('active');
+            });
+        });
+
+        // ============================================
+        // ===== TOAST =====
+        // ============================================
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(t._timer);
+            t._timer = setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        // ============================================
+        // ===== INIT =====
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            analyzeStorage();
+            // Auto-refresh every 30 seconds
+            setInterval(analyzeStorage, 30000);
+        });
+
+        console.log('🚀 لوحة التحكم جاهزة!');
+        console.log('📌 استخدم الأزرار لإدارة التخزين');
+    </script>
+
+</body>
+</html>
