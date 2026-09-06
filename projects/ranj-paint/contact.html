@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="تواصل مع رَنْج للدهانات والديكور. احصل على استشارة مجانية وعرض سعر لمشروعك.">
+    <meta name="keywords" content="اتصل بنا, طلب عرض سعر, دهانات, ديكور, اليمن, صنعاء">
+    <meta name="author" content="Osama Mansour Al-Muraysi">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="اتصل بنا | رَنْج - لمساتك تروي حكاية الجدران">
+    <meta property="og:description" content="تواصل معنا واحصل على استشارة مجانية">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_AR">
+    <title>اتصل بنا | رَنْج - لمساتك تروي حكاية الجدران</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+</head>
+<body>
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">ر</div>
+                <div class="logo-text">رَنْج <span>Paint</span></div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">الرئيسية</a>
+                <a href="about.html" class="nav-link">من نحن</a>
+                <a href="services.html" class="nav-link">الخدمات</a>
+                <a href="gallery.html" class="nav-link">معرض الأعمال</a>
+                <a href="contact.html" class="nav-link active">اتصل بنا</a>
+            </nav>
+
+            <div class="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== CONTACT HERO ==================== -->
+    <section class="contact-hero">
+        <div style="position: relative; z-index: 1; text-align: center; color: var(--white); padding: 120px 20px 60px;">
+            <h1 style="font-size: 3rem; margin-bottom: 15px;">اتصل <span style="color: var(--gold);">بنا</span></h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">نحن هنا لمساعدتك في تحويل مساحتك</p>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-wrapper animate-on-scroll">
+                    <h2>اطلب <span>عرض سعر</span></h2>
+                    <p>املأ النموذج التالي وسنقوم بالرد عليك في أقرب وقت</p>
+
+                    <!-- 
+                        IMPORTANT: Replace "YOUR_FORMSPREE_ID" with your actual Formspree form ID
+                        Get your form ID from: https://formspree.io/
+                        After creating an account, create a new form and copy the endpoint URL
+                        Example: action="https://formspree.io/f/xnqkvepo"
+                    -->
+                    <form class="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" enctype="multipart/form-data">
+                        <!-- Hidden field for Formspree -->
+                        <input type="text" name="_gotcha" style="display:none">
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">الاسم الكامل <span>*</span></label>
+                                <input type="text" id="name" name="name" placeholder="أدخل اسمك الكامل" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">رقم الجوال <span>*</span></label>
+                                <input type="tel" id="phone" name="phone" placeholder="مثال: 770200970" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">البريد الإلكتروني</label>
+                                <input type="email" id="email" name="email" placeholder="example@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="service">نوع الخدمة <span>*</span></label>
+                                <select id="service" name="service" required>
+                                    <option value="" disabled selected>اختر نوع الخدمة</option>
+                                    <option value="interior">دهان داخلي</option>
+                                    <option value="exterior">دهان خارجي</option>
+                                    <option value="insulation">عزل حراري</option>
+                                    <option value="gypsum">جبس ديكور</option>
+                                    <option value="combined">خدمة متكاملة</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="area">مساحة المكان (متر مربع) <span>*</span></label>
+                            <input type="number" id="area" name="area" placeholder="مثال: 150" min="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>رفع ملف (صور أو مخططات - اختياري)</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="file" name="attachment" accept="image/*,.pdf,.dwg">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>اسحب الملف هنا أو انقر للاختيار</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">رسالتك أو ملاحظات إضافية</label>
+                            <textarea id="message" name="message" placeholder="صف مشروعك أو أضف أي ملاحظات إضافية..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 16px;">
+                            <i class="fas fa-paper-plane"></i> إرسال الطلب
+                        </button>
+
+                        <p style="text-align: center; margin-top: 20px; color: var(--gray); font-size: 0.9rem;">
+                            <i class="fas fa-lock" style="color: var(--gold);"></i>
+                            بياناتك آمنة ومحمية. لن نشاركها مع أي طرف ثالث.
+                        </p>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="contact-info-wrapper">
+                    <div class="info-card animate-on-scroll">
+                        <i class="fas fa-user"></i>
+                        <div>
+                            <h4>المدير</h4>
+                            <p>أسامة منصور المريسي</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card animate-on-scroll">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>رقم الجوال</h4>
+                            <p><a href="tel:+967770200970" style="color: inherit;">+967 770 200 970</a></p>
+                        </div>
+                    </div>
+
+                    <div class="info-card animate-on-scroll">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>البريد الإلكتروني</h4>
+                            <p><a href="mailto:2025ooss@gmail.com" style="color: inherit;">2025ooss@gmail.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="info-card animate-on-scroll">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>ساعات العمل</h4>
+                            <p>السبت - الخميس: 8:00 صباحاً - 6:00 مساءً</p>
+                            <p>الجمعة: إجازة</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card animate-on-scroll">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>الموقع</h4>
+                            <p>صنعاء - اليمن</p>
+                            <p>نخدم جميع المحافظات</p>
+                        </div>
+                    </div>
+
+                    <div class="map-wrapper animate-on-scroll">
+                        <!-- Google Maps Embed - Yemen, Sana'a -->
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3865.1234567890123!2d44.191!3d15.369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDIyJzA4LjQiTiA0NMKwMTEnMjcuNiJF!5e0!3m2!1sar!2sye!4v1234567890"
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== WHATSAPP CTA ==================== -->
+    <section style="padding: 80px 0; background: var(--white); text-align: center;">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <i class="fab fa-whatsapp" style="font-size: 4rem; color: #25D366; margin-bottom: 20px;"></i>
+                <h2 style="font-size: 2rem; margin-bottom: 15px; color: var(--dark);">تواصل عبر واتساب</h2>
+                <p style="color: var(--gray); margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto;">للاستفسارات السريعة، يمكنك التواصل معنا مباشرة عبر واتساب وسنرد عليك في أقرب وقت</p>
+                <a href="https://wa.me/967770200970" target="_blank" class="btn btn-primary" style="background: #25D366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);">
+                    <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo-text" style="font-size: 1.8rem;">رَنْج <span style="color: var(--gold);">Paint</span></a>
+                    <p>نحن نؤمن بأن كل جدار يحمل حكاية، ومهمتنا هي أن نجعل هذه الحكاية جميلة ومميزة بأجود أنواع الدهانات والتشطيبات.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/967770200970" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="services.html">الخدمات</a></li>
+                        <li><a href="gallery.html">معرض الأعمال</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>خدماتنا</h3>
+                    <ul>
+                        <li><a href="services.html">دهان داخلي</a></li>
+                        <li><a href="services.html">دهان خارجي</a></li>
+                        <li><a href="services.html">عزل حراري</a></li>
+                        <li><a href="services.html">جبس ديكور</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-user"></i> أسامة منصور المريسي</li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:+967770200970" style="color: inherit;">+967 770 200 970</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:2025ooss@gmail.com" style="color: inherit;">2025ooss@gmail.com</a></li>
+                        <li><i class="fas fa-clock"></i> السبت - الخميس: 8:00 ص - 6:00 م</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>جميع الحقوق محفوظة © <span class="current-year">2026</span> رَنْج للدهانات والديكور | تصميم وتطوير <span>أسامة المريسي</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" style="position: fixed; bottom: 30px; left: 30px; width: 50px; height: 50px; background: var(--gold); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow); opacity: 0; visibility: hidden; transition: var(--transition); z-index: 999;" title="العودة للأعلى">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    <style>
+        .back-to-top.visible { opacity: 1 !important; visibility: visible !important; }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

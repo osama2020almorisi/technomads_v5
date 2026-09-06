@@ -1,0 +1,24 @@
+# robots.txt for Ranj Paint Website
+# https://ranj-paint.github.io/
+# Last updated: 2026-08-31
+
+User-agent: *
+Allow: /
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+Allow: /index.html
+Allow: /about.html
+Allow: /services.html
+Allow: /gallery.html
+Allow: /contact.html
+
+# Sitemap location
+Sitemap: https://ranj-paint.github.io/sitemap.xml
+
+# Crawl-delay for heavy bots
+Crawl-delay: 1
+
+# Disallow admin or private areas (if any)
+# Disallow: /admin/
+# Disallow: /private/
