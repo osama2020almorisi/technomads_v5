@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="معرض أعمال رَنْج - شقق، فلل، شركات. تصفح أعمالنا المتميزة في الدهانات والديكور.">
+    <meta name="keywords" content="معرض أعمال, دهانات, ديكور, شقق, فلل, شركات, اليمن">
+    <meta name="author" content="Osama Mansour Al-Muraysi">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="معرض الأعمال | رَنْج - لمساتك تروي حكاية الجدران">
+    <meta property="og:description" content="تصفح معرض أعمالنا المتميزة">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_AR">
+    <title>معرض الأعمال | رَنْج - لمساتك تروي حكاية الجدران</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+</head>
+<body>
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">ر</div>
+                <div class="logo-text">رَنْج <span>Paint</span></div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">الرئيسية</a>
+                <a href="about.html" class="nav-link">من نحن</a>
+                <a href="services.html" class="nav-link">الخدمات</a>
+                <a href="gallery.html" class="nav-link active">معرض الأعمال</a>
+                <a href="contact.html" class="nav-link">اتصل بنا</a>
+            </nav>
+
+            <div class="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== GALLERY HERO ==================== -->
+    <section class="gallery-hero">
+        <div style="position: relative; z-index: 1; text-align: center; color: var(--white); padding: 120px 20px 60px;">
+            <h1 style="font-size: 3rem; margin-bottom: 15px;">معرض <span style="color: var(--gold);">الأعمال</span></h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">لمسات إبداعية على جدران حقيقية</p>
+        </div>
+    </section>
+
+    <!-- ==================== GALLERY SECTION ==================== -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="section-title animate-on-scroll">
+                <h2>أعمالنا <span>المتميزة</span></h2>
+                <div class="line"></div>
+                <p>تصفح معرض أعمالنا حسب التصنيف</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="gallery-filter animate-on-scroll">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="apartments">شقق</button>
+                <button class="filter-btn" data-filter="villas">فلل</button>
+                <button class="filter-btn" data-filter="companies">شركات</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid">
+                <!-- Apartments (4 items) -->
+                <div class="gallery-item animate-on-scroll" data-category="apartments">
+                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=600&q=80" alt="شقة فاخرة - غرفة معيشة">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item animate-on-scroll" data-category="apartments">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="شقة عصرية - غرفة نوم">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item animate-on-scroll" data-category="apartments">
+                    <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a200?w=600&q=80" alt="شقة - مطبخ حديث">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item animate-on-scroll" data-category="apartments">
+                    <img src="https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=600&q=80" alt="شقة - صالة استقبال">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <!-- Villas (4 items) -->
+                <div class="gallery-item animate-on-scroll" data-category="villas">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" alt="فيلا - واجهة خارجية">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item animate-on-scroll" data-category="villas">
+                    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=80" alt="فيلا - غرفة نوم رئيسية">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item animate-on-scroll" data-category="villas">
+                    <img src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=600&q=80" alt="فيلا - غرفة معيشة فاخرة">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item animate-on-scroll" data-category="villas">
+                    <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600&q=80" alt="فيلا - حمام فاخر">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <!-- Companies (4 items) -->
+                <div class="gallery-item animate-on-scroll" data-category="companies">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" alt="شركة - مكتب حديث">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item animate-on-scroll" data-category="companies">
+                    <img src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=600&q=80" alt="شركة - قاعة اجتماعات">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item animate-on-scroll" data-category="companies">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="شركة - استقبال">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item animate-on-scroll" data-category="companies">
+                    <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&q=80" alt="شركة - مكتب مفتوح">
+                    <div class="gallery-item-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== LIGHTBOX ==================== -->
+    <div class="lightbox">
+        <div class="lightbox-close"><i class="fas fa-times"></i></div>
+        <div class="lightbox-nav lightbox-prev"><i class="fas fa-chevron-right"></i></div>
+        <div class="lightbox-nav lightbox-next"><i class="fas fa-chevron-left"></i></div>
+        <img src="" alt="">
+        <div class="lightbox-caption"></div>
+    </div>
+
+    <!-- ==================== CTA SECTION ==================== -->
+    <section style="padding: 100px 0; background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920') center/cover; opacity: 0.1;"></div>
+        <div class="container" style="position: relative; z-index: 1; text-align: center; color: var(--white);">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;" class="animate-on-scroll">هل أعجبتك <span style="color: var(--gold);">أعمالنا؟</span></h2>
+            <p style="font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9; max-width: 600px; margin-left: auto; margin-right: auto;" class="animate-on-scroll">دعنا نحول مساحتك إلى تحفة فنية مثل هذه الأعمال</p>
+            <div class="animate-on-scroll">
+                <a href="contact.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 16px 45px;">
+                    <i class="fas fa-paint-roller"></i> ابدأ مشروعك الآن
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo-text" style="font-size: 1.8rem;">رَنْج <span style="color: var(--gold);">Paint</span></a>
+                    <p>نحن نؤمن بأن كل جدار يحمل حكاية، ومهمتنا هي أن نجعل هذه الحكاية جميلة ومميزة بأجود أنواع الدهانات والتشطيبات.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="services.html">الخدمات</a></li>
+                        <li><a href="gallery.html">معرض الأعمال</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>خدماتنا</h3>
+                    <ul>
+                        <li><a href="services.html">دهان داخلي</a></li>
+                        <li><a href="services.html">دهان خارجي</a></li>
+                        <li><a href="services.html">عزل حراري</a></li>
+                        <li><a href="services.html">جبس ديكور</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-user"></i> أسامة منصور المريسي</li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:+967770200970" style="color: inherit;">+967 770 200 970</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:2025ooss@gmail.com" style="color: inherit;">2025ooss@gmail.com</a></li>
+                        <li><i class="fas fa-clock"></i> السبت - الخميس: 8:00 ص - 6:00 م</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>جميع الحقوق محفوظة © <span class="current-year">2026</span> رَنْج للدهانات والديكور | تصميم وتطوير <span>أسامة المريسي</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" style="position: fixed; bottom: 30px; left: 30px; width: 50px; height: 50px; background: var(--gold); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow); opacity: 0; visibility: hidden; transition: var(--transition); z-index: 999;" title="العودة للأعلى">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    <style>
+        .back-to-top.visible { opacity: 1 !important; visibility: visible !important; }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

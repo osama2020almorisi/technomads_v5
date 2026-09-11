@@ -1,0 +1,378 @@
+/* =========================================
+   Rang Website - Main Stylesheet
+   ========================================= */
+
+:root {
+    --primary-blue: #004a99;
+    --dark-blue: #0d3b66;
+    --whatsapp-green: #0b6b5c;
+    --text-red: #d32f2f;
+    --bg-gray: #f0f0f0;
+    --white: #ffffff;
+    --shadow: 0 2px 5px rgba(0,0,0,0.1);
+    --shadow-heavy: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+}
+
+body {
+    background-color: var(--bg-gray);
+    color: #333;
+    padding-bottom: 60px; /* مساحة للشريط السفلي */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================================
+   Navbar
+   ========================================= */
+.navbar {
+    background-color: var(--primary-blue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.search-container {
+    flex-grow: 1;
+    margin: 0 15px;
+    position: relative;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 8px 35px 8px 15px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-container i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 14px;
+}
+
+/* =========================================
+   Sidebar / Dropdown Menu
+   ========================================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px; /* مخفية في البداية */
+    width: 280px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+    z-index: 2000;
+    transition: right 0.3s ease-in-out;
+    overflow-y: auto;
+}
+
+.sidebar.open {
+    right: 0;
+}
+
+.sidebar-header {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    border-bottom: 1px solid #eee;
+}
+
+.sidebar-menu li a {
+    display: block;
+    padding: 12px 15px;
+    color: #333;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #f9f9f9;
+    color: var(--primary-blue);
+}
+
+.sidebar-menu li a i {
+    margin-left: 8px;
+    color: var(--primary-blue);
+    width: 20px;
+    text-align: center;
+}
+
+/* القوائم الفرعية (Dropdown) */
+.submenu {
+    list-style: none;
+    padding-right: 20px;
+    background-color: #f4f8ff;
+    display: none; /* مخفية افتراضياً */
+}
+
+.submenu li a {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 8px 15px;
+}
+
+.has-submenu > a::after {
+    content: '\f107'; /* FontAwesome arrow down */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    float: left;
+    transition: transform 0.3s;
+}
+
+.has-submenu.active > a::after {
+    transform: rotate(180deg);
+}
+
+/* =========================================
+   Main Header (Logo Banner)
+   ========================================= */
+.main-header {
+    background-color: var(--white);
+    text-align: center;
+    padding: 15px 0;
+    border-bottom: 2px solid var(--primary-blue);
+}
+
+.main-header img {
+    max-width: 90%;
+    height: auto;
+    max-height: 150px;
+}
+
+/* =========================================
+   Container & Ad Cards
+   ========================================= */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.ad-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: var(--shadow);
+    position: relative;
+}
+
+.ad-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.ad-overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    width: 100%;
+    padding: 0 10px;
+    pointer-events: none;
+}
+
+.ad-overlay-text h2 {
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.ad-overlay-text h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.ad-overlay-text .phone {
+    font-size: 32px;
+    font-weight: 900;
+    direction: ltr;
+    display: inline-block;
+    pointer-events: auto;
+}
+
+/* Sub Header (Featured Posts) */
+.sub-header {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 10px 15px;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sub-header .share-icon {
+    cursor: pointer;
+}
+
+/* Ad Footer Text */
+.ad-footer-text {
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--text-red);
+    background-color: var(--white);
+    line-height: 1.6;
+}
+
+/* =========================================
+   Floating Buttons (WhatsApp & Call)
+   ========================================= */
+.floating-buttons {
+    position: absolute;
+    bottom: 20px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: var(--shadow-heavy);
+    transition: transform 0.2s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn i {
+    margin-left: 8px;
+    font-size: 20px;
+}
+
+.btn-whatsapp {
+    background-color: var(--whatsapp-green);
+}
+
+.btn-call {
+    background-color: var(--dark-blue);
+}
+
+/* =========================================
+   Bottom Bar (Fixed Footer)
+   ========================================= */
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--white);
+    text-align: center;
+    font-weight: bold;
+    color: var(--text-red);
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.bottom-bar .refresh-btn {
+    background-color: var(--text-red);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.2s;
+}
+
+.bottom-bar .refresh-btn:hover {
+    background-color: #b71c1c;
+}
+
+/* =========================================
+   Overlay for Sidebar
+   ========================================= */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1500;
+    display: none;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* =========================================
+   Media Queries (Responsive)
+   ========================================= */
+@media (max-width: 480px) {
+    .ad-overlay-text h2 { font-size: 22px; }
+    .ad-overlay-text h3 { font-size: 18px; }
+    .ad-overlay-text .phone { font-size: 26px; }
+    .btn { padding: 8px 15px; font-size: 14px; }
+    .btn i { font-size: 18px; margin-left: 5px; }
+}

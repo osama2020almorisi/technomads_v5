@@ -1,0 +1,156 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+
+:root{--primary-blue:#004a99;--dark-blue:#0d3b66;--whatsapp-green:#0b6b5c;--text-red:#d32f2f;--bg-gray:#f0f0f0;--white:#fff;--text:#333;--shadow:0 2px 5px rgba(0,0,0,.1);--shadow-heavy:0 4px 10px rgba(0,0,0,.25)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg-gray);color:var(--text);padding-bottom:62px}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit}
+
+/* top contact strip */
+.contact-strip{background:#063b72;color:#fff;padding:6px 15px;font-size:12px}
+.contact-inner{max-width:980px;margin:auto;display:flex;justify-content:center;gap:22px;flex-wrap:wrap}
+.contact-inner a{opacity:.96}
+.contact-inner i{margin-left:5px}
+
+/* navigation */
+.navbar{background:var(--primary-blue);display:flex;align-items:center;gap:8px;padding:10px 15px;color:#fff;position:sticky;top:0;z-index:1000;box-shadow:0 2px 7px rgba(0,0,0,.25)}
+.menu-icon,.nav-action{font-size:22px;cursor:pointer;padding:6px;flex:0 0 auto}
+.search-container{flex:1;max-width:650px;margin:auto;position:relative}
+.search-container input{width:100%;padding:9px 38px 9px 42px;border-radius:22px;border:0;outline:0;font-size:14px;background:#fff;color:#333}
+.search-container i{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:#666}
+.nav-action{color:#fff;border:0;background:none}
+
+/* sidebar */
+.sidebar{position:fixed;top:0;right:-330px;width:310px;max-width:88%;height:100%;background:#fff;box-shadow:-3px 0 15px rgba(0,0,0,.25);z-index:2000;transition:right .28s ease;overflow-y:auto}
+.sidebar.open{right:0}
+.sidebar-header{background:var(--primary-blue);color:#fff;padding:15px;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:18px;position:sticky;top:0;z-index:2}
+.close-btn{font-size:28px;cursor:pointer;line-height:1}
+.sidebar-menu{list-style:none}
+.sidebar-menu>li{border-bottom:1px solid #eee}
+.sidebar-menu a{display:block;padding:11px 15px;font-weight:700}
+.sidebar-menu a:hover{background:#f3f7fc;color:var(--primary-blue)}
+.sidebar-menu i{width:24px;text-align:center;color:var(--primary-blue);margin-left:7px}
+.submenu{list-style:none;display:none;background:#f2f7fd;border-top:1px solid #e5edf7}
+.has-submenu.active>.submenu{display:block}
+.submenu a{padding:8px 22px 8px 12px;font-size:13px;font-weight:500}
+.has-submenu>a:after{content:'\f107';font-family:'Font Awesome 6 Free';font-weight:900;float:left;transition:.2s}
+.has-submenu.active>a:after{transform:rotate(180deg)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1500;display:none}
+.overlay.active{display:block}
+
+/* header */
+.main-header{background:#fff;text-align:center;padding:16px 10px;border-bottom:2px solid var(--primary-blue)}
+.logo{max-width:580px;width:92%;height:110px;display:inline-flex;align-items:center;justify-content:center;margin:auto;border-radius:8px;background:linear-gradient(135deg,#fff,#eef5fb);color:var(--primary-blue);font-size:42px;font-weight:900;letter-spacing:.5px}
+.logo small{display:block;font-size:15px;color:var(--dark-blue);font-weight:700;margin-top:2px}
+
+/* content */
+.container{max-width:600px;margin:auto;padding:10px}
+.section-intro{background:#fff;padding:14px;margin:0 0 12px;border-radius:8px;box-shadow:var(--shadow);text-align:center}
+.section-intro h1{color:var(--primary-blue);font-size:22px;margin-bottom:4px}
+.section-intro p{font-size:13px;line-height:1.8;color:#666}
+.ad-card{background:#fff;border-radius:8px;overflow:hidden;margin-bottom:15px;box-shadow:var(--shadow);position:relative}
+.ad-image{width:100%;height:250px;object-fit:cover;display:block;background:#dbe6ef}
+.ad-image.hero-placeholder{background:linear-gradient(135deg,#0d3b66,#004a99 45%,#1b7bbf);position:relative}
+.ad-image.hero-placeholder:after{content:'رَنْج • دهانات وديكور ومقاولات';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:900;text-align:center}
+.ad-overlay-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:#fff;text-shadow:2px 2px 5px rgba(0,0,0,.85);width:100%;padding:0 10px;pointer-events:none}
+.ad-overlay-text h2{font-size:28px;font-weight:900}
+.ad-overlay-text h3{font-size:21px;font-weight:700;margin:2px 0 8px}
+.phone{font-size:31px;font-weight:900;direction:ltr;display:inline-block}
+.sub-header{background:var(--primary-blue);color:#fff;padding:10px 15px;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:space-between}
+.sub-header.dark{background:#333;font-size:16px}
+.share-icon{cursor:pointer}
+.ad-footer-text{padding:10px;text-align:center;font-weight:700;font-size:15px;color:var(--text-red);line-height:1.7}
+.floating-buttons{position:absolute;bottom:15px;right:15px;display:flex;flex-direction:column;gap:9px;z-index:10}
+.btn{display:flex;align-items:center;justify-content:center;padding:9px 17px;border-radius:30px;color:#fff;font-weight:800;font-size:14px;box-shadow:var(--shadow-heavy);transition:.2s}
+.btn:hover{transform:scale(1.04)}
+.btn i{margin-left:7px;font-size:18px}.btn-whatsapp{background:var(--whatsapp-green)}.btn-call{background:var(--dark-blue)}
+
+/* service grids */
+.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:10px}
+.service-item{background:#fff;border-radius:8px;padding:13px 9px;text-align:center;box-shadow:var(--shadow);font-weight:700;font-size:14px}
+.service-item i{display:block;color:var(--primary-blue);font-size:24px;margin-bottom:5px}
+.page-card{background:#fff;border-radius:8px;box-shadow:var(--shadow);padding:17px;margin-bottom:12px;line-height:1.9}
+.page-card h2{color:var(--primary-blue);font-size:21px;margin-bottom:7px}.page-card h3{font-size:16px;margin:12px 0 5px;color:#333}
+.city-list,.article-list{list-style:none}.city-list li,.article-list li{border-bottom:1px solid #eee;padding:9px}.city-list a,.article-list a{color:var(--primary-blue);font-weight:700}
+
+/* footer */
+.site-footer{background:#073a6d;color:#fff;text-align:center;padding:22px 12px;margin-top:20px}
+.site-footer h3{font-size:19px}.site-footer p{font-size:13px;line-height:1.9;color:#e8f0f8}
+.footer-links{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin:10px 0}.footer-links a{font-size:13px}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;box-shadow:0 -2px 7px rgba(0,0,0,.14);z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:8px 15px;color:var(--text-red);font-weight:800;font-size:12px}
+.refresh-btn{background:var(--text-red);color:#fff;border:0;padding:7px 12px;border-radius:6px;cursor:pointer}
+
+/* search results */
+.search-results{position:absolute;top:48px;left:0;right:0;background:#fff;border-radius:8px;box-shadow:0 5px 18px rgba(0,0,0,.2);display:none;z-index:1200;max-height:320px;overflow:auto}
+.search-results.show{display:block}.search-results a{display:block;padding:10px;border-bottom:1px solid #eee;color:#333}.search-results a:hover{background:#f4f8ff;color:var(--primary-blue)}
+
+@media(max-width:480px){
+.contact-inner{gap:8px;font-size:10px}.navbar{padding:8px 9px}.logo{height:90px;font-size:33px}.logo small{font-size:11px}
+.container{padding:8px}.ad-image{height:230px}.ad-overlay-text h2{font-size:22px}.ad-overlay-text h3{font-size:17px}.phone{font-size:25px}
+.btn{padding:7px 12px;font-size:12px}.btn i{font-size:16px}.floating-buttons{right:10px;bottom:10px}.sub-header{font-size:16px}
+}
+
+
+/* أزرار التواصل الثابتة خارج البطاقات */
+.floating-contact {
+    position: fixed;
+    left: 15px;
+    bottom: 90px;
+    z-index: 9999;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.floating-contact a {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+    text-decoration: none;
+    font-size: 23px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.floating-contact a:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .3);
+}
+
+.floating-whatsapp {
+    background: #0b6b5c;
+}
+
+.floating-call {
+    background: #004a99;
+}
+
+/* الجوال */
+@media (max-width: 480px) {
+    .floating-contact {
+        left: 12px;
+        bottom: 78px;
+        gap: 8px;
+    }
+
+    .floating-contact a {
+        width: 48px;
+        height: 48px;
+        font-size: 21px;
+    }
+}
+
+
+.contact-strip {
+    display: none;
+}

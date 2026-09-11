@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدماتنا - رَنْج للدهانات والديكور</title>
+    <meta name="description" content="جميع خدمات رَنْج للدهانات والديكور والمقاولات: دهانات، ترميم، عوازل، شبوك، مظلات، هناجر، تنسيق حدائق.">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #2C2C2C 0%, #1a1a1a 100%);
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 40px;
+            color: #D4AF37;
+            margin-bottom: 10px;
+        }
+        .page-header p {
+            font-size: 18px;
+            color: #ccc;
+        }
+        .services-full {
+            padding: 70px 0;
+            background-color: #fff;
+        }
+        .services-grid-full {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .service-full-card {
+            background-color: #F5F0E8;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .service-full-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .service-full-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .service-full-content {
+            padding: 25px;
+        }
+        .service-full-content h2 {
+            color: #2C2C2C;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .service-full-content p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .service-full-content ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .service-full-content ul li {
+            padding: 6px 0;
+            color: #555;
+            border-bottom: 1px solid #eee;
+        }
+        .service-full-content ul li::before {
+            content: "✅ ";
+            color: #D4AF37;
+        }
+        .service-full-content .btn-primary {
+            display: inline-block;
+            padding: 10px 25px;
+        }
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 28px;
+            }
+            .services-grid-full {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-flex">
+            <div class="logo">
+                <h1>رَنْج</h1>
+                <span>لمساتك تروي حكاية الجدران</span>
+            </div>
+            <nav>
+                <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li class="dropdown">
+                        <a href="services.html" class="active">الخدمات ▾</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="painting.html">دهانات وديكورات</a></li>
+                            <li><a href="renovation.html">ترميم مباني</a></li>
+                            <li><a href="insulation.html">عوازل مائية وحرارية</a></li>
+                            <li><a href="shades.html">مظلات وسواتر وهناجر</a></li>
+                            <li><a href="fencing.html">شبوك ومزارع</a></li>
+                            <li><a href="gardening.html">تنسيق حدائق</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">خدمات المدن ▾</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="services-sanaa.html">صنعاء</a></li>
+                            <li><a href="services-aden.html">عدن</a></li>
+                            <li><a href="services-taiz.html">تعز</a></li>
+                            <li><a href="services-hodeidah.html">الحديدة</a></li>
+                            <li><a href="services-ibb.html">إب</a></li>
+                            <li><a href="services-dhamar.html">ذمار</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="gallery.html">معرض الأعمال</a></li>
+                    <li><a href="blog.html">المدونة</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                </ul>
+            </nav>
+            <div class="header-phone">
+                <a href="tel:967770200970" class="phone-btn">📞 اتصل الآن</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>خدماتنا</h1>
+            <p>نقدم لك حلولاً متكاملة في عالم الدهانات والديكور والمقاولات بجودة احترافية</p>
+        </div>
+    </section>
+
+    <section class="services-full">
+        <div class="container">
+            <div class="services-grid-full">
+                <div class="service-full-card">
+                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop" alt="دهانات وديكورات">
+                    <div class="service-full-content">
+                        <h2>دهانات وديكورات</h2>
+                        <p>نقدم أفضل خدمات الدهانات والديكور للمنازل والفلل والشركات.</p>
+                        <ul>
+                            <li>دهانات داخلية وخارجية</li>
+                            <li>دهانات إيبوكسي للأرضيات</li>
+                            <li>ديكورات فوم وجبس</li>
+                            <li>خلفيات شاشات مودرن</li>
+                        </ul>
+                        <a href="painting.html" class="btn-primary">تفاصيل الخدمة</a>
+                    </div>
+                </div>
+                <div class="service-full-card">
+                    <img src="https://images.unsplash.com/photo-1581092335871-4b0f6f3c6c8f?w=600&h=400&fit=crop" alt="ترميم مباني">
+                    <div class="service-full-content">
+                        <h2>ترميم مباني</h2>
+                        <p>خدمات ترميم وتشطيب احترافية للمباني السكنية والتجارية.</p>
+                        <ul>
+                            <li>ترميم شقق، فلل، عمائر</li>
+                            <li>ترميم ملاحق وحمامات</li>
+                            <li>تشطيبات داخلية وخارجية</li>
+                            <li>هدم وإعادة بناء</li>
+                        </ul>
+                        <a href="renovation.html" class="btn-primary">تفاصيل الخدمة</a>
+                    </div>
+                </div>
+                <div class="service-full-card">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee2e5e9f4c8b?w=600&h=400&fit=crop" alt="عوازل">
+                    <div class="service-full-content">
+                        <h2>عوازل مائية وحرارية</h2>
+                        <p>حماية مبناك من التسربات والحرارة بأفضل المواد.</p>
+                        <ul>
+                            <li>عزل أسطح وخزانات ومسابح</li>
+                            <li>عوازل للحمامات والمطابخ</li>
+                            <li>عوازل حرارية للأسطح</li>
+                            <li>ضمان جودة وخدمة احترافية</li>
+                        </ul>
+                        <a href="insulation.html" class="btn-primary">تفاصيل الخدمة</a>
+                    </div>
+                </div>
+                <div class="service-full-card">
+                    <img src="https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=600&h=400&fit=crop" alt="مظلات">
+                    <div class="service-full-content">
+                        <h2>مظلات وسواتر وهناجر</h2>
+                        <p>تصميم وتركيب جميع أنواع المظلات والسواتر والهناجر.</p>
+                        <ul>
+                            <li>مظلات سيارات، حدائق، مدارس</li>
+                            <li>سواتر حديد، قماش، خشب</li>
+                            <li>هناجر مستودعات ساندوتش بانل</li>
+                            <li>برجولات وجلسات خارجية</li>
+                        </ul>
+                        <a href="shades.html" class="btn-primary">تفاصيل الخدمة</a>
+                    </div>
+                </div>
+                <div class="service-full-card">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&h=400&fit=crop" alt="شبوك">
+                    <div class="service-full-content">
+                        <h2>شبوك ومزارع</h2>
+                        <p>تركيب شبوك احترافية للمزارع والملاعب والحدائق.</p>
+                        <ul>
+                            <li>شبوك حديد، قماش، أسلاك</li>
+                            <li>شبوك مزارع وملاعب</li>
+                            <li>بوابات حديدية</li>
+                            <li>جميع مناطق اليمن</li>
+                        </ul>
+                        <a href="fencing.html" class="btn-primary">تفاصيل الخدمة</a>
+                    </div>
+                </div>
+                <div class="service-full-card">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee2e5e9f4c8b?w=600&h=400&fit=crop" alt="حدائق">
+                    <div class="service-full-content">
+                        <h2>تنسيق حدائق</h2>
+                        <p>تصميم وتنفيذ حدائق منزلية فاخرة.</p>
+                        <ul>
+                            <li>تصميم حدائق منزلية وممرات</li>
+                            <li>جلسات شتوية وبرجولات</li>
+                            <li>زراعة وإضاءة حدائق</li>
+                            <li>لمسات جمالية راقية</li>
+                        </ul>
+                        <a href="gardening.html" class="btn-primary">تفاصيل الخدمة</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-flex">
+            <div class="footer-info">
+                <h3>رَنْج للدهانات والديكور والمقاولات</h3>
+                <p>أسامة المريسي</p>
+                <p>📞 <a href="tel:967770200970">770 200 970</a></p>
+                <p>✉️ <a href="mailto:2025ooss@gmail.com">2025ooss@gmail.com</a></p>
+                <p>📍 اليمن - صنعاء (وجميع المناطق)</p>
+            </div>
+            <div class="footer-links">
+                <h4>روابط سريعة</h4>
+                <ul>
+                    <li><a href="services.html">الخدمات</a></li>
+                    <li><a href="gallery.html">معرض الأعمال</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                    <li><a href="privacy-policy.html">سياسة الخصوصية</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>تابعنا</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="فيسبوك">📘</a>
+                    <a href="#" aria-label="إنستغرام">📸</a>
+                    <a href="#" aria-label="تويتر">🐦</a>
+                    <a href="https://wa.me/967770200970" aria-label="واتساب">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 رَنْج - جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/967770200970" class="whatsapp-float" target="_blank" aria-label="تواصل عبر واتساب">
+        💬
+    </a>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
