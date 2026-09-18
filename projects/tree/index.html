@@ -3,107 +3,267 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#05070d">
+<meta name="theme-color" content="#0b1220">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>🌳 شجرة العائلة</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>🌳 شجرة العائلة Pro</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
 <style>
   :root{
-    --bg-0:#05070d;
-    --bg-1:#0a0f1c;
-    --bg-2:#0f1628;
-    --bg-3:#16213a;
-    --line:#1e2a44;
-    --txt:#e6edf7;
-    --txt-dim:#8b9bb4;
-    --accent:#3b82f6;
-    --glow:#60a5fa;
-    --danger:#ef4444;
-    --safe-top: env(safe-area-inset-top, 0px);
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --bg:#f3f6fb; --surface:#ffffff; --surface2:#edf2f7; --surface3:#e2e8f0;
+    --text:#152033; --text-strong:#0b1220; --muted:#64748b;
+    --line:#d6dfeb; --line-strong:#b8c4d4;
+    --primary:#0f766e; --primary-dark:#0d5e57; --primary-light:#14b8a6;
+    --danger:#dc2626; --warn:#f59e0b; --success:#16a34a;
+    --safe-top:env(safe-area-inset-top,0px);
+    --safe-bottom:env(safe-area-inset-bottom,0px);
+    --nav:rgba(255,255,255,.96);
+  }
+  html.dark{
+    --bg:#090f1b; --surface:#101a2b; --surface2:#172337; --surface3:#1e2d44;
+    --text:#edf4ff; --text-strong:#ffffff; --muted:#9ba9bc;
+    --line:#293950; --line-strong:#3d5273;
+    --primary:#14b8a6; --primary-dark:#0f766e; --primary-light:#2dd4bf;
+    --nav:rgba(16,26,43,.97);
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   html,body{
-    height:100%;overflow:hidden;background:var(--bg-0);color:var(--txt);
-    font-family:'Segoe UI',Tahoma,system-ui,-apple-system,sans-serif;
-    overscroll-behavior:none;
+    height:100%;overflow:hidden;background:var(--bg);color:var(--text);
+    font-family:Cairo,'Segoe UI',Tahoma,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;overscroll-behavior:none;
     -webkit-user-select:none;user-select:none;
   }
   #app{position:fixed;inset:0;display:flex;flex-direction:column}
 
-  /* شريط علوي */
+  /* ============ شريط علوي ============ */
   .topbar{
-    position:relative;z-index:20;
-    display:flex;align-items:center;gap:6px;
-    padding:calc(8px + var(--safe-top)) 10px 8px;
-    background:linear-gradient(180deg,rgba(10,15,28,.98),rgba(10,15,28,.75));
-    border-bottom:1px solid var(--line);
+    position:relative;z-index:50;
+    display:flex;align-items:center;gap:8px;
+    padding:calc(10px + var(--safe-top)) 12px 10px;
+    background:var(--nav);border-bottom:1px solid var(--line);
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    flex-shrink:0;
   }
+  .brand{font-size:15px;font-weight:900;color:var(--text-strong);display:flex;align-items:center;gap:5px;flex-shrink:0}
+  .brand span{font-size:9px;background:linear-gradient(135deg,var(--primary),var(--primary-light));
+    color:#fff;border-radius:6px;padding:2px 5px;font-weight:900}
+  .top-actions{margin-inline-start:auto;display:flex;gap:6px;flex-shrink:0}
   .icon-btn{
-    width:40px;height:40px;flex:0 0 auto;
-    display:grid;place-items:center;
-    border-radius:11px;border:1px solid var(--line);
-    background:var(--bg-2);color:var(--txt);
-    cursor:pointer;transition:.18s;font-size:17px;font-family:inherit;
+    width:42px;height:42px;border:1px solid var(--line);border-radius:12px;
+    background:var(--surface);color:var(--text);font-size:18px;
+    display:inline-flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:transform .12s ease, background .12s ease;font-family:inherit;
   }
-  .icon-btn:active{transform:scale(.92);background:var(--bg-3)}
-  .icon-btn.primary{background:linear-gradient(135deg,#0ea5e9,#2563eb);border-color:transparent;color:#fff}
-  .icon-btn.active{border-color:var(--accent);color:var(--glow);box-shadow:0 0 0 2px rgba(59,130,246,.2)}
+  .icon-btn:active{transform:scale(.9);background:var(--surface2)}
+  .icon-btn.primary-icon{
+    background:linear-gradient(135deg,var(--primary),var(--primary-light));
+    border-color:var(--primary);color:#fff;
+  }
 
-  .search-box{
-    flex:1;position:relative;display:flex;align-items:center;
-    background:var(--bg-2);border:1px solid var(--line);
-    border-radius:11px;padding:0 10px;height:40px;transition:.2s;min-width:0;
+  /* بحث */
+  .search-wrap{
+    flex:1;display:flex;align-items:center;gap:4px;
+    background:var(--surface2);border:1px solid var(--line);
+    border-radius:12px;padding:0 8px;min-width:0;height:42px;
   }
-  .search-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
-  .search-box input{
-    flex:1;background:transparent;border:0;outline:0;color:var(--txt);
-    font-size:14px;padding:0 6px;min-width:0;font-family:inherit;
+  .search-wrap:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(15,118,110,.12)}
+  .search-wrap input{
+    flex:1;border:0;outline:0;background:transparent;color:var(--text);
+    padding:8px 4px;font-size:13px;min-width:0;font-family:inherit;
+    -webkit-user-select:text;user-select:text;
   }
-  .search-box input::placeholder{color:var(--txt-dim)}
-  .search-box .s-icon{color:var(--txt-dim);font-size:14px;flex:0 0 auto}
-  .search-box .clear-btn{display:none;cursor:pointer;color:var(--txt-dim);font-size:14px;padding:4px}
-  .search-box.has-value .clear-btn{display:block}
+  .search-wrap input::placeholder{color:var(--muted);opacity:.7}
+  .search-wrap .s-icon{color:var(--muted);font-size:14px}
+  .search-wrap .clear-btn{display:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px;background:none;border:0;font-family:inherit}
+  .search-wrap.has-value .clear-btn{display:block}
 
-  /* إحصائيات */
-  .stats{
-    position:absolute;top:calc(62px + var(--safe-top));left:10px;right:10px;
-    z-index:15;display:flex;gap:6px;justify-content:flex-end;pointer-events:none;
+  /* ============ شريط الإحصائيات (ثابت في مكانه) ============ */
+  .stats-bar{
+    position:absolute;
+    top:calc(66px + var(--safe-top));
+    left:12px;right:12px;
+    z-index:20;
+    display:flex;
+    gap:6px;
+    justify-content:flex-end;
+    pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  .stats-bar.hidden{
+    opacity:0;
+    transform:translateY(-8px);
+    pointer-events:none;
   }
   .stat-card{
     pointer-events:auto;
-    min-width:64px;padding:6px 10px;border-radius:12px;
-    background:rgba(15,22,40,.85);border:1px solid var(--line);
-    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    min-width:58px;
+    padding:5px 8px;
+    border-radius:10px;
+    background:var(--surface);
+    border:1px solid var(--line);
     text-align:center;
+    box-shadow:0 2px 8px rgba(15,23,42,.05);
   }
-  .stat-card .num{font-size:17px;font-weight:800;color:var(--glow);line-height:1}
-  .stat-card .lbl{font-size:10px;color:var(--txt-dim);margin-top:2px}
+  .stat-card .num{font-size:15px;font-weight:900;color:var(--primary);line-height:1}
+  .stat-card .lbl{font-size:9px;color:var(--muted);margin-top:1px;font-weight:700}
 
-  /* أدوات تحكم */
+  /* ============ شريط التركيز (نفس مكان الإحصائيات تماماً) ============ */
+  .focus-banner{
+    position:absolute;
+    top:calc(66px + var(--safe-top));
+    left:12px;right:12px;
+    z-index:25;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:8px 12px;
+    background:linear-gradient(135deg,#f59e0b,#ea580c);
+    color:#fff;
+    border-radius:14px;
+    box-shadow:0 12px 32px rgba(245,158,11,.45);
+    animation:focusSlide .32s cubic-bezier(.2,.9,.3,1);
+    pointer-events:auto;
+  }
+  .focus-banner.hidden{display:none!important}
+  @keyframes focusSlide{
+    from{opacity:0;transform:translateY(-12px) scale(.96)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+  }
+
+  .focus-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+    flex:1;
+  }
+  .focus-icon{font-size:22px;flex-shrink:0}
+  .focus-text{min-width:0}
+  .focus-text b{
+    display:block;
+    font-size:14px;
+    font-weight:900;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .focus-text small{
+    display:block;
+    font-size:10px;
+    opacity:.95;
+    font-weight:700;
+    margin-top:2px;
+  }
+
+  /* إحصائيات داخل شريط التركيز */
+  .focus-stats{
+    display:flex;
+    gap:4px;
+    flex-shrink:0;
+    align-items:center;
+  }
+  .focus-stat{
+    background:rgba(255,255,255,.22);
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:9px;
+    padding:4px 8px;
+    text-align:center;
+    min-width:44px;
+  }
+  .focus-stat .num{
+    font-size:14px;
+    font-weight:900;
+    line-height:1;
+    color:#fff;
+  }
+  .focus-stat .lbl{
+    font-size:8px;
+    opacity:.95;
+    font-weight:700;
+    margin-top:2px;
+    color:#fff;
+  }
+
+  .focus-exit{
+    padding:8px 10px;
+    border:1px solid rgba(255,255,255,.5);
+    border-radius:10px;
+    background:rgba(255,255,255,.2);
+    color:#fff;
+    font-weight:800;
+    font-size:11px;
+    cursor:pointer;
+    font-family:inherit;
+    flex-shrink:0;
+    transition:.15s;
+  }
+  .focus-exit:active{transform:scale(.94);background:rgba(255,255,255,.35)}
+
+  /* ============ SVG ============ */
+  .tree-container{
+    flex:1;position:relative;overflow:hidden;
+    background:radial-gradient(ellipse at center, var(--surface) 0%, var(--bg) 100%);
+  }
+  #svg{
+    display:block;width:100%;height:100%;
+    cursor:grab;touch-action:none;
+    shape-rendering:geometricPrecision;text-rendering:geometricPrecision;
+  }
+  #svg.grabbing{cursor:grabbing}
+
+  #viewport{
+    transform-origin:0 0;
+    will-change:transform;
+    transform:translate3d(0,0,0);
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+
+  .node{cursor:pointer}
+  .node-card{
+    fill:var(--surface);stroke:var(--line);stroke-width:1.6;
+    transition:stroke .12s ease,stroke-width .12s ease;
+    shape-rendering:geometricPrecision;
+  }
+  .node-card:hover{stroke:var(--primary);stroke-width:2.2}
+  .node-card.selected{stroke:var(--warn);stroke-width:4}
+  .node-card.focus-node{stroke:var(--warn);stroke-width:5;filter:url(#focusGlow)}
+  .node-card.root-node{stroke:var(--primary);stroke-width:3}
+  .node-card.search-match{stroke:var(--success);stroke-width:3}
+  .node text{
+    pointer-events:none;user-select:none;
+    text-rendering:geometricPrecision;shape-rendering:geometricPrecision;
+    font-family:Cairo,'Segoe UI',Tahoma,sans-serif;
+  }
+  .node-name{font-weight:900;font-size:13px;fill:var(--text-strong);text-anchor:middle}
+  .node-meta{font-size:10px;fill:var(--muted);font-weight:700;text-anchor:middle}
+  .node-gender{fill:#fff;font-family:Arial;font-size:12px;font-weight:900;text-anchor:middle}
+  .link{fill:none;stroke-linecap:round;shape-rendering:geometricPrecision}
+
+  /* ============ أدوات تحكم ============ */
   .fab-stack{
     position:absolute;bottom:calc(16px + var(--safe-bottom));left:12px;
-    z-index:15;display:flex;flex-direction:column;gap:8px;
+    z-index:40;display:flex;flex-direction:column;gap:8px;
   }
+  .fab-stack.right{left:auto;right:12px}
   .fab{
-    width:44px;height:44px;border-radius:13px;
-    background:rgba(15,22,40,.92);border:1px solid var(--line);
-    color:var(--txt);font-size:19px;cursor:pointer;
-    display:grid;place-items:center;transition:.18s;font-family:inherit;
-    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    width:46px;height:46px;border-radius:14px;
+    background:var(--surface);border:1px solid var(--line);
+    color:var(--text);font-size:20px;cursor:pointer;
+    display:grid;place-items:center;transition:transform .12s ease,background .12s ease;
+    font-family:inherit;box-shadow:0 4px 12px rgba(15,23,42,.08);
   }
-  .fab:active{transform:scale(.9);background:var(--accent);color:#fff}
-  .fab.zoom-label{font-size:12px;font-weight:800}
+  .fab:active{transform:scale(.88);background:var(--surface2)}
+  .fab.zoom-label{font-size:12px;font-weight:900}
 
-  /* لوحة تفاصيل */
+  /* ============ لوحة تفاصيل ============ */
   .info-panel{
     position:absolute;top:0;right:0;bottom:0;width:320px;max-width:88vw;
-    background:linear-gradient(180deg,rgba(10,15,28,.99),rgba(15,22,40,.99));
-    border-right:1px solid var(--line);
+    background:var(--surface);border-right:1px solid var(--line);
     transform:translateX(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);
-    z-index:30;display:flex;flex-direction:column;
-    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-    box-shadow:-10px 0 30px rgba(0,0,0,.5);
+    z-index:70;display:flex;flex-direction:column;
+    box-shadow:-10px 0 30px rgba(0,0,0,.15);
   }
   .info-panel.open{transform:translateX(0)}
   .info-head{
@@ -114,140 +274,196 @@
   .avatar{
     width:52px;height:52px;border-radius:50%;
     background:linear-gradient(135deg,#3b82f6,#8b5cf6);
-    display:grid;place-items:center;font-size:22px;color:#fff;font-weight:800;
+    display:grid;place-items:center;font-size:22px;color:#fff;font-weight:900;
     border:2px solid rgba(255,255,255,.2);flex:0 0 auto;
-    box-shadow:0 4px 14px rgba(59,130,246,.3);
   }
-  .info-head .name{font-size:17px;font-weight:800;line-height:1.2}
-  .info-head .sub{font-size:11px;color:var(--txt-dim);margin-top:3px}
+  .info-head .name{font-size:17px;font-weight:900;line-height:1.2}
+  .info-head .sub{font-size:11px;color:var(--muted);margin-top:3px;font-weight:700}
   .info-body{padding:14px 16px;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}
   .info-row{
     display:flex;justify-content:space-between;align-items:center;
     padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px;gap:10px;
   }
-  .info-row .k{color:var(--txt-dim);flex:0 0 auto}
-  .info-row .v{font-weight:600;text-align:left;word-break:break-word}
-  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
-  .badge.male{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
-  .badge.female{background:rgba(236,72,153,.15);color:#f472b6;border:1px solid rgba(236,72,153,.3)}
-  .badge.unknown{background:rgba(139,155,180,.15);color:#8b9bb4;border:1px solid rgba(139,155,180,.3)}
+  .info-row .k{color:var(--muted);flex:0 0 auto;font-weight:700}
+  .info-row .v{font-weight:800;text-align:left;word-break:break-word}
+  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:800}
+  .badge.male{background:rgba(37,99,235,.15);color:#2563eb}
+  .badge.female{background:rgba(219,39,119,.15);color:#db2777}
+  .badge.unknown{background:rgba(100,116,139,.15);color:#64748b}
   .action-btn{
     width:100%;margin-top:12px;padding:12px;border-radius:12px;
-    background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;
-    border:0;font-size:14px;font-weight:700;cursor:pointer;transition:.18s;
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    color:#fff;border:0;font-size:14px;font-weight:800;cursor:pointer;
     font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;
+    transition:transform .12s ease;
   }
   .action-btn:active{transform:scale(.97)}
   .action-btn.exit{background:linear-gradient(135deg,#ef4444,#b91c1c)}
   .action-btn.secondary{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
-  .action-btn.ghost{background:var(--bg-2);border:1px solid var(--line);color:var(--txt)}
+  .action-btn.ghost{background:var(--surface2);border:1px solid var(--line);color:var(--text)}
   .close-panel{
     position:absolute;top:calc(12px + var(--safe-top));left:12px;
     width:34px;height:34px;border-radius:50%;
-    background:rgba(255,255,255,.08);border:0;color:var(--txt);cursor:pointer;
+    background:var(--surface2);border:0;color:var(--text);cursor:pointer;
     display:grid;place-items:center;font-size:15px;font-family:inherit;
   }
 
-  /* SVG */
-  #svg{
-    flex:1;width:100%;display:block;cursor:grab;touch-action:none;
-    background:radial-gradient(ellipse at center bottom, #0c1428 0%, #05070d 70%);
-  }
-  #svg.grabbing{cursor:grabbing}
-
-  .node{cursor:pointer}
-  .node rect{transition:filter .2s,stroke .2s,stroke-width .2s}
-  .node text{pointer-events:none;user-select:none;font-family:'Segoe UI',Tahoma,sans-serif}
-  .node .n-name{font-weight:700;font-size:12px;fill:#fff}
-  .node .n-id{font-size:10px;fill:#b8c5d8;font-weight:600}
-  .node.focused rect{
-    stroke:#fbbf24 !important;stroke-width:3.5 !important;filter:url(#focusGlow);
-  }
-  .node.dimmed{opacity:.06;pointer-events:none;transition:opacity .3s}
-  .node.search-hit rect{stroke:#fbbf24 !important;stroke-width:3 !important}
-  .link{fill:none;stroke-linecap:round;transition:opacity .3s}
-  .link.dimmed{opacity:.03}
-
-  /* Loader */
+  /* ============ Loader ============ */
   #loader{
-    position:fixed;inset:0;background:var(--bg-0);z-index:100;
+    position:fixed;inset:0;background:var(--bg);z-index:100;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
     transition:opacity .4s;
   }
   #loader.hide{opacity:0;pointer-events:none}
   .spinner{
     width:52px;height:52px;border-radius:50%;
-    border:4px solid rgba(59,130,246,.15);
-    border-top-color:var(--accent);animation:spin 1s linear infinite;
+    border:4px solid rgba(15,118,110,.15);border-top-color:var(--primary);
+    animation:spin 1s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg)}}
-  #loader p{color:var(--txt-dim);font-size:13px;text-align:center;padding:0 20px;line-height:1.6}
+  #loader p{color:var(--muted);font-size:13px;text-align:center;padding:0 20px;line-height:1.6;font-weight:700}
 
-  /* Toast */
+  /* ============ Toast ============ */
   #toast{
     position:fixed;bottom:calc(80px + var(--safe-bottom));left:50%;
     transform:translateX(-50%) translateY(20px);
-    background:rgba(15,22,40,.97);border:1px solid var(--accent);
-    color:var(--txt);padding:10px 18px;border-radius:12px;font-size:13px;
-    opacity:0;transition:.3s;z-index:50;pointer-events:none;
-    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-    max-width:85vw;text-align:center;font-weight:600;
-    box-shadow:0 8px 30px rgba(59,130,246,.2);
+    background:var(--surface);border:1px solid var(--primary);
+    color:var(--text);padding:10px 18px;border-radius:12px;font-size:13px;
+    opacity:0;transition:.3s;z-index:90;pointer-events:none;
+    max-width:85vw;text-align:center;font-weight:800;
+    box-shadow:0 8px 30px rgba(15,118,110,.2);
   }
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+  /* ============ حماية ============ */
+  @media print {
+    html, body, #app { display: none !important; visibility: hidden !important; }
+    body::after {
+      content: "🔒 الطباعة معطلة";
+      display: grid !important;
+      visibility: visible !important;
+      position: fixed;
+      inset: 0;
+      place-items: center;
+      font-size: 28px;
+      color: #999;
+      background: #fff;
+      font-family: sans-serif;
+    }
+  }
+  body.protect-blur #app {
+    filter: blur(30px) !important;
+    pointer-events: none !important;
+  }
+  html, body {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+  }
+  input, textarea {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+  }
+  img, svg {
+    -webkit-user-drag: none !important;
+    user-drag: none !important;
+  }
+
   @media(max-width:380px){
-    .stat-card{min-width:56px;padding:5px 8px}
-    .stat-card .num{font-size:15px}
-    .icon-btn{width:36px;height:36px;font-size:15px}
-    .search-box{height:36px}
-    .fab{width:40px;height:40px;font-size:17px}
+    .stat-card{min-width:50px;padding:5px 7px}
+    .stat-card .num{font-size:14px}
+    .icon-btn{width:38px;height:38px;font-size:16px}
+    .search-wrap{height:38px}
+    .fab{width:42px;height:42px;font-size:18px}
+    .brand{font-size:13px}
+    .focus-banner{padding:8px 10px}
+    .focus-text b{font-size:12px}
+    .focus-stat{min-width:38px;padding:3px 6px}
+    .focus-stat .num{font-size:12px}
+    .focus-stat .lbl{font-size:7px}
+    .focus-icon{font-size:18px}
   }
 </style>
 </head>
 <body>
 <div id="app">
 
+  <!-- ============ شريط علوي ============ -->
   <div class="topbar">
-    <button class="icon-btn primary" id="btn-focus-toggle" aria-label="وضع التركيز">🎯</button>
-    <button class="icon-btn" id="btn-home" aria-label="الرئيسية">🏠</button>
-    <button class="icon-btn" id="btn-fit" aria-label="ملاءمة">⛶</button>
-    <div class="search-box" id="searchBox">
-      <span class="s-icon">🔍</span>
-      <input type="text" id="searchInput" placeholder="ابحث بالاسم أو الـ ID..." inputmode="search">
-      <span class="clear-btn" id="clearSearch">✕</span>
+    <div class="brand">🌳 شجرة العائلة <span>PRO</span></div>
+    <div class="search-wrap" id="searchBox">
+      <span class="s-icon">🔎</span>
+      <input type="text" id="searchInput" placeholder="ابحث بالاسم أو #ID...">
+      <button class="clear-btn" id="clearSearch">✕</button>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="btn-theme" title="المظهر">🌙</button>
+      <button class="icon-btn primary-icon" id="btn-fit" title="ملاءمة">⛶</button>
     </div>
   </div>
 
-  <div class="stats">
-    <div class="stat-card"><div class="num" id="st-people">0</div><div class="lbl">الأفراد</div></div>
-    <div class="stat-card"><div class="num" id="st-gens">0</div><div class="lbl">الأجيال</div></div>
-    <div class="stat-card"><div class="num" id="st-roots">0</div><div class="lbl">الفروع</div></div>
+  <!-- ============ حاوية الشجرة ============ -->
+  <div class="tree-container" id="treeContainer">
+
+    <!-- الإحصائيات العامة (تختفي في وضع التركيز) -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-card"><div class="num" id="st-people">0</div><div class="lbl">الأفراد</div></div>
+      <div class="stat-card"><div class="num" id="st-gens">0</div><div class="lbl">الأجيال</div></div>
+      <div class="stat-card"><div class="num" id="st-roots">0</div><div class="lbl">الفروع</div></div>
+    </div>
+
+    <!-- شريط التركيز (يظهر مكان الإحصائيات) -->
+    <div class="focus-banner hidden" id="focusBanner">
+      <div class="focus-left">
+        <span class="focus-icon">🎯</span>
+        <div class="focus-text">
+          <b id="focusName">—</b>
+          <small>وضع التركيز على الفرع</small>
+        </div>
+        <div class="focus-stats">
+          <div class="focus-stat">
+            <div class="num" id="focusPeople">0</div>
+            <div class="lbl">أفراد</div>
+          </div>
+          <div class="focus-stat">
+            <div class="num" id="focusGens">0</div>
+            <div class="lbl">أجيال</div>
+          </div>
+          <div class="focus-stat">
+            <div class="num" id="focusBranches">0</div>
+            <div class="lbl">فروع</div>
+          </div>
+        </div>
+      </div>
+      <button class="focus-exit" id="exitFocusBtn">✕ خروج</button>
+    </div>
+
+    <!-- SVG -->
+    <svg id="svg">
+      <defs>
+        <filter id="focusGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <g id="viewport"></g>
+    </svg>
+
+    <!-- أدوات تحكم -->
+    <div class="fab-stack">
+      <button class="fab" id="btn-zoom-in">＋</button>
+      <button class="fab" id="btn-zoom-out">－</button>
+      <button class="fab zoom-label" id="btn-reset">1:1</button>
+    </div>
+    <div class="fab-stack right">
+      <button class="fab" id="btn-up">▲</button>
+      <button class="fab" id="btn-down">▼</button>
+    </div>
+
   </div>
 
-  <svg id="svg">
-    <defs>
-      <filter id="focusGlow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="6" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#1e3a8a" stop-opacity=".4"/>
-        <stop offset="100%" stop-color="#0a0f1c" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-    <g id="viewport">
-      <g id="links"></g>
-      <g id="nodes"></g>
-    </g>
-  </svg>
-
-  <div class="fab-stack">
-    <button class="fab" id="btn-zoom-in" aria-label="تكبير">＋</button>
-    <button class="fab" id="btn-zoom-out" aria-label="تصغير">－</button>
-    <button class="fab zoom-label" id="btn-reset" aria-label="إعادة تعيين">1:1</button>
-  </div>
-
+  <!-- ============ لوحة تفاصيل ============ -->
   <div class="info-panel" id="infoPanel">
     <button class="close-panel" id="closePanel">✕</button>
     <div class="info-head">
@@ -269,33 +485,21 @@
 </div>
 
 <script>
-/* =========================================================
-   شجرة العائلة — Radial Tree Layout (الجذع في الأسفل)
-   ========================================================= */
+/* ============================================================
+   🌳 Family Tree Pro — Radial Layout + Smooth Transform
+   + منع التصوير والطباعة
+   ============================================================ */
 'use strict';
 
-/* ---------- لوحة ألوان الأجيال ---------- */
-const GEN_PALETTE = [
-  {fill:'#0b2545', stroke:'#3b82f6', glow:'#60a5fa'},
-  {fill:'#1a2e4a', stroke:'#8b5cf6', glow:'#a78bfa'},
-  {fill:'#2d1b4e', stroke:'#ec4899', glow:'#f472b6'},
-  {fill:'#0f3d3e', stroke:'#14b8a6', glow:'#2dd4bf'},
-  {fill:'#3d2f0f', stroke:'#f59e0b', glow:'#fbbf24'},
-  {fill:'#3d0f1f', stroke:'#ef4444', glow:'#f87171'},
-  {fill:'#1e293b', stroke:'#64748b', glow:'#94a3b8'},
-  {fill:'#1e1b4b', stroke:'#6366f1', glow:'#818cf8'},
-  {fill:'#14532d', stroke:'#22c55e', glow:'#4ade80'},
-  {fill:'#4c1d95', stroke:'#a855f7', glow:'#c084fc'},
-  {fill:'#7c2d12', stroke:'#f97316', glow:'#fb923c'},
-  {fill:'#083344', stroke:'#06b6d4', glow:'#22d3ee'},
-];
+const $ = id => document.getElementById(id);
+const svg = $('svg');
+const viewport = $('viewport');
 
-/* ---------- قياسات ---------- */
-const NODE_W = 100;
-const NODE_H = 40;
-const BASE_RADIUS = 130;   // نصف قطر أول طبقة
-const RADIUS_STEP = 130;   // زيادة نصف القطر لكل جيل
-const MAX_ARC = Math.PI * 0.98;  // 176 درجة (شبه قوس كامل)
+/* ---------- ألوان الأجيال ---------- */
+const PALETTE = [
+  "#0f766e","#2563eb","#7c3aed","#db2777","#ea580c",
+  "#16a34a","#0891b2","#9333ea","#ca8a04","#475569"
+];
 
 /* ---------- الحالة ---------- */
 const state = {
@@ -307,21 +511,27 @@ const state = {
   maxGen: 0,
   focusId: null,
   focusSet: null,
-  transform: {x:0,y:0,k:1},
-  positions: new Map(),
+  selectedId: null,
   searchMatches: new Set(),
+  tx: 0, ty: 0, scale: 1,
+  positions: new Map(),
+  dark: false,
+  pointers: new Map(),
+  dragStart: null,
+  pinch: null,
 };
 
-/* ---------- DOM ---------- */
-const $ = id => document.getElementById(id);
-const svg = $('svg');
-const viewport = $('viewport');
-const gLinks = $('links');
-const gNodes = $('nodes');
+const MIN_SCALE = 0.05;
+const MAX_SCALE = 8;
 
-/* =========================================================
+const CARD_W_LARGE = 170;
+const CARD_H_LARGE = 72;
+const CARD_W_SMALL = 145;
+const CARD_H_SMALL = 62;
+
+/* ============================================================
    1) تحميل البيانات
-   ========================================================= */
+   ============================================================ */
 async function loadData(){
   try{
     const res = await fetch('tree-data.json', {cache:'no-store'});
@@ -330,7 +540,7 @@ async function loadData(){
     state.people = Array.isArray(data.people) ? data.people : [];
     buildMaps();
     computeGenerations();
-    render(null);
+    render();
     updateStats();
     requestAnimationFrame(fitToScreen);
     setTimeout(fitToScreen, 200);
@@ -338,40 +548,40 @@ async function loadData(){
   }catch(err){
     console.error(err);
     $('loader').innerHTML = `
-      <p style="color:#ef4444;font-size:15px;font-weight:700">⚠ تعذر تحميل tree-data.json</p>
-      <p style="color:#8b9bb4;font-size:12px;max-width:300px">
-        تأكد من وجود الملف في نفس مجلد index.html<br>
-        وشغّل الصفحة عبر Live Server أو أي سيرفر محلي
+      <p style="color:#ef4444;font-size:15px;font-weight:800">⚠ تعذر تحميل tree-data.json</p>
+      <p style="color:#64748b;font-size:12px;max-width:300px">
+        تأكد من وجود الملف بجانب index.html<br>وشغّل عبر Live Server
       </p>`;
   }
 }
 
-/* =========================================================
+/* ============================================================
    2) خرائط
-   ========================================================= */
+   ============================================================ */
 function buildMaps(){
   state.byId.clear();
   state.children.clear();
-  state.people.forEach(p => state.byId.set(p.id, p));
+  state.people.forEach(p => state.byId.set(Number(p.id), p));
   state.people.forEach(p => {
-    if(p.father_id != null && state.byId.has(p.father_id)){
-      if(!state.children.has(p.father_id)) state.children.set(p.father_id, []);
-      state.children.get(p.father_id).push(p.id);
+    if(p.father_id != null && state.byId.has(Number(p.father_id))){
+      const fid = Number(p.father_id);
+      if(!state.children.has(fid)) state.children.set(fid, []);
+      state.children.get(fid).push(Number(p.id));
     }
   });
   state.children.forEach(arr => arr.sort((a,b)=>a-b));
 }
 
-/* =========================================================
+/* ============================================================
    3) الأجيال
-   ========================================================= */
+   ============================================================ */
 function computeGenerations(){
   state.depth.clear();
   const hasParent = id => {
-    const p = state.byId.get(id);
-    return p && p.father_id != null && state.byId.has(p.father_id);
+    const p = state.byId.get(Number(id));
+    return p && p.father_id != null && state.byId.has(Number(p.father_id));
   };
-  state.roots = state.people.filter(p => !hasParent(p.id)).map(p => p.id);
+  state.roots = state.people.filter(p => !hasParent(p.id)).map(p => Number(p.id));
 
   const q = [];
   state.roots.forEach(id => { state.depth.set(id, 0); q.push(id); });
@@ -386,171 +596,318 @@ function computeGenerations(){
       }
     });
   }
-  state.people.forEach(p => { if(!state.depth.has(p.id)) state.depth.set(p.id,0); });
+  state.people.forEach(p => { if(!state.depth.has(Number(p.id))) state.depth.set(Number(p.id), 0); });
   state.maxGen = 0;
   state.depth.forEach(v => { if(v > state.maxGen) state.maxGen = v; });
 }
 
-/* =========================================================
-   4) Radial Layout — الجذع في الأسفل والفروع للأعلى
-   ========================================================= */
-/* الفكرة:
-   - كل جيل يحصل على قوس دائري خاص به
-   - نصف القطر يزيد مع العمق
-   - الزاوية تتراوح بين -90° و +90° حول المحور العمودي
-   - الجد في الأسفل (y موجب) والفروع للأعلى (y سالب)
-*/
-function layoutRadial(rootId){
-  state.positions.clear();
-
-  // 1) احسب عدد الأوراق (Leaves) لكل عقدة لتوزيع الزوايا بشكل متناسب
-  const leafCount = new Map();
-  function countLeaves(id){
-    if(leafCount.has(id)) return leafCount.get(id);
-    const kids = state.children.get(id) || [];
-    if(kids.length === 0){ leafCount.set(id, 1); return 1; }
-    let sum = 0;
-    kids.forEach(k => sum += countLeaves(k));
-    leafCount.set(id, sum);
-    return sum;
-  }
-  countLeaves(rootId);
-
-  // 2) وزّع الزوايا على الأوراق
-  const totalLeaves = leafCount.get(rootId) || 1;
-  const angleOf = new Map();  // id -> زاوية نهائية
-
-  function assignAngles(id, startAngle, endAngle){
-    const kids = state.children.get(id) || [];
-    if(kids.length === 0){
-      angleOf.set(id, (startAngle + endAngle) / 2);
-      return;
+/* ============================================================
+   4) بناء الشجرة
+   ============================================================ */
+function buildTree(rootId, maxDepth){
+  const seen = new Set([rootId]);
+  function buildNode(pid, d){
+    const p = state.byId.get(pid);
+    if(!p) return null;
+    const node = {id: pid, name: p.name, gender: p.gender, depth: d, children: []};
+    if(d < maxDepth){
+      for(const cid of (state.children.get(pid) || [])){
+        if(seen.has(cid)) continue;
+        seen.add(cid);
+        const child = buildNode(cid, d+1);
+        if(child) node.children.push(child);
+      }
     }
-    // وزّع الأبناء على القوس بحسب عدد أوراق كل منهم
-    let cursor = startAngle;
-    const total = endAngle - startAngle;
-    const sumLeaves = leafCount.get(id);
-    kids.forEach(k=>{
-      const kLeaves = leafCount.get(k);
-      const span = total * (kLeaves / sumLeaves);
-      assignAngles(k, cursor, cursor + span);
-      cursor += span;
+    return node;
+  }
+  return buildNode(rootId, 0);
+}
+
+/* ============================================================
+   5) Radial Layout
+   ============================================================ */
+function layoutRadial(root, dy){
+  function countLeaves(node){
+    if(!node.children || !node.children.length) return 1;
+    let total = 0;
+    for(const c of node.children) total += countLeaves(c);
+    return total;
+  }
+
+  let maxDepth = 0, maxSiblings = 1;
+  const nodesByDepth = {};
+  (function scan(n, d){
+    if(d > maxDepth) maxDepth = d;
+    const c = (n.children || []).length;
+    if(c > maxSiblings) maxSiblings = c;
+    nodesByDepth[d] = (nodesByDepth[d] || 0) + 1;
+    for(const ch of n.children || []) scan(ch, d+1);
+  })(root, 0);
+
+  const totalNodes = Object.values(nodesByDepth).reduce((s,v)=>s+v, 0);
+  const compact = totalNodes > 60;
+  const cardWidth = compact ? CARD_W_SMALL : CARD_W_LARGE;
+  const minGapX = cardWidth + 40;
+
+  let halfAngleDeg;
+  if(maxSiblings <= 2)       halfAngleDeg = 60;
+  else if(maxSiblings <= 4)  halfAngleDeg = 85;
+  else if(maxSiblings <= 8)  halfAngleDeg = 110;
+  else if(maxSiblings <= 15) halfAngleDeg = 135;
+  else if(maxSiblings <= 30) halfAngleDeg = 155;
+  else                        halfAngleDeg = 178;
+
+  const HALF_ANGLE = (halfAngleDeg * Math.PI) / 180;
+  const FULL_ANGLE = 2 * HALF_ANGLE;
+
+  const requiredRadius = {};
+  for(let d = 1; d <= maxDepth; d++){
+    const count = nodesByDepth[d] || 1;
+    requiredRadius[d] = (count * minGapX) / FULL_ANGLE;
+  }
+
+  const BASE_RADIUS = Math.max(dy * 1.8, requiredRadius[1] || 0);
+  const radiusByDepth = {0: 0};
+  radiusByDepth[1] = BASE_RADIUS;
+  for(let d = 2; d <= maxDepth; d++){
+    const depthBonus = (d-1) * 45;
+    const minStep = dy + depthBonus;
+    const stepRadius = radiusByDepth[d-1] + minStep;
+    const reqRadius = requiredRadius[d] || 0;
+    radiusByDepth[d] = Math.max(stepRadius, reqRadius);
+  }
+
+  const all = [];
+  function assign(node, depth, angleStart, angleEnd){
+    const centerAngle = (angleStart + angleEnd) / 2;
+    const radius = radiusByDepth[depth] || 0;
+    if(depth === 0){
+      node._x = 0; node._y = 0;
+    }else{
+      node._x = Math.sin(centerAngle) * radius;
+      node._y = -Math.cos(centerAngle) * radius;
+    }
+    all.push(node);
+
+    const children = node.children || [];
+    if(!children.length) return;
+    const totalLeaves = children.reduce((s,c)=>s+countLeaves(c), 0);
+    let currentAngle = angleStart;
+    for(const child of children){
+      const leaves = countLeaves(child);
+      const angleSpan = (angleEnd - angleStart) * (leaves / totalLeaves);
+      assign(child, depth+1, currentAngle, currentAngle + angleSpan);
+      currentAngle += angleSpan;
+    }
+  }
+  assign(root, 0, -HALF_ANGLE, HALF_ANGLE);
+
+  const xs = all.map(n => n._x);
+  const ys = all.map(n => n._y);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+  const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  all.forEach(n => { n._x -= cx; n._y -= cy; });
+
+  return {nodes: all, cardWidth, cardHeight: compact ? CARD_H_SMALL : CARD_H_LARGE, compact, maxDepth, totalNodes};
+}
+
+/* ============================================================
+   6) الخط المنحني
+   ============================================================ */
+function curved(s, t, cardH){
+  const halfH = cardH / 2;
+  const startX = s._x;
+  const startY = s._y + halfH;
+  const endX = t._x;
+  const endY = t._y - halfH;
+  const h = endX - startX;
+  const v = endY - startY;
+  const c1x = startX + h * 0.25;
+  const c1y = startY + v * 0.45;
+  const c2x = startX + h * 0.75;
+  const c2y = startY + v * 0.55;
+  return `M ${startX} ${startY} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${endX} ${endY}`;
+}
+
+/* ============================================================
+   7) الرسم
+   ============================================================ */
+function render(){
+  viewport.innerHTML = '';
+
+  const rootId = state.focusId != null ? state.focusId : chooseRoot();
+  if(rootId == null) return;
+
+  const maxDepth = state.focusId != null ? 30 : (state.maxGen + 1);
+  const root = buildTree(rootId, maxDepth);
+  if(!root) return;
+
+  const totalNodes = countTreeNodes(root);
+  const dy = totalNodes > 300 ? 240 :
+             totalNodes > 150 ? 220 :
+             totalNodes > 80  ? 200 : 185;
+
+  const result = layoutRadial(root, dy);
+  const {nodes, cardWidth, cardHeight, compact} = result;
+
+  // روابط
+  const gLinks = document.createElementNS('http://www.w3.org/2000/svg','g');
+  for(const n of nodes){
+    for(const c of (n.children || [])){
+      const baseColor = PALETTE[c.depth % PALETTE.length];
+      const sw = Math.max(1.2, 3 - c.depth * 0.15);
+      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('class','link');
+      path.setAttribute('stroke', baseColor);
+      path.setAttribute('stroke-width', sw);
+      path.setAttribute('d', curved(n, c, cardHeight));
+      gLinks.appendChild(path);
+    }
+  }
+
+  // البطاقات
+  const gNodes = document.createElementNS('http://www.w3.org/2000/svg','g');
+  const circleR = compact ? 13 : 15;
+  const circleCX = -cardWidth/2 + circleR + 12;
+  const circleCY = 0;
+
+  for(const n of nodes){
+    const person = state.byId.get(n.id);
+    if(!person) continue;
+
+    const group = document.createElementNS('http://www.w3.org/2000/svg','g');
+    group.setAttribute('class','node');
+    group.setAttribute('transform', `translate(${n._x},${n._y})`);
+    group.dataset.id = n.id;
+
+    const isSelected = state.selectedId === n.id;
+    const isMatch = state.searchMatches.has(n.id);
+    const isRoot = n.depth === 0;
+    const isFocus = state.focusId === n.id;
+
+    const card = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    card.setAttribute('class', 'node-card'
+      + (isSelected ? ' selected' : '')
+      + (isMatch ? ' search-match' : '')
+      + (isRoot ? ' root-node' : '')
+      + (isFocus ? ' focus-node' : ''));
+    card.setAttribute('x', -cardWidth/2);
+    card.setAttribute('y', -cardHeight/2);
+    card.setAttribute('width', cardWidth);
+    card.setAttribute('height', cardHeight);
+    card.setAttribute('rx', compact ? 14 : 18);
+    group.appendChild(card);
+
+    let genderColor = PALETTE[n.depth % PALETTE.length];
+    if(person.gender === 'male') genderColor = '#2563eb';
+    else if(person.gender === 'female') genderColor = '#db2777';
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('cx', circleCX);
+    circle.setAttribute('cy', circleCY);
+    circle.setAttribute('r', circleR);
+    circle.setAttribute('fill', genderColor);
+    group.appendChild(circle);
+
+    const genderIcon = person.gender === 'male' ? '♂' : person.gender === 'female' ? '♀' : '•';
+    const gi = document.createElementNS('http://www.w3.org/2000/svg','text');
+    gi.setAttribute('class','node-gender');
+    gi.setAttribute('x', circleCX);
+    gi.setAttribute('y', circleCY + (compact ? 4 : 5));
+    gi.setAttribute('font-size', compact ? 12 : 14);
+    gi.textContent = genderIcon;
+    group.appendChild(gi);
+
+    const nameCenterX = circleCX + circleR + (cardWidth/2 - (circleCX + circleR)) / 2 + 2;
+    const name = document.createElementNS('http://www.w3.org/2000/svg','text');
+    name.setAttribute('class','node-name');
+    name.setAttribute('x', nameCenterX);
+    name.setAttribute('y', compact ? -4 : -6);
+    name.setAttribute('font-size', compact ? 12 : 13);
+    const maxChars = compact ? 12 : 15;
+    const displayName = (person.name || 'بدون اسم').trim();
+    name.textContent = displayName.length > maxChars ? displayName.slice(0, maxChars-1) + '…' : displayName;
+    group.appendChild(name);
+
+    const meta = document.createElementNS('http://www.w3.org/2000/svg','text');
+    meta.setAttribute('class','node-meta');
+    meta.setAttribute('x', nameCenterX);
+    meta.setAttribute('y', compact ? 12 : 15);
+    meta.setAttribute('font-size', compact ? 9 : 10);
+    meta.textContent = `#${n.id} • ج${n.depth + 1}`;
+    group.appendChild(meta);
+
+    if(isRoot){
+      const ti = document.createElementNS('http://www.w3.org/2000/svg','text');
+      ti.setAttribute('x', cardWidth/2 - 10);
+      ti.setAttribute('y', -cardHeight/2 + 16);
+      ti.setAttribute('font-size', 14);
+      ti.setAttribute('text-anchor','middle');
+      ti.textContent = isFocus ? '🎯' : '🌳';
+      group.appendChild(ti);
+    }
+
+    group.addEventListener('click', e => {
+      e.stopPropagation();
+      selectPerson(n.id);
     });
-    // زاوية الأب = متوسط زوايا الأبناء
-    const childAngles = kids.map(k=>angleOf.get(k));
-    angleOf.set(id, (Math.min(...childAngles) + Math.max(...childAngles)) / 2);
-  }
 
-  // القوس: من -MAX_ARC/2 إلى +MAX_ARC/2 (حول المحور الرأسي)
-  assignAngles(rootId, -MAX_ARC/2, MAX_ARC/2);
-
-  // 3) حوّل (زاوية، عمق) إلى (x، y) — الجذع في الأسفل
-  //    عمق 0 → في الأسفل، عمق أكبر → للأعلى
-  function place(id){
-    if(state.positions.has(id)) return;
-    const depth = state.depth.get(id) || 0;
-    const angle = angleOf.get(id) ?? 0;
-    const r = BASE_RADIUS + depth * RADIUS_STEP;
-    // x = r * sin(angle) ، y = r * cos(angle) — لكن نريد الجذع في الأسفل
-    // لذا نعكس y: الجذع عند y موجب (أسفل)، الفروع عند y سالب
-    const x = r * Math.sin(angle);
-    const y = r * Math.cos(angle);
-    state.positions.set(id, {x, y, depth, angle});
-    (state.children.get(id) || []).forEach(k => place(k));
-  }
-  place(rootId);
-
-  // 4) توسيط الشجرة
-  centerTree();
-}
-
-/* layout لكل الجذور */
-function layoutAllRadial(){
-  state.positions.clear();
-  // نتعامل مع كل جذر كشجرة مستقلة ثم ندمج
-  if(state.roots.length === 1){
-    layoutRadial(state.roots[0]);
-    return;
-  }
-  // إذا فيه أكثر من جذر: نوزعهم على زوايا مختلفة
-  const n = state.roots.length;
-  const arcPerRoot = MAX_ARC / n;
-  state.roots.forEach((rootId, i)=>{
-    const start = -MAX_ARC/2 + i * arcPerRoot;
-    const end = start + arcPerRoot;
-    layoutRadialInRange(rootId, start, end);
-  });
-  centerTree();
-}
-
-function layoutRadialInRange(rootId, startAngle, endAngle){
-  const leafCount = new Map();
-  function countLeaves(id){
-    if(leafCount.has(id)) return leafCount.get(id);
-    const kids = state.children.get(id) || [];
-    if(kids.length === 0){ leafCount.set(id,1); return 1; }
-    let s=0; kids.forEach(k=>s+=countLeaves(k));
-    leafCount.set(id,s); return s;
-  }
-  countLeaves(rootId);
-  const angleOf = new Map();
-  function assignAngles(id, s, e){
-    const kids = state.children.get(id) || [];
-    if(kids.length === 0){ angleOf.set(id, (s+e)/2); return; }
-    let cursor = s;
-    const total = e - s;
-    const sumLeaves = leafCount.get(id);
-    kids.forEach(k=>{
-      const span = total * (leafCount.get(k)/sumLeaves);
-      assignAngles(k, cursor, cursor+span);
-      cursor += span;
+    let lastTap = 0;
+    group.addEventListener('touchend', e => {
+      const now = Date.now();
+      if(now - lastTap < 300){
+        e.preventDefault();
+        focusOn(n.id);
+        lastTap = 0;
+      }else{
+        lastTap = now;
+      }
     });
-    const a = kids.map(k=>angleOf.get(k));
-    angleOf.set(id, (Math.min(...a)+Math.max(...a))/2);
-  }
-  assignAngles(rootId, startAngle, endAngle);
-  function place(id){
-    if(state.positions.has(id)) return;
-    const depth = state.depth.get(id) || 0;
-    const angle = angleOf.get(id) ?? 0;
-    const r = BASE_RADIUS + depth * RADIUS_STEP;
-    state.positions.set(id, {x: r*Math.sin(angle), y: r*Math.cos(angle), depth, angle});
-    (state.children.get(id)||[]).forEach(k=>place(k));
-  }
-  place(rootId);
-}
 
-function centerTree(){
-  if(state.positions.size === 0) return;
-  let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
-  state.positions.forEach(p=>{
-    if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x;
-    if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y;
-  });
-  const offX = -(minX+maxX)/2;
-  const offY = -(minY+maxY)/2;
-  state.positions.forEach(p=>{ p.x+=offX; p.y+=offY; });
-}
+    group.addEventListener('dblclick', e => {
+      e.stopPropagation();
+      focusOn(n.id);
+    });
 
-/* =========================================================
-   5) الرسم
-   ========================================================= */
-function render(focusId = null){
-  state.focusId = focusId;
-  gLinks.innerHTML = '';
-  gNodes.innerHTML = '';
-
-  if(focusId != null){
-    layoutRadial(focusId);
-    drawSubtree(focusId);
-    state.focusSet = collectDescendants(focusId);
-    applyFocusDim();
-  }else{
-    layoutAllRadial();
-    drawAll();
-    state.focusSet = null;
+    gNodes.appendChild(group);
   }
+
+  viewport.appendChild(gLinks);
+  viewport.appendChild(gNodes);
+
   applyTransform();
+}
+
+function countTreeNodes(node){
+  let c = 1;
+  for(const ch of node.children || []) c += countTreeNodes(ch);
+  return c;
+}
+
+/* ============================================================
+   8) الجذور
+   ============================================================ */
+function chooseRoot(){
+  if(state.focusId != null && state.byId.has(state.focusId)) return state.focusId;
+  if(!state.roots.length) return null;
+  let best = state.roots[0], bestCount = -1;
+  for(const r of state.roots){
+    const c = countDescendants(r);
+    if(c > bestCount){ bestCount = c; best = r; }
+  }
+  return best;
+}
+
+function countDescendants(rootId){
+  let count = 0;
+  const stack = [rootId], seen = new Set();
+  while(stack.length){
+    const cur = stack.pop();
+    if(seen.has(cur)) continue;
+    seen.add(cur); count++;
+    for(const ch of (state.children.get(cur) || [])) stack.push(ch);
+  }
+  return count;
 }
 
 function collectDescendants(rootId){
@@ -560,191 +917,100 @@ function collectDescendants(rootId){
     const cur = stack.pop();
     if(set.has(cur)) continue;
     set.add(cur);
-    (state.children.get(cur)||[]).forEach(k=>stack.push(k));
+    (state.children.get(cur) || []).forEach(k => stack.push(k));
   }
   return set;
 }
 
-function drawAll(){
-  state.people.forEach(p=>{
-    if(p.father_id == null) return;
-    if(!state.positions.has(p.father_id) || !state.positions.has(p.id)) return;
-    drawLink(state.positions.get(p.father_id), state.positions.get(p.id), state.depth.get(p.id)||0);
-  });
-  state.people.forEach(p=>{
-    if(!state.positions.has(p.id)) return;
-    drawNode(p, state.positions.get(p.id), state.depth.get(p.id)||0);
-  });
-}
-
-function drawSubtree(rootId){
-  const all = collectDescendants(rootId);
-  all.forEach(id=>{
-    const kids = state.children.get(id) || [];
-    kids.forEach(k=>{
-      if(!all.has(k)) return;
-      if(!state.positions.has(id) || !state.positions.has(k)) return;
-      drawLink(state.positions.get(id), state.positions.get(k), state.depth.get(k)||0);
-    });
-  });
-  all.forEach(id=>{
-    const p = state.byId.get(id);
-    if(!p || !state.positions.has(id)) return;
-    drawNode(p, state.positions.get(id), state.depth.get(id)||0);
-  });
-}
-
-function drawNode(p, pos, depth){
-  const pal = GEN_PALETTE[depth % GEN_PALETTE.length];
-  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
-  g.setAttribute('class','node');
-  g.setAttribute('transform', `translate(${pos.x}, ${pos.y})`);
-  g.dataset.id = p.id;
-  g.dataset.depth = depth;
-
-  const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
-  rect.setAttribute('x', -NODE_W/2);
-  rect.setAttribute('y', -NODE_H/2);
-  rect.setAttribute('width', NODE_W);
-  rect.setAttribute('height', NODE_H);
-  rect.setAttribute('rx', 10);
-  rect.setAttribute('fill', pal.fill);
-  rect.setAttribute('stroke', pal.stroke);
-  rect.setAttribute('stroke-width', '2');
-  g.appendChild(rect);
-
-  // شريط جانبي
-  const bar = document.createElementNS('http://www.w3.org/2000/svg','rect');
-  bar.setAttribute('x', -NODE_W/2 + 4);
-  bar.setAttribute('y', -NODE_H/2 + 4);
-  bar.setAttribute('width', 3);
-  bar.setAttribute('height', NODE_H - 8);
-  bar.setAttribute('rx', 2);
-  bar.setAttribute('fill', pal.stroke);
-  g.appendChild(bar);
-
-  // أيقونة الجنس
-  const genderIcon = p.gender === 'female' ? '♀' : (p.gender === 'male' ? '♂' : '•');
-  const gt = document.createElementNS('http://www.w3.org/2000/svg','text');
-  gt.setAttribute('x', -NODE_W/2 + 11);
-  gt.setAttribute('y', 4);
-  gt.setAttribute('font-size', '13');
-  gt.setAttribute('fill', pal.glow);
-  gt.setAttribute('font-weight','700');
-  gt.textContent = genderIcon;
-  g.appendChild(gt);
-
-  // الاسم
-  const name = (p.name || 'بدون اسم').trim();
-  const displayName = name.length > 13 ? name.slice(0,12)+'…' : name;
-  const t1 = document.createElementNS('http://www.w3.org/2000/svg','text');
-  t1.setAttribute('class','n-name');
-  t1.setAttribute('x', -NODE_W/2 + 22);
-  t1.setAttribute('y', -3);
-  t1.textContent = displayName;
-  g.appendChild(t1);
-
-  // ID
-  const t2 = document.createElementNS('http://www.w3.org/2000/svg','text');
-  t2.setAttribute('class','n-id');
-  t2.setAttribute('x', -NODE_W/2 + 22);
-  t2.setAttribute('y', 12);
-  t2.textContent = `#${p.id}`;
-  g.appendChild(t2);
-
-  g.addEventListener('click', e => { e.stopPropagation(); selectPerson(p.id); });
-  g.addEventListener('dblclick', e => { e.stopPropagation(); focusOn(p.id); });
-
-  let lastTap = 0;
-  g.addEventListener('touchend', e => {
-    const now = Date.now();
-    if(now - lastTap < 300){ e.preventDefault(); focusOn(p.id); }
-    lastTap = now;
-  });
-
-  gNodes.appendChild(g);
-}
-
-function drawLink(a, b, depth){
-  const pal = GEN_PALETTE[depth % GEN_PALETTE.length];
-  // من حافة الأب (باتجاه الابن) إلى حافة الابن (باتجاه الأب)
-  const dx = b.x - a.x, dy = b.y - a.y;
-  const len = Math.hypot(dx, dy) || 1;
-  const ux = dx/len, uy = dy/len;
-  const x1 = a.x + ux * NODE_H/2;
-  const y1 = a.y + uy * NODE_H/2;
-  const x2 = b.x - ux * NODE_H/2;
-  const y2 = b.y - uy * NODE_H/2;
-
-  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-  path.setAttribute('class','link');
-  path.setAttribute('d', `M ${x1} ${y1} L ${x2} ${y2}`);
-  path.setAttribute('stroke', pal.stroke);
-  path.setAttribute('stroke-width', '1.6');
-  path.setAttribute('opacity', '.55');
-  gLinks.appendChild(path);
-}
-
-/* =========================================================
-   6) وضع التركيز
-   ========================================================= */
+/* ============================================================
+   9) 🎯 التركيز (مع إخفاء الإحصائيات العامة وإظهار إحصائيات الفرع)
+   ============================================================ */
 function focusOn(id){
   if(!state.byId.has(id)) return;
+  if(state.focusId === id) { exitFocus(); return; }
+
   state.focusId = id;
   state.focusSet = collectDescendants(id);
-  render(id);
-  document.querySelectorAll('.node').forEach(n=>{
-    if(n.dataset.id === String(id)) n.classList.add('focused');
-  });
-  const p = state.byId.get(id);
-  toast(`🎯 التركيز على: ${p?.name || ''} (#${id})`);
-  $('btn-focus-toggle').classList.add('active');
-  $('btn-focus-toggle').textContent = '✕';
+  state.selectedId = id;
+
+  render();
+
+  const person = state.byId.get(id);
+
+  // ✅ احسب إحصائيات الفرع
+  const branchPeople = state.focusSet.size;
+  const branchGens = computeBranchGenerations(state.focusSet);
+  const branchBranches = (state.children.get(id) || []).length;
+
+  // ✅ اسم الفرد
+  $('focusName').textContent = person.name;
+
+  // ✅ أرقام الإحصائيات
+  $('focusPeople').textContent = branchPeople;
+  $('focusGens').textContent = branchGens;
+  $('focusBranches').textContent = branchBranches;
+
+  // ✅ اخفِ الإحصائيات العامة + أظهر شريط التركيز
+  $('statsBar').classList.add('hidden');
+  $('focusBanner').classList.remove('hidden');
+
+  toast(`🎯 التركيز على: ${person.name}`);
   requestAnimationFrame(fitToScreen);
-  setTimeout(fitToScreen, 200);
+  setTimeout(fitToScreen, 250);
+}
+
+function computeBranchGenerations(set){
+  let minD = Infinity, maxD = -Infinity;
+  set.forEach(id => {
+    const d = state.depth.get(id);
+    if(d == null) return;
+    if(d < minD) minD = d;
+    if(d > maxD) maxD = d;
+  });
+  if(minD === Infinity) return 1;
+  return maxD - minD + 1;
 }
 
 function exitFocus(){
   if(state.focusId == null) return;
   state.focusId = null;
   state.focusSet = null;
-  render(null);
+
+  // ✅ أظهر الإحصائيات العامة + اخفِ شريط التركيز
+  $('statsBar').classList.remove('hidden');
+  $('focusBanner').classList.add('hidden');
+
+  render();
   requestAnimationFrame(fitToScreen);
-  setTimeout(fitToScreen, 200);
-  $('btn-focus-toggle').classList.remove('active');
-  $('btn-focus-toggle').textContent = '🎯';
+  setTimeout(fitToScreen, 250);
   toast('↩ تم الخروج من وضع التركيز');
 }
 
-function applyFocusDim(){
-  if(!state.focusSet) return;
-  document.querySelectorAll('.node').forEach(n=>{
-    if(!state.focusSet.has(Number(n.dataset.id))) n.classList.add('dimmed');
-  });
-}
-
-/* =========================================================
-   7) تفاصيل الفرد
-   ========================================================= */
+/* ============================================================
+   10) تفاصيل الفرد
+   ============================================================ */
 function selectPerson(id){
   const p = state.byId.get(id);
   if(!p) return;
+  state.selectedId = id;
   const depth = state.depth.get(id) || 0;
+
   $('pAvatar').textContent = (p.name||'؟').trim().charAt(0) || '؟';
   $('pName').textContent = p.name || 'بدون اسم';
   $('pSub').textContent = `#${p.id} • الجيل ${depth+1} • ${p.gender==='female'?'أنثى':p.gender==='male'?'ذكر':'غير محدد'}`;
 
   const kids = state.children.get(id) || [];
-  const father = p.father_id ? state.byId.get(p.father_id) : null;
-  let genderBadge='unknown', genderTxt='غير محدد';
-  if(p.gender==='male'){genderBadge='male';genderTxt='ذكر';}
-  else if(p.gender==='female'){genderBadge='female';genderTxt='أنثى';}
+  const father = p.father_id ? state.byId.get(Number(p.father_id)) : null;
+
+  let genderBadge = 'unknown', genderTxt = 'غير محدد';
+  if(p.gender === 'male'){ genderBadge = 'male'; genderTxt = 'ذكر'; }
+  else if(p.gender === 'female'){ genderBadge = 'female'; genderTxt = 'أنثى'; }
 
   $('pBody').innerHTML = `
     <div class="info-row"><span class="k">الـ ID</span><span class="v">#${p.id}</span></div>
     <div class="info-row"><span class="k">الحالة</span><span class="v"><span class="badge ${genderBadge}">${genderTxt}</span></span></div>
     <div class="info-row"><span class="k">الجيل</span><span class="v">${depth+1}</span></div>
-    <div class="info-row"><span class="k">الأب</span><span class="v">${father?`${father.name} <span style="color:#8b9bb4">(#${father.id})</span>`:'—'}</span></div>
+    <div class="info-row"><span class="k">الأب</span><span class="v">${father?`${father.name} <span style="color:var(--muted)">(#${father.id})</span>`:'—'}</span></div>
     <div class="info-row"><span class="k">عدد الأبناء</span><span class="v">${kids.length}</span></div>
     ${p.birth_date?`<div class="info-row"><span class="k">الميلاد</span><span class="v">${p.birth_date}</span></div>`:''}
     ${p.death_date?`<div class="info-row"><span class="k">الوفاة</span><span class="v">${p.death_date}</span></div>`:''}
@@ -753,11 +1019,15 @@ function selectPerson(id){
       ${state.focusId===id?'✕ الخروج من التركيز':'🎯 التركيز على هذا الفرع'}
     </button>
     <button class="action-btn secondary" id="btnCenterPerson">📍 توسيط في الشاشة</button>
-    <button class="action-btn ghost" id="btnFindFather" ${!father?'disabled style="opacity:.4"':''}>👆 الذهاب إلى الأب</button>
+    ${father?`<button class="action-btn ghost" id="btnFindFather">👆 الذهاب إلى الأب</button>`:''}
   `;
+
   $('infoPanel').classList.add('open');
+  render();
+
   $('btnFocusPerson').onclick = ()=>{
-    if(state.focusId===id) exitFocus(); else focusOn(id);
+    if(state.focusId === id) exitFocus();
+    else focusOn(id);
     $('infoPanel').classList.remove('open');
   };
   $('btnCenterPerson').onclick = ()=> centerOn(id);
@@ -766,240 +1036,443 @@ function selectPerson(id){
   }
 }
 
-/* =========================================================
-   8) Transformations
-   ========================================================= */
+/* ============================================================
+   11) التحويل بـ CSS
+   ============================================================ */
+let rafPending = false;
+let pendingTx = 0, pendingTy = 0, pendingScale = 1;
+
 function applyTransform(){
-  const {x,y,k} = state.transform;
-  viewport.setAttribute('transform', `translate(${x},${y}) scale(${k})`);
+  pendingTx = state.tx;
+  pendingTy = state.ty;
+  pendingScale = state.scale;
+  if(rafPending) return;
+  rafPending = true;
+  requestAnimationFrame(() => {
+    rafPending = false;
+    viewport.style.transform = `translate3d(${pendingTx}px, ${pendingTy}px, 0) scale(${pendingScale})`;
+  });
 }
 
+/* ============================================================
+   12) Fit / Center / Zoom
+   ============================================================ */
 function fitToScreen(){
-  if(state.positions.size === 0) return;
-  let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
-  state.positions.forEach(p=>{
-    if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x;
-    if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y;
-  });
-  const padX = NODE_W, padY = NODE_H;
-  const w = (maxX-minX) + padX*2;
-  const h = (maxY-minY) + padY*2;
-  const rect = svg.getBoundingClientRect();
-  const k = Math.min(rect.width/w, rect.height/h) * 0.95;
-  const cx = (minX+maxX)/2;
-  const cy = (minY+maxY)/2;
-  state.transform.k = Math.max(0.06, Math.min(3, k));
-  state.transform.x = rect.width/2 - cx*state.transform.k;
-  state.transform.y = rect.height/2 - cy*state.transform.k;
+  const g = viewport;
+  if(!g) return;
+  const container = document.getElementById('treeContainer');
+  if(!container) return;
+  const box = container.getBoundingClientRect();
+  let bb;
+  try{ bb = g.getBBox(); }catch{ return; }
+  if(!bb.width || !bb.height) return;
+
+  // ✅ حجز مساحة أعلى (الإحصائيات/شريط التركيز) و أسفل (الأزرار)
+  const TOP_RESERVED = 65;
+  const BOTTOM_RESERVED = 80;
+  const SIDE_PADDING = 50;
+
+  const availableW = box.width - SIDE_PADDING * 2;
+  const availableH = box.height - TOP_RESERVED - BOTTOM_RESERVED;
+
+  const sW = availableW / (bb.width + 40);
+  const sH = availableH / (bb.height + 40);
+  const s = Math.min(2.5, Math.max(MIN_SCALE, Math.min(sW, sH)));
+
+  state.scale = s;
+  state.tx = box.width / 2 - (bb.x + bb.width / 2) * s;
+  state.ty = TOP_RESERVED + availableH / 2 - (bb.y + bb.height / 2) * s;
   applyTransform();
 }
 
 function centerOn(id){
-  const pos = state.positions.get(id);
-  if(!pos) return;
-  const rect = svg.getBoundingClientRect();
-  const k = Math.max(state.transform.k, 1);
-  state.transform.k = k;
-  state.transform.x = rect.width/2 - pos.x*k;
-  state.transform.y = rect.height/2 - pos.y*k;
+  const g = viewport;
+  if(!g) return;
+  const nodeEl = [...g.querySelectorAll('.node')].find(el => Number(el.dataset.id) === Number(id));
+  if(!nodeEl) return;
+  const bb = nodeEl.getBBox();
+  const container = document.getElementById('treeContainer');
+  const box = container.getBoundingClientRect();
+  const x = bb.x + bb.width/2;
+  const y = bb.y + bb.height/2;
+  const k = Math.max(state.scale, 1.2);
+
+  state.scale = k;
+  state.tx = box.width/2 - x * k;
+  state.ty = box.height/2 - y * k;
   applyTransform();
 }
 
 function zoomBy(factor, cx, cy){
-  const rect = svg.getBoundingClientRect();
-  if(cx==null) cx = rect.width/2;
-  if(cy==null) cy = rect.height/2;
-  const k0 = state.transform.k;
-  const k1 = Math.max(0.06, Math.min(4, k0*factor));
-  const {x,y} = state.transform;
-  state.transform.x = cx - (cx-x)*(k1/k0);
-  state.transform.y = cy - (cy-y)*(k1/k0);
-  state.transform.k = k1;
+  const container = document.getElementById('treeContainer');
+  if(!container) return;
+  const box = container.getBoundingClientRect();
+  if(cx == null) cx = box.width / 2;
+  if(cy == null) cy = box.height / 2;
+  const k0 = state.scale;
+  const k1 = Math.max(MIN_SCALE, Math.min(MAX_SCALE, k0 * factor));
+  const {tx, ty} = state;
+  state.tx = cx - (cx - tx) * (k1/k0);
+  state.ty = cy - (cy - ty) * (k1/k0);
+  state.scale = k1;
   applyTransform();
 }
 
-function resetZoom(){
-  state.transform = {x:0,y:0,k:1};
-  applyTransform();
-}
+/* ============================================================
+   13) تفاعلات
+   ============================================================ */
+let dragging = false, last = {x:0,y:0}, pinch = null, dragMoved = false;
 
-/* =========================================================
-   9) تفاعلات
-   ========================================================= */
-let dragging=false, last={x:0,y:0}, pinch=null, dragMoved=false;
+const container = document.getElementById('treeContainer');
 
-svg.addEventListener('pointerdown', e=>{
+svg.addEventListener('pointerdown', e => {
   if(e.target.closest('.node')) return;
-  dragging=true; dragMoved=false;
+  dragging = true;
+  dragMoved = false;
   svg.classList.add('grabbing');
-  last={x:e.clientX,y:e.clientY};
-  try{ svg.setPointerCapture(e.pointerId); }catch(_){}
+  last = {x:e.clientX, y:e.clientY};
+  try{ svg.setPointerCapture(e.pointerId); }catch{}
+  state.pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
 });
-svg.addEventListener('pointermove', e=>{
-  if(!dragging) return;
-  const dx=e.clientX-last.x, dy=e.clientY-last.y;
-  if(Math.abs(dx)+Math.abs(dy)>2) dragMoved=true;
-  last={x:e.clientX,y:e.clientY};
-  state.transform.x += dx;
-  state.transform.y += dy;
-  applyTransform();
-});
-svg.addEventListener('pointerup', e=>{
-  dragging=false; svg.classList.remove('grabbing');
-  try{ svg.releasePointerCapture(e.pointerId); }catch(_){}
-});
-svg.addEventListener('pointercancel', ()=>{ dragging=false; svg.classList.remove('grabbing'); });
 
-svg.addEventListener('wheel', e=>{
-  e.preventDefault();
-  const rect = svg.getBoundingClientRect();
-  zoomBy(e.deltaY<0?1.12:1/1.12, e.clientX-rect.left, e.clientY-rect.top);
-}, {passive:false});
+svg.addEventListener('pointermove', e => {
+  if(!state.pointers.has(e.pointerId)) return;
+  state.pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
 
-svg.addEventListener('touchstart', e=>{
-  if(e.touches.length===2){
-    const [a,b]=e.touches;
-    pinch={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)};
+  if(state.pointers.size === 1 && dragging){
+    const dx = e.clientX - last.x;
+    const dy = e.clientY - last.y;
+    if(Math.abs(dx) + Math.abs(dy) > 2) dragMoved = true;
+    last = {x:e.clientX, y:e.clientY};
+    state.tx += dx;
+    state.ty += dy;
+    applyTransform();
+  }
+});
+
+svg.addEventListener('pointerup', e => {
+  dragging = false;
+  svg.classList.remove('grabbing');
+  state.pointers.delete(e.pointerId);
+  try{ svg.releasePointerCapture(e.pointerId); }catch{}
+});
+svg.addEventListener('pointercancel', e => {
+  dragging = false;
+  svg.classList.remove('grabbing');
+  state.pointers.delete(e.pointerId);
+});
+
+svg.addEventListener('touchstart', e => {
+  if(e.touches.length === 2){
+    const [a,b] = e.touches;
+    pinch = {
+      d: Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY),
+      cx: (a.clientX + b.clientX)/2,
+      cy: (a.clientY + b.clientY)/2,
+      startScale: state.scale,
+      startTx: state.tx,
+      startTy: state.ty,
+    };
   }
 }, {passive:true});
-svg.addEventListener('touchmove', e=>{
-  if(e.touches.length===2 && pinch){
+
+svg.addEventListener('touchmove', e => {
+  if(e.touches.length === 2 && pinch){
     e.preventDefault();
-    const [a,b]=e.touches;
-    const d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
-    const f=d/pinch.d; pinch.d=d;
-    const rect=svg.getBoundingClientRect();
-    zoomBy(f, (a.clientX+b.clientX)/2-rect.left, (a.clientY+b.clientY)/2-rect.top);
+    const [a,b] = e.touches;
+    const d = Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+    const box = container.getBoundingClientRect();
+
+    const lx = pinch.cx - box.left;
+    const ly = pinch.cy - box.top;
+
+    const ptX = (lx - pinch.startTx) / pinch.startScale;
+    const ptY = (ly - pinch.startTy) / pinch.startScale;
+
+    const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, pinch.startScale * (d / pinch.d)));
+    state.scale = newScale;
+    state.tx = lx - ptX * newScale;
+    state.ty = ly - ptY * newScale;
+    applyTransform();
   }
 }, {passive:false});
-svg.addEventListener('touchend', ()=>{ pinch=null; });
 
-svg.addEventListener('click', e=>{
+svg.addEventListener('touchend', () => { pinch = null; });
+
+svg.addEventListener('wheel', e => {
+  e.preventDefault();
+  const box = container.getBoundingClientRect();
+  const cx = e.clientX - box.left;
+  const cy = e.clientY - box.top;
+  const factor = e.deltaY < 0 ? 1.15 : 1/1.15;
+  zoomBy(factor, cx, cy);
+}, {passive:false});
+
+svg.addEventListener('click', e => {
   if(!e.target.closest('.node') && !dragMoved){
     $('infoPanel').classList.remove('open');
   }
 });
 
-/* =========================================================
-   10) البحث
-   ========================================================= */
+/* ============================================================
+   14) البحث
+   ============================================================ */
 const searchInput = $('searchInput');
-searchInput.addEventListener('input', ()=>{
-  const q = searchInput.value.trim();
-  $('searchBox').classList.toggle('has-value', q.length>0);
-  document.querySelectorAll('.node').forEach(n=>{
-    n.classList.remove('search-hit');
-    n.style.opacity='';
-  });
-  if(!q){ state.searchMatches.clear(); return; }
+let searchTimer = null;
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    const q = searchInput.value.trim();
+    $('searchBox').classList.toggle('has-value', q.length > 0);
 
-  const matches = new Set();
-  const lowerQ = q.toLowerCase();
-  state.people.forEach(p=>{
-    const nameMatch = (p.name||'').toLowerCase().includes(lowerQ);
-    const idMatch = String(p.id).includes(q);
-    if(nameMatch || idMatch) matches.add(p.id);
-  });
-  state.searchMatches = matches;
-  if(matches.size===0){ toast('🔍 لا توجد نتائج'); return; }
+    state.searchMatches.clear();
+    if(!q){ render(); return; }
 
-  document.querySelectorAll('.node').forEach(n=>{
-    if(matches.has(Number(n.dataset.id))){
-      n.style.opacity='1';
-      n.classList.add('search-hit');
-    }else{
-      n.style.opacity='.1';
+    const lowerQ = q.toLowerCase();
+    state.people.forEach(p => {
+      const nameMatch = (p.name || '').toLowerCase().includes(lowerQ);
+      const idMatch = String(p.id).includes(q.replace('#', ''));
+      if(nameMatch || idMatch) state.searchMatches.add(Number(p.id));
+    });
+
+    if(state.searchMatches.size === 0){
+      toast('🔍 لا توجد نتائج');
+      render();
+      return;
     }
-  });
-  if(matches.size===1){
-    const id=[...matches][0];
-    centerOn(id);
-    toast(`🔍 ${state.byId.get(id)?.name} (#${id})`);
-  }else{
-    toast(`🔍 ${matches.size} نتيجة`);
-    fitSearchResults(matches);
-  }
+    render();
+    if(state.searchMatches.size === 1){
+      const id = [...state.searchMatches][0];
+      setTimeout(()=>centerOn(id), 100);
+      toast(`🔍 ${state.byId.get(id)?.name} (#${id})`);
+    }else{
+      toast(`🔍 ${state.searchMatches.size} نتيجة`);
+    }
+  }, 250);
 });
 
-function fitSearchResults(matches){
-  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity,count=0;
-  matches.forEach(id=>{
-    const p=state.positions.get(id); if(!p) return;
-    count++;
-    if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x;
-    if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y;
-  });
-  if(!count) return;
-  const padX=NODE_W*1.5, padY=NODE_H*1.5;
-  const w=(maxX-minX)+padX*2, h=(maxY-minY)+padY*2;
-  const rect=svg.getBoundingClientRect();
-  const k=Math.min(rect.width/w, rect.height/h)*0.9;
-  const cx=(minX+maxX)/2, cy=(minY+maxY)/2;
-  state.transform.k=Math.max(0.1,Math.min(3,k));
-  state.transform.x=rect.width/2-cx*state.transform.k;
-  state.transform.y=rect.height/2-cy*state.transform.k;
-  applyTransform();
-}
-
-$('clearSearch').onclick = ()=>{
-  searchInput.value='';
+$('clearSearch').onclick = () => {
+  searchInput.value = '';
   searchInput.dispatchEvent(new Event('input'));
   searchInput.focus();
 };
 
-/* =========================================================
-   11) إحصائيات وأزرار
-   ========================================================= */
+/* ============================================================
+   15) إحصائيات عامة
+   ============================================================ */
 function updateStats(){
   $('st-people').textContent = state.people.length;
-  $('st-gens').textContent = state.maxGen+1;
+  $('st-gens').textContent = state.maxGen + 1;
   $('st-roots').textContent = state.roots.length;
 }
 
-$('btn-home').onclick = ()=> exitFocus();
-$('btn-fit').onclick = ()=> fitToScreen();
-$('btn-focus-toggle').onclick = ()=>{
-  if(state.focusId!=null) exitFocus();
-  else toast('🎯 اضغط مرتين على أي فرد');
+/* ============================================================
+   16) أزرار
+   ============================================================ */
+$('btn-fit').onclick = () => fitToScreen();
+$('btn-zoom-in').onclick = () => zoomBy(1.3);
+$('btn-zoom-out').onclick = () => zoomBy(1/1.3);
+$('btn-reset').onclick = () => {
+  state.tx = 0; state.ty = 0; state.scale = 1;
+  applyTransform();
 };
-$('btn-zoom-in').onclick = ()=> zoomBy(1.25);
-$('btn-zoom-out').onclick = ()=> zoomBy(1/1.25);
-$('btn-reset').onclick = ()=> resetZoom();
-$('closePanel').onclick = ()=> $('infoPanel').classList.remove('open');
+$('btn-up').onclick = () => { state.ty += 150; applyTransform(); };
+$('btn-down').onclick = () => { state.ty -= 150; applyTransform(); };
+$('closePanel').onclick = () => $('infoPanel').classList.remove('open');
+$('exitFocusBtn').onclick = exitFocus;
 
-document.addEventListener('keydown', e=>{
-  if(e.key==='Escape'){
-    if($('infoPanel').classList.contains('open')) $('infoPanel').classList.remove('open');
-    else if(state.focusId!=null) exitFocus();
+$('btn-theme').onclick = () => {
+  state.dark = !state.dark;
+  document.documentElement.classList.toggle('dark', state.dark);
+  $('btn-theme').textContent = state.dark ? '☀️' : '🌙';
+  try{ localStorage.setItem('ft-theme', state.dark ? 'dark' : 'light'); }catch{}
+};
+
+try{
+  const saved = localStorage.getItem('ft-theme');
+  if(saved === 'dark'){
+    state.dark = true;
+    document.documentElement.classList.add('dark');
+    $('btn-theme').textContent = '☀️';
   }
-  if(e.key==='f'||e.key==='F') fitToScreen();
-  if(e.key==='+'||e.key==='=') zoomBy(1.2);
-  if(e.key==='-') zoomBy(1/1.2);
+}catch{}
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){
+    if($('infoPanel').classList.contains('open')) $('infoPanel').classList.remove('open');
+    else if(state.focusId != null) exitFocus();
+  }
+  if(e.key === 'f' || e.key === 'F') fitToScreen();
+  if(e.key === '+' || e.key === '=') zoomBy(1.2);
+  if(e.key === '-') zoomBy(1/1.2);
 });
 
-/* =========================================================
-   12) Toast
-   ========================================================= */
-let toastTimer=null;
+/* ============================================================
+   17) Toast
+   ============================================================ */
+let toastTimer = null;
 function toast(msg){
-  const t=$('toast'); t.textContent=msg; t.classList.add('show');
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+  toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
 }
 
-/* =========================================================
-   13) Resize
-   ========================================================= */
-let resizeTimer=null;
-window.addEventListener('resize', ()=>{
+/* ============================================================
+   18) Resize
+   ============================================================ */
+let resizeTimer = null;
+window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
-  resizeTimer=setTimeout(applyTransform,200);
+  resizeTimer = setTimeout(() => { render(); fitToScreen(); }, 250);
 });
-window.addEventListener('orientationchange', ()=> setTimeout(fitToScreen,300));
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => { render(); fitToScreen(); }, 350);
+});
 
-/* =========================================================
-   14) انطلاق
-   ========================================================= */
+/* ============================================================
+   19) 🛡️ منع التصوير والطباعة
+   ============================================================ */
+(function protect(){
+  // 1) منع الطباعة
+  window.addEventListener('beforeprint', (e) => {
+    e.preventDefault(); e.stopPropagation();
+    protectMsg('🔒 الطباعة معطلة');
+    return false;
+  }, true);
+  window.print = function(){ protectMsg('🔒 الطباعة معطلة'); return false; };
+
+  // 2) اختصارات
+  document.addEventListener('keydown', (e) => {
+    const key = e.key ? e.key.toLowerCase() : '';
+    const ctrl = e.ctrlKey || e.metaKey;
+    const shift = e.shiftKey;
+
+    if(ctrl && key === 'p'){ e.preventDefault(); e.stopPropagation(); protectMsg('🔒 الطباعة معطلة'); return false; }
+    if(ctrl && key === 's'){ e.preventDefault(); e.stopPropagation(); protectMsg('💾 الحفظ معطل'); return false; }
+    if(ctrl && shift && key === 's'){ e.preventDefault(); e.stopPropagation(); protectMsg('📸 التصوير معطل'); return false; }
+    if(ctrl && key === 'a'){
+      const tag = document.activeElement?.tagName;
+      if(tag !== 'INPUT' && tag !== 'TEXTAREA'){ e.preventDefault(); return false; }
+    }
+    if(e.key === 'F12' || e.keyCode === 123){ e.preventDefault(); e.stopPropagation(); protectMsg('🚫 أدوات المطور معطلة'); return false; }
+    if(ctrl && shift && ['i','j','c'].includes(key)){ e.preventDefault(); e.stopPropagation(); protectMsg('🚫 أدوات المطور معطلة'); return false; }
+    if(ctrl && key === 'u'){ e.preventDefault(); e.stopPropagation(); return false; }
+    if(e.key === 'PrintScreen' || e.keyCode === 44){
+      e.preventDefault();
+      try{ navigator.clipboard.writeText(''); }catch(_){}
+      protectMsg('📸 التصوير معطل'); return false;
+    }
+    if(e.metaKey && e.shiftKey && ['3','4','5'].includes(key)){
+      e.preventDefault(); e.stopPropagation();
+      protectMsg('📸 التصوير معطل'); return false;
+    }
+  }, true);
+
+  document.addEventListener('keyup', (e) => {
+    if(e.key === 'PrintScreen' || e.keyCode === 44){
+      e.preventDefault();
+      try{ navigator.clipboard.writeText(''); }catch(_){}
+      protectMsg('📸 التصوير معطل'); return false;
+    }
+  }, true);
+
+  // 3) قائمة الزر الأيمن
+  document.addEventListener('contextmenu', (e) => {
+    e.preventDefault(); e.stopPropagation();
+    protectMsg('🚫 القائمة معطلة'); return false;
+  }, true);
+
+  // 4) السحب
+  document.addEventListener('dragstart', (e) => { e.preventDefault(); return false; }, true);
+
+  // 5) إخفاء عند تبديل التطبيق
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden) document.body.classList.add('protect-blur');
+    else setTimeout(() => document.body.classList.remove('protect-blur'), 300);
+  });
+
+  // 6) كشف DevTools
+  let devtoolsOpen = false;
+  setInterval(() => {
+    const threshold = 160;
+    const wD = window.outerWidth - window.innerWidth;
+    const hD = window.outerHeight - window.innerHeight;
+    if(wD > threshold || hD > threshold){
+      if(!devtoolsOpen){
+        devtoolsOpen = true;
+        protectMsg('🚫 أدوات المطور مكتشفة');
+        document.body.classList.add('protect-blur');
+      }
+    } else if(devtoolsOpen){
+      devtoolsOpen = false;
+      document.body.classList.remove('protect-blur');
+    }
+  }, 1000);
+
+  // 7) النسخ
+  document.addEventListener('copy', (e) => {
+    const tag = document.activeElement?.tagName;
+    if(tag !== 'INPUT' && tag !== 'TEXTAREA'){
+      e.preventDefault();
+      try{ e.clipboardData?.setData('text/plain',''); }catch(_){}
+      protectMsg('📋 النسخ معطل');
+      return false;
+    }
+  }, true);
+
+  document.addEventListener('cut', (e) => {
+    const tag = document.activeElement?.tagName;
+    if(tag !== 'INPUT' && tag !== 'TEXTAREA'){ e.preventDefault(); return false; }
+  }, true);
+
+  // 8) رسالة
+  let msgTimer = null;
+  function protectMsg(text){
+    let msg = document.getElementById('_protect_msg');
+    if(!msg){
+      msg = document.createElement('div');
+      msg.id = '_protect_msg';
+      msg.style.cssText = `
+        position: fixed; top: 50%; left: 50%;
+        transform: translate(-50%, -50%) scale(.9);
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+        color: #fff; padding: 16px 26px; border-radius: 14px;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        font-size: 15px; font-weight: 800;
+        box-shadow: 0 20px 60px rgba(220,38,38,.5);
+        z-index: 2147483647; opacity: 0;
+        transition: opacity .25s ease, transform .25s ease;
+        pointer-events: none; direction: rtl; text-align: center;
+        max-width: 90vw;
+      `;
+      document.body.appendChild(msg);
+    }
+    msg.textContent = text;
+    msg.style.opacity = '1';
+    msg.style.transform = 'translate(-50%, -50%) scale(1)';
+    clearTimeout(msgTimer);
+    msgTimer = setTimeout(() => {
+      msg.style.opacity = '0';
+      msg.style.transform = 'translate(-50%, -50%) scale(.9)';
+    }, 1800);
+  }
+
+  // 9) منع selectstart
+  document.addEventListener('selectstart', (e) => {
+    const tag = e.target?.tagName;
+    if(tag !== 'INPUT' && tag !== 'TEXTAREA'){ e.preventDefault(); return false; }
+  }, true);
+
+  // 10) console warning
+  console.log('%c🔒 هذا الموقع محمي ضد التصوير والطباعة',
+    'color:#dc2626;font-size:16px;font-weight:900;padding:8px;');
+})();
+
+/* ============================================================
+   20) انطلاق
+   ============================================================ */
 loadData();
 </script>
 </body>
