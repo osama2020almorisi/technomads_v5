@@ -16,11 +16,8 @@
     --txt:#e6edf7;
     --txt-dim:#8b9bb4;
     --accent:#3b82f6;
-    --accent-2:#8b5cf6;
     --glow:#60a5fa;
     --danger:#ef4444;
-    --ok:#10b981;
-    --warn:#f59e0b;
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
   }
@@ -33,34 +30,30 @@
   }
   #app{position:fixed;inset:0;display:flex;flex-direction:column}
 
-  /* ============ شريط علوي ============ */
+  /* شريط علوي */
   .topbar{
     position:relative;z-index:20;
     display:flex;align-items:center;gap:6px;
     padding:calc(8px + var(--safe-top)) 10px 8px;
     background:linear-gradient(180deg,rgba(10,15,28,.98),rgba(10,15,28,.75));
     border-bottom:1px solid var(--line);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   }
   .icon-btn{
     width:40px;height:40px;flex:0 0 auto;
     display:grid;place-items:center;
     border-radius:11px;border:1px solid var(--line);
     background:var(--bg-2);color:var(--txt);
-    cursor:pointer;transition:.18s;font-size:17px;
-    font-family:inherit;
+    cursor:pointer;transition:.18s;font-size:17px;font-family:inherit;
   }
   .icon-btn:active{transform:scale(.92);background:var(--bg-3)}
   .icon-btn.primary{background:linear-gradient(135deg,#0ea5e9,#2563eb);border-color:transparent;color:#fff}
-  .icon-btn.danger{background:linear-gradient(135deg,#ef4444,#b91c1c);border-color:transparent;color:#fff}
   .icon-btn.active{border-color:var(--accent);color:var(--glow);box-shadow:0 0 0 2px rgba(59,130,246,.2)}
 
   .search-box{
     flex:1;position:relative;display:flex;align-items:center;
     background:var(--bg-2);border:1px solid var(--line);
-    border-radius:11px;padding:0 10px;height:40px;transition:.2s;
-    min-width:0;
+    border-radius:11px;padding:0 10px;height:40px;transition:.2s;min-width:0;
   }
   .search-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
   .search-box input{
@@ -72,25 +65,22 @@
   .search-box .clear-btn{display:none;cursor:pointer;color:var(--txt-dim);font-size:14px;padding:4px}
   .search-box.has-value .clear-btn{display:block}
 
-  /* ============ إحصائيات ============ */
+  /* إحصائيات */
   .stats{
     position:absolute;top:calc(62px + var(--safe-top));left:10px;right:10px;
-    z-index:15;display:flex;gap:6px;justify-content:flex-end;
-    pointer-events:none;
+    z-index:15;display:flex;gap:6px;justify-content:flex-end;pointer-events:none;
   }
   .stat-card{
     pointer-events:auto;
     min-width:64px;padding:6px 10px;border-radius:12px;
     background:rgba(15,22,40,.85);border:1px solid var(--line);
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-    text-align:center;transition:.18s;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    text-align:center;
   }
-  .stat-card:active{transform:scale(.95)}
   .stat-card .num{font-size:17px;font-weight:800;color:var(--glow);line-height:1}
   .stat-card .lbl{font-size:10px;color:var(--txt-dim);margin-top:2px}
 
-  /* ============ أدوات تحكم عائمة ============ */
+  /* أدوات تحكم */
   .fab-stack{
     position:absolute;bottom:calc(16px + var(--safe-bottom));left:12px;
     z-index:15;display:flex;flex-direction:column;gap:8px;
@@ -99,23 +89,20 @@
     width:44px;height:44px;border-radius:13px;
     background:rgba(15,22,40,.92);border:1px solid var(--line);
     color:var(--txt);font-size:19px;cursor:pointer;
-    display:grid;place-items:center;transition:.18s;
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-    font-family:inherit;
+    display:grid;place-items:center;transition:.18s;font-family:inherit;
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   }
   .fab:active{transform:scale(.9);background:var(--accent);color:#fff}
   .fab.zoom-label{font-size:12px;font-weight:800}
 
-  /* ============ لوحة تفاصيل ============ */
+  /* لوحة تفاصيل */
   .info-panel{
     position:absolute;top:0;right:0;bottom:0;width:320px;max-width:88vw;
     background:linear-gradient(180deg,rgba(10,15,28,.99),rgba(15,22,40,.99));
     border-right:1px solid var(--line);
     transform:translateX(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);
     z-index:30;display:flex;flex-direction:column;
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     box-shadow:-10px 0 30px rgba(0,0,0,.5);
   }
   .info-panel.open{transform:translateX(0)}
@@ -136,15 +123,11 @@
   .info-body{padding:14px 16px;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}
   .info-row{
     display:flex;justify-content:space-between;align-items:center;
-    padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px;
-    gap:10px;
+    padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px;gap:10px;
   }
   .info-row .k{color:var(--txt-dim);flex:0 0 auto}
   .info-row .v{font-weight:600;text-align:left;word-break:break-word}
-  .badge{
-    display:inline-block;padding:3px 9px;border-radius:20px;
-    font-size:11px;font-weight:700;
-  }
+  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
   .badge.male{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
   .badge.female{background:rgba(236,72,153,.15);color:#f472b6;border:1px solid rgba(236,72,153,.3)}
   .badge.unknown{background:rgba(139,155,180,.15);color:#8b9bb4;border:1px solid rgba(139,155,180,.3)}
@@ -152,8 +135,7 @@
     width:100%;margin-top:12px;padding:12px;border-radius:12px;
     background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;
     border:0;font-size:14px;font-weight:700;cursor:pointer;transition:.18s;
-    font-family:inherit;
-    display:flex;align-items:center;justify-content:center;gap:6px;
+    font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;
   }
   .action-btn:active{transform:scale(.97)}
   .action-btn.exit{background:linear-gradient(135deg,#ef4444,#b91c1c)}
@@ -165,12 +147,11 @@
     background:rgba(255,255,255,.08);border:0;color:var(--txt);cursor:pointer;
     display:grid;place-items:center;font-size:15px;font-family:inherit;
   }
-  .close-panel:active{background:rgba(255,255,255,.16)}
 
-  /* ============ SVG ============ */
+  /* SVG */
   #svg{
     flex:1;width:100%;display:block;cursor:grab;touch-action:none;
-    background:radial-gradient(ellipse at center, #0a1020 0%, #05070d 100%);
+    background:radial-gradient(ellipse at center bottom, #0c1428 0%, #05070d 70%);
   }
   #svg.grabbing{cursor:grabbing}
 
@@ -180,16 +161,14 @@
   .node .n-name{font-weight:700;font-size:12px;fill:#fff}
   .node .n-id{font-size:10px;fill:#b8c5d8;font-weight:600}
   .node.focused rect{
-    stroke:#fbbf24 !important;
-    stroke-width:3.5 !important;
-    filter:url(#focusGlow);
+    stroke:#fbbf24 !important;stroke-width:3.5 !important;filter:url(#focusGlow);
   }
-  .node.dimmed{opacity:.08;pointer-events:none;transition:opacity .3s}
+  .node.dimmed{opacity:.06;pointer-events:none;transition:opacity .3s}
   .node.search-hit rect{stroke:#fbbf24 !important;stroke-width:3 !important}
   .link{fill:none;stroke-linecap:round;transition:opacity .3s}
-  .link.dimmed{opacity:.04}
+  .link.dimmed{opacity:.03}
 
-  /* ============ شاشة تحميل ============ */
+  /* Loader */
   #loader{
     position:fixed;inset:0;background:var(--bg-0);z-index:100;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
@@ -202,9 +181,9 @@
     border-top-color:var(--accent);animation:spin 1s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg)}}
-  #loader p{color:var(--txt-dim);font-size:13px;text-align:center;padding:0 20px}
+  #loader p{color:var(--txt-dim);font-size:13px;text-align:center;padding:0 20px;line-height:1.6}
 
-  /* ============ Toast ============ */
+  /* Toast */
   #toast{
     position:fixed;bottom:calc(80px + var(--safe-bottom));left:50%;
     transform:translateX(-50%) translateY(20px);
@@ -217,38 +196,22 @@
   }
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-  /* ============ شريط سفلي للبحث السريع (Mobile) ============ */
-  .quick-nav{
-    position:absolute;bottom:calc(16px + var(--safe-bottom));right:12px;
-    z-index:15;display:flex;flex-direction:column;gap:8px;
-  }
-
-  /* ============ شاشة صغيرة جداً ============ */
   @media(max-width:380px){
     .stat-card{min-width:56px;padding:5px 8px}
     .stat-card .num{font-size:15px}
-    .stat-card .lbl{font-size:9px}
     .icon-btn{width:36px;height:36px;font-size:15px}
     .search-box{height:36px}
     .fab{width:40px;height:40px;font-size:17px}
-  }
-
-  /* ============ شاشة كبيرة ============ */
-  @media(min-width:768px){
-    .node .n-name{font-size:13px}
-    .node .n-id{font-size:11px}
-    .info-panel{width:360px}
   }
 </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- شريط علوي -->
   <div class="topbar">
-    <button class="icon-btn primary" id="btn-focus-toggle" title="وضع التركيز" aria-label="وضع التركيز">🎯</button>
-    <button class="icon-btn" id="btn-home" title="الرئيسية" aria-label="الرئيسية">🏠</button>
-    <button class="icon-btn" id="btn-fit" title="ملاءمة الشاشة" aria-label="ملاءمة">⛶</button>
+    <button class="icon-btn primary" id="btn-focus-toggle" aria-label="وضع التركيز">🎯</button>
+    <button class="icon-btn" id="btn-home" aria-label="الرئيسية">🏠</button>
+    <button class="icon-btn" id="btn-fit" aria-label="ملاءمة">⛶</button>
     <div class="search-box" id="searchBox">
       <span class="s-icon">🔍</span>
       <input type="text" id="searchInput" placeholder="ابحث بالاسم أو الـ ID..." inputmode="search">
@@ -256,24 +219,22 @@
     </div>
   </div>
 
-  <!-- إحصائيات -->
   <div class="stats">
     <div class="stat-card"><div class="num" id="st-people">0</div><div class="lbl">الأفراد</div></div>
     <div class="stat-card"><div class="num" id="st-gens">0</div><div class="lbl">الأجيال</div></div>
     <div class="stat-card"><div class="num" id="st-roots">0</div><div class="lbl">الفروع</div></div>
   </div>
 
-  <!-- SVG -->
   <svg id="svg">
     <defs>
-      <filter id="hoverGlow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="3" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
       <filter id="focusGlow" x="-50%" y="-50%" width="200%" height="200%">
         <feGaussianBlur stdDeviation="6" result="b"/>
         <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
+      <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#1e3a8a" stop-opacity=".4"/>
+        <stop offset="100%" stop-color="#0a0f1c" stop-opacity="0"/>
+      </radialGradient>
     </defs>
     <g id="viewport">
       <g id="links"></g>
@@ -281,22 +242,14 @@
     </g>
   </svg>
 
-  <!-- أدوات تحكم عائمة (يسار) -->
   <div class="fab-stack">
     <button class="fab" id="btn-zoom-in" aria-label="تكبير">＋</button>
     <button class="fab" id="btn-zoom-out" aria-label="تصغير">－</button>
     <button class="fab zoom-label" id="btn-reset" aria-label="إعادة تعيين">1:1</button>
   </div>
 
-  <!-- أدوات عائمة (يمين) -->
-  <div class="quick-nav">
-    <button class="fab" id="btn-up" title="أعلى" aria-label="أعلى">▲</button>
-    <button class="fab" id="btn-down" title="أسفل" aria-label="أسفل">▼</button>
-  </div>
-
-  <!-- لوحة تفاصيل -->
-  <div class="info-panel" id="infoPanel" role="dialog" aria-label="تفاصيل الفرد">
-    <button class="close-panel" id="closePanel" aria-label="إغلاق">✕</button>
+  <div class="info-panel" id="infoPanel">
+    <button class="close-panel" id="closePanel">✕</button>
     <div class="info-head">
       <div class="avatar" id="pAvatar">؟</div>
       <div style="min-width:0">
@@ -307,10 +260,8 @@
     <div class="info-body" id="pBody"></div>
   </div>
 
-  <!-- Toast -->
-  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="toast"></div>
 
-  <!-- Loader -->
   <div id="loader">
     <div class="spinner"></div>
     <p>جارٍ تحميل شجرة العائلة...</p>
@@ -319,7 +270,7 @@
 
 <script>
 /* =========================================================
-   شجرة العائلة الاحترافية — Mobile-First Vertical Layout
+   شجرة العائلة — Radial Tree Layout (الجذع في الأسفل)
    ========================================================= */
 'use strict';
 
@@ -339,11 +290,12 @@ const GEN_PALETTE = [
   {fill:'#083344', stroke:'#06b6d4', glow:'#22d3ee'},
 ];
 
-/* ---------- قياسات العقدة ---------- */
-const NODE_W = 110;
-const NODE_H = 48;
-const H_GAP = 16;    // فراغ أفقي بين الأشقاء
-const V_GAP = 75;    // فراغ عمودي بين الأجيال
+/* ---------- قياسات ---------- */
+const NODE_W = 100;
+const NODE_H = 40;
+const BASE_RADIUS = 130;   // نصف قطر أول طبقة
+const RADIUS_STEP = 130;   // زيادة نصف القطر لكل جيل
+const MAX_ARC = Math.PI * 0.98;  // 176 درجة (شبه قوس كامل)
 
 /* ---------- الحالة ---------- */
 const state = {
@@ -380,15 +332,14 @@ async function loadData(){
     computeGenerations();
     render(null);
     updateStats();
-    // ملاءمة بعد الرسم
-    requestAnimationFrame(()=>{ fitToScreen(); });
-    setTimeout(()=>{ fitToScreen(); }, 120);
+    requestAnimationFrame(fitToScreen);
+    setTimeout(fitToScreen, 200);
     $('loader').classList.add('hide');
   }catch(err){
     console.error(err);
     $('loader').innerHTML = `
       <p style="color:#ef4444;font-size:15px;font-weight:700">⚠ تعذر تحميل tree-data.json</p>
-      <p style="color:#8b9bb4;font-size:12px;max-width:300px;text-align:center;line-height:1.6">
+      <p style="color:#8b9bb4;font-size:12px;max-width:300px">
         تأكد من وجود الملف في نفس مجلد index.html<br>
         وشغّل الصفحة عبر Live Server أو أي سيرفر محلي
       </p>`;
@@ -396,26 +347,23 @@ async function loadData(){
 }
 
 /* =========================================================
-   2) بناء الخرائط
+   2) خرائط
    ========================================================= */
 function buildMaps(){
   state.byId.clear();
   state.children.clear();
   state.people.forEach(p => state.byId.set(p.id, p));
-
   state.people.forEach(p => {
     if(p.father_id != null && state.byId.has(p.father_id)){
       if(!state.children.has(p.father_id)) state.children.set(p.father_id, []);
       state.children.get(p.father_id).push(p.id);
     }
   });
-
-  // ترتيب الأبناء حسب الـ ID لضمان استقرار الترتيب
   state.children.forEach(arr => arr.sort((a,b)=>a-b));
 }
 
 /* =========================================================
-   3) حساب الأجيال
+   3) الأجيال
    ========================================================= */
 function computeGenerations(){
   state.depth.clear();
@@ -431,82 +379,157 @@ function computeGenerations(){
   while(head < q.length){
     const id = q[head++];
     const d = state.depth.get(id) || 0;
-    const kids = state.children.get(id) || [];
-    for(const k of kids){
+    (state.children.get(id) || []).forEach(k=>{
       if(!state.depth.has(k) || state.depth.get(k) < d+1){
         state.depth.set(k, d+1);
         q.push(k);
       }
-    }
+    });
   }
   state.people.forEach(p => { if(!state.depth.has(p.id)) state.depth.set(p.id,0); });
-
   state.maxGen = 0;
   state.depth.forEach(v => { if(v > state.maxGen) state.maxGen = v; });
 }
 
 /* =========================================================
-   4) تخطيط الشجرة — رأسي / هرمي (Top-Down)
+   4) Radial Layout — الجذع في الأسفل والفروع للأعلى
    ========================================================= */
-function layoutTree(rootId){
+/* الفكرة:
+   - كل جيل يحصل على قوس دائري خاص به
+   - نصف القطر يزيد مع العمق
+   - الزاوية تتراوح بين -90° و +90° حول المحور العمودي
+   - الجد في الأسفل (y موجب) والفروع للأعلى (y سالب)
+*/
+function layoutRadial(rootId){
   state.positions.clear();
-  let cursor = 0;
 
-  function place(id, depth){
-    if(!state.byId.has(id)) return cursor;
+  // 1) احسب عدد الأوراق (Leaves) لكل عقدة لتوزيع الزوايا بشكل متناسب
+  const leafCount = new Map();
+  function countLeaves(id){
+    if(leafCount.has(id)) return leafCount.get(id);
     const kids = state.children.get(id) || [];
-    const childXs = [];
-    kids.forEach(k => childXs.push(place(k, depth+1)));
-
-    let x;
-    if(childXs.length === 0){
-      x = cursor;
-      cursor += NODE_W + H_GAP;
-    }else{
-      x = (childXs[0] + childXs[childXs.length-1]) / 2;
-    }
-    state.positions.set(id, {x, y: depth * (NODE_H + V_GAP), depth});
-    return x;
+    if(kids.length === 0){ leafCount.set(id, 1); return 1; }
+    let sum = 0;
+    kids.forEach(k => sum += countLeaves(k));
+    leafCount.set(id, sum);
+    return sum;
   }
-  place(rootId, 0);
+  countLeaves(rootId);
+
+  // 2) وزّع الزوايا على الأوراق
+  const totalLeaves = leafCount.get(rootId) || 1;
+  const angleOf = new Map();  // id -> زاوية نهائية
+
+  function assignAngles(id, startAngle, endAngle){
+    const kids = state.children.get(id) || [];
+    if(kids.length === 0){
+      angleOf.set(id, (startAngle + endAngle) / 2);
+      return;
+    }
+    // وزّع الأبناء على القوس بحسب عدد أوراق كل منهم
+    let cursor = startAngle;
+    const total = endAngle - startAngle;
+    const sumLeaves = leafCount.get(id);
+    kids.forEach(k=>{
+      const kLeaves = leafCount.get(k);
+      const span = total * (kLeaves / sumLeaves);
+      assignAngles(k, cursor, cursor + span);
+      cursor += span;
+    });
+    // زاوية الأب = متوسط زوايا الأبناء
+    const childAngles = kids.map(k=>angleOf.get(k));
+    angleOf.set(id, (Math.min(...childAngles) + Math.max(...childAngles)) / 2);
+  }
+
+  // القوس: من -MAX_ARC/2 إلى +MAX_ARC/2 (حول المحور الرأسي)
+  assignAngles(rootId, -MAX_ARC/2, MAX_ARC/2);
+
+  // 3) حوّل (زاوية، عمق) إلى (x، y) — الجذع في الأسفل
+  //    عمق 0 → في الأسفل، عمق أكبر → للأعلى
+  function place(id){
+    if(state.positions.has(id)) return;
+    const depth = state.depth.get(id) || 0;
+    const angle = angleOf.get(id) ?? 0;
+    const r = BASE_RADIUS + depth * RADIUS_STEP;
+    // x = r * sin(angle) ، y = r * cos(angle) — لكن نريد الجذع في الأسفل
+    // لذا نعكس y: الجذع عند y موجب (أسفل)، الفروع عند y سالب
+    const x = r * Math.sin(angle);
+    const y = r * Math.cos(angle);
+    state.positions.set(id, {x, y, depth, angle});
+    (state.children.get(id) || []).forEach(k => place(k));
+  }
+  place(rootId);
+
+  // 4) توسيط الشجرة
   centerTree();
 }
 
-/* تخطيط كل الشجرة (عدة جذور) */
-function layoutAll(){
+/* layout لكل الجذور */
+function layoutAllRadial(){
   state.positions.clear();
-  let cursor = 0;
-
-  function place(id, depth){
-    if(!state.byId.has(id)) return cursor;
-    const kids = state.children.get(id) || [];
-    const childXs = [];
-    kids.forEach(k => childXs.push(place(k, depth+1)));
-    let x;
-    if(childXs.length === 0){
-      x = cursor; cursor += NODE_W + H_GAP;
-    }else{
-      x = (childXs[0] + childXs[childXs.length-1]) / 2;
-    }
-    state.positions.set(id, {x, y: depth*(NODE_H+V_GAP), depth});
-    return x;
+  // نتعامل مع كل جذر كشجرة مستقلة ثم ندمج
+  if(state.roots.length === 1){
+    layoutRadial(state.roots[0]);
+    return;
   }
-  state.roots.forEach(r => place(r, 0));
+  // إذا فيه أكثر من جذر: نوزعهم على زوايا مختلفة
+  const n = state.roots.length;
+  const arcPerRoot = MAX_ARC / n;
+  state.roots.forEach((rootId, i)=>{
+    const start = -MAX_ARC/2 + i * arcPerRoot;
+    const end = start + arcPerRoot;
+    layoutRadialInRange(rootId, start, end);
+  });
   centerTree();
 }
 
-/* توسيط الشجرة حول (0,0) */
+function layoutRadialInRange(rootId, startAngle, endAngle){
+  const leafCount = new Map();
+  function countLeaves(id){
+    if(leafCount.has(id)) return leafCount.get(id);
+    const kids = state.children.get(id) || [];
+    if(kids.length === 0){ leafCount.set(id,1); return 1; }
+    let s=0; kids.forEach(k=>s+=countLeaves(k));
+    leafCount.set(id,s); return s;
+  }
+  countLeaves(rootId);
+  const angleOf = new Map();
+  function assignAngles(id, s, e){
+    const kids = state.children.get(id) || [];
+    if(kids.length === 0){ angleOf.set(id, (s+e)/2); return; }
+    let cursor = s;
+    const total = e - s;
+    const sumLeaves = leafCount.get(id);
+    kids.forEach(k=>{
+      const span = total * (leafCount.get(k)/sumLeaves);
+      assignAngles(k, cursor, cursor+span);
+      cursor += span;
+    });
+    const a = kids.map(k=>angleOf.get(k));
+    angleOf.set(id, (Math.min(...a)+Math.max(...a))/2);
+  }
+  assignAngles(rootId, startAngle, endAngle);
+  function place(id){
+    if(state.positions.has(id)) return;
+    const depth = state.depth.get(id) || 0;
+    const angle = angleOf.get(id) ?? 0;
+    const r = BASE_RADIUS + depth * RADIUS_STEP;
+    state.positions.set(id, {x: r*Math.sin(angle), y: r*Math.cos(angle), depth, angle});
+    (state.children.get(id)||[]).forEach(k=>place(k));
+  }
+  place(rootId);
+}
+
 function centerTree(){
   if(state.positions.size === 0) return;
-  let minX=Infinity, maxX=-Infinity, maxY=0;
+  let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
   state.positions.forEach(p=>{
-    if(p.x < minX) minX = p.x;
-    if(p.x > maxX) maxX = p.x;
-    if(p.y > maxY) maxY = p.y;
+    if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x;
+    if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y;
   });
-  const offX = -(minX + maxX) / 2;
-  const offY = -maxY / 2;
-  state.positions.forEach(p => { p.x += offX; p.y += offY; });
+  const offX = -(minX+maxX)/2;
+  const offY = -(minY+maxY)/2;
+  state.positions.forEach(p=>{ p.x+=offX; p.y+=offY; });
 }
 
 /* =========================================================
@@ -518,20 +541,18 @@ function render(focusId = null){
   gNodes.innerHTML = '';
 
   if(focusId != null){
-    // وضع التركيز: ارسم الفرد وذريته فقط
-    layoutTree(focusId);
+    layoutRadial(focusId);
     drawSubtree(focusId);
     state.focusSet = collectDescendants(focusId);
     applyFocusDim();
   }else{
-    layoutAll();
+    layoutAllRadial();
     drawAll();
     state.focusSet = null;
   }
   applyTransform();
 }
 
-/* اجمع كل الذرية */
 function collectDescendants(rootId){
   const set = new Set();
   const stack = [rootId];
@@ -539,12 +560,11 @@ function collectDescendants(rootId){
     const cur = stack.pop();
     if(set.has(cur)) continue;
     set.add(cur);
-    (state.children.get(cur) || []).forEach(k => stack.push(k));
+    (state.children.get(cur)||[]).forEach(k=>stack.push(k));
   }
   return set;
 }
 
-/* رسم الشجرة الكاملة */
 function drawAll(){
   state.people.forEach(p=>{
     if(p.father_id == null) return;
@@ -557,13 +577,9 @@ function drawAll(){
   });
 }
 
-/* رسم الشجرة الفرعية */
 function drawSubtree(rootId){
   const all = collectDescendants(rootId);
-  // الروابط
-  all.forEach(id => {
-    const p = state.byId.get(id);
-    if(!p) return;
+  all.forEach(id=>{
     const kids = state.children.get(id) || [];
     kids.forEach(k=>{
       if(!all.has(k)) return;
@@ -571,15 +587,13 @@ function drawSubtree(rootId){
       drawLink(state.positions.get(id), state.positions.get(k), state.depth.get(k)||0);
     });
   });
-  // العقد
-  all.forEach(id => {
+  all.forEach(id=>{
     const p = state.byId.get(id);
     if(!p || !state.positions.has(id)) return;
     drawNode(p, state.positions.get(id), state.depth.get(id)||0);
   });
 }
 
-/* رسم عقدة */
 function drawNode(p, pos, depth){
   const pal = GEN_PALETTE[depth % GEN_PALETTE.length];
   const g = document.createElementNS('http://www.w3.org/2000/svg','g');
@@ -588,24 +602,23 @@ function drawNode(p, pos, depth){
   g.dataset.id = p.id;
   g.dataset.depth = depth;
 
-  // مستطيل
   const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
   rect.setAttribute('x', -NODE_W/2);
   rect.setAttribute('y', -NODE_H/2);
   rect.setAttribute('width', NODE_W);
   rect.setAttribute('height', NODE_H);
-  rect.setAttribute('rx', 11);
+  rect.setAttribute('rx', 10);
   rect.setAttribute('fill', pal.fill);
   rect.setAttribute('stroke', pal.stroke);
   rect.setAttribute('stroke-width', '2');
   g.appendChild(rect);
 
-  // شريط علوي
+  // شريط جانبي
   const bar = document.createElementNS('http://www.w3.org/2000/svg','rect');
-  bar.setAttribute('x', -NODE_W/2 + 5);
-  bar.setAttribute('y', -NODE_H/2 + 5);
+  bar.setAttribute('x', -NODE_W/2 + 4);
+  bar.setAttribute('y', -NODE_H/2 + 4);
   bar.setAttribute('width', 3);
-  bar.setAttribute('height', NODE_H - 10);
+  bar.setAttribute('height', NODE_H - 8);
   bar.setAttribute('rx', 2);
   bar.setAttribute('fill', pal.stroke);
   g.appendChild(bar);
@@ -613,9 +626,9 @@ function drawNode(p, pos, depth){
   // أيقونة الجنس
   const genderIcon = p.gender === 'female' ? '♀' : (p.gender === 'male' ? '♂' : '•');
   const gt = document.createElementNS('http://www.w3.org/2000/svg','text');
-  gt.setAttribute('x', -NODE_W/2 + 13);
-  gt.setAttribute('y', 5);
-  gt.setAttribute('font-size', '14');
+  gt.setAttribute('x', -NODE_W/2 + 11);
+  gt.setAttribute('y', 4);
+  gt.setAttribute('font-size', '13');
   gt.setAttribute('fill', pal.glow);
   gt.setAttribute('font-weight','700');
   gt.textContent = genderIcon;
@@ -623,58 +636,52 @@ function drawNode(p, pos, depth){
 
   // الاسم
   const name = (p.name || 'بدون اسم').trim();
-  const displayName = name.length > 14 ? name.slice(0,13)+'…' : name;
+  const displayName = name.length > 13 ? name.slice(0,12)+'…' : name;
   const t1 = document.createElementNS('http://www.w3.org/2000/svg','text');
   t1.setAttribute('class','n-name');
-  t1.setAttribute('x', -NODE_W/2 + 25);
+  t1.setAttribute('x', -NODE_W/2 + 22);
   t1.setAttribute('y', -3);
   t1.textContent = displayName;
   g.appendChild(t1);
 
-  // الـ ID (بدلاً من تاريخ الميلاد — كما طلبت)
+  // ID
   const t2 = document.createElementNS('http://www.w3.org/2000/svg','text');
   t2.setAttribute('class','n-id');
-  t2.setAttribute('x', -NODE_W/2 + 25);
-  t2.setAttribute('y', 13);
-  t2.textContent = `ID: ${p.id}`;
+  t2.setAttribute('x', -NODE_W/2 + 22);
+  t2.setAttribute('y', 12);
+  t2.textContent = `#${p.id}`;
   g.appendChild(t2);
 
-  // أحداث
-  g.addEventListener('click', e => {
-    e.stopPropagation();
-    selectPerson(p.id);
-  });
-  g.addEventListener('dblclick', e => {
-    e.stopPropagation();
-    focusOn(p.id);
-  });
-  // دعم اللمس المزدوج للجوال
+  g.addEventListener('click', e => { e.stopPropagation(); selectPerson(p.id); });
+  g.addEventListener('dblclick', e => { e.stopPropagation(); focusOn(p.id); });
+
   let lastTap = 0;
   g.addEventListener('touchend', e => {
     const now = Date.now();
-    if(now - lastTap < 300){
-      e.preventDefault();
-      focusOn(p.id);
-    }
+    if(now - lastTap < 300){ e.preventDefault(); focusOn(p.id); }
     lastTap = now;
   });
 
   gNodes.appendChild(g);
 }
 
-/* رسم رابط */
 function drawLink(a, b, depth){
   const pal = GEN_PALETTE[depth % GEN_PALETTE.length];
-  const x1 = a.x, y1 = a.y + NODE_H/2;
-  const x2 = b.x, y2 = b.y - NODE_H/2;
-  const my = (y1 + y2) / 2;
+  // من حافة الأب (باتجاه الابن) إلى حافة الابن (باتجاه الأب)
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const len = Math.hypot(dx, dy) || 1;
+  const ux = dx/len, uy = dy/len;
+  const x1 = a.x + ux * NODE_H/2;
+  const y1 = a.y + uy * NODE_H/2;
+  const x2 = b.x - ux * NODE_H/2;
+  const y2 = b.y - uy * NODE_H/2;
 
   const path = document.createElementNS('http://www.w3.org/2000/svg','path');
   path.setAttribute('class','link');
-  path.setAttribute('d', `M ${x1} ${y1} C ${x1} ${my}, ${x2} ${my}, ${x2} ${y2}`);
+  path.setAttribute('d', `M ${x1} ${y1} L ${x2} ${y2}`);
   path.setAttribute('stroke', pal.stroke);
-  path.setAttribute('stroke-width', '1.8');
-  path.setAttribute('opacity', '.7');
+  path.setAttribute('stroke-width', '1.6');
+  path.setAttribute('opacity', '.55');
   gLinks.appendChild(path);
 }
 
@@ -686,20 +693,15 @@ function focusOn(id){
   state.focusId = id;
   state.focusSet = collectDescendants(id);
   render(id);
-
-  // ضع علامة "مركز" على العقدة
   document.querySelectorAll('.node').forEach(n=>{
     if(n.dataset.id === String(id)) n.classList.add('focused');
   });
-
   const p = state.byId.get(id);
-  toast(`🎯 التركيز على: ${p?.name || ''} (ID: ${id})`);
+  toast(`🎯 التركيز على: ${p?.name || ''} (#${id})`);
   $('btn-focus-toggle').classList.add('active');
   $('btn-focus-toggle').textContent = '✕';
-
-  // ملاءمة الشجرة الفرعية
-  requestAnimationFrame(()=>{ fitToScreen(); });
-  setTimeout(()=>{ fitToScreen(); }, 120);
+  requestAnimationFrame(fitToScreen);
+  setTimeout(fitToScreen, 200);
 }
 
 function exitFocus(){
@@ -707,14 +709,13 @@ function exitFocus(){
   state.focusId = null;
   state.focusSet = null;
   render(null);
-  requestAnimationFrame(()=>{ fitToScreen(); });
-  setTimeout(()=>{ fitToScreen(); }, 120);
+  requestAnimationFrame(fitToScreen);
+  setTimeout(fitToScreen, 200);
   $('btn-focus-toggle').classList.remove('active');
   $('btn-focus-toggle').textContent = '🎯';
   toast('↩ تم الخروج من وضع التركيز');
 }
 
-/* تعتيم غير الذرية */
 function applyFocusDim(){
   if(!state.focusSet) return;
   document.querySelectorAll('.node').forEach(n=>{
@@ -729,46 +730,39 @@ function selectPerson(id){
   const p = state.byId.get(id);
   if(!p) return;
   const depth = state.depth.get(id) || 0;
-
   $('pAvatar').textContent = (p.name||'؟').trim().charAt(0) || '؟';
   $('pName').textContent = p.name || 'بدون اسم';
-  $('pSub').textContent = `ID: ${p.id} • الجيل ${depth+1} • ${p.gender==='female'?'أنثى':p.gender==='male'?'ذكر':'غير محدد'}`;
+  $('pSub').textContent = `#${p.id} • الجيل ${depth+1} • ${p.gender==='female'?'أنثى':p.gender==='male'?'ذكر':'غير محدد'}`;
 
   const kids = state.children.get(id) || [];
   const father = p.father_id ? state.byId.get(p.father_id) : null;
-
-  let genderBadge = 'unknown', genderTxt = 'غير محدد';
-  if(p.gender === 'male'){ genderBadge='male'; genderTxt='ذكر'; }
-  else if(p.gender === 'female'){ genderBadge='female'; genderTxt='أنثى'; }
+  let genderBadge='unknown', genderTxt='غير محدد';
+  if(p.gender==='male'){genderBadge='male';genderTxt='ذكر';}
+  else if(p.gender==='female'){genderBadge='female';genderTxt='أنثى';}
 
   $('pBody').innerHTML = `
     <div class="info-row"><span class="k">الـ ID</span><span class="v">#${p.id}</span></div>
-    <div class="info-row"><span class="k">الحالة</span>
-      <span class="v"><span class="badge ${genderBadge}">${genderTxt}</span></span></div>
+    <div class="info-row"><span class="k">الحالة</span><span class="v"><span class="badge ${genderBadge}">${genderTxt}</span></span></div>
     <div class="info-row"><span class="k">الجيل</span><span class="v">${depth+1}</span></div>
     <div class="info-row"><span class="k">الأب</span><span class="v">${father?`${father.name} <span style="color:#8b9bb4">(#${father.id})</span>`:'—'}</span></div>
     <div class="info-row"><span class="k">عدد الأبناء</span><span class="v">${kids.length}</span></div>
-    ${p.birth_date?`<div class="info-row"><span class="k">تاريخ الميلاد</span><span class="v">${p.birth_date}</span></div>`:''}
-    ${p.death_date?`<div class="info-row"><span class="k">تاريخ الوفاة</span><span class="v">${p.death_date}</span></div>`:''}
+    ${p.birth_date?`<div class="info-row"><span class="k">الميلاد</span><span class="v">${p.birth_date}</span></div>`:''}
+    ${p.death_date?`<div class="info-row"><span class="k">الوفاة</span><span class="v">${p.death_date}</span></div>`:''}
     ${p.notes?`<div class="info-row"><span class="k">ملاحظات</span><span class="v">${p.notes}</span></div>`:''}
     <button class="action-btn ${state.focusId===id?'exit':''}" id="btnFocusPerson">
       ${state.focusId===id?'✕ الخروج من التركيز':'🎯 التركيز على هذا الفرع'}
     </button>
     <button class="action-btn secondary" id="btnCenterPerson">📍 توسيط في الشاشة</button>
-    <button class="action-btn ghost" id="btnFindFather" ${!father?'disabled style="opacity:.4"':''}>
-      👆 الذهاب إلى الأب
-    </button>
+    <button class="action-btn ghost" id="btnFindFather" ${!father?'disabled style="opacity:.4"':''}>👆 الذهاب إلى الأب</button>
   `;
   $('infoPanel').classList.add('open');
-
-  $('btnFocusPerson').onclick = () => {
-    if(state.focusId === id) exitFocus();
-    else focusOn(id);
+  $('btnFocusPerson').onclick = ()=>{
+    if(state.focusId===id) exitFocus(); else focusOn(id);
     $('infoPanel').classList.remove('open');
   };
-  $('btnCenterPerson').onclick = () => centerOn(id);
+  $('btnCenterPerson').onclick = ()=> centerOn(id);
   if(father){
-    $('btnFindFather').onclick = () => { selectPerson(father.id); centerOn(father.id); };
+    $('btnFindFather').onclick = ()=>{ selectPerson(father.id); centerOn(father.id); };
   }
 }
 
@@ -784,21 +778,19 @@ function fitToScreen(){
   if(state.positions.size === 0) return;
   let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
   state.positions.forEach(p=>{
-    if(p.x < minX) minX = p.x;
-    if(p.x > maxX) maxX = p.x;
-    if(p.y < minY) minY = p.y;
-    if(p.y > maxY) maxY = p.y;
+    if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x;
+    if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y;
   });
   const padX = NODE_W, padY = NODE_H;
-  const w = (maxX - minX) + padX*2;
-  const h = (maxY - minY) + padY*2;
+  const w = (maxX-minX) + padX*2;
+  const h = (maxY-minY) + padY*2;
   const rect = svg.getBoundingClientRect();
-  const k = Math.min(rect.width / w, rect.height / h) * 0.92;
-  const cx = (minX + maxX) / 2;
-  const cy = (minY + maxY) / 2;
+  const k = Math.min(rect.width/w, rect.height/h) * 0.95;
+  const cx = (minX+maxX)/2;
+  const cy = (minY+maxY)/2;
   state.transform.k = Math.max(0.06, Math.min(3, k));
-  state.transform.x = rect.width/2 - cx * state.transform.k;
-  state.transform.y = rect.height/2 - cy * state.transform.k;
+  state.transform.x = rect.width/2 - cx*state.transform.k;
+  state.transform.y = rect.height/2 - cy*state.transform.k;
   applyTransform();
 }
 
@@ -808,20 +800,20 @@ function centerOn(id){
   const rect = svg.getBoundingClientRect();
   const k = Math.max(state.transform.k, 1);
   state.transform.k = k;
-  state.transform.x = rect.width/2 - pos.x * k;
-  state.transform.y = rect.height/2 - pos.y * k;
+  state.transform.x = rect.width/2 - pos.x*k;
+  state.transform.y = rect.height/2 - pos.y*k;
   applyTransform();
 }
 
 function zoomBy(factor, cx, cy){
   const rect = svg.getBoundingClientRect();
-  if(cx == null) cx = rect.width/2;
-  if(cy == null) cy = rect.height/2;
+  if(cx==null) cx = rect.width/2;
+  if(cy==null) cy = rect.height/2;
   const k0 = state.transform.k;
-  const k1 = Math.max(0.06, Math.min(4, k0 * factor));
+  const k1 = Math.max(0.06, Math.min(4, k0*factor));
   const {x,y} = state.transform;
-  state.transform.x = cx - (cx - x) * (k1/k0);
-  state.transform.y = cy - (cy - y) * (k1/k0);
+  state.transform.x = cx - (cx-x)*(k1/k0);
+  state.transform.y = cy - (cy-y)*(k1/k0);
   state.transform.k = k1;
   applyTransform();
 }
@@ -832,34 +824,28 @@ function resetZoom(){
 }
 
 /* =========================================================
-   9) التفاعلات — سحب، تكبير، Pinch
+   9) تفاعلات
    ========================================================= */
-let dragging = false;
-let last = {x:0,y:0};
-let pinch = null;
-let dragMoved = false;
+let dragging=false, last={x:0,y:0}, pinch=null, dragMoved=false;
 
 svg.addEventListener('pointerdown', e=>{
   if(e.target.closest('.node')) return;
-  dragging = true;
-  dragMoved = false;
+  dragging=true; dragMoved=false;
   svg.classList.add('grabbing');
-  last = {x:e.clientX, y:e.clientY};
+  last={x:e.clientX,y:e.clientY};
   try{ svg.setPointerCapture(e.pointerId); }catch(_){}
 });
 svg.addEventListener('pointermove', e=>{
   if(!dragging) return;
-  const dx = e.clientX - last.x;
-  const dy = e.clientY - last.y;
-  if(Math.abs(dx) + Math.abs(dy) > 2) dragMoved = true;
-  last = {x:e.clientX, y:e.clientY};
+  const dx=e.clientX-last.x, dy=e.clientY-last.y;
+  if(Math.abs(dx)+Math.abs(dy)>2) dragMoved=true;
+  last={x:e.clientX,y:e.clientY};
   state.transform.x += dx;
   state.transform.y += dy;
   applyTransform();
 });
 svg.addEventListener('pointerup', e=>{
-  dragging = false;
-  svg.classList.remove('grabbing');
+  dragging=false; svg.classList.remove('grabbing');
   try{ svg.releasePointerCapture(e.pointerId); }catch(_){}
 });
 svg.addEventListener('pointercancel', ()=>{ dragging=false; svg.classList.remove('grabbing'); });
@@ -867,35 +853,27 @@ svg.addEventListener('pointercancel', ()=>{ dragging=false; svg.classList.remove
 svg.addEventListener('wheel', e=>{
   e.preventDefault();
   const rect = svg.getBoundingClientRect();
-  const cx = e.clientX - rect.left;
-  const cy = e.clientY - rect.top;
-  const factor = e.deltaY < 0 ? 1.12 : 1/1.12;
-  zoomBy(factor, cx, cy);
+  zoomBy(e.deltaY<0?1.12:1/1.12, e.clientX-rect.left, e.clientY-rect.top);
 }, {passive:false});
 
-// Pinch (لمس بإصبعين)
 svg.addEventListener('touchstart', e=>{
-  if(e.touches.length === 2){
-    const [a,b] = e.touches;
-    pinch = {d: Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY)};
+  if(e.touches.length===2){
+    const [a,b]=e.touches;
+    pinch={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)};
   }
 }, {passive:true});
 svg.addEventListener('touchmove', e=>{
-  if(e.touches.length === 2 && pinch){
+  if(e.touches.length===2 && pinch){
     e.preventDefault();
-    const [a,b] = e.touches;
-    const d = Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
-    const factor = d / pinch.d;
-    pinch.d = d;
-    const rect = svg.getBoundingClientRect();
-    const cx = ((a.clientX + b.clientX)/2) - rect.left;
-    const cy = ((a.clientY + b.clientY)/2) - rect.top;
-    zoomBy(factor, cx, cy);
+    const [a,b]=e.touches;
+    const d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+    const f=d/pinch.d; pinch.d=d;
+    const rect=svg.getBoundingClientRect();
+    zoomBy(f, (a.clientX+b.clientX)/2-rect.left, (a.clientY+b.clientY)/2-rect.top);
   }
 }, {passive:false});
-svg.addEventListener('touchend', ()=>{ pinch = null; });
+svg.addEventListener('touchend', ()=>{ pinch=null; });
 
-// النقر على الخلفية = إغلاق اللوحة
 svg.addEventListener('click', e=>{
   if(!e.target.closest('.node') && !dragMoved){
     $('infoPanel').classList.remove('open');
@@ -903,18 +881,16 @@ svg.addEventListener('click', e=>{
 });
 
 /* =========================================================
-   10) البحث (بالاسم أو الـ ID)
+   10) البحث
    ========================================================= */
 const searchInput = $('searchInput');
 searchInput.addEventListener('input', ()=>{
   const q = searchInput.value.trim();
-  $('searchBox').classList.toggle('has-value', q.length > 0);
-
+  $('searchBox').classList.toggle('has-value', q.length>0);
   document.querySelectorAll('.node').forEach(n=>{
     n.classList.remove('search-hit');
-    n.style.opacity = '';
+    n.style.opacity='';
   });
-
   if(!q){ state.searchMatches.clear(); return; }
 
   const matches = new Set();
@@ -925,132 +901,104 @@ searchInput.addEventListener('input', ()=>{
     if(nameMatch || idMatch) matches.add(p.id);
   });
   state.searchMatches = matches;
-
-  if(matches.size === 0){
-    toast('🔍 لا توجد نتائج');
-    return;
-  }
+  if(matches.size===0){ toast('🔍 لا توجد نتائج'); return; }
 
   document.querySelectorAll('.node').forEach(n=>{
     if(matches.has(Number(n.dataset.id))){
-      n.style.opacity = '1';
+      n.style.opacity='1';
       n.classList.add('search-hit');
     }else{
-      n.style.opacity = '.12';
+      n.style.opacity='.1';
     }
   });
-
-  // إذا كانت نتيجة واحدة — انتقل إليها
-  if(matches.size === 1){
-    const id = [...matches][0];
+  if(matches.size===1){
+    const id=[...matches][0];
     centerOn(id);
-    toast(`🔍 تم العثور على: ${state.byId.get(id)?.name} (#${id})`);
+    toast(`🔍 ${state.byId.get(id)?.name} (#${id})`);
   }else{
     toast(`🔍 ${matches.size} نتيجة`);
-    // ملاءمة النتائج
     fitSearchResults(matches);
   }
 });
 
 function fitSearchResults(matches){
-  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
-  let count = 0;
+  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity,count=0;
   matches.forEach(id=>{
-    const p = state.positions.get(id);
-    if(!p) return;
+    const p=state.positions.get(id); if(!p) return;
     count++;
     if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x;
     if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y;
   });
-  if(count === 0) return;
-  const padX = NODE_W*1.5, padY = NODE_H*1.5;
-  const w = (maxX - minX) + padX*2;
-  const h = (maxY - minY) + padY*2;
-  const rect = svg.getBoundingClientRect();
-  const k = Math.min(rect.width / w, rect.height / h) * 0.9;
-  const cx = (minX + maxX) / 2;
-  const cy = (minY + maxY) / 2;
-  state.transform.k = Math.max(0.1, Math.min(3, k));
-  state.transform.x = rect.width/2 - cx * state.transform.k;
-  state.transform.y = rect.height/2 - cy * state.transform.k;
+  if(!count) return;
+  const padX=NODE_W*1.5, padY=NODE_H*1.5;
+  const w=(maxX-minX)+padX*2, h=(maxY-minY)+padY*2;
+  const rect=svg.getBoundingClientRect();
+  const k=Math.min(rect.width/w, rect.height/h)*0.9;
+  const cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  state.transform.k=Math.max(0.1,Math.min(3,k));
+  state.transform.x=rect.width/2-cx*state.transform.k;
+  state.transform.y=rect.height/2-cy*state.transform.k;
   applyTransform();
 }
 
 $('clearSearch').onclick = ()=>{
-  searchInput.value = '';
+  searchInput.value='';
   searchInput.dispatchEvent(new Event('input'));
   searchInput.focus();
 };
 
 /* =========================================================
-   11) إحصائيات
+   11) إحصائيات وأزرار
    ========================================================= */
 function updateStats(){
   $('st-people').textContent = state.people.length;
-  $('st-gens').textContent = state.maxGen + 1;
+  $('st-gens').textContent = state.maxGen+1;
   $('st-roots').textContent = state.roots.length;
 }
 
-/* =========================================================
-   12) أزرار
-   ========================================================= */
-$('btn-home').onclick = ()=>{ exitFocus(); };
-$('btn-fit').onclick = ()=>{ fitToScreen(); };
+$('btn-home').onclick = ()=> exitFocus();
+$('btn-fit').onclick = ()=> fitToScreen();
 $('btn-focus-toggle').onclick = ()=>{
-  if(state.focusId != null) exitFocus();
-  else toast('🎯 اضغط مرتين على أي فرد لتركيز الشجرة عليه');
+  if(state.focusId!=null) exitFocus();
+  else toast('🎯 اضغط مرتين على أي فرد');
 };
 $('btn-zoom-in').onclick = ()=> zoomBy(1.25);
 $('btn-zoom-out').onclick = ()=> zoomBy(1/1.25);
-$('btn-reset').onclick = ()=>{ resetZoom(); };
+$('btn-reset').onclick = ()=> resetZoom();
 $('closePanel').onclick = ()=> $('infoPanel').classList.remove('open');
 
-// أزرار التنقل السريع (يمين)
-$('btn-up').onclick = ()=>{ state.transform.y += 80; applyTransform(); };
-$('btn-down').onclick = ()=>{ state.transform.y -= 80; applyTransform(); };
-
-// ESC
 document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape'){
+  if(e.key==='Escape'){
     if($('infoPanel').classList.contains('open')) $('infoPanel').classList.remove('open');
-    else if(state.focusId != null) exitFocus();
+    else if(state.focusId!=null) exitFocus();
   }
-  if(e.key === 'f' || e.key === 'F') fitToScreen();
-  if(e.key === '+' || e.key === '=') zoomBy(1.2);
-  if(e.key === '-') zoomBy(1/1.2);
+  if(e.key==='f'||e.key==='F') fitToScreen();
+  if(e.key==='+'||e.key==='=') zoomBy(1.2);
+  if(e.key==='-') zoomBy(1/1.2);
 });
 
 /* =========================================================
-   13) Toast
+   12) Toast
    ========================================================= */
-let toastTimer = null;
+let toastTimer=null;
 function toast(msg){
-  const t = $('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  const t=$('toast'); t.textContent=msg; t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
 }
 
 /* =========================================================
-   14) إعادة الرسم عند تغيير حجم الشاشة (تدوير)
+   13) Resize
    ========================================================= */
-let resizeTimer = null;
+let resizeTimer=null;
 window.addEventListener('resize', ()=>{
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(()=>{
-    // فقط إعادة التطبيق، لا نعيد الحساب
-    applyTransform();
-  }, 200);
+  resizeTimer=setTimeout(applyTransform,200);
 });
-
-// إعادة حساب الاتجاه عند تغيير الاتجاه
-window.addEventListener('orientationchange', ()=>{
-  setTimeout(fitToScreen, 300);
-});
+window.addEventListener('orientationchange', ()=> setTimeout(fitToScreen,300));
 
 /* =========================================================
-   15) انطلاق
+   14) انطلاق
    ========================================================= */
 loadData();
 </script>
