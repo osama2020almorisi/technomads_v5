@@ -1,832 +1,933 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#050b16">
-<title>شجرة العائلة الدائرية — Family Tree Pro</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🌳 شجرة العائلة</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
-:root{
- --bg:#050b16;--panel:rgba(12,23,40,.86);--panel2:#101e32;
- --border:rgba(107,143,186,.20);--text:#f4f7ff;--muted:#8798b1;
- --cyan:#35e0d0;--blue:#4d8fff;--violet:#ae73ff;--green:#61dc76;
-}
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Cairo,system-ui,sans-serif}
-body{
- background:
- radial-gradient(circle at 50% 45%,rgba(42,92,145,.15),transparent 27%),
- radial-gradient(circle at 18% 75%,rgba(45,226,207,.07),transparent 30%),
- radial-gradient(circle at 82% 20%,rgba(102,75,200,.07),transparent 28%),#050b16;
-}
-button,input{font:inherit}
-.app{height:100dvh;display:grid;grid-template-rows:auto 1fr}
-.topbar{
- height:68px;display:flex;align-items:center;gap:10px;padding:9px 14px;
- background:rgba(5,12,23,.84);border-bottom:1px solid var(--border);
- backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:30
-}
-.brand{display:flex;align-items:center;gap:9px;min-width:190px}
-.logo{
- width:43px;height:43px;border-radius:14px;display:grid;place-items:center;font-size:22px;
- background:linear-gradient(145deg,#123f45,#112344);border:1px solid #31647b;
- box-shadow:0 0 28px rgba(45,226,207,.13)
-}
-.brand h1{font-size:14px;margin:0;font-weight:800}.brand small{font-size:9px;color:var(--muted)}
-.search{position:relative;flex:1;max-width:610px;margin:auto}
-.search input{
- width:100%;height:43px;border-radius:14px;border:1px solid #263b57;
- background:#0a1627;color:#fff;outline:0;padding:0 43px 0 40px
-}
-.search input:focus{border-color:#397ed3;box-shadow:0 0 0 3px rgba(57,126,211,.11)}
-.search .glass{position:absolute;right:13px;top:8px;color:#91a5bf;font-size:21px}
-.search button{position:absolute;left:5px;top:4px;width:35px;height:35px;border:0;background:none;color:#8395ae;font-size:20px}
-.actions{display:flex;gap:6px}
-.btn{
- height:42px;min-width:42px;border:1px solid #2a3f5b;border-radius:12px;
- color:#dce8fa;background:#0c192b;display:inline-flex;align-items:center;justify-content:center;
- padding:0 11px;cursor:pointer;transition:.15s
-}
-.btn:hover{background:#14263d}.btn.primary{border-color:#2eaaa5;background:linear-gradient(135deg,#106e6b,#185d91)}
-.label{font-size:11px}
-.workspace{position:relative;min-height:0;overflow:hidden}
-#viewport{position:absolute;inset:0;touch-action:none;cursor:grab;overflow:hidden}
-#viewport.dragging{cursor:grabbing}
-#canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.stats{
- position:absolute;right:14px;top:13px;z-index:10;display:flex;gap:7px;pointer-events:none
-}
-.stat{
- min-width:86px;padding:8px 10px;text-align:center;border:1px solid var(--border);
- border-radius:14px;background:rgba(11,23,40,.72);backdrop-filter:blur(12px)
-}
-.stat b{display:block;font-size:17px;line-height:1.15}.stat span{font-size:9px;color:var(--muted)}
-.zoom{position:absolute;left:14px;top:13px;z-index:10;display:flex;flex-direction:column;gap:6px}
-.zoom .btn{width:42px;padding:0;background:rgba(12,25,43,.78);backdrop-filter:blur(12px);font-size:19px}
-.hint{
- position:absolute;left:50%;bottom:13px;transform:translateX(-50%);z-index:10;
- max-width:92%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
- padding:7px 13px;border:1px solid var(--border);border-radius:12px;
- color:#8b9bb2;background:rgba(8,17,30,.72);backdrop-filter:blur(12px);font-size:10px
-}
-.panel{
- position:absolute;left:14px;top:14px;width:300px;max-height:calc(100% - 28px);
- overflow:auto;z-index:20;padding:15px;border:1px solid #263d5b;border-radius:18px;
- background:rgba(7,17,30,.94);backdrop-filter:blur(18px);box-shadow:0 20px 55px #0008;display:none
-}
-.panel.open{display:block}
-.panel h2{font-size:15px;margin:0 0 12px}.detail-head{display:flex;align-items:center;gap:10px}
-.avatar{width:53px;height:53px;border-radius:16px;display:grid;place-items:center;font-size:21px;
- background:#22364e;border:1px solid #45d7ca}
-.detail-name{font-weight:800}.detail-sub,.muted{font-size:10px;color:var(--muted)}
-.row{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #ffffff0d;font-size:11px}
-.row span{color:var(--muted)}
-.children{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
-.chip{font-size:9px;padding:4px 7px;border-radius:8px;background:#112b36;border:1px solid #1f7777;color:#c9fffa}
-#loading{position:absolute;inset:0;display:grid;place-items:center;color:#8496af;z-index:2;pointer-events:none;text-align:center;padding:20px}
-#loading.error{color:#ff8a8a;pointer-events:auto}
-#loading small{display:block;font-size:11px;color:#5f7288;margin-top:8px;line-height:1.7}
-@media(max-width:700px){
- .topbar{height:58px;padding:7px 8px}.brand{min-width:auto}.brand>div:last-child{display:none}
- .logo{width:37px;height:37px;border-radius:12px}.search input{height:39px}
- .actions .label{display:none}.btn{height:39px;min-width:39px;padding:0 8px}
- .stats{right:8px;top:8px;gap:4px}.stat{min-width:61px;padding:6px 6px}.stat b{font-size:14px}.stat span{font-size:7px}
- .zoom{left:8px;top:8px}.zoom .btn{width:38px;height:38px}
- .panel{left:8px;right:8px;bottom:8px;top:auto;width:auto;max-height:53%}
- .hint{bottom:7px;font-size:8px}
-}
-.legend{
- position:absolute;right:14px;bottom:13px;z-index:11;min-width:150px;max-width:230px;
- padding:9px 11px;border:1px solid rgba(107,143,186,.20);border-radius:14px;
- background:rgba(8,17,30,.78);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);
- box-shadow:0 10px 30px rgba(0,0,0,.22)
-}
-.legend-title{font-size:9px;color:#9aabc2;margin-bottom:6px;font-weight:700}
-#legendItems{display:flex;flex-wrap:wrap;gap:5px}
-.legend-item{display:flex;align-items:center;gap:4px;color:#cbd7e8;font-size:8px}
-.legend-dot{width:7px;height:7px;border-radius:50%;box-shadow:0 0 7px currentColor}
-@media(max-width:700px){.legend{right:8px;bottom:7px;min-width:115px;max-width:145px}.legend-title{font-size:8px}.legend-item{font-size:7px}.legend-dot{width:6px;height:6px}}
+  :root{
+    --bg-0:#05070d;
+    --bg-1:#0a0f1c;
+    --bg-2:#0f1628;
+    --line:#1e2a44;
+    --txt:#e6edf7;
+    --txt-dim:#8b9bb4;
+    --accent:#3b82f6;
+    --accent-2:#8b5cf6;
+    --glow:#60a5fa;
+    --danger:#ef4444;
+    --ok:#10b981;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;overflow:hidden;background:var(--bg-0);color:var(--txt);
+    font-family:'Segoe UI',Tahoma,system-ui,sans-serif}
+  #app{position:fixed;inset:0;display:flex;flex-direction:column}
+
+  /* ===== شريط علوي ===== */
+  .topbar{
+    position:relative;z-index:20;
+    display:flex;align-items:center;gap:8px;
+    padding:10px 12px;
+    background:linear-gradient(180deg,rgba(10,15,28,.98),rgba(10,15,28,.85));
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(10px);
+  }
+  .icon-btn{
+    width:42px;height:42px;flex:0 0 auto;
+    display:grid;place-items:center;
+    border-radius:12px;border:1px solid var(--line);
+    background:var(--bg-2);color:var(--txt);
+    cursor:pointer;transition:.2s;font-size:18px;
+  }
+  .icon-btn:hover{background:#16213a;border-color:var(--accent);color:var(--glow)}
+  .icon-btn.primary{background:linear-gradient(135deg,#0ea5e9,#2563eb);border-color:transparent;color:#fff}
+  .search-box{
+    flex:1;position:relative;display:flex;align-items:center;
+    background:var(--bg-2);border:1px solid var(--line);
+    border-radius:12px;padding:0 12px;height:42px;transition:.2s;
+  }
+  .search-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
+  .search-box input{
+    flex:1;background:transparent;border:0;outline:0;color:var(--txt);
+    font-size:15px;padding:0 8px;
+  }
+  .search-box input::placeholder{color:var(--txt-dim)}
+  .search-box .s-icon{color:var(--txt-dim);font-size:16px}
+  .search-box .clear-btn{display:none;cursor:pointer;color:var(--txt-dim)}
+  .search-box.has-value .clear-btn{display:block}
+
+  /* ===== إحصائيات ===== */
+  .stats{
+    position:absolute;top:64px;left:12px;right:12px;z-index:15;
+    display:flex;gap:8px;justify-content:flex-end;pointer-events:none;
+  }
+  .stat-card{
+    pointer-events:auto;
+    min-width:82px;padding:8px 12px;border-radius:14px;
+    background:rgba(15,22,40,.85);border:1px solid var(--line);
+    backdrop-filter:blur(8px);text-align:center;transition:.2s;
+  }
+  .stat-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .stat-card .num{font-size:20px;font-weight:800;color:var(--glow);line-height:1}
+  .stat-card .lbl{font-size:11px;color:var(--txt-dim);margin-top:3px}
+
+  /* ===== أدوات تحكم ===== */
+  .controls{
+    position:absolute;bottom:20px;left:16px;z-index:15;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .ctrl-btn{
+    width:46px;height:46px;border-radius:14px;
+    background:rgba(15,22,40,.9);border:1px solid var(--line);
+    color:var(--txt);font-size:20px;cursor:pointer;
+    display:grid;place-items:center;transition:.2s;
+    backdrop-filter:blur(8px);
+  }
+  .ctrl-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;transform:scale(1.05)}
+  .ctrl-btn.zoom-label{font-size:13px;font-weight:700}
+
+  /* ===== لوحة تفاصيل ===== */
+  .info-panel{
+    position:absolute;top:0;right:0;bottom:0;width:320px;max-width:85vw;
+    background:linear-gradient(180deg,rgba(10,15,28,.98),rgba(15,22,40,.98));
+    border-right:1px solid var(--line);
+    transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+    z-index:30;display:flex;flex-direction:column;
+    backdrop-filter:blur(14px);
+  }
+  .info-panel.open{transform:translateX(0)}
+  .info-head{
+    padding:16px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:12px;
+  }
+  .avatar{
+    width:52px;height:52px;border-radius:50%;
+    background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+    display:grid;place-items:center;font-size:22px;color:#fff;
+    border:2px solid rgba(255,255,255,.2);flex:0 0 auto;
+  }
+  .info-head .name{font-size:18px;font-weight:800}
+  .info-head .sub{font-size:12px;color:var(--txt-dim);margin-top:2px}
+  .info-body{padding:16px;overflow-y:auto;flex:1}
+  .info-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px;
+  }
+  .info-row .k{color:var(--txt-dim)}
+  .info-row .v{font-weight:600}
+  .badge{
+    display:inline-block;padding:3px 10px;border-radius:20px;
+    font-size:11px;font-weight:700;
+  }
+  .badge.male{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
+  .badge.female{background:rgba(236,72,153,.15);color:#f472b6;border:1px solid rgba(236,72,153,.3)}
+  .badge.unknown{background:rgba(139,155,180,.15);color:#8b9bb4;border:1px solid rgba(139,155,180,.3)}
+  .focus-btn{
+    width:100%;margin-top:16px;padding:12px;border-radius:12px;
+    background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;
+    border:0;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;
+  }
+  .focus-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,99,235,.4)}
+  .focus-btn.exit{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+  .close-panel{
+    position:absolute;top:12px;left:12px;width:32px;height:32px;border-radius:50%;
+    background:rgba(255,255,255,.08);border:0;color:var(--txt);cursor:pointer;
+    display:grid;place-items:center;font-size:16px;
+  }
+
+  /* ===== SVG ===== */
+  #svg{flex:1;width:100%;display:block;cursor:grab;touch-action:none}
+  #svg.grabbing{cursor:grabbing}
+
+  .node{cursor:pointer}
+  .node rect{
+    transition:filter .25s,stroke .25s,stroke-width .25s;
+  }
+  .node:hover rect{filter:url(#hoverGlow)}
+  .node text{
+    pointer-events:none;user-select:none;
+    font-family:'Segoe UI',Tahoma,sans-serif;
+  }
+  .node .n-name{font-weight:700;font-size:13px;fill:#fff}
+  .node .n-meta{font-size:10px;fill:#b8c5d8}
+  .node.focused rect{
+    stroke:#fbbf24 !important;
+    stroke-width:3.5 !important;
+    filter:url(#focusGlow);
+  }
+  .node.dimmed{opacity:.12;pointer-events:none;transition:opacity .4s}
+  .link{fill:none;stroke-linecap:round;transition:opacity .3s}
+  .link.dimmed{opacity:.06}
+
+  /* ===== شاشة تحميل ===== */
+  #loader{
+    position:fixed;inset:0;background:var(--bg-0);z-index:100;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+    transition:opacity .5s;
+  }
+  #loader.hide{opacity:0;pointer-events:none}
+  .spinner{
+    width:56px;height:56px;border-radius:50%;
+    border:4px solid rgba(59,130,246,.15);
+    border-top-color:var(--accent);animation:spin 1s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #loader p{color:var(--txt-dim);font-size:14px}
+
+  /* ===== Toast ===== */
+  #toast{
+    position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:rgba(15,22,40,.95);border:1px solid var(--accent);
+    color:var(--txt);padding:10px 20px;border-radius:12px;font-size:13px;
+    opacity:0;transition:.3s;z-index:50;pointer-events:none;
+    backdrop-filter:blur(8px);
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ===== موبايل ===== */
+  @media(max-width:600px){
+    .stat-card{min-width:66px;padding:6px 9px}
+    .stat-card .num{font-size:16px}
+    .stat-card .lbl{font-size:10px}
+    .info-panel{width:280px}
+    .node .n-name{font-size:11px}
+    .node .n-meta{font-size:9px}
+  }
 </style>
 </head>
 <body>
-<div class="app">
-<header class="topbar">
- <div class="brand"><div class="logo">🌿</div><div><h1>شجرة العائلة الدائرية</h1><small>Family Tree Pro • Radial View</small></div></div>
- <div class="search"><span class="glass">⌕</span><input id="search" placeholder="ابحث عن اسم…  (Ctrl + F)" autocomplete="off"><button id="clear">×</button></div>
- <div class="actions">
-  <button class="btn" id="fit" title="ملاءمة">⛶ <span class="label">ملاءمة</span></button>
-  <button class="btn" id="home" title="المركز">⌂ <span class="label">المركز</span></button>
-  <button class="btn primary" id="info">ⓘ</button>
- </div>
-</header>
-<main class="workspace">
- <div class="stats">
-  <div class="stat"><b id="people">0</b><span>الأفراد</span></div>
-  <div class="stat"><b id="gens">0</b><span>الأجيال</span></div>
-  <div class="stat"><b id="branches">0</b><span>الفروع</span></div>
- </div>
- <div id="viewport"><canvas id="canvas"></canvas><div id="loading">جاري تحميل ملف البيانات…</div></div>
- <div class="zoom"><button class="btn" id="plus">+</button><button class="btn" id="minus">−</button><button class="btn" id="one">1:1</button></div>
- <div class="legend" id="legend"><div class="legend-title">ألوان الفروع</div><div id="legendItems"></div></div>
- <div class="hint">اسحب للتحريك • إصبعان للتكبير والتصغير • اضغط على البطاقة لتتبع الفرع • اللون = فرع العائلة</div>
- <aside class="panel" id="panel"><div id="detail"></div></aside>
-</main>
+<div id="app">
+
+  <!-- شريط علوي -->
+  <div class="topbar">
+    <div class="icon-btn primary" id="btn-info" title="معلومات">ℹ</div>
+    <div class="icon-btn" id="btn-home" title="الصفحة الرئيسية">🏠</div>
+    <div class="icon-btn" id="btn-fit" title="ملاءمة الشاشة">⛶</div>
+    <div class="search-box" id="searchBox">
+      <span class="s-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="ابحث عن اسم...">
+      <span class="clear-btn" id="clearSearch">✕</span>
+    </div>
+    <div class="icon-btn" id="btn-theme" title="الألوان">🌿</div>
+  </div>
+
+  <!-- إحصائيات -->
+  <div class="stats">
+    <div class="stat-card"><div class="num" id="st-people">0</div><div class="lbl">الأفراد</div></div>
+    <div class="stat-card"><div class="num" id="st-gens">0</div><div class="lbl">الأجيال</div></div>
+    <div class="stat-card"><div class="num" id="st-roots">0</div><div class="lbl">الفروع</div></div>
+  </div>
+
+  <!-- SVG -->
+  <svg id="svg">
+    <defs>
+      <filter id="hoverGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="3" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="focusGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="6" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <linearGradient id="linkGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3b82f6" stop-opacity=".9"/>
+        <stop offset="100%" stop-color="#8b5cf6" stop-opacity=".5"/>
+      </linearGradient>
+    </defs>
+    <g id="viewport">
+      <g id="links"></g>
+      <g id="nodes"></g>
+    </g>
+  </svg>
+
+  <!-- أدوات تحكم -->
+  <div class="controls">
+    <button class="ctrl-btn" id="btn-zoom-in">＋</button>
+    <button class="ctrl-btn" id="btn-zoom-out">－</button>
+    <button class="ctrl-btn zoom-label" id="btn-reset">1:1</button>
+  </div>
+
+  <!-- لوحة تفاصيل -->
+  <div class="info-panel" id="infoPanel">
+    <button class="close-panel" id="closePanel">✕</button>
+    <div class="info-head">
+      <div class="avatar" id="pAvatar">؟</div>
+      <div>
+        <div class="name" id="pName">—</div>
+        <div class="sub" id="pSub">—</div>
+      </div>
+    </div>
+    <div class="info-body" id="pBody"></div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>جارٍ تحميل شجرة العائلة...</p>
+  </div>
 </div>
 
 <script>
+/* =========================================================
+   شجرة العائلة الاحترافية — Family Tree Pro Viewer
+   ========================================================= */
 'use strict';
 
-// ============================================================
-// ==== تحميل البيانات من ملف JSON خارجي ======================
-// ============================================================
-const DATA_URL = 'tree-data.json';
+/* ---------- ثوابت الألوان حسب الجيل ---------- */
+const GEN_PALETTE = [
+  {fill:'#0b2545', stroke:'#3b82f6', glow:'#60a5fa', label:'الجيل ١'},
+  {fill:'#1a2e4a', stroke:'#8b5cf6', glow:'#a78bfa', label:'الجيل ٢'},
+  {fill:'#2d1b4e', stroke:'#ec4899', glow:'#f472b6', label:'الجيل ٣'},
+  {fill:'#0f3d3e', stroke:'#14b8a6', glow:'#2dd4bf', label:'الجيل ٤'},
+  {fill:'#3d2f0f', stroke:'#f59e0b', glow:'#fbbf24', label:'الجيل ٥'},
+  {fill:'#3d0f1f', stroke:'#ef4444', glow:'#f87171', label:'الجيل ٦'},
+  {fill:'#1e293b', stroke:'#64748b', glow:'#94a3b8', label:'الجيل ٧'},
+  {fill:'#1e1b4b', stroke:'#6366f1', glow:'#818cf8', label:'الجيل ٨'},
+  {fill:'#14532d', stroke:'#22c55e', glow:'#4ade80', label:'الجيل ٩'},
+  {fill:'#4c1d95', stroke:'#a855f7', glow:'#c084fc', label:'الجيل ١٠'},
+  {fill:'#7c2d12', stroke:'#f97316', glow:'#fb923c', label:'الجيل ١١'},
+  {fill:'#083344', stroke:'#06b6d4', glow:'#22d3ee', label:'الجيل ١٢'},
+  {fill:'#422006', stroke:'#eab308', glow:'#facc15', label:'الجيل ١٣'},
+  {fill:'#450a0a', stroke:'#dc2626', glow:'#fca5a5', label:'الجيل ١٤'},
+];
 
-let people = [];
-let byId = new Map();
-let children = new Map();
-let roots = [];
-let depthCount = 0;
+const NODE_W = 130;
+const NODE_H = 56;
+const H_GAP = 22;   // فراغ أفقي بين الأشقاء
+const V_GAP = 90;   // فراغ عمودي بين الأجيال
 
-// عناصر الواجهة
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d', { alpha: false });
-const vp = document.getElementById('viewport');
-const loadingEl = document.getElementById('loading');
-
-let W = 0, H = 0, DPR = Math.min(devicePixelRatio || 1, 2);
-let scale = 1, tx = 0, ty = 0, drag = false, lastX = 0, lastY = 0;
-let selected = null, query = '';
-let nodes = [], edges = [], worldR = 1000;
-const pos = new Map(), depthMap = new Map();
-const leafMemo = new Map();
-
-// ============================================================
-// أدوات مساعدة
-// ============================================================
-function esc(s) {
-  return String(s ?? '').replace(/[&<>"']/g, m => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[m]));
-}
-function initials(name) {
-  const x = (name || '?').trim();
-  return x ? x[0] : '•';
-}
-
-function depthOf(root) {
-  let max = 0;
-  const q = [[root, 0]];
-  while (q.length) {
-    const [p, d] = q.shift();
-    max = Math.max(max, d);
-    for (const c of (children.get(p.id) || [])) q.push([c, d + 1]);
-  }
-  return max;
-}
-
-function leafCount(p) {
-  const kids = children.get(p.id) || [];
-  if (!kids.length) return 1;
-  return kids.reduce((s, c) => s + leafCount(c), 0);
-}
-function leaves(p) {
-  if (leafMemo.has(p.id)) return leafMemo.get(p.id);
-  const n = leafCount(p);
-  leafMemo.set(p.id, n);
-  return n;
-}
-
-// ============================================================
-// أبعاد البطاقة ونظام منع التصادم
-// ============================================================
-const CARD = {
-  w: innerWidth < 700 ? 142 : 166,
-  h: innerWidth < 700 ? 66  : 76,
-  rootW: 220,
-  rootH: 92,
-  gap: 20
+/* ---------- الحالة ---------- */
+const state = {
+  people: [],
+  byId: new Map(),
+  children: new Map(),   // father_id -> [ids]
+  roots: [],
+  depth: new Map(),      // id -> generation index
+  maxGen: 0,
+  focusId: null,
+  transform: {x:0,y:0,k:1},
+  positions: new Map(),
 };
 
-function cardCircumradius(w, h) {
-  return Math.hypot(w / 2, h / 2);
+/* ---------- عناصر DOM ---------- */
+const $ = id => document.getElementById(id);
+const svg = $('svg');
+const viewport = $('viewport');
+const gLinks = $('links');
+const gNodes = $('nodes');
+
+/* =========================================================
+   1) تحميل البيانات
+   ========================================================= */
+async function loadData(){
+  try{
+    const res = await fetch('tree-data.json', {cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    state.people = Array.isArray(data.people) ? data.people : [];
+    buildMaps();
+    computeGenerations();
+    render();
+    updateStats();
+    fitToScreen();
+    $('loader').classList.add('hide');
+  }catch(err){
+    console.error(err);
+    $('loader').innerHTML = `
+      <p style="color:#ef4444;font-size:16px">⚠ تعذر تحميل tree-data.json</p>
+      <p style="color:#8b9bb4;font-size:12px;max-width:300px;text-align:center">
+        تأكد من وجود الملف في نفس مجلد index.html<br>وشغّل الصفحة عبر سيرفر محلي (Live Server)
+      </p>`;
+  }
 }
 
-function cardsCollide(a, b, minGap) {
-  const dx = Math.abs(a.x - b.x);
-  const dy = Math.abs(a.y - b.y);
-  const minDx = (a.w + b.w) / 2 + minGap;
-  const minDy = (a.h + b.h) / 2 + minGap;
-  return dx < minDx && dy < minDy;
+/* =========================================================
+   2) خرائط الأب/الأبناء
+   ========================================================= */
+function buildMaps(){
+  state.byId.clear();
+  state.children.clear();
+  state.people.forEach(p => state.byId.set(p.id, p));
+
+  state.people.forEach(p => {
+    if(p.father_id != null && state.byId.has(p.father_id)){
+      if(!state.children.has(p.father_id)) state.children.set(p.father_id, []);
+      state.children.get(p.father_id).push(p.id);
+    }
+  });
 }
 
-// ============================================================
-// بناء التوزيع الدائري بشكل مضمون ضد التصادم
-// ============================================================
-function buildLayoutSafe() {
-  nodes = [];
-  edges = [];
-  pos.clear();
-  depthMap.clear();
-  leafMemo.clear();
+/* =========================================================
+   3) حساب الأجيال (BFS من الجذور)
+   ========================================================= */
+function computeGenerations(){
+  state.depth.clear();
+  const hasParent = id => {
+    const p = state.byId.get(id);
+    return p && p.father_id != null && state.byId.has(p.father_id);
+  };
+  state.roots = state.people.filter(p => !hasParent(p.id)).map(p => p.id);
 
-  const allRoots = roots.length ? roots : (people[0] ? [people[0]] : []);
-  if (!allRoots.length) return;
+  const q = [];
+  state.roots.forEach(id => { state.depth.set(id, 0); q.push(id); });
+  let head = 0;
+  while(head < q.length){
+    const id = q[head++];
+    const d = state.depth.get(id) || 0;
+    const kids = state.children.get(id) || [];
+    for(const k of kids){
+      if(!state.depth.has(k) || state.depth.get(k) < d+1){
+        state.depth.set(k, d+1);
+        q.push(k);
+      }
+    }
+  }
+  // أي فرد لم يُزار (دورة/يتيم) → ضعه في الجيل 0
+  state.people.forEach(p => { if(!state.depth.has(p.id)) state.depth.set(p.id,0); });
 
-  const totalLeaves = Math.max(1, allRoots.reduce((s, r) => s + leaves(r), 0));
-  let angle = -Math.PI / 2;
-  const TWO_PI = Math.PI * 2;
+  state.maxGen = 0;
+  state.depth.forEach(v => { if(v > state.maxGen) state.maxGen = v; });
+}
 
-  const palette = [
-    '#35e0d0','#4d8fff','#ae73ff','#63dc76','#ffbd59','#ff6f91',
-    '#6fd8ff','#d88cff','#9fe05c','#ff7d62','#55c7a9','#c49bff'
-  ];
-  const rootColor = new Map();
-  const branchOf = new Map();
+/* =========================================================
+   4) تخطيط الشجرة (Tidy Tree)
+   ========================================================= */
+function layout(rootId){
+  state.positions.clear();
+  let cursor = 0;
 
-  allRoots.forEach((r, i) => {
-    rootColor.set(r.id, palette[i % palette.length]);
-    branchOf.set(r.id, r.id);
+  function place(id, depth){
+    const kids = (state.children.get(id) || []);
+    // نضع الأطفال أولاً
+    const childXs = [];
+    kids.forEach(k => childXs.push(place(k, depth+1)));
+
+    let x;
+    if(childXs.length === 0){
+      x = cursor;
+      cursor += NODE_W + H_GAP;
+    }else{
+      x = (childXs[0] + childXs[childXs.length-1]) / 2;
+    }
+    const y = depth * (NODE_H + V_GAP);
+    state.positions.set(id, {x, y, depth});
+    return x;
+  }
+  place(rootId, 0);
+
+  // توسيط الشجرة كاملة
+  let minX = Infinity, maxX = -Infinity, maxY = 0;
+  state.positions.forEach(p => {
+    if(p.x < minX) minX = p.x;
+    if(p.x > maxX) maxX = p.x;
+    if(p.y > maxY) maxY = p.y;
+  });
+  const offsetX = -(minX + maxX) / 2;
+  const offsetY = -maxY / 2;
+  state.positions.forEach(p => { p.x += offsetX; p.y += offsetY; });
+}
+
+/* =========================================================
+   5) الرسم
+   ========================================================= */
+function render(focusId = null){
+  state.focusId = focusId;
+  gLinks.innerHTML = '';
+  gNodes.innerHTML = '';
+
+  if(focusId != null){
+    // وضع التركيز: ارسم الفرد + كل ذريته
+    layout(focusId);
+    drawTree(focusId);
+    applyFocusDim(focusId);
+  }else{
+    // الوضع الكامل: ارسم كل الجذور
+    layoutAll();
+    drawAll();
+  }
+  applyTransform();
+}
+
+/* تخطيط كل الشجرة (عدة جذور) */
+function layoutAll(){
+  state.positions.clear();
+  let cursor = 0;
+  const rootPositions = [];
+
+  function place(id, depth){
+    const kids = state.children.get(id) || [];
+    const childXs = [];
+    kids.forEach(k => childXs.push(place(k, depth+1)));
+    let x;
+    if(childXs.length === 0){
+      x = cursor; cursor += NODE_W + H_GAP;
+    }else{
+      x = (childXs[0] + childXs[childXs.length-1]) / 2;
+    }
+    state.positions.set(id, {x, y: depth*(NODE_H+V_GAP), depth});
+    return x;
+  }
+  state.roots.forEach(r => rootPositions.push(place(r, 0)));
+
+  let minX=Infinity, maxX=-Infinity, maxY=0;
+  state.positions.forEach(p=>{
+    if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x; if(p.y>maxY)maxY=p.y;
+  });
+  const offX = -(minX+maxX)/2;
+  const offY = -maxY/2;
+  state.positions.forEach(p=>{p.x+=offX; p.y+=offY;});
+}
+
+/* رسم الشجرة الكاملة */
+function drawAll(){
+  // الروابط
+  state.people.forEach(p=>{
+    if(p.father_id == null) return;
+    if(!state.positions.has(p.father_id) || !state.positions.has(p.id)) return;
+    drawLink(state.positions.get(p.father_id), state.positions.get(p.id), state.depth.get(p.id)||0);
+  });
+  // العقد
+  state.people.forEach(p=>{
+    if(!state.positions.has(p.id)) return;
+    drawNode(p, state.positions.get(p.id), state.depth.get(p.id)||0);
+  });
+}
+
+/* رسم شجرة الجذر المحدد فقط */
+function drawTree(rootId){
+  const stack = [rootId];
+  const visited = new Set();
+  while(stack.length){
+    const id = stack.pop();
+    if(visited.has(id)) continue;
+    visited.add(id);
+    if(!state.positions.has(id)) continue;
+    const pos = state.positions.get(id);
+    const depth = state.depth.get(id) || 0;
+    const kids = state.children.get(id) || [];
+    kids.forEach(k=>{
+      if(!state.positions.has(k)) return;
+      drawLink(pos, state.positions.get(k), state.depth.get(k)||0);
+      stack.push(k);
+    });
+  }
+  // العقد
+  const stack2 = [rootId];
+  const visited2 = new Set();
+  while(stack2.length){
+    const id = stack2.pop();
+    if(visited2.has(id)) continue;
+    visited2.add(id);
+    if(!state.positions.has(id)) continue;
+    const p = state.byId.get(id);
+    if(!p) continue;
+    drawNode(p, state.positions.get(id), state.depth.get(id)||0);
+    (state.children.get(id)||[]).forEach(k=>stack2.push(k));
+  }
+}
+
+/* رسم عقدة */
+function drawNode(p, pos, depth){
+  const pal = GEN_PALETTE[depth % GEN_PALETTE.length];
+  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','node');
+  g.setAttribute('transform', `translate(${pos.x}, ${pos.y})`);
+  g.dataset.id = p.id;
+  g.dataset.depth = depth;
+
+  // مستطيل
+  const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+  rect.setAttribute('x', -NODE_W/2);
+  rect.setAttribute('y', -NODE_H/2);
+  rect.setAttribute('width', NODE_W);
+  rect.setAttribute('height', NODE_H);
+  rect.setAttribute('rx', 12);
+  rect.setAttribute('fill', pal.fill);
+  rect.setAttribute('stroke', pal.stroke);
+  rect.setAttribute('stroke-width', '2');
+  g.appendChild(rect);
+
+  // شريط علوي ملون
+  const bar = document.createElementNS('http://www.w3.org/2000/svg','rect');
+  bar.setAttribute('x', -NODE_W/2 + 6);
+  bar.setAttribute('y', -NODE_H/2 + 6);
+  bar.setAttribute('width', 4);
+  bar.setAttribute('height', NODE_H - 12);
+  bar.setAttribute('rx', 2);
+  bar.setAttribute('fill', pal.stroke);
+  g.appendChild(bar);
+
+  // أيقونة الجنس
+  const genderIcon = p.gender === 'female' ? '♀' : (p.gender === 'male' ? '♂' : '؟');
+  const gt = document.createElementNS('http://www.w3.org/2000/svg','text');
+  gt.setAttribute('x', -NODE_W/2 + 16);
+  gt.setAttribute('y', 6);
+  gt.setAttribute('font-size', '16');
+  gt.setAttribute('fill', pal.glow);
+  gt.textContent = genderIcon;
+  g.appendChild(gt);
+
+  // الاسم
+  const name = (p.name || 'بدون اسم').trim();
+  const displayName = name.length > 16 ? name.slice(0,15)+'…' : name;
+  const t1 = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t1.setAttribute('class','n-name');
+  t1.setAttribute('x', -NODE_W/2 + 30);
+  t1.setAttribute('y', -2);
+  t1.textContent = displayName;
+  g.appendChild(t1);
+
+  // تواريخ
+  const b = (p.birth_date||'').trim();
+  const d = (p.death_date||'').trim();
+  let meta = '';
+  if(b && d) meta = `${b} - ${d}`;
+  else if(b) meta = `مولود: ${b}`;
+  else if(d) meta = `توفي: ${d}`;
+  if(meta){
+    const t2 = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t2.setAttribute('class','n-meta');
+    t2.setAttribute('x', -NODE_W/2 + 30);
+    t2.setAttribute('y', 14);
+    t2.textContent = meta;
+    g.appendChild(t2);
+  }
+
+  // الأحداث
+  g.addEventListener('click', e => {
+    e.stopPropagation();
+    selectPerson(p.id);
+  });
+  g.addEventListener('dblclick', e => {
+    e.stopPropagation();
+    focusOn(p.id);
   });
 
-  function assignBranch(p, rootId) {
-    branchOf.set(p.id, rootId);
-    for (const c of (children.get(p.id) || [])) assignBranch(c, rootId);
-  }
-  allRoots.forEach(r => assignBranch(r, r.id));
-
-  // توزيع الزوايا
-  function place(p, d, a0, a1) {
-    const a = (a0 + a1) / 2;
-    const arr = depthMap.get(d) || [];
-    arr.push(p.id);
-    depthMap.set(d, arr);
-    pos.set(p.id, { a, d, branch: branchOf.get(p.id) });
-
-    const kids = children.get(p.id) || [];
-    if (kids.length) {
-      let cur = a0;
-      const span = a1 - a0;
-      const lp = Math.max(1, leaves(p));
-      for (const c of kids) {
-        const part = span * (leaves(c) / lp);
-        place(c, d + 1, cur, cur + part);
-        cur += part;
-      }
-    }
-  }
-
-  for (const r of allRoots) {
-    const part = TWO_PI * (leaves(r) / totalLeaves);
-    place(r, 0, angle, angle + part);
-    angle += part;
-  }
-
-  // حساب أنصاف الأقطار
-  const radii = [0];
-  const maxDepth = depthCount;
-
-  for (let d = 1; d < maxDepth; d++) {
-    const ids = depthMap.get(d) || [];
-    const n = ids.length;
-    const w = CARD.w;
-    const h = CARD.h;
-
-    let minByCount = 0;
-    if (n >= 2) {
-      const circum = cardCircumradius(w, h);
-      const minLinear = 2 * circum + CARD.gap;
-      minByCount = minLinear / (2 * Math.sin(Math.PI / n));
-    }
-
-    const prevR = radii[d - 1] || 0;
-    const minRadial = prevR + h + CARD.gap + 45;
-
-    let minFromRoot = 0;
-    if (d === 1) {
-      minFromRoot = cardCircumradius(CARD.rootW, CARD.rootH)
-                  + cardCircumradius(w, h)
-                  + CARD.gap + 35;
-    }
-
-    radii[d] = Math.max(minByCount, minRadial, minFromRoot, 100);
-  }
-
-  // المواقع الأولية
-  worldR = 0;
-  for (const p of people) {
-    const q = pos.get(p.id);
-    if (!q) continue;
-    q.r = radii[q.d];
-    q.x = Math.cos(q.a) * q.r;
-    q.y = Math.sin(q.a) * q.r;
-    q.w = q.d === 0 ? CARD.rootW : CARD.w;
-    q.h = q.d === 0 ? CARD.rootH : CARD.h;
-    q.color = rootColor.get(q.branch) || palette[0];
-    worldR = Math.max(worldR, Math.hypot(q.x, q.y) + cardCircumradius(q.w, q.h));
-    nodes.push(p);
-  }
-
-  // التصحيح التكراري
-  const MAX_ITER = 40;
-  for (let iter = 0; iter < MAX_ITER; iter++) {
-    let collisionFound = false;
-    const expansion = new Map();
-
-    for (let d = 1; d < maxDepth; d++) {
-      const ids = depthMap.get(d) || [];
-      if (ids.length < 2) continue;
-      ids.sort((a, b) => pos.get(a).a - pos.get(b).a);
-      const r = radii[d];
-
-      for (let i = 0; i < ids.length; i++) {
-        for (let j = i + 1; j < ids.length; j++) {
-          const A = pos.get(ids[i]);
-          const B = pos.get(ids[j]);
-          let da = Math.abs(A.a - B.a);
-          if (da > Math.PI) da = 2 * Math.PI - da;
-          const linearDist = 2 * r * Math.sin(da / 2);
-          const circumA = cardCircumradius(A.w, A.h);
-          const circumB = cardCircumradius(B.w, B.h);
-          const required = circumA + circumB + CARD.gap;
-
-          if (linearDist < required - 0.5) {
-            collisionFound = true;
-            const factor = required / Math.max(linearDist, 0.001);
-            const cur = expansion.get(d) || 1;
-            expansion.set(d, Math.max(cur, factor * 1.03));
-          }
-        }
-      }
-    }
-
-    if (!collisionFound) break;
-
-    for (const [d, factor] of expansion) {
-      const newR = radii[d] * factor;
-      const minAllowed = (radii[d - 1] || 0) + CARD.h + CARD.gap + 45;
-      radii[d] = Math.max(newR, minAllowed);
-      const ids = depthMap.get(d) || [];
-      for (const id of ids) {
-        const q = pos.get(id);
-        q.r = radii[d];
-        q.x = Math.cos(q.a) * q.r;
-        q.y = Math.sin(q.a) * q.r;
-      }
-    }
-
-    for (let d = 1; d < maxDepth; d++) {
-      const minAllowed = (radii[d - 1] || 0) + CARD.h + CARD.gap + 45;
-      if (radii[d] < minAllowed) {
-        radii[d] = minAllowed;
-        const ids = depthMap.get(d) || [];
-        for (const id of ids) {
-          const q = pos.get(id);
-          q.r = radii[d];
-          q.x = Math.cos(q.a) * q.r;
-          q.y = Math.sin(q.a) * q.r;
-        }
-      }
-    }
-
-    worldR = 0;
-    for (const q of pos.values()) {
-      worldR = Math.max(worldR, Math.hypot(q.x, q.y) + cardCircumradius(q.w, q.h));
-    }
-  }
-
-  // فحص بين الحلقات المتجاورة
-  for (let pass = 0; pass < 5; pass++) {
-    let fixed = false;
-    for (let d = 1; d < maxDepth - 1; d++) {
-      const inner = depthMap.get(d) || [];
-      const outer = depthMap.get(d + 1) || [];
-      for (const iid of inner) {
-        const A = pos.get(iid);
-        for (const oid of outer) {
-          const B = pos.get(oid);
-          if (cardsCollide(A, B, CARD.gap * 0.5)) {
-            const newR = radii[d + 1] + CARD.gap + CARD.h * 0.4;
-            radii[d + 1] = newR;
-            for (const id of outer) {
-              const q = pos.get(id);
-              q.r = newR;
-              q.x = Math.cos(q.a) * newR;
-              q.y = Math.sin(q.a) * newR;
-            }
-            fixed = true;
-            break;
-          }
-        }
-      }
-    }
-    if (!fixed) break;
-  }
-
-  worldR = 0;
-  for (const q of pos.values()) {
-    worldR = Math.max(worldR, Math.hypot(q.x, q.y) + cardCircumradius(q.w, q.h));
-  }
-
-  // الحواف
-  for (const p of people) {
-    const a = pos.get(p.id);
-    if (!a) continue;
-    for (const c of children.get(p.id) || []) {
-      const b = pos.get(c.id);
-      if (b) edges.push({ a, b, type: 'child', color: a.color });
-    }
-  }
-
-  const seen = new Set();
-  for (const p of people) {
-    const sid = Number(p.spouse_id || 0);
-    if (!sid || !byId.has(sid)) continue;
-    const key = `${Math.min(p.id, sid)}-${Math.max(p.id, sid)}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
-    const a = pos.get(p.id), b = pos.get(sid);
-    if (a && b) edges.push({ a, b, type: 'spouse', color: a.color });
-  }
-
-  // الأسطورة
-  const li = document.getElementById('legendItems');
-  if (li) {
-    li.innerHTML = allRoots.slice(0, 12).map((r, i) =>
-      `<span class="legend-item"><i class="legend-dot" style="color:${rootColor.get(r.id)};background:${rootColor.get(r.id)}"></i>${esc(r.name || ('الفرع ' + (i + 1)))}</span>`
-    ).join('');
-  }
+  gNodes.appendChild(g);
 }
 
-// ============================================================
-// إعادة الحجم
-// ============================================================
-function resize() {
-  const r = vp.getBoundingClientRect();
-  W = r.width; H = r.height;
-  DPR = Math.min(devicePixelRatio || 1, 2);
-  canvas.width = Math.floor(W * DPR);
-  canvas.height = Math.floor(H * DPR);
-  canvas.style.width = W + 'px';
-  canvas.style.height = H + 'px';
-  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+/* رسم رابط */
+function drawLink(a, b, depth){
+  const pal = GEN_PALETTE[depth % GEN_PALETTE.length];
+  const x1 = a.x, y1 = a.y + NODE_H/2;
+  const x2 = b.x, y2 = b.y - NODE_H/2;
+  const my = (y1 + y2) / 2;
 
-  CARD.w = innerWidth < 700 ? 142 : 166;
-  CARD.h = innerWidth < 700 ? 66  : 76;
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('class','link');
+  path.setAttribute('d', `M ${x1} ${y1} C ${x1} ${my}, ${x2} ${my}, ${x2} ${y2}`);
+  path.setAttribute('stroke', pal.stroke);
+  path.setAttribute('stroke-width', '2');
+  path.setAttribute('opacity', '.75');
+  gLinks.appendChild(path);
+}
 
-  if (people.length) {
-    buildLayoutSafe();
-    fit();
-    loadingEl.style.display = 'none';
+/* =========================================================
+   6) وضع التركيز
+   ========================================================= */
+function focusOn(id){
+  state.focusId = id;
+  // احسب كل الذرية
+  const descendants = new Set();
+  const stack = [id];
+  while(stack.length){
+    const cur = stack.pop();
+    if(descendants.has(cur)) continue;
+    descendants.add(cur);
+    (state.children.get(cur)||[]).forEach(k=>stack.push(k));
   }
+  state.focusSet = descendants;
+
+  // أعد الرسم
+  render(id);
+
+  // اجعل العقدة مركزة
+  document.querySelectorAll('.node').forEach(n=>{
+    if(n.dataset.id === String(id)) n.classList.add('focused');
+  });
+
+  // رسالة
+  const p = state.byId.get(id);
+  toast(`🎯 التركيز على: ${p?.name || ''}`);
+  $('btn-home').style.background = 'linear-gradient(135deg,#ef4444,#b91c1c)';
+  $('btn-home').style.borderColor = 'transparent';
 }
 
-// ============================================================
-// التحويلات والتكبير
-// ============================================================
-function screenToWorld(x, y) {
-  return { x: (x - W / 2 - tx) / scale, y: (y - H / 2 - ty) / scale };
-}
-function fit() {
-  const usable = Math.min(W - 36, H - 36);
-  scale = Math.min(.90, usable / (worldR * 2));
-  scale = Math.max(.055, scale);
-  tx = 0; ty = 0;
-}
-function home() {
-  const root = roots[0]; if (!root) return;
-  const p = pos.get(root.id);
-  scale = Math.max(.42, Math.min(1.05, scale));
-  tx = -p.x * scale; ty = -p.y * scale;
-  selected = root.id;
-  showDetails(root);
-}
-function zoomAt(f, x = W / 2, y = H / 2) {
-  const before = screenToWorld(x, y);
-  const ns = Math.max(.08, Math.min(2.4, scale * f));
-  scale = ns;
-  const after = screenToWorld(x, y);
-  tx += (after.x - before.x) * scale;
-  ty += (after.y - before.y) * scale;
+function exitFocus(){
+  if(state.focusId == null) return;
+  state.focusId = null;
+  state.focusSet = null;
+  render(null);
+  fitToScreen();
+  $('btn-home').style.background = '';
+  $('btn-home').style.borderColor = '';
+  toast('↩ تم الخروج من وضع التركيز');
 }
 
-// ============================================================
-// الرسم
-// ============================================================
-function roundedRect(c, x, y, w, h, r) {
-  c.beginPath();
-  c.moveTo(x + r, y);
-  c.arcTo(x + w, y, x + w, y + h, r);
-  c.arcTo(x + w, y + h, x, y + h, r);
-  c.arcTo(x, y + h, x, y, r);
-  c.arcTo(x, y, x + w, y, r);
-  c.closePath();
-}
-function edgePath(a, b) {
-  const ax = Math.atan2(a.y, a.x), bx = Math.atan2(b.y, b.x);
-  const r1 = a.r || Math.hypot(a.x, a.y), r2 = b.r || Math.hypot(b.x, b.y);
-  const m1 = r1 + (r2 - r1) * .43, m2 = r1 + (r2 - r1) * .70;
-  const p1 = { x: Math.cos(ax) * m1, y: Math.sin(ax) * m1 };
-  const p2 = { x: Math.cos(bx) * m2, y: Math.sin(bx) * m2 };
-  return [p1, p2];
+/* تطبيق التعتيم على غير الذرية */
+function applyFocusDim(focusId){
+  const focusSet = state.focusSet || new Set([focusId]);
+  document.querySelectorAll('.node').forEach(n=>{
+    if(!focusSet.has(Number(n.dataset.id))) n.classList.add('dimmed');
+  });
+  document.querySelectorAll('.link').forEach(l=>{
+    l.style.opacity = '.9';
+  });
 }
 
-function draw() {
-  ctx.clearRect(0, 0, W, H);
+/* =========================================================
+   7) تفاصيل الفرد
+   ========================================================= */
+function selectPerson(id){
+  const p = state.byId.get(id);
+  if(!p) return;
+  const depth = state.depth.get(id) || 0;
+  const pal = GEN_PALETTE[depth % GEN_PALETTE.length];
 
-  // حلقات إرشادية
-  ctx.save();
-  ctx.translate(W / 2 + tx, H / 2 + ty);
-  for (let d = 1; d < depthCount; d++) {
-    const r = pos.get(depthMap.get(d)?.[0] || 0)?.r || 0;
-    if (!r) continue;
-    ctx.beginPath();
-    ctx.arc(0, 0, r, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(72,111,145,.075)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-  }
-  ctx.restore();
+  $('pAvatar').textContent = (p.name||'؟').trim().charAt(0) || '؟';
+  $('pName').textContent = p.name || 'بدون اسم';
+  $('pSub').textContent = `${pal.label} • ${p.gender==='female'?'أنثى':p.gender==='male'?'ذكر':'غير محدد'}`;
 
-  // الحواف
-  ctx.save();
-  ctx.translate(W / 2 + tx, H / 2 + ty);
-  ctx.scale(scale, scale);
-  for (const e of edges) {
-    const a = e.a, b = e.b;
-    const active = !selected || a.branch === pos.get(selected)?.branch;
-    ctx.globalAlpha = active ? 1 : .10;
-    ctx.beginPath();
-    ctx.moveTo(a.x, a.y);
-    if (e.type === 'spouse') {
-      ctx.setLineDash([9, 8]);
-      ctx.strokeStyle = e.color || '#ae73ff';
-      ctx.lineWidth = 2.1;
-      ctx.lineTo(b.x, b.y);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    } else {
-      const [c1, c2] = edgePath(a, b);
-      ctx.bezierCurveTo(c1.x, c1.y, c2.x, c2.y, b.x, b.y);
-      ctx.strokeStyle = e.color || '#35e0d0';
-      ctx.lineWidth = (selected && (a.branch === pos.get(selected)?.branch)) ? 3.6 : 2.4;
-      ctx.stroke();
-      ctx.globalAlpha = active ? .20 : .03;
-      ctx.strokeStyle = e.color || '#35e0d0';
-      ctx.lineWidth = 8;
-      ctx.stroke();
-    }
-    ctx.globalAlpha = 1;
-  }
-  ctx.restore();
+  const kids = state.children.get(id) || [];
+  const father = p.father_id ? state.byId.get(p.father_id) : null;
 
-  // البطاقات
-  ctx.save();
-  ctx.translate(W / 2 + tx, H / 2 + ty);
-  ctx.scale(scale, scale);
-  for (const p of nodes) drawCard(p);
-  ctx.restore();
+  let genderBadge = 'unknown', genderTxt = 'غير محدد';
+  if(p.gender === 'male'){ genderBadge='male'; genderTxt='ذكر'; }
+  else if(p.gender === 'female'){ genderBadge='female'; genderTxt='أنثى'; }
+
+  $('pBody').innerHTML = `
+    <div class="info-row"><span class="k">الحالة</span>
+      <span class="v"><span class="badge ${genderBadge}">${genderTxt}</span></span></div>
+    <div class="info-row"><span class="k">الجيل</span><span class="v">${depth+1}</span></div>
+    ${p.birth_date?`<div class="info-row"><span class="k">تاريخ الميلاد</span><span class="v">${p.birth_date}</span></div>`:''}
+    ${p.death_date?`<div class="info-row"><span class="k">تاريخ الوفاة</span><span class="v">${p.death_date}</span></div>`:''}
+    <div class="info-row"><span class="k">الأب</span><span class="v">${father?father.name:'—'}</span></div>
+    <div class="info-row"><span class="k">عدد الأبناء</span><span class="v">${kids.length}</span></div>
+    ${p.notes?`<div class="info-row"><span class="k">ملاحظات</span><span class="v">${p.notes}</span></div>`:''}
+    <button class="focus-btn" id="btnFocusPerson">
+      ${state.focusId===id?'✕ الخروج من التركيز':'🎯 التركيز على هذا الفرع'}
+    </button>
+    <button class="focus-btn" id="btnCenterPerson" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);margin-top:8px">
+      🎯 توسيط في الشاشة
+    </button>
+  `;
+  $('infoPanel').classList.add('open');
+
+  $('btnFocusPerson').onclick = () => {
+    if(state.focusId === id) exitFocus();
+    else focusOn(id);
+    $('infoPanel').classList.remove('open');
+  };
+  $('btnCenterPerson').onclick = () => {
+    centerOn(id);
+  };
 }
 
-function drawCard(p) {
-  const q = pos.get(p.id);
-  if (!q) return;
-  const w = q.w, h = q.h, x = q.x - w / 2, y = q.y - h / 2;
-  const hit = query && (p.name || '').toLowerCase().includes(query);
-  const isSel = selected === p.id;
-  const branchActive = !selected || q.branch === pos.get(selected)?.branch;
-  ctx.globalAlpha = branchActive ? 1 : .22;
-
-  if (isSel || hit) {
-    ctx.shadowBlur = isSel ? 26 : 18;
-    ctx.shadowColor = isSel ? q.color : 'rgba(174,115,255,.48)';
-  }
-  roundedRect(ctx, x, y, w, h, 18);
-  const g = ctx.createLinearGradient(x, y, x + w, y + h);
-  g.addColorStop(0, '#14253b');
-  g.addColorStop(1, '#0d1b2d');
-  ctx.fillStyle = g;
-  ctx.fill();
-  ctx.shadowBlur = 0;
-  ctx.strokeStyle = isSel ? q.color : hit ? '#b783ff' : q.color;
-  ctx.lineWidth = isSel ? 3.0 : 1.45;
-  ctx.stroke();
-
-  const ar = h * .31;
-  const ax = x + 25, ay = y + h / 2;
-  ctx.beginPath();
-  ctx.arc(ax, ay, ar, 0, Math.PI * 2);
-  ctx.fillStyle = '#263a50';
-  ctx.fill();
-  ctx.strokeStyle = isSel ? q.color : (p.gender === 'female' ? '#d796ea' : q.color);
-  ctx.lineWidth = 1.8;
-  ctx.stroke();
-  ctx.fillStyle = '#edf6ff';
-  ctx.font = `800 ${Math.max(13, ar * .75)}px Cairo`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(initials(p.name), ax, ay + 1);
-
-  const tx2 = x + 48;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = '#fff';
-  ctx.font = `800 ${q.d === 0 ? 15 : 12}px Cairo`;
-  let nm = p.name || 'بدون اسم';
-  if (nm.length > (q.d === 0 ? 18 : 17)) nm = nm.slice(0, (q.d === 0 ? 17 : 16)) + '…';
-  ctx.fillText(nm, tx2, y + 25);
-
-  ctx.fillStyle = '#91a4bd';
-  ctx.font = `500 ${q.d === 0 ? 10 : 8.5}px Cairo`;
-  const birth = p.birth_date || '';
-  const death = p.death_date || '';
-  ctx.fillText(birth ? `ميلاد: ${birth}` : 'الميلاد: —', tx2, y + 42);
-  ctx.fillText(death ? `وفاة: ${death}` : `الأبناء: ${(children.get(p.id) || []).length}`, tx2, y + 57);
-
-  if (q.d === 0) {
-    ctx.fillStyle = p.gender === 'female' ? '#402743' : '#123f45';
-    roundedRect(ctx, tx2, y + 65, 54, 16, 8);
-    ctx.fill();
-    ctx.fillStyle = '#d9fffb';
-    ctx.font = '700 8px Cairo';
-    ctx.textAlign = 'center';
-    ctx.fillText(p.gender === 'female' ? 'أنثى' : 'فرد', tx2 + 27, y + 77);
-  }
+/* =========================================================
+   8) التحويلات (Transform)
+   ========================================================= */
+function applyTransform(){
+  const {x,y,k} = state.transform;
+  viewport.setAttribute('transform', `translate(${x},${y}) scale(${k})`);
 }
 
-function render() {
-  if (people.length) draw();
-  requestAnimationFrame(render);
-}
-requestAnimationFrame(render);
-
-// ============================================================
-// التفاعل
-// ============================================================
-function hitTest(sx, sy) {
-  const w = screenToWorld(sx, sy);
-  let best = null, bd = Infinity;
-  for (const p of nodes) {
-    const q = pos.get(p.id);
-    const dx = w.x - q.x, dy = w.y - q.y;
-    if (Math.abs(dx) <= q.w / 2 && Math.abs(dy) <= q.h / 2) {
-      const d = dx * dx + dy * dy;
-      if (d < bd) { bd = d; best = p; }
-    }
-  }
-  return best;
-}
-function select(p) {
-  selected = p?.id || null;
-  if (p) showDetails(p);
+function fitToScreen(){
+  if(state.positions.size === 0) return;
+  let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
+  state.positions.forEach(p=>{
+    if(p.x < minX) minX = p.x;
+    if(p.x > maxX) maxX = p.x;
+    if(p.y < minY) minY = p.y;
+    if(p.y > maxY) maxY = p.y;
+  });
+  const padX = NODE_W, padY = NODE_H;
+  const w = (maxX - minX) + padX*2;
+  const h = (maxY - minY) + padY*2;
+  const rect = svg.getBoundingClientRect();
+  const k = Math.min(rect.width / w, rect.height / h) * 0.95;
+  const cx = (minX + maxX) / 2;
+  const cy = (minY + maxY) / 2;
+  state.transform.k = Math.max(0.08, Math.min(3, k));
+  state.transform.x = rect.width/2 - cx * state.transform.k;
+  state.transform.y = rect.height/2 - cy * state.transform.k;
+  applyTransform();
 }
 
-function showDetails(p) {
-  const kids = children.get(p.id) || [];
-  const father = p.father_id ? byId.get(p.father_id) : null;
-  document.getElementById('detail').innerHTML = `
- <div class="detail-head"><div class="avatar">${esc(initials(p.name))}</div><div><div class="detail-name">${esc(p.name || 'بدون اسم')}</div><div class="detail-sub">السجل #${p.id}</div></div></div>
- <div class="row"><span>الأب</span><b>${esc(father?.name || p.father_name || '—')}</b></div>
- <div class="row"><span>الجنس</span><b>${p.gender === 'female' ? 'أنثى' : p.gender === 'male' ? 'ذكر' : 'غير محدد'}</b></div>
- <div class="row"><span>الميلاد</span><b>${esc(p.birth_date || 'غير مسجل')}</b></div>
- <div class="row"><span>الوفاة</span><b>${esc(p.death_date || 'غير مسجل')}</b></div>
- <div class="row"><span>الأبناء</span><b>${kids.length}</b></div>
- ${kids.length ? `<div class="muted" style="margin-top:10px">أبناء ${esc(p.name)}:</div><div class="children">${kids.map(c => `<span class="chip">${esc(c.name)}</span>`).join('')}</div>` : ''}`;
-  document.getElementById('panel').classList.add('open');
+function centerOn(id){
+  const pos = state.positions.get(id);
+  if(!pos) return;
+  const rect = svg.getBoundingClientRect();
+  const k = Math.max(state.transform.k, 1);
+  state.transform.k = k;
+  state.transform.x = rect.width/2 - pos.x * k;
+  state.transform.y = rect.height/2 - pos.y * k;
+  applyTransform();
 }
 
-// أزرار
-document.getElementById('info').onclick = () => document.getElementById('panel').classList.toggle('open');
-document.getElementById('fit').onclick = () => { if (people.length) fit(); };
-document.getElementById('home').onclick = () => { if (people.length) home(); };
-document.getElementById('plus').onclick = () => zoomAt(1.22);
-document.getElementById('minus').onclick = () => zoomAt(.82);
-document.getElementById('one').onclick = () => { scale = 1; tx = 0; ty = 0; };
-
-// السحب
-vp.addEventListener('pointerdown', e => {
-  if (!people.length) return;
-  const p = hitTest(e.clientX, e.clientY);
-  if (p) { select(p); return; }
-  drag = true;
-  lastX = e.clientX; lastY = e.clientY;
-  vp.classList.add('dragging');
-  vp.setPointerCapture(e.pointerId);
-});
-vp.addEventListener('pointermove', e => {
-  if (!drag) return;
-  tx += e.clientX - lastX;
-  ty += e.clientY - lastY;
-  lastX = e.clientX; lastY = e.clientY;
-});
-vp.addEventListener('pointerup', () => { drag = false; vp.classList.remove('dragging'); });
-vp.addEventListener('pointercancel', () => { drag = false; vp.classList.remove('dragging'); });
-vp.addEventListener('wheel', e => {
-  e.preventDefault();
-  zoomAt(e.deltaY < 0 ? 1.12 : .89, e.clientX, e.clientY);
-}, { passive: false });
-
-// البحث
-const search = document.getElementById('search');
-function doSearch(v) {
-  query = v.trim().toLowerCase();
-  if (query) {
-    const p = people.find(x => (x.name || '').toLowerCase().includes(query));
-    if (p) { selected = p.id; showDetails(p); }
-  } else selected = null;
+function zoomBy(factor){
+  const rect = svg.getBoundingClientRect();
+  const cx = rect.width/2, cy = rect.height/2;
+  const k0 = state.transform.k;
+  const k1 = Math.max(0.08, Math.min(4, k0 * factor));
+  const {x,y} = state.transform;
+  state.transform.x = cx - (cx - x) * (k1/k0);
+  state.transform.y = cy - (cy - y) * (k1/k0);
+  state.transform.k = k1;
+  applyTransform();
 }
-search.addEventListener('input', e => doSearch(e.target.value));
-document.getElementById('clear').onclick = () => { search.value = ''; doSearch(''); search.focus(); };
-document.addEventListener('keydown', e => {
-  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
-    e.preventDefault();
-    search.focus();
-  }
-  if (e.key === 'Escape') {
-    search.value = '';
-    doSearch('');
-    document.getElementById('panel').classList.remove('open');
-  }
-});
 
-// اللمس المتعدد
+function resetZoom(){
+  state.transform = {x:0,y:0,k:1};
+  applyTransform();
+}
+
+/* =========================================================
+   9) التفاعلات (سحب، تكبير)
+   ========================================================= */
+let dragging = false;
+let last = {x:0,y:0};
 let pinch = null;
-vp.addEventListener('touchstart', e => {
-  if (e.touches.length === 2) {
-    const a = e.touches[0], b = e.touches[1];
-    pinch = { dist: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), scale };
+
+svg.addEventListener('pointerdown', e=>{
+  if(e.target.closest('.node')) return;
+  dragging = true;
+  svg.classList.add('grabbing');
+  last = {x:e.clientX, y:e.clientY};
+  svg.setPointerCapture(e.pointerId);
+});
+svg.addEventListener('pointermove', e=>{
+  if(!dragging) return;
+  const dx = e.clientX - last.x;
+  const dy = e.clientY - last.y;
+  last = {x:e.clientX, y:e.clientY};
+  state.transform.x += dx;
+  state.transform.y += dy;
+  applyTransform();
+});
+svg.addEventListener('pointerup', e=>{
+  dragging = false;
+  svg.classList.remove('grabbing');
+});
+svg.addEventListener('pointercancel', ()=>{ dragging=false; svg.classList.remove('grabbing'); });
+
+svg.addEventListener('wheel', e=>{
+  e.preventDefault();
+  const factor = e.deltaY < 0 ? 1.12 : 1/1.12;
+  zoomBy(factor);
+}, {passive:false});
+
+// اللمس المتعدد (Pinch)
+svg.addEventListener('touchstart', e=>{
+  if(e.touches.length === 2){
+    const [a,b] = e.touches;
+    pinch = {d: Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY)};
   }
-}, { passive: true });
-vp.addEventListener('touchmove', e => {
-  if (e.touches.length === 2 && pinch) {
-    const a = e.touches[0], b = e.touches[1];
-    const d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-    scale = Math.max(.08, Math.min(2.4, pinch.scale * (d / pinch.dist)));
+}, {passive:true});
+svg.addEventListener('touchmove', e=>{
+  if(e.touches.length === 2 && pinch){
+    e.preventDefault();
+    const [a,b] = e.touches;
+    const d = Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+    const factor = d / pinch.d;
+    pinch.d = d;
+    zoomBy(factor);
   }
-}, { passive: true });
-vp.addEventListener('touchend', () => pinch = null, { passive: true });
+}, {passive:false});
+svg.addEventListener('touchend', ()=>{ pinch = null; });
 
-// ============================================================
-// تحميل ملف JSON الخارجي ثم بناء الشجرة
-// ============================================================
-async function loadData() {
-  try {
-    loadingEl.classList.remove('error');
-    loadingEl.textContent = 'جاري تحميل ملف البيانات…';
-
-    const res = await fetch(DATA_URL, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status} — تعذّر العثور على ${DATA_URL}`);
-
-    const DATA = await res.json();
-    const rawPeople = DATA.people || DATA;
-
-    // تهيئة البيانات
-    people = rawPeople.map(p => ({
-      ...p,
-      id: Number(p.id),
-      father_id: p.father_id == null ? null : Number(p.father_id)
-    }));
-
-    byId = new Map(people.map(p => [p.id, p]));
-
-    children = new Map();
-    for (const p of people) {
-      if (!children.has(p.father_id)) children.set(p.father_id, []);
-      children.get(p.father_id).push(p);
-    }
-    for (const arr of children.values()) arr.sort((x, y) => x.id - y.id);
-
-    roots = people.filter(p => p.father_id === null || !byId.has(p.father_id));
-
-    // عمق الشجرة
-    depthCount = roots.reduce((m, r) => Math.max(m, depthOf(r)), 0) + 1;
-
-    // الإحصائيات
-    document.getElementById('people').textContent = people.length;
-    document.getElementById('gens').textContent = depthCount;
-    document.getElementById('branches').textContent = roots.length;
-
-    // البناء
-    resize();
-    loadingEl.style.display = 'none';
-
-  } catch (err) {
-    console.error(err);
-    loadingEl.classList.add('error');
-    loadingEl.innerHTML = `
-      <div>
-        ⚠ فشل تحميل ملف البيانات
-        <small>
-          ${esc(err.message)}<br>
-          تأكّد أن ملف <b>tree-data.json</b> في نفس المجلد.<br>
-          لا بد من تشغيل الصفحة عبر سيرفر محلي (مثال: <code>python -m http.server</code>)<br>
-          لأن المتصفح يمنع <b>fetch</b> على ملفات <code>file://</code>.
-        </small>
-      </div>`;
+// النقر على الخلفية = إغلاق اللوحة
+svg.addEventListener('click', e=>{
+  if(!e.target.closest('.node')){
+    $('infoPanel').classList.remove('open');
   }
+});
+
+/* =========================================================
+   10) البحث
+   ========================================================= */
+const searchInput = $('searchInput');
+searchInput.addEventListener('input', ()=>{
+  const q = searchInput.value.trim();
+  $('searchBox').classList.toggle('has-value', q.length > 0);
+
+  if(!q){ 
+    document.querySelectorAll('.node').forEach(n=>n.style.opacity='');
+    return;
+  }
+  const matches = new Set();
+  state.people.forEach(p=>{
+    if((p.name||'').includes(q)) matches.add(p.id);
+  });
+  document.querySelectorAll('.node').forEach(n=>{
+    if(matches.has(Number(n.dataset.id))) n.style.opacity = '1';
+    else n.style.opacity = '.15';
+  });
+  if(matches.size === 1){
+    const id = [...matches][0];
+    centerOn(id);
+  }
+});
+$('clearSearch').onclick = ()=>{
+  searchInput.value = '';
+  searchInput.dispatchEvent(new Event('input'));
+};
+
+/* =========================================================
+   11) إحصائيات
+   ========================================================= */
+function updateStats(){
+  $('st-people').textContent = state.people.length;
+  $('st-gens').textContent = state.maxGen + 1;
+  $('st-roots').textContent = state.roots.length;
 }
 
-new ResizeObserver(resize).observe(vp);
+/* =========================================================
+   12) أزرار
+   ========================================================= */
+$('btn-home').onclick = ()=>{ exitFocus(); };
+$('btn-fit').onclick = ()=>{ fitToScreen(); };
+$('btn-zoom-in').onclick = ()=> zoomBy(1.25);
+$('btn-zoom-out').onclick = ()=> zoomBy(1/1.25);
+$('btn-reset').onclick = ()=>{ resetZoom(); };
+$('closePanel').onclick = ()=> $('infoPanel').classList.remove('open');
+$('btn-info').onclick = ()=>{
+  toast(`📊 ${state.people.length} فرد • ${state.maxGen+1} جيل • ${state.roots.length} فرع`);
+};
+$('btn-theme').onclick = ()=>{
+  // تبديل بسيط بين لوحتين
+  document.documentElement.style.setProperty('--accent', '#10b981');
+  document.documentElement.style.setProperty('--glow', '#34d399');
+  toast('🌿 تم تغيير السمة');
+};
+
+// ESC = خروج من التركيز أو إغلاق اللوحة
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape'){
+    if($('infoPanel').classList.contains('open')) $('infoPanel').classList.remove('open');
+    else if(state.focusId != null) exitFocus();
+  }
+  if(e.key === 'f' || e.key === 'F') fitToScreen();
+});
+
+/* =========================================================
+   13) Toast
+   ========================================================= */
+let toastTimer = null;
+function toast(msg){
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
+}
+
+/* =========================================================
+   14) انطلاق
+   ========================================================= */
+window.addEventListener('resize', ()=>{ /* يمكن إعادة الملاءمة */ });
 loadData();
 </script>
 </body>
