@@ -2,13 +2,16 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#05070d">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>🌳 شجرة العائلة</title>
 <style>
   :root{
     --bg-0:#05070d;
     --bg-1:#0a0f1c;
     --bg-2:#0f1628;
+    --bg-3:#16213a;
     --line:#1e2a44;
     --txt:#e6edf7;
     --txt-dim:#8b9bb4;
@@ -17,181 +20,224 @@
     --glow:#60a5fa;
     --danger:#ef4444;
     --ok:#10b981;
+    --warn:#f59e0b;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  html,body{height:100%;overflow:hidden;background:var(--bg-0);color:var(--txt);
-    font-family:'Segoe UI',Tahoma,system-ui,sans-serif}
+  html,body{
+    height:100%;overflow:hidden;background:var(--bg-0);color:var(--txt);
+    font-family:'Segoe UI',Tahoma,system-ui,-apple-system,sans-serif;
+    overscroll-behavior:none;
+    -webkit-user-select:none;user-select:none;
+  }
   #app{position:fixed;inset:0;display:flex;flex-direction:column}
 
-  /* ===== شريط علوي ===== */
+  /* ============ شريط علوي ============ */
   .topbar{
     position:relative;z-index:20;
-    display:flex;align-items:center;gap:8px;
-    padding:10px 12px;
-    background:linear-gradient(180deg,rgba(10,15,28,.98),rgba(10,15,28,.85));
+    display:flex;align-items:center;gap:6px;
+    padding:calc(8px + var(--safe-top)) 10px 8px;
+    background:linear-gradient(180deg,rgba(10,15,28,.98),rgba(10,15,28,.75));
     border-bottom:1px solid var(--line);
-    backdrop-filter:blur(10px);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
   }
   .icon-btn{
-    width:42px;height:42px;flex:0 0 auto;
+    width:40px;height:40px;flex:0 0 auto;
     display:grid;place-items:center;
-    border-radius:12px;border:1px solid var(--line);
+    border-radius:11px;border:1px solid var(--line);
     background:var(--bg-2);color:var(--txt);
-    cursor:pointer;transition:.2s;font-size:18px;
+    cursor:pointer;transition:.18s;font-size:17px;
+    font-family:inherit;
   }
-  .icon-btn:hover{background:#16213a;border-color:var(--accent);color:var(--glow)}
+  .icon-btn:active{transform:scale(.92);background:var(--bg-3)}
   .icon-btn.primary{background:linear-gradient(135deg,#0ea5e9,#2563eb);border-color:transparent;color:#fff}
+  .icon-btn.danger{background:linear-gradient(135deg,#ef4444,#b91c1c);border-color:transparent;color:#fff}
+  .icon-btn.active{border-color:var(--accent);color:var(--glow);box-shadow:0 0 0 2px rgba(59,130,246,.2)}
+
   .search-box{
     flex:1;position:relative;display:flex;align-items:center;
     background:var(--bg-2);border:1px solid var(--line);
-    border-radius:12px;padding:0 12px;height:42px;transition:.2s;
+    border-radius:11px;padding:0 10px;height:40px;transition:.2s;
+    min-width:0;
   }
   .search-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
   .search-box input{
     flex:1;background:transparent;border:0;outline:0;color:var(--txt);
-    font-size:15px;padding:0 8px;
+    font-size:14px;padding:0 6px;min-width:0;font-family:inherit;
   }
   .search-box input::placeholder{color:var(--txt-dim)}
-  .search-box .s-icon{color:var(--txt-dim);font-size:16px}
-  .search-box .clear-btn{display:none;cursor:pointer;color:var(--txt-dim)}
+  .search-box .s-icon{color:var(--txt-dim);font-size:14px;flex:0 0 auto}
+  .search-box .clear-btn{display:none;cursor:pointer;color:var(--txt-dim);font-size:14px;padding:4px}
   .search-box.has-value .clear-btn{display:block}
 
-  /* ===== إحصائيات ===== */
+  /* ============ إحصائيات ============ */
   .stats{
-    position:absolute;top:64px;left:12px;right:12px;z-index:15;
-    display:flex;gap:8px;justify-content:flex-end;pointer-events:none;
+    position:absolute;top:calc(62px + var(--safe-top));left:10px;right:10px;
+    z-index:15;display:flex;gap:6px;justify-content:flex-end;
+    pointer-events:none;
   }
   .stat-card{
     pointer-events:auto;
-    min-width:82px;padding:8px 12px;border-radius:14px;
+    min-width:64px;padding:6px 10px;border-radius:12px;
     background:rgba(15,22,40,.85);border:1px solid var(--line);
-    backdrop-filter:blur(8px);text-align:center;transition:.2s;
-  }
-  .stat-card:hover{border-color:var(--accent);transform:translateY(-2px)}
-  .stat-card .num{font-size:20px;font-weight:800;color:var(--glow);line-height:1}
-  .stat-card .lbl{font-size:11px;color:var(--txt-dim);margin-top:3px}
-
-  /* ===== أدوات تحكم ===== */
-  .controls{
-    position:absolute;bottom:20px;left:16px;z-index:15;
-    display:flex;flex-direction:column;gap:8px;
-  }
-  .ctrl-btn{
-    width:46px;height:46px;border-radius:14px;
-    background:rgba(15,22,40,.9);border:1px solid var(--line);
-    color:var(--txt);font-size:20px;cursor:pointer;
-    display:grid;place-items:center;transition:.2s;
     backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    text-align:center;transition:.18s;
   }
-  .ctrl-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;transform:scale(1.05)}
-  .ctrl-btn.zoom-label{font-size:13px;font-weight:700}
+  .stat-card:active{transform:scale(.95)}
+  .stat-card .num{font-size:17px;font-weight:800;color:var(--glow);line-height:1}
+  .stat-card .lbl{font-size:10px;color:var(--txt-dim);margin-top:2px}
 
-  /* ===== لوحة تفاصيل ===== */
+  /* ============ أدوات تحكم عائمة ============ */
+  .fab-stack{
+    position:absolute;bottom:calc(16px + var(--safe-bottom));left:12px;
+    z-index:15;display:flex;flex-direction:column;gap:8px;
+  }
+  .fab{
+    width:44px;height:44px;border-radius:13px;
+    background:rgba(15,22,40,.92);border:1px solid var(--line);
+    color:var(--txt);font-size:19px;cursor:pointer;
+    display:grid;place-items:center;transition:.18s;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    font-family:inherit;
+  }
+  .fab:active{transform:scale(.9);background:var(--accent);color:#fff}
+  .fab.zoom-label{font-size:12px;font-weight:800}
+
+  /* ============ لوحة تفاصيل ============ */
   .info-panel{
-    position:absolute;top:0;right:0;bottom:0;width:320px;max-width:85vw;
-    background:linear-gradient(180deg,rgba(10,15,28,.98),rgba(15,22,40,.98));
+    position:absolute;top:0;right:0;bottom:0;width:320px;max-width:88vw;
+    background:linear-gradient(180deg,rgba(10,15,28,.99),rgba(15,22,40,.99));
     border-right:1px solid var(--line);
-    transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+    transform:translateX(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);
     z-index:30;display:flex;flex-direction:column;
     backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:-10px 0 30px rgba(0,0,0,.5);
   }
   .info-panel.open{transform:translateX(0)}
   .info-head{
-    padding:16px;border-bottom:1px solid var(--line);
+    padding:16px 16px 16px 52px;border-bottom:1px solid var(--line);
     display:flex;align-items:center;gap:12px;
+    padding-top:calc(16px + var(--safe-top));
   }
   .avatar{
     width:52px;height:52px;border-radius:50%;
     background:linear-gradient(135deg,#3b82f6,#8b5cf6);
-    display:grid;place-items:center;font-size:22px;color:#fff;
+    display:grid;place-items:center;font-size:22px;color:#fff;font-weight:800;
     border:2px solid rgba(255,255,255,.2);flex:0 0 auto;
+    box-shadow:0 4px 14px rgba(59,130,246,.3);
   }
-  .info-head .name{font-size:18px;font-weight:800}
-  .info-head .sub{font-size:12px;color:var(--txt-dim);margin-top:2px}
-  .info-body{padding:16px;overflow-y:auto;flex:1}
+  .info-head .name{font-size:17px;font-weight:800;line-height:1.2}
+  .info-head .sub{font-size:11px;color:var(--txt-dim);margin-top:3px}
+  .info-body{padding:14px 16px;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}
   .info-row{
     display:flex;justify-content:space-between;align-items:center;
-    padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px;
+    padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px;
+    gap:10px;
   }
-  .info-row .k{color:var(--txt-dim)}
-  .info-row .v{font-weight:600}
+  .info-row .k{color:var(--txt-dim);flex:0 0 auto}
+  .info-row .v{font-weight:600;text-align:left;word-break:break-word}
   .badge{
-    display:inline-block;padding:3px 10px;border-radius:20px;
+    display:inline-block;padding:3px 9px;border-radius:20px;
     font-size:11px;font-weight:700;
   }
   .badge.male{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
   .badge.female{background:rgba(236,72,153,.15);color:#f472b6;border:1px solid rgba(236,72,153,.3)}
   .badge.unknown{background:rgba(139,155,180,.15);color:#8b9bb4;border:1px solid rgba(139,155,180,.3)}
-  .focus-btn{
-    width:100%;margin-top:16px;padding:12px;border-radius:12px;
+  .action-btn{
+    width:100%;margin-top:12px;padding:12px;border-radius:12px;
     background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;
-    border:0;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;
+    border:0;font-size:14px;font-weight:700;cursor:pointer;transition:.18s;
+    font-family:inherit;
+    display:flex;align-items:center;justify-content:center;gap:6px;
   }
-  .focus-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,99,235,.4)}
-  .focus-btn.exit{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+  .action-btn:active{transform:scale(.97)}
+  .action-btn.exit{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+  .action-btn.secondary{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
+  .action-btn.ghost{background:var(--bg-2);border:1px solid var(--line);color:var(--txt)}
   .close-panel{
-    position:absolute;top:12px;left:12px;width:32px;height:32px;border-radius:50%;
+    position:absolute;top:calc(12px + var(--safe-top));left:12px;
+    width:34px;height:34px;border-radius:50%;
     background:rgba(255,255,255,.08);border:0;color:var(--txt);cursor:pointer;
-    display:grid;place-items:center;font-size:16px;
+    display:grid;place-items:center;font-size:15px;font-family:inherit;
   }
+  .close-panel:active{background:rgba(255,255,255,.16)}
 
-  /* ===== SVG ===== */
-  #svg{flex:1;width:100%;display:block;cursor:grab;touch-action:none}
+  /* ============ SVG ============ */
+  #svg{
+    flex:1;width:100%;display:block;cursor:grab;touch-action:none;
+    background:radial-gradient(ellipse at center, #0a1020 0%, #05070d 100%);
+  }
   #svg.grabbing{cursor:grabbing}
 
   .node{cursor:pointer}
-  .node rect{
-    transition:filter .25s,stroke .25s,stroke-width .25s;
-  }
-  .node:hover rect{filter:url(#hoverGlow)}
-  .node text{
-    pointer-events:none;user-select:none;
-    font-family:'Segoe UI',Tahoma,sans-serif;
-  }
-  .node .n-name{font-weight:700;font-size:13px;fill:#fff}
-  .node .n-meta{font-size:10px;fill:#b8c5d8}
+  .node rect{transition:filter .2s,stroke .2s,stroke-width .2s}
+  .node text{pointer-events:none;user-select:none;font-family:'Segoe UI',Tahoma,sans-serif}
+  .node .n-name{font-weight:700;font-size:12px;fill:#fff}
+  .node .n-id{font-size:10px;fill:#b8c5d8;font-weight:600}
   .node.focused rect{
     stroke:#fbbf24 !important;
     stroke-width:3.5 !important;
     filter:url(#focusGlow);
   }
-  .node.dimmed{opacity:.12;pointer-events:none;transition:opacity .4s}
+  .node.dimmed{opacity:.08;pointer-events:none;transition:opacity .3s}
+  .node.search-hit rect{stroke:#fbbf24 !important;stroke-width:3 !important}
   .link{fill:none;stroke-linecap:round;transition:opacity .3s}
-  .link.dimmed{opacity:.06}
+  .link.dimmed{opacity:.04}
 
-  /* ===== شاشة تحميل ===== */
+  /* ============ شاشة تحميل ============ */
   #loader{
     position:fixed;inset:0;background:var(--bg-0);z-index:100;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
-    transition:opacity .5s;
+    transition:opacity .4s;
   }
   #loader.hide{opacity:0;pointer-events:none}
   .spinner{
-    width:56px;height:56px;border-radius:50%;
+    width:52px;height:52px;border-radius:50%;
     border:4px solid rgba(59,130,246,.15);
     border-top-color:var(--accent);animation:spin 1s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg)}}
-  #loader p{color:var(--txt-dim);font-size:14px}
+  #loader p{color:var(--txt-dim);font-size:13px;text-align:center;padding:0 20px}
 
-  /* ===== Toast ===== */
+  /* ============ Toast ============ */
   #toast{
-    position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);
-    background:rgba(15,22,40,.95);border:1px solid var(--accent);
-    color:var(--txt);padding:10px 20px;border-radius:12px;font-size:13px;
+    position:fixed;bottom:calc(80px + var(--safe-bottom));left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:rgba(15,22,40,.97);border:1px solid var(--accent);
+    color:var(--txt);padding:10px 18px;border-radius:12px;font-size:13px;
     opacity:0;transition:.3s;z-index:50;pointer-events:none;
-    backdrop-filter:blur(8px);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    max-width:85vw;text-align:center;font-weight:600;
+    box-shadow:0 8px 30px rgba(59,130,246,.2);
   }
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-  /* ===== موبايل ===== */
-  @media(max-width:600px){
-    .stat-card{min-width:66px;padding:6px 9px}
-    .stat-card .num{font-size:16px}
-    .stat-card .lbl{font-size:10px}
-    .info-panel{width:280px}
-    .node .n-name{font-size:11px}
-    .node .n-meta{font-size:9px}
+  /* ============ شريط سفلي للبحث السريع (Mobile) ============ */
+  .quick-nav{
+    position:absolute;bottom:calc(16px + var(--safe-bottom));right:12px;
+    z-index:15;display:flex;flex-direction:column;gap:8px;
+  }
+
+  /* ============ شاشة صغيرة جداً ============ */
+  @media(max-width:380px){
+    .stat-card{min-width:56px;padding:5px 8px}
+    .stat-card .num{font-size:15px}
+    .stat-card .lbl{font-size:9px}
+    .icon-btn{width:36px;height:36px;font-size:15px}
+    .search-box{height:36px}
+    .fab{width:40px;height:40px;font-size:17px}
+  }
+
+  /* ============ شاشة كبيرة ============ */
+  @media(min-width:768px){
+    .node .n-name{font-size:13px}
+    .node .n-id{font-size:11px}
+    .info-panel{width:360px}
   }
 </style>
 </head>
@@ -200,15 +246,14 @@
 
   <!-- شريط علوي -->
   <div class="topbar">
-    <div class="icon-btn primary" id="btn-info" title="معلومات">ℹ</div>
-    <div class="icon-btn" id="btn-home" title="الصفحة الرئيسية">🏠</div>
-    <div class="icon-btn" id="btn-fit" title="ملاءمة الشاشة">⛶</div>
+    <button class="icon-btn primary" id="btn-focus-toggle" title="وضع التركيز" aria-label="وضع التركيز">🎯</button>
+    <button class="icon-btn" id="btn-home" title="الرئيسية" aria-label="الرئيسية">🏠</button>
+    <button class="icon-btn" id="btn-fit" title="ملاءمة الشاشة" aria-label="ملاءمة">⛶</button>
     <div class="search-box" id="searchBox">
       <span class="s-icon">🔍</span>
-      <input type="text" id="searchInput" placeholder="ابحث عن اسم...">
+      <input type="text" id="searchInput" placeholder="ابحث بالاسم أو الـ ID..." inputmode="search">
       <span class="clear-btn" id="clearSearch">✕</span>
     </div>
-    <div class="icon-btn" id="btn-theme" title="الألوان">🌿</div>
   </div>
 
   <!-- إحصائيات -->
@@ -229,10 +274,6 @@
         <feGaussianBlur stdDeviation="6" result="b"/>
         <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
-      <linearGradient id="linkGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#3b82f6" stop-opacity=".9"/>
-        <stop offset="100%" stop-color="#8b5cf6" stop-opacity=".5"/>
-      </linearGradient>
     </defs>
     <g id="viewport">
       <g id="links"></g>
@@ -240,19 +281,25 @@
     </g>
   </svg>
 
-  <!-- أدوات تحكم -->
-  <div class="controls">
-    <button class="ctrl-btn" id="btn-zoom-in">＋</button>
-    <button class="ctrl-btn" id="btn-zoom-out">－</button>
-    <button class="ctrl-btn zoom-label" id="btn-reset">1:1</button>
+  <!-- أدوات تحكم عائمة (يسار) -->
+  <div class="fab-stack">
+    <button class="fab" id="btn-zoom-in" aria-label="تكبير">＋</button>
+    <button class="fab" id="btn-zoom-out" aria-label="تصغير">－</button>
+    <button class="fab zoom-label" id="btn-reset" aria-label="إعادة تعيين">1:1</button>
+  </div>
+
+  <!-- أدوات عائمة (يمين) -->
+  <div class="quick-nav">
+    <button class="fab" id="btn-up" title="أعلى" aria-label="أعلى">▲</button>
+    <button class="fab" id="btn-down" title="أسفل" aria-label="أسفل">▼</button>
   </div>
 
   <!-- لوحة تفاصيل -->
-  <div class="info-panel" id="infoPanel">
-    <button class="close-panel" id="closePanel">✕</button>
+  <div class="info-panel" id="infoPanel" role="dialog" aria-label="تفاصيل الفرد">
+    <button class="close-panel" id="closePanel" aria-label="إغلاق">✕</button>
     <div class="info-head">
       <div class="avatar" id="pAvatar">؟</div>
-      <div>
+      <div style="min-width:0">
         <div class="name" id="pName">—</div>
         <div class="sub" id="pSub">—</div>
       </div>
@@ -261,7 +308,7 @@
   </div>
 
   <!-- Toast -->
-  <div id="toast"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
 
   <!-- Loader -->
   <div id="loader">
@@ -272,47 +319,48 @@
 
 <script>
 /* =========================================================
-   شجرة العائلة الاحترافية — Family Tree Pro Viewer
+   شجرة العائلة الاحترافية — Mobile-First Vertical Layout
    ========================================================= */
 'use strict';
 
-/* ---------- ثوابت الألوان حسب الجيل ---------- */
+/* ---------- لوحة ألوان الأجيال ---------- */
 const GEN_PALETTE = [
-  {fill:'#0b2545', stroke:'#3b82f6', glow:'#60a5fa', label:'الجيل ١'},
-  {fill:'#1a2e4a', stroke:'#8b5cf6', glow:'#a78bfa', label:'الجيل ٢'},
-  {fill:'#2d1b4e', stroke:'#ec4899', glow:'#f472b6', label:'الجيل ٣'},
-  {fill:'#0f3d3e', stroke:'#14b8a6', glow:'#2dd4bf', label:'الجيل ٤'},
-  {fill:'#3d2f0f', stroke:'#f59e0b', glow:'#fbbf24', label:'الجيل ٥'},
-  {fill:'#3d0f1f', stroke:'#ef4444', glow:'#f87171', label:'الجيل ٦'},
-  {fill:'#1e293b', stroke:'#64748b', glow:'#94a3b8', label:'الجيل ٧'},
-  {fill:'#1e1b4b', stroke:'#6366f1', glow:'#818cf8', label:'الجيل ٨'},
-  {fill:'#14532d', stroke:'#22c55e', glow:'#4ade80', label:'الجيل ٩'},
-  {fill:'#4c1d95', stroke:'#a855f7', glow:'#c084fc', label:'الجيل ١٠'},
-  {fill:'#7c2d12', stroke:'#f97316', glow:'#fb923c', label:'الجيل ١١'},
-  {fill:'#083344', stroke:'#06b6d4', glow:'#22d3ee', label:'الجيل ١٢'},
-  {fill:'#422006', stroke:'#eab308', glow:'#facc15', label:'الجيل ١٣'},
-  {fill:'#450a0a', stroke:'#dc2626', glow:'#fca5a5', label:'الجيل ١٤'},
+  {fill:'#0b2545', stroke:'#3b82f6', glow:'#60a5fa'},
+  {fill:'#1a2e4a', stroke:'#8b5cf6', glow:'#a78bfa'},
+  {fill:'#2d1b4e', stroke:'#ec4899', glow:'#f472b6'},
+  {fill:'#0f3d3e', stroke:'#14b8a6', glow:'#2dd4bf'},
+  {fill:'#3d2f0f', stroke:'#f59e0b', glow:'#fbbf24'},
+  {fill:'#3d0f1f', stroke:'#ef4444', glow:'#f87171'},
+  {fill:'#1e293b', stroke:'#64748b', glow:'#94a3b8'},
+  {fill:'#1e1b4b', stroke:'#6366f1', glow:'#818cf8'},
+  {fill:'#14532d', stroke:'#22c55e', glow:'#4ade80'},
+  {fill:'#4c1d95', stroke:'#a855f7', glow:'#c084fc'},
+  {fill:'#7c2d12', stroke:'#f97316', glow:'#fb923c'},
+  {fill:'#083344', stroke:'#06b6d4', glow:'#22d3ee'},
 ];
 
-const NODE_W = 130;
-const NODE_H = 56;
-const H_GAP = 22;   // فراغ أفقي بين الأشقاء
-const V_GAP = 90;   // فراغ عمودي بين الأجيال
+/* ---------- قياسات العقدة ---------- */
+const NODE_W = 110;
+const NODE_H = 48;
+const H_GAP = 16;    // فراغ أفقي بين الأشقاء
+const V_GAP = 75;    // فراغ عمودي بين الأجيال
 
 /* ---------- الحالة ---------- */
 const state = {
   people: [],
   byId: new Map(),
-  children: new Map(),   // father_id -> [ids]
+  children: new Map(),
   roots: [],
-  depth: new Map(),      // id -> generation index
+  depth: new Map(),
   maxGen: 0,
   focusId: null,
+  focusSet: null,
   transform: {x:0,y:0,k:1},
   positions: new Map(),
+  searchMatches: new Set(),
 };
 
-/* ---------- عناصر DOM ---------- */
+/* ---------- DOM ---------- */
 const $ = id => document.getElementById(id);
 const svg = $('svg');
 const viewport = $('viewport');
@@ -330,22 +378,25 @@ async function loadData(){
     state.people = Array.isArray(data.people) ? data.people : [];
     buildMaps();
     computeGenerations();
-    render();
+    render(null);
     updateStats();
-    fitToScreen();
+    // ملاءمة بعد الرسم
+    requestAnimationFrame(()=>{ fitToScreen(); });
+    setTimeout(()=>{ fitToScreen(); }, 120);
     $('loader').classList.add('hide');
   }catch(err){
     console.error(err);
     $('loader').innerHTML = `
-      <p style="color:#ef4444;font-size:16px">⚠ تعذر تحميل tree-data.json</p>
-      <p style="color:#8b9bb4;font-size:12px;max-width:300px;text-align:center">
-        تأكد من وجود الملف في نفس مجلد index.html<br>وشغّل الصفحة عبر سيرفر محلي (Live Server)
+      <p style="color:#ef4444;font-size:15px;font-weight:700">⚠ تعذر تحميل tree-data.json</p>
+      <p style="color:#8b9bb4;font-size:12px;max-width:300px;text-align:center;line-height:1.6">
+        تأكد من وجود الملف في نفس مجلد index.html<br>
+        وشغّل الصفحة عبر Live Server أو أي سيرفر محلي
       </p>`;
   }
 }
 
 /* =========================================================
-   2) خرائط الأب/الأبناء
+   2) بناء الخرائط
    ========================================================= */
 function buildMaps(){
   state.byId.clear();
@@ -358,10 +409,13 @@ function buildMaps(){
       state.children.get(p.father_id).push(p.id);
     }
   });
+
+  // ترتيب الأبناء حسب الـ ID لضمان استقرار الترتيب
+  state.children.forEach(arr => arr.sort((a,b)=>a-b));
 }
 
 /* =========================================================
-   3) حساب الأجيال (BFS من الجذور)
+   3) حساب الأجيال
    ========================================================= */
 function computeGenerations(){
   state.depth.clear();
@@ -385,7 +439,6 @@ function computeGenerations(){
       }
     }
   }
-  // أي فرد لم يُزار (دورة/يتيم) → ضعه في الجيل 0
   state.people.forEach(p => { if(!state.depth.has(p.id)) state.depth.set(p.id,0); });
 
   state.maxGen = 0;
@@ -393,15 +446,15 @@ function computeGenerations(){
 }
 
 /* =========================================================
-   4) تخطيط الشجرة (Tidy Tree)
+   4) تخطيط الشجرة — رأسي / هرمي (Top-Down)
    ========================================================= */
-function layout(rootId){
+function layoutTree(rootId){
   state.positions.clear();
   let cursor = 0;
 
   function place(id, depth){
-    const kids = (state.children.get(id) || []);
-    // نضع الأطفال أولاً
+    if(!state.byId.has(id)) return cursor;
+    const kids = state.children.get(id) || [];
     const childXs = [];
     kids.forEach(k => childXs.push(place(k, depth+1)));
 
@@ -412,52 +465,20 @@ function layout(rootId){
     }else{
       x = (childXs[0] + childXs[childXs.length-1]) / 2;
     }
-    const y = depth * (NODE_H + V_GAP);
-    state.positions.set(id, {x, y, depth});
+    state.positions.set(id, {x, y: depth * (NODE_H + V_GAP), depth});
     return x;
   }
   place(rootId, 0);
-
-  // توسيط الشجرة كاملة
-  let minX = Infinity, maxX = -Infinity, maxY = 0;
-  state.positions.forEach(p => {
-    if(p.x < minX) minX = p.x;
-    if(p.x > maxX) maxX = p.x;
-    if(p.y > maxY) maxY = p.y;
-  });
-  const offsetX = -(minX + maxX) / 2;
-  const offsetY = -maxY / 2;
-  state.positions.forEach(p => { p.x += offsetX; p.y += offsetY; });
-}
-
-/* =========================================================
-   5) الرسم
-   ========================================================= */
-function render(focusId = null){
-  state.focusId = focusId;
-  gLinks.innerHTML = '';
-  gNodes.innerHTML = '';
-
-  if(focusId != null){
-    // وضع التركيز: ارسم الفرد + كل ذريته
-    layout(focusId);
-    drawTree(focusId);
-    applyFocusDim(focusId);
-  }else{
-    // الوضع الكامل: ارسم كل الجذور
-    layoutAll();
-    drawAll();
-  }
-  applyTransform();
+  centerTree();
 }
 
 /* تخطيط كل الشجرة (عدة جذور) */
 function layoutAll(){
   state.positions.clear();
   let cursor = 0;
-  const rootPositions = [];
 
   function place(id, depth){
+    if(!state.byId.has(id)) return cursor;
     const kids = state.children.get(id) || [];
     const childXs = [];
     kids.forEach(k => childXs.push(place(k, depth+1)));
@@ -470,63 +491,92 @@ function layoutAll(){
     state.positions.set(id, {x, y: depth*(NODE_H+V_GAP), depth});
     return x;
   }
-  state.roots.forEach(r => rootPositions.push(place(r, 0)));
+  state.roots.forEach(r => place(r, 0));
+  centerTree();
+}
 
+/* توسيط الشجرة حول (0,0) */
+function centerTree(){
+  if(state.positions.size === 0) return;
   let minX=Infinity, maxX=-Infinity, maxY=0;
   state.positions.forEach(p=>{
-    if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x; if(p.y>maxY)maxY=p.y;
+    if(p.x < minX) minX = p.x;
+    if(p.x > maxX) maxX = p.x;
+    if(p.y > maxY) maxY = p.y;
   });
-  const offX = -(minX+maxX)/2;
-  const offY = -maxY/2;
-  state.positions.forEach(p=>{p.x+=offX; p.y+=offY;});
+  const offX = -(minX + maxX) / 2;
+  const offY = -maxY / 2;
+  state.positions.forEach(p => { p.x += offX; p.y += offY; });
+}
+
+/* =========================================================
+   5) الرسم
+   ========================================================= */
+function render(focusId = null){
+  state.focusId = focusId;
+  gLinks.innerHTML = '';
+  gNodes.innerHTML = '';
+
+  if(focusId != null){
+    // وضع التركيز: ارسم الفرد وذريته فقط
+    layoutTree(focusId);
+    drawSubtree(focusId);
+    state.focusSet = collectDescendants(focusId);
+    applyFocusDim();
+  }else{
+    layoutAll();
+    drawAll();
+    state.focusSet = null;
+  }
+  applyTransform();
+}
+
+/* اجمع كل الذرية */
+function collectDescendants(rootId){
+  const set = new Set();
+  const stack = [rootId];
+  while(stack.length){
+    const cur = stack.pop();
+    if(set.has(cur)) continue;
+    set.add(cur);
+    (state.children.get(cur) || []).forEach(k => stack.push(k));
+  }
+  return set;
 }
 
 /* رسم الشجرة الكاملة */
 function drawAll(){
-  // الروابط
   state.people.forEach(p=>{
     if(p.father_id == null) return;
     if(!state.positions.has(p.father_id) || !state.positions.has(p.id)) return;
     drawLink(state.positions.get(p.father_id), state.positions.get(p.id), state.depth.get(p.id)||0);
   });
-  // العقد
   state.people.forEach(p=>{
     if(!state.positions.has(p.id)) return;
     drawNode(p, state.positions.get(p.id), state.depth.get(p.id)||0);
   });
 }
 
-/* رسم شجرة الجذر المحدد فقط */
-function drawTree(rootId){
-  const stack = [rootId];
-  const visited = new Set();
-  while(stack.length){
-    const id = stack.pop();
-    if(visited.has(id)) continue;
-    visited.add(id);
-    if(!state.positions.has(id)) continue;
-    const pos = state.positions.get(id);
-    const depth = state.depth.get(id) || 0;
+/* رسم الشجرة الفرعية */
+function drawSubtree(rootId){
+  const all = collectDescendants(rootId);
+  // الروابط
+  all.forEach(id => {
+    const p = state.byId.get(id);
+    if(!p) return;
     const kids = state.children.get(id) || [];
     kids.forEach(k=>{
-      if(!state.positions.has(k)) return;
-      drawLink(pos, state.positions.get(k), state.depth.get(k)||0);
-      stack.push(k);
+      if(!all.has(k)) return;
+      if(!state.positions.has(id) || !state.positions.has(k)) return;
+      drawLink(state.positions.get(id), state.positions.get(k), state.depth.get(k)||0);
     });
-  }
+  });
   // العقد
-  const stack2 = [rootId];
-  const visited2 = new Set();
-  while(stack2.length){
-    const id = stack2.pop();
-    if(visited2.has(id)) continue;
-    visited2.add(id);
-    if(!state.positions.has(id)) continue;
+  all.forEach(id => {
     const p = state.byId.get(id);
-    if(!p) continue;
+    if(!p || !state.positions.has(id)) return;
     drawNode(p, state.positions.get(id), state.depth.get(id)||0);
-    (state.children.get(id)||[]).forEach(k=>stack2.push(k));
-  }
+  });
 }
 
 /* رسم عقدة */
@@ -544,59 +594,52 @@ function drawNode(p, pos, depth){
   rect.setAttribute('y', -NODE_H/2);
   rect.setAttribute('width', NODE_W);
   rect.setAttribute('height', NODE_H);
-  rect.setAttribute('rx', 12);
+  rect.setAttribute('rx', 11);
   rect.setAttribute('fill', pal.fill);
   rect.setAttribute('stroke', pal.stroke);
   rect.setAttribute('stroke-width', '2');
   g.appendChild(rect);
 
-  // شريط علوي ملون
+  // شريط علوي
   const bar = document.createElementNS('http://www.w3.org/2000/svg','rect');
-  bar.setAttribute('x', -NODE_W/2 + 6);
-  bar.setAttribute('y', -NODE_H/2 + 6);
-  bar.setAttribute('width', 4);
-  bar.setAttribute('height', NODE_H - 12);
+  bar.setAttribute('x', -NODE_W/2 + 5);
+  bar.setAttribute('y', -NODE_H/2 + 5);
+  bar.setAttribute('width', 3);
+  bar.setAttribute('height', NODE_H - 10);
   bar.setAttribute('rx', 2);
   bar.setAttribute('fill', pal.stroke);
   g.appendChild(bar);
 
   // أيقونة الجنس
-  const genderIcon = p.gender === 'female' ? '♀' : (p.gender === 'male' ? '♂' : '؟');
+  const genderIcon = p.gender === 'female' ? '♀' : (p.gender === 'male' ? '♂' : '•');
   const gt = document.createElementNS('http://www.w3.org/2000/svg','text');
-  gt.setAttribute('x', -NODE_W/2 + 16);
-  gt.setAttribute('y', 6);
-  gt.setAttribute('font-size', '16');
+  gt.setAttribute('x', -NODE_W/2 + 13);
+  gt.setAttribute('y', 5);
+  gt.setAttribute('font-size', '14');
   gt.setAttribute('fill', pal.glow);
+  gt.setAttribute('font-weight','700');
   gt.textContent = genderIcon;
   g.appendChild(gt);
 
   // الاسم
   const name = (p.name || 'بدون اسم').trim();
-  const displayName = name.length > 16 ? name.slice(0,15)+'…' : name;
+  const displayName = name.length > 14 ? name.slice(0,13)+'…' : name;
   const t1 = document.createElementNS('http://www.w3.org/2000/svg','text');
   t1.setAttribute('class','n-name');
-  t1.setAttribute('x', -NODE_W/2 + 30);
-  t1.setAttribute('y', -2);
+  t1.setAttribute('x', -NODE_W/2 + 25);
+  t1.setAttribute('y', -3);
   t1.textContent = displayName;
   g.appendChild(t1);
 
-  // تواريخ
-  const b = (p.birth_date||'').trim();
-  const d = (p.death_date||'').trim();
-  let meta = '';
-  if(b && d) meta = `${b} - ${d}`;
-  else if(b) meta = `مولود: ${b}`;
-  else if(d) meta = `توفي: ${d}`;
-  if(meta){
-    const t2 = document.createElementNS('http://www.w3.org/2000/svg','text');
-    t2.setAttribute('class','n-meta');
-    t2.setAttribute('x', -NODE_W/2 + 30);
-    t2.setAttribute('y', 14);
-    t2.textContent = meta;
-    g.appendChild(t2);
-  }
+  // الـ ID (بدلاً من تاريخ الميلاد — كما طلبت)
+  const t2 = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t2.setAttribute('class','n-id');
+  t2.setAttribute('x', -NODE_W/2 + 25);
+  t2.setAttribute('y', 13);
+  t2.textContent = `ID: ${p.id}`;
+  g.appendChild(t2);
 
-  // الأحداث
+  // أحداث
   g.addEventListener('click', e => {
     e.stopPropagation();
     selectPerson(p.id);
@@ -604,6 +647,16 @@ function drawNode(p, pos, depth){
   g.addEventListener('dblclick', e => {
     e.stopPropagation();
     focusOn(p.id);
+  });
+  // دعم اللمس المزدوج للجوال
+  let lastTap = 0;
+  g.addEventListener('touchend', e => {
+    const now = Date.now();
+    if(now - lastTap < 300){
+      e.preventDefault();
+      focusOn(p.id);
+    }
+    lastTap = now;
   });
 
   gNodes.appendChild(g);
@@ -620,8 +673,8 @@ function drawLink(a, b, depth){
   path.setAttribute('class','link');
   path.setAttribute('d', `M ${x1} ${y1} C ${x1} ${my}, ${x2} ${my}, ${x2} ${y2}`);
   path.setAttribute('stroke', pal.stroke);
-  path.setAttribute('stroke-width', '2');
-  path.setAttribute('opacity', '.75');
+  path.setAttribute('stroke-width', '1.8');
+  path.setAttribute('opacity', '.7');
   gLinks.appendChild(path);
 }
 
@@ -629,31 +682,24 @@ function drawLink(a, b, depth){
    6) وضع التركيز
    ========================================================= */
 function focusOn(id){
+  if(!state.byId.has(id)) return;
   state.focusId = id;
-  // احسب كل الذرية
-  const descendants = new Set();
-  const stack = [id];
-  while(stack.length){
-    const cur = stack.pop();
-    if(descendants.has(cur)) continue;
-    descendants.add(cur);
-    (state.children.get(cur)||[]).forEach(k=>stack.push(k));
-  }
-  state.focusSet = descendants;
-
-  // أعد الرسم
+  state.focusSet = collectDescendants(id);
   render(id);
 
-  // اجعل العقدة مركزة
+  // ضع علامة "مركز" على العقدة
   document.querySelectorAll('.node').forEach(n=>{
     if(n.dataset.id === String(id)) n.classList.add('focused');
   });
 
-  // رسالة
   const p = state.byId.get(id);
-  toast(`🎯 التركيز على: ${p?.name || ''}`);
-  $('btn-home').style.background = 'linear-gradient(135deg,#ef4444,#b91c1c)';
-  $('btn-home').style.borderColor = 'transparent';
+  toast(`🎯 التركيز على: ${p?.name || ''} (ID: ${id})`);
+  $('btn-focus-toggle').classList.add('active');
+  $('btn-focus-toggle').textContent = '✕';
+
+  // ملاءمة الشجرة الفرعية
+  requestAnimationFrame(()=>{ fitToScreen(); });
+  setTimeout(()=>{ fitToScreen(); }, 120);
 }
 
 function exitFocus(){
@@ -661,20 +707,18 @@ function exitFocus(){
   state.focusId = null;
   state.focusSet = null;
   render(null);
-  fitToScreen();
-  $('btn-home').style.background = '';
-  $('btn-home').style.borderColor = '';
+  requestAnimationFrame(()=>{ fitToScreen(); });
+  setTimeout(()=>{ fitToScreen(); }, 120);
+  $('btn-focus-toggle').classList.remove('active');
+  $('btn-focus-toggle').textContent = '🎯';
   toast('↩ تم الخروج من وضع التركيز');
 }
 
-/* تطبيق التعتيم على غير الذرية */
-function applyFocusDim(focusId){
-  const focusSet = state.focusSet || new Set([focusId]);
+/* تعتيم غير الذرية */
+function applyFocusDim(){
+  if(!state.focusSet) return;
   document.querySelectorAll('.node').forEach(n=>{
-    if(!focusSet.has(Number(n.dataset.id))) n.classList.add('dimmed');
-  });
-  document.querySelectorAll('.link').forEach(l=>{
-    l.style.opacity = '.9';
+    if(!state.focusSet.has(Number(n.dataset.id))) n.classList.add('dimmed');
   });
 }
 
@@ -685,11 +729,10 @@ function selectPerson(id){
   const p = state.byId.get(id);
   if(!p) return;
   const depth = state.depth.get(id) || 0;
-  const pal = GEN_PALETTE[depth % GEN_PALETTE.length];
 
   $('pAvatar').textContent = (p.name||'؟').trim().charAt(0) || '؟';
   $('pName').textContent = p.name || 'بدون اسم';
-  $('pSub').textContent = `${pal.label} • ${p.gender==='female'?'أنثى':p.gender==='male'?'ذكر':'غير محدد'}`;
+  $('pSub').textContent = `ID: ${p.id} • الجيل ${depth+1} • ${p.gender==='female'?'أنثى':p.gender==='male'?'ذكر':'غير محدد'}`;
 
   const kids = state.children.get(id) || [];
   const father = p.father_id ? state.byId.get(p.father_id) : null;
@@ -699,19 +742,21 @@ function selectPerson(id){
   else if(p.gender === 'female'){ genderBadge='female'; genderTxt='أنثى'; }
 
   $('pBody').innerHTML = `
+    <div class="info-row"><span class="k">الـ ID</span><span class="v">#${p.id}</span></div>
     <div class="info-row"><span class="k">الحالة</span>
       <span class="v"><span class="badge ${genderBadge}">${genderTxt}</span></span></div>
     <div class="info-row"><span class="k">الجيل</span><span class="v">${depth+1}</span></div>
+    <div class="info-row"><span class="k">الأب</span><span class="v">${father?`${father.name} <span style="color:#8b9bb4">(#${father.id})</span>`:'—'}</span></div>
+    <div class="info-row"><span class="k">عدد الأبناء</span><span class="v">${kids.length}</span></div>
     ${p.birth_date?`<div class="info-row"><span class="k">تاريخ الميلاد</span><span class="v">${p.birth_date}</span></div>`:''}
     ${p.death_date?`<div class="info-row"><span class="k">تاريخ الوفاة</span><span class="v">${p.death_date}</span></div>`:''}
-    <div class="info-row"><span class="k">الأب</span><span class="v">${father?father.name:'—'}</span></div>
-    <div class="info-row"><span class="k">عدد الأبناء</span><span class="v">${kids.length}</span></div>
     ${p.notes?`<div class="info-row"><span class="k">ملاحظات</span><span class="v">${p.notes}</span></div>`:''}
-    <button class="focus-btn" id="btnFocusPerson">
+    <button class="action-btn ${state.focusId===id?'exit':''}" id="btnFocusPerson">
       ${state.focusId===id?'✕ الخروج من التركيز':'🎯 التركيز على هذا الفرع'}
     </button>
-    <button class="focus-btn" id="btnCenterPerson" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);margin-top:8px">
-      🎯 توسيط في الشاشة
+    <button class="action-btn secondary" id="btnCenterPerson">📍 توسيط في الشاشة</button>
+    <button class="action-btn ghost" id="btnFindFather" ${!father?'disabled style="opacity:.4"':''}>
+      👆 الذهاب إلى الأب
     </button>
   `;
   $('infoPanel').classList.add('open');
@@ -721,13 +766,14 @@ function selectPerson(id){
     else focusOn(id);
     $('infoPanel').classList.remove('open');
   };
-  $('btnCenterPerson').onclick = () => {
-    centerOn(id);
-  };
+  $('btnCenterPerson').onclick = () => centerOn(id);
+  if(father){
+    $('btnFindFather').onclick = () => { selectPerson(father.id); centerOn(father.id); };
+  }
 }
 
 /* =========================================================
-   8) التحويلات (Transform)
+   8) Transformations
    ========================================================= */
 function applyTransform(){
   const {x,y,k} = state.transform;
@@ -747,10 +793,10 @@ function fitToScreen(){
   const w = (maxX - minX) + padX*2;
   const h = (maxY - minY) + padY*2;
   const rect = svg.getBoundingClientRect();
-  const k = Math.min(rect.width / w, rect.height / h) * 0.95;
+  const k = Math.min(rect.width / w, rect.height / h) * 0.92;
   const cx = (minX + maxX) / 2;
   const cy = (minY + maxY) / 2;
-  state.transform.k = Math.max(0.08, Math.min(3, k));
+  state.transform.k = Math.max(0.06, Math.min(3, k));
   state.transform.x = rect.width/2 - cx * state.transform.k;
   state.transform.y = rect.height/2 - cy * state.transform.k;
   applyTransform();
@@ -767,11 +813,12 @@ function centerOn(id){
   applyTransform();
 }
 
-function zoomBy(factor){
+function zoomBy(factor, cx, cy){
   const rect = svg.getBoundingClientRect();
-  const cx = rect.width/2, cy = rect.height/2;
+  if(cx == null) cx = rect.width/2;
+  if(cy == null) cy = rect.height/2;
   const k0 = state.transform.k;
-  const k1 = Math.max(0.08, Math.min(4, k0 * factor));
+  const k1 = Math.max(0.06, Math.min(4, k0 * factor));
   const {x,y} = state.transform;
   state.transform.x = cx - (cx - x) * (k1/k0);
   state.transform.y = cy - (cy - y) * (k1/k0);
@@ -785,23 +832,26 @@ function resetZoom(){
 }
 
 /* =========================================================
-   9) التفاعلات (سحب، تكبير)
+   9) التفاعلات — سحب، تكبير، Pinch
    ========================================================= */
 let dragging = false;
 let last = {x:0,y:0};
 let pinch = null;
+let dragMoved = false;
 
 svg.addEventListener('pointerdown', e=>{
   if(e.target.closest('.node')) return;
   dragging = true;
+  dragMoved = false;
   svg.classList.add('grabbing');
   last = {x:e.clientX, y:e.clientY};
-  svg.setPointerCapture(e.pointerId);
+  try{ svg.setPointerCapture(e.pointerId); }catch(_){}
 });
 svg.addEventListener('pointermove', e=>{
   if(!dragging) return;
   const dx = e.clientX - last.x;
   const dy = e.clientY - last.y;
+  if(Math.abs(dx) + Math.abs(dy) > 2) dragMoved = true;
   last = {x:e.clientX, y:e.clientY};
   state.transform.x += dx;
   state.transform.y += dy;
@@ -810,16 +860,20 @@ svg.addEventListener('pointermove', e=>{
 svg.addEventListener('pointerup', e=>{
   dragging = false;
   svg.classList.remove('grabbing');
+  try{ svg.releasePointerCapture(e.pointerId); }catch(_){}
 });
 svg.addEventListener('pointercancel', ()=>{ dragging=false; svg.classList.remove('grabbing'); });
 
 svg.addEventListener('wheel', e=>{
   e.preventDefault();
+  const rect = svg.getBoundingClientRect();
+  const cx = e.clientX - rect.left;
+  const cy = e.clientY - rect.top;
   const factor = e.deltaY < 0 ? 1.12 : 1/1.12;
-  zoomBy(factor);
+  zoomBy(factor, cx, cy);
 }, {passive:false});
 
-// اللمس المتعدد (Pinch)
+// Pinch (لمس بإصبعين)
 svg.addEventListener('touchstart', e=>{
   if(e.touches.length === 2){
     const [a,b] = e.touches;
@@ -833,46 +887,99 @@ svg.addEventListener('touchmove', e=>{
     const d = Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
     const factor = d / pinch.d;
     pinch.d = d;
-    zoomBy(factor);
+    const rect = svg.getBoundingClientRect();
+    const cx = ((a.clientX + b.clientX)/2) - rect.left;
+    const cy = ((a.clientY + b.clientY)/2) - rect.top;
+    zoomBy(factor, cx, cy);
   }
 }, {passive:false});
 svg.addEventListener('touchend', ()=>{ pinch = null; });
 
 // النقر على الخلفية = إغلاق اللوحة
 svg.addEventListener('click', e=>{
-  if(!e.target.closest('.node')){
+  if(!e.target.closest('.node') && !dragMoved){
     $('infoPanel').classList.remove('open');
   }
 });
 
 /* =========================================================
-   10) البحث
+   10) البحث (بالاسم أو الـ ID)
    ========================================================= */
 const searchInput = $('searchInput');
 searchInput.addEventListener('input', ()=>{
   const q = searchInput.value.trim();
   $('searchBox').classList.toggle('has-value', q.length > 0);
 
-  if(!q){ 
-    document.querySelectorAll('.node').forEach(n=>n.style.opacity='');
+  document.querySelectorAll('.node').forEach(n=>{
+    n.classList.remove('search-hit');
+    n.style.opacity = '';
+  });
+
+  if(!q){ state.searchMatches.clear(); return; }
+
+  const matches = new Set();
+  const lowerQ = q.toLowerCase();
+  state.people.forEach(p=>{
+    const nameMatch = (p.name||'').toLowerCase().includes(lowerQ);
+    const idMatch = String(p.id).includes(q);
+    if(nameMatch || idMatch) matches.add(p.id);
+  });
+  state.searchMatches = matches;
+
+  if(matches.size === 0){
+    toast('🔍 لا توجد نتائج');
     return;
   }
-  const matches = new Set();
-  state.people.forEach(p=>{
-    if((p.name||'').includes(q)) matches.add(p.id);
-  });
+
   document.querySelectorAll('.node').forEach(n=>{
-    if(matches.has(Number(n.dataset.id))) n.style.opacity = '1';
-    else n.style.opacity = '.15';
+    if(matches.has(Number(n.dataset.id))){
+      n.style.opacity = '1';
+      n.classList.add('search-hit');
+    }else{
+      n.style.opacity = '.12';
+    }
   });
+
+  // إذا كانت نتيجة واحدة — انتقل إليها
   if(matches.size === 1){
     const id = [...matches][0];
     centerOn(id);
+    toast(`🔍 تم العثور على: ${state.byId.get(id)?.name} (#${id})`);
+  }else{
+    toast(`🔍 ${matches.size} نتيجة`);
+    // ملاءمة النتائج
+    fitSearchResults(matches);
   }
 });
+
+function fitSearchResults(matches){
+  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+  let count = 0;
+  matches.forEach(id=>{
+    const p = state.positions.get(id);
+    if(!p) return;
+    count++;
+    if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x;
+    if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y;
+  });
+  if(count === 0) return;
+  const padX = NODE_W*1.5, padY = NODE_H*1.5;
+  const w = (maxX - minX) + padX*2;
+  const h = (maxY - minY) + padY*2;
+  const rect = svg.getBoundingClientRect();
+  const k = Math.min(rect.width / w, rect.height / h) * 0.9;
+  const cx = (minX + maxX) / 2;
+  const cy = (minY + maxY) / 2;
+  state.transform.k = Math.max(0.1, Math.min(3, k));
+  state.transform.x = rect.width/2 - cx * state.transform.k;
+  state.transform.y = rect.height/2 - cy * state.transform.k;
+  applyTransform();
+}
+
 $('clearSearch').onclick = ()=>{
   searchInput.value = '';
   searchInput.dispatchEvent(new Event('input'));
+  searchInput.focus();
 };
 
 /* =========================================================
@@ -889,27 +996,28 @@ function updateStats(){
    ========================================================= */
 $('btn-home').onclick = ()=>{ exitFocus(); };
 $('btn-fit').onclick = ()=>{ fitToScreen(); };
+$('btn-focus-toggle').onclick = ()=>{
+  if(state.focusId != null) exitFocus();
+  else toast('🎯 اضغط مرتين على أي فرد لتركيز الشجرة عليه');
+};
 $('btn-zoom-in').onclick = ()=> zoomBy(1.25);
 $('btn-zoom-out').onclick = ()=> zoomBy(1/1.25);
 $('btn-reset').onclick = ()=>{ resetZoom(); };
 $('closePanel').onclick = ()=> $('infoPanel').classList.remove('open');
-$('btn-info').onclick = ()=>{
-  toast(`📊 ${state.people.length} فرد • ${state.maxGen+1} جيل • ${state.roots.length} فرع`);
-};
-$('btn-theme').onclick = ()=>{
-  // تبديل بسيط بين لوحتين
-  document.documentElement.style.setProperty('--accent', '#10b981');
-  document.documentElement.style.setProperty('--glow', '#34d399');
-  toast('🌿 تم تغيير السمة');
-};
 
-// ESC = خروج من التركيز أو إغلاق اللوحة
+// أزرار التنقل السريع (يمين)
+$('btn-up').onclick = ()=>{ state.transform.y += 80; applyTransform(); };
+$('btn-down').onclick = ()=>{ state.transform.y -= 80; applyTransform(); };
+
+// ESC
 document.addEventListener('keydown', e=>{
   if(e.key === 'Escape'){
     if($('infoPanel').classList.contains('open')) $('infoPanel').classList.remove('open');
     else if(state.focusId != null) exitFocus();
   }
   if(e.key === 'f' || e.key === 'F') fitToScreen();
+  if(e.key === '+' || e.key === '=') zoomBy(1.2);
+  if(e.key === '-') zoomBy(1/1.2);
 });
 
 /* =========================================================
@@ -925,9 +1033,25 @@ function toast(msg){
 }
 
 /* =========================================================
-   14) انطلاق
+   14) إعادة الرسم عند تغيير حجم الشاشة (تدوير)
    ========================================================= */
-window.addEventListener('resize', ()=>{ /* يمكن إعادة الملاءمة */ });
+let resizeTimer = null;
+window.addEventListener('resize', ()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(()=>{
+    // فقط إعادة التطبيق، لا نعيد الحساب
+    applyTransform();
+  }, 200);
+});
+
+// إعادة حساب الاتجاه عند تغيير الاتجاه
+window.addEventListener('orientationchange', ()=>{
+  setTimeout(fitToScreen, 300);
+});
+
+/* =========================================================
+   15) انطلاق
+   ========================================================= */
 loadData();
 </script>
 </body>
