@@ -35,7 +35,6 @@
     --nav:rgba(16,26,43,.98);
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  *:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:6px}
   html,body{
     height:100%;overflow:hidden;background:var(--bg);color:var(--text);
     font-family:Cairo,'Segoe UI',Tahoma,system-ui,sans-serif;
@@ -211,7 +210,7 @@
   .sr-item.active::before{
     content:"";position:absolute;right:0;top:0;bottom:0;
     width:3px;background:var(--primary);
-    border-radius:4px 0 0 4px;
+    border-radius:0 4px 4px 0;
   }
 
   .sr-avatar{
@@ -763,7 +762,7 @@
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   @media print {
-    html, body { display: none !important; visibility: hidden !important; }
+    html, body, #app { display: none !important; visibility: hidden !important; }
     body::after {
       content: "🔒 الطباعة معطلة";
       display: grid !important; visibility: visible !important;
@@ -846,7 +845,7 @@
   }
 </style>
 </head>
-<body>
+  <body>
 <div id="app">
 
   <!-- ============ الشريط العلوي ============ -->
@@ -967,15 +966,14 @@
 
 <script>
 /* ============================================================
-   🌳 Family Tree Pro — النسخة النهائية المُصلَّحة
-   Bottom Sheet + Search + Path Highlighting + Performance
+   🌳 Family Tree Pro — النسخة النهائية المحسّنة
+   Bottom Sheet Details Panel + Search + Path Highlighting
    ============================================================ */
 'use strict';
 
 const $ = id => document.getElementById(id);
 const svg = $('svg');
 const viewport = $('viewport');
-const container = $('treeContainer');
 
 const PALETTE = [
   "#0f766e","#2563eb","#7c3aed","#db2777","#ea580c",
@@ -998,6 +996,8 @@ const state = {
   tx: 0, ty: 0, scale: 1,
   dark: false,
   pointers: new Map(),
+  dragStart: null,
+  pinch: null,
 };
 
 const MIN_SCALE = 0.05;
@@ -1006,27 +1006,6 @@ const CARD_W_LARGE = 170;
 const CARD_H_LARGE = 72;
 const CARD_W_SMALL = 145;
 const CARD_H_SMALL = 62;
-
-/* ============================================================
-   أدوات مساعدة
-   ============================================================ */
-function escapeHtml(s){
-  return String(s ?? '').replace(/[&<>"']/g,
-    c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-// تطبيع النص العربي: إزالة التشكيل وتوحيد الألف والهمزات
-function normalizeArabic(str){
-  return String(str || '')
-    .replace(/[\u064B-\u065F\u0670]/g, '')  // حركات
-    .replace(/[إأآا]/g, 'ا')
-    .replace(/ى/g, 'ي')
-    .replace(/ؤ/g, 'و')
-    .replace(/ئ/g, 'ي')
-    .replace(/ة/g, 'ه')
-    .toLowerCase()
-    .trim();
-}
 
 /* ============================================================
    1) تحميل البيانات
@@ -1244,13 +1223,12 @@ function render(){
 
   const ancestorSet = new Set();
   const ancestorEdges = new Set();
-  const isSearching = state.searchIndex >= 0 && state.searchMatches.length > 0;
-  let currentPathArr = [];
-  if(isSearching){
-    currentPathArr = getAncestorPath(state.searchMatches[state.searchIndex]);
-    currentPathArr.forEach(id => ancestorSet.add(id));
-    for(let i = 0; i < currentPathArr.length - 1; i++){
-      ancestorEdges.add(`${currentPathArr[i]}-${currentPathArr[i+1]}`);
+  if(state.searchIndex >= 0 && state.searchMatches.length){
+    const currentId = state.searchMatches[state.searchIndex];
+    const path = getAncestorPath(currentId);
+    path.forEach(id => ancestorSet.add(id));
+    for(let i = 0; i < path.length - 1; i++){
+      ancestorEdges.add(`${path[i]}-${path[i+1]}`);
     }
   }
 
@@ -1268,9 +1246,11 @@ function render(){
       const edgeKey = `${c.id}-${n.id}`;
       if(ancestorEdges.has(edgeKey)){
         path.classList.add('ancestor-path');
-      } else if(isSearching){
-        const inPath = currentPathArr.includes(n.id) && currentPathArr.includes(c.id)
-                    && currentPathArr.indexOf(c.id) === currentPathArr.indexOf(n.id) + 1;
+      } else if(state.searchIndex >= 0 && state.searchMatches.length){
+        const currentId = state.searchMatches[state.searchIndex];
+        const pathArr = getAncestorPath(currentId);
+        const inPath = pathArr.includes(n.id) && pathArr.includes(c.id)
+                    && pathArr.indexOf(c.id) === pathArr.indexOf(n.id) + 1;
         if(!inPath) path.classList.add('dimmed');
       }
       gLinks.appendChild(path);
@@ -1295,9 +1275,9 @@ function render(){
     const isRoot = n.depth === 0;
     const isFocus = state.focusId === n.id;
     const isSearchHit = state.searchMatches.includes(n.id);
-    const isCurrentSearch = isSearching && state.searchMatches[state.searchIndex] === n.id;
+    const isCurrentSearch = state.searchIndex >= 0 && state.searchMatches[state.searchIndex] === n.id;
 
-    if(isSearching){
+    if(state.searchIndex >= 0 && state.searchMatches.length){
       if(!ancestorSet.has(n.id) && !isSearchHit){
         group.classList.add('dimmed');
       }
@@ -1471,24 +1451,16 @@ function focusOn(id){
   setTimeout(fitToScreen, 250);
 }
 
-// إصلاح #22: حساب الأجيال نسبياً من جذر الفرع
 function computeBranchGenerations(set){
-  if(!set || set.size === 0) return 1;
-  let minD = Infinity;
+  let minD = Infinity, maxD = -Infinity;
   set.forEach(id => {
     const d = state.depth.get(id);
     if(d == null) return;
     if(d < minD) minD = d;
+    if(d > maxD) maxD = d;
   });
   if(minD === Infinity) return 1;
-  let maxRelative = 0;
-  set.forEach(id => {
-    const d = state.depth.get(id);
-    if(d == null) return;
-    const rel = d - minD;
-    if(rel > maxRelative) maxRelative = rel;
-  });
-  return maxRelative + 1;
+  return maxD - minD + 1;
 }
 
 function exitFocus(){
@@ -1527,7 +1499,6 @@ function selectPerson(id){
 
   const isFocused = state.focusId === id;
 
-  // إصلاح #12: escapeHtml لكل الحقول الديناميكية
   $('pBody').innerHTML = `
     <div class="info-grid">
       <div class="info-cell">
@@ -1552,7 +1523,7 @@ function selectPerson(id){
       </div>
       <div class="info-cell">
         <div class="k">الميلاد</div>
-        <div class="v arabic">${escapeHtml(p.birth_date || '—')}</div>
+        <div class="v arabic">${p.birth_date || '—'}</div>
       </div>
     </div>
 
@@ -1594,10 +1565,7 @@ function selectPerson(id){
   `;
 
   $('infoPanel').classList.add('open');
-
-  // إصلاح #14: تحديث الـ selected class فقط بدلاً من render() كامل
-  updateSelectedClass(id);
-  updateSearchClasses();
+  render();
 
   $('btnHighlightPath').onclick = () => highlightPathToRoot(id);
   $('btnFocusPerson').onclick = ()=>{
@@ -1615,36 +1583,6 @@ function selectPerson(id){
   enableSheetDrag();
 }
 
-// تحديث كلاس selected بدون إعادة رسم الشجرة
-function updateSelectedClass(id){
-  viewport.querySelectorAll('.node-card.selected').forEach(el => el.classList.remove('selected'));
-  if(id == null) return;
-  const nodeEl = viewport.querySelector(`.node[data-id="${id}"] .node-card`);
-  if(nodeEl) nodeEl.classList.add('selected');
-}
-
-// تحديث كلاسات البحث بدون إعادة رسم الشجرة
-function updateSearchClasses(){
-  const isSearching = state.searchIndex >= 0 && state.searchMatches.length > 0;
-  const ancestorSet = new Set();
-  if(isSearching){
-    getAncestorPath(state.searchMatches[state.searchIndex]).forEach(id => ancestorSet.add(id));
-  }
-  viewport.querySelectorAll('.node').forEach(el => {
-    const id = Number(el.dataset.id);
-    const card = el.querySelector('.node-card');
-    if(!card) return;
-    card.classList.remove('search-hit','search-current');
-    el.classList.remove('dimmed');
-    if(!isSearching) return;
-    const isHit = state.searchMatches.includes(id);
-    const isCurrent = state.searchMatches[state.searchIndex] === id;
-    if(isHit) card.classList.add('search-hit');
-    if(isCurrent) card.classList.add('search-current');
-    if(!ancestorSet.has(id) && !isHit) el.classList.add('dimmed');
-  });
-}
-
 /* ============================================================
    نافذة التفاصيل الإضافية
    ============================================================ */
@@ -1655,13 +1593,10 @@ function showMoreDetails(id){
   const rows = [];
   rows.push(`<div class="info-row"><span class="k">الاسم</span><span class="v">${escapeHtml(p.name||'—')}</span></div>`);
   rows.push(`<div class="info-row"><span class="k">ID</span><span class="v">#${p.id}</span></div>`);
-  if(p.gender) rows.push(`<div class="info-row"><span class="k">الجنس</span><span class="v">${escapeHtml(p.gender)}</span></div>`);
   if(p.birth_date) rows.push(`<div class="info-row"><span class="k">الميلاد</span><span class="v">${escapeHtml(p.birth_date)}</span></div>`);
   if(p.death_date) rows.push(`<div class="info-row"><span class="k">الوفاة</span><span class="v">${escapeHtml(p.death_date)}</span></div>`);
-  if(p.father_name) rows.push(`<div class="info-row"><span class="k">اسم الأب</span><span class="v">${escapeHtml(p.father_name)}</span></div>`);
-  if(p.mother_name) rows.push(`<div class="info-row"><span class="k">اسم الأم</span><span class="v">${escapeHtml(p.mother_name)}</span></div>`);
   if(p.notes) rows.push(`<div class="info-row"><span class="k">ملاحظات</span><span class="v">${escapeHtml(p.notes)}</span></div>`);
-  if(p.image) rows.push(`<div class="info-row"><span class="k">صورة</span><span class="v"><a href="${escapeHtml(p.image)}" target="_blank" rel="noopener" style="color:var(--primary)">عرض</a></span></div>`);
+  if(p.image) rows.push(`<div class="info-row"><span class="k">صورة</span><span class="v"><a href="${escapeHtml(p.image)}" target="_blank" style="color:var(--primary)">عرض</a></span></div>`);
   if(p.created_at) rows.push(`<div class="info-row"><span class="k">أُضيف</span><span class="v">${escapeHtml(p.created_at)}</span></div>`);
   if(p.updated_at) rows.push(`<div class="info-row"><span class="k">آخر تحديث</span><span class="v">${escapeHtml(p.updated_at)}</span></div>`);
 
@@ -1686,6 +1621,7 @@ function enableSheetDrag(){
   let startY = 0, currentY = 0, dragging = false;
 
   const onStart = (e)=>{
+    if(e.target !== handle) return;
     dragging = true;
     startY = (e.touches ? e.touches[0].clientY : e.clientY);
     panel.style.transition = 'none';
@@ -1717,13 +1653,11 @@ function closePanel(){
   $('infoPanel').classList.remove('open');
 }
 
-// إصلاح #10: تحديث UI عند إضاءة المسار
 function highlightPathToRoot(id){
   const path = getAncestorPath(id);
   if(!path.length) return;
   state.searchMatches = path.slice();
   state.searchIndex = 0;
-  renderSearchUI(state.searchMatches[0].toString());
   render();
   toast(`✨ المسار مضاء حتى الجذر (${path.length} أسلاف)`);
   setTimeout(() => centerOn(path[0]), 100);
@@ -1746,6 +1680,8 @@ function applyTransform(){
 
 function fitToScreen(){
   const g = viewport; if(!g) return;
+  const container = document.getElementById('treeContainer');
+  if(!container) return;
   const box = container.getBoundingClientRect();
   let bb; try{ bb = g.getBBox(); }catch{ return; }
   if(!bb.width || !bb.height) return;
@@ -1767,9 +1703,11 @@ function fitToScreen(){
 }
 
 function centerOn(id){
-  const nodeEl = viewport.querySelector(`.node[data-id="${id}"]`);
+  const g = viewport; if(!g) return;
+  const nodeEl = [...g.querySelectorAll('.node')].find(el => Number(el.dataset.id) === Number(id));
   if(!nodeEl) return;
   const bb = nodeEl.getBBox();
+  const container = document.getElementById('treeContainer');
   const box = container.getBoundingClientRect();
   const x = bb.x + bb.width/2;
   const y = bb.y + bb.height/2;
@@ -1781,6 +1719,8 @@ function centerOn(id){
 }
 
 function zoomBy(factor, cx, cy){
+  const container = document.getElementById('treeContainer');
+  if(!container) return;
   const box = container.getBoundingClientRect();
   if(cx == null) cx = box.width / 2;
   if(cy == null) cy = box.height / 2;
@@ -1797,6 +1737,7 @@ function zoomBy(factor, cx, cy){
    9) تفاعلات
    ============================================================ */
 let dragging = false, last = {x:0,y:0}, pinch = null, dragMoved = false;
+const container = document.getElementById('treeContainer');
 
 svg.addEventListener('pointerdown', e => {
   if(e.target.closest('.node')) return;
@@ -1871,7 +1812,9 @@ svg.addEventListener('wheel', e => {
 svg.addEventListener('click', e => {
   if(!e.target.closest('.node') && !dragMoved){
     closePanel();
-    if(state.searchMatches.length && !(state.searchMatches.length > 1 && state.searchIndex === 0)){
+    if(state.searchMatches.length && state.searchIndex === 0 && state.searchMatches.length > 1){
+      // اترك الإضاءة إذا كانت من highlightPathToRoot
+    } else if(state.searchMatches.length){
       clearSearch();
     }
   }
@@ -1922,23 +1865,22 @@ function performSearch(query){
     return;
   }
 
-  const normalizedQ = normalizeArabic(q.replace('#', ''));
-  const rawQ = q.replace('#', '').toLowerCase();
+  const lowerQ = q.toLowerCase();
   const matches = [];
   state.people.forEach(p => {
-    const name = normalizeArabic(p.name || '');
+    const name = (p.name || '').toLowerCase();
     const idStr = String(p.id);
-    if(name.includes(normalizedQ) || idStr.includes(rawQ)){
+    if(name.includes(lowerQ) || idStr.includes(q.replace('#', ''))){
       matches.push(Number(p.id));
     }
   });
 
   matches.sort((a, b) => {
     const pa = state.byId.get(a), pb = state.byId.get(b);
-    const na = normalizeArabic(pa?.name || '');
-    const nb = normalizeArabic(pb?.name || '');
-    const aStart = na.startsWith(normalizedQ) ? 0 : 1;
-    const bStart = nb.startsWith(normalizedQ) ? 0 : 1;
+    const na = (pa?.name || '').toLowerCase();
+    const nb = (pb?.name || '').toLowerCase();
+    const aStart = na.startsWith(lowerQ) ? 0 : 1;
+    const bStart = nb.startsWith(lowerQ) ? 0 : 1;
     if(aStart !== bStart) return aStart - bStart;
     return na.localeCompare(nb);
   });
@@ -2033,7 +1975,7 @@ function renderSearchUI(q){
 function highlightMatch(name, query){
   if(!query) return escapeHtml(name);
   const lower = name.toLowerCase();
-  const q = query.toLowerCase().replace('#','');
+  const q = query.toLowerCase();
   const idx = lower.indexOf(q);
   if(idx < 0) return escapeHtml(name);
   const before = name.slice(0, idx);
@@ -2051,7 +1993,6 @@ function updateActiveResult(){
   if(active) active.scrollIntoView({block:'nearest', behavior:'smooth'});
 }
 
-// إصلاح #9: إخفاء dropdown بعد التنقل
 function nextResult(){
   if(!state.searchMatches.length) return;
   state.searchIndex = (state.searchIndex + 1) % state.searchMatches.length;
@@ -2061,7 +2002,6 @@ function nextResult(){
   setTimeout(() => centerOn(id), 100);
   const p = state.byId.get(id);
   toast(`🔍 ${state.searchIndex+1}/${state.searchMatches.length}: ${p?.name} (#${id})`);
-  searchResults.classList.add('hidden');
 }
 
 function prevResult(){
@@ -2073,7 +2013,6 @@ function prevResult(){
   setTimeout(() => centerOn(id), 100);
   const p = state.byId.get(id);
   toast(`🔍 ${state.searchIndex+1}/${state.searchMatches.length}: ${p?.name} (#${id})`);
-  searchResults.classList.add('hidden');
 }
 
 function clearSearch(){
@@ -2092,6 +2031,11 @@ $('clearSearch').onclick = () => {
   searchInput.focus();
 };
 
+function escapeHtml(s){
+  return String(s ?? '').replace(/[&<>"']/g,
+    c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
 /* ============================================================
    11) إحصائيات
    ============================================================ */
@@ -2105,12 +2049,9 @@ function updateStats(){
    12) أزرار
    ============================================================ */
 $('btn-fit').onclick = () => fitToScreen();
-
-// إصلاح #8: زر 1:1 يُعيد fitToScreen
-$('btn-reset').onclick = () => fitToScreen();
-
 $('btn-zoom-in').onclick = () => zoomBy(1.3);
 $('btn-zoom-out').onclick = () => zoomBy(1/1.3);
+$('btn-reset').onclick = () => { state.tx=0; state.ty=0; state.scale=1; applyTransform(); };
 $('btn-up').onclick = () => { state.ty += 150; applyTransform(); };
 $('btn-down').onclick = () => { state.ty -= 150; applyTransform(); };
 $('closePanel').onclick = closePanel;
@@ -2139,10 +2080,7 @@ document.addEventListener('keydown', e => {
     if($('infoPanel').classList.contains('open')) closePanel();
     else if(state.focusId != null) exitFocus();
   }
-  if(e.key === 'f' || e.key === 'F'){
-    const tag = document.activeElement?.tagName;
-    if(tag !== 'INPUT' && tag !== 'TEXTAREA') fitToScreen();
-  }
+  if(e.key === 'f' || e.key === 'F') fitToScreen();
   if(e.key === '+' || e.key === '=') zoomBy(1.2);
   if(e.key === '-') zoomBy(1/1.2);
   if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
@@ -2172,16 +2110,9 @@ window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => { render(); fitToScreen(); }, 250);
 });
-
-if(screen.orientation && screen.orientation.addEventListener){
-  screen.orientation.addEventListener('change', () => {
-    setTimeout(() => { render(); fitToScreen(); }, 350);
-  });
-} else {
-  window.addEventListener('orientationchange', () => {
-    setTimeout(() => { render(); fitToScreen(); }, 350);
-  });
-}
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => { render(); fitToScreen(); }, 350);
+});
 
 /* ============================================================
    15) حماية
