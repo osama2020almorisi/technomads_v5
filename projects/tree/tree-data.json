@@ -1,7 +1,7 @@
 {
   "format": "family-tree-pro",
   "version": 7,
-  "exported_at": "2026-09-20T18:25:03.349Z",
+  "exported_at": "2026-09-20T19:07:08.360Z",
   "people": [
     {
       "birth_date": "1995",
@@ -24,7 +24,7 @@
       "created_at": "2026-09-16T22:28:28",
       "death_date": "",
       "father_id": 681,
-      "father_name": "بالعيد المريسي",
+      "father_name": "بلعيد المريسي",
       "gender": "unknown",
       "id": 682,
       "image": "",
@@ -40,7 +40,7 @@
       "created_at": "2026-09-16T22:28:28",
       "death_date": "",
       "father_id": 681,
-      "father_name": "بالعيد المريسي",
+      "father_name": "بلعيد المريسي",
       "gender": "unknown",
       "id": 683,
       "image": "",
@@ -12171,13 +12171,13 @@
       "mother_id": null,
       "mother_name": null,
       "gender": "unknown",
-      "birth_date": "65222",
+      "birth_date": "61,5",
       "death_date": "",
       "spouse_id": null,
       "notes": "",
       "image": "",
       "created_at": "2026-09-20 17:56:49",
-      "updated_at": "2026-09-20 17:56:49"
+      "updated_at": "2026-09-20 19:03:17"
     },
     {
       "id": 1484,
@@ -12203,13 +12203,13 @@
       "mother_id": null,
       "mother_name": null,
       "gender": "unknown",
-      "birth_date": "2004",
+      "birth_date": "20046",
       "death_date": "",
       "spouse_id": null,
       "notes": "",
       "image": "",
       "created_at": "2026-09-20 17:58:12",
-      "updated_at": "2026-09-20 17:58:12"
+      "updated_at": "2026-09-20 19:06:28"
     },
     {
       "id": 1486,
@@ -12267,13 +12267,13 @@
       "mother_id": null,
       "mother_name": null,
       "gender": "unknown",
-      "birth_date": "",
+      "birth_date": "2643",
       "death_date": "",
       "spouse_id": null,
       "notes": "",
       "image": "",
       "created_at": "2026-09-20 18:00:54",
-      "updated_at": "2026-09-20 18:00:54"
+      "updated_at": "2026-09-20 18:46:12"
     },
     {
       "id": 1491,
@@ -12283,13 +12283,13 @@
       "mother_id": null,
       "mother_name": null,
       "gender": "unknown",
-      "birth_date": "62",
+      "birth_date": "62329",
       "death_date": "",
       "spouse_id": null,
       "notes": "",
       "image": "",
       "created_at": "2026-09-20 18:02:26",
-      "updated_at": "2026-09-20 18:02:26"
+      "updated_at": "2026-09-20 19:03:57"
     },
     {
       "id": 1492,
@@ -12347,13 +12347,13 @@
       "mother_id": null,
       "mother_name": null,
       "gender": "unknown",
-      "birth_date": "263",
+      "birth_date": "26323986",
       "death_date": "",
       "spouse_id": null,
       "notes": "",
       "image": "",
       "created_at": "2026-09-20 18:12:12",
-      "updated_at": "2026-09-20 18:12:12"
+      "updated_at": "2026-09-20 19:04:23"
     },
     {
       "id": 1496,
@@ -12523,13 +12523,13 @@
       "mother_id": null,
       "mother_name": null,
       "gender": "unknown",
-      "birth_date": "2000",
+      "birth_date": "26.9000",
       "death_date": "",
       "spouse_id": null,
       "notes": "",
       "image": "",
       "created_at": "2026-09-20 18:17:30",
-      "updated_at": "2026-09-20 18:17:30"
+      "updated_at": "2026-09-20 19:04:47"
     },
     {
       "id": 1507,
@@ -12564,22 +12564,6 @@
       "updated_at": "2026-09-20 18:22:38"
     },
     {
-      "id": 1490,
-      "name": "حافظ",
-      "father_id": 784,
-      "father_name": "مصلح",
-      "mother_id": null,
-      "mother_name": null,
-      "gender": "unknown",
-      "birth_date": "1",
-      "death_date": "",
-      "spouse_id": null,
-      "notes": "",
-      "image": "",
-      "created_at": "2026-09-20 18:02:07",
-      "updated_at": "2026-09-20 18:02:07"
-    },
-    {
       "id": 1509,
       "name": "قيس",
       "father_id": 842,
@@ -12594,6 +12578,22 @@
       "image": "",
       "created_at": "2026-09-20 18:23:54",
       "updated_at": "2026-09-20 18:23:54"
+    },
+    {
+      "id": 1490,
+      "name": "حافظ",
+      "father_id": 784,
+      "father_name": "مصلح",
+      "mother_id": null,
+      "mother_name": null,
+      "gender": "unknown",
+      "birth_date": "1",
+      "death_date": "",
+      "spouse_id": null,
+      "notes": "",
+      "image": "",
+      "created_at": "2026-09-20 18:02:07",
+      "updated_at": "2026-09-20 18:02:07"
     }
   ],
   "marriages": []
