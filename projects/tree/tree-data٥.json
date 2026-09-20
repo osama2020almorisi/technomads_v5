@@ -1,7 +1,7 @@
 {
   "format": "family-tree-pro",
   "version": 7,
-  "exported_at": "2026-09-20T15:07:59.067Z",
+  "exported_at": "2026-09-20T03:40:00.012Z",
   "people": [
     {
       "birth_date": "1995",
@@ -12098,70 +12098,6 @@
       "image": "",
       "created_at": "2026-09-20 03:13:27",
       "updated_at": "2026-09-20 03:13:27"
-    },
-    {
-      "id": 1478,
-      "name": "عبدالقوي",
-      "father_id": 891,
-      "father_name": "مسعد",
-      "mother_id": null,
-      "mother_name": null,
-      "gender": "unknown",
-      "birth_date": "1999",
-      "death_date": "",
-      "spouse_id": null,
-      "notes": "",
-      "image": "",
-      "created_at": "2026-09-20 14:02:09",
-      "updated_at": "2026-09-20 14:02:09"
-    },
-    {
-      "id": 1479,
-      "name": "عبدالرحمن",
-      "father_id": 1478,
-      "father_name": "عبدالقوي",
-      "mother_id": null,
-      "mother_name": null,
-      "gender": "unknown",
-      "birth_date": "2259",
-      "death_date": "",
-      "spouse_id": null,
-      "notes": "",
-      "image": "",
-      "created_at": "2026-09-20 14:02:42",
-      "updated_at": "2026-09-20 14:02:42"
-    },
-    {
-      "id": 1480,
-      "name": "عمر",
-      "father_id": 1478,
-      "father_name": "عبدالقوي",
-      "mother_id": null,
-      "mother_name": null,
-      "gender": "unknown",
-      "birth_date": "2285",
-      "death_date": "",
-      "spouse_id": null,
-      "notes": "",
-      "image": "",
-      "created_at": "2026-09-20 14:02:42",
-      "updated_at": "2026-09-20 14:02:42"
-    },
-    {
-      "id": 1481,
-      "name": "محمد",
-      "father_id": 1478,
-      "father_name": "عبدالقوي",
-      "mother_id": null,
-      "mother_name": null,
-      "gender": "unknown",
-      "birth_date": "2013",
-      "death_date": "",
-      "spouse_id": null,
-      "notes": "",
-      "image": "",
-      "created_at": "2026-09-20 14:02:42",
-      "updated_at": "2026-09-20 14:02:42"
     }
   ],
   "marriages": []
