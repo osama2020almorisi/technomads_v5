@@ -1,12 +1,12 @@
 {
   "format": "family-tree-pro",
   "version": 7,
-  "exported_at": "2026-09-20T03:20:18.769Z",
+  "exported_at": "2026-09-19T23:32:40.426Z",
   "people": [
     {
       "birth_date": "1995",
       "created_at": "2026-09-16T22:28:28",
-      "death_date": "",
+      "death_date": "2000",
       "father_id": null,
       "father_name": null,
       "gender": "unknown",
@@ -14,15 +14,15 @@
       "image": "",
       "mother_id": null,
       "mother_name": null,
-      "name": "بلعيد المريسي",
+      "name": "بالعيد المريسي",
       "notes": "",
       "spouse_id": null,
-      "updated_at": "2026-09-20 03:18:46"
+      "updated_at": "2026-09-16T22:28:28"
     },
     {
       "birth_date": "1995",
       "created_at": "2026-09-16T22:28:28",
-      "death_date": "",
+      "death_date": "2000",
       "father_id": 681,
       "father_name": "بالعيد المريسي",
       "gender": "unknown",
@@ -33,12 +33,12 @@
       "name": "صلاح",
       "notes": "",
       "spouse_id": null,
-      "updated_at": "2026-09-20 03:19:28"
+      "updated_at": "2026-09-16T22:28:28"
     },
     {
       "birth_date": "1995",
       "created_at": "2026-09-16T22:28:28",
-      "death_date": "",
+      "death_date": "2000",
       "father_id": 681,
       "father_name": "بالعيد المريسي",
       "gender": "unknown",
@@ -49,12 +49,12 @@
       "name": "أحمد",
       "notes": "",
       "spouse_id": null,
-      "updated_at": "2026-09-20 03:20:00"
+      "updated_at": "2026-09-16T22:28:28"
     },
     {
       "birth_date": "1995",
       "created_at": "2026-09-16T22:28:28",
-      "death_date": "",
+      "death_date": "2000",
       "father_id": 682,
       "father_name": "صلاح",
       "gender": "unknown",
@@ -65,7 +65,7 @@
       "name": "محمد",
       "notes": "",
       "spouse_id": null,
-      "updated_at": "2026-09-20 01:28:46"
+      "updated_at": "2026-09-16T22:28:28"
     },
     {
       "birth_date": "1995",
@@ -86,7 +86,7 @@
     {
       "birth_date": "1995",
       "created_at": "2026-09-16T22:28:28",
-      "death_date": "",
+      "death_date": "2000",
       "father_id": 684,
       "father_name": "محمد",
       "gender": "unknown",
@@ -97,12 +97,12 @@
       "name": "احمد",
       "notes": "",
       "spouse_id": null,
-      "updated_at": "2026-09-20 01:28:22"
+      "updated_at": "2026-09-16T22:28:28"
     },
     {
       "birth_date": "1995",
       "created_at": "2026-09-16T22:28:28",
-      "death_date": "",
+      "death_date": "2000",
       "father_id": 686,
       "father_name": "احمد",
       "gender": "unknown",
@@ -113,7 +113,7 @@
       "name": "ناصر",
       "notes": "",
       "spouse_id": null,
-      "updated_at": "2026-09-20 01:27:49"
+      "updated_at": "2026-09-16T22:28:28"
     },
     {
       "birth_date": "1995",
@@ -8910,10 +8910,10 @@
       "image": "",
       "mother_id": null,
       "mother_name": null,
-      "name": "موفق",
+      "name": "توفيق",
       "notes": "",
       "spouse_id": null,
-      "updated_at": "2026-09-20 03:08:44"
+      "updated_at": "2026-09-18T19:41:23"
     },
     {
       "birth_date": "نقمقن٣",
@@ -11172,6 +11172,22 @@
       "updated_at": "2026-09-20T00:52:50"
     },
     {
+      "birth_date": "قن",
+      "created_at": "2026-09-20T00:52:50",
+      "death_date": "",
+      "father_id": 1397,
+      "father_name": "مجاهد",
+      "gender": "unknown",
+      "id": 1404,
+      "image": "",
+      "mother_id": null,
+      "mother_name": null,
+      "name": "مجاهد",
+      "notes": "",
+      "spouse_id": null,
+      "updated_at": "2026-09-20T00:52:50"
+    },
+    {
       "birth_date": "فتت٣ت٣",
       "created_at": "2026-09-20T00:53:10",
       "death_date": "",
@@ -12306,38 +12322,6 @@
       "notes": "",
       "spouse_id": null,
       "updated_at": "2026-09-20T01:49:22"
-    },
-    {
-      "id": 1476,
-      "name": "غيث",
-      "father_id": 1015,
-      "father_name": "فوزي",
-      "mother_id": null,
-      "mother_name": null,
-      "gender": "unknown",
-      "birth_date": "",
-      "death_date": "",
-      "spouse_id": null,
-      "notes": "",
-      "image": "",
-      "created_at": "2026-09-20 03:03:20",
-      "updated_at": "2026-09-20 03:03:20"
-    },
-    {
-      "id": 1477,
-      "name": "عمر",
-      "father_id": 853,
-      "father_name": "فاروق",
-      "mother_id": null,
-      "mother_name": null,
-      "gender": "unknown",
-      "birth_date": "1",
-      "death_date": "",
-      "spouse_id": null,
-      "notes": "",
-      "image": "",
-      "created_at": "2026-09-20 03:13:27",
-      "updated_at": "2026-09-20 03:13:27"
     }
   ],
   "marriages": []
