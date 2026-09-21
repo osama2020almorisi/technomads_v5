@@ -1,0 +1,3455 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>🌳 شجرة العائلة Pro</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
+<style>
+  :root{
+    --bg:#f3f6fb; --surface:#ffffff; --surface2:#edf2f7; --surface3:#e2e8f0;
+    --text:#152033; --text-strong:#0b1220; --muted:#64748b;
+    --line:#d6dfeb; --line-strong:#b8c4d4;
+    --primary:#0f766e; --primary-dark:#0d5e57; --primary-light:#14b8a6;
+    --danger:#dc2626; --warn:#f59e0b; --success:#16a34a; --info:#2563eb;
+    --gold:#fbbf24; --gold-dark:#d97706;
+    --safe-top:env(safe-area-inset-top,0px);
+    --safe-bottom:env(safe-area-inset-bottom,0px);
+    --safe-left:env(safe-area-inset-left,0px);
+    --safe-right:env(safe-area-inset-right,0px);
+    --nav:rgba(255,255,255,.97);
+    --btn-sm:38px;
+    --btn-md:44px;
+    --btn-lg:48px;
+    --btn-xl:52px;
+    --topbar-h:62px;
+  }
+  html.dark{
+    --bg:#090f1b; --surface:#101a2b; --surface2:#172337; --surface3:#1e2d44;
+    --text:#edf4ff; --text-strong:#ffffff; --muted:#9ba9bc;
+    --line:#293950; --line-strong:#3d5273;
+    --primary:#14b8a6; --primary-dark:#0f766e; --primary-light:#2dd4bf;
+    --nav:rgba(16,26,43,.98);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  *:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:6px}
+  html,body{
+    height:100%;overflow:hidden;background:var(--bg);color:var(--text);
+    font-family:Cairo,'Segoe UI',Tahoma,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;overscroll-behavior:none;
+    -webkit-user-select:none;user-select:none;
+  }
+  #app{position:fixed;inset:0;display:flex;flex-direction:column}
+
+  .topbar{
+    position:relative;z-index:50;
+    display:flex;align-items:center;gap:4px;
+    padding:calc(6px + var(--safe-top)) 8px 6px;
+    background:var(--nav);border-bottom:1px solid var(--line);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    flex-shrink:0;
+    min-height:var(--topbar-h);
+    overflow:visible;
+  }
+
+  .brand{
+    font-size:13px;font-weight:900;color:var(--text-strong);
+    display:flex;align-items:center;gap:3px;flex-shrink:0;
+    padding-inline-end:2px;
+    white-space:nowrap;
+  }
+  .brand span{
+    font-size:7px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-light));
+    color:#fff;border-radius:4px;padding:1px 4px;font-weight:900;
+    letter-spacing:.5px;
+  }
+
+  .search-wrap{
+    flex:1 1 0;display:flex;align-items:center;gap:3px;
+    background:var(--surface2);border:1.5px solid var(--line);
+    border-radius:11px;padding:0 5px;min-width:80px;height:var(--btn-md);
+    transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    overflow:hidden;
+  }
+  .search-wrap:focus-within{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(15,118,110,.14);
+    background:var(--surface);
+  }
+  .search-wrap input{
+    flex:1 1 0;border:0;outline:0;background:transparent;color:var(--text);
+    padding:6px 2px;font-size:13px;min-width:0;font-family:inherit;
+    -webkit-user-select:text;user-select:text;
+    text-overflow:ellipsis;
+  }
+  .search-wrap input::placeholder{color:var(--muted);opacity:.65;font-size:12px}
+  .search-wrap .s-icon{
+    color:var(--muted);font-size:14px;flex-shrink:0;
+    padding-inline-start:1px;
+  }
+
+  .search-counter{
+    display:none;align-items:center;gap:1px;
+    font-size:10px;font-weight:900;color:var(--primary);
+    padding:2px 5px;border-radius:6px;background:rgba(15,118,110,.14);
+    flex-shrink:0;font-variant-numeric:tabular-nums;
+    transition:transform .2s ease;
+    white-space:nowrap;
+  }
+  .search-counter.show{display:inline-flex;animation:popIn .25s cubic-bezier(.2,.9,.3,1)}
+  @keyframes popIn{
+    from{transform:scale(.7);opacity:0}
+    to{transform:scale(1);opacity:1}
+  }
+  .search-counter .current{color:var(--primary-dark);font-size:11px}
+  .search-counter .sep{opacity:.4;font-size:9px}
+  .search-counter .total{opacity:.75;font-size:9px}
+
+  .search-nav{display:none;gap:2px;flex-shrink:0}
+  .search-nav.show{display:flex}
+  .search-nav-btn{
+    width:26px;height:26px;border-radius:7px;
+    border:1px solid var(--line);background:var(--surface);
+    color:var(--text);font-size:11px;cursor:pointer;
+    display:grid;place-items:center;font-family:inherit;
+    transition:transform .1s ease, background .12s ease, color .12s ease;
+    -webkit-tap-highlight-color:transparent;
+    flex-shrink:0;
+  }
+  .search-nav-btn:active{transform:scale(.88);background:var(--primary);color:#fff}
+  .search-nav-btn:disabled{opacity:.3;cursor:not-allowed}
+  .search-nav-btn:disabled:active{background:var(--surface);color:var(--text)}
+
+  .clear-btn{
+    display:none;color:var(--muted);font-size:13px;cursor:pointer;
+    padding:2px 4px;background:none;border:0;font-family:inherit;
+    border-radius:5px;transition:background .12s ease;
+    flex-shrink:0;
+  }
+  .clear-btn:active{background:var(--surface3)}
+  .search-wrap.has-value .clear-btn{display:block}
+
+  .top-actions{
+    display:flex;gap:3px;flex-shrink:0;align-items:center;
+  }
+  .icon-btn{
+    width:var(--btn-md);height:var(--btn-md);
+    border:1.5px solid var(--line);border-radius:11px;
+    background:var(--surface);color:var(--text);font-size:16px;
+    display:inline-flex;align-items:center;justify-content:center;
+    cursor:pointer;font-family:inherit;
+    transition:transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
+    -webkit-tap-highlight-color:transparent;
+    flex-shrink:0;
+  }
+  .icon-btn:active{transform:scale(.88)}
+  .icon-btn:hover{background:var(--surface2)}
+  .icon-btn.primary-icon{
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    border-color:var(--primary-dark);color:#fff;
+    box-shadow:0 3px 10px rgba(15,118,110,.3);
+  }
+  .icon-btn.primary-icon:active{
+    transform:scale(.88);
+    box-shadow:0 1px 4px rgba(15,118,110,.4);
+  }
+  .icon-btn.spinning{
+    animation:btnSpin 1s linear infinite;
+    pointer-events:none;opacity:.7;
+  }
+  @keyframes btnSpin{to{transform:rotate(360deg)}}
+
+  .search-results{
+    position:absolute;
+    top:calc(var(--topbar-h) + var(--safe-top) - 4px);
+    left:calc(10px + var(--safe-left));
+    right:calc(10px + var(--safe-right));
+    z-index:80;
+    max-height:min(58vh, 420px);
+    overflow-y:auto;overflow-x:hidden;
+    background:var(--surface);
+    border:1.5px solid var(--line);
+    border-radius:16px;
+    box-shadow:0 24px 60px rgba(0,0,0,.28);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    animation:dropIn .24s cubic-bezier(.2,.9,.3,1);
+    -webkit-overflow-scrolling:touch;
+    transform-origin:top center;
+  }
+  .search-results.hidden{display:none}
+  @keyframes dropIn{
+    from{opacity:0;transform:translateY(-10px) scale(.96)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+  }
+
+  .sr-header{
+    padding:10px 14px;
+    background:linear-gradient(180deg, var(--surface2), var(--surface));
+    border-bottom:1px solid var(--line);
+    font-size:10px;color:var(--muted);font-weight:800;
+    display:flex;justify-content:space-between;align-items:center;
+    position:sticky;top:0;z-index:2;
+    backdrop-filter:blur(8px);
+  }
+  .sr-header b{color:var(--primary);font-weight:900;font-size:12px}
+  .sr-hint{
+    font-size:9px;color:var(--muted);opacity:.85;
+    display:flex;gap:5px;align-items:center;
+  }
+  .sr-hint kbd{
+    background:var(--surface3);border:1px solid var(--line);
+    border-radius:4px;padding:1px 5px;font-family:inherit;font-size:8px;
+    font-weight:800;color:var(--text);
+  }
+
+  .sr-item{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 14px;
+    cursor:pointer;
+    border-bottom:1px solid var(--line);
+    transition:background .12s ease;
+    position:relative;
+    min-height:58px;
+  }
+  .sr-item:last-child{border-bottom:0}
+  .sr-item:active, .sr-item.active{background:var(--surface2)}
+  .sr-item.active::before{
+    content:"";position:absolute;right:0;top:0;bottom:0;
+    width:3px;background:var(--primary);
+    border-radius:4px 0 0 4px;
+  }
+
+  .sr-avatar{
+    width:36px;height:36px;border-radius:50%;
+    display:grid;place-items:center;
+    font-size:15px;font-weight:900;color:#fff;
+    flex-shrink:0;
+    background:linear-gradient(135deg,#64748b,#94a3b8);
+  }
+  .sr-avatar.male{background:linear-gradient(135deg,#2563eb,#3b82f6)}
+  .sr-avatar.female{background:linear-gradient(135deg,#db2777,#ec4899)}
+  .sr-avatar.unknown{background:linear-gradient(135deg,#64748b,#94a3b8)}
+
+  .sr-info{flex:1;min-width:0}
+  .sr-name{
+    font-size:13px;font-weight:800;color:var(--text-strong);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .sr-name mark{
+    background:var(--gold);color:#0b1220;
+    padding:0 3px;border-radius:3px;font-weight:900;
+  }
+  .sr-meta{
+    font-size:10px;color:var(--muted);margin-top:3px;
+    display:flex;gap:6px;align-items:center;font-weight:700;
+    flex-wrap:wrap;
+  }
+  .sr-id{
+    font-size:9px;font-weight:900;color:var(--primary);
+    background:rgba(15,118,110,.12);
+    padding:2px 6px;border-radius:5px;
+    direction:ltr;font-variant-numeric:tabular-nums;
+  }
+  .sr-item.active .sr-id{
+    background:var(--primary);color:#fff;
+  }
+  .sr-badge{
+    font-size:8px;font-weight:900;
+    padding:2px 5px;border-radius:4px;
+    background:var(--surface3);color:var(--muted);
+    text-transform:uppercase;
+  }
+  .sr-empty{
+    padding:32px 14px;text-align:center;
+    color:var(--muted);font-size:13px;font-weight:700;
+  }
+  .sr-empty .emoji{font-size:36px;display:block;margin-bottom:8px;opacity:.5}
+
+  .stats-bar{
+    position:absolute;
+    top:calc(var(--topbar-h) + var(--safe-top) + 6px);
+    left:calc(10px + var(--safe-left));
+    right:calc(10px + var(--safe-right));
+    z-index:20;
+    display:flex;gap:6px;justify-content:flex-end;
+    pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  .stats-bar.hidden{opacity:0;transform:translateY(-8px);pointer-events:none}
+
+  .stat-card{
+    pointer-events:auto;min-width:60px;padding:6px 10px;
+    border-radius:12px;background:var(--surface);
+    border:1.5px solid var(--line);
+    text-align:center;
+    box-shadow:0 2px 10px rgba(15,23,42,.06);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .stat-card:active{transform:scale(.95)}
+  .stat-card .num{font-size:16px;font-weight:900;color:var(--primary);line-height:1}
+  .stat-card .lbl{font-size:9px;color:var(--muted);margin-top:2px;font-weight:800}
+
+  .focus-banner{
+    position:absolute;
+    top:calc(var(--topbar-h) + var(--safe-top) + 6px);
+    left:calc(10px + var(--safe-left));
+    right:calc(10px + var(--safe-right));
+    z-index:25;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:10px 14px;
+    background:linear-gradient(135deg,#f59e0b,#ea580c);
+    color:#fff;border-radius:14px;
+    box-shadow:0 12px 32px rgba(245,158,11,.45);
+    animation:focusSlide .32s cubic-bezier(.2,.9,.3,1);
+    pointer-events:auto;
+  }
+  .focus-banner.hidden{display:none!important}
+  @keyframes focusSlide{
+    from{opacity:0;transform:translateY(-12px) scale(.96)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+  }
+  .focus-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+  .focus-icon{font-size:22px;flex-shrink:0}
+  .focus-text{min-width:0}
+  .focus-text b{display:block;font-size:14px;font-weight:900;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .focus-text small{display:block;font-size:10px;opacity:.95;font-weight:700;margin-top:2px}
+  .focus-stats{display:flex;gap:4px;flex-shrink:0;align-items:center}
+  .focus-stat{
+    background:rgba(255,255,255,.24);border:1px solid rgba(255,255,255,.38);
+    border-radius:9px;padding:5px 9px;text-align:center;min-width:46px;
+  }
+  .focus-stat .num{font-size:14px;font-weight:900;line-height:1;color:#fff}
+  .focus-stat .lbl{font-size:8px;opacity:.95;font-weight:800;margin-top:2px;color:#fff}
+  .focus-exit{
+    padding:9px 12px;border:1.5px solid rgba(255,255,255,.55);
+    border-radius:10px;background:rgba(255,255,255,.22);color:#fff;
+    font-weight:900;font-size:11px;cursor:pointer;font-family:inherit;
+    flex-shrink:0;transition:.15s;
+  }
+  .focus-exit:active{transform:scale(.92);background:rgba(255,255,255,.4)}
+
+  .tree-container{
+    flex:1;position:relative;overflow:hidden;
+    background:radial-gradient(ellipse at center, var(--surface) 0%, var(--bg) 100%);
+  }
+  #svg{
+    display:block;width:100%;height:100%;
+    cursor:grab;touch-action:none;
+    shape-rendering:geometricPrecision;text-rendering:geometricPrecision;
+  }
+  #svg.grabbing{cursor:grabbing}
+  #viewport{
+    transform-origin:0 0;will-change:transform;
+    transform:translate3d(0,0,0);
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  }
+  .node{cursor:pointer}
+  .node-card{
+    fill:var(--surface);stroke:var(--line);stroke-width:1.6;
+    transition:stroke .15s ease, stroke-width .15s ease, filter .2s ease, opacity .2s ease;
+    shape-rendering:geometricPrecision;
+  }
+  .node-card:hover{stroke:var(--primary);stroke-width:2.2}
+  .node-card.selected{stroke:var(--warn);stroke-width:4}
+  .node-card.focus-node{stroke:var(--warn);stroke-width:5;filter:url(#focusGlow)}
+  .node-card.root-node{stroke:var(--primary);stroke-width:3}
+  .node-card.search-hit{
+    stroke:var(--gold);stroke-width:4;
+    filter:url(#searchGlow);
+  }
+  .node-card.search-current{
+    stroke:#fbbf24;stroke-width:5;
+    filter:url(#searchGlowStrong);
+    animation:pulseSearch 1.6s ease-in-out infinite;
+  }
+  @keyframes pulseSearch{
+    0%,100%{stroke-width:5}
+    50%{stroke-width:6.5}
+  }
+  .node.dimmed{opacity:.08;transition:opacity .25s ease}
+
+  .node text{
+    pointer-events:none;user-select:none;
+    text-rendering:geometricPrecision;shape-rendering:geometricPrecision;
+    font-family:Cairo,'Segoe UI',Tahoma,sans-serif;
+  }
+  .node-name{font-weight:900;font-size:13px;fill:var(--text-strong);text-anchor:middle}
+  .node-meta{font-size:10px;fill:var(--muted);font-weight:700;text-anchor:middle}
+  .node-gender{fill:#fff;font-family:Arial;font-size:12px;font-weight:900;text-anchor:middle}
+
+  .link{
+    fill:none;stroke-linecap:round;
+    shape-rendering:geometricPrecision;
+    transition:stroke .25s ease, stroke-width .25s ease, opacity .25s ease, filter .25s ease;
+  }
+  .link.ancestor-path{
+    stroke:var(--gold) !important;
+    stroke-width:3.5 !important;
+    opacity:1 !important;
+    filter:url(#searchGlowPath);
+    stroke-dasharray: 6 4;
+    animation:dashFlow 1s linear infinite;
+  }
+  @keyframes dashFlow{
+    from{stroke-dashoffset:0}
+    to{stroke-dashoffset:-20}
+  }
+  .link.dimmed{opacity:.04}
+
+  .search-ring{
+    fill:none;stroke:var(--gold);stroke-width:2;
+    opacity:0;pointer-events:none;
+  }
+  .search-ring.active{
+    opacity:.9;
+    animation:ringPulse 1.8s ease-out infinite;
+  }
+  @keyframes ringPulse{
+    0%{r:26;opacity:.9}
+    100%{r:60;opacity:0}
+  }
+
+  .bottom-tools{
+    position:absolute;
+    bottom:calc(14px + var(--safe-bottom));
+    left:calc(12px + var(--safe-left));
+    right:calc(12px + var(--safe-right));
+    z-index:40;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:8px;
+    pointer-events:none;
+  }
+
+  .tool-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    pointer-events:auto;
+  }
+
+  .tool-btn{
+    width:var(--btn-lg);height:var(--btn-lg);
+    border-radius:14px;
+    background:var(--surface);
+    border:1.5px solid var(--line);
+    color:var(--text);
+    font-size:20px;
+    cursor:pointer;font-family:inherit;
+    display:grid;place-items:center;
+    transition:transform .12s ease, background .12s ease, box-shadow .12s ease;
+    box-shadow:0 4px 14px rgba(15,23,42,.10);
+    -webkit-tap-highlight-color:transparent;
+    font-weight:700;
+  }
+  .tool-btn:active{
+    transform:scale(.88);
+    background:var(--surface2);
+    box-shadow:0 2px 6px rgba(15,23,42,.15);
+  }
+  .tool-btn.zoom-label{
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:-.5px;
+  }
+  .tool-btn.primary-tool{
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    border-color:var(--primary-dark);
+    color:#fff;
+    box-shadow:0 6px 16px rgba(15,118,110,.35);
+  }
+  .tool-btn.primary-tool:active{
+    background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+  }
+
+  .nav-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    pointer-events:auto;
+  }
+  .nav-btn{
+    width:var(--btn-lg);height:var(--btn-lg);
+    border-radius:50%;
+    background:var(--surface);
+    border:1.5px solid var(--line);
+    color:var(--text);
+    font-size:17px;
+    cursor:pointer;font-family:inherit;
+    display:grid;place-items:center;
+    transition:transform .12s ease, background .12s ease;
+    box-shadow:0 4px 14px rgba(15,23,42,.10);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .nav-btn:active{transform:scale(.88);background:var(--surface2)}
+
+  .info-panel{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    width:100%;
+    max-height:68vh;
+    background:var(--surface);
+    border-radius:22px 22px 0 0;
+    border-top:1px solid var(--line);
+    transform:translateY(110%);
+    transition:transform .38s cubic-bezier(.32,.72,0,1);
+    z-index:70;
+    display:flex;flex-direction:column;
+    box-shadow:0 -18px 50px rgba(0,0,0,.28);
+    will-change:transform;
+    -webkit-backface-visibility:hidden;
+  }
+  .info-panel.open{transform:translateY(0)}
+
+  .sheet-handle{
+    width:44px;height:5px;border-radius:3px;
+    background:var(--line-strong);
+    margin:10px auto 4px;
+    flex-shrink:0;
+    cursor:grab;
+    transition:background .15s, transform .15s;
+  }
+  .sheet-handle:active{background:var(--primary);transform:scaleX(1.15)}
+
+  .info-head{
+    display:flex;align-items:center;gap:11px;
+    padding:6px 16px 12px;
+    border-bottom:1px solid var(--line);
+    flex-shrink:0;
+    position:relative;
+  }
+  .avatar{
+    width:44px;height:44px;border-radius:50%;
+    display:grid;place-items:center;
+    font-size:18px;color:#fff;font-weight:900;
+    background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+    border:2px solid rgba(255,255,255,.18);
+    flex:0 0 auto;
+    box-shadow:0 4px 14px rgba(59,130,246,.3);
+  }
+  .info-head-text{flex:1;min-width:0}
+  .info-head .name{
+    font-size:15px;font-weight:900;line-height:1.25;
+    color:var(--text-strong);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .info-head .sub{
+    font-size:10px;color:var(--muted);
+    margin-top:2px;font-weight:800;
+    display:flex;gap:6px;align-items:center;
+  }
+  .info-head .sub .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--primary);display:inline-block;
+  }
+
+  .close-panel{
+    position:absolute;
+    top:12px;left:12px;
+    width:32px;height:32px;border-radius:50%;
+    background:var(--surface2);
+    border:0;color:var(--muted);
+    cursor:pointer;display:grid;place-items:center;
+    font-size:14px;font-family:inherit;
+    transition:transform .12s, background .12s, color .12s;
+    z-index:2;
+  }
+  .close-panel:active{
+    transform:scale(.85);
+    background:var(--danger);color:#fff;
+  }
+
+  .info-body{
+    padding:12px 14px calc(14px + var(--safe-bottom));
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    flex:1;
+    overscroll-behavior:contain;
+  }
+
+  .info-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:6px;
+    margin-bottom:12px;
+  }
+  .info-cell{
+    background:var(--surface2);
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:8px 4px;
+    text-align:center;
+    transition:transform .12s, border-color .12s;
+  }
+  .info-cell:active{transform:scale(.96)}
+  .info-cell .k{
+    font-size:9px;color:var(--muted);
+    font-weight:800;margin-bottom:3px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .info-cell .v{
+    font-size:12px;font-weight:900;
+    color:var(--text-strong);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    direction:ltr;
+  }
+  .info-cell .v.arabic{direction:rtl}
+  .info-cell .v.badge-cell{
+    display:inline-block;
+    padding:2px 8px;border-radius:20px;
+    font-size:10px;
+  }
+  .info-cell .v.badge-cell.male{background:rgba(37,99,235,.15);color:#2563eb}
+  .info-cell .v.badge-cell.female{background:rgba(219,39,119,.15);color:#db2777}
+  .info-cell .v.badge-cell.unknown{background:rgba(100,116,139,.15);color:#64748b}
+
+  .info-father{
+    display:flex;align-items:center;gap:8px;
+    padding:9px 11px;
+    background:var(--surface2);
+    border:1px solid var(--line);
+    border-radius:11px;
+    margin-bottom:12px;
+    font-size:12px;
+    cursor:pointer;
+    transition:transform .12s, border-color .12s;
+  }
+  .info-father:active{transform:scale(.98);border-color:var(--primary)}
+  .info-father .f-icon{
+    width:28px;height:28px;border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+    display:grid;place-items:center;
+    color:#fff;font-size:11px;font-weight:900;
+    flex-shrink:0;
+  }
+  .info-father .f-info{flex:1;min-width:0}
+  .info-father .f-info .f-k{font-size:9px;color:var(--muted);font-weight:800}
+  .info-father .f-info .f-v{
+    font-size:12px;font-weight:900;color:var(--text-strong);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .info-father .f-arrow{color:var(--muted);font-size:14px}
+
+  .quick-actions{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:6px;
+    margin-bottom:10px;
+  }
+  .qa-btn{
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:3px;
+    padding:9px 4px;
+    border-radius:12px;
+    border:1.5px solid var(--line);
+    background:var(--surface2);
+    color:var(--text);
+    font-family:inherit;
+    font-size:9px;font-weight:900;
+    cursor:pointer;
+    transition:transform .12s, background .12s, border-color .12s, color .12s;
+    -webkit-tap-highlight-color:transparent;
+    min-height:56px;
+  }
+  .qa-btn:active{transform:scale(.9)}
+  .qa-btn .qa-icon{font-size:18px;line-height:1}
+  .qa-btn .qa-label{
+    font-size:8.5px;line-height:1.15;
+    text-align:center;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    max-width:100%;
+  }
+
+  .qa-btn.gold{
+    background:linear-gradient(135deg,#fbbf24,#d97706);
+    border-color:#d97706;color:#0b1220;
+    box-shadow:0 4px 12px rgba(251,191,36,.3);
+  }
+  .qa-btn.green{
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    border-color:var(--primary-dark);color:#fff;
+    box-shadow:0 4px 12px rgba(15,118,110,.3);
+  }
+  .qa-btn.red{
+    background:linear-gradient(135deg,#ef4444,#b91c1c);
+    border-color:#b91c1c;color:#fff;
+    box-shadow:0 4px 12px rgba(239,68,68,.3);
+  }
+  .qa-btn.purple{
+    background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+    border-color:#6d28d9;color:#fff;
+    box-shadow:0 4px 12px rgba(139,92,246,.3);
+  }
+
+  .father-btn{
+    width:100%;padding:11px;
+    border-radius:12px;
+    border:1.5px solid var(--line);
+    background:var(--surface2);
+    color:var(--text);
+    font-family:inherit;font-size:12px;font-weight:900;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    transition:transform .12s, border-color .12s, background .12s;
+    -webkit-tap-highlight-color:transparent;
+    margin-top:2px;
+  }
+  .father-btn:active{transform:scale(.97);border-color:var(--primary);background:var(--surface3)}
+
+  .detail-modal{
+    position:fixed;inset:0;z-index:200;
+    background:rgba(0,0,0,.55);
+    display:none;align-items:center;justify-content:center;
+    padding:20px;
+    backdrop-filter:blur(4px);
+  }
+  .detail-modal.show{display:flex;animation:fadeIn .2s ease}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .detail-modal-content{
+    background:var(--surface);
+    border-radius:18px;
+    padding:18px;
+    width:100%;max-width:400px;
+    max-height:70vh;overflow-y:auto;
+    box-shadow:0 24px 60px rgba(0,0,0,.4);
+  }
+  .detail-modal-content h3{
+    font-size:15px;font-weight:900;
+    color:var(--text-strong);
+    margin-bottom:12px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .detail-modal-content .info-row{
+    display:flex;justify-content:space-between;
+    padding:10px 0;border-bottom:1px dashed var(--line);
+    font-size:13px;gap:10px;
+  }
+  .detail-modal-content .info-row:last-child{border-bottom:0}
+  .detail-modal-content .info-row .k{color:var(--muted);font-weight:800;flex:0 0 auto}
+  .detail-modal-content .info-row .v{font-weight:800;text-align:left;word-break:break-word}
+  .detail-modal-close{
+    width:100%;margin-top:14px;padding:11px;
+    border-radius:11px;border:1.5px solid var(--line);
+    background:var(--surface2);color:var(--text);
+    font-family:inherit;font-size:13px;font-weight:900;
+    cursor:pointer;
+  }
+  .detail-modal-close:active{transform:scale(.97);background:var(--surface3)}
+
+  #loader{
+    position:fixed;inset:0;background:var(--bg);z-index:100;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+    transition:opacity .4s;
+  }
+  #loader.hide{opacity:0;pointer-events:none}
+  .spinner{
+    width:54px;height:54px;border-radius:50%;
+    border:4px solid rgba(15,118,110,.15);border-top-color:var(--primary);
+    animation:spin 1s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #loader p{color:var(--muted);font-size:13px;text-align:center;padding:0 20px;line-height:1.7;font-weight:800}
+
+  #toast{
+    position:fixed;bottom:calc(90px + var(--safe-bottom));left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--surface);border:1.5px solid var(--primary);
+    color:var(--text);padding:11px 18px;border-radius:13px;font-size:13px;
+    opacity:0;transition:.3s;z-index:90;pointer-events:none;
+    max-width:85vw;text-align:center;font-weight:800;
+    box-shadow:0 8px 30px rgba(15,118,110,.2);
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media print {
+    html, body { display: none !important; visibility: hidden !important; }
+    body::after {
+      content: "🔒 الطباعة معطلة";
+      display: grid !important; visibility: visible !important;
+      position: fixed; inset: 0; place-items: center;
+      font-size: 28px; color: #999; background: #fff;
+      font-family: sans-serif;
+    }
+  }
+  body.protect-blur #app{
+    filter: blur(30px) !important; pointer-events: none !important;
+  }
+  html, body{
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+  }
+  input, textarea{
+    -webkit-user-select: text !important;
+    user-select: text !important;
+  }
+  img, svg{ -webkit-user-drag: none !important; user-drag: none !important; }
+
+  @media(max-width:420px){
+    :root{--topbar-h:54px;--btn-md:40px;--btn-lg:44px}
+    .brand{font-size:11px}
+    .brand span{font-size:6px;padding:1px 3px}
+    .search-wrap{height:38px}
+    .search-wrap input{font-size:12px;padding:5px 2px}
+    .search-wrap input::placeholder{font-size:11px}
+    .stat-card{min-width:52px;padding:5px 8px}
+    .stat-card .num{font-size:14px}
+    .stat-card .lbl{font-size:8px}
+    .focus-banner{padding:9px 11px}
+    .focus-text b{font-size:13px}
+    .focus-stat{min-width:40px;padding:4px 7px}
+    .focus-stat .num{font-size:12px}
+    .focus-stat .lbl{font-size:7px}
+    .focus-icon{font-size:19px}
+    .search-counter{font-size:9px;padding:2px 4px}
+    .search-counter .current{font-size:10px}
+    .search-nav-btn{width:24px;height:24px;font-size:10px}
+    .info-grid{grid-template-columns:repeat(3,1fr)}
+    .qa-btn{min-height:52px;padding:7px 3px}
+    .qa-btn .qa-icon{font-size:16px}
+    .qa-btn .qa-label{font-size:8px}
+  }
+
+  @media(max-width:360px){
+    :root{--topbar-h:50px;--btn-md:38px;--btn-lg:42px}
+    .brand{font-size:10px}
+    .brand span{display:none}
+    .top-actions{gap:2px}
+    .search-wrap{gap:2px;padding:0 3px}
+    .search-wrap input{font-size:11px}
+    .search-wrap .s-icon{font-size:12px}
+    .search-nav-btn{width:22px;height:22px;font-size:9px}
+    .focus-stats{display:none}
+    .focus-banner{padding:8px 10px}
+    .focus-text b{font-size:12px}
+    .stat-card{min-width:46px;padding:4px 6px}
+    .stat-card .num{font-size:12px}
+    .stat-card .lbl{font-size:7px}
+    .qa-btn .qa-label{font-size:7.5px}
+  }
+
+  @media(min-width:768px){
+    .brand{font-size:16px}
+    .brand span{font-size:9px}
+    .icon-btn{font-size:19px}
+    .stat-card{min-width:72px;padding:8px 12px}
+    .stat-card .num{font-size:18px}
+    .stat-card .lbl{font-size:10px}
+    .tool-btn,.nav-btn{width:52px;height:52px}
+    .search-results{left:auto;right:12px;width:440px}
+    .info-panel{
+      left:auto;right:12px;bottom:12px;
+      width:400px;
+      max-height:82vh;
+      border-radius:22px;
+      transform:translateY(calc(100% + 24px));
+    }
+    .info-panel.open{transform:translateY(0)}
+    .qa-btn{min-height:64px}
+    .qa-btn .qa-icon{font-size:20px}
+    .qa-btn .qa-label{font-size:10px}
+  }
+
+  @keyframes nodeIn{from{opacity:0}to{opacity:1}}
+  .node{animation:nodeIn .5s ease both}
+  .node-card.deceased{fill:var(--surface3)}
+  .node.tl-dim{opacity:.08;transition:opacity .25s ease}
+  #svg{position:relative;z-index:1}
+
+  .bg-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .bg-particles span{position:absolute;border-radius:50%;
+    background:radial-gradient(circle,rgba(20,184,166,.30),transparent 70%);
+    animation:floatUp linear infinite;opacity:.45}
+  @keyframes floatUp{from{transform:translateY(25vh)}to{transform:translateY(-115vh)}}
+  html.dark .bg-particles span{background:radial-gradient(circle,rgba(45,212,191,.22),transparent 70%)}
+
+  .modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);
+    display:none;align-items:center;justify-content:center;padding:16px;
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+  .modal.show{display:flex;animation:fadeIn .2s ease}
+  .modal-box{background:var(--surface);border-radius:18px;width:100%;max-width:480px;
+    max-height:82vh;overflow-y:auto;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.4);
+    -webkit-overflow-scrolling:touch}
+  .modal-box h3{font-size:15px;font-weight:900;color:var(--text-strong);
+    margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .modal-box h4{font-size:12px;font-weight:900;color:var(--muted);margin:14px 0 8px}
+
+  .frm-row{margin-bottom:10px}
+  .frm-row label{display:block;font-size:11px;font-weight:800;color:var(--muted);margin-bottom:4px}
+  .frm-row input,.frm-row select,.frm-row textarea{
+    width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--line);
+    background:var(--surface2);color:var(--text);font-family:inherit;font-size:13px;
+    -webkit-user-select:text;user-select:text}
+  .frm-row input:focus,.frm-row select:focus,.frm-row textarea:focus{
+    outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(15,118,110,.12)}
+  .frm-2col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .frm-actions{display:flex;gap:8px;margin-top:14px}
+  .btn{flex:1;padding:11px;border-radius:11px;border:0;font-family:inherit;
+    font-weight:900;font-size:13px;cursor:pointer;transition:transform .12s ease}
+  .btn:active{transform:scale(.95)}
+  .btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff}
+  .btn.ghost{background:var(--surface2);border:1.5px solid var(--line);color:var(--text)}
+  .btn.danger{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff}
+
+  .stat-table{width:100%;border-collapse:collapse;font-size:12px}
+  .stat-table td,.stat-table th{padding:8px 4px;border-bottom:1px dashed var(--line);text-align:right}
+  .stat-table th{color:var(--muted);font-size:10px;font-weight:900}
+  .stat-table .num{font-weight:900;color:var(--primary);text-align:left;font-variant-numeric:tabular-nums}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+  .chip{font-size:10px;font-weight:800;background:var(--surface2);
+    border:1px solid var(--line);border-radius:20px;padding:4px 9px;color:var(--text)}
+  .chip b{color:var(--primary)}
+
+  .kbd-list{list-style:none}
+  .kbd-list li{display:flex;justify-content:space-between;align-items:center;
+    padding:8px 0;border-bottom:1px dashed var(--line);font-size:12px;font-weight:700}
+  .kbd-list kbd{background:var(--surface3);border:1px solid var(--line);
+    border-radius:6px;padding:2px 8px;font-family:inherit;font-size:11px;font-weight:900;color:var(--text)}
+
+  .anc-chain{margin-bottom:4px}
+  .anc-item{padding:7px 10px;background:var(--surface2);border:1px solid var(--line);
+    border-radius:10px;margin-bottom:5px;font-size:12px;font-weight:800;
+    cursor:pointer;transition:border-color .12s,transform .12s}
+  .anc-item:active{border-color:var(--primary);transform:scale(.98)}
+  .anc-item small{color:var(--muted);font-weight:700}
+  .desc-ul{list-style:none;padding-inline-start:14px;border-inline-start:2px solid var(--line);margin:4px 0}
+  .desc-ul li{margin:3px 0;font-size:12px;font-weight:700}
+  .desc-link{cursor:pointer;color:var(--text)}
+  .desc-link:active{color:var(--primary)}
+
+  .timeline-bar{position:absolute;bottom:calc(86px + var(--safe-bottom));
+    left:50%;transform:translateX(-50%);z-index:35;
+    display:flex;align-items:center;gap:10px;
+    background:var(--nav);border:1.5px solid var(--line);border-radius:14px;
+    padding:8px 14px;box-shadow:0 6px 20px rgba(0,0,0,.15);
+    max-width:min(560px,92vw)}
+  .timeline-bar.hidden{display:none}
+  .timeline-bar input[type=range]{flex:1;accent-color:var(--primary);min-width:130px}
+  .tl-year{font-weight:900;font-size:13px;color:var(--primary);
+    min-width:44px;text-align:center;font-variant-numeric:tabular-nums;direction:ltr}
+  #timelineReset{background:none;border:0;color:var(--muted);font-size:13px;cursor:pointer;padding:4px}
+
+  .explore-overlay{position:fixed;inset:0;z-index:400;
+    background:rgba(9,15,27,.93);display:none;flex-direction:column;
+    align-items:center;justify-content:center;gap:16px;padding:20px;text-align:center}
+  .explore-overlay.show{display:flex}
+  .exp-card{background:var(--surface);color:var(--text);border-radius:20px;
+    padding:26px 22px;max-width:340px;width:100%;
+    box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .exp-card .exp-q{font-size:19px;font-weight:900;color:var(--text-strong);margin-bottom:8px}
+  .exp-card .exp-info{display:none;font-size:13px;line-height:2;color:var(--text)}
+  .exp-card .exp-hint{font-size:11px;color:var(--muted);font-weight:800;margin-top:6px}
+  .exp-actions{display:flex;gap:8px;margin-top:16px}
+
+  body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
+
+  .more-menu{position:absolute;top:calc(100% + 6px);inset-inline-start:8px;
+    display:none;flex-direction:column;gap:6px;background:var(--nav);
+    border:1.5px solid var(--line);border-radius:16px;padding:8px;z-index:120;
+    box-shadow:0 16px 40px rgba(0,0,0,.3)}
+  .more-menu.open{display:flex}
+  .more-menu .icon-btn{width:var(--btn-xl);height:var(--btn-xl)}
+  @media(min-width:769px){
+    .more-menu{display:flex;position:static;flex-direction:row;background:none;
+      border:0;padding:0;box-shadow:none;gap:5px}
+    #btnMoreMenu{display:none}
+  }
+  .pan-bar{position:absolute;bottom:calc(12px + var(--safe-bottom));left:50%;
+    transform:translateX(-50%);z-index:36;display:flex;align-items:center;gap:6px;
+    background:var(--nav);border:1.5px solid var(--line);border-radius:30px;
+    padding:6px 10px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:min(430px,88vw)}
+  .pan-btn{border:0;background:var(--surface2);color:var(--text);width:34px;height:34px;
+    border-radius:50%;font-size:13px;cursor:pointer;flex-shrink:0;
+    display:grid;place-items:center;font-family:inherit;transition:transform .12s}
+  .pan-btn:active{transform:scale(.88);background:var(--primary);color:#fff}
+  .pan-bar input[type=range]{flex:1;accent-color:var(--primary);min-width:110px}
+  @media(max-width:768px){
+    .quick-actions{display:flex;flex-wrap:nowrap;overflow-x:auto;
+      -webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:thin}
+    .qa-btn{min-width:80px;flex:0 0 auto}
+    .info-panel{max-height:80vh}
+    .info-grid{gap:5px}
+    .search-wrap input{font-size:14px}
+  }
+
+  .child-rows-wrap{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+  .child-row{
+    display:flex;align-items:stretch;gap:8px;
+    background:var(--surface2);border:1.5px solid var(--line);
+    border-radius:14px;padding:10px;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .child-row:focus-within{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(15,118,110,.12);
+  }
+  .child-row .row-fields{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
+  .child-row .row-fields input{
+    width:100%;padding:10px 12px;border-radius:10px;
+    border:1.5px solid var(--line);background:var(--surface);
+    color:var(--text);font-family:inherit;font-size:13px;
+    -webkit-user-select:text;user-select:text;
+    transition:border-color .15s ease;
+  }
+  .child-row .row-fields input:focus{
+    outline:none;border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(15,118,110,.10);
+  }
+  .child-row .row-fields input::placeholder{color:var(--muted);opacity:.7}
+  .child-row .row-remove{
+    width:44px;flex-shrink:0;
+    border:1.5px solid var(--line);border-radius:12px;
+    background:var(--surface);color:var(--danger);
+    font-size:18px;font-weight:900;cursor:pointer;
+    display:grid;place-items:center;font-family:inherit;
+    transition:transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
+  }
+  .child-row .row-remove:active{transform:scale(.9);background:var(--danger);color:#fff;border-color:var(--danger)}
+  .add-row-btn{
+    width:100%;padding:13px;
+    border:2px dashed var(--primary);
+    border-radius:14px;background:transparent;
+    color:var(--primary);font-family:inherit;font-size:13px;font-weight:900;
+    cursor:pointer;margin-top:10px;
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    transition:background .15s ease, transform .12s ease;
+  }
+  .add-row-btn:active{transform:scale(.98);background:rgba(15,118,110,.08)}
+  .cf-actions{
+    display:flex;gap:8px;margin-top:16px;
+  }
+  .cf-actions .btn{flex:1}
+</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="manifest" href='data:application/manifest+json,{"name":"شجرة العائلة Pro","short_name":"FamilyTree","start_url":".","display":"standalone","background_color":"#0b1220","theme_color":"#0b766e","icons":[]}'>
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ الشريط العلوي ============ -->
+  <div class="topbar">
+    <div class="brand">🌳<span>PRO</span></div>
+    <div class="search-wrap" id="searchBox">
+      <span class="s-icon">🔎</span>
+      <button class="clear-btn" id="voiceBtn" title="بحث صوتي" style="display:block;font-size:13px">🎤</button>
+      <input type="text" id="searchInput" placeholder="ابحث بالاسم أو #ID..." autocomplete="off" spellcheck="false">
+      <span class="search-counter" id="searchCounter">
+        <span class="current" id="searchCurrent">1</span>
+        <span class="sep">/</span>
+        <span class="total" id="searchTotal">10</span>
+      </span>
+      <div class="search-nav" id="searchNav">
+        <button class="search-nav-btn" id="searchPrev" title="السابق">▲</button>
+        <button class="search-nav-btn" id="searchNext" title="التالي">▼</button>
+      </div>
+      <button class="clear-btn" id="clearSearch" title="مسح">✕</button>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="btn-fullscreen" title="ملء الشاشة">⛶</button>
+      <button class="icon-btn" id="btnMoreMenu" title="المزيد">⋮</button>
+      <button class="icon-btn" id="btn-theme" title="المظهر">🌙</button>
+      <div class="more-menu" id="moreMenu">
+        <button class="icon-btn" id="btn-refresh" title="🔄 تحديث البيانات من الملف">🔄</button>
+        <button class="icon-btn" id="btn-export" title="تصدير الشجرة">📸</button>
+        <button class="icon-btn" id="btn-add" title="إضافة فرد جديد (جذر أو بأب)">➕</button>
+        <button class="icon-btn" id="btn-stats" title="إحصائيات متقدمة">📊</button>
+        <button class="icon-btn" id="btn-compare" title="مقارنة الفروع">⚖️</button>
+        <button class="icon-btn" id="btn-heatmap" title="تلوين حسب الفرع">🎨</button>
+        <button class="icon-btn" id="btn-explore" title="وضع الاستكشاف">🎮</button>
+        <button class="icon-btn" id="btn-lang" title="English">🌐</button>
+        <button class="icon-btn" id="btn-help" title="اختصارات ومساعدة">❓</button>
+        <button class="icon-btn primary-icon" id="btn-fit" title="ملاءمة">⛶</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-results hidden" id="searchResults"></div>
+
+  <div class="tree-container" id="treeContainer">
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-card"><div class="num" id="st-people">0</div><div class="lbl">الأفراد</div></div>
+      <div class="stat-card"><div class="num" id="st-gens">0</div><div class="lbl">الأجيال</div></div>
+      <div class="stat-card"><div class="num" id="st-roots">0</div><div class="lbl">الفروع</div></div>
+    </div>
+
+    <div class="focus-banner hidden" id="focusBanner">
+      <div class="focus-left">
+        <span class="focus-icon">🎯</span>
+        <div class="focus-text">
+          <b id="focusName">—</b>
+          <small>وضع التركيز على الفرع</small>
+        </div>
+        <div class="focus-stats">
+          <div class="focus-stat"><div class="num" id="focusPeople">0</div><div class="lbl">أفراد</div></div>
+          <div class="focus-stat"><div class="num" id="focusGens">0</div><div class="lbl">أجيال</div></div>
+          <div class="focus-stat"><div class="num" id="focusBranches">0</div><div class="lbl">فروع</div></div>
+        </div>
+      </div>
+      <button class="focus-exit" id="exitFocusBtn">✕ خروج</button>
+    </div>
+
+    <svg id="svg">
+      <defs>
+        <filter id="focusGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="searchGlow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="searchGlowStrong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="searchGlowPath" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="2" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <g id="viewport"></g>
+    </svg>
+
+    <div class="bottom-tools">
+      <div class="tool-group">
+        <button class="tool-btn" id="btn-zoom-in" aria-label="تكبير">＋</button>
+        <button class="tool-btn" id="btn-zoom-out" aria-label="تصغير">−</button>
+        <button class="tool-btn zoom-label" id="btn-reset" aria-label="إعادة">1:1</button>
+      </div>
+      <div class="nav-group">
+        <button class="nav-btn" id="btn-up" aria-label="أعلى">▲</button>
+        <button class="nav-btn" id="btn-gen-up" title="الجيل الأعلى" style="font-size:13px">⤒</button>
+        <button class="nav-btn" id="btn-down" aria-label="أسفل">▼</button>
+        <button class="nav-btn" id="btn-gen-down" title="الجيل الأدنى" style="font-size:13px">⤓</button>
+      </div>
+    </div>
+
+    <div class="pan-bar" id="panBar">
+      <button class="pan-btn" id="panRight" title="تحريك لليمين">➡</button>
+      <input type="range" id="panRange" min="-1800" max="1800" step="10" value="0" title="تحريك الشجرة يميناً ويساراً">
+      <button class="pan-btn" id="panLeft" title="تحريك لليسار">⬅</button>
+      <button class="pan-btn" id="timelineOpen" title="المخطط الزمني">📅</button>
+    </div>
+  </div>
+
+  <!-- لوحة التفاصيل — Bottom Sheet -->
+  <div class="info-panel" id="infoPanel">
+    <div class="sheet-handle" id="sheetHandle"></div>
+    <div class="info-head">
+      <button class="close-panel" id="closePanel">✕</button>
+      <div class="avatar" id="pAvatar">؟</div>
+      <div class="info-head-text">
+        <div class="name" id="pName">—</div>
+        <div class="sub" id="pSub">—</div>
+      </div>
+    </div>
+    <div class="info-body" id="pBody"></div>
+  </div>
+
+  <!-- نافذة التفاصيل الإضافية -->
+  <div class="detail-modal" id="detailModal">
+    <div class="detail-modal-content">
+      <h3>ℹ️ تفاصيل إضافية</h3>
+      <div id="detailModalBody"></div>
+      <button class="detail-modal-close" id="detailModalClose">إغلاق</button>
+    </div>
+  </div>
+
+
+  <!-- نافذة إضافة / تعديل فرد -->
+  <div class="modal" id="personFormModal">
+    <div class="modal-box">
+      <h3 id="pfTitle">➕ إضافة فرد جديد</h3>
+      <div class="frm-row"><label>الاسم الكامل *</label><input id="pfName" placeholder="مثال: محمد أحمد"></div>
+      <div class="frm-row"><label>الأب</label><select id="pfFather"></select></div>
+      <div class="frm-2col">
+        <div class="frm-row"><label>الجنس</label>
+          <select id="pfGender"><option value="unknown">غير محدد</option><option value="male">ذكر</option><option value="female">أنثى</option></select>
+        </div>
+        <div class="frm-row"><label>سنة الميلاد</label><input id="pfBirth" inputmode="numeric" placeholder="مثال: 1980"></div>
+      </div>
+      <div class="frm-row"><label>سنة الوفاة (اتركها فارغة إن كان على قيد الحياة)</label><input id="pfDeath" inputmode="numeric" placeholder="—"></div>
+      <div class="frm-row"><label>ملاحظات</label><textarea id="pfNotes" rows="2"></textarea></div>
+      <div class="frm-actions">
+        <button class="btn ghost" id="pfCancel">إلغاء</button>
+        <button class="btn primary" id="pfSave">💾 حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة إضافة أبناء متعددة -->
+  <div class="modal" id="childFormModal">
+    <div class="modal-box">
+      <h3 id="cfTitle">👨‍👩‍👧‍👦 إضافة عدة أبناء</h3>
+      <p style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:12px;line-height:1.7">
+        أضف صفاً لكل ابن: اكتب الاسم، وتاريخ الميلاد (اختياري).
+      </p>
+      <div class="frm-row" style="display:none"><input id="cfFatherName" disabled></div>
+      <div class="child-rows-wrap" id="cfRowsWrap"></div>
+      <button class="add-row-btn" id="cfAddRow" type="button">＋ إضافة صف جديد</button>
+      <div class="cf-actions">
+        <button class="btn ghost" id="cfClose">إلغاء</button>
+        <button class="btn primary" id="cfSave">💾 إضافة الكل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة المخطط الزمني -->
+  <div class="modal" id="timelineModal">
+    <div class="modal-box">
+      <h3>📅 المخطط الزمني</h3>
+      <p style="font-size:11px;color:var(--muted);font-weight:700;line-height:1.7">
+        اسحب لإبراز من وُلدوا حتى السنة المحددة فقط، وخفت بقية الأفراد.
+      </p>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:12px">
+        <input type="range" id="timelineRange" style="flex:1;accent-color:var(--primary)">
+        <span class="tl-year" id="timelineYearLabel">—</span>
+      </div>
+      <div class="frm-actions">
+        <button class="btn ghost" id="timelineReset">إظهار الكل</button>
+        <button class="btn primary" onclick="document.getElementById('timelineModal').classList.remove('show')">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة الإحصائيات المتقدمة -->
+  <div class="modal" id="statsModal">
+    <div class="modal-box">
+      <h3>📊 إحصائيات الشجرة</h3>
+      <div id="statsBody"></div>
+      <h4>🥧 توزيع الفروع (حسب عدد الأفراد)</h4>
+      <canvas id="statsPie" width="340" height="190" style="width:100%;direction:ltr"></canvas>
+      <button class="btn ghost" style="width:100%;margin-top:12px" onclick="document.getElementById('statsModal').classList.remove('show')">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- نافذة شجرة أنساب الشخص -->
+  <div class="modal" id="ancestryModal">
+    <div class="modal-box">
+      <div id="ancestryModalBody"></div>
+      <button class="btn ghost" style="width:100%;margin-top:12px" onclick="document.getElementById('ancestryModal').classList.remove('show')">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- نافذة مقارنة الفروع -->
+  <div class="modal" id="compareModal">
+    <div class="modal-box">
+      <h3>⚖️ مقارنة بين فرعين</h3>
+      <div class="frm-row"><label>الفرع الأول</label><select id="cmpA"></select></div>
+      <div class="frm-row"><label>الفرع الثاني</label><select id="cmpB"></select></div>
+      <div class="frm-actions"><button class="btn primary" id="cmpRun">⚖️ قارن</button></div>
+      <div id="cmpResult" style="margin-top:12px"></div>
+      <button class="btn ghost" style="width:100%;margin-top:12px" onclick="document.getElementById('compareModal').classList.remove('show')">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- نافذة المساعدة والاختصارات -->
+  <div class="modal" id="helpModal">
+    <div class="modal-box">
+      <h3>❓ الاختصارات والمساعدة</h3>
+      <ul class="kbd-list">
+        <li><span>البحث السريع</span><kbd>Ctrl + K</kbd></li>
+        <li><span>تحديث البيانات</span><kbd>Ctrl + R</kbd></li>
+        <li><span>ملاءمة الشجرة للشاشة</span><kbd>F</kbd></li>
+        <li><span>تكبير / تصغير</span><kbd>+ / −</kbd></li>
+        <li><span>التنقل بين الأجيال</span><kbd>[ / ]</kbd></li>
+        <li><span>الانتقال للنتيجة التالية في البحث</span><kbd>Enter</kbd></li>
+        <li><span>السابق في نتائج البحث</span><kbd>Shift + Enter</kbd></li>
+        <li><span>إغلاق اللوحات والنوافذ</span><kbd>Esc</kbd></li>
+        <li><span>نافذة المساعدة</span><kbd>?</kbd></li>
+      </ul>
+      <h4>الإيماءات</h4>
+      <ul class="kbd-list">
+        <li><span>فتح تفاصيل الفرد</span><kbd>نقرة</kbd></li>
+        <li><span>التركيز على فرع الفرد</span><kbd>نقرة مزدوجة</kbd></li>
+        <li><span>تكبير بإصبعين</span><kbd>Pinch</kbd></li>
+        <li><span>سحب الخريطة</span><kbd>سحب</kbd></li>
+      </ul>
+      <button class="btn ghost" style="width:100%;margin-top:12px" onclick="document.getElementById('helpModal').classList.remove('show')">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- وضع الاستكشاف -->
+  <div class="explore-overlay" id="exploreOverlay">
+    <div style="font-size:34px">🎮</div>
+    <div style="color:#fff;font-weight:900;font-size:16px">وضع الاستكشاف — اعرف عائلتك!</div>
+    <div class="exp-card">
+      <div class="exp-q" id="expQ">❓ من هو هذا الشخص؟</div>
+      <div class="exp-info" id="expInfo"></div>
+      <div class="exp-hint" id="expHint"></div>
+      <div class="exp-actions">
+        <button class="btn ghost" id="expClose">✕ خروج</button>
+        <button class="btn primary" id="expReveal">👀 اكتشف</button>
+        <button class="btn primary" id="expNext" style="display:none">⏭ التالي</button>
+      </div>
+      <div class="exp-actions">
+        <button class="btn ghost" id="expShow" style="display:none">📍 عرضه في الشجرة</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>جارٍ تحميل شجرة العائلة...</p>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   🌳 Family Tree Pro — النسخة النهائية المُصلَّحة + زر التحديث
+   ============================================================ */
+'use strict';
+
+const $ = id => document.getElementById(id);
+const svg = $('svg');
+const viewport = $('viewport');
+const container = $('treeContainer');
+
+const PALETTE = [
+  "#0f766e","#2563eb","#7c3aed","#db2777","#ea580c",
+  "#16a34a","#0891b2","#9333ea","#ca8a04","#475569"
+];
+
+const state = {
+  people: [],
+  byId: new Map(),
+  children: new Map(),
+  parentOf: new Map(),
+  roots: [],
+  depth: new Map(),
+  maxGen: 0,
+  focusId: null,
+  focusSet: null,
+  selectedId: null,
+  searchMatches: [],
+  searchIndex: -1,
+  tx: 0, ty: 0, scale: 1,
+  dark: false,
+  pointers: new Map(),
+};
+
+const MIN_SCALE = 0.05;
+const MAX_SCALE = 8;
+const CARD_W_LARGE = 170;
+const CARD_H_LARGE = 72;
+const CARD_W_SMALL = 145;
+const CARD_H_SMALL = 62;
+
+/* ============================================================
+   أدوات مساعدة
+   ============================================================ */
+function escapeHtml(s){
+  return String(s ?? '').replace(/[&<>"']/g,
+    c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function normalizeArabic(str){
+  return String(str || '')
+    .replace(/[\u064B-\u065F\u0670]/g, '')
+    .replace(/[إأآا]/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .replace(/ؤ/g, 'و')
+    .replace(/ئ/g, 'ي')
+    .replace(/ة/g, 'ه')
+    .toLowerCase()
+    .trim();
+}
+
+/* ============================================================
+   1) تحميل البيانات
+   ============================================================ */
+async function loadData(){
+  try{
+    const res = await fetch('tree-data.json?t=' + Date.now(), {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    state.people = Array.isArray(data.people) ? data.people : [];
+    state.marriages = Array.isArray(data.marriages) ? data.marriages : [];
+    applyOps();
+    buildMaps();
+    computeGenerations();
+    render();
+    updateStats();
+    requestAnimationFrame(fitToScreen);
+    setTimeout(fitToScreen, 200);
+    $('loader').classList.add('hide');
+    setTimeout(()=>{ initTimeline(); handleHashLink(); }, 400);
+  }catch(err){
+    console.error(err);
+    $('loader').innerHTML = `
+      <p style="color:#ef4444;font-size:15px;font-weight:900">⚠ تعذر تحميل tree-data.json</p>
+      <p style="color:#64748b;font-size:12px;max-width:300px">
+        تأكد من وجود الملف بجانب index.html<br>وشغّل عبر Live Server
+      </p>`;
+  }
+}
+
+/* ============================================================
+   🔄 دالة تحديث البيانات من الملف
+   ============================================================ */
+async function refreshData(){
+  const btn = $('btn-refresh');
+  if(btn) btn.classList.add('spinning');
+
+  try{
+    // 1) جلب الملف مع كسر الكاش
+    const res = await fetch('tree-data.json?t=' + Date.now(), {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+
+    const newPeople = Array.isArray(data.people) ? data.people : [];
+    const newMarriages = Array.isArray(data.marriages) ? data.marriages : [];
+    const oldCount = state.people.length;
+
+    // 2) السؤال: دمج أم استبدال
+    const hasLocalOps = getOps().length > 0;
+    let mode = 'replace';
+
+    if(hasLocalOps){
+      const choice = confirm(
+        '🔄 تحديث البيانات من tree-data.json\n\n' +
+        '📌 عندك ' + getOps().length + ' تعديل محلي محفوظ.\n\n' +
+        '✅ موافق = استبدال كامل (حذف التعديلات المحلية)\n' +
+        '❌ إلغاء = دمج (الملف + تعديلاتك المحلية)'
+      );
+      mode = choice ? 'replace' : 'merge';
+    }
+
+    // 3) تحديث البيانات الأساسية
+    state.people = newPeople;
+    state.marriages = newMarriages;
+
+    // 4) حسب الوضع المختار
+    if(mode === 'replace'){
+      localStorage.removeItem('ft-ops');
+    }
+    // في وضع merge، applyOps() ستُطبق التعديلات المحلية فوق البيانات الجديدة
+
+    // 5) إعادة البناء
+    applyOps();
+    buildMaps();
+    computeGenerations();
+
+    // 6) إعادة الرسم
+    render();
+    updateStats();
+    requestAnimationFrame(fitToScreen);
+    setTimeout(fitToScreen, 250);
+    initTimeline();
+
+    // 7) إغلاق اللوحات المفتوحة
+    closePanel();
+    if(state.focusId != null) exitFocus();
+    clearSearch();
+
+    const newCount = state.people.length;
+    const diff = newCount - oldCount;
+    const diffMsg = diff === 0 ? '' : (diff > 0 ? ` (+${diff})` : ` (${diff})`);
+    const modeMsg = mode === 'replace' ? 'استبدال كامل' : 'دمج';
+    toast(`🔄 تم التحديث — ${newCount} فرد${diffMsg} • ${modeMsg}`);
+    console.log('✅ تم التحديث:', {oldCount, newCount, diff, mode});
+
+  }catch(err){
+    console.error(err);
+    toast('⚠ فشل التحديث: ' + err.message);
+  }finally{
+    if(btn) btn.classList.remove('spinning');
+  }
+}
+
+function buildMaps(){
+  state.byId.clear();
+  state.children.clear();
+  state.parentOf.clear();
+  state.people.forEach(p => state.byId.set(Number(p.id), p));
+  state.people.forEach(p => {
+    if(p.father_id != null && state.byId.has(Number(p.father_id))){
+      const fid = Number(p.father_id);
+      if(!state.children.has(fid)) state.children.set(fid, []);
+      state.children.get(fid).push(Number(p.id));
+      state.parentOf.set(Number(p.id), fid);
+    }
+  });
+  state.children.forEach(arr => arr.sort((a,b)=>a-b));
+}
+
+function computeGenerations(){
+  state.depth.clear();
+  const hasParent = id => {
+    const p = state.byId.get(Number(id));
+    return p && p.father_id != null && state.byId.has(Number(p.father_id));
+  };
+  state.roots = state.people.filter(p => !hasParent(p.id)).map(p => Number(p.id));
+  const q = [];
+  state.roots.forEach(id => { state.depth.set(id, 0); q.push(id); });
+  let head = 0;
+  while(head < q.length){
+    const id = q[head++];
+    const d = state.depth.get(id) || 0;
+    (state.children.get(id) || []).forEach(k=>{
+      if(!state.depth.has(k) || state.depth.get(k) < d+1){
+        state.depth.set(k, d+1);
+        q.push(k);
+      }
+    });
+  }
+  state.people.forEach(p => { if(!state.depth.has(Number(p.id))) state.depth.set(Number(p.id), 0); });
+  state.maxGen = 0;
+  state.depth.forEach(v => { if(v > state.maxGen) state.maxGen = v; });
+}
+
+function buildTree(rootId, maxDepth){
+  const seen = new Set([rootId]);
+  function buildNode(pid, d){
+    const p = state.byId.get(pid);
+    if(!p) return null;
+    const node = {id: pid, name: p.name, gender: p.gender, depth: d, children: []};
+    if(d < maxDepth){
+      for(const cid of (state.children.get(pid) || [])){
+        if(seen.has(cid)) continue;
+        seen.add(cid);
+        const child = buildNode(cid, d+1);
+        if(child) node.children.push(child);
+      }
+    }
+    return node;
+  }
+  return buildNode(rootId, 0);
+}
+
+function layoutRadial(root, dy){
+  function countLeaves(node){
+    if(!node.children || !node.children.length) return 1;
+    let total = 0;
+    for(const c of node.children) total += countLeaves(c);
+    return total;
+  }
+  let maxDepth = 0, maxSiblings = 1;
+  const nodesByDepth = {};
+  (function scan(n, d){
+    if(d > maxDepth) maxDepth = d;
+    const c = (n.children || []).length;
+    if(c > maxSiblings) maxSiblings = c;
+    nodesByDepth[d] = (nodesByDepth[d] || 0) + 1;
+    for(const ch of n.children || []) scan(ch, d+1);
+  })(root, 0);
+
+  const totalNodes = Object.values(nodesByDepth).reduce((s,v)=>s+v, 0);
+  const compact = totalNodes > 60;
+  const cardWidth = compact ? CARD_W_SMALL : CARD_W_LARGE;
+  const minGapX = cardWidth + 40;
+
+  let halfAngleDeg;
+  if(maxSiblings <= 2) halfAngleDeg = 60;
+  else if(maxSiblings <= 4) halfAngleDeg = 85;
+  else if(maxSiblings <= 8) halfAngleDeg = 110;
+  else if(maxSiblings <= 15) halfAngleDeg = 135;
+  else if(maxSiblings <= 30) halfAngleDeg = 155;
+  else halfAngleDeg = 178;
+
+  const HALF_ANGLE = (halfAngleDeg * Math.PI) / 180;
+  const FULL_ANGLE = 2 * HALF_ANGLE;
+  const requiredRadius = {};
+  for(let d = 1; d <= maxDepth; d++){
+    const count = nodesByDepth[d] || 1;
+    requiredRadius[d] = (count * minGapX) / FULL_ANGLE;
+  }
+  const BASE_RADIUS = Math.max(dy * 1.8, requiredRadius[1] || 0);
+  const radiusByDepth = {0: 0};
+  radiusByDepth[1] = BASE_RADIUS;
+  for(let d = 2; d <= maxDepth; d++){
+    const depthBonus = (d-1) * 45;
+    const minStep = dy + depthBonus;
+    const stepRadius = radiusByDepth[d-1] + minStep;
+    const reqRadius = requiredRadius[d] || 0;
+    radiusByDepth[d] = Math.max(stepRadius, reqRadius);
+  }
+  const all = [];
+  function assign(node, depth, angleStart, angleEnd){
+    const centerAngle = (angleStart + angleEnd) / 2;
+    const radius = radiusByDepth[depth] || 0;
+    if(depth === 0){ node._x = 0; node._y = 0; }
+    else{
+      node._x = Math.sin(centerAngle) * radius;
+      node._y = -Math.cos(centerAngle) * radius;
+    }
+    all.push(node);
+    const children = node.children || [];
+    if(!children.length) return;
+    const totalLeaves = children.reduce((s,c)=>s+countLeaves(c), 0);
+    let currentAngle = angleStart;
+    for(const child of children){
+      const leaves = countLeaves(child);
+      const angleSpan = (angleEnd - angleStart) * (leaves / totalLeaves);
+      assign(child, depth+1, currentAngle, currentAngle + angleSpan);
+      currentAngle += angleSpan;
+    }
+  }
+  assign(root, 0, -HALF_ANGLE, HALF_ANGLE);
+
+  const xs = all.map(n => n._x);
+  const ys = all.map(n => n._y);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+  const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  all.forEach(n => { n._x -= cx; n._y -= cy; });
+
+  return {nodes: all, cardWidth, cardHeight: compact ? CARD_H_SMALL : CARD_H_LARGE, compact, maxDepth, totalNodes};
+}
+
+function curved(s, t, cardH){
+  const halfH = cardH / 2;
+  const startX = s._x, startY = s._y + halfH;
+  const endX = t._x, endY = t._y - halfH;
+  const h = endX - startX, v = endY - startY;
+  return `M ${startX} ${startY} C ${startX + h*0.25} ${startY + v*0.45}, ${startX + h*0.75} ${startY + v*0.55}, ${endX} ${endY}`;
+}
+
+function getAncestorPath(personId){
+  const path = [];
+  const seen = new Set();
+  let cur = Number(personId);
+  while(cur != null && !seen.has(cur)){
+    seen.add(cur);
+    path.push(cur);
+    cur = state.parentOf.get(cur);
+    if(cur == null) break;
+  }
+  return path;
+}
+
+function render(){
+  viewport.innerHTML = '';
+
+  const rootId = state.focusId != null ? state.focusId : chooseRoot();
+  if(rootId == null) return;
+
+  const maxDepth = state.focusId != null ? 30 : (state.maxGen + 1);
+  const root = buildTree(rootId, maxDepth);
+  if(!root) return;
+
+  const totalNodes = countTreeNodes(root);
+  const dy = totalNodes > 300 ? 240 : totalNodes > 150 ? 220 : totalNodes > 80 ? 200 : 185;
+
+  const result = layoutRadial(root, dy);
+  const {nodes, cardWidth, cardHeight, compact} = result;
+
+  const ancestorSet = new Set();
+  const ancestorEdges = new Set();
+  const isSearching = state.searchIndex >= 0 && state.searchMatches.length > 0;
+  let currentPathArr = [];
+  if(isSearching){
+    currentPathArr = getAncestorPath(state.searchMatches[state.searchIndex]);
+    currentPathArr.forEach(id => ancestorSet.add(id));
+    for(let i = 0; i < currentPathArr.length - 1; i++){
+      ancestorEdges.add(`${currentPathArr[i]}-${currentPathArr[i+1]}`);
+    }
+  }
+
+  const gLinks = document.createElementNS('http://www.w3.org/2000/svg','g');
+  for(const n of nodes){
+    for(const c of (n.children || [])){
+      const baseColor = PALETTE[c.depth % PALETTE.length];
+      const sw = Math.max(1.2, 3 - c.depth * 0.15);
+      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('class','link');
+      path.setAttribute('stroke', baseColor);
+      path.setAttribute('stroke-width', sw);
+      path.setAttribute('d', curved(n, c, cardHeight));
+
+      const edgeKey = `${c.id}-${n.id}`;
+      if(ancestorEdges.has(edgeKey)){
+        path.classList.add('ancestor-path');
+      } else if(isSearching){
+        const inPath = currentPathArr.includes(n.id) && currentPathArr.includes(c.id)
+                    && currentPathArr.indexOf(c.id) === currentPathArr.indexOf(n.id) + 1;
+        if(!inPath) path.classList.add('dimmed');
+      }
+      gLinks.appendChild(path);
+    }
+  }
+
+  const gNodes = document.createElementNS('http://www.w3.org/2000/svg','g');
+  const circleR = compact ? 13 : 15;
+  const circleCX = -cardWidth/2 + circleR + 12;
+  const circleCY = 0;
+
+  for(const n of nodes){
+    const person = state.byId.get(n.id);
+    if(!person) continue;
+
+    const group = document.createElementNS('http://www.w3.org/2000/svg','g');
+    group.setAttribute('class','node');
+    group.setAttribute('transform', `translate(${n._x},${n._y})`);
+    group.dataset.id = n.id;
+    group.style.animationDelay = Math.min((n.depth||0)*55, 550)+'ms';
+
+    const isSelected = state.selectedId === n.id;
+    const isRoot = n.depth === 0;
+    const isFocus = state.focusId === n.id;
+    const isSearchHit = state.searchMatches.includes(n.id);
+    const isCurrentSearch = isSearching && state.searchMatches[state.searchIndex] === n.id;
+
+    if(isSearching){
+      if(!ancestorSet.has(n.id) && !isSearchHit){
+        group.classList.add('dimmed');
+      }
+    }
+
+    const card = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    let cls = 'node-card';
+    if(isSelected) cls += ' selected';
+    if(isSearchHit) cls += ' search-hit';
+    if(isCurrentSearch) cls += ' search-current';
+    if(isRoot) cls += ' root-node';
+    if(isFocus) cls += ' focus-node';
+    if(isDeceased(person)) cls += ' deceased';
+    card.setAttribute('class', cls);
+    card.setAttribute('x', -cardWidth/2);
+    card.setAttribute('y', -cardHeight/2);
+    card.setAttribute('width', cardWidth);
+    card.setAttribute('height', cardHeight);
+    card.setAttribute('rx', compact ? 14 : 18);
+    group.appendChild(card);
+
+    let genderColor = PALETTE[n.depth % PALETTE.length];
+    if(state.colorMode === 'branch'){
+      const rId = branchRootId(n.id);
+      genderColor = PALETTE[Math.abs(rId) % PALETTE.length];
+    }
+    if(person.gender === 'male') genderColor = '#2563eb';
+    else if(person.gender === 'female') genderColor = '#db2777';
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('cx', circleCX);
+    circle.setAttribute('cy', circleCY);
+    circle.setAttribute('r', circleR);
+    circle.setAttribute('fill', genderColor);
+    group.appendChild(circle);
+
+    const genderIcon = person.gender === 'male' ? '♂' : person.gender === 'female' ? '♀' : '•';
+    const gi = document.createElementNS('http://www.w3.org/2000/svg','text');
+    gi.setAttribute('class','node-gender');
+    gi.setAttribute('x', circleCX);
+    gi.setAttribute('y', circleCY + (compact ? 4 : 5));
+    gi.setAttribute('font-size', compact ? 12 : 14);
+    gi.textContent = genderIcon;
+    group.appendChild(gi);
+
+    const nameCenterX = circleCX + circleR + (cardWidth/2 - (circleCX + circleR)) / 2 + 2;
+    const name = document.createElementNS('http://www.w3.org/2000/svg','text');
+    name.setAttribute('class','node-name');
+    name.setAttribute('x', nameCenterX);
+    name.setAttribute('y', compact ? -4 : -6);
+    name.setAttribute('font-size', compact ? 12 : 13);
+    const maxChars = compact ? 12 : 15;
+    const displayName = (person.name || 'بدون اسم').trim();
+    name.textContent = displayName.length > maxChars ? displayName.slice(0, maxChars-1) + '…' : displayName;
+    group.appendChild(name);
+
+    const meta = document.createElementNS('http://www.w3.org/2000/svg','text');
+    meta.setAttribute('class','node-meta');
+    meta.setAttribute('x', nameCenterX);
+    meta.setAttribute('y', compact ? 12 : 15);
+    meta.setAttribute('font-size', compact ? 9 : 10);
+    meta.textContent = `#${n.id} • ج${n.depth + 1}`;
+    group.appendChild(meta);
+
+    if(isRoot){
+      const ti = document.createElementNS('http://www.w3.org/2000/svg','text');
+      ti.setAttribute('x', cardWidth/2 - 10);
+      ti.setAttribute('y', -cardHeight/2 + 16);
+      ti.setAttribute('font-size', 14);
+      ti.setAttribute('text-anchor','middle');
+      ti.textContent = isFocus ? '🎯' : '🌳';
+      group.appendChild(ti);
+    }
+
+    if(isCurrentSearch){
+      const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      ring.setAttribute('class','search-ring active');
+      ring.setAttribute('cx', 0);
+      ring.setAttribute('cy', 0);
+      ring.setAttribute('r', 26);
+      group.appendChild(ring);
+    }
+
+    group.addEventListener('click', e => {
+      e.stopPropagation();
+      selectPerson(n.id);
+    });
+
+    let lastTap = 0;
+    group.addEventListener('touchend', e => {
+      const now = Date.now();
+      if(now - lastTap < 300){
+        e.preventDefault();
+        focusOn(n.id);
+        lastTap = 0;
+      }else{
+        lastTap = now;
+      }
+    });
+
+    group.addEventListener('dblclick', e => {
+      e.stopPropagation();
+      focusOn(n.id);
+    });
+
+    (function(){
+      const kidsN = (state.children.get(n.id) || []).length;
+      if(kidsN > 0){
+        const bc = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        bc.setAttribute('cx', cardWidth/2 - 3);
+        bc.setAttribute('cy', -cardHeight/2 + 3);
+        bc.setAttribute('r', compact ? 7 : 8);
+        bc.setAttribute('fill', 'var(--primary)');
+        group.appendChild(bc);
+        const bt = document.createElementNS('http://www.w3.org/2000/svg','text');
+        bt.setAttribute('x', cardWidth/2 - 3);
+        bt.setAttribute('y', -cardHeight/2 + (compact ? 6.5 : 7));
+        bt.setAttribute('text-anchor','middle');
+        bt.setAttribute('font-size', compact ? 8 : 9);
+        bt.setAttribute('font-weight','900');
+        bt.setAttribute('fill','#fff');
+        bt.textContent = kidsN > 9 ? '9+' : kidsN;
+        group.appendChild(bt);
+      }
+      if(parseYear(person.birth_date) != null){
+        const bd = document.createElementNS('http://www.w3.org/2000/svg','text');
+        bd.setAttribute('x', -cardWidth/2 + 11);
+        bd.setAttribute('y', cardHeight/2 - 8);
+        bd.setAttribute('font-size', 10);
+        bd.textContent = '📅';
+        group.appendChild(bd);
+      }
+      if(isDeceased(person)){
+        const dt = document.createElementNS('http://www.w3.org/2000/svg','text');
+        dt.setAttribute('x', cardWidth/2 - (kidsN > 0 ? 20 : 11));
+        dt.setAttribute('y', cardHeight/2 - 8);
+        dt.setAttribute('font-size', 10);
+        dt.setAttribute('fill', 'var(--muted)');
+        dt.textContent = '✝';
+        group.appendChild(dt);
+      }
+      const pyT = parseYear(person.birth_date);
+      if(state.timelineYear != null && pyT != null && pyT > state.timelineYear){
+        group.classList.add('tl-dim');
+      }
+    })();
+
+    gNodes.appendChild(group);
+  }
+
+  (state.marriages || []).forEach(m=>{
+    const a = Number(m.a ?? m.husband_id ?? m.person1_id);
+    const b = Number(m.b ?? m.wife_id ?? m.person2_id);
+    const na = nodes.find(x=>x.id===a), nb = nodes.find(x=>x.id===b);
+    if(na && nb){
+      const ln = document.createElementNS('http://www.w3.org/2000/svg','line');
+      ln.setAttribute('x1', na._x); ln.setAttribute('y1', na._y);
+      ln.setAttribute('x2', nb._x); ln.setAttribute('y2', nb._y);
+      ln.setAttribute('stroke', '#db2777');
+      ln.setAttribute('stroke-width', 2);
+      ln.setAttribute('stroke-dasharray', '5 4');
+      ln.setAttribute('opacity', .8);
+      gLinks.appendChild(ln);
+    }
+  });
+
+  viewport.appendChild(gLinks);
+  viewport.appendChild(gNodes);
+  applyTransform();
+}
+
+function countTreeNodes(node){
+  let c = 1;
+  for(const ch of node.children || []) c += countTreeNodes(ch);
+  return c;
+}
+
+function chooseRoot(){
+  if(state.focusId != null && state.byId.has(state.focusId)) return state.focusId;
+  if(!state.roots.length) return null;
+  let best = state.roots[0], bestCount = -1;
+  for(const r of state.roots){
+    const c = countDescendants(r);
+    if(c > bestCount){ bestCount = c; best = r; }
+  }
+  return best;
+}
+
+function countDescendants(rootId){
+  let count = 0;
+  const stack = [rootId], seen = new Set();
+  while(stack.length){
+    const cur = stack.pop();
+    if(seen.has(cur)) continue;
+    seen.add(cur); count++;
+    for(const ch of (state.children.get(cur) || [])) stack.push(ch);
+  }
+  return count;
+}
+
+function collectDescendants(rootId){
+  const set = new Set();
+  const stack = [rootId];
+  while(stack.length){
+    const cur = stack.pop();
+    if(set.has(cur)) continue;
+    set.add(cur);
+    (state.children.get(cur) || []).forEach(k => stack.push(k));
+  }
+  return set;
+}
+
+function focusOn(id){
+  if(!state.byId.has(id)) return;
+  if(state.focusId === id){ exitFocus(); return; }
+  state.focusId = id;
+  state.focusSet = collectDescendants(id);
+  state.selectedId = id;
+  render();
+
+  const person = state.byId.get(id);
+  $('focusName').textContent = person.name;
+  $('focusPeople').textContent = state.focusSet.size;
+  $('focusGens').textContent = computeBranchGenerations(state.focusSet);
+  $('focusBranches').textContent = (state.children.get(id) || []).length;
+  $('statsBar').classList.add('hidden');
+  $('focusBanner').classList.remove('hidden');
+
+  toast(`🎯 التركيز على: ${person.name}`);
+  requestAnimationFrame(fitToScreen);
+  setTimeout(fitToScreen, 250);
+}
+
+function computeBranchGenerations(set){
+  if(!set || set.size === 0) return 1;
+  let minD = Infinity;
+  set.forEach(id => {
+    const d = state.depth.get(id);
+    if(d == null) return;
+    if(d < minD) minD = d;
+  });
+  if(minD === Infinity) return 1;
+  let maxRelative = 0;
+  set.forEach(id => {
+    const d = state.depth.get(id);
+    if(d == null) return;
+    const rel = d - minD;
+    if(rel > maxRelative) maxRelative = rel;
+  });
+  return maxRelative + 1;
+}
+
+function exitFocus(){
+  if(state.focusId == null) return;
+  state.focusId = null;
+  state.focusSet = null;
+  $('statsBar').classList.remove('hidden');
+  $('focusBanner').classList.add('hidden');
+  render();
+  requestAnimationFrame(fitToScreen);
+  setTimeout(fitToScreen, 250);
+  toast('↩ تم الخروج من وضع التركيز');
+}
+
+function selectPerson(id){
+  const p = state.byId.get(id);
+  if(!p) return;
+  state.selectedId = id;
+  const depth = state.depth.get(id) || 0;
+
+  $('pAvatar').textContent = (p.name||'؟').trim().charAt(0) || '؟';
+  $('pName').textContent = p.name || 'بدون اسم';
+  $('pSub').innerHTML = `<span class="dot"></span>#${p.id} • الجيل ${depth+1}`;
+
+  const kids = state.children.get(id) || [];
+  const father = p.father_id ? state.byId.get(Number(p.father_id)) : null;
+  const ancestors = getAncestorPath(id);
+  const ancestorsCount = Math.max(0, ancestors.length - 1);
+
+  let genderBadge = 'unknown', genderTxt = 'غير محدد';
+  if(p.gender === 'male'){ genderBadge = 'male'; genderTxt = 'ذكر'; }
+  else if(p.gender === 'female'){ genderBadge = 'female'; genderTxt = 'أنثى'; }
+
+  const isFocused = state.focusId === id;
+
+  $('pBody').innerHTML = `
+    <div class="info-grid">
+      <div class="info-cell">
+        <div class="k">ID</div>
+        <div class="v">#${p.id}</div>
+      </div>
+      <div class="info-cell">
+        <div class="k">الجيل</div>
+        <div class="v">${depth+1}</div>
+      </div>
+      <div class="info-cell">
+        <div class="k">الحالة</div>
+        <div class="v badge-cell ${genderBadge}">${genderTxt}</div>
+      </div>
+      <div class="info-cell">
+        <div class="k">الأبناء</div>
+        <div class="v">${kids.length}</div>
+      </div>
+      <div class="info-cell">
+        <div class="k">الأسلاف</div>
+        <div class="v">${ancestorsCount}</div>
+      </div>
+      <div class="info-cell">
+        <div class="k">الميلاد</div>
+        <div class="v arabic">${escapeHtml(p.birth_date || '—')}</div>
+      </div>
+    </div>
+
+    ${father ? `
+      <div class="info-father" id="fatherRow">
+        <div class="f-icon">👨</div>
+        <div class="f-info">
+          <div class="f-k">الأب</div>
+          <div class="f-v">${escapeHtml(father.name||'—')} <span style="color:var(--muted);font-size:10px">#${father.id}</span></div>
+        </div>
+        <div class="f-arrow">‹</div>
+      </div>
+    ` : ''}
+
+    <div class="quick-actions">
+      <button class="qa-btn gold" id="btnHighlightPath">
+        <span class="qa-icon">✨</span>
+        <span class="qa-label">إضاءة المسار</span>
+      </button>
+      <button class="qa-btn ${isFocused ? 'red' : 'green'}" id="btnFocusPerson">
+        <span class="qa-icon">${isFocused ? '✕' : '🎯'}</span>
+        <span class="qa-label">${isFocused ? 'خروج' : 'تركيز'}</span>
+      </button>
+      <button class="qa-btn purple" id="btnCenterPerson">
+        <span class="qa-icon">📍</span>
+        <span class="qa-label">توسيط</span>
+      </button>
+      <button class="qa-btn green" id="btnAddChild">
+        <span class="qa-icon">➕</span>
+        <span class="qa-label">إضافة ابن</span>
+      </button>
+      <button class="qa-btn" id="btnAncestry">
+        <span class="qa-icon">🌿</span>
+        <span class="qa-label">شجرة الأنساب</span>
+      </button>
+      <button class="qa-btn" id="btnSharePerson">
+        <span class="qa-icon">🔗</span>
+        <span class="qa-label">نسخ الرابط</span>
+      </button>
+      <button class="qa-btn" id="btnEditPerson">
+        <span class="qa-icon">✏️</span>
+        <span class="qa-label">تعديل</span>
+      </button>
+      <button class="qa-btn red" id="btnDeletePerson">
+        <span class="qa-icon">🗑️</span>
+        <span class="qa-label">حذف</span>
+      </button>
+      <button class="qa-btn" id="btnMoreInfo">
+        <span class="qa-icon">ℹ️</span>
+        <span class="qa-label">تفاصيل</span>
+      </button>
+    </div>
+
+    ${father ? `
+      <button class="father-btn" id="btnFindFather">
+        👆 الذهاب إلى الأب (${escapeHtml(father.name||'—')})
+      </button>
+    ` : ''}
+  `;
+
+  $('infoPanel').classList.add('open');
+
+  updateSelectedClass(id);
+  updateSearchClasses();
+
+  $('btnHighlightPath').onclick = () => highlightPathToRoot(id);
+  $('btnFocusPerson').onclick = ()=>{
+    if(state.focusId === id) exitFocus();
+    else focusOn(id);
+    closePanel();
+  };
+  $('btnCenterPerson').onclick = ()=> centerOn(id);
+  $('btnMoreInfo').onclick = ()=> showMoreDetails(id);
+  if(father){
+    $('fatherRow').onclick = ()=>{ selectPerson(father.id); centerOn(father.id); };
+    $('btnFindFather').onclick = ()=>{ selectPerson(father.id); centerOn(father.id); };
+  }
+
+  enableSheetDrag();
+}
+
+function updateSelectedClass(id){
+  viewport.querySelectorAll('.node-card.selected').forEach(el => el.classList.remove('selected'));
+  if(id == null) return;
+  const nodeEl = viewport.querySelector(`.node[data-id="${id}"] .node-card`);
+  if(nodeEl) nodeEl.classList.add('selected');
+}
+
+function updateSearchClasses(){
+  const isSearching = state.searchIndex >= 0 && state.searchMatches.length > 0;
+  const ancestorSet = new Set();
+  if(isSearching){
+    getAncestorPath(state.searchMatches[state.searchIndex]).forEach(id => ancestorSet.add(id));
+  }
+  viewport.querySelectorAll('.node').forEach(el => {
+    const id = Number(el.dataset.id);
+    const card = el.querySelector('.node-card');
+    if(!card) return;
+    card.classList.remove('search-hit','search-current');
+    el.classList.remove('dimmed');
+    if(!isSearching) return;
+    const isHit = state.searchMatches.includes(id);
+    const isCurrent = state.searchMatches[state.searchIndex] === id;
+    if(isHit) card.classList.add('search-hit');
+    if(isCurrent) card.classList.add('search-current');
+    if(!ancestorSet.has(id) && !isHit) el.classList.add('dimmed');
+  });
+}
+
+function showMoreDetails(id){
+  const p = state.byId.get(id);
+  if(!p) return;
+
+  const rows = [];
+  rows.push(`<div class="info-row"><span class="k">الاسم</span><span class="v">${escapeHtml(p.name||'—')}</span></div>`);
+  rows.push(`<div class="info-row"><span class="k">ID</span><span class="v">#${p.id}</span></div>`);
+  if(p.gender) rows.push(`<div class="info-row"><span class="k">الجنس</span><span class="v">${escapeHtml(p.gender)}</span></div>`);
+  if(p.birth_date) rows.push(`<div class="info-row"><span class="k">الميلاد</span><span class="v">${escapeHtml(p.birth_date)}</span></div>`);
+  if(p.death_date) rows.push(`<div class="info-row"><span class="k">الوفاة</span><span class="v">${escapeHtml(p.death_date)}</span></div>`);
+  if(p.father_name) rows.push(`<div class="info-row"><span class="k">اسم الأب</span><span class="v">${escapeHtml(p.father_name)}</span></div>`);
+  if(p.mother_name) rows.push(`<div class="info-row"><span class="k">اسم الأم</span><span class="v">${escapeHtml(p.mother_name)}</span></div>`);
+  if(p.notes) rows.push(`<div class="info-row"><span class="k">ملاحظات</span><span class="v">${escapeHtml(p.notes)}</span></div>`);
+  if(p.image) rows.push(`<div class="info-row"><span class="k">صورة</span><span class="v"><a href="${escapeHtml(p.image)}" target="_blank" rel="noopener" style="color:var(--primary)">عرض</a></span></div>`);
+  if(p.created_at) rows.push(`<div class="info-row"><span class="k">أُضيف</span><span class="v">${escapeHtml(p.created_at)}</span></div>`);
+  if(p.updated_at) rows.push(`<div class="info-row"><span class="k">آخر تحديث</span><span class="v">${escapeHtml(p.updated_at)}</span></div>`);
+
+  $('detailModalBody').innerHTML = rows.join('');
+  $('detailModal').classList.add('show');
+}
+
+$('detailModalClose').onclick = () => $('detailModal').classList.remove('show');
+$('detailModal').onclick = (e) => {
+  if(e.target === $('detailModal')) $('detailModal').classList.remove('show');
+};
+
+function enableSheetDrag(){
+  const panel = $('infoPanel');
+  const handle = $('sheetHandle');
+  if(!handle || handle.dataset.bound) return;
+  handle.dataset.bound = '1';
+
+  let startY = 0, currentY = 0, dragging = false;
+
+  const onStart = (e)=>{
+    dragging = true;
+    startY = (e.touches ? e.touches[0].clientY : e.clientY);
+    panel.style.transition = 'none';
+  };
+  const onMove = (e)=>{
+    if(!dragging) return;
+    const y = (e.touches ? e.touches[0].clientY : e.clientY);
+    currentY = Math.max(0, y - startY);
+    panel.style.transform = `translateY(${currentY}px)`;
+  };
+  const onEnd = ()=>{
+    if(!dragging) return;
+    dragging = false;
+    panel.style.transition = '';
+    panel.style.transform = '';
+    if(currentY > 90) closePanel();
+    currentY = 0;
+  };
+
+  handle.addEventListener('touchstart', onStart, {passive:true});
+  handle.addEventListener('touchmove', onMove, {passive:true});
+  handle.addEventListener('touchend', onEnd);
+  handle.addEventListener('mousedown', onStart);
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onEnd);
+}
+
+function closePanel(){
+  $('infoPanel').classList.remove('open');
+}
+
+function highlightPathToRoot(id){
+  const path = getAncestorPath(id);
+  if(!path.length) return;
+  state.searchMatches = path.slice();
+  state.searchIndex = 0;
+  renderSearchUI(state.searchMatches[0].toString());
+  render();
+  toast(`✨ المسار مضاء حتى الجذر (${path.length} أسلاف)`);
+  setTimeout(() => centerOn(path[0]), 100);
+}
+
+let rafPending = false;
+let pendingTx = 0, pendingTy = 0, pendingScale = 1;
+function applyTransform(){
+  pendingTx = state.tx; pendingTy = state.ty; pendingScale = state.scale;
+  if(rafPending) return;
+  rafPending = true;
+  requestAnimationFrame(() => {
+    rafPending = false;
+    viewport.style.transform = `translate3d(${pendingTx}px, ${pendingTy}px, 0) scale(${pendingScale})`;
+  });
+}
+
+function fitToScreen(){
+  const g = viewport; if(!g) return;
+  const box = container.getBoundingClientRect();
+  let bb; try{ bb = g.getBBox(); }catch{ return; }
+  if(!bb.width || !bb.height) return;
+
+  const TOP_RESERVED = 70;
+  const BOTTOM_RESERVED = 90;
+  const SIDE_PADDING = 40;
+
+  const availableW = box.width - SIDE_PADDING * 2;
+  const availableH = box.height - TOP_RESERVED - BOTTOM_RESERVED;
+  const sW = availableW / (bb.width + 40);
+  const sH = availableH / (bb.height + 40);
+  const s = Math.min(2.5, Math.max(MIN_SCALE, Math.min(sW, sH)));
+
+  state.scale = s;
+  state.tx = box.width / 2 - (bb.x + bb.width / 2) * s;
+  state.ty = TOP_RESERVED + availableH / 2 - (bb.y + bb.height / 2) * s;
+  state.panCenterX = state.tx;
+  const _pr = $('panRange'); if(_pr) _pr.value = 0;
+  applyTransform();
+}
+
+function centerOn(id){
+  const nodeEl = viewport.querySelector(`.node[data-id="${id}"]`);
+  if(!nodeEl) return;
+  const bb = nodeEl.getBBox();
+  const box = container.getBoundingClientRect();
+  const x = bb.x + bb.width/2;
+  const y = bb.y + bb.height/2;
+  const k = Math.max(state.scale, 1.2);
+  state.scale = k;
+  state.tx = box.width/2 - x * k;
+  state.ty = box.height/2 - y * k;
+  applyTransform();
+}
+
+function zoomBy(factor, cx, cy){
+  const box = container.getBoundingClientRect();
+  if(cx == null) cx = box.width / 2;
+  if(cy == null) cy = box.height / 2;
+  const k0 = state.scale;
+  const k1 = Math.max(MIN_SCALE, Math.min(MAX_SCALE, k0 * factor));
+  const {tx, ty} = state;
+  state.tx = cx - (cx - tx) * (k1/k0);
+  state.ty = cy - (cy - ty) * (k1/k0);
+  state.scale = k1;
+  applyTransform();
+}
+
+let dragging = false, last = {x:0,y:0}, pinch = null, dragMoved = false;
+
+svg.addEventListener('pointerdown', e => {
+  if(e.target.closest('.node')) return;
+  dragging = true; dragMoved = false;
+  svg.classList.add('grabbing');
+  last = {x:e.clientX, y:e.clientY};
+  try{ svg.setPointerCapture(e.pointerId); }catch{}
+  state.pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+});
+
+svg.addEventListener('pointermove', e => {
+  if(!state.pointers.has(e.pointerId)) return;
+  state.pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+  if(state.pointers.size === 1 && dragging){
+    const dx = e.clientX - last.x;
+    const dy = e.clientY - last.y;
+    if(Math.abs(dx) + Math.abs(dy) > 2) dragMoved = true;
+    last = {x:e.clientX, y:e.clientY};
+    state.tx += dx; state.ty += dy;
+    applyTransform();
+  }
+});
+
+svg.addEventListener('pointerup', e => {
+  dragging = false; svg.classList.remove('grabbing');
+  state.pointers.delete(e.pointerId);
+  try{ svg.releasePointerCapture(e.pointerId); }catch{}
+});
+svg.addEventListener('pointercancel', e => {
+  dragging = false; svg.classList.remove('grabbing');
+  state.pointers.delete(e.pointerId);
+});
+
+svg.addEventListener('touchstart', e => {
+  if(e.touches.length === 2){
+    const [a,b] = e.touches;
+    pinch = {
+      d: Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY),
+      cx: (a.clientX + b.clientX)/2,
+      cy: (a.clientY + b.clientY)/2,
+      startScale: state.scale,
+      startTx: state.tx, startTy: state.ty,
+    };
+  }
+}, {passive:true});
+
+svg.addEventListener('touchmove', e => {
+  if(e.touches.length === 2 && pinch){
+    e.preventDefault();
+    const [a,b] = e.touches;
+    const d = Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+    const box = container.getBoundingClientRect();
+    const lx = pinch.cx - box.left, ly = pinch.cy - box.top;
+    const ptX = (lx - pinch.startTx) / pinch.startScale;
+    const ptY = (ly - pinch.startTy) / pinch.startScale;
+    const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, pinch.startScale * (d / pinch.d)));
+    state.scale = newScale;
+    state.tx = lx - ptX * newScale;
+    state.ty = ly - ptY * newScale;
+    applyTransform();
+  }
+}, {passive:false});
+
+svg.addEventListener('touchend', () => { pinch = null; });
+
+svg.addEventListener('wheel', e => {
+  e.preventDefault();
+  const box = container.getBoundingClientRect();
+  zoomBy(e.deltaY < 0 ? 1.15 : 1/1.15, e.clientX - box.left, e.clientY - box.top);
+}, {passive:false});
+
+svg.addEventListener('click', e => {
+  if(!e.target.closest('.node') && !dragMoved){
+    closePanel();
+    if(state.searchMatches.length && !(state.searchMatches.length > 1 && state.searchIndex === 0)){
+      clearSearch();
+    }
+  }
+});
+
+const searchInput = $('searchInput');
+const searchBox = $('searchBox');
+const searchResults = $('searchResults');
+const searchCounter = $('searchCounter');
+const searchNav = $('searchNav');
+const searchCurrent = $('searchCurrent');
+const searchTotal = $('searchTotal');
+const searchPrev = $('searchPrev');
+const searchNext = $('searchNext');
+
+let searchTimer = null;
+
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => performSearch(searchInput.value), 200);
+});
+
+searchInput.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    if(e.shiftKey) prevResult();
+    else nextResult();
+  }
+  if(e.key === 'Escape'){
+    e.preventDefault();
+    clearSearch();
+    searchInput.blur();
+  }
+});
+
+searchPrev.onclick = prevResult;
+searchNext.onclick = nextResult;
+
+function performSearch(query){
+  const q = (query || '').trim();
+  searchBox.classList.toggle('has-value', q.length > 0);
+
+  if(!q){
+    clearSearch();
+    return;
+  }
+
+  const normalizedQ = normalizeArabic(q.replace('#', ''));
+  const rawQ = q.replace('#', '').toLowerCase();
+  const matches = [];
+  state.people.forEach(p => {
+    const name = normalizeArabic(p.name || '');
+    const idStr = String(p.id);
+    if(name.includes(normalizedQ) || idStr.includes(rawQ)){
+      matches.push(Number(p.id));
+    }
+  });
+
+  matches.sort((a, b) => {
+    const pa = state.byId.get(a), pb = state.byId.get(b);
+    const na = normalizeArabic(pa?.name || '');
+    const nb = normalizeArabic(pb?.name || '');
+    const aStart = na.startsWith(normalizedQ) ? 0 : 1;
+    const bStart = nb.startsWith(normalizedQ) ? 0 : 1;
+    if(aStart !== bStart) return aStart - bStart;
+    return na.localeCompare(nb);
+  });
+
+  state.searchMatches = matches;
+  state.searchIndex = matches.length ? 0 : -1;
+
+  renderSearchUI(q);
+  render();
+
+  if(matches.length){
+    setTimeout(() => centerOn(matches[0]), 150);
+  }
+}
+
+function renderSearchUI(q){
+  const total = state.searchMatches.length;
+
+  if(total > 0){
+    searchCounter.classList.add('show');
+    searchNav.classList.add('show');
+    searchCurrent.textContent = state.searchIndex + 1;
+    searchTotal.textContent = total;
+    searchPrev.disabled = total <= 1;
+    searchNext.disabled = total <= 1;
+  }else{
+    searchCounter.classList.remove('show');
+    searchNav.classList.remove('show');
+  }
+
+  if(!q || total === 0){
+    if(q && total === 0){
+      searchResults.classList.remove('hidden');
+      searchResults.innerHTML = `
+        <div class="sr-empty">
+          <span class="emoji">🔍</span>
+          لا توجد نتائج لـ «${escapeHtml(q)}»
+        </div>`;
+    }else{
+      searchResults.classList.add('hidden');
+    }
+    return;
+  }
+
+  searchResults.classList.remove('hidden');
+  const headerHtml = `
+    <div class="sr-header">
+      <div><b>${total}</b> نتيجة</div>
+      <div class="sr-hint">
+        <kbd>Enter</kbd> التالي
+        <kbd>Esc</kbd> مسح
+      </div>
+    </div>`;
+
+  const itemsHtml = state.searchMatches.map((id, i) => {
+    const p = state.byId.get(id);
+    if(!p) return '';
+    const depth = state.depth.get(id) || 0;
+    const initial = (p.name||'؟').trim().charAt(0) || '؟';
+    const genderClass = p.gender === 'male' ? 'male' : p.gender === 'female' ? 'female' : 'unknown';
+    const highlighted = highlightMatch(p.name || '', q);
+    const father = p.father_id ? state.byId.get(Number(p.father_id)) : null;
+    return `
+      <div class="sr-item ${i === state.searchIndex ? 'active' : ''}" data-id="${id}">
+        <div class="sr-avatar ${genderClass}">${escapeHtml(initial)}</div>
+        <div class="sr-info">
+          <div class="sr-name">${highlighted}</div>
+          <div class="sr-meta">
+            <span class="sr-id">#${id}</span>
+            <span class="sr-badge">ج${depth+1}</span>
+            ${father ? `<span>الأب: ${escapeHtml(father.name||'—')}</span>` : ''}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  searchResults.innerHTML = headerHtml + itemsHtml;
+
+  searchResults.querySelectorAll('.sr-item').forEach(el => {
+    el.onclick = () => {
+      const id = Number(el.dataset.id);
+      const idx = state.searchMatches.indexOf(id);
+      if(idx >= 0) state.searchIndex = idx;
+      updateActiveResult();
+      centerOn(id);
+      selectPerson(id);
+      searchResults.classList.add('hidden');
+    };
+  });
+}
+
+function highlightMatch(name, query){
+  if(!query) return escapeHtml(name);
+  const lower = name.toLowerCase();
+  const q = query.toLowerCase().replace('#','');
+  const idx = lower.indexOf(q);
+  if(idx < 0) return escapeHtml(name);
+  const before = name.slice(0, idx);
+  const match = name.slice(idx, idx + q.length);
+  const after = name.slice(idx + q.length);
+  return `${escapeHtml(before)}<mark>${escapeHtml(match)}</mark>${escapeHtml(after)}`;
+}
+
+function updateActiveResult(){
+  searchResults.querySelectorAll('.sr-item').forEach((el, i) => {
+    el.classList.toggle('active', i === state.searchIndex);
+  });
+  searchCurrent.textContent = state.searchIndex + 1;
+  const active = searchResults.querySelector('.sr-item.active');
+  if(active) active.scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+
+function nextResult(){
+  if(!state.searchMatches.length) return;
+  state.searchIndex = (state.searchIndex + 1) % state.searchMatches.length;
+  updateActiveResult();
+  const id = state.searchMatches[state.searchIndex];
+  render();
+  setTimeout(() => centerOn(id), 100);
+  const p = state.byId.get(id);
+  toast(`🔍 ${state.searchIndex+1}/${state.searchMatches.length}: ${p?.name} (#${id})`);
+  searchResults.classList.add('hidden');
+}
+
+function prevResult(){
+  if(!state.searchMatches.length) return;
+  state.searchIndex = (state.searchIndex - 1 + state.searchMatches.length) % state.searchMatches.length;
+  updateActiveResult();
+  const id = state.searchMatches[state.searchIndex];
+  render();
+  setTimeout(() => centerOn(id), 100);
+  const p = state.byId.get(id);
+  toast(`🔍 ${state.searchIndex+1}/${state.searchMatches.length}: ${p?.name} (#${id})`);
+  searchResults.classList.add('hidden');
+}
+
+function clearSearch(){
+  searchInput.value = '';
+  searchBox.classList.remove('has-value');
+  searchResults.classList.add('hidden');
+  searchCounter.classList.remove('show');
+  searchNav.classList.remove('show');
+  state.searchMatches = [];
+  state.searchIndex = -1;
+  render();
+}
+
+$('clearSearch').onclick = () => {
+  clearSearch();
+  searchInput.focus();
+};
+
+function updateStats(){
+  $('st-people').textContent = state.people.length;
+  $('st-gens').textContent = state.maxGen + 1;
+  $('st-roots').textContent = state.roots.length;
+}
+
+$('btn-fit').onclick = () => fitToScreen();
+$('btn-reset').onclick = () => fitToScreen();
+$('btn-zoom-in').onclick = () => zoomBy(1.3);
+$('btn-zoom-out').onclick = () => zoomBy(1/1.3);
+$('btn-up').onclick = () => { state.ty += 150; applyTransform(); };
+$('btn-down').onclick = () => { state.ty -= 150; applyTransform(); };
+$('closePanel').onclick = closePanel;
+$('exitFocusBtn').onclick = exitFocus;
+
+$('btn-theme').onclick = () => {
+  state.dark = !state.dark;
+  document.documentElement.classList.toggle('dark', state.dark);
+  $('btn-theme').textContent = state.dark ? '☀️' : '🌙';
+  try{ localStorage.setItem('ft-theme', state.dark ? 'dark' : 'light'); }catch{}
+};
+
+try{
+  if(!localStorage.getItem('ft-theme') && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches){
+    state.dark = true;
+    document.documentElement.classList.add('dark');
+    $('btn-theme').textContent = '☀️';
+  }
+}catch(_){}
+try{
+  const saved = localStorage.getItem('ft-theme');
+  if(saved === 'dark'){
+    state.dark = true;
+    document.documentElement.classList.add('dark');
+    $('btn-theme').textContent = '☀️';
+  }
+}catch{}
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){
+    if($('detailModal').classList.contains('show')){ $('detailModal').classList.remove('show'); return; }
+    if(!searchResults.classList.contains('hidden')){ clearSearch(); return; }
+    if($('infoPanel').classList.contains('open')) closePanel();
+    else if(state.focusId != null) exitFocus();
+  }
+  if(e.key === 'f' || e.key === 'F'){
+    const tag = document.activeElement?.tagName;
+    if(tag !== 'INPUT' && tag !== 'TEXTAREA') fitToScreen();
+  }
+  if(e.key === '?'){ e.preventDefault(); openModal('helpModal'); }
+  if(e.key === ']') navGen(1);
+  if(e.key === '[') navGen(-1);
+  if(e.key === '+' || e.key === '=') zoomBy(1.2);
+  if(e.key === '-') zoomBy(1/1.2);
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
+    e.preventDefault();
+    searchInput.focus();
+    searchInput.select();
+  }
+  // 🔄 Ctrl+R لتحديث البيانات (بدون تحديث الصفحة)
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r'){
+    e.preventDefault();
+    refreshData();
+  }
+});
+
+let toastTimer = null;
+function toast(msg){
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
+}
+
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => { render(); fitToScreen(); }, 250);
+});
+
+if(screen.orientation && screen.orientation.addEventListener){
+  screen.orientation.addEventListener('change', () => {
+    setTimeout(() => { render(); fitToScreen(); }, 350);
+  });
+} else {
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => { render(); fitToScreen(); }, 350);
+  });
+}
+
+(function protect(){
+  window.addEventListener('beforeprint', (e) => {
+    e.preventDefault(); e.stopPropagation(); protectMsg('🔒 الطباعة معطلة'); return false;
+  }, true);
+  window.print = function(){ protectMsg('🔒 الطباعة معطلة'); return false; };
+
+  document.addEventListener('keydown', (e) => {
+    const key = e.key ? e.key.toLowerCase() : '';
+    const ctrl = e.ctrlKey || e.metaKey;
+    const shift = e.shiftKey;
+    if(ctrl && key === 'p'){ e.preventDefault(); e.stopPropagation(); protectMsg('🔒 الطباعة معطلة'); return false; }
+    if(ctrl && key === 's'){ e.preventDefault(); e.stopPropagation(); protectMsg('💾 الحفظ معطل'); return false; }
+    if(ctrl && shift && key === 's'){ e.preventDefault(); e.stopPropagation(); protectMsg('📸 التصوير معطل'); return false; }
+    if(ctrl && key === 'a'){
+      const tag = document.activeElement?.tagName;
+      if(tag !== 'INPUT' && tag !== 'TEXTAREA'){ e.preventDefault(); return false; }
+    }
+    if(e.key === 'F12' || e.keyCode === 123){ e.preventDefault(); e.stopPropagation(); protectMsg('🚫 أدوات المطور'); return false; }
+    if(ctrl && shift && ['i','j','c'].includes(key)){ e.preventDefault(); e.stopPropagation(); protectMsg('🚫 أدوات المطور'); return false; }
+    if(ctrl && key === 'u'){ e.preventDefault(); e.stopPropagation(); return false; }
+    if(e.key === 'PrintScreen' || e.keyCode === 44){
+      e.preventDefault();
+      try{ navigator.clipboard.writeText(''); }catch(_){}
+      protectMsg('📸 التصوير معطل'); return false;
+    }
+    if(e.metaKey && e.shiftKey && ['3','4','5'].includes(key)){
+      e.preventDefault(); e.stopPropagation(); protectMsg('📸 التصوير معطل'); return false;
+    }
+  }, true);
+
+  document.addEventListener('keyup', (e) => {
+    if(e.key === 'PrintScreen' || e.keyCode === 44){
+      e.preventDefault();
+      try{ navigator.clipboard.writeText(''); }catch(_){}
+      protectMsg('📸 التصوير معطل'); return false;
+    }
+  }, true);
+
+  document.addEventListener('contextmenu', (e) => {
+    e.preventDefault(); e.stopPropagation(); protectMsg('🚫 القائمة معطلة'); return false;
+  }, true);
+
+  document.addEventListener('dragstart', (e) => { e.preventDefault(); return false; }, true);
+
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden) document.body.classList.add('protect-blur');
+    else setTimeout(() => document.body.classList.remove('protect-blur'), 300);
+  });
+
+  let devtoolsOpen = false;
+  setInterval(() => {
+    const t = 160;
+    const wD = window.outerWidth - window.innerWidth;
+    const hD = window.outerHeight - window.innerHeight;
+    if(wD > t || hD > t){
+      if(!devtoolsOpen){ devtoolsOpen = true; protectMsg('🚫 أدوات المطور'); document.body.classList.add('protect-blur'); }
+    } else if(devtoolsOpen){ devtoolsOpen = false; document.body.classList.remove('protect-blur'); }
+  }, 1000);
+
+  document.addEventListener('copy', (e) => {
+    const tag = document.activeElement?.tagName;
+    if(tag !== 'INPUT' && tag !== 'TEXTAREA'){
+      e.preventDefault();
+      try{ e.clipboardData?.setData('text/plain',''); }catch(_){}
+      protectMsg('📋 النسخ معطل'); return false;
+    }
+  }, true);
+
+  document.addEventListener('cut', (e) => {
+    const tag = document.activeElement?.tagName;
+    if(tag !== 'INPUT' && tag !== 'TEXTAREA'){ e.preventDefault(); return false; }
+  }, true);
+
+  let msgTimer = null;
+  function protectMsg(text){
+    let msg = document.getElementById('_protect_msg');
+    if(!msg){
+      msg = document.createElement('div');
+      msg.id = '_protect_msg';
+      msg.style.cssText = `
+        position: fixed; top: 50%; left: 50%;
+        transform: translate(-50%, -50%) scale(.9);
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+        color: #fff; padding: 16px 26px; border-radius: 14px;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        font-size: 15px; font-weight: 800;
+        box-shadow: 0 20px 60px rgba(220,38,38,.5);
+        z-index: 2147483647; opacity: 0;
+        transition: opacity .25s ease, transform .25s ease;
+        pointer-events: none; direction: rtl; text-align: center;
+        max-width: 90vw;
+      `;
+      document.body.appendChild(msg);
+    }
+    msg.textContent = text;
+    msg.style.opacity = '1';
+    msg.style.transform = 'translate(-50%, -50%) scale(1)';
+    clearTimeout(msgTimer);
+    msgTimer = setTimeout(() => {
+      msg.style.opacity = '0';
+      msg.style.transform = 'translate(-50%, -50%) scale(.9)';
+    }, 1800);
+  }
+
+  document.addEventListener('selectstart', (e) => {
+    const tag = e.target?.tagName;
+    if(tag !== 'INPUT' && tag !== 'TEXTAREA'){ e.preventDefault(); return false; }
+  }, true);
+})();
+
+
+/* ============================================================
+   FEATURES PACK
+   ============================================================ */
+function parseYear(s){
+  if(s == null || s === '') return null;
+  let t = String(s).trim().replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+  const m = t.match(/(1[3-4]\d{2}|19\d{2}|20\d{2})/);
+  return m ? parseInt(m[1], 10) : null;
+}
+function isDeceased(p){ return !!(p && parseYear(p.death_date) != null); }
+function branchRootId(id){
+  let cur = Number(id), seen = new Set();
+  while(state.parentOf.has(cur) && !seen.has(cur)){ seen.add(cur); cur = state.parentOf.get(cur); }
+  return cur;
+}
+function openModal(id){ $(id).classList.add('show'); }
+function closeModal(id){ $(id).classList.remove('show'); }
+document.querySelectorAll('.modal').forEach(m=>{
+  m.addEventListener('click', e=>{ if(e.target === m) m.classList.remove('show'); });
+});
+
+function getOps(){ try{ return JSON.parse(localStorage.getItem('ft-ops') || '[]'); }catch(_){ return []; } }
+function saveOps(ops){ try{ localStorage.setItem('ft-ops', JSON.stringify(ops)); }catch(_){} }
+function applyOps(){
+  getOps().forEach(o=>{
+    if(o.op === 'add' || o.op === 'edit'){
+      const i = state.people.findIndex(p => Number(p.id) === Number(o.person.id));
+      if(i >= 0) state.people[i] = o.person; else state.people.push(o.person);
+    }else if(o.op === 'del'){
+      state.people = state.people.filter(p => !o.ids.includes(Number(p.id)));
+    }
+  });
+}
+function recordOp(o){
+  const ops = getOps(); ops.push(o); saveOps(ops);
+  applyOps(); buildMaps(); computeGenerations();
+  updateStats(); render();
+  requestAnimationFrame(fitToScreen); setTimeout(fitToScreen, 250);
+}
+function nextId(){ return state.people.reduce((m,p)=>Math.max(m, Number(p.id)), 0) + 1; }
+
+function fillFatherSelect(sel, currentId){
+  const opts = ['<option value="">— بدون أب (جذر) —</option>'];
+  [...state.people].sort((a,b)=>String(a.name).localeCompare(String(b.name),'ar'))
+    .forEach(p=>{
+      if(Number(p.id) === Number(currentId)) return;
+      opts.push(`<option value="${p.id}">${escapeHtml(p.name||'بدون اسم')} (#${p.id})</option>`);
+    });
+  sel.innerHTML = opts.join('');
+}
+let editingId = null;
+function openPersonForm(person){
+  editingId = person ? Number(person.id) : null;
+  $('pfTitle').textContent = person ? '✏️ تعديل: ' + (person.name||'') : '➕ إضافة فرد جديد';
+  fillFatherSelect($('pfFather'), editingId);
+  $('pfName').value = person ? (person.name||'') : '';
+  $('pfFather').value = person && person.father_id != null ? person.father_id : '';
+  $('pfGender').value = person ? (person.gender||'unknown') : 'unknown';
+  $('pfBirth').value = person ? (person.birth_date||'') : '';
+  $('pfDeath').value = person ? (person.death_date||'') : '';
+  $('pfNotes').value = person ? (person.notes||'') : '';
+  openModal('personFormModal');
+}
+$('pfCancel').onclick = ()=> closeModal('personFormModal');
+$('pfSave').onclick = ()=>{
+  const name = $('pfName').value.trim();
+  if(!name){ toast('⚠ أدخل الاسم أولاً'); return; }
+  const fid = $('pfFather').value;
+  const now = new Date().toISOString().slice(0,19).replace('T',' ');
+  if(editingId != null){
+    const old = state.byId.get(editingId);
+    recordOp({op:'edit', person:{
+      ...old, name,
+      father_id: fid === '' ? null : Number(fid),
+      gender: $('pfGender').value,
+      birth_date: $('pfBirth').value.trim(),
+      death_date: $('pfDeath').value.trim(),
+      notes: $('pfNotes').value.trim(),
+      updated_at: now
+    }});
+    toast('✏️ تم تحديث البيانات');
+    closeModal('personFormModal');
+    setTimeout(()=> selectPerson(editingId), 350);
+  }else{
+    const id = nextId();
+    const father = fid !== '' ? state.byId.get(Number(fid)) : null;
+    recordOp({op:'add', person:{
+      id, name,
+      father_id: father ? Number(fid) : null,
+      father_name: father ? father.name : null,
+      mother_id: null, mother_name: null,
+      gender: $('pfGender').value,
+      birth_date: $('pfBirth').value.trim(),
+      death_date: $('pfDeath').value.trim(),
+      spouse_id: null, notes: $('pfNotes').value.trim(),
+      image: '', created_at: now, updated_at: now
+    }});
+    toast(`➕ تمت إضافة «${name}» #${id}`);
+    closeModal('personFormModal');
+    setTimeout(()=>{ centerOn(id); selectPerson(id); }, 350);
+  }
+};
+function deletePerson(id){
+  const p = state.byId.get(id); if(!p) return;
+  const ids = [...collectDescendants(id)];
+  const msg = ids.length > 1
+    ? `🗑️ حذف «${p.name}» ومعه ${ids.length - 1} من الأبناء والأحفاد؟`
+    : `🗑️ حذف «${p.name}»؟`;
+  if(!confirm(msg)) return;
+  recordOp({op:'del', ids});
+  if(state.focusId != null && ids.includes(state.focusId)) exitFocus();
+  if(state.selectedId === id) closePanel();
+  toast('🗑️ تم الحذف');
+}
+
+function sharePersonLink(id){
+  const url = location.origin + location.pathname + '#id=' + id;
+  const done = ()=> toast('🔗 تم نسخ رابط الشخص');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(done).catch(()=>prompt('انسخ الرابط:', url));
+  }else prompt('انسخ الرابط:', url);
+}
+function handleHashLink(){
+  const m = location.hash.match(/id=(\d+)/);
+  if(m){
+    const id = Number(m[1]);
+    if(state.byId.has(id)){
+      setTimeout(()=>{ centerOn(id); selectPerson(id); }, 350);
+      toast('🔗 تم الفتح من رابط: ' + (state.byId.get(id).name||''));
+    }
+  }
+}
+window.addEventListener('hashchange', handleHashLink);
+
+async function exportTreeImage(format){
+  toast('📸 جارٍ تجهيز التصدير...');
+  await new Promise(r=>setTimeout(r, 60));
+  let bb;
+  try{ bb = viewport.getBBox(); }catch(_){ toast('⚠ تعذر التصدير'); return; }
+  if(!bb.width || !bb.height){ toast('⚠ لا يوجد محتوى للتصدير'); return; }
+  const W = bb.width + 100, H = bb.height + 100;
+  const clone = viewport.cloneNode(true);
+  clone.setAttribute('transform', `translate(${-bb.x + 50}, ${-bb.y + 50})`);
+  const srcEls = viewport.querySelectorAll('*');
+  const clEls = clone.querySelectorAll('*');
+  const PROPS = ['fill','stroke','stroke-width','stroke-dasharray','stroke-linecap','opacity',
+                 'font-size','font-weight','font-family','text-anchor'];
+  srcEls.forEach((el, i)=>{
+    const cs = getComputedStyle(el);
+    const c = clEls[i]; if(!c) return;
+    let st = '';
+    PROPS.forEach(p=>{ const v = cs.getPropertyValue(p); if(v) st += `${p}:${v};`; });
+    if(st) c.setAttribute('style', st);
+    if(el.getAttribute('d')) c.setAttribute('d', el.getAttribute('d'));
+    if(el.getAttribute('transform')) c.setAttribute('transform', el.getAttribute('transform'));
+  });
+  const bg = state.dark ? '#090f1b' : '#ffffff';
+  const svgText = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${Math.round(W*2)}" height="${Math.round(H*2)}" viewBox="0 0 ${W} ${H}"><rect width="100%" height="100%" fill="${bg}"/>${new XMLSerializer().serializeToString(clone)}</svg>`;
+  const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
+  const img = new Image();
+  img.onload = ()=>{
+    const canvas = document.createElement('canvas');
+    canvas.width = W * 2; canvas.height = H * 2;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    canvas.toBlob(blob=>{
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'family-tree.png';
+      a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+      toast('📸 تم تصدير PNG بنجاح');
+      if(format === 'pdf') exportPDF(canvas);
+    }, 'image/png');
+  };
+  img.onerror = ()=> toast('⚠ تعذر إنشاء الصورة');
+  img.src = url;
+}
+function exportPDF(canvas){
+  try{
+    const ns = window.jspdf && window.jspdf.jsPDF;
+    if(!ns){ toast('⚠ مكتبة PDF غير متاحة (تحقق من الإنترنت)'); return; }
+    const pdf = new ns({orientation: canvas.width > canvas.height ? 'l' : 'p', unit: 'pt', format: 'a4'});
+    const pw = pdf.internal.pageSize.getWidth() - 20;
+    const ph = pdf.internal.pageSize.getHeight() - 20;
+    const r = Math.min(pw / canvas.width, ph / canvas.height);
+    pdf.addImage(canvas.toDataURL('image/jpeg', .92), 'JPEG',
+      10 + (pw - canvas.width*r)/2, 10 + (ph - canvas.height*r)/2,
+      canvas.width*r, canvas.height*r);
+    pdf.save('family-tree.pdf');
+    toast('📄 تم تصدير PDF');
+  }catch(err){ console.error(err); toast('⚠ تعذر إنشاء PDF'); }
+}
+function exportJSON(){
+  const data = {format:'family-tree-pro', version:7,
+    exported_at:new Date().toISOString(), people:state.people, marriages:state.marriages||[]};
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tree-data.json';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+  toast('💾 تم تنزيل ملف JSON المحدّث');
+}
+function showExportMenu(){
+  const c = confirm('📸 تصدير الشجرة\n\nموافق = PNG + PDF\nإلغاء ثم اختر من القائمة');
+  if(c){ exportTreeImage('pdf'); return; }
+  const choice = prompt('اكتب:\n1 = PNG فقط\n2 = PNG + PDF\n3 = تنزيل JSON المحدّث', '1');
+  if(choice === '1') exportTreeImage('png');
+  else if(choice === '2') exportTreeImage('pdf');
+  else if(choice === '3') exportJSON();
+}
+
+function openStats(){
+  const people = state.people;
+  const males = people.filter(p=>p.gender==='male').length;
+  const females = people.filter(p=>p.gender==='female').length;
+  const freq = {};
+  people.forEach(p=>{
+    const first = normalizeArabic(String(p.name||'').trim().split(/\s+/)[0] || '');
+    if(first && first.length > 1) freq[first] = (freq[first]||0) + 1;
+  });
+  const topNames = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  let maxD = -1, deepest = null;
+  people.forEach(p=>{
+    const d = state.depth.get(Number(p.id)) || 0;
+    if(d > maxD){ maxD = d; deepest = p; }
+  });
+  const ages = [];
+  const curY = new Date().getFullYear();
+  people.forEach(p=>{
+    const b = parseYear(p.birth_date); if(b == null) return;
+    const d = parseYear(p.death_date);
+    const age = (d != null ? d : curY) - b;
+    if(age >= 0 && age < 130) ages.push(age);
+  });
+  const avgAge = ages.length ? Math.round(ages.reduce((s,a)=>s+a,0) / ages.length) : null;
+  const withBirth = people.filter(p=>parseYear(p.birth_date)!=null);
+  const minY = withBirth.length ? Math.min(...withBirth.map(p=>parseYear(p.birth_date))) : null;
+  const maxY = withBirth.length ? Math.max(...withBirth.map(p=>parseYear(p.birth_date))) : null;
+
+  $('statsBody').innerHTML = `
+    <table class="stat-table">
+      <tr><th>إجمالي الأفراد</th><td class="num">${people.length}</td></tr>
+      <tr><th>الذكور / الإناث</th><td class="num">♂${males} / ♀${females}</td></tr>
+      <tr><th>عدد الأجيال</th><td class="num">${state.maxGen + 1}</td></tr>
+      <tr><th>أطول سلسلة نسب</th><td class="num">${deepest ? escapeHtml(deepest.name)+' (ج'+(maxD+1)+')' : '—'}</td></tr>
+      <tr><th>متوسط العمر</th><td class="num">${avgAge != null ? avgAge + ' سنة' : '—'}</td></tr>
+      <tr><th>نطاق سنوات الميلاد</th><td class="num">${minY != null ? minY + ' – ' + maxY : '—'}</td></tr>
+      <tr><th>فروع الجذور</th><td class="num">${state.roots.length}</td></tr>
+    </table>
+    <h4>🔤 أكثر الأسماء تكراراً</h4>
+    <div class="chips">${topNames.map(([n,c])=>`<span class="chip">${escapeHtml(n)} <b>×${c}</b></span>`).join('') || '—'}</div>`;
+  openModal('statsModal');
+  drawPie();
+}
+function drawPie(){
+  const cv = $('statsPie'); if(!cv) return;
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  const data = state.roots.map(r=>{
+    const p = state.byId.get(r);
+    return {label:(p?p.name:'؟')+' #'+r, value:countDescendants(r)};
+  }).sort((a,b)=>b.value-a.value);
+  const top = data.slice(0, 7);
+  const rest = data.slice(7).reduce((s,d)=>s+d.value, 0);
+  if(rest > 0) top.push({label:'أخرى', value:rest});
+  const total = top.reduce((s,d)=>s+d.value, 0) || 1;
+  const cx = 95, cy = 95, R = 80;
+  let a0 = -Math.PI/2;
+  top.forEach((d, i)=>{
+    const a1 = a0 + (d.value/total) * Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, R, a0, a1);
+    ctx.closePath();
+    ctx.fillStyle = PALETTE[i % PALETTE.length];
+    ctx.fill();
+    ctx.strokeStyle = state.dark ? '#101a2b' : '#fff';
+    ctx.lineWidth = 2; ctx.stroke();
+    a0 = a1;
+  });
+  ctx.font = 'bold 10px Cairo, sans-serif';
+  top.forEach((d, i)=>{
+    const y = 18 + i * 22;
+    ctx.fillStyle = PALETTE[i % PALETTE.length];
+    ctx.fillRect(200, y - 8, 11, 11);
+    ctx.fillStyle = state.dark ? '#edf4ff' : '#152033';
+    const pct = Math.round(d.value/total*100);
+    ctx.fillText(`${d.label} — ${pct}%`, 217, y + 2);
+  });
+}
+
+function showAncestry(id){
+  const p = state.byId.get(id); if(!p) return;
+  const anc = getAncestorPath(id).slice(0, -1).reverse();
+  let html = `<h3>🌿 شجرة أنساب: ${escapeHtml(p.name||'')} <span class="sr-id">#${id}</span></h3>
+    <h4>⬆️ الأسلاف</h4><div class="anc-chain">`;
+  if(!anc.length) html += `<div class="anc-item">🌳 جذر الشجرة — لا يوجد أب مسجل</div>`;
+  anc.forEach((a, i)=>{
+    const ap = state.byId.get(a);
+    html += `<div class="anc-item" data-goto="${a}" style="margin-inline-start:${i*12}px">
+      ${'▫️'.repeat(0)}👆 ${escapeHtml(ap ? ap.name : '؟')} <span class="sr-id">#${a}</span>
+      <small>الجيل ${(state.depth.get(a)||0)+1}</small></div>`;
+  });
+  html += `</div><h4>⬇️ الأبناء والأحفاد</h4><div>${descHtml(id, 0)}</div>`;
+  $('ancestryModalBody').innerHTML = html;
+  openModal('ancestryModal');
+  $('ancestryModalBody').querySelectorAll('[data-goto]').forEach(el=>{
+    el.onclick = ()=>{
+      const gid = Number(el.dataset.goto);
+      closeModal('ancestryModal');
+      setTimeout(()=>{ centerOn(gid); selectPerson(gid); }, 150);
+    };
+  });
+}
+function descHtml(id, lv){
+  if(lv > 4) return '';
+  const kids = state.children.get(id) || [];
+  if(!kids.length) return lv === 0 ? '<div class="anc-item">— لا يوجد أبناء مسجلون —</div>' : '';
+  let h = '<ul class="desc-ul">';
+  kids.forEach(k=>{
+    const kp = state.byId.get(k);
+    const kn = (state.children.get(k) || []).length;
+    h += `<li><span class="desc-link" data-goto="${k}">▸ ${escapeHtml(kp ? kp.name : '؟')}
+          <span class="sr-id">#${k}</span>${kn ? ` <small style="color:var(--muted)">(${kn} أبناء)</small>` : ''}</span>
+          ${descHtml(k, lv+1)}</li>`;
+  });
+  return h + '</ul>';
+}
+
+function openCompare(){
+  const opts = state.roots.map(r=>{
+    const p = state.byId.get(r);
+    return `<option value="${r}">${escapeHtml(p ? p.name : '؟')} (#${r}) — ${countDescendants(r)} فرد</option>`;
+  }).join('');
+  $('cmpA').innerHTML = opts; $('cmpB').innerHTML = opts;
+  if(state.roots.length > 1) $('cmpB').selectedIndex = 1;
+  $('cmpResult').innerHTML = '';
+  openModal('compareModal');
+}
+$('cmpRun').onclick = ()=>{
+  const A = Number($('cmpA').value), B = Number($('cmpB').value);
+  if(A === B){ toast('⚠ اختر فرعين مختلفين'); return; }
+  const info = (root)=>{
+    const set = collectDescendants(root);
+    const gens = computeBranchGenerations(set);
+    const ys = [...set].map(id=>parseYear(state.byId.get(id)?.birth_date)).filter(y=>y!=null);
+    return {
+      size: set.size, gens,
+      branches: (state.children.get(root) || []).length,
+      minY: ys.length ? Math.min(...ys) : null,
+      maxY: ys.length ? Math.max(...ys) : null
+    };
+  };
+  const a = info(A), b = info(B);
+  const row = (k, va, vb)=>`<tr><td>${k}</td><td class="num">${va ?? '—'}</td><td class="num">${vb ?? '—'}</td></tr>`;
+  $('cmpResult').innerHTML = `<table class="stat-table">
+    <tr><th>المعيار</th><th>الفرع الأول</th><th>الفرع الثاني</th></tr>
+    ${row('عدد الأفراد', a.size, b.size)}
+    ${row('عدد الأجيال', a.gens, b.gens)}
+    ${row('الأبناء المباشرون', a.branches, b.branches)}
+    ${row('أقدم ميلاد', a.minY, b.minY)}
+    ${row('أحدث ميلاد', a.maxY, b.maxY)}
+  </table>`;
+};
+
+function initTimeline(){
+  const years = state.people.map(p=>parseYear(p.birth_date)).filter(y=>y!=null);
+  if(years.length < 3){ state.timelineReady = false; return; }
+  const min = Math.min(...years), max = Math.max(...years);
+  const r = $('timelineRange');
+  r.min = min; r.max = max; r.value = max;
+  $('timelineYearLabel').textContent = max;
+  state.timelineReady = true;
+  r.oninput = ()=>{
+    state.timelineYear = Number(r.value);
+    $('timelineYearLabel').textContent = r.value;
+    applyTimelineDim();
+  };
+  $('timelineReset').onclick = ()=>{
+    state.timelineYear = null;
+    r.value = max; $('timelineYearLabel').textContent = max;
+    applyTimelineDim();
+  };
+}
+
+function initPanBar(){
+  const r = $('panRange');
+  const apply = v => { state.tx = (state.panCenterX || 0) + Number(v); applyTransform(); };
+  r.oninput = ()=> apply(r.value);
+  $('panRight').onclick = ()=>{ r.value = Number(r.value) + 150; apply(r.value); };
+  $('panLeft').onclick  = ()=>{ r.value = Number(r.value) - 150; apply(r.value); };
+  r.addEventListener('dblclick', ()=>{ r.value = 0; apply(0); });
+  $('timelineOpen').onclick = ()=>{
+    if(!state.timelineReady){ toast('⚠ لا توجد تواريخ ميلاد كافية للمخطط الزمني'); return; }
+    openModal('timelineModal');
+  };
+}
+
+let childFatherId = null;
+
+function cfMakeRow(name = '', birth = ''){
+  const row = document.createElement('div');
+  row.className = 'child-row';
+  row.innerHTML = `
+    <div class="row-fields">
+      <input type="text" class="cf-name" placeholder="الاسم" value="${escapeHtml(name)}">
+      <input type="text" class="cf-birth" placeholder="تاريخ الميلاد (اختياري)" value="${escapeHtml(birth)}" inputmode="numeric">
+    </div>
+    <button type="button" class="row-remove" title="حذف الصف">✕</button>
+  `;
+  row.querySelector('.row-remove').addEventListener('click', () => {
+    const wrap = $('cfRowsWrap');
+    if(wrap.children.length <= 1){
+      row.querySelector('.cf-name').value = '';
+      row.querySelector('.cf-birth').value = '';
+      row.querySelector('.cf-name').focus();
+    } else {
+      row.remove();
+    }
+  });
+  return row;
+}
+
+function openChildForm(fatherId){
+  const f = state.byId.get(fatherId); if(!f) return;
+  childFatherId = Number(fatherId);
+  $('cfTitle').textContent = `👨‍👩‍👧‍👦 إضافة عدة أبناء — للأب: ${f.name || ''} (#${f.id})`;
+  $('cfFatherName').value = `${f.name || ''} (#${f.id})`;
+  const wrap = $('cfRowsWrap');
+  wrap.innerHTML = '';
+  wrap.appendChild(cfMakeRow());
+  wrap.appendChild(cfMakeRow());
+  openModal('childFormModal');
+  setTimeout(()=>{
+    const first = wrap.querySelector('.cf-name');
+    if(first) first.focus();
+  }, 250);
+}
+
+$('cfAddRow').onclick = () => {
+  const wrap = $('cfRowsWrap');
+  const row = cfMakeRow();
+  wrap.appendChild(row);
+  row.querySelector('.cf-name').focus();
+  const box = $('childFormModal').querySelector('.modal-box');
+  if(box) box.scrollTop = box.scrollHeight;
+};
+
+function saveChildren(close){
+  const f = state.byId.get(childFatherId); if(!f){ closeModal('childFormModal'); return; }
+  const rows = [...$('cfRowsWrap').querySelectorAll('.child-row')];
+  const entries = [];
+  rows.forEach(r=>{
+    const name = r.querySelector('.cf-name').value.trim();
+    const birth = r.querySelector('.cf-birth').value.trim();
+    if(name) entries.push({name, birth});
+  });
+  if(!entries.length){ toast('⚠ أدخل اسماً واحداً على الأقل'); return; }
+  const now = new Date().toISOString().slice(0,19).replace('T',' ');
+  const startId = nextId();
+  const ops = entries.map((e, i) => ({
+    op:'add',
+    person:{
+      id: startId + i,
+      name: e.name,
+      father_id: Number(f.id),
+      father_name: f.name || null,
+      mother_id: null, mother_name: null,
+      gender: 'unknown',
+      birth_date: e.birth || '',
+      death_date: '',
+      spouse_id: null, notes: '', image: '',
+      created_at: now, updated_at: now
+    }
+  }));
+  const all = getOps(); all.push(...ops); saveOps(all);
+  applyOps(); buildMaps(); computeGenerations(); updateStats(); render();
+  requestAnimationFrame(fitToScreen); setTimeout(fitToScreen, 250);
+  toast(`➕ تمت إضافة ${ops.length} أبناء لـ «${f.name}»`);
+  if(close) closeModal('childFormModal');
+  else {
+    const wrap = $('cfRowsWrap');
+    wrap.innerHTML = '';
+    wrap.appendChild(cfMakeRow());
+    wrap.appendChild(cfMakeRow());
+  }
+}
+
+$('cfSave').onclick = ()=> saveChildren(true);
+$('cfClose').onclick = ()=> closeModal('childFormModal');
+
+function applyTimelineDim(){
+  const y = state.timelineYear;
+  viewport.querySelectorAll('.node').forEach(el=>{
+    const p = state.byId.get(Number(el.dataset.id));
+    const py = parseYear(p && p.birth_date);
+    el.classList.toggle('tl-dim', y != null && py != null && py > y);
+  });
+}
+
+let genCursor = 0;
+function navGen(dir){
+  genCursor = Math.max(0, Math.min(state.maxGen, genCursor + dir));
+  const p = state.people.find(pp => (state.depth.get(Number(pp.id)) || 0) === genCursor);
+  if(p){
+    const id = Number(p.id);
+    centerOn(id); selectPerson(id);
+    toast(`👥 الجيل ${genCursor + 1} من ${state.maxGen + 1}`);
+  }
+}
+
+function toggleFullscreen(){
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    document.body.classList.add('fs-mode');
+    toast('⛶ وضع ملء الشاشة — Esc للخروج');
+  }else{
+    document.exitFullscreen && document.exitFullscreen();
+    document.body.classList.remove('fs-mode');
+  }
+}
+document.addEventListener('fullscreenchange', ()=>{
+  if(!document.fullscreenElement) document.body.classList.remove('fs-mode');
+});
+
+function toggleHeatmap(){
+  state.colorMode = state.colorMode === 'branch' ? 'depth' : 'branch';
+  render();
+  toast(state.colorMode === 'branch' ? '🎨 تلوين حسب الفرع الجذري' : '🎨 تلوين حسب الجيل');
+}
+
+function startExplore(){
+  $('exploreOverlay').classList.add('show');
+  nextExplore();
+}
+function nextExplore(){
+  const cands = state.people.filter(p=>{
+    const n = String(p.name||'');
+    return n.length > 1 && !/^\d|👧|مجهول/.test(n);
+  });
+  if(!cands.length){ toast('⚠ لا يوجد أفراد للاستكشاف'); return; }
+  const p = cands[Math.floor(Math.random()*cands.length)];
+  state.exploreCur = Number(p.id);
+  $('expQ').textContent = '❓ من هو هذا الشخص؟';
+  $('expInfo').style.display = 'none';
+  $('expHint').textContent = `💡 تلميح: من الجيل ${(state.depth.get(Number(p.id))||0)+1} • له ${(state.children.get(Number(p.id))||[]).length} أبناء`;
+  $('expReveal').style.display = '';
+  $('expNext').style.display = 'none';
+  $('expShow').style.display = 'none';
+}
+function revealExplore(){
+  const p = state.byId.get(state.exploreCur); if(!p) return;
+  const father = p.father_id ? state.byId.get(Number(p.father_id)) : null;
+  const kids = state.children.get(state.exploreCur) || [];
+  const by = parseYear(p.birth_date);
+  $('expInfo').innerHTML = `
+    <b style="font-size:16px;color:var(--text-strong)">${escapeHtml(p.name||'')} <span class="sr-id">#${p.id}</span></b><br>
+    👨 الأب: ${father ? escapeHtml(father.name) : '—'}<br>
+    👶 الأبناء: ${kids.length ? kids.map(k=>escapeHtml(state.byId.get(k)?.name||'')).join('، ') : '—'}<br>
+    📅 الميلاد: ${by != null ? by : '—'}`;
+  $('expInfo').style.display = 'block';
+  $('expHint').textContent = '';
+  $('expReveal').style.display = 'none';
+  $('expNext').style.display = '';
+  $('expShow').style.display = '';
+}
+$('btn-explore').onclick = startExplore;
+document.getElementById('expClose').onclick = ()=> $('exploreOverlay').classList.remove('show');
+document.getElementById('expReveal').onclick = revealExplore;
+document.getElementById('expNext').onclick = nextExplore;
+document.getElementById('expShow').onclick = ()=>{
+  const id = state.exploreCur;
+  $('exploreOverlay').classList.remove('show');
+  setTimeout(()=>{ centerOn(id); selectPerson(id); }, 200);
+};
+
+function initVoice(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const btn = $('voiceBtn');
+  if(!SR){ btn.style.display = 'none'; return; }
+  let rec = null, on = false;
+  btn.onclick = ()=>{
+    if(on){ rec && rec.stop(); return; }
+    rec = new SR();
+    rec.lang = 'ar-SA'; rec.interimResults = false;
+    rec.onresult = e=>{
+      const t = e.results[0][0].transcript;
+      searchInput.value = t;
+      performSearch(t);
+      toast('🎤 سمعت: ' + t);
+    };
+    rec.onerror = ()=> toast('⚠ تعذر التعرف على الصوت');
+    rec.onend = ()=>{ on = false; btn.textContent = '🎤'; };
+    try{ rec.start(); on = true; btn.textContent = '⏹'; }catch(_){}
+  };
+}
+
+function initParticles(){
+  const box = $('bgParticles'); if(!box) return;
+  box.innerHTML = '';
+  for(let i = 0; i < 26; i++){
+    const s = document.createElement('span');
+    const sz = 3 + Math.random()*9;
+    s.style.width = s.style.height = sz + 'px';
+    s.style.left = Math.random()*100 + '%';
+    s.style.top = Math.random()*100 + '%';
+    s.style.animationDuration = (14 + Math.random()*20) + 's';
+    s.style.animationDelay = (-Math.random()*20) + 's';
+    box.appendChild(s);
+  }
+}
+
+const I18N_TITLES = {
+  ar: {'btn-refresh':'🔄 تحديث البيانات','btn-export':'تصدير الشجرة','btn-add':'إضافة فرد','btn-stats':'إحصائيات متقدمة',
+       'btn-compare':'مقارنة الفروع','btn-fullscreen':'ملء الشاشة','btn-heatmap':'تلوين حسب الفرع',
+       'btn-explore':'وضع الاستكشاف','btn-lang':'English','btn-help':'اختصارات ومساعدة',
+       'btn-theme':'المظهر','btn-fit':'ملاءمة'},
+  en: {'btn-refresh':'Refresh data','btn-export':'Export tree','btn-add':'Add person','btn-stats':'Statistics',
+       'btn-compare':'Compare branches','btn-fullscreen':'Fullscreen','btn-heatmap':'Color by branch',
+       'btn-explore':'Explore mode','btn-lang':'العربية','btn-help':'Shortcuts & help',
+       'btn-theme':'Theme','btn-fit':'Fit screen'}
+};
+function setLang(l){
+  state.lang = l;
+  try{ localStorage.setItem('ft-lang', l); }catch(_){}
+  document.documentElement.lang = l;
+  document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+  const dict = I18N_TITLES[l] || {};
+  Object.keys(I18N_TITLES.ar).forEach(id=>{
+    const el = $(id); if(el) el.title = dict[id] || '';
+  });
+  const brand = document.querySelector('.brand');
+  if(brand) brand.innerHTML = l === 'ar'
+    ? '🌳 شجرة <span>PRO</span>'
+    : '🌳 Family <span>PRO</span>';
+  searchInput.placeholder = l === 'ar' ? 'ابحث بالاسم أو #ID...' : 'Search by name or #ID...';
+  const lbls = {ar:['الأفراد','الأجيال','الفروع'], en:['Members','Generations','Branches']}[l];
+  const lblEls = document.querySelectorAll('.stat-card .lbl');
+  lblEls.forEach((el, i)=>{ if(lbls[i]) el.textContent = lbls[i]; });
+  toast(l === 'ar' ? '🌐 العربية' : '🌐 English');
+}
+
+function initFeatures(){
+  state.timelineYear = null;
+  state.colorMode = 'depth';
+  $('btn-refresh').onclick = refreshData;  // 🔄 زر التحديث
+  $('btn-export').onclick = showExportMenu;
+  $('btn-add').onclick = ()=> openPersonForm(null);
+  $('btn-stats').onclick = openStats;
+  $('btn-compare').onclick = openCompare;
+  $('btn-fullscreen').onclick = toggleFullscreen;
+  $('btn-heatmap').onclick = toggleHeatmap;
+  $('btn-help').onclick = ()=> openModal('helpModal');
+  $('btn-gen-up').onclick = ()=> navGen(-1);
+  $('btn-gen-down').onclick = ()=> navGen(1);
+  $('btn-lang').onclick = ()=> setLang(state.lang === 'ar' ? 'en' : 'ar');
+  $('btnMoreMenu').onclick = (e)=>{
+    e.stopPropagation();
+    $('moreMenu').classList.toggle('open');
+  };
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('#moreMenu') && !e.target.closest('#btnMoreMenu'))
+      $('moreMenu').classList.remove('open');
+  });
+  initPanBar();
+
+  $('pBody').addEventListener('click', e=>{
+    const id = state.selectedId; if(!id) return;
+    if(e.target.closest('#btnEditPerson')) openPersonForm(state.byId.get(id));
+    else if(e.target.closest('#btnDeletePerson')) deletePerson(id);
+    else if(e.target.closest('#btnSharePerson')) sharePersonLink(id);
+    else if(e.target.closest('#btnAddChild')) openChildForm(id);
+    else if(e.target.closest('#btnAncestry')) showAncestry(id);
+  });
+
+  initVoice();
+  initParticles();
+  try{
+    const savedLang = localStorage.getItem('ft-lang');
+    if(savedLang && savedLang !== 'ar') setLang(savedLang);
+    else state.lang = 'ar';
+  }catch(_){ state.lang = 'ar'; }
+}
+initFeatures();
+
+loadData();
+</script>
+</body>
+</html>
