@@ -11,9 +11,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link rel="manifest" href='data:application/manifest+json,{"name":"شجرة العائلة Pro","short_name":"FamilyTree","start_url":".","display":"standalone","background_color":"#0b1220","theme_color":"#0b766e","icons":[]}'>
 <style>
-/* ============================================================
- 🌳 شجرة العائلة Pro — CSS الكامل
- ============================================================ */
 :root{
   --bg:#f3f6fb; --surface:#ffffff; --surface2:#edf2f7; --surface3:#e2e8f0;
   --text:#152033; --text-strong:#0b1220; --muted:#64748b;
@@ -26,10 +23,7 @@
   --safe-left:env(safe-area-inset-left,0px);
   --safe-right:env(safe-area-inset-right,0px);
   --nav:rgba(255,255,255,.97);
-  --btn-sm:38px;
-  --btn-md:44px;
-  --btn-lg:48px;
-  --btn-xl:52px;
+  --btn-sm:38px; --btn-md:44px; --btn-lg:48px; --btn-xl:52px;
   --topbar-h:62px;
 }
 html.dark{
@@ -49,9 +43,6 @@ html,body{
 }
 #app{position:fixed;inset:0;display:flex;flex-direction:column}
 
-/* ============================================================
-   الشريط العلوي
-   ============================================================ */
 .topbar{
   position:relative;z-index:50;
   display:flex;align-items:center;gap:4px;
@@ -68,8 +59,7 @@ html,body{
 .brand span{
   font-size:7px;
   background:linear-gradient(135deg,var(--primary),var(--primary-light));
-  color:#fff;border-radius:4px;padding:1px 4px;font-weight:900;
-  letter-spacing:.5px;
+  color:#fff;border-radius:4px;padding:1px 4px;font-weight:900;letter-spacing:.5px;
 }
 .search-wrap{
   flex:1 1 0;display:flex;align-items:center;gap:3px;
@@ -94,8 +84,7 @@ html,body{
   display:none;align-items:center;gap:1px;
   font-size:10px;font-weight:900;color:var(--primary);
   padding:2px 5px;border-radius:6px;background:rgba(15,118,110,.14);
-  flex-shrink:0;font-variant-numeric:tabular-nums;
-  transition:transform .2s ease;white-space:nowrap;
+  flex-shrink:0;font-variant-numeric:tabular-nums;white-space:nowrap;
 }
 .search-counter.show{display:inline-flex;animation:popIn .25s cubic-bezier(.2,.9,.3,1)}
 @keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
@@ -110,7 +99,7 @@ html,body{
   color:var(--text);font-size:11px;cursor:pointer;
   display:grid;place-items:center;font-family:inherit;
   transition:transform .1s ease, background .12s ease, color .12s ease;
-  -webkit-tap-highlight-color:transparent;flex-shrink:0;
+  flex-shrink:0;
 }
 .search-nav-btn:active{transform:scale(.88);background:var(--primary);color:#fff}
 .search-nav-btn:disabled{opacity:.3;cursor:not-allowed}
@@ -129,7 +118,7 @@ html,body{
   display:inline-flex;align-items:center;justify-content:center;
   cursor:pointer;font-family:inherit;
   transition:transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
-  -webkit-tap-highlight-color:transparent;flex-shrink:0;
+  flex-shrink:0;
 }
 .icon-btn:active{transform:scale(.88)}
 .icon-btn:hover{background:var(--surface2)}
@@ -141,14 +130,10 @@ html,body{
 .icon-btn.spinning{animation:btnSpin 1s linear infinite;pointer-events:none;opacity:.7}
 @keyframes btnSpin{to{transform:rotate(360deg)}}
 
-/* ============================================================
-   نتائج البحث
-   ============================================================ */
 .search-results{
   position:absolute;
   top:calc(var(--topbar-h) + var(--safe-top) - 4px);
-  left:calc(10px + var(--safe-left));
-  right:calc(10px + var(--safe-right));
+  left:calc(10px + var(--safe-left));right:calc(10px + var(--safe-right));
   z-index:80;max-height:min(58vh, 420px);
   overflow-y:auto;overflow-x:hidden;
   background:var(--surface);border:1.5px solid var(--line);
@@ -158,10 +143,7 @@ html,body{
   -webkit-overflow-scrolling:touch;transform-origin:top center;
 }
 .search-results.hidden{display:none}
-@keyframes dropIn{
-  from{opacity:0;transform:translateY(-10px) scale(.96)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
+@keyframes dropIn{from{opacity:0;transform:translateY(-10px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 .sr-header{
   padding:10px 14px;
   background:linear-gradient(180deg, var(--surface2), var(--surface));
@@ -172,11 +154,7 @@ html,body{
 }
 .sr-header b{color:var(--primary);font-weight:900;font-size:12px}
 .sr-hint{font-size:9px;color:var(--muted);opacity:.85;display:flex;gap:5px;align-items:center}
-.sr-hint kbd{
-  background:var(--surface3);border:1px solid var(--line);
-  border-radius:4px;padding:1px 5px;font-family:inherit;font-size:8px;
-  font-weight:800;color:var(--text);
-}
+.sr-hint kbd{background:var(--surface3);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-family:inherit;font-size:8px;font-weight:800;color:var(--text)}
 .sr-item{
   display:flex;align-items:center;gap:10px;
   padding:10px 14px;cursor:pointer;
@@ -185,10 +163,7 @@ html,body{
 }
 .sr-item:last-child{border-bottom:0}
 .sr-item:active, .sr-item.active{background:var(--surface2)}
-.sr-item.active::before{
-  content:"";position:absolute;right:0;top:0;bottom:0;
-  width:3px;background:var(--primary);border-radius:4px 0 0 4px;
-}
+.sr-item.active::before{content:"";position:absolute;right:0;top:0;bottom:0;width:3px;background:var(--primary);border-radius:4px 0 0 4px}
 .sr-avatar{
   width:36px;height:36px;border-radius:50%;
   display:grid;place-items:center;
@@ -198,31 +173,15 @@ html,body{
 .sr-avatar.male{background:linear-gradient(135deg,#2563eb,#3b82f6)}
 .sr-avatar.female{background:linear-gradient(135deg,#db2777,#ec4899)}
 .sr-info{flex:1;min-width:0}
-.sr-name{
-  font-size:13px;font-weight:800;color:var(--text-strong);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+.sr-name{font-size:13px;font-weight:800;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sr-name mark{background:var(--gold);color:#0b1220;padding:0 3px;border-radius:3px;font-weight:900}
-.sr-meta{
-  font-size:10px;color:var(--muted);margin-top:3px;
-  display:flex;gap:6px;align-items:center;font-weight:700;flex-wrap:wrap;
-}
-.sr-id{
-  font-size:9px;font-weight:900;color:var(--primary);
-  background:rgba(15,118,110,.12);padding:2px 6px;border-radius:5px;
-  direction:ltr;font-variant-numeric:tabular-nums;
-}
+.sr-meta{font-size:10px;color:var(--muted);margin-top:3px;display:flex;gap:6px;align-items:center;font-weight:700;flex-wrap:wrap}
+.sr-id{font-size:9px;font-weight:900;color:var(--primary);background:rgba(15,118,110,.12);padding:2px 6px;border-radius:5px;direction:ltr;font-variant-numeric:tabular-nums}
 .sr-item.active .sr-id{background:var(--primary);color:#fff}
-.sr-badge{
-  font-size:8px;font-weight:900;padding:2px 5px;border-radius:4px;
-  background:var(--surface3);color:var(--muted);text-transform:uppercase;
-}
+.sr-badge{font-size:8px;font-weight:900;padding:2px 5px;border-radius:4px;background:var(--surface3);color:var(--muted);text-transform:uppercase}
 .sr-empty{padding:32px 14px;text-align:center;color:var(--muted);font-size:13px;font-weight:700}
 .sr-empty .emoji{font-size:36px;display:block;margin-bottom:8px;opacity:.5}
 
-/* ============================================================
-   الشجرة
-   ============================================================ */
 .stats-bar{
   position:absolute;
   top:calc(var(--topbar-h) + var(--safe-top) + 6px);
@@ -256,20 +215,14 @@ html,body{
   pointer-events:auto;
 }
 .focus-banner.hidden{display:none!important}
-@keyframes focusSlide{
-  from{opacity:0;transform:translateY(-12px) scale(.96)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
+@keyframes focusSlide{from{opacity:0;transform:translateY(-12px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 .focus-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
 .focus-icon{font-size:22px;flex-shrink:0}
 .focus-text{min-width:0}
 .focus-text b{display:block;font-size:14px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .focus-text small{display:block;font-size:10px;opacity:.95;font-weight:700;margin-top:2px}
 .focus-stats{display:flex;gap:4px;flex-shrink:0;align-items:center}
-.focus-stat{
-  background:rgba(255,255,255,.24);border:1px solid rgba(255,255,255,.38);
-  border-radius:9px;padding:5px 9px;text-align:center;min-width:46px;
-}
+.focus-stat{background:rgba(255,255,255,.24);border:1px solid rgba(255,255,255,.38);border-radius:9px;padding:5px 9px;text-align:center;min-width:46px}
 .focus-stat .num{font-size:14px;font-weight:900;line-height:1;color:#fff}
 .focus-stat .lbl{font-size:8px;opacity:.95;font-weight:800;margin-top:2px;color:#fff}
 .focus-exit{
@@ -284,17 +237,9 @@ html,body{
   flex:1;position:relative;overflow:hidden;
   background:radial-gradient(ellipse at center, var(--surface) 0%, var(--bg) 100%);
 }
-#svg{
-  display:block;width:100%;height:100%;
-  cursor:grab;touch-action:none;
-  shape-rendering:geometricPrecision;text-rendering:geometricPrecision;
-}
+#svg{display:block;width:100%;height:100%;cursor:grab;touch-action:none;shape-rendering:geometricPrecision;text-rendering:geometricPrecision}
 #svg.grabbing{cursor:grabbing}
-#viewport{
-  transform-origin:0 0;will-change:transform;
-  transform:translate3d(0,0,0);
-  backface-visibility:hidden;-webkit-backface-visibility:hidden;
-}
+#viewport{transform-origin:0 0;will-change:transform;transform:translate3d(0,0,0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .node{cursor:pointer}
 .node-card{
   fill:var(--surface);stroke:var(--line);stroke-width:1.6;
@@ -306,137 +251,79 @@ html,body{
 .node-card.focus-node{stroke:var(--warn);stroke-width:5;filter:url(#focusGlow)}
 .node-card.root-node{stroke:var(--primary);stroke-width:3}
 .node-card.search-hit{stroke:var(--gold);stroke-width:4;filter:url(#searchGlow)}
-.node-card.search-current{
-  stroke:#fbbf24;stroke-width:5;
-  filter:url(#searchGlowStrong);
-  animation:pulseSearch 1.6s ease-in-out infinite;
-}
-@keyframes pulseSearch{
-  0%,100%{stroke-width:5}
-  50%{stroke-width:6.5}
-}
+.node-card.search-current{stroke:#fbbf24;stroke-width:5;filter:url(#searchGlowStrong);animation:pulseSearch 1.6s ease-in-out infinite}
+@keyframes pulseSearch{0%,100%{stroke-width:5}50%{stroke-width:6.5}}
 .node.dimmed{opacity:.08;transition:opacity .25s ease}
-
-.node text{
-  pointer-events:none;user-select:none;
-  text-rendering:geometricPrecision;shape-rendering:geometricPrecision;
-  font-family:Cairo,'Segoe UI',Tahoma,sans-serif;
-}
+.node text{pointer-events:none;user-select:none;text-rendering:geometricPrecision;font-family:Cairo,'Segoe UI',Tahoma,sans-serif}
 .node-name{font-weight:900;font-size:13px;fill:var(--text-strong);text-anchor:middle}
 .node-meta{font-size:10px;fill:var(--muted);font-weight:700;text-anchor:middle}
 .node-gender{fill:#fff;font-family:Arial;font-size:12px;font-weight:900;text-anchor:middle}
 
-.link{
-  fill:none;stroke-linecap:round;
-  shape-rendering:geometricPrecision;
-  transition:stroke .25s ease, stroke-width .25s ease, opacity .25s ease, filter .25s ease;
-}
-.link.ancestor-path{
-  stroke:var(--gold) !important;
-  stroke-width:3.5 !important;
-  opacity:1 !important;
-  filter:url(#searchGlowPath);
-  stroke-dasharray: 6 4;
-  animation:dashFlow 1s linear infinite;
-}
+.link{fill:none;stroke-linecap:round;transition:stroke .25s ease, stroke-width .25s ease, opacity .25s ease, filter .25s ease}
+.link.ancestor-path{stroke:var(--gold) !important;stroke-width:3.5 !important;opacity:1 !important;filter:url(#searchGlowPath);stroke-dasharray:6 4;animation:dashFlow 1s linear infinite}
 @keyframes dashFlow{from{stroke-dashoffset:0}to{stroke-dashoffset:-20}}
 .link.dimmed{opacity:.04}
-
-.link.marriage-link{
-  stroke:#db2777 !important;
-  stroke-width:2.5 !important;
-  stroke-dasharray: 6 5;
-  opacity:.85 !important;
-  animation:marriageFlow 1.6s linear infinite;
-}
+.link.marriage-link{stroke:#db2777 !important;stroke-width:2.5 !important;stroke-dasharray:6 5;opacity:.85 !important;animation:marriageFlow 1.6s linear infinite}
 @keyframes marriageFlow{from{stroke-dashoffset:0}to{stroke-dashoffset:-22}}
 
 .search-ring{fill:none;stroke:var(--gold);stroke-width:2;opacity:0;pointer-events:none}
 .search-ring.active{opacity:.9;animation:ringPulse 1.8s ease-out infinite}
-@keyframes ringPulse{
-  0%{r:26;opacity:.9}
-  100%{r:60;opacity:0}
-}
+@keyframes ringPulse{0%{r:26;opacity:.9}100%{r:60;opacity:0}}
 
-/* ============================================================
-   أدوات سفلية
-   ============================================================ */
 .bottom-tools{
   position:absolute;
   bottom:calc(14px + var(--safe-bottom));
-  left:calc(12px + var(--safe-left));
-  right:calc(12px + var(--safe-right));
-  z-index:40;display:flex;justify-content:space-between;
-  align-items:flex-end;gap:8px;pointer-events:none;
+  left:calc(12px + var(--safe-left));right:calc(12px + var(--safe-right));
+  z-index:40;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;
+  pointer-events:none;
 }
 .tool-group{display:flex;flex-direction:column;gap:6px;pointer-events:auto}
 .tool-btn{
-  width:var(--btn-lg);height:var(--btn-lg);
-  border-radius:14px;background:var(--surface);
-  border:1.5px solid var(--line);color:var(--text);
-  font-size:20px;cursor:pointer;font-family:inherit;
-  display:grid;place-items:center;
+  width:var(--btn-lg);height:var(--btn-lg);border-radius:14px;
+  background:var(--surface);border:1.5px solid var(--line);color:var(--text);
+  font-size:20px;cursor:pointer;font-family:inherit;display:grid;place-items:center;
   transition:transform .12s ease, background .12s ease, box-shadow .12s ease;
-  box-shadow:0 4px 14px rgba(15,23,42,.10);
-  -webkit-tap-highlight-color:transparent;font-weight:700;
+  box-shadow:0 4px 14px rgba(15,23,42,.10);font-weight:700;
 }
-.tool-btn:active{
-  transform:scale(.88);background:var(--surface2);
-  box-shadow:0 2px 6px rgba(15,23,42,.15);
-}
+.tool-btn:active{transform:scale(.88);background:var(--surface2);box-shadow:0 2px 6px rgba(15,23,42,.15)}
 .tool-btn.zoom-label{font-size:11px;font-weight:900;letter-spacing:-.5px}
-.tool-btn.primary-tool{
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  border-color:var(--primary-dark);color:#fff;
-  box-shadow:0 6px 16px rgba(15,118,110,.35);
-}
 .nav-group{display:flex;flex-direction:column;gap:6px;pointer-events:auto}
 .nav-btn{
   width:var(--btn-lg);height:var(--btn-lg);border-radius:50%;
-  background:var(--surface);border:1.5px solid var(--line);
-  color:var(--text);font-size:17px;cursor:pointer;font-family:inherit;
-  display:grid;place-items:center;
+  background:var(--surface);border:1.5px solid var(--line);color:var(--text);
+  font-size:17px;cursor:pointer;font-family:inherit;display:grid;place-items:center;
   transition:transform .12s ease, background .12s ease;
   box-shadow:0 4px 14px rgba(15,23,42,.10);
-  -webkit-tap-highlight-color:transparent;
 }
 .nav-btn:active{transform:scale(.88);background:var(--surface2)}
 
 .pan-bar{
-  position:absolute;bottom:calc(12px + var(--safe-bottom));
-  left:50%;transform:translateX(-50%);z-index:36;
+  position:absolute;bottom:calc(12px + var(--safe-bottom));left:50%;
+  transform:translateX(-50%);z-index:36;
   display:flex;align-items:center;gap:6px;
   background:var(--nav);border:1.5px solid var(--line);border-radius:30px;
-  padding:6px 10px;box-shadow:0 6px 20px rgba(0,0,0,.18);
-  max-width:min(430px,88vw);
+  padding:6px 10px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:min(430px,88vw);
 }
 .pan-btn{
   border:0;background:var(--surface2);color:var(--text);
-  width:34px;height:34px;border-radius:50%;font-size:13px;
-  cursor:pointer;flex-shrink:0;display:grid;place-items:center;
-  font-family:inherit;transition:transform .12s;
+  width:34px;height:34px;border-radius:50%;font-size:13px;cursor:pointer;
+  flex-shrink:0;display:grid;place-items:center;font-family:inherit;transition:transform .12s;
 }
 .pan-btn:active{transform:scale(.88);background:var(--primary);color:#fff}
 .pan-bar input[type=range]{flex:1;accent-color:var(--primary);min-width:110px}
 
-/* ============================================================
-   لوحة التفاصيل
-   ============================================================ */
 .info-panel{
   position:absolute;left:0;right:0;bottom:0;width:100%;
-  max-height:68vh;background:var(--surface);
-  border-radius:22px 22px 0 0;border-top:1px solid var(--line);
-  transform:translateY(110%);
+  max-height:68vh;background:var(--surface);border-radius:22px 22px 0 0;
+  border-top:1px solid var(--line);transform:translateY(110%);
   transition:transform .38s cubic-bezier(.32,.72,0,1);
   z-index:70;display:flex;flex-direction:column;
-  box-shadow:0 -18px 50px rgba(0,0,0,.28);
-  will-change:transform;-webkit-backface-visibility:hidden;
+  box-shadow:0 -18px 50px rgba(0,0,0,.28);will-change:transform;
 }
 .info-panel.open{transform:translateY(0)}
 .sheet-handle{
   width:44px;height:5px;border-radius:3px;background:var(--line-strong);
-  margin:10px auto 4px;flex-shrink:0;cursor:grab;
-  transition:background .15s, transform .15s;
+  margin:10px auto 4px;flex-shrink:0;cursor:grab;transition:background .15s, transform .15s;
 }
 .sheet-handle:active{background:var(--primary);transform:scaleX(1.15)}
 .info-head{
@@ -446,56 +333,34 @@ html,body{
 }
 .avatar{
   width:44px;height:44px;border-radius:50%;
-  display:grid;place-items:center;
-  font-size:18px;color:#fff;font-weight:900;
+  display:grid;place-items:center;font-size:18px;color:#fff;font-weight:900;
   background:linear-gradient(135deg,#3b82f6,#8b5cf6);
   border:2px solid rgba(255,255,255,.18);flex:0 0 auto;
   box-shadow:0 4px 14px rgba(59,130,246,.3);
 }
 .info-head-text{flex:1;min-width:0}
-.info-head .name{
-  font-size:15px;font-weight:900;line-height:1.25;
-  color:var(--text-strong);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.info-head .sub{
-  font-size:10px;color:var(--muted);
-  margin-top:2px;font-weight:800;
-  display:flex;gap:6px;align-items:center;
-}
+.info-head .name{font-size:15px;font-weight:900;line-height:1.25;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.info-head .sub{font-size:10px;color:var(--muted);margin-top:2px;font-weight:800;display:flex;gap:6px;align-items:center}
 .info-head .sub .dot{width:6px;height:6px;border-radius:50%;background:var(--primary);display:inline-block}
 .close-panel{
-  position:absolute;top:12px;left:12px;
-  width:32px;height:32px;border-radius:50%;
-  background:var(--surface2);border:0;color:var(--muted);
-  cursor:pointer;display:grid;place-items:center;
-  font-size:14px;font-family:inherit;
+  position:absolute;top:12px;left:12px;width:32px;height:32px;border-radius:50%;
+  background:var(--surface2);border:0;color:var(--muted);cursor:pointer;
+  display:grid;place-items:center;font-size:14px;font-family:inherit;
   transition:transform .12s, background .12s, color .12s;z-index:2;
 }
 .close-panel:active{transform:scale(.85);background:var(--danger);color:#fff}
 .info-body{
   padding:12px 14px calc(14px + var(--safe-bottom));
-  overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;
-  overscroll-behavior:contain;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;overscroll-behavior:contain;
 }
-.info-grid{
-  display:grid;grid-template-columns:repeat(3, 1fr);
-  gap:6px;margin-bottom:12px;
-}
+.info-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:6px;margin-bottom:12px}
 .info-cell{
-  background:var(--surface2);border:1px solid var(--line);
-  border-radius:11px;padding:8px 4px;text-align:center;
-  transition:transform .12s, border-color .12s;
+  background:var(--surface2);border:1px solid var(--line);border-radius:11px;
+  padding:8px 4px;text-align:center;transition:transform .12s, border-color .12s;
 }
 .info-cell:active{transform:scale(.96)}
-.info-cell .k{
-  font-size:9px;color:var(--muted);font-weight:800;
-  margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.info-cell .v{
-  font-size:12px;font-weight:900;color:var(--text-strong);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr;
-}
+.info-cell .k{font-size:9px;color:var(--muted);font-weight:800;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.info-cell .v{font-size:12px;font-weight:900;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr}
 .info-cell .v.arabic{direction:rtl}
 .info-cell .v.badge-cell{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px}
 .info-cell .v.badge-cell.male{background:rgba(37,99,235,.15);color:#2563eb}
@@ -503,9 +368,8 @@ html,body{
 .info-cell .v.badge-cell.unknown{background:rgba(100,116,139,.15);color:#64748b}
 
 .info-father{
-  display:flex;align-items:center;gap:8px;
-  padding:9px 11px;background:var(--surface2);
-  border:1px solid var(--line);border-radius:11px;
+  display:flex;align-items:center;gap:8px;padding:9px 11px;
+  background:var(--surface2);border:1px solid var(--line);border-radius:11px;
   margin-bottom:12px;font-size:12px;cursor:pointer;
   transition:transform .12s, border-color .12s;
 }
@@ -520,29 +384,21 @@ html,body{
 .info-father .f-icon.spouse{background:linear-gradient(135deg,#f59e0b,#d97706)}
 .info-father .f-info{flex:1;min-width:0}
 .info-father .f-info .f-k{font-size:9px;color:var(--muted);font-weight:800}
-.info-father .f-info .f-v{
-  font-size:12px;font-weight:900;color:var(--text-strong);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+.info-father .f-info .f-v{font-size:12px;font-weight:900;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .info-father .f-arrow{color:var(--muted);font-size:14px}
 
 .quick-actions{display:grid;grid-template-columns:repeat(3, 1fr);gap:6px;margin-bottom:10px}
 .qa-btn{
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:3px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
   padding:9px 4px;border-radius:12px;
-  border:1.5px solid var(--line);background:var(--surface2);
-  color:var(--text);font-family:inherit;
-  font-size:9px;font-weight:900;cursor:pointer;
+  border:1.5px solid var(--line);background:var(--surface2);color:var(--text);
+  font-family:inherit;font-size:9px;font-weight:900;cursor:pointer;
   transition:transform .12s, background .12s, border-color .12s, color .12s;
-  -webkit-tap-highlight-color:transparent;min-height:56px;
+  min-height:56px;
 }
 .qa-btn:active{transform:scale(.9)}
 .qa-btn .qa-icon{font-size:18px;line-height:1}
-.qa-btn .qa-label{
-  font-size:8.5px;line-height:1.15;text-align:center;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
-}
+.qa-btn .qa-label{font-size:8.5px;line-height:1.15;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .qa-btn.gold{background:linear-gradient(135deg,#fbbf24,#d97706);border-color:#d97706;color:#0b1220;box-shadow:0 4px 12px rgba(251,191,36,.3)}
 .qa-btn.green{background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-color:var(--primary-dark);color:#fff;box-shadow:0 4px 12px rgba(15,118,110,.3)}
 .qa-btn.red{background:linear-gradient(135deg,#ef4444,#b91c1c);border-color:#b91c1c;color:#fff;box-shadow:0 4px 12px rgba(239,68,68,.3)}
@@ -551,60 +407,27 @@ html,body{
 
 .father-btn{
   width:100%;padding:11px;border-radius:12px;
-  border:1.5px solid var(--line);background:var(--surface2);
-  color:var(--text);font-family:inherit;font-size:12px;font-weight:900;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
-  transition:transform .12s, border-color .12s, background .12s;
-  -webkit-tap-highlight-color:transparent;margin-top:2px;
+  border:1.5px solid var(--line);background:var(--surface2);color:var(--text);
+  font-family:inherit;font-size:12px;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:transform .12s, border-color .12s, background .12s;margin-top:2px;
 }
 .father-btn:active{transform:scale(.97);border-color:var(--primary);background:var(--surface3)}
 
-/* ============================================================
-   نوافذ Modal
-   ============================================================ */
-.detail-modal{
-  position:fixed;inset:0;z-index:200;
-  background:rgba(0,0,0,.55);
-  display:none;align-items:center;justify-content:center;
-  padding:20px;backdrop-filter:blur(4px);
-}
+.detail-modal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .detail-modal.show{display:flex;animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.detail-modal-content{
-  background:var(--surface);border-radius:18px;padding:18px;
-  width:100%;max-width:400px;max-height:70vh;overflow-y:auto;
-  box-shadow:0 24px 60px rgba(0,0,0,.4);
-}
-.detail-modal-content h3{
-  font-size:15px;font-weight:900;color:var(--text-strong);
-  margin-bottom:12px;display:flex;align-items:center;gap:8px;
-}
-.detail-modal-content .info-row{
-  display:flex;justify-content:space-between;
-  padding:10px 0;border-bottom:1px dashed var(--line);
-  font-size:13px;gap:10px;
-}
+.detail-modal-content{background:var(--surface);border-radius:18px;padding:18px;width:100%;max-width:400px;max-height:70vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.detail-modal-content h3{font-size:15px;font-weight:900;color:var(--text-strong);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.detail-modal-content .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px;gap:10px}
 .detail-modal-content .info-row:last-child{border-bottom:0}
 .detail-modal-content .info-row .k{color:var(--muted);font-weight:800;flex:0 0 auto}
 .detail-modal-content .info-row .v{font-weight:800;text-align:left;word-break:break-word}
-.detail-modal-close{
-  width:100%;margin-top:14px;padding:11px;
-  border-radius:11px;border:1.5px solid var(--line);
-  background:var(--surface2);color:var(--text);
-  font-family:inherit;font-size:13px;font-weight:900;cursor:pointer;
-}
+.detail-modal-close{width:100%;margin-top:14px;padding:11px;border-radius:11px;border:1.5px solid var(--line);background:var(--surface2);color:var(--text);font-family:inherit;font-size:13px;font-weight:900;cursor:pointer}
 
-#loader{
-  position:fixed;inset:0;background:var(--bg);z-index:100;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
-  transition:opacity .4s;
-}
+#loader{position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .4s}
 #loader.hide{opacity:0;pointer-events:none}
-.spinner{
-  width:54px;height:54px;border-radius:50%;
-  border:4px solid rgba(15,118,110,.15);border-top-color:var(--primary);
-  animation:spin 1s linear infinite;
-}
+.spinner{width:54px;height:54px;border-radius:50%;border:4px solid rgba(15,118,110,.15);border-top-color:var(--primary);animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 #loader p{color:var(--muted);font-size:13px;text-align:center;padding:0 20px;line-height:1.7;font-weight:800}
 
@@ -619,51 +442,21 @@ html,body{
 }
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ============================================================
-   الحماية — ✅ الإصلاح 1: السماح بالطباعة عند وجود body.printing
-   ============================================================ */
-@media print {
-  html:not(.printing-print), body:not(.printing) { display: none !important; visibility: hidden !important; }
-  body:not(.printing)::after {
+@media print{
+  html, body { display: none !important; visibility: hidden !important; }
+  body::after {
     content: "🔒 الطباعة معطلة — استخدم زر الطباعة داخل التطبيق";
     display: grid !important; visibility: visible !important;
     position: fixed; inset: 0; place-items: center;
     font-size: 24px; color: #999; background: #fff;
     font-family: sans-serif; text-align: center; padding: 30px;
   }
-  /* ✅ عند الطباعة الفعلية */
-  body.printing { display: block !important; visibility: visible !important; overflow: visible !important; }
-  body.printing #app { position: static !important; display: block !important; }
-  body.printing .topbar,
-  body.printing .bottom-tools,
-  body.printing .pan-bar,
-  body.printing .stats-bar,
-  body.printing .focus-banner,
-  body.printing .info-panel,
-  body.printing .search-results,
-  body.printing .modal,
-  body.printing .explore-overlay,
-  body.printing #toast,
-  body.printing #loader { display: none !important; }
-  body.printing .tree-container { position: static !important; overflow: visible !important; height: auto !important; }
-  body.printing #svg { width: 100% !important; height: auto !important; }
 }
-body.protect-blur #app{filter: blur(30px) !important; pointer-events: none !important;}
-html, body{
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  user-select: none !important;
-  -webkit-touch-callout: none !important;
-}
-input, textarea{
-  -webkit-user-select: text !important;
-  user-select: text !important;
-}
-img, svg{ -webkit-user-drag: none !important; user-drag: none !important; }
+body.protect-blur #app{filter:blur(30px) !important;pointer-events:none !important}
+html,body{-webkit-user-select:none !important;-moz-user-select:none !important;user-select:none !important;-webkit-touch-callout:none !important}
+input,textarea{-webkit-user-select:text !important;user-select:text !important}
+img,svg{-webkit-user-drag:none !important;user-drag:none !important}
 
-/* ============================================================
-   استجابة الشاشات
-   ============================================================ */
 @media(max-width:420px){
   :root{--topbar-h:54px;--btn-md:40px;--btn-lg:44px}
   .brand{font-size:11px}
@@ -713,11 +506,7 @@ img, svg{ -webkit-user-drag: none !important; user-drag: none !important; }
   .stat-card .lbl{font-size:10px}
   .tool-btn,.nav-btn{width:52px;height:52px}
   .search-results{left:auto;right:12px;width:440px}
-  .info-panel{
-    left:auto;right:12px;bottom:12px;
-    width:400px;max-height:82vh;border-radius:22px;
-    transform:translateY(calc(100% + 24px));
-  }
+  .info-panel{left:auto;right:12px;bottom:12px;width:400px;max-height:82vh;border-radius:22px;transform:translateY(calc(100% + 24px))}
   .info-panel.open{transform:translateY(0)}
   .qa-btn{min-height:64px}
   .qa-btn .qa-icon{font-size:20px}
@@ -731,174 +520,65 @@ img, svg{ -webkit-user-drag: none !important; user-drag: none !important; }
 #svg{position:relative;z-index:1}
 
 .bg-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.bg-particles span{
-  position:absolute;border-radius:50%;
-  background:radial-gradient(circle,rgba(20,184,166,.30),transparent 70%);
-  animation:floatUp linear infinite;opacity:.45;
-}
+.bg-particles span{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(20,184,166,.30),transparent 70%);animation:floatUp linear infinite;opacity:.45}
 @keyframes floatUp{from{transform:translateY(25vh)}to{transform:translateY(-115vh)}}
 html.dark .bg-particles span{background:radial-gradient(circle,rgba(45,212,191,.22),transparent 70%)}
 
-/* ============================================================
-   Modal عام
-   ============================================================ */
-.modal{
-  position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);
-  display:none;align-items:center;justify-content:center;padding:16px;
-  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-}
+.modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
 .modal.show{display:flex;animation:fadeIn .2s ease}
-.modal-box{
-  background:var(--surface);border-radius:18px;width:100%;max-width:480px;
-  max-height:82vh;overflow-y:auto;padding:18px;
-  box-shadow:0 24px 60px rgba(0,0,0,.4);
-  -webkit-overflow-scrolling:touch;
-}
-.modal-box h3{
-  font-size:15px;font-weight:900;color:var(--text-strong);
-  margin-bottom:12px;display:flex;align-items:center;gap:8px;
-}
+.modal-box{background:var(--surface);border-radius:18px;width:100%;max-width:480px;max-height:82vh;overflow-y:auto;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.modal-box h3{font-size:15px;font-weight:900;color:var(--text-strong);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .modal-box h4{font-size:12px;font-weight:900;color:var(--muted);margin:14px 0 8px}
 
-/* ============================================================
-   النماذج
-   ============================================================ */
 .frm-row{margin-bottom:10px}
-.frm-row label{
-  display:block;font-size:11px;font-weight:800;
-  color:var(--muted);margin-bottom:4px;
-}
-.frm-row input,.frm-row select,.frm-row textarea{
-  width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--line);
-  background:var(--surface2);color:var(--text);font-family:inherit;font-size:13px;
-  -webkit-user-select:text;user-select:text;
-}
-.frm-row input:focus,.frm-row select:focus,.frm-row textarea:focus{
-  outline:none;border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(15,118,110,.12);
-}
+.frm-row label{display:block;font-size:11px;font-weight:800;color:var(--muted);margin-bottom:4px}
+.frm-row input,.frm-row select,.frm-row textarea{width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface2);color:var(--text);font-family:inherit;font-size:13px;-webkit-user-select:text;user-select:text}
+.frm-row input:focus,.frm-row select:focus,.frm-row textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(15,118,110,.12)}
 .frm-2col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .frm-actions{display:flex;gap:8px;margin-top:14px}
-.btn{
-  flex:1;padding:11px;border-radius:11px;border:0;font-family:inherit;
-  font-weight:900;font-size:13px;cursor:pointer;transition:transform .12s ease;
-}
+.btn{flex:1;padding:11px;border-radius:11px;border:0;font-family:inherit;font-weight:900;font-size:13px;cursor:pointer;transition:transform .12s ease}
 .btn:active{transform:scale(.95)}
 .btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff}
 .btn.ghost{background:var(--surface2);border:1.5px solid var(--line);color:var(--text)}
 .btn.danger{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff}
 
-/* ============================================================
-   Smart Select
-   ============================================================ */
-.smart-select{
-  position:relative;background:var(--surface2);
-  border:1.5px solid var(--line);border-radius:10px;
-  overflow:hidden;transition:border-color .15s;
-}
+.smart-select{position:relative;background:var(--surface2);border:1.5px solid var(--line);border-radius:10px;overflow:hidden;transition:border-color .15s}
 .smart-select:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(15,118,110,.12)}
-.smart-select input{
-  width:100%;padding:9px 10px;border:0;border-bottom:1px dashed var(--line);
-  background:transparent;color:var(--text);font-family:inherit;font-size:12px;
-  outline:none;border-radius:0;
-}
-.smart-select select{
-  width:100%;border:0;background:transparent;color:var(--text);
-  font-family:inherit;font-size:12.5px;
-  padding:4px;outline:none;
-  max-height:140px;overflow-y:auto;
-}
-.smart-select select option{
-  padding:6px 8px;border-radius:6px;
-  background:var(--surface);color:var(--text);
-}
-.smart-select select option:checked,
-.smart-select select option:checked:hover{
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark)) !important;
-  color:#fff !important;
-}
+.smart-select input{width:100%;padding:9px 10px;border:0;border-bottom:1px dashed var(--line);background:transparent;color:var(--text);font-family:inherit;font-size:12px;outline:none;border-radius:0}
+.smart-select select{width:100%;border:0;background:transparent;color:var(--text);font-family:inherit;font-size:12.5px;padding:4px;outline:none;max-height:140px;overflow-y:auto}
+.smart-select select option{padding:6px 8px;border-radius:6px;background:var(--surface);color:var(--text)}
+.smart-select select option:checked,.smart-select select option:checked:hover{background:linear-gradient(135deg,var(--primary),var(--primary-dark)) !important;color:#fff !important}
 .smart-select select option.female-opt{color:#db2777;font-weight:800}
 .smart-select select option.male-opt{color:#2563eb;font-weight:800}
 
-/* ============================================================
-   أبناء متعددون
-   ============================================================ */
 .child-rows-wrap{display:flex;flex-direction:column;gap:10px;margin-top:6px}
-.child-row{
-  display:flex;align-items:stretch;gap:8px;
-  background:var(--surface2);border:1.5px solid var(--line);
-  border-radius:14px;padding:10px;
-  transition:border-color .15s ease, box-shadow .15s ease;
-}
-.child-row:focus-within{
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(15,118,110,.12);
-}
+.child-row{display:flex;align-items:stretch;gap:8px;background:var(--surface2);border:1.5px solid var(--line);border-radius:14px;padding:10px;transition:border-color .15s ease, box-shadow .15s ease}
+.child-row:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(15,118,110,.12)}
 .child-row .row-fields{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
-.child-row .row-fields input{
-  width:100%;padding:10px 12px;border-radius:10px;
-  border:1.5px solid var(--line);background:var(--surface);
-  color:var(--text);font-family:inherit;font-size:13px;
-  -webkit-user-select:text;user-select:text;
-  transition:border-color .15s ease;
-}
-.child-row .row-fields input:focus{
-  outline:none;border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(15,118,110,.10);
-}
+.child-row .row-fields input{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--text);font-family:inherit;font-size:13px;-webkit-user-select:text;user-select:text;transition:border-color .15s ease}
+.child-row .row-fields input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(15,118,110,.10)}
 .child-row .row-fields input::placeholder{color:var(--muted);opacity:.7}
-.child-row .row-remove{
-  width:44px;flex-shrink:0;
-  border:1.5px solid var(--line);border-radius:12px;
-  background:var(--surface);color:var(--danger);
-  font-size:18px;font-weight:900;cursor:pointer;
-  display:grid;place-items:center;font-family:inherit;
-  transition:transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
-}
+.child-row .row-remove{width:44px;flex-shrink:0;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--danger);font-size:18px;font-weight:900;cursor:pointer;display:grid;place-items:center;font-family:inherit;transition:transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease}
 .child-row .row-remove:active{transform:scale(.9);background:var(--danger);color:#fff;border-color:var(--danger)}
-.add-row-btn{
-  width:100%;padding:13px;
-  border:2px dashed var(--primary);border-radius:14px;background:transparent;
-  color:var(--primary);font-family:inherit;font-size:13px;font-weight:900;
-  cursor:pointer;margin-top:10px;
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  transition:background .15s ease, transform .12s ease;
-}
+.add-row-btn{width:100%;padding:13px;border:2px dashed var(--primary);border-radius:14px;background:transparent;color:var(--primary);font-family:inherit;font-size:13px;font-weight:900;cursor:pointer;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s ease, transform .12s ease}
 .add-row-btn:active{transform:scale(.98);background:rgba(15,118,110,.08)}
 .cf-actions{display:flex;gap:8px;margin-top:16px}
 .cf-actions .btn{flex:1}
 
-/* ============================================================
-   إحصائيات + مساعدة + أنساب
-   ============================================================ */
 .stat-table{width:100%;border-collapse:collapse;font-size:12px}
 .stat-table td,.stat-table th{padding:8px 4px;border-bottom:1px dashed var(--line);text-align:right}
 .stat-table th{color:var(--muted);font-size:10px;font-weight:900}
 .stat-table .num{font-weight:900;color:var(--primary);text-align:left;font-variant-numeric:tabular-nums}
 .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
-.chip{
-  font-size:10px;font-weight:800;background:var(--surface2);
-  border:1px solid var(--line);border-radius:20px;padding:4px 9px;color:var(--text);
-}
+.chip{font-size:10px;font-weight:800;background:var(--surface2);border:1px solid var(--line);border-radius:20px;padding:4px 9px;color:var(--text)}
 .chip b{color:var(--primary)}
 
 .kbd-list{list-style:none}
-.kbd-list li{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:8px 0;border-bottom:1px dashed var(--line);font-size:12px;font-weight:700;
-}
-.kbd-list kbd{
-  background:var(--surface3);border:1px solid var(--line);
-  border-radius:6px;padding:2px 8px;font-family:inherit;font-size:11px;
-  font-weight:900;color:var(--text);
-}
+.kbd-list li{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line);font-size:12px;font-weight:700}
+.kbd-list kbd{background:var(--surface3);border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-family:inherit;font-size:11px;font-weight:900;color:var(--text)}
+
 .anc-chain{margin-bottom:4px}
-.anc-item{
-  padding:7px 10px;background:var(--surface2);
-  border:1px solid var(--line);border-radius:10px;margin-bottom:5px;
-  font-size:12px;font-weight:800;cursor:pointer;
-  transition:border-color .12s,transform .12s;
-}
+.anc-item{padding:7px 10px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;margin-bottom:5px;font-size:12px;font-weight:800;cursor:pointer;transition:border-color .12s,transform .12s}
 .anc-item:active{border-color:var(--primary);transform:scale(.98)}
 .anc-item small{color:var(--muted);font-weight:700}
 .desc-ul{list-style:none;padding-inline-start:14px;border-inline-start:2px solid var(--line);margin:4px 0}
@@ -906,39 +586,14 @@ html.dark .bg-particles span{background:radial-gradient(circle,rgba(45,212,191,.
 .desc-link{cursor:pointer;color:var(--text)}
 .desc-link:active{color:var(--primary)}
 
-/* ============================================================
-   المخطط الزمني
-   ============================================================ */
-.timeline-bar{
-  position:absolute;bottom:calc(86px + var(--safe-bottom));
-  left:50%;transform:translateX(-50%);z-index:35;
-  display:flex;align-items:center;gap:10px;
-  background:var(--nav);border:1.5px solid var(--line);border-radius:14px;
-  padding:8px 14px;box-shadow:0 6px 20px rgba(0,0,0,.15);
-  max-width:min(560px,92vw);
-}
+.timeline-bar{position:absolute;bottom:calc(86px + var(--safe-bottom));left:50%;transform:translateX(-50%);z-index:35;display:flex;align-items:center;gap:10px;background:var(--nav);border:1.5px solid var(--line);border-radius:14px;padding:8px 14px;box-shadow:0 6px 20px rgba(0,0,0,.15);max-width:min(560px,92vw)}
 .timeline-bar.hidden{display:none}
 .timeline-bar input[type=range]{flex:1;accent-color:var(--primary);min-width:130px}
-.tl-year{
-  font-weight:900;font-size:13px;color:var(--primary);
-  min-width:44px;text-align:center;font-variant-numeric:tabular-nums;direction:ltr;
-}
+.tl-year{font-weight:900;font-size:13px;color:var(--primary);min-width:44px;text-align:center;font-variant-numeric:tabular-nums;direction:ltr}
 
-/* ============================================================
-   Explore overlay
-   ============================================================ */
-.explore-overlay{
-  position:fixed;inset:0;z-index:400;
-  background:rgba(9,15,27,.93);display:none;
-  flex-direction:column;align-items:center;justify-content:center;
-  gap:16px;padding:20px;text-align:center;
-}
+.explore-overlay{position:fixed;inset:0;z-index:400;background:rgba(9,15,27,.93);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;text-align:center}
 .explore-overlay.show{display:flex}
-.exp-card{
-  background:var(--surface);color:var(--text);border-radius:20px;
-  padding:26px 22px;max-width:340px;width:100%;
-  box-shadow:0 30px 80px rgba(0,0,0,.5);
-}
+.exp-card{background:var(--surface);color:var(--text);border-radius:20px;padding:26px 22px;max-width:340px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.5)}
 .exp-card .exp-q{font-size:19px;font-weight:900;color:var(--text-strong);margin-bottom:8px}
 .exp-card .exp-info{display:none;font-size:13px;line-height:2;color:var(--text)}
 .exp-card .exp-hint{font-size:11px;color:var(--muted);font-weight:800;margin-top:6px}
@@ -946,60 +601,36 @@ html.dark .bg-particles span{background:radial-gradient(circle,rgba(45,212,191,.
 
 body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
 
-.more-menu{
-  position:absolute;top:calc(100% + 6px);inset-inline-start:8px;
-  display:none;flex-direction:column;gap:6px;background:var(--nav);
-  border:1.5px solid var(--line);border-radius:16px;padding:8px;z-index:120;
-  box-shadow:0 16px 40px rgba(0,0,0,.3);
-}
+.more-menu{position:absolute;top:calc(100% + 6px);inset-inline-start:8px;display:none;flex-direction:column;gap:6px;background:var(--nav);border:1.5px solid var(--line);border-radius:16px;padding:8px;z-index:120;box-shadow:0 16px 40px rgba(0,0,0,.3)}
 .more-menu.open{display:flex}
 .more-menu .icon-btn{width:var(--btn-xl);height:var(--btn-xl)}
 @media(min-width:769px){
-  .more-menu{
-    display:flex;position:static;flex-direction:row;
-    background:none;border:0;padding:0;box-shadow:none;gap:5px;
-  }
+  .more-menu{display:flex;position:static;flex-direction:row;background:none;border:0;padding:0;box-shadow:none;gap:5px}
   #btnMoreMenu{display:none}
 }
 
-/* ============================================================
-   نافذة خيارات الطباعة
-   ============================================================ */
-.print-option{
-  display:flex;align-items:center;gap:12px;
-  padding:12px;margin-bottom:8px;
-  background:var(--surface2);border:1.5px solid var(--line);
-  border-radius:12px;cursor:pointer;
-  transition:border-color .15s, background .15s, transform .12s;
-}
+.print-option{display:flex;align-items:center;gap:12px;padding:12px;margin-bottom:8px;background:var(--surface2);border:1.5px solid var(--line);border-radius:12px;cursor:pointer;transition:border-color .15s, background .15s, transform .12s}
 .print-option:active{transform:scale(.98)}
 .print-option:hover{border-color:var(--primary)}
-.print-option input[type="checkbox"]{
-  width:22px;height:22px;accent-color:var(--primary);
-  cursor:pointer;flex-shrink:0;
-}
+.print-option input[type="checkbox"]{width:22px;height:22px;accent-color:var(--primary);cursor:pointer;flex-shrink:0}
 .print-option input[type="checkbox"]:checked ~ .po-icon{transform:scale(1.15)}
 .print-option .po-icon{font-size:24px;flex-shrink:0;transition:transform .15s}
 .print-option .po-text{flex:1;display:flex;flex-direction:column;gap:2px}
 .print-option .po-text b{font-size:13px;font-weight:900;color:var(--text-strong)}
 .print-option .po-text small{font-size:10px;color:var(--muted);font-weight:700}
-.print-option:has(input:checked){
-  background:linear-gradient(135deg, rgba(15,118,110,.12), rgba(20,184,166,.06));
-  border-color:var(--primary);
-}
+.print-option:has(input:checked){background:linear-gradient(135deg, rgba(15,118,110,.12), rgba(20,184,166,.06));border-color:var(--primary)}
 
-@media(max-width:420px){
-  .print-option{padding:10px;gap:10px}
-  .print-option .po-icon{font-size:20px}
-  .print-option .po-text b{font-size:12px}
-  .print-option .po-text small{font-size:9px}
-}
+/* Stats bars for stats modal */
+.bar-row{display:flex;align-items:center;gap:6px;margin:4px 0;font-size:11px;font-weight:800}
+.bar-label{min-width:70px;color:var(--muted)}
+.bar-track{flex:1;height:14px;background:var(--surface2);border-radius:7px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-light));border-radius:7px;transition:width .5s}
+.bar-value{min-width:40px;text-align:left;color:var(--primary);font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- ============ الشريط العلوي ============ -->
   <div class="topbar">
     <div class="brand">🌳<span>PRO</span></div>
     <div class="search-wrap" id="searchBox">
@@ -1022,7 +653,7 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
       <button class="icon-btn" id="btnMoreMenu" title="المزيد">⋮</button>
       <button class="icon-btn" id="btn-theme" title="المظهر">🌙</button>
       <div class="more-menu" id="moreMenu">
-        <button class="icon-btn" id="btn-refresh" title="🔄 تحديث البيانات من الملف">🔄</button>
+        <button class="icon-btn" id="btn-refresh" title="🔄 تحديث البيانات">🔄</button>
         <button class="icon-btn" id="btn-export" title="تصدير الشجرة">📸</button>
         <button class="icon-btn" id="btn-add" title="إضافة فرد جديد">➕</button>
         <button class="icon-btn" id="btn-stats" title="إحصائيات متقدمة">📊</button>
@@ -1101,13 +732,12 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
 
     <div class="pan-bar" id="panBar">
       <button class="pan-btn" id="panRight" title="تحريك لليمين">➡</button>
-      <input type="range" id="panRange" min="-1800" max="1800" step="10" value="0" title="تحريك الشجرة">
+      <input type="range" id="panRange" min="-1800" max="1800" step="10" value="0">
       <button class="pan-btn" id="panLeft" title="تحريك لليسار">⬅</button>
       <button class="pan-btn" id="timelineOpen" title="المخطط الزمني">📅</button>
     </div>
   </div>
 
-  <!-- لوحة التفاصيل -->
   <div class="info-panel" id="infoPanel">
     <div class="sheet-handle" id="sheetHandle"></div>
     <div class="info-head">
@@ -1121,7 +751,6 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     <div class="info-body" id="pBody"></div>
   </div>
 
-  <!-- نافذة التفاصيل الإضافية -->
   <div class="detail-modal" id="detailModal">
     <div class="detail-modal-content">
       <h3>ℹ️ تفاصيل إضافية</h3>
@@ -1130,40 +759,28 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة إضافة / تعديل فرد -->
   <div class="modal" id="personFormModal">
     <div class="modal-box">
       <h3 id="pfTitle">➕ إضافة فرد جديد</h3>
-
+      <div class="frm-row"><label>الاسم الكامل *</label><input id="pfName" placeholder="مثال: محمد أحمد" autocomplete="off"></div>
+      <div class="frm-row"><label>الأب</label><select id="pfFather"></select></div>
       <div class="frm-row">
-        <label id="pfNameLabel">الاسم الكامل *</label>
-        <input id="pfName" placeholder="مثال: محمد أحمد" autocomplete="off">
-      </div>
-
-      <div class="frm-row">
-        <label id="pfFatherLabel">الأب</label>
-        <select id="pfFather"></select>
-      </div>
-
-      <div class="frm-row">
-        <label id="pfMotherLabel">الأم <span style="color:var(--muted);font-size:10px">(اختياري)</span></label>
+        <label>الأم <span style="color:var(--muted);font-size:10px">(اختياري)</span></label>
         <div class="smart-select" id="pfMotherWrap">
           <input type="text" id="pfMotherSearch" placeholder="🔍 ابحث في الإناث..." autocomplete="off">
           <select id="pfMother" size="5"></select>
         </div>
       </div>
-
       <div class="frm-row">
-        <label id="pfSpouseLabel">الزوج/الزوجة <span style="color:var(--muted);font-size:10px">(اختياري)</span></label>
+        <label>الزوج/الزوجة <span style="color:var(--muted);font-size:10px">(اختياري)</span></label>
         <div class="smart-select" id="pfSpouseWrap">
           <input type="text" id="pfSpouseSearch" placeholder="🔍 ابحث..." autocomplete="off">
           <select id="pfSpouse" size="5"></select>
         </div>
       </div>
-
       <div class="frm-2col">
         <div class="frm-row">
-          <label id="pfGenderLabel">الجنس</label>
+          <label>الجنس</label>
           <select id="pfGender">
             <option value="unknown">غير محدد</option>
             <option value="male">ذكر</option>
@@ -1171,21 +788,12 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
           </select>
         </div>
         <div class="frm-row">
-          <label id="pfBirthLabel">سنة الميلاد <small id="pfBirthHint" style="color:var(--primary)"></small></label>
+          <label>سنة الميلاد <small id="pfBirthHint" style="color:var(--primary)"></small></label>
           <input id="pfBirth" inputmode="numeric" placeholder="مثال: 1980">
         </div>
       </div>
-
-      <div class="frm-row">
-        <label id="pfDeathLabel">سنة الوفاة (اتركها فارغة إن كان على قيد الحياة)</label>
-        <input id="pfDeath" inputmode="numeric" placeholder="—">
-      </div>
-
-      <div class="frm-row">
-        <label id="pfNotesLabel">ملاحظات</label>
-        <textarea id="pfNotes" rows="2"></textarea>
-      </div>
-
+      <div class="frm-row"><label>سنة الوفاة (اتركها فارغة إن كان على قيد الحياة)</label><input id="pfDeath" inputmode="numeric" placeholder="—"></div>
+      <div class="frm-row"><label>ملاحظات</label><textarea id="pfNotes" rows="2"></textarea></div>
       <div class="frm-actions">
         <button class="btn ghost" id="pfCancel">إلغاء</button>
         <button class="btn primary" id="pfSave">💾 حفظ</button>
@@ -1193,12 +801,11 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة إضافة أبناء متعددة -->
   <div class="modal" id="childFormModal">
     <div class="modal-box">
       <h3 id="cfTitle">👨‍👩‍👧‍👦 إضافة عدة أبناء</h3>
       <p style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:12px;line-height:1.7">
-        أضف صفاً لكل ابن: اكتب الاسم، وتاريخ الميلاد (سيُقترح تلقائياً إن تركته فارغاً).
+        أضف صفاً لكل ابن. إذا تركت تاريخ الميلاد فارغاً سيُقترح تلقائياً.
       </p>
       <div class="frm-row" style="display:none"><input id="cfFatherName" disabled></div>
       <div class="child-rows-wrap" id="cfRowsWrap"></div>
@@ -1210,7 +817,6 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة المخطط الزمني -->
   <div class="modal" id="timelineModal">
     <div class="modal-box">
       <h3>📅 المخطط الزمني</h3>
@@ -1228,7 +834,6 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة الإحصائيات -->
   <div class="modal" id="statsModal">
     <div class="modal-box">
       <h3>📊 إحصائيات الشجرة</h3>
@@ -1239,7 +844,6 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة شجرة الأنساب -->
   <div class="modal" id="ancestryModal">
     <div class="modal-box">
       <div id="ancestryModalBody"></div>
@@ -1247,7 +851,6 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة مقارنة الفروع -->
   <div class="modal" id="compareModal">
     <div class="modal-box">
       <h3>⚖️ مقارنة بين فرعين</h3>
@@ -1259,7 +862,6 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة المساعدة -->
   <div class="modal" id="helpModal">
     <div class="modal-box">
       <h3>❓ الاختصارات والمساعدة</h3>
@@ -1282,7 +884,6 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة إدخال كلمة سر الطباعة -->
   <div class="modal" id="printPasswordModal">
     <div class="modal-box" style="max-width:360px">
       <h3>🔒 كلمة سر الطباعة</h3>
@@ -1300,7 +901,6 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة اختيار نوع الطباعة / التصدير -->
   <div class="modal" id="printOptionsModal">
     <div class="modal-box">
       <h3>🖨️ خيارات الطباعة والتصدير</h3>
@@ -1308,35 +908,11 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
         اختر ما تريد تنفيذه. يمكنك اختيار أكثر من خيار.
       </p>
 
-      <label class="print-option">
-        <input type="checkbox" id="optPNG" checked>
-        <span class="po-icon">🖼️</span>
-        <span class="po-text"><b>صورة PNG</b><small>دقة عالية 4x</small></span>
-      </label>
-
-      <label class="print-option">
-        <input type="checkbox" id="optPDF">
-        <span class="po-icon">📄</span>
-        <span class="po-text"><b>ملف PDF</b><small>A4 / A3 حسب الحجم</small></span>
-      </label>
-
-      <label class="print-option">
-        <input type="checkbox" id="optSVG">
-        <span class="po-icon">📐</span>
-        <span class="po-text"><b>ملف SVG</b><small>فيكتور قابل للتكبير</small></span>
-      </label>
-
-      <label class="print-option">
-        <input type="checkbox" id="optJSON">
-        <span class="po-icon">💾</span>
-        <span class="po-text"><b>ملف JSON</b><small>نسخة احتياطية كاملة</small></span>
-      </label>
-
-      <label class="print-option">
-        <input type="checkbox" id="optPRINT">
-        <span class="po-icon">🖨️</span>
-        <span class="po-text"><b>الطباعة المباشرة</b><small>عبر نافذة المتصفح</small></span>
-      </label>
+      <label class="print-option"><input type="checkbox" id="optPNG" checked><span class="po-icon">🖼️</span><span class="po-text"><b>صورة PNG</b><small>دقة عالية</small></span></label>
+      <label class="print-option"><input type="checkbox" id="optPDF"><span class="po-icon">📄</span><span class="po-text"><b>ملف PDF</b><small>A4 موسّط</small></span></label>
+      <label class="print-option"><input type="checkbox" id="optSVG"><span class="po-icon">📐</span><span class="po-text"><b>ملف SVG</b><small>فيكتور</small></span></label>
+      <label class="print-option"><input type="checkbox" id="optJSON"><span class="po-icon">💾</span><span class="po-text"><b>ملف JSON</b><small>نسخة احتياطية</small></span></label>
+      <label class="print-option"><input type="checkbox" id="optPRINT"><span class="po-icon">🖨️</span><span class="po-text"><b>الطباعة المباشرة</b><small>عبر المتصفح</small></span></label>
 
       <div class="frm-row" style="margin-top:14px">
         <label>جودة التصدير</label>
@@ -1344,7 +920,7 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
           <option value="2">عادية (2x)</option>
           <option value="3">عالية (3x)</option>
           <option value="4" selected>فائقة (4x) ⭐</option>
-          <option value="6">احترافية (6x) — بطيئة</option>
+          <option value="6">احترافية (6x)</option>
         </select>
       </div>
 
@@ -1356,7 +932,6 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- وضع الاستكشاف -->
   <div class="explore-overlay" id="exploreOverlay">
     <div style="font-size:34px">🎮</div>
     <div style="color:#fff;font-weight:900;font-size:16px">وضع الاستكشاف</div>
@@ -1383,10 +958,13 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
   </div>
 </div>
 
-<script>
+<!-- ⏭️ سيتم إدراج JavaScript في الرسالتين التاليتين -->
+  
+</body>
+  <script>
 /* ============================================================
- 🌳 شجرة العائلة Pro — JavaScript
- ============================================================ */
+   🌳 شجرة العائلة Pro — JavaScript الجزء 1
+   ============================================================ */
 'use strict';
 
 const $ = id => document.getElementById(id);
@@ -1424,7 +1002,6 @@ const state = {
   timelineYear: null,
   timelineReady: false,
   lang: 'ar',
-  _undoStack: [],
 };
 
 const MIN_SCALE = 0.05;
@@ -1441,7 +1018,6 @@ function escapeHtml(s){
   return String(s ?? '').replace(/[&<>"']/g,
     c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-
 function normalizeArabic(str){
   return String(str || '')
     .replace(/[\u064B-\u065F\u0670]/g, '')
@@ -1453,16 +1029,13 @@ function normalizeArabic(str){
     .toLowerCase()
     .trim();
 }
-
 function parseYear(s){
   if(s == null || s === '') return null;
   let t = String(s).trim().replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
   const m = t.match(/(1[3-4]\d{2}|19\d{2}|20\d{2})/);
   return m ? parseInt(m[1], 10) : null;
 }
-
 function isDeceased(p){ return !!(p && parseYear(p.death_date) != null); }
-
 function getOps(){ try{ return JSON.parse(localStorage.getItem('ft-ops') || '[]'); }catch(_){ return []; } }
 function saveOps(ops){ try{ localStorage.setItem('ft-ops', JSON.stringify(ops)); }catch(_){} }
 
@@ -1477,71 +1050,16 @@ function applyOps(){
   });
 }
 
-/* ✅ الإصلاح 6: recordOp تطبق العملية الجديدة فقط */
 function recordOp(o){
-  /* دفع للـ undo stack */
-  state._undoStack.push(JSON.parse(JSON.stringify(o)));
-  if(state._undoStack.length > 30) state._undoStack.shift();
-
   const ops = getOps(); ops.push(o); saveOps(ops);
-
-  /* ✅ تطبيق العملية الجديدة مباشرة على state.people */
-  if(o.op === 'add' || o.op === 'edit'){
-    const i = state.people.findIndex(p => Number(p.id) === Number(o.person.id));
-    if(i >= 0) state.people[i] = o.person;
-    else state.people.push(o.person);
-  }else if(o.op === 'del'){
-    state.people = state.people.filter(p => !o.ids.includes(Number(p.id)));
-  }
-
-  buildMaps(); computeGenerations();
+  applyOps(); buildMaps(); computeGenerations();
   updateStats(); render();
   requestAnimationFrame(()=>fitToScreen());
   setTimeout(()=>fitToScreen(), 250);
-}
-
-/* ✅ Undo */
-function undoLastOp(){
-  if(!state._undoStack.length){ toast('⚠ لا توجد عمليات للتراجع'); return; }
-  const last = state._undoStack.pop();
-  /* احذف آخر عملية من localStorage */
-  const ops = getOps();
-  /* ابحث عن آخر تطابق من النهاية */
-  for(let i = ops.length - 1; i >= 0; i--){
-    if(JSON.stringify(ops[i]) === JSON.stringify(last)){
-      ops.splice(i, 1);
-      break;
-    }
-  }
-  saveOps(ops);
-  /* أعد بناء state.people من الصفر */
-  reloadPeopleFromScratch();
-  toast('↩ تم التراجع عن آخر عملية');
 }
 
 function nextId(){
   return state.people.reduce((m,p)=>Math.max(m, Number(p.id)), 0) + 1;
-}
-
-/* ✅ reload من الصفر */
-let _basePeople = [];
-
-async function fetchBaseData(){
-  const res = await fetch('tree-data.json?t=' + Date.now(), {
-    cache: 'no-store',
-    headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
-  });
-  if(!res.ok) throw new Error('HTTP '+res.status);
-  return await res.json();
-}
-
-function reloadPeopleFromScratch(){
-  state.people = JSON.parse(JSON.stringify(_basePeople));
-  applyOps();
-  buildMaps(); computeGenerations();
-  updateStats(); render();
-  requestAnimationFrame(()=>fitToScreen());
-  setTimeout(()=>fitToScreen(), 250);
 }
 
 /* ============================================================
@@ -1549,11 +1067,18 @@ function reloadPeopleFromScratch(){
    ============================================================ */
 async function loadData(){
   try{
-    const data = await fetchBaseData();
-    _basePeople = Array.isArray(data.people) ? JSON.parse(JSON.stringify(data.people)) : [];
-    state.people = JSON.parse(JSON.stringify(_basePeople));
+    const res = await fetch('tree-data.json?t=' + Date.now(), {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    state.people = Array.isArray(data.people) ? data.people : [];
     state.marriages = Array.isArray(data.marriages) ? data.marriages : [];
+
+    /* ✅ إصلاح #2: تحميل الزيجات المحفوظة */
     loadMarriagesFromStorage();
+
     applyOps();
     buildMaps();
     computeGenerations();
@@ -1571,99 +1096,6 @@ async function loadData(){
         تأكد من وجود الملف بجانب index.html<br>وشغّل عبر Live Server
       </p>`;
   }
-}
-
-/* ✅ الإصلاح 3: refreshData بدون reload */
-async function refreshData(){
-  const btn = $('btn-refresh');
-  btn.classList.add('spinning');
-
-  /* احفظ الحالة */
-  const saved = {
-    tx: state.tx, ty: state.ty, scale: state.scale,
-    selectedId: state.selectedId,
-    focusId: state.focusId,
-    searchMatches: state.searchMatches.slice(),
-    searchIndex: state.searchIndex,
-    searchValue: $('searchInput').value,
-    dark: state.dark,
-  };
-
-  try{
-    const data = await fetchBaseData();
-    _basePeople = Array.isArray(data.people) ? JSON.parse(JSON.stringify(data.people)) : [];
-    state.people = JSON.parse(JSON.stringify(_basePeople));
-    state.marriages = Array.isArray(data.marriages) ? data.marriages : [];
-    loadMarriagesFromStorage();
-    applyOps();
-    buildMaps();
-    computeGenerations();
-    render();
-    updateStats();
-
-    /* استعد الحالة */
-    state.tx = saved.tx;
-    state.ty = saved.ty;
-    state.scale = saved.scale;
-    applyTransform();
-
-    if(saved.focusId != null && state.byId.has(saved.focusId)){
-      state.focusId = saved.focusId;
-      state.focusSet = collectDescendants(saved.focusId);
-      const person = state.byId.get(saved.focusId);
-      $('focusName').textContent = person.name;
-      $('focusPeople').textContent = state.focusSet.size;
-      $('focusGens').textContent = computeBranchGenerations(state.focusSet);
-      $('focusBranches').textContent = (state.children.get(saved.focusId) || []).length;
-      $('statsBar').classList.add('hidden');
-      $('focusBanner').classList.remove('hidden');
-    }
-
-    if(saved.selectedId != null && state.byId.has(saved.selectedId)){
-      selectPerson(saved.selectedId);
-    }
-
-    if(saved.searchMatches.length){
-      state.searchMatches = saved.searchMatches.filter(id => state.byId.has(id));
-      state.searchIndex = Math.min(saved.searchIndex, state.searchMatches.length - 1);
-      $('searchInput').value = saved.searchValue;
-      if(state.searchMatches.length){
-        renderSearchUI(saved.searchValue);
-        render();
-      }
-    }
-
-    toast('✅ تم تحديث البيانات');
-  }catch(err){
-    console.error(err);
-    toast('❌ فشل التحديث: ' + err.message);
-  }finally{
-    btn.classList.remove('spinning');
-  }
-}
-
-function loadMarriagesFromStorage(){
-  try{
-    const saved = JSON.parse(localStorage.getItem('ft-marriages') || 'null');
-    if(Array.isArray(saved)){
-      const existing = new Set(
-        (state.marriages||[]).map(m=>{
-          const a = Number(m.a ?? m.husband_id ?? m.person1_id);
-          const b = Number(m.b ?? m.wife_id ?? m.person2_id);
-          return `${Math.min(a,b)}-${Math.max(a,b)}`;
-        })
-      );
-      saved.forEach(m=>{
-        const a = Number(m.a ?? m.husband_id ?? m.person1_id);
-        const b = Number(m.b ?? m.wife_id ?? m.person2_id);
-        const key = `${Math.min(a,b)}-${Math.max(a,b)}`;
-        if(!existing.has(key)){
-          state.marriages.push(m);
-          existing.add(key);
-        }
-      });
-    }
-  }catch(_){}
 }
 
 /* ============================================================
@@ -1879,10 +1311,7 @@ function collectDescendants(rootId){
   return set;
 }
 
-function countDescendants(rootId){
-  return collectDescendants(rootId).size;
-}
-
+function countDescendants(rootId){ return collectDescendants(rootId).size; }
 function countTreeNodes(node){
   let c = 1;
   for(const ch of node.children || []) c += countTreeNodes(ch);
@@ -2153,7 +1582,6 @@ function render(){
    ============================================================ */
 let rafPending = false;
 let pendingTx = 0, pendingTy = 0, pendingScale = 1;
-
 function applyTransform(){
   pendingTx = state.tx; pendingTy = state.ty; pendingScale = state.scale;
   if(rafPending) return;
@@ -2349,79 +1777,26 @@ function selectPerson(id){
 
   $('pBody').innerHTML = `
     <div class="info-grid">
-      <div class="info-cell">
-        <div class="k">ID</div>
-        <div class="v">#${p.id}</div>
-      </div>
-      <div class="info-cell">
-        <div class="k">الجيل</div>
-        <div class="v">${depth+1}</div>
-      </div>
-      <div class="info-cell">
-        <div class="k">الحالة</div>
-        <div class="v badge-cell ${genderBadge}">${genderTxt}</div>
-      </div>
-      <div class="info-cell">
-        <div class="k">الأبناء</div>
-        <div class="v" style="color:${kids.length > 0 ? 'var(--primary)' : 'var(--muted)'}">${kids.length}</div>
-      </div>
-      <div class="info-cell">
-        <div class="k">الأسلاف</div>
-        <div class="v">${ancestorsCount}</div>
-      </div>
-      <div class="info-cell">
-        <div class="k">الميلاد</div>
-        <div class="v arabic">${escapeHtml(p.birth_date || '—')}</div>
-      </div>
+      <div class="info-cell"><div class="k">ID</div><div class="v">#${p.id}</div></div>
+      <div class="info-cell"><div class="k">الجيل</div><div class="v">${depth+1}</div></div>
+      <div class="info-cell"><div class="k">الحالة</div><div class="v badge-cell ${genderBadge}">${genderTxt}</div></div>
+      <div class="info-cell"><div class="k">الأبناء</div><div class="v">${kids.length}</div></div>
+      <div class="info-cell"><div class="k">الأسلاف</div><div class="v">${ancestorsCount}</div></div>
+      <div class="info-cell"><div class="k">الميلاد</div><div class="v arabic">${escapeHtml(p.birth_date || '—')}</div></div>
     </div>
 
     ${relationsHTML}
 
     <div class="quick-actions">
-      <button class="qa-btn gold" id="btnHighlightPath">
-        <span class="qa-icon">✨</span>
-        <span class="qa-label" data-i18n="highlightPath">إضاءة المسار</span>
-      </button>
-      <button class="qa-btn ${isFocused ? 'red' : 'green'}" id="btnFocusPerson">
-        <span class="qa-icon">${isFocused ? '✕' : '🎯'}</span>
-        <span class="qa-label">${isFocused ? 'خروج' : 'تركيز'}</span>
-      </button>
-      <button class="qa-btn purple" id="btnCenterPerson">
-        <span class="qa-icon">📍</span>
-        <span class="qa-label" data-i18n="center">توسيط</span>
-      </button>
-      <button class="qa-btn green" id="btnAddChild">
-        <span class="qa-icon">➕</span>
-        <span class="qa-label" data-i18n="addChild">إضافة ابن</span>
-      </button>
-      <button class="qa-btn pink" id="btnAddSpouse">
-        <span class="qa-icon">💍</span>
-        <span class="qa-label" data-i18n="addSpouse">إضافة زوج</span>
-      </button>
-      <button class="qa-btn" id="btnAncestry">
-        <span class="qa-icon">🌿</span>
-        <span class="qa-label" data-i18n="ancestry">شجرة الأنساب</span>
-      </button>
-      <button class="qa-btn" id="btnSharePerson">
-        <span class="qa-icon">🔗</span>
-        <span class="qa-label" data-i18n="shareLink">نسخ الرابط</span>
-      </button>
-      <button class="qa-btn" id="btnEditPerson">
-        <span class="qa-icon">✏️</span>
-        <span class="qa-label" data-i18n="edit">تعديل</span>
-      </button>
-      <button class="qa-btn" id="btnMoreInfo">
-        <span class="qa-icon">ℹ️</span>
-        <span class="qa-label" data-i18n="moreInfo">تفاصيل</span>
-      </button>
-      <button class="qa-btn red" id="btnDeletePerson">
-        <span class="qa-icon">🗑️</span>
-        <span class="qa-label" data-i18n="delete">حذف</span>
-      </button>
-      <button class="qa-btn" id="btnClosePanelAll" style="background:linear-gradient(135deg,#475569,#1e293b);color:#fff;border-color:#1e293b">
-        <span class="qa-icon">✖</span>
-        <span class="qa-label" data-i18n="closeAll">إغلاق الكل</span>
-      </button>
+      <button class="qa-btn gold" id="btnHighlightPath"><span class="qa-icon">✨</span><span class="qa-label">إضاءة المسار</span></button>
+      <button class="qa-btn ${isFocused ? 'red' : 'green'}" id="btnFocusPerson"><span class="qa-icon">${isFocused ? '✕' : '🎯'}</span><span class="qa-label">${isFocused ? 'خروج' : 'تركيز'}</span></button>
+      <button class="qa-btn purple" id="btnCenterPerson"><span class="qa-icon">📍</span><span class="qa-label">توسيط</span></button>
+      <button class="qa-btn green" id="btnAddChild"><span class="qa-icon">➕</span><span class="qa-label">إضافة ابن</span></button>
+      <button class="qa-btn pink" id="btnAddSpouse"><span class="qa-icon">💍</span><span class="qa-label">إضافة زوج</span></button>
+      <button class="qa-btn" id="btnAncestry"><span class="qa-icon">🌿</span><span class="qa-label">شجرة الأنساب</span></button>
+      <button class="qa-btn" id="btnSharePerson"><span class="qa-icon">🔗</span><span class="qa-label">نسخ الرابط</span></button>
+      <button class="qa-btn" id="btnEditPerson"><span class="qa-icon">✏️</span><span class="qa-label">تعديل</span></button>
+      <button class="qa-btn red" id="btnDeletePerson"><span class="qa-icon">🗑️</span><span class="qa-label">حذف</span></button>
     </div>
   `;
 
@@ -2437,33 +1812,18 @@ function selectPerson(id){
     closePanel();
   };
   $('btnCenterPerson').onclick = ()=> centerOnSmooth(id);
-  $('btnMoreInfo').onclick = ()=> showMoreDetails(id);
   $('btnAddChild').onclick = ()=> openChildForm(id);
   $('btnAddSpouse').onclick = ()=> openSpouseForm(id);
   $('btnAncestry').onclick = ()=> showAncestry(id);
   $('btnEditPerson').onclick = ()=> openPersonForm(p);
   $('btnSharePerson').onclick = ()=> sharePersonLink(id);
-  $('btnDeletePerson').onclick = ()=> { closePanel(); deletePerson(id); };
-  /* ✅ إغلاق الكل */
-  $('btnClosePanelAll').onclick = ()=>{
-    closePanel();
-    if(state.focusId != null) exitFocus();
-    clearSearch();
-    toast('✖ تم إغلاق كل اللوحات');
-  };
+  $('btnDeletePerson').onclick = ()=> deletePerson(id);   /* ✅ زر حذف */
 
-  if(father){
-    $('fatherRow').onclick = ()=>{ selectPerson(father.id); centerOnSmooth(father.id); };
-  }
-  if(mother){
-    $('motherRow').onclick = ()=>{ selectPerson(mother.id); centerOnSmooth(mother.id); };
-  }
-  if(spouse){
-    $('spouseRow').onclick = ()=>{ selectPerson(spouse.id); centerOnSmooth(spouse.id); };
-  }
+  if(father) $('fatherRow').onclick = ()=>{ selectPerson(father.id); centerOnSmooth(father.id); };
+  if(mother) $('motherRow').onclick = ()=>{ selectPerson(mother.id); centerOnSmooth(mother.id); };
+  if(spouse) $('spouseRow').onclick = ()=>{ selectPerson(spouse.id); centerOnSmooth(spouse.id); };
 
   enableSheetDrag();
-  applyLanguage();
 }
 
 function updateSelectedClass(id){
@@ -2487,6 +1847,7 @@ function updateSearchClasses(){
     el.classList.remove('dimmed');
     if(!isSearching) return;
     const isHit = state.searchMatches.includes(id);
+    /* ✅ إصلاح #1: state.searchIndex بدل state.index */
     const isCurrent = state.searchMatches[state.searchIndex] === id;
     if(isHit) card.classList.add('search-hit');
     if(isCurrent) card.classList.add('search-current');
@@ -2504,11 +1865,12 @@ function showMoreDetails(id){
   if(p.birth_date) rows.push(`<div class="info-row"><span class="k">الميلاد</span><span class="v">${escapeHtml(p.birth_date)}</span></div>`);
   if(p.death_date) rows.push(`<div class="info-row"><span class="k">الوفاة</span><span class="v">${escapeHtml(p.death_date)}</span></div>`);
   if(p.father_name) rows.push(`<div class="info-row"><span class="k">اسم الأب</span><span class="v">${escapeHtml(p.father_name)}</span></div>`);
-  const mother = p.mother_id ? state.byId.get(Number(p.mother_id)) : null;
-  if(mother) rows.push(`<div class="info-row"><span class="k">الأم</span><span class="v">${escapeHtml(mother.name)} (#${mother.id})</span></div>`);
-  else if(p.mother_name) rows.push(`<div class="info-row"><span class="k">اسم الأم</span><span class="v">${escapeHtml(p.mother_name)}</span></div>`);
-  const spouse = p.spouse_id ? state.byId.get(Number(p.spouse_id)) : null;
-  if(spouse) rows.push(`<div class="info-row"><span class="k">${p.gender === 'female' ? 'الزوج' : 'الزوجة'}</span><span class="v">${escapeHtml(spouse.name)} (#${spouse.id})</span></div>`);
+  if(p.mother_name) rows.push(`<div class="info-row"><span class="k">اسم الأم</span><span class="v">${escapeHtml(p.mother_name)}</span></div>`);
+  /* ✅ إضافة الزوج/الزوجة في التفاصيل */
+  if(p.spouse_id){
+    const sp = state.byId.get(Number(p.spouse_id));
+    if(sp) rows.push(`<div class="info-row"><span class="k">الزوج/الزوجة</span><span class="v">${escapeHtml(sp.name)} #${sp.id}</span></div>`);
+  }
   if(p.notes) rows.push(`<div class="info-row"><span class="k">ملاحظات</span><span class="v">${escapeHtml(p.notes)}</span></div>`);
   $('detailModalBody').innerHTML = rows.join('');
   $('detailModal').classList.add('show');
@@ -2553,9 +1915,7 @@ function enableSheetDrag(){
   document.addEventListener('mouseup', onEnd);
 }
 
-function closePanel(){
-  $('infoPanel').classList.remove('open');
-}
+function closePanel(){ $('infoPanel').classList.remove('open'); }
 
 /* ============================================================
    11) اقتراح تاريخ الميلاد الذكي
@@ -2564,31 +1924,31 @@ function suggestBirthDate(name, fatherId, excludeId = null){
   const cleanName = normalizeArabic(name || '');
   const currentYear = new Date().getFullYear();
 
+  /* 1) إذا كان للأب تاريخ ميلاد صالح → الأب + 25 */
   if(fatherId != null){
     const father = state.byId.get(Number(fatherId));
     if(father){
       const fy = parseYear(father.birth_date);
       if(fy != null && fy > 1000 && fy < currentYear){
         let suggested = fy + 25;
-        if(cleanName){
-          const sameNameYears = state.people
-            .filter(p => normalizeArabic(p.name) === cleanName)
-            .map(p => parseYear(p.birth_date))
-            .filter(y => y != null);
-          let tries = 0;
-          while(sameNameYears.includes(suggested) && tries < 30){
-            suggested += (tries % 2 === 0 ? 1 : -1);
-            tries++;
-          }
+        const sameNameYears = state.people
+          .filter(p => normalizeArabic(p.name) === cleanName && (excludeId == null || Number(p.id) !== Number(excludeId)))
+          .map(p => parseYear(p.birth_date))
+          .filter(y => y != null);
+        let tries = 0;
+        while(sameNameYears.includes(suggested) && tries < 30){
+          suggested += (tries % 2 === 0 ? 1 : -1);
+          tries++;
         }
         if(suggested < currentYear + 1) return String(suggested);
       }
     }
   }
 
+  /* 2) فجوة في تواريخ نفس الاسم */
   if(cleanName){
     const sameNameYears = state.people
-      .filter(p => normalizeArabic(p.name) === cleanName)
+      .filter(p => normalizeArabic(p.name) === cleanName && (excludeId == null || Number(p.id) !== Number(excludeId)))
       .map(p => parseYear(p.birth_date))
       .filter(y => y != null)
       .sort((a,b)=>a-b);
@@ -2597,8 +1957,7 @@ function suggestBirthDate(name, fatherId, excludeId = null){
       for(let i = 0; i < sameNameYears.length - 1; i++){
         const gap = sameNameYears[i+1] - sameNameYears[i];
         if(gap > 1){
-          const mid = Math.floor((sameNameYears[i] + sameNameYears[i+1]) / 2);
-          return String(mid);
+          return String(Math.floor((sameNameYears[i] + sameNameYears[i+1]) / 2));
         }
       }
       const before = sameNameYears[0] - 1;
@@ -2649,25 +2008,18 @@ function autoFillBirthIfEmpty(){
    12) Smart Select
    ============================================================ */
 function fillSmartSelect(selectEl, searchEl, people, options = {}){
-  const {placeholder = '— لا يوجد —', excludeIds = [], preferGender = null, forceInclude = []} = options;
+  const {placeholder = '— لا يوجد —', excludeIds = [], preferGender = null} = options;
 
-  let filtered = people.filter(p => !excludeIds.includes(Number(p.id)));
-
-  forceInclude.forEach(fid => {
-    const p = state.byId.get(Number(fid));
-    if(p && !filtered.find(x => Number(x.id) === Number(fid))){
-      filtered.push(p);
-    }
-  });
-
-  const sorted = [...filtered].sort((a,b)=>{
-    if(preferGender){
-      const aMatch = a.gender === preferGender ? 0 : 1;
-      const bMatch = b.gender === preferGender ? 0 : 1;
-      if(aMatch !== bMatch) return aMatch - bMatch;
-    }
-    return String(a.name||'').localeCompare(String(b.name||''), 'ar');
-  });
+  const sorted = [...people]
+    .filter(p => !excludeIds.includes(Number(p.id)))
+    .sort((a,b)=>{
+      if(preferGender){
+        const aMatch = a.gender === preferGender ? 0 : 1;
+        const bMatch = b.gender === preferGender ? 0 : 1;
+        if(aMatch !== bMatch) return aMatch - bMatch;
+      }
+      return String(a.name||'').localeCompare(String(b.name||''), 'ar');
+    });
 
   const html = [`<option value="">${placeholder}</option>`];
   sorted.forEach(p=>{
@@ -2712,32 +2064,22 @@ function openPersonForm(person){
   $('pfTitle').textContent = person ? '✏️ تعديل: ' + (person.name||'') : '➕ إضافة فرد جديد';
   fillFatherSelect($('pfFather'), editingId);
 
-  const motherForceInclude = person && person.mother_id ? [person.mother_id] : [];
-  const spouseForceInclude = person && person.spouse_id ? [person.spouse_id] : [];
+  /* الأم — استبعد المختار */
+  const motherExclude = editingId ? [editingId] : [];
+  fillSmartSelect($('pfMother'), $('pfMotherSearch'), state.people, {
+    placeholder: '— لا توجد —',
+    excludeIds: motherExclude,
+    preferGender: 'female'
+  });
 
-  fillSmartSelect(
-    $('pfMother'), $('pfMotherSearch'),
-    state.people,
-    {
-      placeholder: '— لا توجد —',
-      excludeIds: editingId ? [editingId] : [],
-      preferGender: 'female',
-      forceInclude: motherForceInclude
-    }
-  );
-
+  /* الزوج/الزوجة */
   const gender = person ? (person.gender || 'unknown') : 'unknown';
   const preferSpouse = gender === 'male' ? 'female' : gender === 'female' ? 'male' : null;
-  fillSmartSelect(
-    $('pfSpouse'), $('pfSpouseSearch'),
-    state.people,
-    {
-      placeholder: '— لا يوجد —',
-      excludeIds: editingId ? [editingId] : [],
-      preferGender: preferSpouse,
-      forceInclude: spouseForceInclude
-    }
-  );
+  fillSmartSelect($('pfSpouse'), $('pfSpouseSearch'), state.people, {
+    placeholder: '— لا يوجد —',
+    excludeIds: editingId ? [editingId] : [],
+    preferGender: preferSpouse
+  });
 
   $('pfName').value = person ? (person.name||'') : '';
   $('pfFather').value = person && person.father_id != null ? person.father_id : '';
@@ -2750,9 +2092,9 @@ function openPersonForm(person){
 
   $('pfMotherSearch').value = '';
   $('pfSpouseSearch').value = '';
-
   [...$('pfMother').options].forEach(o=>o.hidden = false);
   [...$('pfSpouse').options].forEach(o=>o.hidden = false);
+  if($('pfBirthHint')) $('pfBirthHint').textContent = '';
 
   openModal('personFormModal');
 }
@@ -2789,8 +2131,7 @@ $('pfSave').onclick = ()=>{
       updated_at: now
     }});
 
-    if(spouse) updateMarriagesFor(editingId, Number(sid));
-    else updateMarriagesFor(editingId, null);
+    updateMarriagesFor(editingId, spouse ? Number(sid) : null);
 
     toast('✏️ تم تحديث البيانات');
     closeModal('personFormModal');
@@ -2820,69 +2161,41 @@ $('pfSave').onclick = ()=>{
   }
 };
 
-/* ✅ الإصلاح 2: تسجيل تعديل الزوج/الزوجة في ft-ops لكل طرف */
 function updateMarriagesFor(personId, spouseId){
-  const now = new Date().toISOString().slice(0,19).replace('T',' ');
-
-  /* احذف كل زيجات هذا الشخص */
   state.marriages = (state.marriages || []).filter(m=>{
     const a = Number(m.a ?? m.husband_id ?? m.person1_id);
     const b = Number(m.b ?? m.wife_id ?? m.person2_id);
     return a !== personId && b !== personId;
   });
-
-  /* احذف الزواج القديم من الطرف الآخر إن وُجد */
-  const oldSpouseId = state.byId.get(personId)?.spouse_id;
-  if(oldSpouseId && oldSpouseId !== spouseId){
-    state.marriages = state.marriages.filter(m=>{
-      const a = Number(m.a ?? m.husband_id ?? m.person1_id);
-      const b = Number(m.b ?? m.wife_id ?? m.person2_id);
-      return !((a === personId && b === oldSpouseId) || (a === oldSpouseId && b === personId));
-    });
-    /* ✅ سجل تعديل الطرف القديم */
-    const oldSpouse = state.byId.get(Number(oldSpouseId));
-    if(oldSpouse){
-      recordOp({op:'edit', person:{
-        ...oldSpouse,
-        spouse_id: null,
-        updated_at: now
-      }});
-    }
-  }
-
   if(spouseId != null){
     state.marriages.push({ a: personId, b: spouseId });
-    /* ✅ سجل تعديل الطرفين في ft-ops */
-    const p1 = state.byId.get(personId);
-    const p2 = state.byId.get(spouseId);
-    if(p1){
-      recordOp({op:'edit', person:{
-        ...p1,
-        spouse_id: spouseId,
-        updated_at: now
-      }});
-    }
-    if(p2){
-      recordOp({op:'edit', person:{
-        ...p2,
-        spouse_id: personId,
-        updated_at: now
-      }});
-    }
-  }else{
-    /* إزالة الزوج */
-    const p1 = state.byId.get(personId);
-    if(p1){
-      recordOp({op:'edit', person:{
-        ...p1,
-        spouse_id: null,
-        updated_at: now
-      }});
-    }
   }
-
   try{ localStorage.setItem('ft-marriages', JSON.stringify(state.marriages)); }catch(_){}
   buildMaps();
+}
+
+function loadMarriagesFromStorage(){
+  try{
+    const saved = JSON.parse(localStorage.getItem('ft-marriages') || 'null');
+    if(Array.isArray(saved)){
+      const existing = new Set(
+        (state.marriages||[]).map(m=>{
+          const a = Number(m.a ?? m.husband_id ?? m.person1_id);
+          const b = Number(m.b ?? m.wife_id ?? m.person2_id);
+          return `${Math.min(a,b)}-${Math.max(a,b)}`;
+        })
+      );
+      saved.forEach(m=>{
+        const a = Number(m.a ?? m.husband_id ?? m.person1_id);
+        const b = Number(m.b ?? m.wife_id ?? m.person2_id);
+        const key = `${Math.min(a,b)}-${Math.max(a,b)}`;
+        if(!existing.has(key)){
+          state.marriages.push(m);
+          existing.add(key);
+        }
+      });
+    }
+  }catch(_){}
 }
 
 /* ============================================================
@@ -2907,7 +2220,7 @@ function openSpouseForm(personId){
 }
 
 /* ============================================================
-   15) نموذج إضافة أبناء متعددة
+   15) نموذج إضافة عدة أبناء — صف واحد افتراضي
    ============================================================ */
 let childFatherId = null;
 
@@ -2952,6 +2265,7 @@ function openChildForm(fatherId){
   $('cfFatherName').value = `${f.name || ''} (#${f.id})`;
   const wrap = $('cfRowsWrap');
   wrap.innerHTML = '';
+  /* ✅ صف واحد افتراضي فقط */
   wrap.appendChild(cfMakeRow());
   openModal('childFormModal');
   setTimeout(()=>{
@@ -2979,9 +2293,7 @@ function saveChildren(close){
     const name = r.querySelector('.cf-name').value.trim();
     let birth = r.querySelector('.cf-birth').value.trim();
     if(name){
-      if(!birth){
-        birth = suggestBirthDate(name, childFatherId);
-      }
+      if(!birth) birth = suggestBirthDate(name, childFatherId);
       entries.push({name, birth});
     }
   });
@@ -3007,13 +2319,7 @@ function saveChildren(close){
   }));
 
   const all = getOps(); all.push(...ops); saveOps(all);
-  /* ✅ تطبيق مباشر بدون applyOps */
-  ops.forEach(o=>{
-    const i = state.people.findIndex(p => Number(p.id) === Number(o.person.id));
-    if(i >= 0) state.people[i] = o.person;
-    else state.people.push(o.person);
-  });
-  buildMaps(); computeGenerations(); updateStats(); render();
+  applyOps(); buildMaps(); computeGenerations(); updateStats(); render();
   requestAnimationFrame(fitToScreen); setTimeout(fitToScreen, 250);
 
   toast(`➕ تمت إضافة ${ops.length} أبناء لـ «${f.name}»`);
@@ -3035,14 +2341,6 @@ function deletePerson(id){
     ? `🗑️ حذف «${p.name}» ومعه ${ids.length - 1} من الأبناء والأحفاد؟`
     : `🗑️ حذف «${p.name}»؟`;
   if(!confirm(msg)) return;
-
-  state.marriages = (state.marriages || []).filter(m=>{
-    const a = Number(m.a ?? m.husband_id ?? m.person1_id);
-    const b = Number(m.b ?? m.wife_id ?? m.person2_id);
-    return !ids.includes(a) && !ids.includes(b);
-  });
-  try{ localStorage.setItem('ft-marriages', JSON.stringify(state.marriages)); }catch(_){}
-
   recordOp({op:'del', ids});
   if(state.focusId != null && ids.includes(state.focusId)) exitFocus();
   if(state.selectedId === id) closePanel();
@@ -3108,10 +2406,7 @@ function performSearch(query){
   const q = (query || '').trim();
   searchBox.classList.toggle('has-value', q.length > 0);
 
-  if(!q){
-    clearSearch();
-    return;
-  }
+  if(!q){ clearSearch(); return; }
 
   const normalizedQ = normalizeArabic(q.replace('#', ''));
   const rawQ = q.replace('#', '').toLowerCase();
@@ -3181,10 +2476,7 @@ function renderSearchUI(q){
   const headerHtml = `
     <div class="sr-header">
       <div><b>${total}</b> نتيجة</div>
-      <div class="sr-hint">
-        <kbd>Enter</kbd> التالي
-        <kbd>Esc</kbd> مسح
-      </div>
+      <div class="sr-hint"><kbd>Enter</kbd> التالي <kbd>Esc</kbd> مسح</div>
     </div>`;
 
   const itemsHtml = state.searchMatches.map((id, i) => {
@@ -3481,25 +2773,14 @@ svg.addEventListener('touchmove', e => {
 svg.addEventListener('touchend', () => { pinch = null; });
 
 /* ============================================================
-   25) ربط الأزرار الأساسية
+   25) ربط الأزرار
    ============================================================ */
 $('btn-fit').onclick = fitToScreen;
 $('btn-reset').onclick = fitToScreen;
 $('btn-zoom-in').onclick = () => zoomBy(1.3);
 $('btn-zoom-out').onclick = () => zoomBy(1/1.3);
-
-/* ✅ الإصلاح 7: خطوة نسبية */
-$('btn-up').onclick = () => {
-  const step = 150 / Math.max(0.5, state.scale);
-  state.ty += step;
-  applyTransform();
-};
-$('btn-down').onclick = () => {
-  const step = 150 / Math.max(0.5, state.scale);
-  state.ty -= step;
-  applyTransform();
-};
-
+$('btn-up').onclick = () => { state.ty += 150; applyTransform(); };
+$('btn-down').onclick = () => { state.ty -= 150; applyTransform(); };
 $('closePanel').onclick = closePanel;
 $('exitFocusBtn').onclick = exitFocus;
 
@@ -3520,7 +2801,7 @@ try{
 }catch(_){}
 
 /* ============================================================
-   26) اختصارات لوحة المفاتيح
+   26) اختصارات
    ============================================================ */
 document.addEventListener('keydown', e => {
   const tag = document.activeElement?.tagName;
@@ -3539,11 +2820,6 @@ document.addEventListener('keydown', e => {
     if(e.key === '[') navGen(-1);
     if(e.key === '+' || e.key === '=') zoomBy(1.2);
     if(e.key === '-') zoomBy(1/1.2);
-    /* ✅ اختصار Undo */
-    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z'){
-      e.preventDefault();
-      undoLastOp();
-    }
   }
   if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
     e.preventDefault();
@@ -3587,17 +2863,184 @@ window.addEventListener('resize', () => {
 })();
 
 /* ============================================================
-   29) التهيئة النهائية
+   29) الميزات الإضافية (إحصائيات + مقارنة + تلوين + استكشاف + لغة)
    ============================================================ */
-function initPanBar(){
-  const r = $('panRange');
-  const apply = v => { state.tx = (state.panCenterX || 0) + Number(v); applyTransform(); };
-  r.oninput = ()=> apply(r.value);
-  $('panRight').onclick = ()=>{ r.value = Number(r.value) + 150; apply(r.value); };
-  $('panLeft').onclick  = ()=>{ r.value = Number(r.value) - 150; apply(r.value); };
-  $('timelineOpen').onclick = ()=>{
-    if(!state.timelineReady){ toast('⚠ لا توجد تواريخ ميلاد كافية'); return; }
-    openModal('timelineModal');
+function openStatsModal(){
+  const people = state.people;
+  const males = people.filter(p=>p.gender==='male').length;
+  const females = people.filter(p=>p.gender==='female').length;
+  const freq = {};
+  people.forEach(p=>{
+    const first = normalizeArabic(String(p.name||'').trim().split(/\s+/)[0] || '');
+    if(first && first.length > 1) freq[first] = (freq[first]||0) + 1;
+  });
+  const topNames = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  let maxD = -1, deepest = null;
+  people.forEach(p=>{
+    const d = state.depth.get(Number(p.id)) || 0;
+    if(d > maxD){ maxD = d; deepest = p; }
+  });
+  const ages = [];
+  const curY = new Date().getFullYear();
+  people.forEach(p=>{
+    const b = parseYear(p.birth_date); if(b == null) return;
+    const d = parseYear(p.death_date);
+    const age = (d != null ? d : curY) - b;
+    if(age >= 0 && age < 130) ages.push(age);
+  });
+  const avgAge = ages.length ? Math.round(ages.reduce((s,a)=>s+a,0) / ages.length) : null;
+
+  $('statsBody').innerHTML = `
+    <table class="stat-table">
+      <tr><th>إجمالي الأفراد</th><td class="num">${people.length}</td></tr>
+      <tr><th>الذكور / الإناث</th><td class="num">♂${males} / ♀${females}</td></tr>
+      <tr><th>عدد الأجيال</th><td class="num">${state.maxGen + 1}</td></tr>
+      <tr><th>أطول سلسلة نسب</th><td class="num">${deepest ? escapeHtml(deepest.name)+' (ج'+(maxD+1)+')' : '—'}</td></tr>
+      <tr><th>متوسط العمر</th><td class="num">${avgAge != null ? avgAge + ' سنة' : '—'}</td></tr>
+      <tr><th>عدد الزيجات</th><td class="num">${(state.marriages||[]).length}</td></tr>
+      <tr><th>فروع الجذور</th><td class="num">${state.roots.length}</td></tr>
+    </table>
+    <h4>🔤 أكثر الأسماء تكراراً</h4>
+    <div class="chips">${topNames.map(([n,c])=>`<span class="chip">${escapeHtml(n)} <b>×${c}</b></span>`).join('') || '—'}</div>
+  `;
+  openModal('statsModal');
+  drawPie();
+}
+
+function drawPie(){
+  const cv = $('statsPie'); if(!cv) return;
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  const data = state.roots.map(r=>{
+    const p = state.byId.get(r);
+    return {label:(p?p.name:'؟')+' #'+r, value:countDescendants(r)};
+  }).sort((a,b)=>b.value-a.value);
+  const top = data.slice(0, 7);
+  const rest = data.slice(7).reduce((s,d)=>s+d.value, 0);
+  if(rest > 0) top.push({label:'أخرى', value:rest});
+  const total = top.reduce((s,d)=>s+d.value, 0) || 1;
+  const cx = 95, cy = 95, R = 80;
+  let a0 = -Math.PI/2;
+  top.forEach((d, i)=>{
+    const a1 = a0 + (d.value/total) * Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, R, a0, a1);
+    ctx.closePath();
+    ctx.fillStyle = PALETTE[i % PALETTE.length];
+    ctx.fill();
+    ctx.strokeStyle = state.dark ? '#101a2b' : '#fff';
+    ctx.lineWidth = 2; ctx.stroke();
+    a0 = a1;
+  });
+  ctx.font = 'bold 10px Cairo, sans-serif';
+  top.forEach((d, i)=>{
+    const y = 18 + i * 22;
+    ctx.fillStyle = PALETTE[i % PALETTE.length];
+    ctx.fillRect(200, y - 8, 11, 11);
+    ctx.fillStyle = state.dark ? '#edf4ff' : '#152033';
+    const pct = Math.round(d.value/total*100);
+    ctx.fillText(`${d.label} — ${pct}%`, 217, y + 2);
+  });
+}
+
+function openCompare(){
+  const opts = state.roots.map(r=>{
+    const p = state.byId.get(r);
+    return `<option value="${r}">${escapeHtml(p ? p.name : '؟')} (#${r}) — ${countDescendants(r)} فرد</option>`;
+  }).join('');
+  $('cmpA').innerHTML = opts; $('cmpB').innerHTML = opts;
+  if(state.roots.length > 1) $('cmpB').selectedIndex = 1;
+  $('cmpResult').innerHTML = '';
+  openModal('compareModal');
+}
+
+$('cmpRun').onclick = ()=>{
+  const A = Number($('cmpA').value), B = Number($('cmpB').value);
+  if(A === B){ toast('⚠ اختر فرعين مختلفين'); return; }
+  const info = (root)=>{
+    const set = collectDescendants(root);
+    const gens = computeBranchGenerations(set);
+    const ys = [...set].map(id=>parseYear(state.byId.get(id)?.birth_date)).filter(y=>y!=null);
+    return {
+      size: set.size, gens,
+      branches: (state.children.get(root) || []).length,
+      minY: ys.length ? Math.min(...ys) : null,
+      maxY: ys.length ? Math.max(...ys) : null
+    };
+  };
+  const a = info(A), b = info(B);
+  const row = (k, va, vb)=>`<tr><td>${k}</td><td class="num">${va ?? '—'}</td><td class="num">${vb ?? '—'}</td></tr>`;
+  $('cmpResult').innerHTML = `<table class="stat-table">
+    <tr><th>المعيار</th><th>الفرع الأول</th><th>الفرع الثاني</th></tr>
+    ${row('عدد الأفراد', a.size, b.size)}
+    ${row('عدد الأجيال', a.gens, b.gens)}
+    ${row('الأبناء المباشرون', a.branches, b.branches)}
+    ${row('أقدم ميلاد', a.minY, b.minY)}
+    ${row('أحدث ميلاد', a.maxY, b.maxY)}
+  </table>`;
+};
+
+function toggleHeatmap(){
+  state.colorMode = state.colorMode === 'branch' ? 'depth' : 'branch';
+  render();
+  toast(state.colorMode === 'branch' ? '🎨 تلوين حسب الفرع' : '🎨 تلوين حسب الجيل');
+}
+
+function startExplore(){
+  $('exploreOverlay').classList.add('show');
+  nextExplore();
+}
+function nextExplore(){
+  const cands = state.people.filter(p=>{
+    const n = String(p.name||'');
+    return n.length > 1 && !/^\d|👧|مجهول/.test(n);
+  });
+  if(!cands.length){ toast('⚠ لا يوجد أفراد'); return; }
+  const p = cands[Math.floor(Math.random()*cands.length)];
+  state.exploreCur = Number(p.id);
+  $('expQ').textContent = '❓ من هو هذا الشخص؟';
+  $('expInfo').style.display = 'none';
+  $('expHint').textContent = `💡 تلميح: من الجيل ${(state.depth.get(Number(p.id))||0)+1} • له ${(state.children.get(Number(p.id))||[]).length} أبناء`;
+  $('expReveal').style.display = '';
+  $('expNext').style.display = 'none';
+  $('expShow').style.display = 'none';
+}
+function revealExplore(){
+  const p = state.byId.get(state.exploreCur); if(!p) return;
+  const father = p.father_id ? state.byId.get(Number(p.father_id)) : null;
+  const kids = state.children.get(state.exploreCur) || [];
+  const by = parseYear(p.birth_date);
+  $('expInfo').innerHTML = `
+    <b style="font-size:16px;color:var(--text-strong)">${escapeHtml(p.name||'')} <span class="sr-id">#${p.id}</span></b><br>
+    👨 الأب: ${father ? escapeHtml(father.name) : '—'}<br>
+    👶 الأبناء: ${kids.length ? kids.map(k=>escapeHtml(state.byId.get(k)?.name||'')).join('، ') : '—'}<br>
+    📅 الميلاد: ${by != null ? by : '—'}`;
+  $('expInfo').style.display = 'block';
+  $('expHint').textContent = '';
+  $('expReveal').style.display = 'none';
+  $('expNext').style.display = '';
+  $('expShow').style.display = '';
+}
+
+function initVoice(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const btn = $('voiceBtn');
+  if(!SR){ btn.style.display = 'none'; return; }
+  let rec = null, on = false;
+  btn.onclick = ()=>{
+    if(on){ rec && rec.stop(); return; }
+    rec = new SR();
+    rec.lang = 'ar-SA'; rec.interimResults = false;
+    rec.onresult = e=>{
+      const t = e.results[0][0].transcript;
+      searchInput.value = t;
+      performSearch(t);
+      toast('🎤 سمعت: ' + t);
+    };
+    rec.onerror = ()=> toast('⚠ تعذر التعرف على الصوت');
+    rec.onend = ()=>{ on = false; btn.textContent = '🎤'; };
+    try{ rec.start(); on = true; btn.textContent = '⏹'; }catch(_){}
   };
 }
 
@@ -3617,436 +3060,36 @@ function initParticles(){
 }
 
 /* ============================================================
-   30) الإحصائيات المتقدمة
+   30) التهيئة النهائية
    ============================================================ */
-function showStats(){
-  const males = state.people.filter(p => p.gender === 'male').length;
-  const females = state.people.filter(p => p.gender === 'female').length;
-  const unknowns = state.people.length - males - females;
-  const withBirth = state.people.filter(p => parseYear(p.birth_date) != null);
-  const birthYears = withBirth.map(p => parseYear(p.birth_date)).filter(y => y != null);
-  const minYear = birthYears.length ? Math.min(...birthYears) : '—';
-  const maxYear = birthYears.length ? Math.max(...birthYears) : '—';
-  const avgYear = birthYears.length ? Math.round(birthYears.reduce((a,b)=>a+b,0) / birthYears.length) : '—';
-
-  const nameCount = {};
-  state.people.forEach(p => {
-    const n = (p.name || '').trim();
-    if(n) nameCount[n] = (nameCount[n] || 0) + 1;
-  });
-  const topNames = Object.entries(nameCount).sort((a,b)=>b[1]-a[1]).slice(0, 5);
-
-  const branchCounts = state.roots.map(r => ({
-    id: r,
-    name: state.byId.get(r)?.name || '؟',
-    count: countDescendants(r)
-  })).sort((a,b)=>b.count-a.count).slice(0, 8);
-
-  let html = `
-    <table class="stat-table">
-      <tr><th>البيان</th><th>القيمة</th></tr>
-      <tr><td>👥 إجمالي الأفراد</td><td class="num">${state.people.length}</td></tr>
-      <tr><td>👨 الذكور</td><td class="num">${males}</td></tr>
-      <tr><td>👩 الإناث</td><td class="num">${females}</td></tr>
-      <tr><td>❓ غير محدد</td><td class="num">${unknowns}</td></tr>
-      <tr><td>🧬 الأجيال</td><td class="num">${state.maxGen + 1}</td></tr>
-      <tr><td>🌳 الفروع الجذرية</td><td class="num">${state.roots.length}</td></tr>
-      <tr><td>📅 نطاق سنوات الميلاد</td><td class="num">${minYear} - ${maxYear}</td></tr>
-      <tr><td>📊 متوسط سنة الميلاد</td><td class="num">${avgYear}</td></tr>
-      <tr><td>💍 الزيجات</td><td class="num">${(state.marriages||[]).length}</td></tr>
-    </table>
-    <h4>🏷️ أكثر الأسماء تكراراً</h4>
-    <div class="chips">
-      ${topNames.map(([n,c])=>`<span class="chip">${escapeHtml(n)} <b>×${c}</b></span>`).join('') || '<span class="chip">—</span>'}
-    </div>
-    <h4>🌳 أكبر الفروع</h4>
-    <div class="chips">
-      ${branchCounts.map(b=>`<span class="chip">${escapeHtml(b.name)} <b>${b.count}</b></span>`).join('') || '<span class="chip">—</span>'}
-    </div>
-  `;
-  $('statsBody').innerHTML = html;
-  openModal('statsModal');
-  /* ✅ الإصلاح 5: تأخير الرسم */
-  setTimeout(() => drawPieChart(branchCounts), 100);
+function initPanBar(){
+  const r = $('panRange');
+  const apply = v => { state.tx = (state.panCenterX || 0) + Number(v); applyTransform(); };
+  r.oninput = ()=> apply(r.value);
+  $('panRight').onclick = ()=>{ r.value = Number(r.value) + 150; apply(r.value); };
+  $('panLeft').onclick  = ()=>{ r.value = Number(r.value) - 150; apply(r.value); };
+  $('timelineOpen').onclick = ()=>{
+    if(!state.timelineReady){ toast('⚠ لا توجد تواريخ ميلاد كافية'); return; }
+    openModal('timelineModal');
+  };
 }
 
-function drawPieChart(branchCounts){
-  const canvas = $('statsPie');
-  if(!canvas) return;
-  /* تأكد من أن canvas مقيس */
-  const rect = canvas.getBoundingClientRect();
-  if(canvas.width === 0 || canvas.height === 0){
-    canvas.width = 340; canvas.height = 190;
+function toggleFullscreen(){
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    toast('⛶ ملء الشاشة — Esc للخروج');
+  }else{
+    document.exitFullscreen && document.exitFullscreen();
   }
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  ctx.clearRect(0, 0, W, H);
-
-  const total = branchCounts.reduce((s,b)=>s+b.count, 0) || 1;
-  const cx = W/2, cy = H/2 + 5, r = 70;
-
-  let startAngle = -Math.PI/2;
-  branchCounts.forEach((b, i) => {
-    const slice = (b.count / total) * Math.PI * 2;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, r, startAngle, startAngle + slice);
-    ctx.closePath();
-    ctx.fillStyle = PALETTE[i % PALETTE.length];
-    ctx.fill();
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    startAngle += slice;
-  });
-
-  let ly = 18;
-  branchCounts.slice(0, 6).forEach((b, i) => {
-    ctx.fillStyle = PALETTE[i % PALETTE.length];
-    ctx.fillRect(10, ly, 12, 12);
-    ctx.fillStyle = '#333';
-    ctx.font = 'bold 10px Cairo, sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText(`${b.name} (${b.count})`, 28, ly + 10);
-    ly += 18;
-  });
 }
 
-/* ============================================================
-   31) مقارنة الفروع
-   ============================================================ */
-function openCompare(){
-  const roots = state.roots;
-  if(roots.length < 2){ toast('⚠ يحتاج فرعان على الأقل'); return; }
-
-  const optsHtml = roots.map(r => {
-    const p = state.byId.get(r);
-    return `<option value="${r}">${escapeHtml(p?.name||'؟')} (#${r})</option>`;
-  }).join('');
-
-  $('cmpA').innerHTML = optsHtml;
-  $('cmpB').innerHTML = optsHtml;
-  $('cmpB').selectedIndex = Math.min(1, roots.length - 1);
-  $('cmpResult').innerHTML = '';
-  openModal('compareModal');
-}
-
-function runCompare(){
-  const a = Number($('cmpA').value);
-  const b = Number($('cmpB').value);
-  if(a === b){ toast('⚠ اختر فرعين مختلفين'); return; }
-
-  const setA = collectDescendants(a);
-  const setB = collectDescendants(b);
-
-  const info = (rootId, set) => {
-    const p = state.byId.get(rootId);
-    const depths = [...set].map(id => state.depth.get(id) ?? 0);
-    const gens = Math.max(...depths) - Math.min(...depths) + 1;
-    const directKids = (state.children.get(rootId) || []).length;
-    const years = [...set].map(id => parseYear(state.byId.get(id)?.birth_date)).filter(y=>y!=null);
-    const oldest = years.length ? Math.min(...years) : '—';
-    const newest = years.length ? Math.max(...years) : '—';
-    return {name: p?.name || '؟', total: set.size, gens, directKids, oldest, newest};
-  };
-
-  const A = info(a, setA);
-  const B = info(b, setB);
-
-  const row = (label, va, vb) => `
-    <tr>
-      <td style="font-weight:800">${label}</td>
-      <td class="num">${va}</td>
-      <td class="num">${vb}</td>
-    </tr>`;
-
-  $('cmpResult').innerHTML = `
-    <table class="stat-table">
-      <tr><th>البيان</th><th>${escapeHtml(A.name)}</th><th>${escapeHtml(B.name)}</th></tr>
-      ${row('👥 الأفراد', A.total, B.total)}
-      ${row('🧬 الأجيال', A.gens, B.gens)}
-      ${row('👶 أبناء مباشرون', A.directKids, B.directKids)}
-      ${row('📅 أقدم ميلاد', A.oldest, B.oldest)}
-      ${row('📅 أحدث ميلاد', A.newest, B.newest)}
-    </table>
-  `;
-}
-
-/* ============================================================
-   32) تلوين حسب الفرع
-   ============================================================ */
-function toggleHeatmap(){
-  state.colorMode = state.colorMode === 'depth' ? 'branch' : 'depth';
-  render();
-  toast(state.colorMode === 'branch' ? '🎨 تلوين حسب الفرع' : '🎨 تلوين حسب الجيل');
-}
-
-/* ============================================================
-   33) وضع الاستكشاف
-   ============================================================ */
-let explorePersonId = null;
-let exploreRevealed = false;
-
-function openExplore(){
-  if(state.people.length < 2){ toast('⚠ عدد الأفراد قليل'); return; }
-  exploreRevealed = false;
-  explorePersonId = state.people[Math.floor(Math.random() * state.people.length)].id;
-  const p = state.byId.get(explorePersonId);
-  const depth = state.depth.get(explorePersonId) || 0;
-  const kids = (state.children.get(explorePersonId) || []).length;
-  const hasFather = !!p.father_id;
-
-  $('expQ').textContent = '❓ من هو هذا الشخص؟';
-  $('expHint').textContent = `الجيل ${depth+1} • ${kids} أبناء • ${hasFather ? 'له أب مسجل' : 'جذر الشجرة'}`;
-  $('expInfo').style.display = 'none';
-  $('expInfo').innerHTML = '';
-  $('expReveal').style.display = '';
-  $('expNext').style.display = 'none';
-  $('expShow').style.display = 'none';
-  $('exploreOverlay').classList.add('show');
-}
-
-function revealExplore(){
-  if(!explorePersonId) return;
-  const p = state.byId.get(explorePersonId);
-  exploreRevealed = true;
-  $('expQ').textContent = `✅ ${p.name} (#${p.id})`;
-  $('expInfo').innerHTML = `
-    الجنس: ${p.gender === 'male' ? '♂ ذكر' : p.gender === 'female' ? '♀ أنثى' : '• غير محدد'}<br>
-    الميلاد: ${p.birth_date || '—'}<br>
-    ${p.notes ? 'ملاحظات: ' + escapeHtml(p.notes) : ''}
-  `;
-  $('expInfo').style.display = 'block';
-  $('expReveal').style.display = 'none';
-  $('expNext').style.display = '';
-  $('expShow').style.display = '';
-}
-
-function nextExplore(){
-  closeExplore();
-  setTimeout(openExplore, 200);
-}
-
-function closeExplore(){
-  $('exploreOverlay').classList.remove('show');
-  explorePersonId = null;
-}
-
-function showExplorePerson(){
-  if(!explorePersonId) return;
-  const id = explorePersonId;
-  closeExplore();
-  setTimeout(()=>{ centerOnSmooth(id); selectPerson(id); }, 250);
-}
-
-/* ============================================================
-   34) تبديل اللغة — ✅ الإصلاح 8 (ترجمة شاملة)
-   ============================================================ */
-const translations = {
-  ar: {
-    title: '🌳 شجرة العائلة Pro',
-    searchPlaceholder: 'ابحث بالاسم أو #ID...',
-    statsPeople: 'الأفراد',
-    statsGens: 'الأجيال',
-    statsRoots: 'الفروع',
-    btnAdd: 'إضافة فرد جديد',
-    btnExport: 'تصدير الشجرة',
-    btnStats: 'إحصائيات متقدمة',
-    btnCompare: 'مقارنة الفروع',
-    btnHeatmap: 'تلوين حسب الفرع',
-    btnExplore: 'وضع الاستكشاف',
-    btnHelp: 'اختصارات ومساعدة',
-    btnLang: 'English',
-    btnRefresh: 'تحديث البيانات',
-    btnFullscreen: 'ملء الشاشة',
-    btnFit: 'ملاءمة',
-    btnTheme: 'المظهر',
-    /* النماذج */
-    frmName: 'الاسم الكامل *',
-    frmFather: 'الأب',
-    frmMother: 'الأم (اختياري)',
-    frmSpouse: 'الزوج/الزوجة (اختياري)',
-    frmGender: 'الجنس',
-    frmBirth: 'سنة الميلاد',
-    frmDeath: 'سنة الوفاة (اتركها فارغة إن كان على قيد الحياة)',
-    frmNotes: 'ملاحظات',
-    frmSave: '💾 حفظ',
-    frmCancel: 'إلغاء',
-    /* لوحة التفاصيل */
-    highlightPath: 'إضاءة المسار',
-    center: 'توسيط',
-    addChild: 'إضافة ابن',
-    addSpouse: 'إضافة زوج',
-    ancestry: 'شجرة الأنساب',
-    shareLink: 'نسخ الرابط',
-    edit: 'تعديل',
-    moreInfo: 'تفاصيل',
-    delete: 'حذف',
-    closeAll: 'إغلاق الكل',
-    /* رسائل */
-    toastAdded: '➕ تمت الإضافة',
-    toastUpdated: '✏️ تم التحديث',
-    toastDeleted: '🗑️ تم الحذف',
-    toastRefreshed: '✅ تم تحديث البيانات',
-    toastUndo: '↩ تم التراجع',
-    toastUndoEmpty: '⚠ لا توجد عمليات للتراجع',
-  },
-  en: {
-    title: '🌳 Family Tree Pro',
-    searchPlaceholder: 'Search by name or #ID...',
-    statsPeople: 'People',
-    statsGens: 'Generations',
-    statsRoots: 'Branches',
-    btnAdd: 'Add Person',
-    btnExport: 'Export Tree',
-    btnStats: 'Statistics',
-    btnCompare: 'Compare Branches',
-    btnHeatmap: 'Color by Branch',
-    btnExplore: 'Explore Mode',
-    btnHelp: 'Help & Shortcuts',
-    btnLang: 'العربية',
-    btnRefresh: 'Refresh Data',
-    btnFullscreen: 'Fullscreen',
-    btnFit: 'Fit',
-    btnTheme: 'Theme',
-    frmName: 'Full Name *',
-    frmFather: 'Father',
-    frmMother: 'Mother (optional)',
-    frmSpouse: 'Spouse (optional)',
-    frmGender: 'Gender',
-    frmBirth: 'Birth Year',
-    frmDeath: 'Death Year (leave empty if alive)',
-    frmNotes: 'Notes',
-    frmSave: '💾 Save',
-    frmCancel: 'Cancel',
-    highlightPath: 'Highlight Path',
-    center: 'Center',
-    addChild: 'Add Child',
-    addSpouse: 'Add Spouse',
-    ancestry: 'Ancestry',
-    shareLink: 'Copy Link',
-    edit: 'Edit',
-    moreInfo: 'Details',
-    delete: 'Delete',
-    closeAll: 'Close All',
-    toastAdded: '➕ Added successfully',
-    toastUpdated: '✏️ Updated',
-    toastDeleted: '🗑️ Deleted',
-    toastRefreshed: '✅ Data refreshed',
-    toastUndo: '↩ Undone',
-    toastUndoEmpty: '⚠ No operations to undo',
-  }
-};
-
-function applyLanguage(){
-  const t = translations[state.lang];
-  document.documentElement.lang = state.lang;
-  document.documentElement.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
-  document.title = t.title;
-  if($('searchInput')) $('searchInput').placeholder = t.searchPlaceholder;
-
-  /* إحصائيات */
-  if($('st-people')?.nextElementSibling) $('st-people').nextElementSibling.textContent = t.statsPeople;
-  if($('st-gens')?.nextElementSibling) $('st-gens').nextElementSibling.textContent = t.statsGens;
-  if($('st-roots')?.nextElementSibling) $('st-roots').nextElementSibling.textContent = t.statsRoots;
-
-  /* عناوين الأزرار */
-  const titleMap = {
-    'btn-refresh': t.btnRefresh,
-    'btn-export': t.btnExport,
-    'btn-add': t.btnAdd,
-    'btn-stats': t.btnStats,
-    'btn-compare': t.btnCompare,
-    'btn-heatmap': t.btnHeatmap,
-    'btn-explore': t.btnExplore,
-    'btn-lang': t.btnLang,
-    'btn-help': t.btnHelp,
-    'btn-fullscreen': t.btnFullscreen,
-    'btn-fit': t.btnFit,
-    'btn-theme': t.btnTheme,
-  };
-  Object.entries(titleMap).forEach(([id, val])=>{
-    const el = $(id);
-    if(el) el.title = val;
-  });
-
-  /* نصوص النموذج */
-  const labelMap = {
-    'pfNameLabel': t.frmName,
-    'pfFatherLabel': t.frmFather,
-    'pfMotherLabel': t.frmMother,
-    'pfSpouseLabel': t.frmSpouse,
-    'pfGenderLabel': t.frmGender,
-    'pfBirthLabel': t.frmBirth,
-    'pfDeathLabel': t.frmDeath,
-    'pfNotesLabel': t.frmNotes,
-  };
-  Object.entries(labelMap).forEach(([id, val])=>{
-    const el = $(id);
-    if(el) el.textContent = val;
-  });
-  if($('pfSave')) $('pfSave').textContent = t.frmSave;
-  if($('pfCancel')) $('pfCancel').textContent = t.frmCancel;
-
-  /* نصوص data-i18n في لوحة التفاصيل */
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const key = el.dataset.i18n;
-    if(t[key]) el.textContent = t[key];
-  });
-}
-
-function toggleLanguage(){
-  state.lang = state.lang === 'ar' ? 'en' : 'ar';
-  applyLanguage();
-  toast(state.lang === 'ar' ? '🇸🇦 العربية' : '🇬🇧 English');
-}
-
-/* ============================================================
-   35) البحث الصوتي
-   ============================================================ */
-function startVoiceSearch(){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){ toast('⚠ البحث الصوتي غير مدعوم في هذا المتصفح'); return; }
-
-  const rec = new SR();
-  rec.lang = state.lang === 'ar' ? 'ar-SA' : 'en-US';
-  rec.interimResults = false;
-  rec.maxAlternatives = 1;
-
-  $('voiceBtn').textContent = '🔴';
-  $('voiceBtn').style.color = '#dc2626';
-
-  rec.onresult = (e) => {
-    const text = e.results[0][0].transcript;
-    $('searchInput').value = text;
-    searchBox.classList.add('has-value');
-    performSearch(text);
-    toast(`🎤 سمعت: «${text}»`);
-  };
-
-  rec.onerror = (e) => {
-    toast('⚠ خطأ في الاستماع: ' + e.error);
-  };
-
-  rec.onend = () => {
-    $('voiceBtn').textContent = '🎤';
-    $('voiceBtn').style.color = '';
-  };
-
-  try{ rec.start(); toast('🎤 جارٍ الاستماع...'); }
-  catch(err){ toast('⚠ تعذر بدء الاستماع'); }
-}
-
-/* ============================================================
-   36) ربط الأزرار
-   ============================================================ */
 function initFeatures(){
   initPanBar();
   initParticles();
+  initVoice();
   wireBirthSuggestion();
 
-  /* ✅ الإصلاح 3: زر التحديث يستدعي refreshData */
-  $('btn-refresh').onclick = refreshData;
+  $('btn-refresh').onclick = () => location.reload();
   $('btn-add').onclick = ()=> openPersonForm(null);
   $('btn-fullscreen').onclick = toggleFullscreen;
   $('btnMoreMenu').onclick = (e)=>{
@@ -4058,36 +3101,24 @@ function initFeatures(){
       $('moreMenu').classList.remove('open');
   });
 
-  $('btn-gen-up').onclick = ()=> navGen(-1);
-  $('btn-gen-down').onclick = ()=> navGen(1);
-
-  /* الأزرار الإضافية */
-  $('btn-stats').onclick = showStats;
+  /* ✅ ربط كل الأزرار الإضافية */
+  $('btn-stats').onclick = openStatsModal;
   $('btn-compare').onclick = openCompare;
   $('btn-heatmap').onclick = toggleHeatmap;
-  $('btn-explore').onclick = openExplore;
+  $('btn-explore').onclick = startExplore;
   $('btn-help').onclick = ()=> openModal('helpModal');
-  $('btn-lang').onclick = toggleLanguage;
-  $('voiceBtn').onclick = startVoiceSearch;
-  $('cmpRun').onclick = runCompare;
+  $('btn-gen-up').onclick = ()=> navGen(-1);
+  $('btn-gen-down').onclick = ()=> navGen(1);
+  $('btn-lang').onclick = ()=> toast('🌐 قريباً');
 
-  /* أزرار الاستكشاف */
-  $('expClose').onclick = closeExplore;
+  $('expClose').onclick = ()=> $('exploreOverlay').classList.remove('show');
   $('expReveal').onclick = revealExplore;
   $('expNext').onclick = nextExplore;
-  $('expShow').onclick = showExplorePerson;
-  $('exploreOverlay').onclick = (e)=>{ if(e.target === $('exploreOverlay')) closeExplore(); };
-
-  applyLanguage();
-}
-
-function toggleFullscreen(){
-  if(!document.fullscreenElement){
-    document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
-    toast('⛶ ملء الشاشة — Esc للخروج');
-  }else{
-    document.exitFullscreen && document.exitFullscreen();
-  }
+  $('expShow').onclick = ()=>{
+    const id = state.exploreCur;
+    $('exploreOverlay').classList.remove('show');
+    setTimeout(()=>{ centerOnSmooth(id); selectPerson(id); }, 200);
+  };
 }
 
 document.querySelectorAll('[data-close]').forEach(btn=>{
@@ -4103,11 +3134,14 @@ $('detailModal').onclick = (e) => {
 
 initFeatures();
 loadData();
-
-/* ============================================================
-   🌳 JavaScript الجزء 2 — الطباعة والتصدير
+  /* ============================================================
+   🌳 شجرة العائلة Pro — JavaScript الجزء 2
+   الطباعة والتصدير + كلمة السر
    ============================================================ */
 
+/* ============================================================
+   1) 🔒 كلمة سر الطباعة
+   ============================================================ */
 let _pendingExportAction = null;
 
 function requestPrintPassword(onSuccess){
@@ -4158,6 +3192,9 @@ function requestPrintPassword(onSuccess){
   };
 }
 
+/* ============================================================
+   2) 🎛️ نافذة خيارات الطباعة
+   ============================================================ */
 function showPrintOptions(){
   const modal = $('printOptionsModal');
   const progress = $('poProgress');
@@ -4198,7 +3235,7 @@ function showPrintOptions(){
 
       if(opts.png && canvas){
         progress.textContent = '💾 حفظ PNG...';
-        downloadCanvasPNG(canvas, 'family-tree.png');
+        downloadCanvasPNG(canvas, `family-tree-${Date.now()}.png`);
         await sleep(400);
       }
 
@@ -4243,6 +3280,9 @@ function showPrintOptions(){
 
 function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
+/* ============================================================
+   3) 🖼️ تحويل الشجرة إلى Canvas بدقة عالية
+   ============================================================ */
 async function renderTreeToCanvas(scaleFactor = 4){
   let bb;
   try{ bb = viewport.getBBox(); }
@@ -4251,15 +3291,17 @@ async function renderTreeToCanvas(scaleFactor = 4){
   if(!bb.width || !bb.height) throw new Error('الشجرة فارغة');
 
   const PADDING = 60;
-  const TITLE_HEIGHT = 80;
+  const TITLE_HEIGHT = 100;
   const FOOTER_HEIGHT = 50;
 
   const contentW = bb.width + PADDING * 2;
   const contentH = bb.height + PADDING * 2;
+  const totalW = contentW;
   const totalH = contentH + TITLE_HEIGHT + FOOTER_HEIGHT;
-  const finalW = Math.round(contentW * scaleFactor);
+  const finalW = Math.round(totalW * scaleFactor);
   const finalH = Math.round(totalH * scaleFactor);
 
+  /* canvas */
   const canvas = document.createElement('canvas');
   canvas.width = finalW;
   canvas.height = finalH;
@@ -4273,23 +3315,28 @@ async function renderTreeToCanvas(scaleFactor = 4){
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, finalW, finalH);
 
+  /* العنوان */
   ctx.save();
   ctx.scale(scaleFactor, scaleFactor);
   ctx.fillStyle = textColor;
-  ctx.font = 'bold 24px Cairo, "Segoe UI", Tahoma, sans-serif';
+  ctx.font = 'bold 28px Cairo, "Segoe UI", Tahoma, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   const title = '🌳 شجرة العائلة Pro';
-  ctx.fillText(title, contentW / 2, TITLE_HEIGHT / 2);
+  ctx.fillText(title, contentW / 2, 38);
 
   ctx.fillStyle = subColor;
-  ctx.font = 'bold 13px Cairo, "Segoe UI", Tahoma, sans-serif';
+  ctx.font = 'bold 14px Cairo, "Segoe UI", Tahoma, sans-serif';
   const dateStr = new Date().toLocaleDateString('ar-EG', {
     year: 'numeric', month: 'long', day: 'numeric'
   });
-  ctx.fillText(`📅 ${dateStr}  •  👥 ${state.people.length} فرد  •  🧬 ${state.maxGen + 1} أجيال`, contentW / 2, TITLE_HEIGHT / 2 + 28);
+  ctx.fillText(
+    `📅 ${dateStr}  •  👥 ${state.people.length} فرد  •  🧬 ${state.maxGen + 1} أجيال  •  🌿 ${state.roots.length} فروع`,
+    contentW / 2, 66
+  );
   ctx.restore();
 
+  /* استنسخ الشجرة */
   const clone = viewport.cloneNode(true);
   const offsetX = PADDING - bb.x;
   const offsetY = TITLE_HEIGHT + PADDING - bb.y;
@@ -4297,13 +3344,14 @@ async function renderTreeToCanvas(scaleFactor = 4){
 
   applyComputedStyles(viewport, clone, isDark);
 
+  /* SVG مؤقت */
   const svgNS = 'http://www.w3.org/2000/svg';
   const svgWrapper = document.createElementNS(svgNS, 'svg');
   svgWrapper.setAttribute('xmlns', svgNS);
   svgWrapper.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
-  svgWrapper.setAttribute('width', contentW);
+  svgWrapper.setAttribute('width', totalW);
   svgWrapper.setAttribute('height', totalH);
-  svgWrapper.setAttribute('viewBox', `0 0 ${contentW} ${totalH}`);
+  svgWrapper.setAttribute('viewBox', `0 0 ${totalW} ${totalH}`);
 
   const bgRect = document.createElementNS(svgNS, 'rect');
   bgRect.setAttribute('width', '100%');
@@ -4311,13 +3359,14 @@ async function renderTreeToCanvas(scaleFactor = 4){
   bgRect.setAttribute('fill', bgColor);
   svgWrapper.appendChild(bgRect);
 
+  /* العنوان داخل SVG */
   const titleText = document.createElementNS(svgNS, 'text');
   titleText.setAttribute('x', contentW / 2);
-  titleText.setAttribute('y', TITLE_HEIGHT / 2);
+  titleText.setAttribute('y', 38);
   titleText.setAttribute('text-anchor', 'middle');
   titleText.setAttribute('dominant-baseline', 'middle');
   titleText.setAttribute('font-family', 'Cairo, "Segoe UI", Tahoma, sans-serif');
-  titleText.setAttribute('font-size', '24');
+  titleText.setAttribute('font-size', '28');
   titleText.setAttribute('font-weight', '900');
   titleText.setAttribute('fill', textColor);
   titleText.textContent = title;
@@ -4325,18 +3374,19 @@ async function renderTreeToCanvas(scaleFactor = 4){
 
   const subtitleText = document.createElementNS(svgNS, 'text');
   subtitleText.setAttribute('x', contentW / 2);
-  subtitleText.setAttribute('y', TITLE_HEIGHT / 2 + 28);
+  subtitleText.setAttribute('y', 66);
   subtitleText.setAttribute('text-anchor', 'middle');
   subtitleText.setAttribute('dominant-baseline', 'middle');
   subtitleText.setAttribute('font-family', 'Cairo, "Segoe UI", Tahoma, sans-serif');
-  subtitleText.setAttribute('font-size', '13');
+  subtitleText.setAttribute('font-size', '14');
   subtitleText.setAttribute('font-weight', '800');
   subtitleText.setAttribute('fill', subColor);
-  subtitleText.textContent = `📅 ${dateStr}  •  👥 ${state.people.length} فرد  •  🧬 ${state.maxGen + 1} أجيال`;
+  subtitleText.textContent = `📅 ${dateStr}  •  👥 ${state.people.length} فرد  •  🧬 ${state.maxGen + 1} أجيال  •  🌿 ${state.roots.length} فروع`;
   svgWrapper.appendChild(subtitleText);
 
   svgWrapper.appendChild(clone);
 
+  /* تحويل إلى صورة */
   const serializer = new XMLSerializer();
   const svgString = serializer.serializeToString(svgWrapper);
   const svgBlob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
@@ -4361,10 +3411,11 @@ async function renderTreeToCanvas(scaleFactor = 4){
     img.src = svgUrl;
   });
 
+  /* التذييل — ✅ إصلاح: استخدم totalH - FOOTER/2 */
   ctx.save();
   ctx.scale(scaleFactor, scaleFactor);
   ctx.fillStyle = subColor;
-  ctx.font = 'bold 11px Cairo, "Segoe UI", Tahoma, sans-serif';
+  ctx.font = 'bold 12px Cairo, "Segoe UI", Tahoma, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('تم التوليد بواسطة شجرة العائلة Pro', contentW / 2, totalH - FOOTER_HEIGHT / 2);
@@ -4373,6 +3424,7 @@ async function renderTreeToCanvas(scaleFactor = 4){
   return canvas;
 }
 
+/* نسخ الأنماط */
 function applyComputedStyles(srcRoot, dstRoot, isDark){
   const srcEls = [srcRoot, ...srcRoot.querySelectorAll('*')];
   const dstEls = [dstRoot, ...dstRoot.querySelectorAll('*')];
@@ -4408,6 +3460,9 @@ function applyComputedStyles(srcRoot, dstRoot, isDark){
   }
 }
 
+/* ============================================================
+   4) 🖼️ تنزيل PNG
+   ============================================================ */
 function downloadCanvasPNG(canvas, filename){
   canvas.toBlob(blob=>{
     const a = document.createElement('a');
@@ -4417,12 +3472,16 @@ function downloadCanvasPNG(canvas, filename){
     a.click();
     document.body.removeChild(a);
     setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
-    toast('🖼️ تم تنزيل PNG بدقة عالية');
+    toast('🖼️ تم تنزيل PNG');
   }, 'image/png', 1.0);
 }
 
+/* ============================================================
+   5) 📄 PDF احترافي
+   ============================================================ */
 async function exportPDFFromCanvas(canvas){
-  if(!window.jspdf) throw new Error('مكتبة jsPDF غير متاحة — تحقق من الإنترنت');
+  const ns = window.jspdf && window.jspdf.jsPDF;
+  if(!ns) throw new Error('مكتبة jsPDF غير متاحة');
 
   const { jsPDF } = window.jspdf;
 
@@ -4436,7 +3495,7 @@ async function exportPDFFromCanvas(canvas){
 
   const pageW = pdf.internal.pageSize.getWidth();
   const pageH = pdf.internal.pageSize.getHeight();
-  const margin = 8;
+  const margin = 6;
 
   const availW = pageW - margin * 2;
   const availH = pageH - margin * 2;
@@ -4453,18 +3512,20 @@ async function exportPDFFromCanvas(canvas){
     drawW = availH * imgRatio;
   }
 
+  /* التوسيط */
   const offsetX = margin + (availW - drawW) / 2;
   const offsetY = margin + (availH - drawH) / 2;
 
   const imgData = canvas.toDataURL('image/jpeg', 0.95);
-
   pdf.addImage(imgData, 'JPEG', offsetX, offsetY, drawW, drawH, undefined, 'FAST');
 
-  const filename = `family-tree-${Date.now()}.pdf`;
-  pdf.save(filename);
-  toast('📄 تم تنزيل PDF بنجاح');
+  pdf.save(`family-tree-${Date.now()}.pdf`);
+  toast('📄 تم تنزيل PDF');
 }
 
+/* ============================================================
+   6) 📐 SVG
+   ============================================================ */
 function exportTreeSVG(){
   let bb;
   try{ bb = viewport.getBBox(); }
@@ -4473,13 +3534,14 @@ function exportTreeSVG(){
   if(!bb.width || !bb.height){ toast('⚠ الشجرة فارغة'); return; }
 
   const PADDING = 60;
-  const TITLE_HEIGHT = 80;
+  const TITLE_HEIGHT = 100;
   const contentW = bb.width + PADDING * 2;
   const contentH = bb.height + PADDING * 2 + TITLE_HEIGHT;
 
   const isDark = document.documentElement.classList.contains('dark');
   const bgColor = isDark ? '#090f1b' : '#ffffff';
   const textColor = isDark ? '#edf4ff' : '#0b1220';
+  const subColor = isDark ? '#9ba9bc' : '#64748b';
 
   const clone = viewport.cloneNode(true);
   const offsetX = PADDING - bb.x;
@@ -4502,16 +3564,33 @@ function exportTreeSVG(){
   bgRect.setAttribute('fill', bgColor);
   wrapper.appendChild(bgRect);
 
+  const dateStr = new Date().toLocaleDateString('ar-EG', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+
   const title = document.createElementNS(svgNS, 'text');
   title.setAttribute('x', contentW / 2);
-  title.setAttribute('y', 40);
+  title.setAttribute('y', 38);
   title.setAttribute('text-anchor', 'middle');
+  title.setAttribute('dominant-baseline', 'middle');
   title.setAttribute('font-family', 'Cairo, "Segoe UI", Tahoma, sans-serif');
-  title.setAttribute('font-size', '24');
+  title.setAttribute('font-size', '28');
   title.setAttribute('font-weight', '900');
   title.setAttribute('fill', textColor);
   title.textContent = '🌳 شجرة العائلة Pro';
   wrapper.appendChild(title);
+
+  const sub = document.createElementNS(svgNS, 'text');
+  sub.setAttribute('x', contentW / 2);
+  sub.setAttribute('y', 66);
+  sub.setAttribute('text-anchor', 'middle');
+  sub.setAttribute('dominant-baseline', 'middle');
+  sub.setAttribute('font-family', 'Cairo, "Segoe UI", Tahoma, sans-serif');
+  sub.setAttribute('font-size', '14');
+  sub.setAttribute('font-weight', '800');
+  sub.setAttribute('fill', subColor);
+  sub.textContent = `📅 ${dateStr}  •  👥 ${state.people.length} فرد  •  🧬 ${state.maxGen + 1} أجيال`;
+  wrapper.appendChild(sub);
 
   wrapper.appendChild(clone);
 
@@ -4529,6 +3608,9 @@ function exportTreeSVG(){
   toast('📐 تم تنزيل SVG');
 }
 
+/* ============================================================
+   7) 💾 JSON كامل
+   ============================================================ */
 function exportJSONFull(){
   const data = {
     format: 'family-tree-pro',
@@ -4537,6 +3619,7 @@ function exportJSONFull(){
     total_people: state.people.length,
     total_generations: state.maxGen + 1,
     total_roots: state.roots.length,
+    total_marriages: (state.marriages || []).length,
     people: state.people,
     marriages: state.marriages || []
   };
@@ -4552,79 +3635,70 @@ function exportJSONFull(){
   toast('💾 تم تنزيل JSON كامل');
 }
 
-/* ✅ الإصلاح 1 + 4: directPrint مع body.printing وحفظ الحالة الكاملة */
+/* ============================================================
+   8) 🖨️ الطباعة المباشرة — مع توسيط وإصلاح
+   ============================================================ */
 async function directPrint(){
-  /* ✅ الإصلاح 4: احفظ الحالة الكاملة */
-  const saved = {
-    tx: state.tx,
-    ty: state.ty,
-    scale: state.scale,
-    selectedId: state.selectedId,
-    focusId: state.focusId,
-    searchMatches: state.searchMatches.slice(),
-    searchIndex: state.searchIndex,
+  /* احفظ الحالة الحالية */
+  const prevState = {
+    tx: state.tx, ty: state.ty, scale: state.scale,
   };
 
-  /* اجعل الشجرة كاملة على الشاشة */
+  /* ⚠️ مهم: قبل الطباعة، أعد الرسم بدون بحث ولا تحديد */
+  const prevSelected = state.selectedId;
+  const prevSearchMatches = state.searchMatches.slice();
+  const prevSearchIndex = state.searchIndex;
+  state.selectedId = null;
+  state.searchMatches = [];
+  state.searchIndex = -1;
+  render();
+
+  /* ملاءمة الشجرة للشاشة */
+  await sleep(150);
   fitToScreen();
-  await sleep(300);
 
-  /* ✅ الإصلاح 1: أضف class printing قبل الطباعة */
-  document.body.classList.add('printing');
+  /* ⚠️ نحتاج لجعل الشجرة مرئية أثناء الطباعة عبر CSS */
+  const svgEl = $('svg');
+  const prevSvgStyle = svgEl.getAttribute('style') || '';
 
-  /* افتح نافذة الطباعة */
+  /* إخفاء الأدوات أثناء الطباعة */
+  svgEl.setAttribute('style',
+    prevSvgStyle + ';position:fixed;top:0;left:0;width:100vw;height:100vh;background:#fff;z-index:99999;'
+  );
+
+  await sleep(200);
+
   window.print();
 
-  /* ✅ أزل class printing بعد الطباعة */
+  /* استرجاع */
   setTimeout(()=>{
-    document.body.classList.remove('printing');
-
-    /* ✅ الإصلاح 4: استرجع الحالة الكاملة */
-    state.tx = saved.tx;
-    state.ty = saved.ty;
-    state.scale = saved.scale;
-    state.selectedId = saved.selectedId;
-    state.focusId = saved.focusId;
-    state.searchMatches = saved.searchMatches;
-    state.searchIndex = saved.searchIndex;
-
-    /* أعد الرسم إذا لزم */
-    if(state.focusId != null){
-      state.focusSet = collectDescendants(state.focusId);
-    }
+    svgEl.setAttribute('style', prevSvgStyle);
+    state.tx = prevState.tx;
+    state.ty = prevState.ty;
+    state.scale = prevState.scale;
+    state.selectedId = prevSelected;
+    state.searchMatches = prevSearchMatches;
+    state.searchIndex = prevSearchIndex;
     render();
-
-    /* استرجع اللوحات */
-    if(state.focusId != null){
-      const person = state.byId.get(state.focusId);
-      if(person){
-        $('focusName').textContent = person.name;
-        $('focusPeople').textContent = state.focusSet.size;
-        $('focusGens').textContent = computeBranchGenerations(state.focusSet);
-        $('focusBranches').textContent = (state.children.get(state.focusId) || []).length;
-        $('statsBar').classList.add('hidden');
-        $('focusBanner').classList.remove('hidden');
-      }
-    }
-    if(state.selectedId != null && state.byId.has(state.selectedId)){
-      selectPerson(state.selectedId);
-    }
-
     applyTransform();
-  }, 1000);
+  }, 800);
 }
 
+/* ============================================================
+   9) 🎨 تشغيل تدفق التصدير
+   ============================================================ */
 function triggerExportFlow(){
   requestPrintPassword(()=>{
     showPrintOptions();
   });
 }
 
+/* ربط زر التصدير */
 $('btn-export').onclick = triggerExportFlow;
-
 const printBtn = $('printBtn');
 if(printBtn) printBtn.onclick = triggerExportFlow;
 
+/* Ctrl+P */
 document.addEventListener('keydown', (e)=>{
   if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p'){
     e.preventDefault();
@@ -4634,11 +3708,13 @@ document.addEventListener('keydown', (e)=>{
   }
 }, true);
 
+/* افتراضياً: PNG محدد */
 (function initPrintOptions(){
   const png = $('optPNG');
   if(png) png.checked = true;
 })();
 
+/* إخفاء النوافذ عند الإغلاق */
 window.addEventListener('beforeunload', ()=>{
   try{
     $('printPasswordModal').classList.remove('show');
@@ -4646,6 +3722,7 @@ window.addEventListener('beforeunload', ()=>{
   }catch(_){}
 });
 
+/* Esc لإغلاق نوافذ الطباعة */
 document.addEventListener('keydown', (e)=>{
   if(e.key === 'Escape'){
     const pp = $('printPasswordModal');
@@ -4654,6 +3731,23 @@ document.addEventListener('keydown', (e)=>{
     if(po && po.classList.contains('show')){ po.classList.remove('show'); return; }
   }
 });
+
+/* ⚠️ مهم: منع نافذة الطباعة الخارجية */
+window.print = (function(origPrint){
+  return function(){
+    /* اسمح بالطباعة فقط عند استدعائها من directPrint */
+    if(window.__allowPrint){
+      window.__allowPrint = false;
+      return origPrint.apply(window, arguments);
+    }
+    triggerExportFlow();
+  };
+})(window.print);
+
+/* ============================================================
+   10) نهاية الملف
+   ============================================================ */
+console.log('%c🌳 شجرة العائلة Pro — جاهز للعمل',
+  'background:#0f766e;color:#fff;padding:4px 8px;border-radius:4px;font-weight:900');
+  
 </script>
-</body>
-</html>

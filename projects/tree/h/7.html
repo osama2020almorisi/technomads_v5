@@ -10,10 +10,11 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link rel="manifest" href='data:application/manifest+json,{"name":"شجرة العائلة Pro","short_name":"FamilyTree","start_url":".","display":"standalone","background_color":"#0b1220","theme_color":"#0b766e","icons":[]}'>
-<style>
-/* ============================================================
- 🌳 شجرة العائلة Pro — CSS الكامل
- ============================================================ */
+  <style>
+  /* ============================================================
+   🌳 شجرة العائلة Pro — CSS الكامل
+   ============================================================ */
+
 :root{
   --bg:#f3f6fb; --surface:#ffffff; --surface2:#edf2f7; --surface3:#e2e8f0;
   --text:#152033; --text-strong:#0b1220; --muted:#64748b;
@@ -342,6 +343,7 @@ html,body{
 @keyframes dashFlow{from{stroke-dashoffset:0}to{stroke-dashoffset:-20}}
 .link.dimmed{opacity:.04}
 
+/* ✨ خط الزواج الوردي */
 .link.marriage-link{
   stroke:#db2777 !important;
   stroke-width:2.5 !important;
@@ -620,33 +622,17 @@ html,body{
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ============================================================
-   الحماية — ✅ الإصلاح 1: السماح بالطباعة عند وجود body.printing
+   الحماية
    ============================================================ */
 @media print {
-  html:not(.printing-print), body:not(.printing) { display: none !important; visibility: hidden !important; }
-  body:not(.printing)::after {
+  html, body { display: none !important; visibility: hidden !important; }
+  body::after {
     content: "🔒 الطباعة معطلة — استخدم زر الطباعة داخل التطبيق";
     display: grid !important; visibility: visible !important;
     position: fixed; inset: 0; place-items: center;
     font-size: 24px; color: #999; background: #fff;
     font-family: sans-serif; text-align: center; padding: 30px;
   }
-  /* ✅ عند الطباعة الفعلية */
-  body.printing { display: block !important; visibility: visible !important; overflow: visible !important; }
-  body.printing #app { position: static !important; display: block !important; }
-  body.printing .topbar,
-  body.printing .bottom-tools,
-  body.printing .pan-bar,
-  body.printing .stats-bar,
-  body.printing .focus-banner,
-  body.printing .info-panel,
-  body.printing .search-results,
-  body.printing .modal,
-  body.printing .explore-overlay,
-  body.printing #toast,
-  body.printing #loader { display: none !important; }
-  body.printing .tree-container { position: static !important; overflow: visible !important; height: auto !important; }
-  body.printing #svg { width: 100% !important; height: auto !important; }
 }
 body.protect-blur #app{filter: blur(30px) !important; pointer-events: none !important;}
 html, body{
@@ -789,7 +775,7 @@ html.dark .bg-particles span{background:radial-gradient(circle,rgba(45,212,191,.
 .btn.danger{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff}
 
 /* ============================================================
-   Smart Select
+   ✨ Smart Select (بحث + قائمة)
    ============================================================ */
 .smart-select{
   position:relative;background:var(--surface2);
@@ -963,7 +949,7 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
 }
 
 /* ============================================================
-   نافذة خيارات الطباعة
+   ✨ نافذة خيارات الطباعة
    ============================================================ */
 .print-option{
   display:flex;align-items:center;gap:12px;
@@ -988,13 +974,16 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
   border-color:var(--primary);
 }
 
+/* ============================================================
+   استجابة الشاشات الصغيرة للطباعة
+   ============================================================ */
 @media(max-width:420px){
   .print-option{padding:10px;gap:10px}
   .print-option .po-icon{font-size:20px}
   .print-option .po-text b{font-size:12px}
   .print-option .po-text small{font-size:9px}
 }
-</style>
+  <style></style>
 </head>
 <body>
 <div id="app">
@@ -1130,31 +1119,35 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة إضافة / تعديل فرد -->
+  <!-- ============================================
+       نافذة إضافة / تعديل فرد (محدّثة)
+       ============================================ -->
   <div class="modal" id="personFormModal">
     <div class="modal-box">
       <h3 id="pfTitle">➕ إضافة فرد جديد</h3>
 
       <div class="frm-row">
-        <label id="pfNameLabel">الاسم الكامل *</label>
+        <label>الاسم الكامل *</label>
         <input id="pfName" placeholder="مثال: محمد أحمد" autocomplete="off">
       </div>
 
       <div class="frm-row">
-        <label id="pfFatherLabel">الأب</label>
+        <label>الأب</label>
         <select id="pfFather"></select>
       </div>
 
+      <!-- ✨ جديد: حقل الأم -->
       <div class="frm-row">
-        <label id="pfMotherLabel">الأم <span style="color:var(--muted);font-size:10px">(اختياري)</span></label>
+        <label>الأم <span style="color:var(--muted);font-size:10px">(اختياري)</span></label>
         <div class="smart-select" id="pfMotherWrap">
           <input type="text" id="pfMotherSearch" placeholder="🔍 ابحث في الإناث..." autocomplete="off">
           <select id="pfMother" size="5"></select>
         </div>
       </div>
 
+      <!-- ✨ جديد: حقل الزوج/الزوجة -->
       <div class="frm-row">
-        <label id="pfSpouseLabel">الزوج/الزوجة <span style="color:var(--muted);font-size:10px">(اختياري)</span></label>
+        <label>الزوج/الزوجة <span style="color:var(--muted);font-size:10px">(اختياري)</span></label>
         <div class="smart-select" id="pfSpouseWrap">
           <input type="text" id="pfSpouseSearch" placeholder="🔍 ابحث..." autocomplete="off">
           <select id="pfSpouse" size="5"></select>
@@ -1163,7 +1156,7 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
 
       <div class="frm-2col">
         <div class="frm-row">
-          <label id="pfGenderLabel">الجنس</label>
+          <label>الجنس</label>
           <select id="pfGender">
             <option value="unknown">غير محدد</option>
             <option value="male">ذكر</option>
@@ -1171,18 +1164,18 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
           </select>
         </div>
         <div class="frm-row">
-          <label id="pfBirthLabel">سنة الميلاد <small id="pfBirthHint" style="color:var(--primary)"></small></label>
+          <label>سنة الميلاد <small id="pfBirthHint" style="color:var(--primary)"></small></label>
           <input id="pfBirth" inputmode="numeric" placeholder="مثال: 1980">
         </div>
       </div>
 
       <div class="frm-row">
-        <label id="pfDeathLabel">سنة الوفاة (اتركها فارغة إن كان على قيد الحياة)</label>
+        <label>سنة الوفاة (اتركها فارغة إن كان على قيد الحياة)</label>
         <input id="pfDeath" inputmode="numeric" placeholder="—">
       </div>
 
       <div class="frm-row">
-        <label id="pfNotesLabel">ملاحظات</label>
+        <label>ملاحظات</label>
         <textarea id="pfNotes" rows="2"></textarea>
       </div>
 
@@ -1193,7 +1186,9 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة إضافة أبناء متعددة -->
+  <!-- ============================================
+       نافذة إضافة أبناء متعددة (صف واحد افتراضي)
+       ============================================ -->
   <div class="modal" id="childFormModal">
     <div class="modal-box">
       <h3 id="cfTitle">👨‍👩‍👧‍👦 إضافة عدة أبناء</h3>
@@ -1210,7 +1205,9 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة المخطط الزمني -->
+  <!-- ============================================
+       نافذة المخطط الزمني
+       ============================================ -->
   <div class="modal" id="timelineModal">
     <div class="modal-box">
       <h3>📅 المخطط الزمني</h3>
@@ -1282,7 +1279,9 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة إدخال كلمة سر الطباعة -->
+  <!-- ============================================
+       ✨ نافذة إدخال كلمة سر الطباعة
+       ============================================ -->
   <div class="modal" id="printPasswordModal">
     <div class="modal-box" style="max-width:360px">
       <h3>🔒 كلمة سر الطباعة</h3>
@@ -1300,7 +1299,9 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </div>
   </div>
 
-  <!-- نافذة اختيار نوع الطباعة / التصدير -->
+  <!-- ============================================
+       ✨ نافذة اختيار نوع الطباعة / التصدير
+       ============================================ -->
   <div class="modal" id="printOptionsModal">
     <div class="modal-box">
       <h3>🖨️ خيارات الطباعة والتصدير</h3>
@@ -1383,10 +1384,11 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
   </div>
 </div>
 
-<script>
-/* ============================================================
- 🌳 شجرة العائلة Pro — JavaScript
- ============================================================ */
+<!-- سيتم إدراج JavaScript من الرسالتين 3 و 4 هنا -->
+ <script>
+  /* ============================================================
+   🌳 شجرة العائلة Pro — JavaScript الجزء 1
+   ============================================================ */
 'use strict';
 
 const $ = id => document.getElementById(id);
@@ -1399,6 +1401,7 @@ const PALETTE = [
   "#16a34a","#0891b2","#9333ea","#ca8a04","#475569"
 ];
 
+/* كلمة سر الطباعة — ثابتة في الكود */
 const PRINT_PASSWORD = '1000';
 
 const state = {
@@ -1422,9 +1425,7 @@ const state = {
   marriages: [],
   colorMode: 'depth',
   timelineYear: null,
-  timelineReady: false,
   lang: 'ar',
-  _undoStack: [],
 };
 
 const MIN_SCALE = 0.05;
@@ -1477,71 +1478,16 @@ function applyOps(){
   });
 }
 
-/* ✅ الإصلاح 6: recordOp تطبق العملية الجديدة فقط */
 function recordOp(o){
-  /* دفع للـ undo stack */
-  state._undoStack.push(JSON.parse(JSON.stringify(o)));
-  if(state._undoStack.length > 30) state._undoStack.shift();
-
   const ops = getOps(); ops.push(o); saveOps(ops);
-
-  /* ✅ تطبيق العملية الجديدة مباشرة على state.people */
-  if(o.op === 'add' || o.op === 'edit'){
-    const i = state.people.findIndex(p => Number(p.id) === Number(o.person.id));
-    if(i >= 0) state.people[i] = o.person;
-    else state.people.push(o.person);
-  }else if(o.op === 'del'){
-    state.people = state.people.filter(p => !o.ids.includes(Number(p.id)));
-  }
-
-  buildMaps(); computeGenerations();
+  applyOps(); buildMaps(); computeGenerations();
   updateStats(); render();
   requestAnimationFrame(()=>fitToScreen());
   setTimeout(()=>fitToScreen(), 250);
-}
-
-/* ✅ Undo */
-function undoLastOp(){
-  if(!state._undoStack.length){ toast('⚠ لا توجد عمليات للتراجع'); return; }
-  const last = state._undoStack.pop();
-  /* احذف آخر عملية من localStorage */
-  const ops = getOps();
-  /* ابحث عن آخر تطابق من النهاية */
-  for(let i = ops.length - 1; i >= 0; i--){
-    if(JSON.stringify(ops[i]) === JSON.stringify(last)){
-      ops.splice(i, 1);
-      break;
-    }
-  }
-  saveOps(ops);
-  /* أعد بناء state.people من الصفر */
-  reloadPeopleFromScratch();
-  toast('↩ تم التراجع عن آخر عملية');
 }
 
 function nextId(){
   return state.people.reduce((m,p)=>Math.max(m, Number(p.id)), 0) + 1;
-}
-
-/* ✅ reload من الصفر */
-let _basePeople = [];
-
-async function fetchBaseData(){
-  const res = await fetch('tree-data.json?t=' + Date.now(), {
-    cache: 'no-store',
-    headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
-  });
-  if(!res.ok) throw new Error('HTTP '+res.status);
-  return await res.json();
-}
-
-function reloadPeopleFromScratch(){
-  state.people = JSON.parse(JSON.stringify(_basePeople));
-  applyOps();
-  buildMaps(); computeGenerations();
-  updateStats(); render();
-  requestAnimationFrame(()=>fitToScreen());
-  setTimeout(()=>fitToScreen(), 250);
 }
 
 /* ============================================================
@@ -1549,11 +1495,14 @@ function reloadPeopleFromScratch(){
    ============================================================ */
 async function loadData(){
   try{
-    const data = await fetchBaseData();
-    _basePeople = Array.isArray(data.people) ? JSON.parse(JSON.stringify(data.people)) : [];
-    state.people = JSON.parse(JSON.stringify(_basePeople));
+    const res = await fetch('tree-data.json?t=' + Date.now(), {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    state.people = Array.isArray(data.people) ? data.people : [];
     state.marriages = Array.isArray(data.marriages) ? data.marriages : [];
-    loadMarriagesFromStorage();
     applyOps();
     buildMaps();
     computeGenerations();
@@ -1573,99 +1522,6 @@ async function loadData(){
   }
 }
 
-/* ✅ الإصلاح 3: refreshData بدون reload */
-async function refreshData(){
-  const btn = $('btn-refresh');
-  btn.classList.add('spinning');
-
-  /* احفظ الحالة */
-  const saved = {
-    tx: state.tx, ty: state.ty, scale: state.scale,
-    selectedId: state.selectedId,
-    focusId: state.focusId,
-    searchMatches: state.searchMatches.slice(),
-    searchIndex: state.searchIndex,
-    searchValue: $('searchInput').value,
-    dark: state.dark,
-  };
-
-  try{
-    const data = await fetchBaseData();
-    _basePeople = Array.isArray(data.people) ? JSON.parse(JSON.stringify(data.people)) : [];
-    state.people = JSON.parse(JSON.stringify(_basePeople));
-    state.marriages = Array.isArray(data.marriages) ? data.marriages : [];
-    loadMarriagesFromStorage();
-    applyOps();
-    buildMaps();
-    computeGenerations();
-    render();
-    updateStats();
-
-    /* استعد الحالة */
-    state.tx = saved.tx;
-    state.ty = saved.ty;
-    state.scale = saved.scale;
-    applyTransform();
-
-    if(saved.focusId != null && state.byId.has(saved.focusId)){
-      state.focusId = saved.focusId;
-      state.focusSet = collectDescendants(saved.focusId);
-      const person = state.byId.get(saved.focusId);
-      $('focusName').textContent = person.name;
-      $('focusPeople').textContent = state.focusSet.size;
-      $('focusGens').textContent = computeBranchGenerations(state.focusSet);
-      $('focusBranches').textContent = (state.children.get(saved.focusId) || []).length;
-      $('statsBar').classList.add('hidden');
-      $('focusBanner').classList.remove('hidden');
-    }
-
-    if(saved.selectedId != null && state.byId.has(saved.selectedId)){
-      selectPerson(saved.selectedId);
-    }
-
-    if(saved.searchMatches.length){
-      state.searchMatches = saved.searchMatches.filter(id => state.byId.has(id));
-      state.searchIndex = Math.min(saved.searchIndex, state.searchMatches.length - 1);
-      $('searchInput').value = saved.searchValue;
-      if(state.searchMatches.length){
-        renderSearchUI(saved.searchValue);
-        render();
-      }
-    }
-
-    toast('✅ تم تحديث البيانات');
-  }catch(err){
-    console.error(err);
-    toast('❌ فشل التحديث: ' + err.message);
-  }finally{
-    btn.classList.remove('spinning');
-  }
-}
-
-function loadMarriagesFromStorage(){
-  try{
-    const saved = JSON.parse(localStorage.getItem('ft-marriages') || 'null');
-    if(Array.isArray(saved)){
-      const existing = new Set(
-        (state.marriages||[]).map(m=>{
-          const a = Number(m.a ?? m.husband_id ?? m.person1_id);
-          const b = Number(m.b ?? m.wife_id ?? m.person2_id);
-          return `${Math.min(a,b)}-${Math.max(a,b)}`;
-        })
-      );
-      saved.forEach(m=>{
-        const a = Number(m.a ?? m.husband_id ?? m.person1_id);
-        const b = Number(m.b ?? m.wife_id ?? m.person2_id);
-        const key = `${Math.min(a,b)}-${Math.max(a,b)}`;
-        if(!existing.has(key)){
-          state.marriages.push(m);
-          existing.add(key);
-        }
-      });
-    }
-  }catch(_){}
-}
-
 /* ============================================================
    2) بناء الخرائط
    ============================================================ */
@@ -1680,20 +1536,24 @@ function buildMaps(){
 
   state.people.forEach(p => {
     const pid = Number(p.id);
+    /* الأب */
     if(p.father_id != null && state.byId.has(Number(p.father_id))){
       const fid = Number(p.father_id);
       if(!state.children.has(fid)) state.children.set(fid, []);
       state.children.get(fid).push(pid);
       state.parentOf.set(pid, fid);
     }
+    /* الأم */
     if(p.mother_id != null && state.byId.has(Number(p.mother_id))){
       state.motherOf.set(pid, Number(p.mother_id));
     }
+    /* الزوج/الزوجة */
     if(p.spouse_id != null && state.byId.has(Number(p.spouse_id))){
       state.spouseOf.set(pid, Number(p.spouse_id));
     }
   });
 
+  /* الزيجات من marriages */
   (state.marriages || []).forEach(m=>{
     const a = Number(m.a ?? m.husband_id ?? m.person1_id);
     const b = Number(m.b ?? m.wife_id ?? m.person2_id);
@@ -1931,6 +1791,7 @@ function render(){
     }
   }
 
+  /* الروابط (الأب ← الابن) */
   const gLinks = document.createElementNS('http://www.w3.org/2000/svg','g');
   for(const n of nodes){
     for(const c of (n.children || [])){
@@ -1954,6 +1815,7 @@ function render(){
     }
   }
 
+  /* ✨ خطوط الزواج الوردية */
   const drawnMarriages = new Set();
   (state.marriages || []).forEach(m=>{
     const a = Number(m.a ?? m.husband_id ?? m.person1_id);
@@ -1971,6 +1833,7 @@ function render(){
     }
   });
 
+  /* العقد */
   const gNodes = document.createElementNS('http://www.w3.org/2000/svg','g');
   const circleR = compact ? 13 : 15;
   const circleCX = -cardWidth/2 + circleR + 12;
@@ -2149,7 +2012,7 @@ function render(){
 }
 
 /* ============================================================
-   7) التوسيط
+   7) ✨ إصلاح التوسيط — جوهري!
    ============================================================ */
 let rafPending = false;
 let pendingTx = 0, pendingTy = 0, pendingScale = 1;
@@ -2188,6 +2051,34 @@ function fitToScreen(){
   applyTransform();
 }
 
+/* ✨ التوسيط الحقيقي على شخص محدد */
+function centerOn(id){
+  const nodeEl = viewport.querySelector(`.node[data-id="${id}"]`);
+  if(!nodeEl){ console.warn('centerOn: node not found', id); return; }
+
+  const box = container.getBoundingClientRect();
+
+  /* إحداثيات العقدة داخل SVG (قبل transform) */
+  let nodeBB;
+  try{ nodeBB = nodeEl.getBBox(); }
+  catch(_){ return; }
+
+  /* احسب موضع العقدة في نظام viewport عبر transform الحالي */
+  const nodeX = nodeBB.x + nodeBB.width / 2;
+  const nodeY = nodeBB.y + nodeBB.height / 2;
+
+  /* اختر مقياس مناسب */
+  const k = Math.max(state.scale, 1.0);
+  state.scale = k;
+
+  /* اجعل مركز العقدة في وسط الشاشة */
+  state.tx = box.width / 2 - nodeX * k;
+  state.ty = box.height / 2 - nodeY * k;
+
+  applyTransform();
+}
+
+/* ✨ توسيط سلس مع أنيميشن */
 function centerOnSmooth(id, duration = 400){
   const nodeEl = viewport.querySelector(`.node[data-id="${id}"]`);
   if(!nodeEl) return;
@@ -2312,6 +2203,7 @@ function selectPerson(id){
 
   const isFocused = state.focusId === id;
 
+  /* صفوف العلاقات */
   let relationsHTML = '';
   if(father){
     relationsHTML += `
@@ -2363,7 +2255,7 @@ function selectPerson(id){
       </div>
       <div class="info-cell">
         <div class="k">الأبناء</div>
-        <div class="v" style="color:${kids.length > 0 ? 'var(--primary)' : 'var(--muted)'}">${kids.length}</div>
+        <div class="v">${kids.length}</div>
       </div>
       <div class="info-cell">
         <div class="k">الأسلاف</div>
@@ -2380,7 +2272,7 @@ function selectPerson(id){
     <div class="quick-actions">
       <button class="qa-btn gold" id="btnHighlightPath">
         <span class="qa-icon">✨</span>
-        <span class="qa-label" data-i18n="highlightPath">إضاءة المسار</span>
+        <span class="qa-label">إضاءة المسار</span>
       </button>
       <button class="qa-btn ${isFocused ? 'red' : 'green'}" id="btnFocusPerson">
         <span class="qa-icon">${isFocused ? '✕' : '🎯'}</span>
@@ -2388,39 +2280,31 @@ function selectPerson(id){
       </button>
       <button class="qa-btn purple" id="btnCenterPerson">
         <span class="qa-icon">📍</span>
-        <span class="qa-label" data-i18n="center">توسيط</span>
+        <span class="qa-label">توسيط</span>
       </button>
       <button class="qa-btn green" id="btnAddChild">
         <span class="qa-icon">➕</span>
-        <span class="qa-label" data-i18n="addChild">إضافة ابن</span>
+        <span class="qa-label">إضافة ابن</span>
       </button>
       <button class="qa-btn pink" id="btnAddSpouse">
         <span class="qa-icon">💍</span>
-        <span class="qa-label" data-i18n="addSpouse">إضافة زوج</span>
+        <span class="qa-label">إضافة زوج</span>
       </button>
       <button class="qa-btn" id="btnAncestry">
         <span class="qa-icon">🌿</span>
-        <span class="qa-label" data-i18n="ancestry">شجرة الأنساب</span>
+        <span class="qa-label">شجرة الأنساب</span>
       </button>
       <button class="qa-btn" id="btnSharePerson">
         <span class="qa-icon">🔗</span>
-        <span class="qa-label" data-i18n="shareLink">نسخ الرابط</span>
+        <span class="qa-label">نسخ الرابط</span>
       </button>
       <button class="qa-btn" id="btnEditPerson">
         <span class="qa-icon">✏️</span>
-        <span class="qa-label" data-i18n="edit">تعديل</span>
+        <span class="qa-label">تعديل</span>
       </button>
       <button class="qa-btn" id="btnMoreInfo">
         <span class="qa-icon">ℹ️</span>
-        <span class="qa-label" data-i18n="moreInfo">تفاصيل</span>
-      </button>
-      <button class="qa-btn red" id="btnDeletePerson">
-        <span class="qa-icon">🗑️</span>
-        <span class="qa-label" data-i18n="delete">حذف</span>
-      </button>
-      <button class="qa-btn" id="btnClosePanelAll" style="background:linear-gradient(135deg,#475569,#1e293b);color:#fff;border-color:#1e293b">
-        <span class="qa-icon">✖</span>
-        <span class="qa-label" data-i18n="closeAll">إغلاق الكل</span>
+        <span class="qa-label">تفاصيل</span>
       </button>
     </div>
   `;
@@ -2430,6 +2314,7 @@ function selectPerson(id){
   updateSelectedClass(id);
   updateSearchClasses();
 
+  /* ربط الأزرار */
   $('btnHighlightPath').onclick = () => highlightPathToRoot(id);
   $('btnFocusPerson').onclick = ()=>{
     if(state.focusId === id) exitFocus();
@@ -2443,14 +2328,6 @@ function selectPerson(id){
   $('btnAncestry').onclick = ()=> showAncestry(id);
   $('btnEditPerson').onclick = ()=> openPersonForm(p);
   $('btnSharePerson').onclick = ()=> sharePersonLink(id);
-  $('btnDeletePerson').onclick = ()=> { closePanel(); deletePerson(id); };
-  /* ✅ إغلاق الكل */
-  $('btnClosePanelAll').onclick = ()=>{
-    closePanel();
-    if(state.focusId != null) exitFocus();
-    clearSearch();
-    toast('✖ تم إغلاق كل اللوحات');
-  };
 
   if(father){
     $('fatherRow').onclick = ()=>{ selectPerson(father.id); centerOnSmooth(father.id); };
@@ -2463,7 +2340,6 @@ function selectPerson(id){
   }
 
   enableSheetDrag();
-  applyLanguage();
 }
 
 function updateSelectedClass(id){
@@ -2487,7 +2363,7 @@ function updateSearchClasses(){
     el.classList.remove('dimmed');
     if(!isSearching) return;
     const isHit = state.searchMatches.includes(id);
-    const isCurrent = state.searchMatches[state.searchIndex] === id;
+    const isCurrent = state.searchMatches[state.index] === id;
     if(isHit) card.classList.add('search-hit');
     if(isCurrent) card.classList.add('search-current');
     if(!ancestorSet.has(id) && !isHit) el.classList.add('dimmed');
@@ -2504,11 +2380,7 @@ function showMoreDetails(id){
   if(p.birth_date) rows.push(`<div class="info-row"><span class="k">الميلاد</span><span class="v">${escapeHtml(p.birth_date)}</span></div>`);
   if(p.death_date) rows.push(`<div class="info-row"><span class="k">الوفاة</span><span class="v">${escapeHtml(p.death_date)}</span></div>`);
   if(p.father_name) rows.push(`<div class="info-row"><span class="k">اسم الأب</span><span class="v">${escapeHtml(p.father_name)}</span></div>`);
-  const mother = p.mother_id ? state.byId.get(Number(p.mother_id)) : null;
-  if(mother) rows.push(`<div class="info-row"><span class="k">الأم</span><span class="v">${escapeHtml(mother.name)} (#${mother.id})</span></div>`);
-  else if(p.mother_name) rows.push(`<div class="info-row"><span class="k">اسم الأم</span><span class="v">${escapeHtml(p.mother_name)}</span></div>`);
-  const spouse = p.spouse_id ? state.byId.get(Number(p.spouse_id)) : null;
-  if(spouse) rows.push(`<div class="info-row"><span class="k">${p.gender === 'female' ? 'الزوج' : 'الزوجة'}</span><span class="v">${escapeHtml(spouse.name)} (#${spouse.id})</span></div>`);
+  if(p.mother_name) rows.push(`<div class="info-row"><span class="k">اسم الأم</span><span class="v">${escapeHtml(p.mother_name)}</span></div>`);
   if(p.notes) rows.push(`<div class="info-row"><span class="k">ملاحظات</span><span class="v">${escapeHtml(p.notes)}</span></div>`);
   $('detailModalBody').innerHTML = rows.join('');
   $('detailModal').classList.add('show');
@@ -2558,18 +2430,27 @@ function closePanel(){
 }
 
 /* ============================================================
-   11) اقتراح تاريخ الميلاد الذكي
+   11) ✨ اقتراح تاريخ الميلاد الذكي
    ============================================================ */
 function suggestBirthDate(name, fatherId, excludeId = null){
   const cleanName = normalizeArabic(name || '');
   const currentYear = new Date().getFullYear();
+  const birthYears = new Set();
 
+  state.people.forEach(p=>{
+    if(excludeId != null && Number(p.id) === Number(excludeId)) return;
+    const y = parseYear(p.birth_date);
+    if(y != null) birthYears.add(y);
+  });
+
+  /* 1) إذا كان للأب تاريخ ميلاد صالح */
   if(fatherId != null){
     const father = state.byId.get(Number(fatherId));
     if(father){
       const fy = parseYear(father.birth_date);
       if(fy != null && fy > 1000 && fy < currentYear){
         let suggested = fy + 25;
+        /* إذا السنة موجودة لنفس الاسم → جرّب حولها */
         if(cleanName){
           const sameNameYears = state.people
             .filter(p => normalizeArabic(p.name) === cleanName)
@@ -2586,6 +2467,7 @@ function suggestBirthDate(name, fatherId, excludeId = null){
     }
   }
 
+  /* 2) إذا لم يكن للأب تاريخ → ابحث عن فجوة في تواريخ نفس الاسم */
   if(cleanName){
     const sameNameYears = state.people
       .filter(p => normalizeArabic(p.name) === cleanName)
@@ -2594,6 +2476,7 @@ function suggestBirthDate(name, fatherId, excludeId = null){
       .sort((a,b)=>a-b);
 
     if(sameNameYears.length > 0){
+      /* جرّب الوسط بين كل سنتين متتاليتين */
       for(let i = 0; i < sameNameYears.length - 1; i++){
         const gap = sameNameYears[i+1] - sameNameYears[i];
         if(gap > 1){
@@ -2601,16 +2484,20 @@ function suggestBirthDate(name, fatherId, excludeId = null){
           return String(mid);
         }
       }
+      /* جرّب قبل الأقدم */
       const before = sameNameYears[0] - 1;
       if(before > 1900) return String(before);
+      /* جرّب بعد الأحدث */
       const after = sameNameYears[sameNameYears.length - 1] + 1;
       if(after <= currentYear) return String(after);
     }
   }
 
+  /* 3) الافتراضي */
   return String(currentYear - 30);
 }
 
+/* ربط اقتراح التاريخ بحقل الاسم */
 function wireBirthSuggestion(){
   const nameInput = $('pfName');
   const birthInput = $('pfBirth');
@@ -2633,6 +2520,7 @@ function wireBirthSuggestion(){
   $('pfFather').addEventListener('change', update);
 }
 
+/* ملء حقل الميلاد عند الحفظ إن كان فارغاً */
 function autoFillBirthIfEmpty(){
   const nameInput = $('pfName');
   const birthInput = $('pfBirth');
@@ -2646,28 +2534,22 @@ function autoFillBirthIfEmpty(){
 }
 
 /* ============================================================
-   12) Smart Select
+   12) ✨ Smart Select للأم والزوجة
    ============================================================ */
 function fillSmartSelect(selectEl, searchEl, people, options = {}){
-  const {placeholder = '— لا يوجد —', excludeIds = [], preferGender = null, forceInclude = []} = options;
+  const {placeholder = '— لا يوجد —', excludeIds = [], preferGender = null} = options;
 
-  let filtered = people.filter(p => !excludeIds.includes(Number(p.id)));
-
-  forceInclude.forEach(fid => {
-    const p = state.byId.get(Number(fid));
-    if(p && !filtered.find(x => Number(x.id) === Number(fid))){
-      filtered.push(p);
-    }
-  });
-
-  const sorted = [...filtered].sort((a,b)=>{
-    if(preferGender){
-      const aMatch = a.gender === preferGender ? 0 : 1;
-      const bMatch = b.gender === preferGender ? 0 : 1;
-      if(aMatch !== bMatch) return aMatch - bMatch;
-    }
-    return String(a.name||'').localeCompare(String(b.name||''), 'ar');
-  });
+  const sorted = [...people]
+    .filter(p => !excludeIds.includes(Number(p.id)))
+    .sort((a,b)=>{
+      /* الأولوية للجنس المفضل */
+      if(preferGender){
+        const aMatch = a.gender === preferGender ? 0 : 1;
+        const bMatch = b.gender === preferGender ? 0 : 1;
+        if(aMatch !== bMatch) return aMatch - bMatch;
+      }
+      return String(a.name||'').localeCompare(String(b.name||''), 'ar');
+    });
 
   const html = [`<option value="">${placeholder}</option>`];
   sorted.forEach(p=>{
@@ -2677,6 +2559,7 @@ function fillSmartSelect(selectEl, searchEl, people, options = {}){
   });
   selectEl.innerHTML = html.join('');
 
+  /* البحث الفوري */
   if(searchEl && !searchEl.dataset.bound){
     searchEl.dataset.bound = '1';
     searchEl.addEventListener('input', ()=>{
@@ -2712,20 +2595,18 @@ function openPersonForm(person){
   $('pfTitle').textContent = person ? '✏️ تعديل: ' + (person.name||'') : '➕ إضافة فرد جديد';
   fillFatherSelect($('pfFather'), editingId);
 
-  const motherForceInclude = person && person.mother_id ? [person.mother_id] : [];
-  const spouseForceInclude = person && person.spouse_id ? [person.spouse_id] : [];
-
+  /* الأم */
   fillSmartSelect(
     $('pfMother'), $('pfMotherSearch'),
     state.people,
     {
       placeholder: '— لا توجد —',
       excludeIds: editingId ? [editingId] : [],
-      preferGender: 'female',
-      forceInclude: motherForceInclude
+      preferGender: 'female'
     }
   );
 
+  /* الزوج/الزوجة */
   const gender = person ? (person.gender || 'unknown') : 'unknown';
   const preferSpouse = gender === 'male' ? 'female' : gender === 'female' ? 'male' : null;
   fillSmartSelect(
@@ -2734,8 +2615,7 @@ function openPersonForm(person){
     {
       placeholder: '— لا يوجد —',
       excludeIds: editingId ? [editingId] : [],
-      preferGender: preferSpouse,
-      forceInclude: spouseForceInclude
+      preferGender: preferSpouse
     }
   );
 
@@ -2751,12 +2631,14 @@ function openPersonForm(person){
   $('pfMotherSearch').value = '';
   $('pfSpouseSearch').value = '';
 
+  /* فك ضغط الخيارات المخفية */
   [...$('pfMother').options].forEach(o=>o.hidden = false);
   [...$('pfSpouse').options].forEach(o=>o.hidden = false);
 
   openModal('personFormModal');
 }
 
+/* حفظ فرد */
 $('pfSave').onclick = ()=>{
   const name = $('pfName').value.trim();
   if(!name){ toast('⚠ أدخل الاسم أولاً'); return; }
@@ -2789,8 +2671,8 @@ $('pfSave').onclick = ()=>{
       updated_at: now
     }});
 
-    if(spouse) updateMarriagesFor(editingId, Number(sid));
-    else updateMarriagesFor(editingId, null);
+    /* تحديث الزيجات */
+    updateMarriagesFor(editingId, spouse ? Number(sid) : null);
 
     toast('✏️ تم تحديث البيانات');
     closeModal('personFormModal');
@@ -2820,69 +2702,47 @@ $('pfSave').onclick = ()=>{
   }
 };
 
-/* ✅ الإصلاح 2: تسجيل تعديل الزوج/الزوجة في ft-ops لكل طرف */
+/* تحديث قائمة الزيجات عند تغيير الزوج/الزوجة */
 function updateMarriagesFor(personId, spouseId){
-  const now = new Date().toISOString().slice(0,19).replace('T',' ');
-
   /* احذف كل زيجات هذا الشخص */
   state.marriages = (state.marriages || []).filter(m=>{
     const a = Number(m.a ?? m.husband_id ?? m.person1_id);
     const b = Number(m.b ?? m.wife_id ?? m.person2_id);
     return a !== personId && b !== personId;
   });
-
-  /* احذف الزواج القديم من الطرف الآخر إن وُجد */
-  const oldSpouseId = state.byId.get(personId)?.spouse_id;
-  if(oldSpouseId && oldSpouseId !== spouseId){
-    state.marriages = state.marriages.filter(m=>{
-      const a = Number(m.a ?? m.husband_id ?? m.person1_id);
-      const b = Number(m.b ?? m.wife_id ?? m.person2_id);
-      return !((a === personId && b === oldSpouseId) || (a === oldSpouseId && b === personId));
-    });
-    /* ✅ سجل تعديل الطرف القديم */
-    const oldSpouse = state.byId.get(Number(oldSpouseId));
-    if(oldSpouse){
-      recordOp({op:'edit', person:{
-        ...oldSpouse,
-        spouse_id: null,
-        updated_at: now
-      }});
-    }
-  }
-
+  /* أضف الزواج الجديد */
   if(spouseId != null){
     state.marriages.push({ a: personId, b: spouseId });
-    /* ✅ سجل تعديل الطرفين في ft-ops */
-    const p1 = state.byId.get(personId);
-    const p2 = state.byId.get(spouseId);
-    if(p1){
-      recordOp({op:'edit', person:{
-        ...p1,
-        spouse_id: spouseId,
-        updated_at: now
-      }});
-    }
-    if(p2){
-      recordOp({op:'edit', person:{
-        ...p2,
-        spouse_id: personId,
-        updated_at: now
-      }});
-    }
-  }else{
-    /* إزالة الزوج */
-    const p1 = state.byId.get(personId);
-    if(p1){
-      recordOp({op:'edit', person:{
-        ...p1,
-        spouse_id: null,
-        updated_at: now
-      }});
-    }
   }
-
+  /* احفظ في localStorage */
   try{ localStorage.setItem('ft-marriages', JSON.stringify(state.marriages)); }catch(_){}
   buildMaps();
+}
+
+/* استرجاع الزيجات من localStorage عند التحميل */
+function loadMarriagesFromStorage(){
+  try{
+    const saved = JSON.parse(localStorage.getItem('ft-marriages') || 'null');
+    if(Array.isArray(saved)){
+      /* دمج مع الموجود */
+      const existing = new Set(
+        (state.marriages||[]).map(m=>{
+          const a = Number(m.a ?? m.husband_id ?? m.person1_id);
+          const b = Number(m.b ?? m.wife_id ?? m.person2_id);
+          return `${Math.min(a,b)}-${Math.max(a,b)}`;
+        })
+      );
+      saved.forEach(m=>{
+        const a = Number(m.a ?? m.husband_id ?? m.person1_id);
+        const b = Number(m.b ?? m.wife_id ?? m.person2_id);
+        const key = `${Math.min(a,b)}-${Math.max(a,b)}`;
+        if(!existing.has(key)){
+          state.marriages.push(m);
+          existing.add(key);
+        }
+      });
+    }
+  }catch(_){}
 }
 
 /* ============================================================
@@ -2893,13 +2753,16 @@ function openSpouseForm(personId){
   if(!person) return;
   const gender = person.gender || 'unknown';
   const preferSpouse = gender === 'male' ? 'female' : gender === 'female' ? 'male' : null;
+  /* افتح نموذج إضافة فرد جديد، وستكون القائمة مهيأة */
   openPersonForm(null);
   setTimeout(()=>{
+    /* اربطه تلقائياً بهذا الشخص كزوج */
     fillSmartSelect(
       $('pfSpouse'), $('pfSpouseSearch'),
       state.people.filter(p=>Number(p.id) !== personId),
       { placeholder: '— اختر الزوج/الزوجة —', preferGender: preferSpouse }
     );
+    /* حدد الجنس المعاكس */
     if(gender === 'male') $('pfGender').value = 'female';
     else if(gender === 'female') $('pfGender').value = 'male';
     toast(`💍 اختر بيانات ${gender === 'female' ? 'الزوج' : 'الزوجة'} لـ ${person.name}`);
@@ -2907,7 +2770,7 @@ function openSpouseForm(personId){
 }
 
 /* ============================================================
-   15) نموذج إضافة أبناء متعددة
+   15) نموذج إضافة عدة أبناء (صف واحد افتراضي)
    ============================================================ */
 let childFatherId = null;
 
@@ -2932,6 +2795,7 @@ function cfMakeRow(name = '', birth = ''){
     }
   });
 
+  /* اقتراح الميلاد عند كتابة الاسم */
   const nameInput = row.querySelector('.cf-name');
   const birthInput = row.querySelector('.cf-birth');
   nameInput.addEventListener('input', ()=>{
@@ -2952,6 +2816,7 @@ function openChildForm(fatherId){
   $('cfFatherName').value = `${f.name || ''} (#${f.id})`;
   const wrap = $('cfRowsWrap');
   wrap.innerHTML = '';
+  /* ✨ صف واحد افتراضي فقط */
   wrap.appendChild(cfMakeRow());
   openModal('childFormModal');
   setTimeout(()=>{
@@ -2979,6 +2844,7 @@ function saveChildren(close){
     const name = r.querySelector('.cf-name').value.trim();
     let birth = r.querySelector('.cf-birth').value.trim();
     if(name){
+      /* إذا لم يُدخل تاريخ → اقترح */
       if(!birth){
         birth = suggestBirthDate(name, childFatherId);
       }
@@ -3007,13 +2873,7 @@ function saveChildren(close){
   }));
 
   const all = getOps(); all.push(...ops); saveOps(all);
-  /* ✅ تطبيق مباشر بدون applyOps */
-  ops.forEach(o=>{
-    const i = state.people.findIndex(p => Number(p.id) === Number(o.person.id));
-    if(i >= 0) state.people[i] = o.person;
-    else state.people.push(o.person);
-  });
-  buildMaps(); computeGenerations(); updateStats(); render();
+  applyOps(); buildMaps(); computeGenerations(); updateStats(); render();
   requestAnimationFrame(fitToScreen); setTimeout(fitToScreen, 250);
 
   toast(`➕ تمت إضافة ${ops.length} أبناء لـ «${f.name}»`);
@@ -3035,14 +2895,6 @@ function deletePerson(id){
     ? `🗑️ حذف «${p.name}» ومعه ${ids.length - 1} من الأبناء والأحفاد؟`
     : `🗑️ حذف «${p.name}»؟`;
   if(!confirm(msg)) return;
-
-  state.marriages = (state.marriages || []).filter(m=>{
-    const a = Number(m.a ?? m.husband_id ?? m.person1_id);
-    const b = Number(m.b ?? m.wife_id ?? m.person2_id);
-    return !ids.includes(a) && !ids.includes(b);
-  });
-  try{ localStorage.setItem('ft-marriages', JSON.stringify(state.marriages)); }catch(_){}
-
   recordOp({op:'del', ids});
   if(state.focusId != null && ids.includes(state.focusId)) exitFocus();
   if(state.selectedId === id) closePanel();
@@ -3064,12 +2916,13 @@ function toast(msg){
   toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
 }
 
+/* ربط إغلاق النوافذ */
 document.querySelectorAll('.modal').forEach(m=>{
   m.addEventListener('click', e=>{ if(e.target === m) m.classList.remove('show'); });
 });
 
 /* ============================================================
-   18) البحث
+   18) البحث (مع إصلاح التنقل)
    ============================================================ */
 const searchInput = $('searchInput');
 const searchBox = $('searchBox');
@@ -3245,6 +3098,7 @@ function updateActiveResult(){
   if(active) active.scrollIntoView({block:'nearest', behavior:'smooth'});
 }
 
+/* ✨ إصلاح: التنقل بين نتائج البحث */
 function nextResult(){
   if(!state.searchMatches.length) return;
   state.searchIndex = (state.searchIndex + 1) % state.searchMatches.length;
@@ -3447,6 +3301,7 @@ svg.addEventListener('wheel', e => {
   zoomBy(e.deltaY < 0 ? 1.15 : 1/1.15, e.clientX - box.left, e.clientY - box.top);
 }, {passive:false});
 
+/* pinch zoom */
 let pinch = null;
 svg.addEventListener('touchstart', e => {
   if(e.touches.length === 2){
@@ -3487,19 +3342,8 @@ $('btn-fit').onclick = fitToScreen;
 $('btn-reset').onclick = fitToScreen;
 $('btn-zoom-in').onclick = () => zoomBy(1.3);
 $('btn-zoom-out').onclick = () => zoomBy(1/1.3);
-
-/* ✅ الإصلاح 7: خطوة نسبية */
-$('btn-up').onclick = () => {
-  const step = 150 / Math.max(0.5, state.scale);
-  state.ty += step;
-  applyTransform();
-};
-$('btn-down').onclick = () => {
-  const step = 150 / Math.max(0.5, state.scale);
-  state.ty -= step;
-  applyTransform();
-};
-
+$('btn-up').onclick = () => { state.ty += 150; applyTransform(); };
+$('btn-down').onclick = () => { state.ty -= 150; applyTransform(); };
 $('closePanel').onclick = closePanel;
 $('exitFocusBtn').onclick = exitFocus;
 
@@ -3510,6 +3354,7 @@ $('btn-theme').onclick = () => {
   try{ localStorage.setItem('ft-theme', state.dark ? 'dark' : 'light'); }catch{}
 };
 
+/* استرجاع الثيم */
 try{
   const saved = localStorage.getItem('ft-theme');
   if(saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches)){
@@ -3539,11 +3384,6 @@ document.addEventListener('keydown', e => {
     if(e.key === '[') navGen(-1);
     if(e.key === '+' || e.key === '=') zoomBy(1.2);
     if(e.key === '-') zoomBy(1/1.2);
-    /* ✅ اختصار Undo */
-    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z'){
-      e.preventDefault();
-      undoLastOp();
-    }
   }
   if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
     e.preventDefault();
@@ -3616,437 +3456,13 @@ function initParticles(){
   }
 }
 
-/* ============================================================
-   30) الإحصائيات المتقدمة
-   ============================================================ */
-function showStats(){
-  const males = state.people.filter(p => p.gender === 'male').length;
-  const females = state.people.filter(p => p.gender === 'female').length;
-  const unknowns = state.people.length - males - females;
-  const withBirth = state.people.filter(p => parseYear(p.birth_date) != null);
-  const birthYears = withBirth.map(p => parseYear(p.birth_date)).filter(y => y != null);
-  const minYear = birthYears.length ? Math.min(...birthYears) : '—';
-  const maxYear = birthYears.length ? Math.max(...birthYears) : '—';
-  const avgYear = birthYears.length ? Math.round(birthYears.reduce((a,b)=>a+b,0) / birthYears.length) : '—';
-
-  const nameCount = {};
-  state.people.forEach(p => {
-    const n = (p.name || '').trim();
-    if(n) nameCount[n] = (nameCount[n] || 0) + 1;
-  });
-  const topNames = Object.entries(nameCount).sort((a,b)=>b[1]-a[1]).slice(0, 5);
-
-  const branchCounts = state.roots.map(r => ({
-    id: r,
-    name: state.byId.get(r)?.name || '؟',
-    count: countDescendants(r)
-  })).sort((a,b)=>b.count-a.count).slice(0, 8);
-
-  let html = `
-    <table class="stat-table">
-      <tr><th>البيان</th><th>القيمة</th></tr>
-      <tr><td>👥 إجمالي الأفراد</td><td class="num">${state.people.length}</td></tr>
-      <tr><td>👨 الذكور</td><td class="num">${males}</td></tr>
-      <tr><td>👩 الإناث</td><td class="num">${females}</td></tr>
-      <tr><td>❓ غير محدد</td><td class="num">${unknowns}</td></tr>
-      <tr><td>🧬 الأجيال</td><td class="num">${state.maxGen + 1}</td></tr>
-      <tr><td>🌳 الفروع الجذرية</td><td class="num">${state.roots.length}</td></tr>
-      <tr><td>📅 نطاق سنوات الميلاد</td><td class="num">${minYear} - ${maxYear}</td></tr>
-      <tr><td>📊 متوسط سنة الميلاد</td><td class="num">${avgYear}</td></tr>
-      <tr><td>💍 الزيجات</td><td class="num">${(state.marriages||[]).length}</td></tr>
-    </table>
-    <h4>🏷️ أكثر الأسماء تكراراً</h4>
-    <div class="chips">
-      ${topNames.map(([n,c])=>`<span class="chip">${escapeHtml(n)} <b>×${c}</b></span>`).join('') || '<span class="chip">—</span>'}
-    </div>
-    <h4>🌳 أكبر الفروع</h4>
-    <div class="chips">
-      ${branchCounts.map(b=>`<span class="chip">${escapeHtml(b.name)} <b>${b.count}</b></span>`).join('') || '<span class="chip">—</span>'}
-    </div>
-  `;
-  $('statsBody').innerHTML = html;
-  openModal('statsModal');
-  /* ✅ الإصلاح 5: تأخير الرسم */
-  setTimeout(() => drawPieChart(branchCounts), 100);
-}
-
-function drawPieChart(branchCounts){
-  const canvas = $('statsPie');
-  if(!canvas) return;
-  /* تأكد من أن canvas مقيس */
-  const rect = canvas.getBoundingClientRect();
-  if(canvas.width === 0 || canvas.height === 0){
-    canvas.width = 340; canvas.height = 190;
-  }
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  ctx.clearRect(0, 0, W, H);
-
-  const total = branchCounts.reduce((s,b)=>s+b.count, 0) || 1;
-  const cx = W/2, cy = H/2 + 5, r = 70;
-
-  let startAngle = -Math.PI/2;
-  branchCounts.forEach((b, i) => {
-    const slice = (b.count / total) * Math.PI * 2;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, r, startAngle, startAngle + slice);
-    ctx.closePath();
-    ctx.fillStyle = PALETTE[i % PALETTE.length];
-    ctx.fill();
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    startAngle += slice;
-  });
-
-  let ly = 18;
-  branchCounts.slice(0, 6).forEach((b, i) => {
-    ctx.fillStyle = PALETTE[i % PALETTE.length];
-    ctx.fillRect(10, ly, 12, 12);
-    ctx.fillStyle = '#333';
-    ctx.font = 'bold 10px Cairo, sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText(`${b.name} (${b.count})`, 28, ly + 10);
-    ly += 18;
-  });
-}
-
-/* ============================================================
-   31) مقارنة الفروع
-   ============================================================ */
-function openCompare(){
-  const roots = state.roots;
-  if(roots.length < 2){ toast('⚠ يحتاج فرعان على الأقل'); return; }
-
-  const optsHtml = roots.map(r => {
-    const p = state.byId.get(r);
-    return `<option value="${r}">${escapeHtml(p?.name||'؟')} (#${r})</option>`;
-  }).join('');
-
-  $('cmpA').innerHTML = optsHtml;
-  $('cmpB').innerHTML = optsHtml;
-  $('cmpB').selectedIndex = Math.min(1, roots.length - 1);
-  $('cmpResult').innerHTML = '';
-  openModal('compareModal');
-}
-
-function runCompare(){
-  const a = Number($('cmpA').value);
-  const b = Number($('cmpB').value);
-  if(a === b){ toast('⚠ اختر فرعين مختلفين'); return; }
-
-  const setA = collectDescendants(a);
-  const setB = collectDescendants(b);
-
-  const info = (rootId, set) => {
-    const p = state.byId.get(rootId);
-    const depths = [...set].map(id => state.depth.get(id) ?? 0);
-    const gens = Math.max(...depths) - Math.min(...depths) + 1;
-    const directKids = (state.children.get(rootId) || []).length;
-    const years = [...set].map(id => parseYear(state.byId.get(id)?.birth_date)).filter(y=>y!=null);
-    const oldest = years.length ? Math.min(...years) : '—';
-    const newest = years.length ? Math.max(...years) : '—';
-    return {name: p?.name || '؟', total: set.size, gens, directKids, oldest, newest};
-  };
-
-  const A = info(a, setA);
-  const B = info(b, setB);
-
-  const row = (label, va, vb) => `
-    <tr>
-      <td style="font-weight:800">${label}</td>
-      <td class="num">${va}</td>
-      <td class="num">${vb}</td>
-    </tr>`;
-
-  $('cmpResult').innerHTML = `
-    <table class="stat-table">
-      <tr><th>البيان</th><th>${escapeHtml(A.name)}</th><th>${escapeHtml(B.name)}</th></tr>
-      ${row('👥 الأفراد', A.total, B.total)}
-      ${row('🧬 الأجيال', A.gens, B.gens)}
-      ${row('👶 أبناء مباشرون', A.directKids, B.directKids)}
-      ${row('📅 أقدم ميلاد', A.oldest, B.oldest)}
-      ${row('📅 أحدث ميلاد', A.newest, B.newest)}
-    </table>
-  `;
-}
-
-/* ============================================================
-   32) تلوين حسب الفرع
-   ============================================================ */
-function toggleHeatmap(){
-  state.colorMode = state.colorMode === 'depth' ? 'branch' : 'depth';
-  render();
-  toast(state.colorMode === 'branch' ? '🎨 تلوين حسب الفرع' : '🎨 تلوين حسب الجيل');
-}
-
-/* ============================================================
-   33) وضع الاستكشاف
-   ============================================================ */
-let explorePersonId = null;
-let exploreRevealed = false;
-
-function openExplore(){
-  if(state.people.length < 2){ toast('⚠ عدد الأفراد قليل'); return; }
-  exploreRevealed = false;
-  explorePersonId = state.people[Math.floor(Math.random() * state.people.length)].id;
-  const p = state.byId.get(explorePersonId);
-  const depth = state.depth.get(explorePersonId) || 0;
-  const kids = (state.children.get(explorePersonId) || []).length;
-  const hasFather = !!p.father_id;
-
-  $('expQ').textContent = '❓ من هو هذا الشخص؟';
-  $('expHint').textContent = `الجيل ${depth+1} • ${kids} أبناء • ${hasFather ? 'له أب مسجل' : 'جذر الشجرة'}`;
-  $('expInfo').style.display = 'none';
-  $('expInfo').innerHTML = '';
-  $('expReveal').style.display = '';
-  $('expNext').style.display = 'none';
-  $('expShow').style.display = 'none';
-  $('exploreOverlay').classList.add('show');
-}
-
-function revealExplore(){
-  if(!explorePersonId) return;
-  const p = state.byId.get(explorePersonId);
-  exploreRevealed = true;
-  $('expQ').textContent = `✅ ${p.name} (#${p.id})`;
-  $('expInfo').innerHTML = `
-    الجنس: ${p.gender === 'male' ? '♂ ذكر' : p.gender === 'female' ? '♀ أنثى' : '• غير محدد'}<br>
-    الميلاد: ${p.birth_date || '—'}<br>
-    ${p.notes ? 'ملاحظات: ' + escapeHtml(p.notes) : ''}
-  `;
-  $('expInfo').style.display = 'block';
-  $('expReveal').style.display = 'none';
-  $('expNext').style.display = '';
-  $('expShow').style.display = '';
-}
-
-function nextExplore(){
-  closeExplore();
-  setTimeout(openExplore, 200);
-}
-
-function closeExplore(){
-  $('exploreOverlay').classList.remove('show');
-  explorePersonId = null;
-}
-
-function showExplorePerson(){
-  if(!explorePersonId) return;
-  const id = explorePersonId;
-  closeExplore();
-  setTimeout(()=>{ centerOnSmooth(id); selectPerson(id); }, 250);
-}
-
-/* ============================================================
-   34) تبديل اللغة — ✅ الإصلاح 8 (ترجمة شاملة)
-   ============================================================ */
-const translations = {
-  ar: {
-    title: '🌳 شجرة العائلة Pro',
-    searchPlaceholder: 'ابحث بالاسم أو #ID...',
-    statsPeople: 'الأفراد',
-    statsGens: 'الأجيال',
-    statsRoots: 'الفروع',
-    btnAdd: 'إضافة فرد جديد',
-    btnExport: 'تصدير الشجرة',
-    btnStats: 'إحصائيات متقدمة',
-    btnCompare: 'مقارنة الفروع',
-    btnHeatmap: 'تلوين حسب الفرع',
-    btnExplore: 'وضع الاستكشاف',
-    btnHelp: 'اختصارات ومساعدة',
-    btnLang: 'English',
-    btnRefresh: 'تحديث البيانات',
-    btnFullscreen: 'ملء الشاشة',
-    btnFit: 'ملاءمة',
-    btnTheme: 'المظهر',
-    /* النماذج */
-    frmName: 'الاسم الكامل *',
-    frmFather: 'الأب',
-    frmMother: 'الأم (اختياري)',
-    frmSpouse: 'الزوج/الزوجة (اختياري)',
-    frmGender: 'الجنس',
-    frmBirth: 'سنة الميلاد',
-    frmDeath: 'سنة الوفاة (اتركها فارغة إن كان على قيد الحياة)',
-    frmNotes: 'ملاحظات',
-    frmSave: '💾 حفظ',
-    frmCancel: 'إلغاء',
-    /* لوحة التفاصيل */
-    highlightPath: 'إضاءة المسار',
-    center: 'توسيط',
-    addChild: 'إضافة ابن',
-    addSpouse: 'إضافة زوج',
-    ancestry: 'شجرة الأنساب',
-    shareLink: 'نسخ الرابط',
-    edit: 'تعديل',
-    moreInfo: 'تفاصيل',
-    delete: 'حذف',
-    closeAll: 'إغلاق الكل',
-    /* رسائل */
-    toastAdded: '➕ تمت الإضافة',
-    toastUpdated: '✏️ تم التحديث',
-    toastDeleted: '🗑️ تم الحذف',
-    toastRefreshed: '✅ تم تحديث البيانات',
-    toastUndo: '↩ تم التراجع',
-    toastUndoEmpty: '⚠ لا توجد عمليات للتراجع',
-  },
-  en: {
-    title: '🌳 Family Tree Pro',
-    searchPlaceholder: 'Search by name or #ID...',
-    statsPeople: 'People',
-    statsGens: 'Generations',
-    statsRoots: 'Branches',
-    btnAdd: 'Add Person',
-    btnExport: 'Export Tree',
-    btnStats: 'Statistics',
-    btnCompare: 'Compare Branches',
-    btnHeatmap: 'Color by Branch',
-    btnExplore: 'Explore Mode',
-    btnHelp: 'Help & Shortcuts',
-    btnLang: 'العربية',
-    btnRefresh: 'Refresh Data',
-    btnFullscreen: 'Fullscreen',
-    btnFit: 'Fit',
-    btnTheme: 'Theme',
-    frmName: 'Full Name *',
-    frmFather: 'Father',
-    frmMother: 'Mother (optional)',
-    frmSpouse: 'Spouse (optional)',
-    frmGender: 'Gender',
-    frmBirth: 'Birth Year',
-    frmDeath: 'Death Year (leave empty if alive)',
-    frmNotes: 'Notes',
-    frmSave: '💾 Save',
-    frmCancel: 'Cancel',
-    highlightPath: 'Highlight Path',
-    center: 'Center',
-    addChild: 'Add Child',
-    addSpouse: 'Add Spouse',
-    ancestry: 'Ancestry',
-    shareLink: 'Copy Link',
-    edit: 'Edit',
-    moreInfo: 'Details',
-    delete: 'Delete',
-    closeAll: 'Close All',
-    toastAdded: '➕ Added successfully',
-    toastUpdated: '✏️ Updated',
-    toastDeleted: '🗑️ Deleted',
-    toastRefreshed: '✅ Data refreshed',
-    toastUndo: '↩ Undone',
-    toastUndoEmpty: '⚠ No operations to undo',
-  }
-};
-
-function applyLanguage(){
-  const t = translations[state.lang];
-  document.documentElement.lang = state.lang;
-  document.documentElement.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
-  document.title = t.title;
-  if($('searchInput')) $('searchInput').placeholder = t.searchPlaceholder;
-
-  /* إحصائيات */
-  if($('st-people')?.nextElementSibling) $('st-people').nextElementSibling.textContent = t.statsPeople;
-  if($('st-gens')?.nextElementSibling) $('st-gens').nextElementSibling.textContent = t.statsGens;
-  if($('st-roots')?.nextElementSibling) $('st-roots').nextElementSibling.textContent = t.statsRoots;
-
-  /* عناوين الأزرار */
-  const titleMap = {
-    'btn-refresh': t.btnRefresh,
-    'btn-export': t.btnExport,
-    'btn-add': t.btnAdd,
-    'btn-stats': t.btnStats,
-    'btn-compare': t.btnCompare,
-    'btn-heatmap': t.btnHeatmap,
-    'btn-explore': t.btnExplore,
-    'btn-lang': t.btnLang,
-    'btn-help': t.btnHelp,
-    'btn-fullscreen': t.btnFullscreen,
-    'btn-fit': t.btnFit,
-    'btn-theme': t.btnTheme,
-  };
-  Object.entries(titleMap).forEach(([id, val])=>{
-    const el = $(id);
-    if(el) el.title = val;
-  });
-
-  /* نصوص النموذج */
-  const labelMap = {
-    'pfNameLabel': t.frmName,
-    'pfFatherLabel': t.frmFather,
-    'pfMotherLabel': t.frmMother,
-    'pfSpouseLabel': t.frmSpouse,
-    'pfGenderLabel': t.frmGender,
-    'pfBirthLabel': t.frmBirth,
-    'pfDeathLabel': t.frmDeath,
-    'pfNotesLabel': t.frmNotes,
-  };
-  Object.entries(labelMap).forEach(([id, val])=>{
-    const el = $(id);
-    if(el) el.textContent = val;
-  });
-  if($('pfSave')) $('pfSave').textContent = t.frmSave;
-  if($('pfCancel')) $('pfCancel').textContent = t.frmCancel;
-
-  /* نصوص data-i18n في لوحة التفاصيل */
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const key = el.dataset.i18n;
-    if(t[key]) el.textContent = t[key];
-  });
-}
-
-function toggleLanguage(){
-  state.lang = state.lang === 'ar' ? 'en' : 'ar';
-  applyLanguage();
-  toast(state.lang === 'ar' ? '🇸🇦 العربية' : '🇬🇧 English');
-}
-
-/* ============================================================
-   35) البحث الصوتي
-   ============================================================ */
-function startVoiceSearch(){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){ toast('⚠ البحث الصوتي غير مدعوم في هذا المتصفح'); return; }
-
-  const rec = new SR();
-  rec.lang = state.lang === 'ar' ? 'ar-SA' : 'en-US';
-  rec.interimResults = false;
-  rec.maxAlternatives = 1;
-
-  $('voiceBtn').textContent = '🔴';
-  $('voiceBtn').style.color = '#dc2626';
-
-  rec.onresult = (e) => {
-    const text = e.results[0][0].transcript;
-    $('searchInput').value = text;
-    searchBox.classList.add('has-value');
-    performSearch(text);
-    toast(`🎤 سمعت: «${text}»`);
-  };
-
-  rec.onerror = (e) => {
-    toast('⚠ خطأ في الاستماع: ' + e.error);
-  };
-
-  rec.onend = () => {
-    $('voiceBtn').textContent = '🎤';
-    $('voiceBtn').style.color = '';
-  };
-
-  try{ rec.start(); toast('🎤 جارٍ الاستماع...'); }
-  catch(err){ toast('⚠ تعذر بدء الاستماع'); }
-}
-
-/* ============================================================
-   36) ربط الأزرار
-   ============================================================ */
+/* فكّ ضغط الصفوف عند الإضافة */
 function initFeatures(){
   initPanBar();
   initParticles();
   wireBirthSuggestion();
 
-  /* ✅ الإصلاح 3: زر التحديث يستدعي refreshData */
-  $('btn-refresh').onclick = refreshData;
+  $('btn-refresh').onclick = () => location.reload();
   $('btn-add').onclick = ()=> openPersonForm(null);
   $('btn-fullscreen').onclick = toggleFullscreen;
   $('btnMoreMenu').onclick = (e)=>{
@@ -4060,25 +3476,6 @@ function initFeatures(){
 
   $('btn-gen-up').onclick = ()=> navGen(-1);
   $('btn-gen-down').onclick = ()=> navGen(1);
-
-  /* الأزرار الإضافية */
-  $('btn-stats').onclick = showStats;
-  $('btn-compare').onclick = openCompare;
-  $('btn-heatmap').onclick = toggleHeatmap;
-  $('btn-explore').onclick = openExplore;
-  $('btn-help').onclick = ()=> openModal('helpModal');
-  $('btn-lang').onclick = toggleLanguage;
-  $('voiceBtn').onclick = startVoiceSearch;
-  $('cmpRun').onclick = runCompare;
-
-  /* أزرار الاستكشاف */
-  $('expClose').onclick = closeExplore;
-  $('expReveal').onclick = revealExplore;
-  $('expNext').onclick = nextExplore;
-  $('expShow').onclick = showExplorePerson;
-  $('exploreOverlay').onclick = (e)=>{ if(e.target === $('exploreOverlay')) closeExplore(); };
-
-  applyLanguage();
 }
 
 function toggleFullscreen(){
@@ -4090,6 +3487,7 @@ function toggleFullscreen(){
   }
 }
 
+/* ربط إغلاق النافذة */
 document.querySelectorAll('[data-close]').forEach(btn=>{
   btn.onclick = ()=> closeModal(btn.dataset.close);
 });
@@ -4101,559 +3499,9 @@ $('detailModal').onclick = (e) => {
   if(e.target === $('detailModal')) $('detailModal').classList.remove('show');
 };
 
+/* تهيئة */
 initFeatures();
 loadData();
-
-/* ============================================================
-   🌳 JavaScript الجزء 2 — الطباعة والتصدير
-   ============================================================ */
-
-let _pendingExportAction = null;
-
-function requestPrintPassword(onSuccess){
-  const modal = $('printPasswordModal');
-  const input = $('printPasswordInput');
-  const errEl = $('printPasswordError');
-
-  input.value = '';
-  errEl.textContent = '';
-  _pendingExportAction = onSuccess;
-
-  modal.classList.add('show');
-  setTimeout(()=> input.focus(), 200);
-
-  input.onkeydown = (e)=>{
-    if(e.key === 'Enter'){ e.preventDefault(); $('ppConfirm').click(); }
-  };
-
-  $('ppCancel').onclick = ()=>{
-    modal.classList.remove('show');
-    _pendingExportAction = null;
-  };
-
-  $('ppConfirm').onclick = ()=>{
-    const val = input.value.trim();
-    if(val === PRINT_PASSWORD){
-      modal.classList.remove('show');
-      errEl.textContent = '';
-      const action = _pendingExportAction;
-      _pendingExportAction = null;
-      if(typeof action === 'function') action();
-    }else{
-      errEl.textContent = '❌ كلمة سر خاطئة';
-      input.value = '';
-      input.focus();
-      input.animate(
-        [{transform:'translateX(0)'},{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'translateX(0)'}],
-        {duration:300}
-      );
-    }
-  };
-
-  modal.onclick = (e)=>{
-    if(e.target === modal){
-      modal.classList.remove('show');
-      _pendingExportAction = null;
-    }
-  };
-}
-
-function showPrintOptions(){
-  const modal = $('printOptionsModal');
-  const progress = $('poProgress');
-  progress.textContent = '';
-
-  modal.classList.add('show');
-
-  $('poCancel').onclick = ()=>{
-    modal.classList.remove('show');
-    progress.textContent = '';
-  };
-
-  $('poConfirm').onclick = async ()=>{
-    const opts = {
-      png: $('optPNG').checked,
-      pdf: $('optPDF').checked,
-      svg: $('optSVG').checked,
-      json: $('optJSON').checked,
-      print: $('optPRINT').checked,
-      quality: Math.max(2, Math.min(6, parseInt($('exportQuality').value) || 4)),
-    };
-
-    if(!opts.png && !opts.pdf && !opts.svg && !opts.json && !opts.print){
-      toast('⚠ اختر خياراً واحداً على الأقل');
-      return;
-    }
-
-    progress.textContent = '⏳ جارٍ التصدير...';
-    $('poConfirm').disabled = true;
-
-    try{
-      let canvas = null;
-
-      if(opts.png || opts.pdf){
-        progress.textContent = '🖼️ جارٍ تحضير الصورة...';
-        canvas = await renderTreeToCanvas(opts.quality);
-      }
-
-      if(opts.png && canvas){
-        progress.textContent = '💾 حفظ PNG...';
-        downloadCanvasPNG(canvas, 'family-tree.png');
-        await sleep(400);
-      }
-
-      if(opts.pdf && canvas){
-        progress.textContent = '📄 توليد PDF...';
-        await exportPDFFromCanvas(canvas);
-        await sleep(400);
-      }
-
-      if(opts.svg){
-        progress.textContent = '📐 توليد SVG...';
-        exportTreeSVG();
-        await sleep(400);
-      }
-
-      if(opts.json){
-        progress.textContent = '💾 تصدير JSON...';
-        exportJSONFull();
-        await sleep(400);
-      }
-
-      if(opts.print){
-        progress.textContent = '🖨️ تجهيز الطباعة...';
-        await sleep(200);
-        await directPrint();
-      }
-
-      progress.textContent = '✅ تم بنجاح';
-      setTimeout(()=>{
-        modal.classList.remove('show');
-        progress.textContent = '';
-        $('poConfirm').disabled = false;
-      }, 1000);
-
-    }catch(err){
-      console.error(err);
-      progress.textContent = '❌ فشل: ' + err.message;
-      $('poConfirm').disabled = false;
-    }
-  };
-}
-
-function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
-
-async function renderTreeToCanvas(scaleFactor = 4){
-  let bb;
-  try{ bb = viewport.getBBox(); }
-  catch(_){ throw new Error('تعذر قياس الشجرة'); }
-
-  if(!bb.width || !bb.height) throw new Error('الشجرة فارغة');
-
-  const PADDING = 60;
-  const TITLE_HEIGHT = 80;
-  const FOOTER_HEIGHT = 50;
-
-  const contentW = bb.width + PADDING * 2;
-  const contentH = bb.height + PADDING * 2;
-  const totalH = contentH + TITLE_HEIGHT + FOOTER_HEIGHT;
-  const finalW = Math.round(contentW * scaleFactor);
-  const finalH = Math.round(totalH * scaleFactor);
-
-  const canvas = document.createElement('canvas');
-  canvas.width = finalW;
-  canvas.height = finalH;
-  const ctx = canvas.getContext('2d', { alpha: false });
-
-  const isDark = document.documentElement.classList.contains('dark');
-  const bgColor = isDark ? '#090f1b' : '#ffffff';
-  const textColor = isDark ? '#edf4ff' : '#0b1220';
-  const subColor = isDark ? '#9ba9bc' : '#64748b';
-
-  ctx.fillStyle = bgColor;
-  ctx.fillRect(0, 0, finalW, finalH);
-
-  ctx.save();
-  ctx.scale(scaleFactor, scaleFactor);
-  ctx.fillStyle = textColor;
-  ctx.font = 'bold 24px Cairo, "Segoe UI", Tahoma, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  const title = '🌳 شجرة العائلة Pro';
-  ctx.fillText(title, contentW / 2, TITLE_HEIGHT / 2);
-
-  ctx.fillStyle = subColor;
-  ctx.font = 'bold 13px Cairo, "Segoe UI", Tahoma, sans-serif';
-  const dateStr = new Date().toLocaleDateString('ar-EG', {
-    year: 'numeric', month: 'long', day: 'numeric'
-  });
-  ctx.fillText(`📅 ${dateStr}  •  👥 ${state.people.length} فرد  •  🧬 ${state.maxGen + 1} أجيال`, contentW / 2, TITLE_HEIGHT / 2 + 28);
-  ctx.restore();
-
-  const clone = viewport.cloneNode(true);
-  const offsetX = PADDING - bb.x;
-  const offsetY = TITLE_HEIGHT + PADDING - bb.y;
-  clone.setAttribute('transform', `translate(${offsetX}, ${offsetY})`);
-
-  applyComputedStyles(viewport, clone, isDark);
-
-  const svgNS = 'http://www.w3.org/2000/svg';
-  const svgWrapper = document.createElementNS(svgNS, 'svg');
-  svgWrapper.setAttribute('xmlns', svgNS);
-  svgWrapper.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
-  svgWrapper.setAttribute('width', contentW);
-  svgWrapper.setAttribute('height', totalH);
-  svgWrapper.setAttribute('viewBox', `0 0 ${contentW} ${totalH}`);
-
-  const bgRect = document.createElementNS(svgNS, 'rect');
-  bgRect.setAttribute('width', '100%');
-  bgRect.setAttribute('height', '100%');
-  bgRect.setAttribute('fill', bgColor);
-  svgWrapper.appendChild(bgRect);
-
-  const titleText = document.createElementNS(svgNS, 'text');
-  titleText.setAttribute('x', contentW / 2);
-  titleText.setAttribute('y', TITLE_HEIGHT / 2);
-  titleText.setAttribute('text-anchor', 'middle');
-  titleText.setAttribute('dominant-baseline', 'middle');
-  titleText.setAttribute('font-family', 'Cairo, "Segoe UI", Tahoma, sans-serif');
-  titleText.setAttribute('font-size', '24');
-  titleText.setAttribute('font-weight', '900');
-  titleText.setAttribute('fill', textColor);
-  titleText.textContent = title;
-  svgWrapper.appendChild(titleText);
-
-  const subtitleText = document.createElementNS(svgNS, 'text');
-  subtitleText.setAttribute('x', contentW / 2);
-  subtitleText.setAttribute('y', TITLE_HEIGHT / 2 + 28);
-  subtitleText.setAttribute('text-anchor', 'middle');
-  subtitleText.setAttribute('dominant-baseline', 'middle');
-  subtitleText.setAttribute('font-family', 'Cairo, "Segoe UI", Tahoma, sans-serif');
-  subtitleText.setAttribute('font-size', '13');
-  subtitleText.setAttribute('font-weight', '800');
-  subtitleText.setAttribute('fill', subColor);
-  subtitleText.textContent = `📅 ${dateStr}  •  👥 ${state.people.length} فرد  •  🧬 ${state.maxGen + 1} أجيال`;
-  svgWrapper.appendChild(subtitleText);
-
-  svgWrapper.appendChild(clone);
-
-  const serializer = new XMLSerializer();
-  const svgString = serializer.serializeToString(svgWrapper);
-  const svgBlob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
-  const svgUrl = URL.createObjectURL(svgBlob);
-
-  await new Promise((resolve, reject)=>{
-    const img = new Image();
-    img.onload = ()=>{
-      try{
-        ctx.drawImage(img, 0, 0, finalW, finalH);
-        URL.revokeObjectURL(svgUrl);
-        resolve();
-      }catch(err){
-        URL.revokeObjectURL(svgUrl);
-        reject(err);
-      }
-    };
-    img.onerror = ()=>{
-      URL.revokeObjectURL(svgUrl);
-      reject(new Error('فشل تحميل SVG'));
-    };
-    img.src = svgUrl;
-  });
-
-  ctx.save();
-  ctx.scale(scaleFactor, scaleFactor);
-  ctx.fillStyle = subColor;
-  ctx.font = 'bold 11px Cairo, "Segoe UI", Tahoma, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('تم التوليد بواسطة شجرة العائلة Pro', contentW / 2, totalH - FOOTER_HEIGHT / 2);
-  ctx.restore();
-
-  return canvas;
-}
-
-function applyComputedStyles(srcRoot, dstRoot, isDark){
-  const srcEls = [srcRoot, ...srcRoot.querySelectorAll('*')];
-  const dstEls = [dstRoot, ...dstRoot.querySelectorAll('*')];
-  const PROPS = [
-    'fill','stroke','stroke-width','stroke-dasharray','stroke-linecap','stroke-linejoin',
-    'opacity','font-size','font-weight','font-family','text-anchor','dominant-baseline',
-    'letter-spacing','visibility','display'
-  ];
-
-  for(let i = 0; i < srcEls.length; i++){
-    const src = srcEls[i], dst = dstEls[i];
-    if(!dst) continue;
-    let cs;
-    try{ cs = getComputedStyle(src); }catch(_){ continue; }
-
-    const styles = [];
-    PROPS.forEach(p=>{
-      let v = cs.getPropertyValue(p);
-      if(!v) return;
-      if(v.includes('var(')){
-        const varMatch = v.match(/var\((--[^)]+)\)/);
-        if(varMatch){
-          const realVal = getComputedStyle(document.documentElement).getPropertyValue(varMatch[1]).trim();
-          if(realVal) v = realVal;
-        }
-      }
-      styles.push(`${p}:${v}`);
-    });
-
-    if(styles.length){
-      dst.setAttribute('style', styles.join(';'));
-    }
-  }
-}
-
-function downloadCanvasPNG(canvas, filename){
-  canvas.toBlob(blob=>{
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = filename || `family-tree-${Date.now()}.png`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
-    toast('🖼️ تم تنزيل PNG بدقة عالية');
-  }, 'image/png', 1.0);
-}
-
-async function exportPDFFromCanvas(canvas){
-  if(!window.jspdf) throw new Error('مكتبة jsPDF غير متاحة — تحقق من الإنترنت');
-
-  const { jsPDF } = window.jspdf;
-
-  const isLandscape = canvas.width > canvas.height;
-  const pdf = new jsPDF({
-    orientation: isLandscape ? 'landscape' : 'portrait',
-    unit: 'mm',
-    format: 'a4',
-    compress: true,
-  });
-
-  const pageW = pdf.internal.pageSize.getWidth();
-  const pageH = pdf.internal.pageSize.getHeight();
-  const margin = 8;
-
-  const availW = pageW - margin * 2;
-  const availH = pageH - margin * 2;
-
-  const imgRatio = canvas.width / canvas.height;
-  const pageRatio = availW / availH;
-
-  let drawW, drawH;
-  if(imgRatio > pageRatio){
-    drawW = availW;
-    drawH = availW / imgRatio;
-  }else{
-    drawH = availH;
-    drawW = availH * imgRatio;
-  }
-
-  const offsetX = margin + (availW - drawW) / 2;
-  const offsetY = margin + (availH - drawH) / 2;
-
-  const imgData = canvas.toDataURL('image/jpeg', 0.95);
-
-  pdf.addImage(imgData, 'JPEG', offsetX, offsetY, drawW, drawH, undefined, 'FAST');
-
-  const filename = `family-tree-${Date.now()}.pdf`;
-  pdf.save(filename);
-  toast('📄 تم تنزيل PDF بنجاح');
-}
-
-function exportTreeSVG(){
-  let bb;
-  try{ bb = viewport.getBBox(); }
-  catch(_){ toast('⚠ تعذر قياس الشجرة'); return; }
-
-  if(!bb.width || !bb.height){ toast('⚠ الشجرة فارغة'); return; }
-
-  const PADDING = 60;
-  const TITLE_HEIGHT = 80;
-  const contentW = bb.width + PADDING * 2;
-  const contentH = bb.height + PADDING * 2 + TITLE_HEIGHT;
-
-  const isDark = document.documentElement.classList.contains('dark');
-  const bgColor = isDark ? '#090f1b' : '#ffffff';
-  const textColor = isDark ? '#edf4ff' : '#0b1220';
-
-  const clone = viewport.cloneNode(true);
-  const offsetX = PADDING - bb.x;
-  const offsetY = TITLE_HEIGHT + PADDING - bb.y;
-  clone.setAttribute('transform', `translate(${offsetX}, ${offsetY})`);
-
-  applyComputedStyles(viewport, clone, isDark);
-
-  const svgNS = 'http://www.w3.org/2000/svg';
-  const wrapper = document.createElementNS(svgNS, 'svg');
-  wrapper.setAttribute('xmlns', svgNS);
-  wrapper.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
-  wrapper.setAttribute('width', contentW);
-  wrapper.setAttribute('height', contentH);
-  wrapper.setAttribute('viewBox', `0 0 ${contentW} ${contentH}`);
-
-  const bgRect = document.createElementNS(svgNS, 'rect');
-  bgRect.setAttribute('width', '100%');
-  bgRect.setAttribute('height', '100%');
-  bgRect.setAttribute('fill', bgColor);
-  wrapper.appendChild(bgRect);
-
-  const title = document.createElementNS(svgNS, 'text');
-  title.setAttribute('x', contentW / 2);
-  title.setAttribute('y', 40);
-  title.setAttribute('text-anchor', 'middle');
-  title.setAttribute('font-family', 'Cairo, "Segoe UI", Tahoma, sans-serif');
-  title.setAttribute('font-size', '24');
-  title.setAttribute('font-weight', '900');
-  title.setAttribute('fill', textColor);
-  title.textContent = '🌳 شجرة العائلة Pro';
-  wrapper.appendChild(title);
-
-  wrapper.appendChild(clone);
-
-  const svgString = new XMLSerializer().serializeToString(wrapper);
-  const blob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `family-tree-${Date.now()}.svg`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(url), 5000);
-  toast('📐 تم تنزيل SVG');
-}
-
-function exportJSONFull(){
-  const data = {
-    format: 'family-tree-pro',
-    version: 8,
-    exported_at: new Date().toISOString(),
-    total_people: state.people.length,
-    total_generations: state.maxGen + 1,
-    total_roots: state.roots.length,
-    people: state.people,
-    marriages: state.marriages || []
-  };
-
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json;charset=utf-8'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `tree-data-${Date.now()}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
-  toast('💾 تم تنزيل JSON كامل');
-}
-
-/* ✅ الإصلاح 1 + 4: directPrint مع body.printing وحفظ الحالة الكاملة */
-async function directPrint(){
-  /* ✅ الإصلاح 4: احفظ الحالة الكاملة */
-  const saved = {
-    tx: state.tx,
-    ty: state.ty,
-    scale: state.scale,
-    selectedId: state.selectedId,
-    focusId: state.focusId,
-    searchMatches: state.searchMatches.slice(),
-    searchIndex: state.searchIndex,
-  };
-
-  /* اجعل الشجرة كاملة على الشاشة */
-  fitToScreen();
-  await sleep(300);
-
-  /* ✅ الإصلاح 1: أضف class printing قبل الطباعة */
-  document.body.classList.add('printing');
-
-  /* افتح نافذة الطباعة */
-  window.print();
-
-  /* ✅ أزل class printing بعد الطباعة */
-  setTimeout(()=>{
-    document.body.classList.remove('printing');
-
-    /* ✅ الإصلاح 4: استرجع الحالة الكاملة */
-    state.tx = saved.tx;
-    state.ty = saved.ty;
-    state.scale = saved.scale;
-    state.selectedId = saved.selectedId;
-    state.focusId = saved.focusId;
-    state.searchMatches = saved.searchMatches;
-    state.searchIndex = saved.searchIndex;
-
-    /* أعد الرسم إذا لزم */
-    if(state.focusId != null){
-      state.focusSet = collectDescendants(state.focusId);
-    }
-    render();
-
-    /* استرجع اللوحات */
-    if(state.focusId != null){
-      const person = state.byId.get(state.focusId);
-      if(person){
-        $('focusName').textContent = person.name;
-        $('focusPeople').textContent = state.focusSet.size;
-        $('focusGens').textContent = computeBranchGenerations(state.focusSet);
-        $('focusBranches').textContent = (state.children.get(state.focusId) || []).length;
-        $('statsBar').classList.add('hidden');
-        $('focusBanner').classList.remove('hidden');
-      }
-    }
-    if(state.selectedId != null && state.byId.has(state.selectedId)){
-      selectPerson(state.selectedId);
-    }
-
-    applyTransform();
-  }, 1000);
-}
-
-function triggerExportFlow(){
-  requestPrintPassword(()=>{
-    showPrintOptions();
-  });
-}
-
-$('btn-export').onclick = triggerExportFlow;
-
-const printBtn = $('printBtn');
-if(printBtn) printBtn.onclick = triggerExportFlow;
-
-document.addEventListener('keydown', (e)=>{
-  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p'){
-    e.preventDefault();
-    e.stopPropagation();
-    triggerExportFlow();
-    return false;
-  }
-}, true);
-
-(function initPrintOptions(){
-  const png = $('optPNG');
-  if(png) png.checked = true;
-})();
-
-window.addEventListener('beforeunload', ()=>{
-  try{
-    $('printPasswordModal').classList.remove('show');
-    $('printOptionsModal').classList.remove('show');
-  }catch(_){}
-});
-
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape'){
-    const pp = $('printPasswordModal');
-    const po = $('printOptionsModal');
-    if(pp && pp.classList.contains('show')){ pp.classList.remove('show'); return; }
-    if(po && po.classList.contains('show')){ po.classList.remove('show'); return; }
-  }
-});
-</script>
+  </script>
 </body>
 </html>
