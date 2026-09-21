@@ -1036,7 +1036,7 @@
   .cf-actions .btn{flex:1}
 </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <link rel="manifest" href='data:application/manifest+json,{"name":"شجرة العائلة Pro","short_name":"FamilyTree","start_url":".","display":"standalone","background_color":"#0b1220","theme_color":"#0b766e","icons":[]}'>
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
 <div id="app">
@@ -3453,6 +3453,13 @@ function initFeatures(){
 initFeatures();
 
 loadData();
+</script>
+  <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
