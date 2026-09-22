@@ -2145,10 +2145,6 @@ function render(){
 
   viewport.appendChild(gLinks);
   viewport.appendChild(gNodes);
-
-  state._nodeIndex = new Map();
-  nodes.forEach(n => state._nodeIndex.set(n.id, n));
-
   applyTransform();
 }
 
@@ -2193,51 +2189,35 @@ function fitToScreen(){
 }
 
 function centerOnSmooth(id, duration = 400){
-  const numId = Number(id);
+  const nodeEl = viewport.querySelector(`.node[data-id="${id}"]`);
+  if(!nodeEl) return;
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const nodeEl = viewport.querySelector(`.node[data-id="${numId}"]`);
-      if(!nodeEl){
-        setTimeout(() => centerOnSmooth(numId, duration), 120);
-        return;
-      }
+  const box = container.getBoundingClientRect();
+  let nodeBB;
+  try{ nodeBB = nodeEl.getBBox(); }catch(_){ return; }
 
-      const box = container.getBoundingClientRect();
-      let nodeX, nodeY;
+  const nodeX = nodeBB.x + nodeBB.width / 2;
+  const nodeY = nodeBB.y + nodeBB.height / 2;
 
-      const n = state._nodeIndex && state._nodeIndex.get(numId);
-      if(n && typeof n._x === 'number' && typeof n._y === 'number'){
-        nodeX = n._x;
-        nodeY = n._y;
-      } else {
-        let nodeBB;
-        try{ nodeBB = nodeEl.getBBox(); }catch(_){ return; }
-        nodeX = nodeBB.x + nodeBB.width / 2;
-        nodeY = nodeBB.y + nodeBB.height / 2;
-      }
+  const k = Math.max(state.scale, 1.0);
+  const targetTx = box.width / 2 - nodeX * k;
+  const targetTy = box.height / 2 - nodeY * k;
 
-      const k = Math.max(state.scale, 0.5);
+  const startTx = state.tx, startTy = state.ty, startScale = state.scale;
+  const t0 = performance.now();
 
-      const targetTx = box.width / 2 - nodeX * k;
-      const targetTy = box.height / 2 - nodeY * k;
-
-      const startTx = state.tx, startTy = state.ty, startScale = state.scale;
-      const t0 = performance.now();
-
-      function step(now){
-        const t = Math.min(1, (now - t0) / duration);
-        const ease = 1 - Math.pow(1 - t, 3);
-        state.tx = startTx + (targetTx - startTx) * ease;
-        state.ty = startTy + (targetTy - startTy) * ease;
-        state.scale = startScale + (k - startScale) * ease;
-        applyTransform();
-        if(t < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    });
-  });
+  function step(now){
+    const t = Math.min(1, (now - t0) / duration);
+    const ease = 1 - Math.pow(1 - t, 3);
+    state.tx = startTx + (targetTx - startTx) * ease;
+    state.ty = startTy + (targetTy - startTy) * ease;
+    state.scale = startScale + (k - startScale) * ease;
+    applyTransform();
+    if(t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
+
 function zoomBy(factor, cx, cy){
   const box = container.getBoundingClientRect();
   if(cx == null) cx = box.width / 2;
@@ -2496,16 +2476,9 @@ function updateSelectedClass(id){
 function updateSearchClasses(){
   const isSearching = state.searchIndex >= 0 && state.searchMatches.length > 0;
   const ancestorSet = new Set();
-  const ancestorEdges = new Set();
-
   if(isSearching){
-    const path = getAncestorPath(state.searchMatches[state.searchIndex]);
-    path.forEach(id => ancestorSet.add(id));
-    for(let i = 0; i < path.length - 1; i++){
-      ancestorEdges.add(`${path[i]}-${path[i+1]}`);
-    }
+    getAncestorPath(state.searchMatches[state.searchIndex]).forEach(id => ancestorSet.add(id));
   }
-
   viewport.querySelectorAll('.node').forEach(el => {
     const id = Number(el.dataset.id);
     const card = el.querySelector('.node-card');
@@ -2518,14 +2491,6 @@ function updateSearchClasses(){
     if(isHit) card.classList.add('search-hit');
     if(isCurrent) card.classList.add('search-current');
     if(!ancestorSet.has(id) && !isHit) el.classList.add('dimmed');
-  });
-
-  /* ✅ حدّث روابط الأسلاف */
-  viewport.querySelectorAll('.link').forEach(el => {
-    el.classList.remove('ancestor-path');
-    if(!isSearching) return;
-    const d = el.getAttribute('d') || '';
-    /* لا يمكن معرفة الـ ids من d بسهولة، لذا نعتمد على الفلترة أعلاه فقط */
   });
 }
 
@@ -3176,12 +3141,10 @@ function performSearch(query){
   render();
 
   if(matches.length){
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        centerOnSmooth(matches[0]);
-        updateSearchClasses();
-      });
-    });
+    setTimeout(() => {
+      centerOnSmooth(matches[0]);
+      updateSearchClasses();
+    }, 150);
   }
 }
 
@@ -3287,27 +3250,31 @@ function nextResult(){
   state.searchIndex = (state.searchIndex + 1) % state.searchMatches.length;
   updateActiveResult();
   const id = state.searchMatches[state.searchIndex];
-
-  updateSearchClasses();
-  centerOnSmooth(id, 500);
-
+  render();
+  setTimeout(() => {
+    centerOnSmooth(id);
+    updateSearchClasses();
+  }, 100);
   const p = state.byId.get(id);
   toast(`🔍 ${state.searchIndex+1}/${state.searchMatches.length}: ${p?.name} (#${id})`);
   searchResults.classList.add('hidden');
 }
+
 function prevResult(){
   if(!state.searchMatches.length) return;
   state.searchIndex = (state.searchIndex - 1 + state.searchMatches.length) % state.searchMatches.length;
   updateActiveResult();
   const id = state.searchMatches[state.searchIndex];
-
-  updateSearchClasses();
-  centerOnSmooth(id, 500);
-
+  render();
+  setTimeout(() => {
+    centerOnSmooth(id);
+    updateSearchClasses();
+  }, 100);
   const p = state.byId.get(id);
   toast(`🔍 ${state.searchIndex+1}/${state.searchMatches.length}: ${p?.name} (#${id})`);
   searchResults.classList.add('hidden');
 }
+
 function clearSearch(){
   searchInput.value = '';
   searchBox.classList.remove('has-value');
@@ -3335,13 +3302,9 @@ function highlightPathToRoot(id){
   renderSearchUI(state.searchMatches[0].toString());
   render();
   toast(`✨ المسار مضاء (${path.length} أسلاف)`);
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      centerOnSmooth(path[0]);
-    });
-  });
+  setTimeout(() => centerOnSmooth(path[0]), 100);
 }
+
 /* ============================================================
    20) تحديث الإحصائيات
    ============================================================ */
