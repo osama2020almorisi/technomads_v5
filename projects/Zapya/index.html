@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>تحميل تطبيق Zapya</title>
 <style>
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: 'Segoe UI', Tahoma, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
     }
 
     body {
@@ -17,51 +18,46 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
         padding: 20px;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .card {
         background: #fff;
-        border-radius: 20px;
-        padding: 40px 30px;
+        border-radius: 24px;
+        padding: 40px 25px;
         max-width: 420px;
         width: 100%;
         text-align: center;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-        animation: fadeIn 0.6s ease;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
     }
 
     .icon {
-        width: 100px;
-        height: 100px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-radius: 25px;
-        margin: 0 auto 20px;
+        width: 110px;
+        height: 110px;
+        background: linear-gradient(135deg, #0ea5e9, #6366f1);
+        border-radius: 28px;
+        margin: 0 auto 22px;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 50px;
+        font-size: 55px;
         color: #fff;
-        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 12px 30px rgba(14, 165, 233, 0.45);
     }
 
     h1 {
-        color: #333;
-        font-size: 24px;
+        color: #1e293b;
+        font-size: 26px;
         margin-bottom: 10px;
     }
 
     .desc {
-        color: #777;
+        color: #64748b;
         font-size: 15px;
         margin-bottom: 30px;
-        line-height: 1.6;
+        line-height: 1.7;
     }
 
     .btn {
@@ -70,93 +66,86 @@
         justify-content: center;
         gap: 10px;
         width: 100%;
-        padding: 15px;
+        padding: 18px;
         border: none;
-        border-radius: 12px;
-        font-size: 17px;
+        border-radius: 16px;
+        font-size: 18px;
         font-weight: bold;
         cursor: pointer;
         text-decoration: none;
-        transition: all 0.3s ease;
-        margin-bottom: 12px;
-    }
-
-    .btn-android {
-        background: linear-gradient(135deg, #34d399, #059669);
+        transition: all 0.25s ease;
+        background: linear-gradient(135deg, #0ea5e9, #6366f1);
         color: #fff;
+        box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
     }
 
-    .btn-android:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(5, 150, 105, 0.4);
+    .btn:active {
+        transform: scale(0.97);
     }
 
-    .btn-ios {
-        background: linear-gradient(135deg, #60a5fa, #2563eb);
-        color: #fff;
+    .btn:hover {
+        box-shadow: 0 14px 32px rgba(14, 165, 233, 0.55);
     }
 
-    .btn-ios:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.4);
+    .file-info {
+        margin-top: 18px;
+        font-size: 13px;
+        color: #94a3b8;
+        word-break: break-all;
+        padding: 0 10px;
     }
 
     .info-box {
-        background: #fff7ed;
-        border: 1px solid #fed7aa;
-        border-radius: 12px;
+        background: #fef3c7;
+        border: 1px solid #fcd34d;
+        border-radius: 14px;
         padding: 15px;
-        margin-top: 20px;
+        margin-top: 25px;
         font-size: 13px;
-        color: #9a3412;
+        color: #92400e;
         text-align: right;
-        line-height: 1.8;
+        line-height: 1.9;
     }
 
     .info-box strong {
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 6px;
         font-size: 14px;
     }
 
     .footer {
         margin-top: 25px;
         font-size: 12px;
-        color: #999;
+        color: #cbd5e1;
     }
 </style>
 </head>
 <body>
 
 <div class="card">
-    <div class="icon">📲</div>
-    <h1>تطبيق Zapya</h1>
+    <div class="icon">📦</div>
+    <h1>تحميل تطبيق Zapya</h1>
     <p class="desc">
-        حمّل التطبيق الآن واستمتع بمشاركة الملفات بسرعة فائقة بين جميع الأجهزة
+        اضغط على الزر أدناه لتحميل الملف مباشرة إلى جهازك
     </p>
 
-    <!-- زر تحميل الأندرويد -->
-    <a href="Zapya.apk" class="btn btn-android" download>
-        <span>🤖</span>
-        <span>تحميل لأندرويد (APK)</span>
+    <!-- ⬇️ زر التحميل المباشر -->
+    <a href="Zapya1.7.1(idevices).ipa.zip" class="btn" download>
+        <span>⬇️</span>
+        <span>تحميل الملف الآن</span>
     </a>
 
-    <!-- زر تحميل الآيفون -->
-    <a href="https://apps.apple.com/app/zapya/id543884649" 
-       class="btn btn-ios" 
-       target="_blank" 
-       rel="noopener">
-        <span>🍎</span>
-        <span>تحميل لآيفون / آيباد</span>
-    </a>
+    <div class="file-info">
+        📁 Zapya1.7.1(idevices).ipa.zip
+    </div>
 
     <div class="info-box">
-        <strong>⚠️ ملاحظات مهمة:</strong>
-        • على أندرويد: فعّل "السماح بتثبيت التطبيقات من مصادر غير معروفة"<br>
-        • على آيفون: يتم التحميل من متجر App Store مباشرة
+        <strong>⚠️ ملاحظات مهمة للآيباد:</strong>
+        • بعد التحميل، افتح تطبيق <b>الملفات (Files)</b><br>
+        • ستجد الملف داخل مجلد <b>التنزيلات (Downloads)</b><br>
+        • اضغط عليه لفك الضغط للحصول على ملف .ipa<br>
+        • ثبّت الـ IPA باستخدام أداة مثل <b>Sideloadly</b> أو <b>AltStore</b>
     </div>
-    <br>https://apps.apple.com/us/app/zapya-file-sharing/id576309271?platform=ipad#information
-    
 
     <div class="footer">
         © 2025 جميع الحقوق محفوظة
