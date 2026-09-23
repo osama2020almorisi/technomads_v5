@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحميل تطبيق Zapya</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 40px 30px;
+        max-width: 420px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 25px;
+        margin: 0 auto 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 50px;
+        color: #fff;
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .desc {
+        color: #777;
+        font-size: 15px;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 12px;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        margin-bottom: 12px;
+    }
+
+    .btn-android {
+        background: linear-gradient(135deg, #34d399, #059669);
+        color: #fff;
+    }
+
+    .btn-android:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(5, 150, 105, 0.4);
+    }
+
+    .btn-ios {
+        background: linear-gradient(135deg, #60a5fa, #2563eb);
+        color: #fff;
+    }
+
+    .btn-ios:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .info-box {
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 20px;
+        font-size: 13px;
+        color: #9a3412;
+        text-align: right;
+        line-height: 1.8;
+    }
+
+    .info-box strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    .footer {
+        margin-top: 25px;
+        font-size: 12px;
+        color: #999;
+    }
+</style>
+</head>
+<body>
+
+<div class="card">
+    <div class="icon">📲</div>
+    <h1>تطبيق Zapya</h1>
+    <p class="desc">
+        حمّل التطبيق الآن واستمتع بمشاركة الملفات بسرعة فائقة بين جميع الأجهزة
+    </p>
+
+    <!-- زر تحميل الأندرويد -->
+    <a href="Zapya.apk" class="btn btn-android" download>
+        <span>🤖</span>
+        <span>تحميل لأندرويد (APK)</span>
+    </a>
+
+    <!-- زر تحميل الآيفون -->
+    <a href="https://apps.apple.com/app/zapya/id543884649" 
+       class="btn btn-ios" 
+       target="_blank" 
+       rel="noopener">
+        <span>🍎</span>
+        <span>تحميل لآيفون / آيباد</span>
+    </a>
+
+    <div class="info-box">
+        <strong>⚠️ ملاحظات مهمة:</strong>
+        • على أندرويد: فعّل "السماح بتثبيت التطبيقات من مصادر غير معروفة"<br>
+        • على آيفون: يتم التحميل من متجر App Store مباشرة
+    </div>
+
+    <div class="footer">
+        © 2025 جميع الحقوق محفوظة
+    </div>
+</div>
+
+</body>
+</html>
