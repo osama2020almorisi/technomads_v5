@@ -374,14 +374,11 @@ html,body{
 .v-slider-group{
   display:flex;flex-direction:column;align-items:center;gap:6px;
   pointer-events:auto;
-  /* خلفية زجاجية شفافة لإظهار الشجرة خلف أدوات التحريك */
-  background:rgba(10,20,35,.16);
-  border:1px solid rgba(255,255,255,.10);
+  background:var(--surface);
+  border:1.5px solid var(--line);
   border-radius:20px;
   padding:6px 4px;
-  box-shadow:0 6px 20px rgba(0,0,0,.12);
-  -webkit-backdrop-filter:blur(5px) saturate(115%);
-  backdrop-filter:blur(5px) saturate(115%);
+  box-shadow:0 6px 20px rgba(15,23,42,.12);
 }
 
 .v-slider-btn{
@@ -438,9 +435,9 @@ html,body{
 .v-slider::-webkit-slider-runnable-track{
   width:100%;
   height:6px;
-  background:rgba(255,255,255,.18);
+  background:var(--surface3);
   border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
+  border:1px solid var(--line);
 }
 .v-slider::-webkit-slider-thumb{
   -webkit-appearance:none;
@@ -461,9 +458,9 @@ html,body{
 .v-slider::-moz-range-track{
   width:100%;
   height:6px;
-  background:rgba(255,255,255,.18);
+  background:var(--surface3);
   border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
+  border:1px solid var(--line);
 }
 .v-slider::-moz-range-thumb{
   width:18px;
@@ -525,14 +522,8 @@ html,body{
   position:absolute;bottom:calc(12px + var(--safe-bottom));
   left:50%;transform:translateX(-50%);z-index:36;
   display:flex;align-items:center;gap:6px;
-  /* شريط التحريك الأفقي شفاف مع زجاجية خفيفة */
-  background:rgba(10,20,35,.16);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:30px;
-  padding:6px 10px;
-  box-shadow:0 6px 20px rgba(0,0,0,.14);
-  -webkit-backdrop-filter:blur(5px) saturate(115%);
-  backdrop-filter:blur(5px) saturate(115%);
+  background:var(--nav);border:1.5px solid var(--line);border-radius:30px;
+  padding:6px 10px;box-shadow:0 6px 20px rgba(0,0,0,.18);
   max-width:min(430px,88vw);
 }
 .pan-btn{
@@ -543,16 +534,6 @@ html,body{
 }
 .pan-btn:active{transform:scale(.88);background:var(--primary);color:#fff}
 .pan-bar input[type=range]{flex:1;accent-color:var(--primary);min-width:110px}
-
-/* عند التفاعل تبقى الأدوات شفافة، لكن المسار يصبح أوضح */
-.v-slider:focus-visible::-webkit-slider-runnable-track,
-.pan-bar input[type=range]:focus-visible::-webkit-slider-runnable-track{
-  background:rgba(255,255,255,.24);
-}
-.v-slider:active::-webkit-slider-thumb,
-.pan-bar input[type=range]:active::-webkit-slider-thumb{
-  box-shadow:0 0 0 4px rgba(20,184,166,.16),0 2px 8px rgba(15,118,110,.45);
-}
 
 /* ============================================================
    لوحة التفاصيل

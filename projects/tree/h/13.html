@@ -55,7 +55,7 @@ html,body{
 .topbar{
   position:relative;z-index:50;
   display:flex;align-items:center;gap:4px;
-  padding:calc(10px + var(--safe-top)) 8px 8px;
+  padding:calc(6px + var(--safe-top)) 8px 6px;
   background:var(--nav);border-bottom:1px solid var(--line);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   flex-shrink:0;min-height:var(--topbar-h);overflow:visible;
@@ -146,7 +146,7 @@ html,body{
    ============================================================ */
 .search-results{
   position:absolute;
-  top:calc(var(--topbar-h) + var(--safe-top) + 42px);
+  top:calc(var(--topbar-h) + var(--safe-top) - 4px);
   left:calc(10px + var(--safe-left));
   right:calc(10px + var(--safe-right));
   z-index:80;max-height:min(58vh, 420px);
@@ -225,7 +225,7 @@ html,body{
    ============================================================ */
 .stats-bar{
   position:absolute;
-  top:calc(10px + var(--safe-top));
+  top:calc(var(--topbar-h) + var(--safe-top) + 6px);
   left:calc(10px + var(--safe-left));right:calc(10px + var(--safe-right));
   z-index:20;display:flex;gap:6px;justify-content:flex-end;
   pointer-events:none;
@@ -245,7 +245,7 @@ html,body{
 
 .focus-banner{
   position:absolute;
-  top:calc(10px + var(--safe-top));
+  top:calc(var(--topbar-h) + var(--safe-top) + 6px);
   left:calc(10px + var(--safe-left));right:calc(10px + var(--safe-right));
   z-index:25;display:flex;align-items:center;justify-content:space-between;gap:10px;
   padding:10px 14px;
@@ -359,7 +359,7 @@ html,body{
 }
 
 /* ============================================================
-   🎚️ أدوات سفلية — أشرطة عمودية (Zoom + Pan)
+   أدوات سفلية
    ============================================================ */
 .bottom-tools{
   position:absolute;
@@ -369,170 +369,45 @@ html,body{
   z-index:40;display:flex;justify-content:space-between;
   align-items:flex-end;gap:8px;pointer-events:none;
 }
-
-/* ✅ مجموعة الشريط العمودي */
-.v-slider-group{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  pointer-events:auto;
-  /* خلفية زجاجية شفافة لإظهار الشجرة خلف أدوات التحريك */
-  background:rgba(10,20,35,.16);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:20px;
-  padding:6px 4px;
-  box-shadow:0 6px 20px rgba(0,0,0,.12);
-  -webkit-backdrop-filter:blur(5px) saturate(115%);
-  backdrop-filter:blur(5px) saturate(115%);
-}
-
-.v-slider-btn{
-  width:38px;height:38px;border-radius:50%;
-  background:var(--surface2);border:1.5px solid var(--line);
-  color:var(--text);font-size:16px;cursor:pointer;font-family:inherit;
+.tool-group{display:flex;flex-direction:column;gap:6px;pointer-events:auto}
+.tool-btn{
+  width:var(--btn-lg);height:var(--btn-lg);
+  border-radius:14px;background:var(--surface);
+  border:1.5px solid var(--line);color:var(--text);
+  font-size:20px;cursor:pointer;font-family:inherit;
   display:grid;place-items:center;
-  transition:transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
-  -webkit-tap-highlight-color:transparent;font-weight:900;
-  flex-shrink:0;
+  transition:transform .12s ease, background .12s ease, box-shadow .12s ease;
+  box-shadow:0 4px 14px rgba(15,23,42,.10);
+  -webkit-tap-highlight-color:transparent;font-weight:700;
 }
-.v-slider-btn:active{transform:scale(.88);background:var(--primary);color:#fff;border-color:var(--primary-dark)}
-.v-slider-btn.reset-btn{font-size:13px;background:var(--surface3)}
-.v-slider-btn.reset-btn:active{background:var(--warn);color:#fff;border-color:var(--warn)}
-
-.v-slider-track{
-  width:26px;
-  height:160px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:0;
-  overflow:visible;
+.tool-btn:active{
+  transform:scale(.88);background:var(--surface2);
+  box-shadow:0 2px 6px rgba(15,23,42,.15);
 }
-.v-slider-track .v-slider{
-  flex:0 0 auto;
-}
-
-/* ============================================================
-   🎚️ شريط عمودي موحّد — Android / Chrome / Firefox
-   نعتمد على range أفقي أصلي ثم نديره 90°؛ هذا أكثر ثباتًا من
-   slider-vertical و writing-mode على Chrome Android.
-   min يظهر أسفلًا و max يظهر أعلىً، مع اتجاه LTR ثابت.
-   ============================================================ */
-.v-slider{
-  -webkit-appearance:none;
-  appearance:none;
-  direction:ltr;
-  display:block;
-  width:120px;
-  height:24px;
-  margin:0;
-  padding:0;
-  border:0;
-  outline:0;
-  background:transparent;
-  accent-color:var(--primary);
-  cursor:pointer;
-  touch-action:none;
-  transform:rotate(-90deg);
-  transform-origin:center center;
-}
-
-.v-slider::-webkit-slider-runnable-track{
-  width:100%;
-  height:6px;
-  background:rgba(255,255,255,.18);
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
-}
-.v-slider::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  appearance:none;
-  width:20px;
-  height:20px;
-  margin-top:-8px;
-  border-radius:50%;
+.tool-btn.zoom-label{font-size:11px;font-weight:900;letter-spacing:-.5px}
+.tool-btn.primary-tool{
   background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  border:2px solid #fff;
-  box-shadow:0 2px 8px rgba(15,118,110,.4);
-  cursor:grab;
+  border-color:var(--primary-dark);color:#fff;
+  box-shadow:0 6px 16px rgba(15,118,110,.35);
 }
-.v-slider::-webkit-slider-thumb:active{
-  cursor:grabbing;
+.nav-group{display:flex;flex-direction:column;gap:6px;pointer-events:auto}
+.nav-btn{
+  width:var(--btn-lg);height:var(--btn-lg);border-radius:50%;
+  background:var(--surface);border:1.5px solid var(--line);
+  color:var(--text);font-size:17px;cursor:pointer;font-family:inherit;
+  display:grid;place-items:center;
+  transition:transform .12s ease, background .12s ease;
+  box-shadow:0 4px 14px rgba(15,23,42,.10);
+  -webkit-tap-highlight-color:transparent;
 }
-
-.v-slider::-moz-range-track{
-  width:100%;
-  height:6px;
-  background:rgba(255,255,255,.18);
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
-}
-.v-slider::-moz-range-thumb{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  border:2px solid #fff;
-  box-shadow:0 2px 8px rgba(15,118,110,.4);
-  cursor:grab;
-}
-
-/* منع أي انقلاب بسبب dir=rtl في الصفحة */
-.pan-bar input[type=range]{
-  direction:ltr;
-  -webkit-appearance:none;
-  appearance:none;
-  height:24px;
-  min-width:110px;
-  margin:0;
-  padding:0;
-  background:transparent;
-  accent-color:var(--primary);
-  touch-action:none;
-  cursor:pointer;
-}
-.pan-bar input[type=range]::-webkit-slider-runnable-track{
-  height:6px;
-  background:var(--surface3);
-  border:1px solid var(--line);
-  border-radius:999px;
-}
-.pan-bar input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  appearance:none;
-  width:20px;
-  height:20px;
-  margin-top:-8px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  border:2px solid #fff;
-  box-shadow:0 2px 8px rgba(15,118,110,.4);
-}
-.pan-bar input[type=range]::-moz-range-track{
-  height:6px;
-  background:var(--surface3);
-  border:1px solid var(--line);
-  border-radius:999px;
-}
-.pan-bar input[type=range]::-moz-range-thumb{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  border:2px solid #fff;
-  box-shadow:0 2px 8px rgba(15,118,110,.4);
-}
+.nav-btn:active{transform:scale(.88);background:var(--surface2)}
 
 .pan-bar{
   position:absolute;bottom:calc(12px + var(--safe-bottom));
   left:50%;transform:translateX(-50%);z-index:36;
   display:flex;align-items:center;gap:6px;
-  /* شريط التحريك الأفقي شفاف مع زجاجية خفيفة */
-  background:rgba(10,20,35,.16);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:30px;
-  padding:6px 10px;
-  box-shadow:0 6px 20px rgba(0,0,0,.14);
-  -webkit-backdrop-filter:blur(5px) saturate(115%);
-  backdrop-filter:blur(5px) saturate(115%);
+  background:var(--nav);border:1.5px solid var(--line);border-radius:30px;
+  padding:6px 10px;box-shadow:0 6px 20px rgba(0,0,0,.18);
   max-width:min(430px,88vw);
 }
 .pan-btn{
@@ -543,16 +418,6 @@ html,body{
 }
 .pan-btn:active{transform:scale(.88);background:var(--primary);color:#fff}
 .pan-bar input[type=range]{flex:1;accent-color:var(--primary);min-width:110px}
-
-/* عند التفاعل تبقى الأدوات شفافة، لكن المسار يصبح أوضح */
-.v-slider:focus-visible::-webkit-slider-runnable-track,
-.pan-bar input[type=range]:focus-visible::-webkit-slider-runnable-track{
-  background:rgba(255,255,255,.24);
-}
-.v-slider:active::-webkit-slider-thumb,
-.pan-bar input[type=range]:active::-webkit-slider-thumb{
-  box-shadow:0 0 0 4px rgba(20,184,166,.16),0 2px 8px rgba(15,118,110,.45);
-}
 
 /* ============================================================
    لوحة التفاصيل
@@ -755,7 +620,7 @@ html,body{
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ============================================================
-   الحماية — السماح بالطباعة عند وجود body.printing
+   الحماية — ✅ الإصلاح 1: السماح بالطباعة عند وجود body.printing
    ============================================================ */
 @media print {
   html:not(.printing-print), body:not(.printing) { display: none !important; visibility: hidden !important; }
@@ -766,6 +631,7 @@ html,body{
     font-size: 24px; color: #999; background: #fff;
     font-family: sans-serif; text-align: center; padding: 30px;
   }
+  /* ✅ عند الطباعة الفعلية */
   body.printing { display: block !important; visibility: visible !important; overflow: visible !important; }
   body.printing #app { position: static !important; display: block !important; }
   body.printing .topbar,
@@ -823,15 +689,6 @@ img, svg{ -webkit-user-drag: none !important; user-drag: none !important; }
   .qa-btn .qa-icon{font-size:16px}
   .qa-btn .qa-label{font-size:8px}
   .smart-select select{max-height:120px}
-  .gen-bar{padding:5px 8px;gap:3px}
-  .gen-chip{min-width:28px;height:26px;font-size:10px;padding:0 6px}
-  .gen-label{font-size:8px;padding:0 1px}
-  .gen-divider{height:16px}
-  /* ✅ أشرطة التحكم العمودية على الشاشات الصغيرة */
-  .v-slider-group{padding:5px 3px;gap:5px;border-radius:18px}
-  .v-slider-btn{width:34px;height:34px;font-size:14px}
-  .v-slider-track{min-height:60px;max-height:120px}
-  .v-slider{width:120px}
 }
 @media(max-width:360px){
   :root{--topbar-h:50px;--btn-md:38px;--btn-lg:42px}
@@ -847,9 +704,6 @@ img, svg{ -webkit-user-drag: none !important; user-drag: none !important; }
   .stat-card{min-width:46px;padding:4px 6px}
   .stat-card .num{font-size:12px}
   .stat-card .lbl{font-size:7px}
-  .v-slider-btn{width:30px;height:30px;font-size:12px}
-  .v-slider-track{min-height:50px;max-height:100px}
-  .v-slider{width:100px}
 }
 @media(min-width:768px){
   .brand{font-size:16px}
@@ -858,6 +712,7 @@ img, svg{ -webkit-user-drag: none !important; user-drag: none !important; }
   .stat-card{min-width:72px;padding:8px 12px}
   .stat-card .num{font-size:18px}
   .stat-card .lbl{font-size:10px}
+  .tool-btn,.nav-btn{width:52px;height:52px}
   .search-results{left:auto;right:12px;width:440px}
   .info-panel{
     left:auto;right:12px;bottom:12px;
@@ -1140,35 +995,20 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
   .print-option .po-text b{font-size:12px}
   .print-option .po-text small{font-size:9px}
 }
-
 /* ============================================================
    🎯 شريط الأجيال السريع + طيّ الجيل
    ============================================================ */
 .gen-bar{
-  position:relative;
-  z-index:49;
+  position:absolute;
+  top:calc(var(--topbar-h) + var(--safe-top) + 6px);
+  left:50%;transform:translateX(-50%);z-index:37;
   display:flex;align-items:center;gap:5px;
-  background:var(--nav);
-  border-bottom:1.5px solid var(--line);
-  padding:6px 10px;
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
-  max-width:100%;
-  overflow-x:auto;
-  overflow-y:hidden;
-  scrollbar-width:none;
+  background:var(--nav);border:1.5px solid var(--line);border-radius:30px;
+  padding:6px 10px;box-shadow:0 6px 20px rgba(0,0,0,.15);
+  max-width:min(620px,94vw);overflow-x:auto;scrollbar-width:none;
   -webkit-overflow-scrolling:touch;
-  touch-action:pan-x;
-  flex-shrink:0;
-  justify-content:flex-start;
-  will-change:scroll-position;
 }
 .gen-bar::-webkit-scrollbar{display:none}
-
-.gen-bar::after{
-  content:'';
-  flex:0 0 12px;
-}
-
 .gen-label{
   font-size:10px;font-weight:900;color:var(--muted);
   flex-shrink:0;padding:0 2px;white-space:nowrap;
@@ -1193,12 +1033,10 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
   color:#fff;border-color:#ea580c;border-style:solid;
   box-shadow:0 3px 10px rgba(245,158,11,.3);
 }
-
 @media(max-width:420px){
-  .gen-bar{padding:5px 8px;gap:3px}
-  .gen-chip{min-width:28px;height:26px;font-size:10px;padding:0 6px}
-  .gen-label{font-size:8px;padding:0 1px}
-  .gen-divider{height:16px}
+  .gen-bar{top:calc(var(--topbar-h) + var(--safe-top) + 4px);padding:5px 8px;gap:4px}
+  .gen-chip{min-width:30px;height:28px;font-size:11px;padding:0 8px}
+  .gen-label{font-size:9px}
 }
 </style>
 <base target="_blank">
@@ -1241,19 +1079,6 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
         <button class="icon-btn primary-icon" id="btn-fit" title="ملاءمة">⛶</button>
       </div>
     </div>
-  </div>
-
-  <!-- ✅ شريط الأجيال - جزء من تخطيط #app -->
-  <div class="gen-bar" id="genBar">
-    <span class="gen-label">🎯 الأجيال:</span>
-    <button class="gen-chip" data-genlimit="3" type="button">3</button>
-    <button class="gen-chip" data-genlimit="5" type="button">5</button>
-    <button class="gen-chip" data-genlimit="7" type="button">7</button>
-    <button class="gen-chip" data-genlimit="10" type="button">10</button>
-    <button class="gen-chip active" data-genlimit="all" type="button">الكل</button>
-    <span class="gen-divider"></span>
-    <span class="gen-label">🗜️ طيّ:</span>
-    <span id="genCollapseChips" style="display:flex;gap:4px;align-items:center"></span>
   </div>
 
   <div class="search-results hidden" id="searchResults"></div>
@@ -1306,25 +1131,29 @@ body.fs-mode .topbar,body.fs-mode .bottom-tools{display:none!important}
     </svg>
 
     <div class="bottom-tools">
-      <!-- ✅ شريط التكبير العمودي (يسار) -->
-      <div class="v-slider-group">
-        <button class="v-slider-btn" id="btn-zoom-in" aria-label="تكبير">＋</button>
-        <div class="v-slider-track">
-          <input type="range" id="zoomRange" min="0" max="100" value="50" step="1" orient="vertical" class="v-slider" title="تكبير/تصغير">
-        </div>
-        <button class="v-slider-btn" id="btn-zoom-out" aria-label="تصغير">−</button>
-        <button class="v-slider-btn reset-btn" id="btn-reset" aria-label="إعادة" title="إعادة التوسيط">⌖</button>
+      <div class="tool-group">
+        <button class="tool-btn" id="btn-zoom-in" aria-label="تكبير">＋</button>
+        <button class="tool-btn" id="btn-zoom-out" aria-label="تصغير">−</button>
+        <button class="tool-btn zoom-label" id="btn-reset" aria-label="إعادة">1:1</button>
       </div>
+      <div class="nav-group">
+        <button class="nav-btn" id="btn-up" aria-label="أعلى">▲</button>
+        <button class="nav-btn" id="btn-gen-up" title="الجيل الأعلى" style="font-size:13px">⤒</button>
+        <button class="nav-btn" id="btn-down" aria-label="أسفل">▼</button>
+        <button class="nav-btn" id="btn-gen-down" title="الجيل الأدنى" style="font-size:13px">⤓</button>
+      </div>
+    </div>
 
-      <!-- ✅ شريط التحريك العمودي (يمين) -->
-      <div class="v-slider-group">
-        <button class="v-slider-btn" id="btn-up" aria-label="أعلى">▲</button>
-        <div class="v-slider-track">
-          <input type="range" id="panYRange" min="-2000" max="2000" value="0" step="10" orient="vertical" class="v-slider" title="تحريك لأعلى/أسفل">
-        </div>
-        <button class="v-slider-btn" id="btn-down" aria-label="أسفل">▼</button>
-        <button class="v-slider-btn reset-btn" id="btn-gen-up" title="الجيل الأعلى" style="font-size:13px">⤒</button>
-      </div>
+    <div class="gen-bar" id="genBar">
+      <span class="gen-label">🎯 الأجيال:</span>
+      <button class="gen-chip" data-genlimit="3" type="button">3</button>
+      <button class="gen-chip" data-genlimit="5" type="button">5</button>
+      <button class="gen-chip" data-genlimit="7" type="button">7</button>
+      <button class="gen-chip" data-genlimit="10" type="button">10</button>
+      <button class="gen-chip active" data-genlimit="all" type="button">الكل</button>
+      <span class="gen-divider"></span>
+      <span class="gen-label">🗜️ طيّ:</span>
+      <span id="genCollapseChips" style="display:flex;gap:4px;align-items:center"></span>
     </div>
 
     <div class="pan-bar" id="panBar">
@@ -1707,12 +1536,15 @@ function applyOps(){
   });
 }
 
+/* ✅ الإصلاح 6: recordOp تطبق العملية الجديدة فقط */
 function recordOp(o){
+  /* دفع للـ undo stack */
   state._undoStack.push(JSON.parse(JSON.stringify(o)));
   if(state._undoStack.length > 30) state._undoStack.shift();
 
   const ops = getOps(); ops.push(o); saveOps(ops);
 
+  /* ✅ تطبيق العملية الجديدة مباشرة على state.people */
   if(o.op === 'add' || o.op === 'edit'){
     const i = state.people.findIndex(p => Number(p.id) === Number(o.person.id));
     if(i >= 0) state.people[i] = o.person;
@@ -1727,10 +1559,13 @@ function recordOp(o){
   setTimeout(()=>fitToScreen(), 250);
 }
 
+/* ✅ Undo */
 function undoLastOp(){
   if(!state._undoStack.length){ toast('⚠ لا توجد عمليات للتراجع'); return; }
   const last = state._undoStack.pop();
+  /* احذف آخر عملية من localStorage */
   const ops = getOps();
+  /* ابحث عن آخر تطابق من النهاية */
   for(let i = ops.length - 1; i >= 0; i--){
     if(JSON.stringify(ops[i]) === JSON.stringify(last)){
       ops.splice(i, 1);
@@ -1738,6 +1573,7 @@ function undoLastOp(){
     }
   }
   saveOps(ops);
+  /* أعد بناء state.people من الصفر */
   reloadPeopleFromScratch();
   toast('↩ تم التراجع عن آخر عملية');
 }
@@ -1746,6 +1582,7 @@ function nextId(){
   return state.people.reduce((m,p)=>Math.max(m, Number(p.id)), 0) + 1;
 }
 
+/* ✅ reload من الصفر */
 let _basePeople = [];
 
 async function fetchBaseData(){
@@ -1784,8 +1621,7 @@ async function loadData(){
     requestAnimationFrame(fitToScreen);
     setTimeout(fitToScreen, 200);
     $('loader').classList.add('hide');
-    initTimeline();
-    handleHashLink();
+    setTimeout(()=>{ initTimeline(); handleHashLink(); }, 400);
   }catch(err){
     console.error(err);
     $('loader').innerHTML = `
@@ -1796,10 +1632,12 @@ async function loadData(){
   }
 }
 
+/* ✅ الإصلاح 3: refreshData بدون reload */
 async function refreshData(){
   const btn = $('btn-refresh');
   btn.classList.add('spinning');
 
+  /* احفظ الحالة */
   const saved = {
     tx: state.tx, ty: state.ty, scale: state.scale,
     selectedId: state.selectedId,
@@ -1823,6 +1661,7 @@ async function refreshData(){
     render();
     updateStats();
 
+    /* استعد الحالة */
     state.tx = saved.tx;
     state.ty = saved.ty;
     state.scale = saved.scale;
@@ -2436,7 +2275,7 @@ function fitToScreen(){
   let bb; try{ bb = g.getBBox(); }catch{ return; }
   if(!bb.width || !bb.height) return;
 
-  const TOP_RESERVED = 20;
+  const TOP_RESERVED = 70;
   const BOTTOM_RESERVED = 90;
   const SIDE_PADDING = 40;
 
@@ -2450,10 +2289,7 @@ function fitToScreen(){
   state.tx = box.width / 2 - (bb.x + bb.width / 2) * s;
   state.ty = TOP_RESERVED + availableH / 2 - (bb.y + bb.height / 2) * s;
   state.panCenterX = state.tx;
-  state._panYCenter = state.ty;
   const _pr = $('panRange'); if(_pr) _pr.value = 0;
-  const _pyr = $('panYRange'); if(_pyr) _pyr.value = 0;
-  const _zr = $('zoomRange'); if(_zr) syncZoomSlider();
   applyTransform();
 }
 
@@ -2498,10 +2334,6 @@ function centerOnSmooth(id, duration = 400){
         state.scale = startScale + (k - startScale) * ease;
         applyTransform();
         if(t < 1) requestAnimationFrame(step);
-        else {
-          syncZoomSlider();
-          syncPanYSlider();
-        }
       }
       requestAnimationFrame(step);
     });
@@ -2518,7 +2350,6 @@ function zoomBy(factor, cx, cy){
   state.ty = cy - (cy - ty) * (k1/k0);
   state.scale = k1;
   applyTransform();
-  syncZoomSlider();
 }
 
 /* ============================================================
@@ -2734,6 +2565,7 @@ function selectPerson(id){
   $('btnEditPerson').onclick = ()=> openPersonForm(p);
   $('btnSharePerson').onclick = ()=> sharePersonLink(id);
   $('btnDeletePerson').onclick = ()=> { closePanel(); deletePerson(id); };
+  /* ✅ إغلاق الكل */
   $('btnClosePanelAll').onclick = ()=>{
     closePanel();
     if(state.focusId != null) exitFocus();
@@ -2789,9 +2621,12 @@ function updateSearchClasses(){
     if(!ancestorSet.has(id) && !isHit) el.classList.add('dimmed');
   });
 
+  /* ✅ حدّث روابط الأسلاف */
   viewport.querySelectorAll('.link').forEach(el => {
     el.classList.remove('ancestor-path');
     if(!isSearching) return;
+    const d = el.getAttribute('d') || '';
+    /* لا يمكن معرفة الـ ids من d بسهولة، لذا نعتمد على الفلترة أعلاه فقط */
   });
 }
 
@@ -3121,15 +2956,18 @@ $('pfSave').onclick = ()=>{
   }
 };
 
+/* ✅ الإصلاح 2: تسجيل تعديل الزوج/الزوجة في ft-ops لكل طرف */
 function updateMarriagesFor(personId, spouseId){
   const now = new Date().toISOString().slice(0,19).replace('T',' ');
 
+  /* احذف كل زيجات هذا الشخص */
   state.marriages = (state.marriages || []).filter(m=>{
     const a = Number(m.a ?? m.husband_id ?? m.person1_id);
     const b = Number(m.b ?? m.wife_id ?? m.person2_id);
     return a !== personId && b !== personId;
   });
 
+  /* احذف الزواج القديم من الطرف الآخر إن وُجد */
   const oldSpouseId = state.byId.get(personId)?.spouse_id;
   if(oldSpouseId && oldSpouseId !== spouseId){
     state.marriages = state.marriages.filter(m=>{
@@ -3137,6 +2975,7 @@ function updateMarriagesFor(personId, spouseId){
       const b = Number(m.b ?? m.wife_id ?? m.person2_id);
       return !((a === personId && b === oldSpouseId) || (a === oldSpouseId && b === personId));
     });
+    /* ✅ سجل تعديل الطرف القديم */
     const oldSpouse = state.byId.get(Number(oldSpouseId));
     if(oldSpouse){
       recordOp({op:'edit', person:{
@@ -3149,6 +2988,7 @@ function updateMarriagesFor(personId, spouseId){
 
   if(spouseId != null){
     state.marriages.push({ a: personId, b: spouseId });
+    /* ✅ سجل تعديل الطرفين في ft-ops */
     const p1 = state.byId.get(personId);
     const p2 = state.byId.get(spouseId);
     if(p1){
@@ -3166,6 +3006,7 @@ function updateMarriagesFor(personId, spouseId){
       }});
     }
   }else{
+    /* إزالة الزوج */
     const p1 = state.byId.get(personId);
     if(p1){
       recordOp({op:'edit', person:{
@@ -3302,6 +3143,7 @@ function saveChildren(close){
   }));
 
   const all = getOps(); all.push(...ops); saveOps(all);
+  /* ✅ تطبيق مباشر بدون applyOps */
   ops.forEach(o=>{
     const i = state.people.findIndex(p => Number(p.id) === Number(o.person.id));
     if(i >= 0) state.people[i] = o.person;
@@ -3601,7 +3443,6 @@ function highlightPathToRoot(id){
     });
   });
 }
-
 /* ============================================================
    20) تحديث الإحصائيات
    ============================================================ */
@@ -3800,7 +3641,6 @@ svg.addEventListener('pointerup', e => {
   state._dragStart = null;
   state.pointers.delete(e.pointerId);
   try{ svg.releasePointerCapture(e.pointerId); }catch{}
-  syncPanYSlider();
 });
 
 svg.addEventListener('wheel', e => {
@@ -3840,95 +3680,27 @@ svg.addEventListener('touchmove', e => {
   }
 }, {passive:false});
 
-svg.addEventListener('touchend', () => { pinch = null; syncZoomSlider(); syncPanSlider(); syncPanYSlider(); });
+svg.addEventListener('touchend', () => { pinch = null; });
 
 /* ============================================================
-   25) 🎚️ تهيئة الأشرطة العمودية
-   ============================================================ */
-function initVSliders(){
-  const zoomRange = $('zoomRange');
-  const panYRange = $('panYRange');
-
-  if(zoomRange){
-    syncZoomSlider();
-    zoomRange.oninput = ()=>{
-      const v = Number(zoomRange.value);
-      const logMin = Math.log(MIN_SCALE);
-      const logMax = Math.log(MAX_SCALE);
-      const targetScale = Math.exp(logMin + (logMax - logMin) * (v / 100));
-
-      const box = container.getBoundingClientRect();
-      const cx = box.width / 2;
-      const cy = box.height / 2;
-      const k0 = state.scale;
-      const k1 = targetScale;
-      state.tx = cx - (cx - state.tx) * (k1 / k0);
-      state.ty = cy - (cy - state.ty) * (k1 / k0);
-      state.scale = k1;
-      applyTransform();
-    };
-  }
-
-  if(panYRange){
-    state._panYCenter = state.ty;
-    panYRange.oninput = ()=>{
-      const v = Number(panYRange.value);
-      state.ty = (state._panYCenter || 0) + v;
-      applyTransform();
-    };
-  }
-
-  $('btn-zoom-in').onclick = () => { zoomBy(1.3); };
-  $('btn-zoom-out').onclick = () => { zoomBy(1/1.3); };
-  $('btn-reset').onclick = () => {
-    fitToScreen();
-    if(panYRange){ panYRange.value = 0; }
-  };
-
-  $('btn-up').onclick = () => {
-    const step = 150 / Math.max(0.5, state.scale);
-    state.ty += step;
-    applyTransform();
-    syncPanYSlider();
-  };
-  $('btn-down').onclick = () => {
-    const step = 150 / Math.max(0.5, state.scale);
-    state.ty -= step;
-    applyTransform();
-    syncPanYSlider();
-  };
-  $('btn-gen-up').onclick = () => navGen(-1);
-}
-
-function syncZoomSlider(){
-  const zoomRange = $('zoomRange');
-  if(!zoomRange) return;
-  const logMin = Math.log(MIN_SCALE);
-  const logMax = Math.log(MAX_SCALE);
-  const v = Math.round((Math.log(state.scale) - logMin) / (logMax - logMin) * 100);
-  zoomRange.value = Math.max(0, Math.min(100, v));
-}
-
-function syncPanSlider(){
-  const panRange = $('panRange');
-  if(!panRange) return;
-  const center = state.panCenterX || 0;
-  const diff = state.tx - center;
-  panRange.value = Math.max(Number(panRange.min), Math.min(Number(panRange.max), diff));
-}
-
-function syncPanYSlider(){
-  const panYRange = $('panYRange');
-  if(!panYRange) return;
-  const center = state._panYCenter || 0;
-  const diff = state.ty - center;
-  panYRange.value = Math.max(-2000, Math.min(2000, diff));
-}
-
-/* ============================================================
-   26) ربط الأزرار الأساسية
+   25) ربط الأزرار الأساسية
    ============================================================ */
 $('btn-fit').onclick = fitToScreen;
+$('btn-reset').onclick = fitToScreen;
+$('btn-zoom-in').onclick = () => zoomBy(1.3);
+$('btn-zoom-out').onclick = () => zoomBy(1/1.3);
+
+/* ✅ الإصلاح 7: خطوة نسبية */
+$('btn-up').onclick = () => {
+  const step = 150 / Math.max(0.5, state.scale);
+  state.ty += step;
+  applyTransform();
+};
+$('btn-down').onclick = () => {
+  const step = 150 / Math.max(0.5, state.scale);
+  state.ty -= step;
+  applyTransform();
+};
 
 $('closePanel').onclick = closePanel;
 $('exitFocusBtn').onclick = exitFocus;
@@ -3950,7 +3722,7 @@ try{
 }catch(_){}
 
 /* ============================================================
-   27) اختصارات لوحة المفاتيح
+   26) اختصارات لوحة المفاتيح
    ============================================================ */
 document.addEventListener('keydown', e => {
   const tag = document.activeElement?.tagName;
@@ -3969,6 +3741,7 @@ document.addEventListener('keydown', e => {
     if(e.key === '[') navGen(-1);
     if(e.key === '+' || e.key === '=') zoomBy(1.2);
     if(e.key === '-') zoomBy(1/1.2);
+    /* ✅ اختصار Undo */
     if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z'){
       e.preventDefault();
       undoLastOp();
@@ -3993,7 +3766,7 @@ function navGen(dir){
 }
 
 /* ============================================================
-   28) تغيير حجم الشاشة
+   27) تغيير حجم الشاشة
    ============================================================ */
 let resizeTimer = null;
 window.addEventListener('resize', () => {
@@ -4002,7 +3775,7 @@ window.addEventListener('resize', () => {
 });
 
 /* ============================================================
-   29) الحماية
+   28) الحماية
    ============================================================ */
 (function protect(){
   document.addEventListener('contextmenu', e => {
@@ -4016,7 +3789,7 @@ window.addEventListener('resize', () => {
 })();
 
 /* ============================================================
-   30) التهيئة النهائية
+   29) التهيئة النهائية
    ============================================================ */
 function initPanBar(){
   const r = $('panRange');
@@ -4046,7 +3819,7 @@ function initParticles(){
 }
 
 /* ============================================================
-   31) الإحصائيات المتقدمة
+   30) الإحصائيات المتقدمة
    ============================================================ */
 function showStats(){
   const males = state.people.filter(p => p.gender === 'male').length;
@@ -4095,12 +3868,14 @@ function showStats(){
   `;
   $('statsBody').innerHTML = html;
   openModal('statsModal');
+  /* ✅ الإصلاح 5: تأخير الرسم */
   setTimeout(() => drawPieChart(branchCounts), 100);
 }
 
 function drawPieChart(branchCounts){
   const canvas = $('statsPie');
   if(!canvas) return;
+  /* تأكد من أن canvas مقيس */
   const rect = canvas.getBoundingClientRect();
   if(canvas.width === 0 || canvas.height === 0){
     canvas.width = 340; canvas.height = 190;
@@ -4140,7 +3915,7 @@ function drawPieChart(branchCounts){
 }
 
 /* ============================================================
-   32) مقارنة الفروع
+   31) مقارنة الفروع
    ============================================================ */
 function openCompare(){
   const roots = state.roots;
@@ -4200,7 +3975,7 @@ function runCompare(){
 }
 
 /* ============================================================
-   33) تلوين حسب الفرع
+   32) تلوين حسب الفرع
    ============================================================ */
 function toggleHeatmap(){
   state.colorMode = state.colorMode === 'depth' ? 'branch' : 'depth';
@@ -4209,7 +3984,7 @@ function toggleHeatmap(){
 }
 
 /* ============================================================
-   34) وضع الاستكشاف
+   33) وضع الاستكشاف
    ============================================================ */
 let explorePersonId = null;
 let exploreRevealed = false;
@@ -4267,7 +4042,7 @@ function showExplorePerson(){
 }
 
 /* ============================================================
-   35) تبديل اللغة
+   34) تبديل اللغة — ✅ الإصلاح 8 (ترجمة شاملة)
    ============================================================ */
 const translations = {
   ar: {
@@ -4288,6 +4063,7 @@ const translations = {
     btnFullscreen: 'ملء الشاشة',
     btnFit: 'ملاءمة',
     btnTheme: 'المظهر',
+    /* النماذج */
     frmName: 'الاسم الكامل *',
     frmFather: 'الأب',
     frmMother: 'الأم (اختياري)',
@@ -4298,6 +4074,7 @@ const translations = {
     frmNotes: 'ملاحظات',
     frmSave: '💾 حفظ',
     frmCancel: 'إلغاء',
+    /* لوحة التفاصيل */
     highlightPath: 'إضاءة المسار',
     center: 'توسيط',
     addChild: 'إضافة ابن',
@@ -4308,6 +4085,7 @@ const translations = {
     moreInfo: 'تفاصيل',
     delete: 'حذف',
     closeAll: 'إغلاق الكل',
+    /* رسائل */
     toastAdded: '➕ تمت الإضافة',
     toastUpdated: '✏️ تم التحديث',
     toastDeleted: '🗑️ تم الحذف',
@@ -4369,10 +4147,12 @@ function applyLanguage(){
   document.title = t.title;
   if($('searchInput')) $('searchInput').placeholder = t.searchPlaceholder;
 
+  /* إحصائيات */
   if($('st-people')?.nextElementSibling) $('st-people').nextElementSibling.textContent = t.statsPeople;
   if($('st-gens')?.nextElementSibling) $('st-gens').nextElementSibling.textContent = t.statsGens;
   if($('st-roots')?.nextElementSibling) $('st-roots').nextElementSibling.textContent = t.statsRoots;
 
+  /* عناوين الأزرار */
   const titleMap = {
     'btn-refresh': t.btnRefresh,
     'btn-export': t.btnExport,
@@ -4392,6 +4172,7 @@ function applyLanguage(){
     if(el) el.title = val;
   });
 
+  /* نصوص النموذج */
   const labelMap = {
     'pfNameLabel': t.frmName,
     'pfFatherLabel': t.frmFather,
@@ -4409,6 +4190,7 @@ function applyLanguage(){
   if($('pfSave')) $('pfSave').textContent = t.frmSave;
   if($('pfCancel')) $('pfCancel').textContent = t.frmCancel;
 
+  /* نصوص data-i18n في لوحة التفاصيل */
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key = el.dataset.i18n;
     if(t[key]) el.textContent = t[key];
@@ -4422,7 +4204,7 @@ function toggleLanguage(){
 }
 
 /* ============================================================
-   36) البحث الصوتي
+   35) البحث الصوتي
    ============================================================ */
 function startVoiceSearch(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -4458,11 +4240,10 @@ function startVoiceSearch(){
 }
 
 /* ============================================================
-   37) ربط الأزرار الرئيسية
+   36) ربط الأزرار
    ============================================================ */
 function initFeatures(){
   initPanBar();
-  initVSliders();
   initParticles();
   document.querySelectorAll('.gen-chip[data-genlimit]').forEach(c=>{
     c.onclick = () => setGenLimit(c.dataset.genlimit === 'all' ? null : Number(c.dataset.genlimit));
@@ -4470,6 +4251,7 @@ function initFeatures(){
   updateGenCollapseChips();
   wireBirthSuggestion();
 
+  /* ✅ الإصلاح 3: زر التحديث يستدعي refreshData */
   $('btn-refresh').onclick = refreshData;
   $('btn-add').onclick = ()=> openPersonForm(null);
   $('btn-fullscreen').onclick = toggleFullscreen;
@@ -4482,6 +4264,10 @@ function initFeatures(){
       $('moreMenu').classList.remove('open');
   });
 
+  $('btn-gen-up').onclick = ()=> navGen(-1);
+  $('btn-gen-down').onclick = ()=> navGen(1);
+
+  /* الأزرار الإضافية */
   $('btn-stats').onclick = showStats;
   $('btn-compare').onclick = openCompare;
   $('btn-heatmap').onclick = toggleHeatmap;
@@ -4491,6 +4277,7 @@ function initFeatures(){
   $('voiceBtn').onclick = startVoiceSearch;
   $('cmpRun').onclick = runCompare;
 
+  /* أزرار الاستكشاف */
   $('expClose').onclick = closeExplore;
   $('expReveal').onclick = revealExplore;
   $('expNext').onclick = nextExplore;
@@ -4971,7 +4758,9 @@ function exportJSONFull(){
   toast('💾 تم تنزيل JSON كامل');
 }
 
+/* ✅ الإصلاح 1 + 4: directPrint مع body.printing وحفظ الحالة الكاملة */
 async function directPrint(){
+  /* ✅ الإصلاح 4: احفظ الحالة الكاملة */
   const saved = {
     tx: state.tx,
     ty: state.ty,
@@ -4982,16 +4771,21 @@ async function directPrint(){
     searchIndex: state.searchIndex,
   };
 
+  /* اجعل الشجرة كاملة على الشاشة */
   fitToScreen();
   await sleep(300);
 
+  /* ✅ الإصلاح 1: أضف class printing قبل الطباعة */
   document.body.classList.add('printing');
 
+  /* افتح نافذة الطباعة */
   window.print();
 
+  /* ✅ أزل class printing بعد الطباعة */
   setTimeout(()=>{
     document.body.classList.remove('printing');
 
+    /* ✅ الإصلاح 4: استرجع الحالة الكاملة */
     state.tx = saved.tx;
     state.ty = saved.ty;
     state.scale = saved.scale;
@@ -5000,11 +4794,13 @@ async function directPrint(){
     state.searchMatches = saved.searchMatches;
     state.searchIndex = saved.searchIndex;
 
+    /* أعد الرسم إذا لزم */
     if(state.focusId != null){
       state.focusSet = collectDescendants(state.focusId);
     }
     render();
 
+    /* استرجع اللوحات */
     if(state.focusId != null){
       const person = state.byId.get(state.focusId);
       if(person){

@@ -374,14 +374,11 @@ html,body{
 .v-slider-group{
   display:flex;flex-direction:column;align-items:center;gap:6px;
   pointer-events:auto;
-  /* خلفية زجاجية شفافة لإظهار الشجرة خلف أدوات التحريك */
-  background:rgba(10,20,35,.16);
-  border:1px solid rgba(255,255,255,.10);
+  background:var(--surface);
+  border:1.5px solid var(--line);
   border-radius:20px;
   padding:6px 4px;
-  box-shadow:0 6px 20px rgba(0,0,0,.12);
-  -webkit-backdrop-filter:blur(5px) saturate(115%);
-  backdrop-filter:blur(5px) saturate(115%);
+  box-shadow:0 6px 20px rgba(15,23,42,.12);
 }
 
 .v-slider-btn{
@@ -398,141 +395,69 @@ html,body{
 .v-slider-btn.reset-btn:active{background:var(--warn);color:#fff;border-color:var(--warn)}
 
 .v-slider-track{
-  width:26px;
-  height:160px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:0;
-  overflow:visible;
-}
-.v-slider-track .v-slider{
-  flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+  flex:1;
+  padding:4px 0;
+  min-height:80px;
+  max-height:160px;
 }
 
-/* ============================================================
-   🎚️ شريط عمودي موحّد — Android / Chrome / Firefox
-   نعتمد على range أفقي أصلي ثم نديره 90°؛ هذا أكثر ثباتًا من
-   slider-vertical و writing-mode على Chrome Android.
-   min يظهر أسفلًا و max يظهر أعلىً، مع اتجاه LTR ثابت.
-   ============================================================ */
+/* ✅ شريط عمودي */
 .v-slider{
-  -webkit-appearance:none;
-  appearance:none;
-  direction:ltr;
-  display:block;
-  width:120px;
-  height:24px;
-  margin:0;
-  padding:0;
-  border:0;
-  outline:0;
-  background:transparent;
+  -webkit-appearance:slider-vertical;
+  appearance:slider-vertical;
+  writing-mode:bt-lr;
+  width:24px;
+  height:100%;
+  min-height:80px;
+  max-height:160px;
   accent-color:var(--primary);
   cursor:pointer;
+  background:transparent;
   touch-action:none;
-  transform:rotate(-90deg);
-  transform-origin:center center;
 }
 
+/* ✅ تحسين المظهر للمتصفحات الحديثة */
 .v-slider::-webkit-slider-runnable-track{
-  width:100%;
-  height:6px;
-  background:rgba(255,255,255,.18);
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
+  width:6px;
+  background:var(--surface3);
+  border-radius:3px;
+  border:1px solid var(--line);
 }
 .v-slider::-webkit-slider-thumb{
   -webkit-appearance:none;
   appearance:none;
-  width:20px;
-  height:20px;
-  margin-top:-8px;
+  width:20px;height:20px;
   border-radius:50%;
   background:linear-gradient(135deg,var(--primary),var(--primary-dark));
   border:2px solid #fff;
   box-shadow:0 2px 8px rgba(15,118,110,.4);
   cursor:grab;
+  margin-left:-8px;
 }
-.v-slider::-webkit-slider-thumb:active{
-  cursor:grabbing;
-}
+.v-slider::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.15)}
 
 .v-slider::-moz-range-track{
-  width:100%;
-  height:6px;
-  background:rgba(255,255,255,.18);
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
+  width:6px;
+  background:var(--surface3);
+  border-radius:3px;
+  border:1px solid var(--line);
 }
 .v-slider::-moz-range-thumb{
-  width:18px;
-  height:18px;
+  width:18px;height:18px;
   border-radius:50%;
   background:linear-gradient(135deg,var(--primary),var(--primary-dark));
   border:2px solid #fff;
   box-shadow:0 2px 8px rgba(15,118,110,.4);
   cursor:grab;
-}
-
-/* منع أي انقلاب بسبب dir=rtl في الصفحة */
-.pan-bar input[type=range]{
-  direction:ltr;
-  -webkit-appearance:none;
-  appearance:none;
-  height:24px;
-  min-width:110px;
-  margin:0;
-  padding:0;
-  background:transparent;
-  accent-color:var(--primary);
-  touch-action:none;
-  cursor:pointer;
-}
-.pan-bar input[type=range]::-webkit-slider-runnable-track{
-  height:6px;
-  background:var(--surface3);
-  border:1px solid var(--line);
-  border-radius:999px;
-}
-.pan-bar input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  appearance:none;
-  width:20px;
-  height:20px;
-  margin-top:-8px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  border:2px solid #fff;
-  box-shadow:0 2px 8px rgba(15,118,110,.4);
-}
-.pan-bar input[type=range]::-moz-range-track{
-  height:6px;
-  background:var(--surface3);
-  border:1px solid var(--line);
-  border-radius:999px;
-}
-.pan-bar input[type=range]::-moz-range-thumb{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  border:2px solid #fff;
-  box-shadow:0 2px 8px rgba(15,118,110,.4);
 }
 
 .pan-bar{
   position:absolute;bottom:calc(12px + var(--safe-bottom));
   left:50%;transform:translateX(-50%);z-index:36;
   display:flex;align-items:center;gap:6px;
-  /* شريط التحريك الأفقي شفاف مع زجاجية خفيفة */
-  background:rgba(10,20,35,.16);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:30px;
-  padding:6px 10px;
-  box-shadow:0 6px 20px rgba(0,0,0,.14);
-  -webkit-backdrop-filter:blur(5px) saturate(115%);
-  backdrop-filter:blur(5px) saturate(115%);
+  background:var(--nav);border:1.5px solid var(--line);border-radius:30px;
+  padding:6px 10px;box-shadow:0 6px 20px rgba(0,0,0,.18);
   max-width:min(430px,88vw);
 }
 .pan-btn{
@@ -543,16 +468,6 @@ html,body{
 }
 .pan-btn:active{transform:scale(.88);background:var(--primary);color:#fff}
 .pan-bar input[type=range]{flex:1;accent-color:var(--primary);min-width:110px}
-
-/* عند التفاعل تبقى الأدوات شفافة، لكن المسار يصبح أوضح */
-.v-slider:focus-visible::-webkit-slider-runnable-track,
-.pan-bar input[type=range]:focus-visible::-webkit-slider-runnable-track{
-  background:rgba(255,255,255,.24);
-}
-.v-slider:active::-webkit-slider-thumb,
-.pan-bar input[type=range]:active::-webkit-slider-thumb{
-  box-shadow:0 0 0 4px rgba(20,184,166,.16),0 2px 8px rgba(15,118,110,.45);
-}
 
 /* ============================================================
    لوحة التفاصيل
@@ -831,7 +746,7 @@ img, svg{ -webkit-user-drag: none !important; user-drag: none !important; }
   .v-slider-group{padding:5px 3px;gap:5px;border-radius:18px}
   .v-slider-btn{width:34px;height:34px;font-size:14px}
   .v-slider-track{min-height:60px;max-height:120px}
-  .v-slider{width:120px}
+  .v-slider{min-height:60px;max-height:120px}
 }
 @media(max-width:360px){
   :root{--topbar-h:50px;--btn-md:38px;--btn-lg:42px}
@@ -849,7 +764,7 @@ img, svg{ -webkit-user-drag: none !important; user-drag: none !important; }
   .stat-card .lbl{font-size:7px}
   .v-slider-btn{width:30px;height:30px;font-size:12px}
   .v-slider-track{min-height:50px;max-height:100px}
-  .v-slider{width:100px}
+  .v-slider{min-height:50px;max-height:100px}
 }
 @media(min-width:768px){
   .brand{font-size:16px}
@@ -3840,7 +3755,7 @@ svg.addEventListener('touchmove', e => {
   }
 }, {passive:false});
 
-svg.addEventListener('touchend', () => { pinch = null; syncZoomSlider(); syncPanSlider(); syncPanYSlider(); });
+svg.addEventListener('touchend', () => { pinch = null; syncZoomSlider(); syncPanYSlider(); });
 
 /* ============================================================
    25) 🎚️ تهيئة الأشرطة العمودية
@@ -3907,14 +3822,6 @@ function syncZoomSlider(){
   const logMax = Math.log(MAX_SCALE);
   const v = Math.round((Math.log(state.scale) - logMin) / (logMax - logMin) * 100);
   zoomRange.value = Math.max(0, Math.min(100, v));
-}
-
-function syncPanSlider(){
-  const panRange = $('panRange');
-  if(!panRange) return;
-  const center = state.panCenterX || 0;
-  const diff = state.tx - center;
-  panRange.value = Math.max(Number(panRange.min), Math.min(Number(panRange.max), diff));
 }
 
 function syncPanYSlider(){
