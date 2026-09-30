@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>سجل القراءة — البداية والنهاية</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/mobile.css">
+  <script>
+    (function(){
+      try {
+        const t = localStorage.getItem('bidaya_settings_v1');
+        const s = t ? JSON.parse(t) : {};
+        const dark = s.theme === 'dark' || (s.theme === 'system' &&
+          matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch(e){}
+    })();
+  </script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="icon-btn" href="index.html">←</a>
+  <div class="brand-sm">سجل القراءة</div>
+  <span style="width:44px"></span>
+</header>
+
+<main class="app-main">
+
+  <div class="panel">
+    <div class="toolbar-inline">
+      <span id="countLabel">…</span>
+      <div class="toolbar-actions">
+        <button class="btn btn-light btn-sm" id="clearBtn">🗑 حذف الكل</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="list" class="panel"></div>
+
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/history.js"></script>
+<script>HistoryPage.init();</script>
+<script src="js/pwa.js"></script>
+</body>
+</html>

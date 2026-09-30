@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>اختبار قراءة الفهرس</title>
+<style>
+body{font-family:sans-serif;padding:20px;background:#0f172a;color:#fff;line-height:1.7}
+pre{background:#1e293b;padding:12px;border-radius:8px;overflow:auto;color:#86efac;max-height:500px}
+.ok{color:#86efac}.err{color:#fca5a5}.warn{color:#fcd34d}
+h2{color:#e2bd63}
+button{padding:10px 16px;margin:4px;border-radius:8px;border:0;background:#c79b3b;color:#000;font-weight:bold;cursor:pointer;font-size:14px}
+</style>
+</head>
+<body>
+<h1>🔍 اختبار قراءة الفهرس</h1>
+<div id="out"><pre>جارٍ...</pre></div>
+
+<script src="js/db.js"></script>
+<script>
+(async () => {
+  const out = document.getElementById('out');
+  let log = '';
+  
+  try {
+    log += '📂 قراءة الفصول من IndexedDB...\n\n';
+    const t0 = performance.now();
+    
+    const chapters = await DB.getAll('chapters');
+    log += `✅ تم تحميل ${chapters.length} فصلًا في ${(performance.now()-t0).toFixed(0)}ms\n\n`;
+    
+    // رتّب
+    chapters.sort((a, b) => {
+      const d = (a.order_num || 0) - (b.order_num || 0);
+      return d !== 0 ? d : (a.id - b.id);
+    });
+    log += `✅ تم الترتيب\n\n`;
+    
+    // ابنِ الخريطة
+    const t1 = performance.now();
+    const byParent = {};
+    chapters.forEach(c => {
+      const pid = c.parent_id || '__root';
+      if (!byParent[pid]) byParent[pid] = [];
+      byParent[pid].push(c);
+    });
+    log += `✅ تم بناء الشجرة في ${(performance.now()-t1).toFixed(0)}ms\n\n`;
+    
+    const roots = byParent['__root'] || [];
+    log += `🌳 الجذور: ${roots.length}\n`;
+    
+    // اختبر أول 10 جذور
+    log += '\n═══════════════════════════\n\n';
+    log += 'أول 10 جذور:\n\n';
+    
+    for (let i = 0; i < Math.min(10, roots.length); i++) {
+      const r = roots[i];
+      const kids = byParent[r.id] || [];
+      log += `${i+1}. id=${r.id} | ${(r.title||'').substring(0,55)}\n`;
+      log += `   → عدد الأبناء: ${kids.length}\n`;
+      
+      // أول 3 أبناء
+      for (let j = 0; j < Math.min(3, kids.length); j++) {
+        const k = kids[j];
+        const grandKids = byParent[k.id] || [];
+        log += `      • ${(k.title||'').substring(0,50)} (${grandKids.length} حفيد)\n`;
+      }
+    }
+    
+    log += '\n═══════════════════════════\n\n';
+    log += `⏱️ الوقت الإجمالي: ${(performance.now()-t0).toFixed(0)}ms\n`;
+    log += '✅ الفهرس يمكن بناؤه بنجاح!\n';
+    
+    out.innerHTML = '<pre class="ok">' + log + '</pre>';
+    
+  } catch (e) {
+    out.innerHTML = '<pre class="err">❌ خطأ:\n' + e.message + '\n\n' + log + '</pre>';
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>

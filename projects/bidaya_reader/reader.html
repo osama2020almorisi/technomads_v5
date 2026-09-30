@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0d1727">
+  <title>القارئ — البداية والنهاية</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/reader.css">
+  <link rel="stylesheet" href="css/mobile.css">
+  <script>
+    (function(){
+      try {
+        const t = localStorage.getItem('bidaya_settings_v1');
+        const s = t ? JSON.parse(t) : {};
+        const dark = s.theme === 'dark' || (s.theme === 'system' &&
+          matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      } catch(e){}
+    })();
+  </script>
+</head>
+<body class="reader-body">
+
+<!-- ═══ الشريط الجانبي: الفهرس الشجري ═══ -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="toc-sidebar" id="tocSidebar" aria-label="فهرس الكتاب">
+  <div class="toc-head">
+    <div class="brand">
+      <div class="brand-mark">ب</div>
+      <div>
+        <strong>البداية والنهاية</strong>
+        <small id="tocSubtitle">…</small>
+      </div>
+    </div>
+    <button class="icon-btn sm" id="tocClose" aria-label="إغلاق">✕</button>
+  </div>
+
+  <div class="toc-search">
+    <input type="search" id="tocSearch" placeholder="🔍 ابحث في الفهرس…" autocomplete="off">
+  </div>
+
+  <div class="toc-tree" id="tocTree">
+    <div class="toc-loading">جارٍ التحميل…</div>
+  </div>
+
+  <div class="toc-foot">
+    <a href="index.html" class="toc-nav-link">⌂ الرئيسية</a>
+    <a href="bookmarks.html" class="toc-nav-link">★ العلامات</a>
+    <a href="search.html" class="toc-nav-link">⌕ البحث</a>
+    <a href="settings.html" class="toc-nav-link">⚙ الإعدادات</a>
+  </div>
+</aside>
+
+<!-- ═══ الشريط العلوي ═══ -->
+<header class="reader-topbar">
+  <button class="icon-btn" id="menuBtn" aria-label="الفهرس">☰</button>
+  <div class="reader-title" id="readerTitle">…</div>
+  <div class="reader-top-actions">
+    <button class="icon-btn" id="searchBtn" aria-label="بحث">⌕</button>
+    <button class="icon-btn" id="bookmarkBtn" aria-label="علامة">☆</button>
+    <button class="icon-btn" id="fontBtn" aria-label="الخط">Aa</button>
+    <button class="icon-btn" id="themeBtn" aria-label="الوضع">☾</button>
+  </div>
+</header>
+
+<!-- ═══ المحتوى الرئيسي ═══ -->
+<main class="reader-main" id="readerMain">
+
+  <!-- ترحيب أول -->
+  <section class="reader-hero" id="readerHero">
+    <div>
+      <span class="eyebrow">القارئ</span>
+      <h1 id="heroTitle">…</h1>
+      <p id="heroDesc">اختر فصلًا من الفهرس للبدء.</p>
+    </div>
+    <div class="hero-actions">
+      <button class="btn btn-gold" id="startReadingBtn">📖 ابدأ من الأول</button>
+      <button class="btn btn-light" id="continueBtn" hidden>▶ متابعة</button>
+    </div>
+  </section>
+
+  <!-- عرض الفصل -->
+  <section class="reader-view" id="readerView" hidden>
+
+    <!-- عنوان الفصل -->
+    <header class="chapter-header">
+      <div class="breadcrumbs" id="breadcrumbs"></div>
+      <h1 id="chapterTitle">…</h1>
+      <p class="chapter-meta" id="chapterMeta"></p>
+    </header>
+
+    <!-- النص -->
+    <article class="reader-paper" id="readerText"></article>
+
+    <!-- التنقل -->
+    <nav class="reader-nav" id="readerNav">
+      <button class="nav-btn" id="prevBtn">◀ السابق</button>
+      <div class="reader-progress-box">
+        <div class="reader-progress-bar"><span id="readerProgress"></span></div>
+        <small id="readerPageInfo">…</small>
+      </div>
+      <button class="nav-btn" id="nextBtn">التالي ▶</button>
+    </nav>
+
+    <div class="reader-danger-zone">
+      <button class="icon-btn danger sm" id="clearProgressBtn" title="حذف تقدم هذا الفصل">🗑️ حذف التقدم</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ Modal: البحث السريع ═══ -->
+<div class="modal" id="searchModal">
+  <div class="modal-content">
+    <div class="modal-head">
+      <strong>بحث في الكتاب</strong>
+      <button class="icon-btn sm" id="searchClose">✕</button>
+    </div>
+    <input type="search" id="searchInput" placeholder="اكتب كلمة…" autocomplete="off">
+    <div class="modal-body" id="searchResults">
+      <p class="muted center">اكتب للبحث</p>
+    </div>
+    <div class="modal-foot">
+      <a class="btn btn-light btn-sm" href="search.html">البحث المتقدم</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Modal: تخصيص الخط ═══ -->
+<div class="modal" id="fontModal">
+  <div class="modal-content">
+    <div class="modal-head">
+      <strong>تخصيص القراءة</strong>
+      <button class="icon-btn sm" id="fontClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="field">
+        <span>حجم الخط</span>
+        <select id="setFontSize">
+          <option value="small">صغير</option>
+          <option value="medium">متوسط</option>
+          <option value="large">كبير</option>
+          <option value="xlarge">ضخم</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>نوع الخط</span>
+        <select id="setFontFamily">
+          <option value="naskh">Noto Naskh Arabic</option>
+          <option value="amiri">Amiri</option>
+          <option value="cairo">Cairo</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>الخلفية</span>
+        <select id="setPaper">
+          <option value="cream">عاجية</option>
+          <option value="white">بيضاء</option>
+          <option value="dark">داكنة</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>الوضع</span>
+        <select id="setTheme">
+          <option value="light">نهاري</option>
+          <option value="dark">ليلي</option>
+          <option value="system">حسب النظام</option>
+        </select>
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Toast Container ═══ -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/db.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/reader.js"></script>
+<script>Reader.init();</script>
+<script src="js/pwa.js"></script>
+</body>
+</html>

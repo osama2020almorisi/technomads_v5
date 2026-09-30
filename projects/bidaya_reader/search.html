@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>البحث — البداية والنهاية</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/mobile.css">
+  <script>
+    (function(){
+      try {
+        const t = localStorage.getItem('bidaya_settings_v1');
+        const s = t ? JSON.parse(t) : {};
+        const dark = s.theme === 'dark' || (s.theme === 'system' &&
+          matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch(e){}
+    })();
+  </script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="icon-btn" href="index.html">←</a>
+  <div class="brand-sm">البحث المتقدم</div>
+  <span style="width:44px"></span>
+</header>
+
+<main class="app-main">
+
+  <div class="panel">
+    <form id="searchForm" class="search-form">
+      <div class="field">
+        <input type="search" id="q" placeholder="ابحث في الكتاب… مثال: إبراهيم" autofocus>
+      </div>
+
+      <details class="search-options">
+        <summary>خيارات متقدمة</summary>
+        <div class="filters-grid">
+          <label>
+            <span>نوع البحث</span>
+            <select id="mode">
+              <option value="simple">بسيط (بدون تشكيل)</option>
+              <option value="exact">دقيق (العبارة كاملة)</option>
+              <option value="root">جذور (تقريبي)</option>
+            </select>
+          </label>
+          <label>
+            <span>العلاقة</span>
+            <select id="operator">
+              <option value="AND">كل الكلمات (AND)</option>
+              <option value="OR">أي كلمة (OR)</option>
+            </select>
+          </label>
+          <label>
+            <span>الفصل (اختياري)</span>
+            <select id="chapterFilter">
+              <option value="">— كل الكتاب —</option>
+            </select>
+          </label>
+          <label>
+            <span>عدد النتائج</span>
+            <select id="limit">
+              <option value="20">20</option>
+              <option value="50" selected>50</option>
+              <option value="100">100</option>
+              <option value="500">500</option>
+            </select>
+          </label>
+        </div>
+      </details>
+
+      <button type="submit" class="btn btn-gold btn-lg full">⌕ ابحث</button>
+    </form>
+  </div>
+
+  <div id="resultsInfo" hidden class="result-head"></div>
+  <div id="resultsList"></div>
+
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script>SearchPage.init();</script>
+<script src="js/pwa.js"></script>
+</body>
+</html>

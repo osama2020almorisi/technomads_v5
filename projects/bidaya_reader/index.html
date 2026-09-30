@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=5">
+  <meta name="theme-color" content="#0d1727">
+  <meta name="description" content="البداية والنهاية — قارئ محلي بدون إنترنت">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>البداية والنهاية</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <!-- منع وميض الوضع الليلي -->
+  <script>
+    (function(){
+      try {
+        const t = localStorage.getItem('bidaya_settings_v1');
+        const s = t ? JSON.parse(t) : {};
+        const dark = s.theme === 'dark' || (s.theme === 'system' &&
+          matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      } catch(e){}
+    })();
+  </script>
+</head>
+<body>
+
+<!-- ═══ Topbar ═══ -->
+<header class="topbar">
+  <button class="icon-btn" id="menuBtn" aria-label="القائمة">☰</button>
+  <div class="brand-sm">البداية والنهاية</div>
+  <button class="icon-btn" id="themeBtn" aria-label="تبديل الوضع">☾</button>
+</header>
+
+<!-- ═══ Main ═══ -->
+<main class="app-main">
+
+  <!-- Hero -->
+  <section class="hero" id="heroSection">
+    <div class="hero-content">
+      <span class="eyebrow">البداية والنهاية</span>
+      <h1 id="heroTitle">جارٍ التحميل…</h1>
+      <p id="heroDesc">يتم فحص بيانات الكتاب…</p>
+      <div class="hero-actions" id="heroActions">
+        <a class="btn btn-gold btn-lg" href="import.html">
+          📥 استيراد الكتاب
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- الإحصائيات (hidden حتى تُملأ) -->
+  <section class="stats-grid" id="statsGrid" hidden>
+    <div class="stat-card">
+      <span>الفصول</span>
+      <strong id="statChapters">—</strong>
+      <small>بابًا وفصلًا</small>
+    </div>
+    <div class="stat-card">
+      <span>الصفحات</span>
+      <strong id="statPages">—</strong>
+      <small>صفحة مخزنة</small>
+    </div>
+    <div class="stat-card">
+      <span>الكلمات</span>
+      <strong id="statWords">—</strong>
+      <small>كلمة</small>
+    </div>
+    <div class="stat-card">
+      <span>الأحرف</span>
+      <strong id="statChars">—</strong>
+      <small>حرف تقريبًا</small>
+    </div>
+  </section>
+
+  <!-- الروابط السريعة (hidden حتى تُملأ) -->
+  <section class="quick-grid" id="quickGrid" hidden>
+    <a class="quick-card" href="reader.html">
+      <b>📖</b><span>القراءة</span>
+      <small>ابدأ أو تابع</small>
+    </a>
+    <a class="quick-card" href="search.html">
+      <b>⌕</b><span>البحث</span>
+      <small>بحث متقدم</small>
+    </a>
+    <a class="quick-card" href="bookmarks.html">
+      <b>★</b><span>العلامات</span>
+      <small>المواضع المحفوظة</small>
+    </a>
+    <a class="quick-card" href="history.html">
+      <b>◷</b><span>السجل</span>
+      <small>آخر ما قرأت</small>
+    </a>
+    <a class="quick-card" href="settings.html">
+      <b>⚙</b><span>الإعدادات</span>
+      <small>تخصيص القارئ</small>
+    </a>
+  </section>
+
+  <!-- آخر ما قرأت -->
+  <section class="section-head mt-5" id="recentHead" hidden>
+    <h2>آخر ما قرأت</h2>
+  </section>
+  <section class="panel" id="recentList" hidden></section>
+
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // ✅ ابدأ بعد جهوزية DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => App.initHome());
+  } else {
+    App.initHome();
+  }
+</script>
+<script src="js/pwa.js"></script>
+</body>
+</html>

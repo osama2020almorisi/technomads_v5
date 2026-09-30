@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>الإعدادات — البداية والنهاية</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/mobile.css">
+  <script>
+    (function(){
+      try {
+        const t = localStorage.getItem('bidaya_settings_v1');
+        const s = t ? JSON.parse(t) : {};
+        const dark = s.theme === 'dark' || (s.theme === 'system' &&
+          matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch(e){}
+    })();
+  </script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="icon-btn" href="index.html">←</a>
+  <div class="brand-sm">الإعدادات</div>
+  <span style="width:44px"></span>
+</header>
+
+<main class="app-main narrow">
+
+  <div class="panel">
+    <h2>🎨 المظهر</h2>
+    <label class="field">
+      <span>الوضع</span>
+      <select id="theme">
+        <option value="light">نهاري</option>
+        <option value="dark">ليلي</option>
+        <option value="system">حسب النظام</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>خلفية ورق القراءة</span>
+      <select id="paper">
+        <option value="cream">عاجية</option>
+        <option value="white">بيضاء</option>
+        <option value="dark">داكنة</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="panel">
+    <h2>📖 القراءة</h2>
+    <label class="field">
+      <span>حجم الخط</span>
+      <select id="fontSize">
+        <option value="small">صغير</option>
+        <option value="medium">متوسط</option>
+        <option value="large">كبير</option>
+        <option value="xlarge">ضخم</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>نوع الخط</span>
+      <select id="fontFamily">
+        <option value="naskh">Noto Naskh Arabic</option>
+        <option value="amiri">Amiri</option>
+        <option value="cairo">Cairo</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>حجم الصفحة (عدد الأحرف)</span>
+      <input type="number" id="pageSize" min="500" max="10000" step="500">
+      <small class="muted">كل 1000 حرف ≈ فقرة تقريبًا</small>
+    </label>
+  </div>
+
+  <div class="panel">
+    <h2>🔍 البحث</h2>
+    <label class="field">
+      <span>عدد النتائج في صفحة البحث</span>
+      <select id="resultsPerPage">
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="panel">
+    <h2>💾 البيانات</h2>
+    <div class="toolbar-inline">
+      <button class="btn btn-light btn-sm" id="exportAllBtn">⬇ تصدير كل البيانات</button>
+      <button class="btn btn-light btn-sm" id="installPwaBtn" hidden>📱 تثبيت التطبيق</button>
+    </div>
+    <p class="muted" style="margin-top:10px">
+      يشمل: العلامات + السجل + التقدم + الإعدادات.
+    </p>
+  </div>
+
+  <div class="panel danger-panel">
+    <h3>⚠️ منطقة الخطر</h3>
+    <p>إعادة تعيين الإعدادات (لا يحذف الكتاب).</p>
+    <button class="btn btn-danger" id="resetBtn">🔄 إعادة تعيين الإعدادات</button>
+  </div>
+
+  <div class="panel">
+    <h2>ℹ️ معلومات</h2>
+    <div class="info-list">
+      <div><span>الكتاب:</span><b id="bookInfo">—</b></div>
+      <div><span>الفصول:</span><b id="chaptersInfo">—</b></div>
+      <div><span>الصفحات:</span><b id="pagesInfo">—</b></div>
+      <div><span>العلامات:</span><b id="bmInfo">—</b></div>
+      <div><span>زيارات السجل:</span><b id="histInfo">—</b></div>
+      <div><span>الإصدار:</span><b>v1.0</b></div>
+    </div>
+  </div>
+
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/settings.js"></script>
+<script>SettingsPage.init();</script>
+<script src="js/pwa.js"></script>
+</body>
+</html>

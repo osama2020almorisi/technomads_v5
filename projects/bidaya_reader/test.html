@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>اختبار IndexedDB</title>
+<style>
+body{font-family:sans-serif;padding:20px;background:#0f172a;color:#fff;line-height:1.8}
+pre{background:#1e293b;padding:12px;border-radius:8px;overflow:auto;color:#86efac}
+.ok{color:#86efac}.err{color:#fca5a5}.warn{color:#fcd34d}
+button{padding:12px 20px;margin:5px;border-radius:8px;border:0;background:#c79b3b;color:#000;font-size:16px;font-weight:bold;cursor:pointer}
+</style>
+</head>
+<body>
+<h1>🔍 فحص قاعدة البيانات</h1>
+<div id="out"><pre>جارٍ الفحص...</pre></div>
+<button onclick="location.reload()">🔄 أعد الفحص</button>
+
+<script src="js/db.js"></script>
+<script>
+(async () => {
+  const out = document.getElementById('out');
+  let log = '';
+  
+  try {
+    log += '📂 اسم القاعدة: bidaya_reader\n';
+    log += '📦 الإصدار: 1\n\n';
+    
+    // افتح القاعدة
+    await DB.open();
+    log += '✅ القاعدة مفتوحة\n\n';
+    
+    // افحص كل مخزن
+    const stores = ['book', 'chapters', 'pages', 'bookmarks', 'history', 'progress'];
+    
+    for (const s of stores) {
+      const count = await DB.count(s);
+      const status = count > 0 ? '✅' : '⚠️';
+      log += `${status} ${s}: ${count} سجل\n`;
+    }
+    
+    log += '\n═══════════════════════════\n';
+    
+    // الكتاب
+    const book = await DB.get('book', 1);
+    if (book) {
+      log += `\n📖 الكتاب: ${book.title}\n`;
+      log += `   المؤلف: ${book.author || '(فارغ)'}\n`;
+      log += `   استُورد في: ${book.imported_at}\n`;
+      if (book.stats) {
+        log += `   إحصائيات: ${JSON.stringify(book.stats)}\n`;
+      }
+    } else {
+      log += '\n❌ لا يوجد كتاب في القاعدة!\n';
+    }
+    
+    log += '\n═══════════════════════════\n';
+    
+    // أول 5 فصول
+    const chapters = await DB.getAll('chapters');
+    log += `\n📚 عدد الفصول: ${chapters.length}\n\n`;
+    
+    if (chapters.length > 0) {
+      log += 'أول 5 فصول:\n';
+      for (let i = 0; i < Math.min(5, chapters.length); i++) {
+        const c = chapters[i];
+        log += `  ${i+1}. id=${c.id} parent=${c.parent_id} | ${c.title?.substring(0,50)}\n`;
+      }
+      
+      // فحص الجذور
+      const roots = chapters.filter(c => !c.parent_id);
+      log += `\n🌳 الجذور (بلا parent): ${roots.length}\n`;
+      log += `📊 فصول لها parent: ${chapters.length - roots.length}\n`;
+      
+      // فحص التعشيش
+      const parentIds = new Set(chapters.map(c => c.id));
+      const orphan = chapters.filter(c => c.parent_id && !parentIds.has(c.parent_id));
+      log += `⚠️ فصول يتيمة (parent لا يوجد): ${orphan.length}\n`;
+      
+      if (orphan.length > 0) {
+        log += '\nأمثلة يتيمة:\n';
+        for (let i = 0; i < Math.min(3, orphan.length); i++) {
+          log += `  • id=${orphan[i].id} parent=${orphan[i].parent_id} "${orphan[i].title?.substring(0,40)}"\n`;
+        }
+      }
+    }
+    
+    log += '\n═══════════════════════════\n';
+    
+    // أول 3 صفحات
+    const pages = await DB.getAll('pages');
+    if (pages.length > 0) {
+      log += `\n📄 عدد الصفحات: ${pages.length}\n\n`;
+      log += 'أول 3 صفحات:\n';
+      for (let i = 0; i < Math.min(3, pages.length); i++) {
+        const p = pages[i];
+        log += `  ${i+1}. id=${p.id} chapter_id=${p.chapter_id} | ${p.content?.substring(0,60)}\n`;
+      }
+    }
+    
+    out.innerHTML = '<pre class="ok">' + log + '</pre>';
+    
+  } catch (e) {
+    out.innerHTML = '<pre class="err">❌ خطأ:\n' + e.message + '\n\n' + log + '</pre>';
+  }
+})();
+</script>
+</body>
+</html>

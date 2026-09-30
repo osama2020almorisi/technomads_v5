@@ -1,0 +1,699 @@
+/* ============================================================
+   reader.js — القارئ (نسخة مُصلحة — بناء تدريجي)
+   ============================================================ */
+const Reader = (() => {
+
+  const state = {
+    chapters: [],
+    chaptersByParent: {},
+    chapterMap: {},
+    currentChapter: null,
+    currentPageIndex: 0,
+    currentPages: [],
+    bookmarks: new Set(),
+    textPages: [],
+  };
+
+  const $ = id => document.getElementById(id);
+
+  // ═══════════════════════════════════════════
+  // INIT
+  // ═══════════════════════════════════════════
+  async function init() {
+    try {
+      Store.loadSettings();
+      UI.applyAll();
+      bindEvents();
+
+      const book = await DB.get('book', 1);
+      if (!book) {
+        showEmptyState();
+        return;
+      }
+
+      await loadData();
+      buildSidebar();
+
+      const urlParams = new URLSearchParams(location.search);
+      const cid = urlParams.get('c');
+
+      if (cid) {
+        await openChapter(parseInt(cid, 10));
+      } else {
+        await showHero();
+      }
+    } catch (e) {
+      console.error('❌ Reader init error:', e);
+      UI.toast('خطأ في التحميل: ' + e.message, 'error', 5000);
+    }
+  }
+
+  function showEmptyState() {
+    $('tocTree').innerHTML = `
+      <div style="padding:20px;text-align:center">
+        <p style="color:#fca5a5">⚠️ لا يوجد كتاب</p>
+        <a href="import.html" style="display:inline-block;padding:10px 20px;background:#c79b3b;color:#000;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px">
+          📥 استيراد
+        </a>
+      </div>`;
+    $('readerHero').innerHTML = `
+      <div>
+        <h1>لا يوجد كتاب مستورد</h1>
+        <p>اضغط للانتقال إلى صفحة الاستيراد.</p>
+        <a href="import.html" style="display:inline-block;padding:14px 24px;background:#c79b3b;color:#000;border-radius:12px;text-decoration:none;font-weight:bold;font-size:15px;margin-top:12px">
+          📥 استيراد الكتاب
+        </a>
+      </div>`;
+  }
+
+  // ═══════════════════════════════════════════
+  // LOAD DATA
+  // ═══════════════════════════════════════════
+  async function loadData() {
+    const chapters = await DB.getAll('chapters');
+
+    // ترتيب
+    chapters.sort((a, b) => {
+      const d = (a.order_num || 0) - (b.order_num || 0);
+      return d !== 0 ? d : (a.id - b.id);
+    });
+
+    state.chapters = chapters;
+    state.chapterMap = Object.fromEntries(chapters.map(c => [c.id, c]));
+
+    // شجرة parent → children
+    const byParent = {};
+    chapters.forEach(c => {
+      const pid = c.parent_id || '__root';
+      if (!byParent[pid]) byParent[pid] = [];
+      byParent[pid].push(c);
+    });
+    state.chaptersByParent = byParent;
+
+    // العلامات
+    const bms = await DB.getAll('bookmarks');
+    state.bookmarks = new Set(bms.map(b => b.chapter_id));
+
+    $('tocSubtitle').textContent = `${chapters.length.toLocaleString('ar-EG')} فصلًا`;
+  }
+
+  // ═══════════════════════════════════════════
+  // SIDEBAR — بناء تدريجي
+  // ═══════════════════════════════════════════
+  function buildSidebar() {
+    const roots = state.chaptersByParent['__root'] || [];
+    const tree = $('tocTree');
+
+    if (!roots.length) {
+      tree.innerHTML = '<div style="padding:20px;text-align:center;color:#94a3b8">لا توجد فصول</div>';
+      return;
+    }
+
+    // نبني المستوى 1 و2 فقط
+    let html = '';
+    for (const root of roots) {
+      html += renderNode(root, 0);
+    }
+    tree.innerHTML = html;
+
+    attachAllEvents();
+  }
+
+  function renderNode(node, depth) {
+    const kids = state.chaptersByParent[node.id] || [];
+    const hasKids = kids.length > 0;
+    const title = UI.esc(node.title);
+    const searchKey = UI.esc((node.title || '').toLowerCase());
+
+    // السهم
+    const arrow = hasKids ? (depth < 1 ? '▾' : '▸') : '•';
+    const cls = hasKids ? '' : 'leaf';
+
+    let html = `
+      <div class="toc-node" data-id="${node.id}" data-search="${searchKey}">
+        <button class="toc-toggle ${cls}" type="button" aria-label="فتح/إغلاق">
+          ${arrow}
+        </button>
+        <a class="toc-link" href="#" data-id="${node.id}">
+          <span class="toc-marker">${hasKids ? '📂' : '📄'}</span>
+          <span class="toc-label">${title}</span>
+        </a>
+      </div>
+    `;
+
+    if (hasKids) {
+      // المستوى 1: نبنيه
+      // المستوى 2+: نبنيه فقط عند الطلب (lazy)
+      if (depth < 1) {
+        html += `<div class="toc-children open" data-parent="${node.id}">`;
+        for (const k of kids) {
+          html += renderNode(k, depth + 1);
+        }
+        html += `</div>`;
+      } else {
+        html += `<div class="toc-children" data-parent="${node.id}" data-lazy="1"></div>`;
+      }
+    }
+
+    return html;
+  }
+
+  function loadLazyChildren(node) {
+    const kids = state.chaptersByParent[node.id] || [];
+    if (!kids.length) return '';
+
+    let html = '';
+    for (const k of kids) {
+      html += renderNode(k, 99); // depth كبير = لا نبني أبناءه الآن
+    }
+    return html;
+  }
+
+  function attachAllEvents() {
+    const tree = $('tocTree');
+
+    // فتح/إغلاق + فتح فصل
+    tree.addEventListener('click', e => {
+      // زر الفتح
+      const toggle = e.target.closest('.toc-toggle');
+      if (toggle && !toggle.classList.contains('leaf')) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const node = toggle.closest('.toc-node');
+        const kids = node.nextElementSibling;
+        if (!kids || !kids.classList.contains('toc-children')) return;
+
+        // Lazy loading
+        if (kids.dataset.lazy === '1' && !kids.dataset.loaded) {
+          const chapterId = parseInt(node.dataset.id, 10);
+          const chapter = state.chapterMap[chapterId];
+          if (chapter) {
+            kids.innerHTML = loadLazyChildren(chapter);
+            kids.dataset.loaded = '1';
+            kids.dataset.lazy = '0';
+          }
+        }
+
+        const open = kids.classList.toggle('open');
+        toggle.textContent = open ? '▾' : '▸';
+        return;
+      }
+
+      // فتح فصل
+      const link = e.target.closest('.toc-link');
+      if (link) {
+        e.preventDefault();
+        const id = parseInt(link.dataset.id, 10);
+        openChapter(id);
+        if (window.innerWidth < 900) UI.closeSidebar();
+      }
+    });
+
+    // البحث
+    const searchInput = $('tocSearch');
+    let timer;
+    searchInput.addEventListener('input', e => {
+      clearTimeout(timer);
+      timer = setTimeout(() => filterToc(e.target.value.trim().toLowerCase()), 250);
+    });
+  }
+
+  function filterToc(q) {
+    const tree = $('tocTree');
+    const nodes = tree.querySelectorAll('.toc-node');
+
+    if (!q) {
+      // استعادة الحالة الأصلية
+      nodes.forEach(n => n.style.display = '');
+      tree.querySelectorAll('.toc-children').forEach(c => {
+        if (c.dataset.lazy === '0' || c.classList.contains('open')) {
+          // اترك كما هو
+        }
+      });
+      return;
+    }
+
+    // إخفاء الكل
+    nodes.forEach(n => n.style.display = 'none');
+
+    // إظهار المطابق + أسلافه
+    nodes.forEach(node => {
+      const hay = node.dataset.search || '';
+      if (hay.includes(q)) {
+        // اظهر العقدة
+        node.style.display = '';
+        // اظهر أسلافها
+        let p = node.parentElement;
+        while (p && p !== tree) {
+          if (p.classList.contains('toc-children')) {
+            p.classList.add('open');
+            const prev = p.previousElementSibling;
+            if (prev && prev.classList.contains('toc-node')) {
+              prev.style.display = '';
+              const tg = prev.querySelector('.toc-toggle');
+              if (tg && !tg.classList.contains('leaf')) tg.textContent = '▾';
+            }
+          } else if (p.classList.contains('toc-node')) {
+            p.style.display = '';
+          }
+          p = p.parentElement;
+        }
+      }
+    });
+  }
+
+  function highlightToc(chapterId) {
+    document.querySelectorAll('.toc-link.active').forEach(a => a.classList.remove('active'));
+    const link = document.querySelector(`.toc-link[data-id="${chapterId}"]`);
+    if (link) {
+      link.classList.add('active');
+      // افتح أسلافه
+      let p = link.closest('.toc-children');
+      while (p) {
+        p.classList.add('open');
+        const prev = p.previousElementSibling;
+        if (prev && prev.classList.contains('toc-node')) {
+          const tg = prev.querySelector('.toc-toggle');
+          if (tg && !tg.classList.contains('leaf')) tg.textContent = '▾';
+        }
+        p = p.parentElement?.closest('.toc-children');
+      }
+      link.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  }
+
+  // ═══════════════════════════════════════════
+  // OPEN CHAPTER
+  // ═══════════════════════════════════════════
+  async function openChapter(chapterId) {
+    const ch = state.chapterMap[chapterId];
+    if (!ch) {
+      UI.toast('❌ الفصل غير موجود', 'error');
+      return;
+    }
+
+    $('readerHero').hidden = true;
+    $('readerView').hidden = false;
+
+    const pages = await DB.byIndex('pages', 'chapter_id', chapterId);
+    pages.sort((a, b) => (a.page_num || 0) - (b.page_num || 0));
+
+    state.currentChapter = ch;
+    state.currentPages = pages;
+
+    const fullText = pages.map(p => p.content).join('\n\n');
+    state.textPages = paginate(fullText, Store.get('pageSize') || 2000);
+
+    const progress = await DB.get('progress', chapterId);
+    state.currentPageIndex = progress ? (progress.page_index || 0) : 0;
+    if (state.currentPageIndex >= state.textPages.length) {
+      state.currentPageIndex = 0;
+    }
+
+    $('chapterTitle').textContent = ch.title;
+    const wordCount = fullText.split(/\s+/).length;
+    $('chapterMeta').textContent =
+      `${pages.length.toLocaleString('ar-EG')} صفحة · ${wordCount.toLocaleString('ar-EG')} كلمة`;
+
+    $('breadcrumbs').innerHTML = buildBreadcrumbs(ch);
+    $('readerTitle').textContent = ch.title;
+
+    updateBookmarkBtn();
+    renderPage();
+
+    await DB.put('history', {
+      chapter_id: chapterId,
+      visited_at: new Date().toISOString(),
+    });
+
+    history.replaceState(null, '', `reader.html?c=${chapterId}`);
+    highlightToc(chapterId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function buildBreadcrumbs(ch) {
+    const path = [];
+    let cur = ch;
+    let guard = 0;
+    while (cur && cur.parent_id && guard++ < 20) {
+      cur = state.chapterMap[cur.parent_id];
+      if (cur) path.unshift(cur);
+    }
+    return path.map(c =>
+      `<a href="#" data-id="${c.id}" class="crumb">${UI.esc(c.title)}</a>`
+    ).join(' <span>›</span> ');
+  }
+
+  // ═══════════════════════════════════════════
+  // PAGINATION
+  // ═══════════════════════════════════════════
+  function paginate(text, size) {
+    if (!text) return [''];
+    const paragraphs = text.split(/\n\n+/);
+    const pages = [];
+    let cur = '';
+
+    for (const p of paragraphs) {
+      if ((cur + '\n\n' + p).length > size && cur) {
+        pages.push(cur.trim());
+        cur = p;
+      } else {
+        cur = cur ? (cur + '\n\n' + p) : p;
+      }
+      while (cur.length > size * 1.5) {
+        const cut = cur.lastIndexOf(' ', size);
+        if (cut < size * 0.5) break;
+        pages.push(cur.slice(0, cut).trim());
+        cur = cur.slice(cut).trim();
+      }
+    }
+    if (cur.trim()) pages.push(cur.trim());
+    return pages.length ? pages : [''];
+  }
+
+  function renderPage() {
+    const page = state.textPages[state.currentPageIndex] || '';
+    const txt = $('readerText');
+    txt.innerHTML = page
+      .split('\n\n')
+      .map(p => `<p>${UI.esc(p)}</p>`)
+      .join('');
+    updateProgressBar();
+  }
+
+  function updateProgressBar() {
+    const total = state.textPages.length;
+    const cur = state.currentPageIndex + 1;
+    const pct = total ? Math.round((cur / total) * 100) : 0;
+    $('readerProgress').style.width = pct + '%';
+    $('readerPageInfo').textContent = `${cur} / ${total}`;
+    $('prevBtn').disabled = state.currentPageIndex === 0 && !getPrevChapter();
+    $('nextBtn').disabled = state.currentPageIndex === total - 1 && !getNextChapter();
+  }
+
+  function getPrevChapter() {
+    if (!state.currentChapter) return null;
+    const idx = state.chapters.findIndex(c => c.id === state.currentChapter.id);
+    for (let i = idx - 1; i >= 0; i--) {
+      if (!state.chaptersByParent[state.chapters[i].id]?.length) {
+        return state.chapters[i];
+      }
+    }
+    return null;
+  }
+
+  function getNextChapter() {
+    if (!state.currentChapter) return null;
+    const idx = state.chapters.findIndex(c => c.id === state.currentChapter.id);
+    for (let i = idx + 1; i < state.chapters.length; i++) {
+      if (!state.chaptersByParent[state.chapters[i].id]?.length) {
+        return state.chapters[i];
+      }
+    }
+    return null;
+  }
+
+  // ═══════════════════════════════════════════
+  // NAVIGATION
+  // ═══════════════════════════════════════════
+  function nextPage() {
+    if (state.currentPageIndex < state.textPages.length - 1) {
+      state.currentPageIndex++;
+      renderPage();
+      saveProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const next = getNextChapter();
+      if (next) openChapter(next.id);
+    }
+  }
+
+  function prevPage() {
+    if (state.currentPageIndex > 0) {
+      state.currentPageIndex--;
+      renderPage();
+      saveProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const prev = getPrevChapter();
+      if (prev) openChapter(prev.id);
+    }
+  }
+
+  async function saveProgress() {
+    if (!state.currentChapter) return;
+    await DB.put('progress', {
+      chapter_id: state.currentChapter.id,
+      page_index: state.currentPageIndex,
+      updated_at: new Date().toISOString(),
+    });
+  }
+
+  // ═══════════════════════════════════════════
+  // BOOKMARKS
+  // ═══════════════════════════════════════════
+  function updateBookmarkBtn() {
+    const btn = $('bookmarkBtn');
+    if (!state.currentChapter) return;
+    if (state.bookmarks.has(state.currentChapter.id)) {
+      btn.textContent = '★';
+      btn.classList.add('active');
+    } else {
+      btn.textContent = '☆';
+      btn.classList.remove('active');
+    }
+  }
+
+  async function toggleBookmark() {
+    if (!state.currentChapter) return;
+    const cid = state.currentChapter.id;
+    const bms = await DB.getAll('bookmarks');
+    const existing = bms.find(b => b.chapter_id === cid);
+
+    if (existing) {
+      await DB.del('bookmarks', existing.id);
+      state.bookmarks.delete(cid);
+      UI.toast('☆ أُزيلت العلامة', 'info');
+    } else {
+      await DB.put('bookmarks', {
+        chapter_id: cid,
+        note: '',
+        created_at: new Date().toISOString(),
+      });
+      state.bookmarks.add(cid);
+      UI.toast('★ أُضيفت العلامة', 'success');
+    }
+    updateBookmarkBtn();
+  }
+
+  // ═══════════════════════════════════════════
+  // SEARCH
+  // ═══════════════════════════════════════════
+  let searchTimer = null;
+  async function quickSearch(query) {
+    const q = query.trim();
+    if (q.length < 2) {
+      $('searchResults').innerHTML = '<p class="muted center">اكتب حرفين على الأقل</p>';
+      return;
+    }
+    $('searchResults').innerHTML = '<div class="spinner"></div>';
+
+    const results = [];
+    const norm = s => s
+      .replace(/[\u064B-\u065F\u0670]/g, '')
+      .replace(/[أإآٱ]/g, 'ا')
+      .replace(/ى/g, 'ي')
+      .replace(/ة/g, 'ه');
+
+    const nq = norm(q);
+
+    for (const ch of state.chapters) {
+      const pages = await DB.byIndex('pages', 'chapter_id', ch.id);
+      for (const p of pages) {
+        const idx = norm(p.content).indexOf(nq);
+        if (idx >= 0) {
+          results.push({
+            chapter_id: ch.id,
+            chapter_title: ch.title,
+            snippet: buildSnippet(p.content, idx, q.length),
+          });
+          if (results.length >= 30) break;
+        }
+      }
+      if (results.length >= 30) break;
+    }
+
+    if (!results.length) {
+      $('searchResults').innerHTML = '<p class="muted center">لا نتائج</p>';
+      return;
+    }
+
+    $('searchResults').innerHTML = results.map(r => `
+      <a class="search-result" href="reader.html?c=${r.chapter_id}">
+        <strong>${UI.esc(r.chapter_title)}</strong>
+        <p>${r.snippet}</p>
+      </a>
+    `).join('');
+  }
+
+  function buildSnippet(text, idx, len) {
+    const start = Math.max(0, idx - 60);
+    const end = Math.min(text.length, idx + len + 60);
+    let s = text.slice(start, end);
+    const matched = text.slice(idx, idx + len);
+    const re = new RegExp(matched.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+    s = s.replace(re, '<mark>$&</mark>');
+    if (start > 0) s = '… ' + s;
+    if (end < text.length) s += ' …';
+    return s;
+  }
+
+  // ═══════════════════════════════════════════
+  // HERO
+  // ═══════════════════════════════════════════
+  async function showHero() {
+    $('readerHero').hidden = false;
+    $('readerView').hidden = true;
+
+    const book = await DB.get('book', 1);
+    $('heroTitle').textContent = book?.title || 'البداية والنهاية';
+
+    const progresses = await DB.getAll('progress');
+    if (progresses.length) {
+      progresses.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      const last = progresses[0];
+      const ch = state.chapterMap[last.chapter_id];
+      if (ch) {
+        $('heroDesc').textContent = `آخر قراءة: ${ch.title}`;
+        $('continueBtn').hidden = false;
+        $('continueBtn').onclick = () => openChapter(last.chapter_id);
+      }
+    } else {
+      $('heroDesc').textContent = 'اختر فصلًا من الفهرس أو ابدأ من الأول.';
+      $('continueBtn').hidden = true;
+    }
+  }
+
+  // ═══════════════════════════════════════════
+  // EVENTS
+  // ═══════════════════════════════════════════
+  function bindEvents() {
+    $('menuBtn').addEventListener('click', UI.toggleSidebar);
+    $('tocClose').addEventListener('click', UI.closeSidebar);
+    $('sidebarOverlay').addEventListener('click', UI.closeSidebar);
+
+    $('themeBtn').addEventListener('click', () => {
+      const cur = Store.get('theme');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      Store.set('theme', next);
+      UI.applyTheme();
+    });
+
+    $('prevBtn').addEventListener('click', prevPage);
+    $('nextBtn').addEventListener('click', nextPage);
+
+    $('startReadingBtn').addEventListener('click', () => {
+      for (const ch of state.chapters) {
+        if (!state.chaptersByParent[ch.id]?.length) {
+          openChapter(ch.id);
+          return;
+        }
+      }
+    });
+
+    $('bookmarkBtn').addEventListener('click', toggleBookmark);
+
+    $('clearProgressBtn').addEventListener('click', async () => {
+      if (!state.currentChapter) return;
+      if (!confirm('حذف تقدم القراءة لهذا الفصل؟')) return;
+      await DB.del('progress', state.currentChapter.id);
+      state.currentPageIndex = 0;
+      renderPage();
+      UI.toast('🗑️ تم الحذف', 'success');
+    });
+
+    $('searchBtn').addEventListener('click', () => {
+      $('searchModal').classList.add('open');
+      setTimeout(() => $('searchInput').focus(), 100);
+    });
+    $('searchClose').addEventListener('click', () => {
+      $('searchModal').classList.remove('open');
+    });
+    $('searchInput').addEventListener('input', e => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => quickSearch(e.target.value), 400);
+    });
+
+    $('fontBtn').addEventListener('click', () => {
+      const s = Store.all();
+      $('setFontSize').value = s.fontSize;
+      $('setFontFamily').value = s.fontFamily;
+      $('setPaper').value = s.paper;
+      $('setTheme').value = s.theme;
+      $('fontModal').classList.add('open');
+    });
+    $('fontClose').addEventListener('click', () => {
+      $('fontModal').classList.remove('open');
+    });
+
+    ['setFontSize', 'setFontFamily', 'setPaper', 'setTheme'].forEach(id => {
+      $(id).addEventListener('change', e => {
+        const key = {
+          setFontSize: 'fontSize',
+          setFontFamily: 'fontFamily',
+          setPaper: 'paper',
+          setTheme: 'theme',
+        }[id];
+        Store.set(key, e.target.value);
+        UI.applyAll();
+      });
+    });
+
+    document.querySelectorAll('.modal').forEach(m => {
+      m.addEventListener('click', e => {
+        if (e.target === m) m.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') nextPage();
+      else if (e.key === 'ArrowRight') prevPage();
+      else if (e.key === 'Escape') {
+        $('searchModal').classList.remove('open');
+        $('fontModal').classList.remove('open');
+      }
+      else if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        $('searchModal').classList.add('open');
+        setTimeout(() => $('searchInput').focus(), 100);
+      }
+    });
+
+    // Swipe
+    let startX = 0, startY = 0;
+    document.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', e => {
+      if (!$('readerView').offsetParent) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) > 80 && Math.abs(dy) < 60) {
+        if (dx < 0) nextPage();
+        else prevPage();
+      }
+    }, { passive: true });
+
+    document.body.addEventListener('click', e => {
+      const crumb = e.target.closest('.crumb');
+      if (crumb) {
+        e.preventDefault();
+        openChapter(parseInt(crumb.dataset.id, 10));
+      }
+    });
+  }
+
+  return { init };
+})();

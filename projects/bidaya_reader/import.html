@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>استيراد الكتاب — البداية والنهاية</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/mobile.css">
+  <script>
+    (function(){
+      try {
+        const t = localStorage.getItem('bidaya_settings_v1');
+        const s = t ? JSON.parse(t) : {};
+        const dark = s.theme === 'dark' || (s.theme === 'system' &&
+          matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch(e){}
+    })();
+  </script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="icon-btn" href="index.html" aria-label="رجوع">←</a>
+  <div class="brand-sm">استيراد الكتاب</div>
+  <span style="width:44px"></span>
+</header>
+
+<main class="app-main narrow">
+
+  <div class="panel">
+    <h1>📥 استيراد الكتاب</h1>
+    <p class="muted">
+      اختر ملف <code>bidaya_full.json</code> الذي صدّرته من التطبيق السابق
+      (أو أي ملف بنفس البنية).
+    </p>
+  </div>
+
+  <div class="panel">
+    <div id="dropzone" class="dropzone">
+      <b>⇧</b>
+      <h2>اختر ملف JSON</h2>
+      <p>أو اسحب الملف هنا</p>
+      <input type="file" id="fileInput" accept=".json,application/json" hidden>
+    </div>
+
+    <div id="progressWrap" hidden>
+      <div class="import-progress">
+        <span id="progressBar"></span>
+      </div>
+      <p id="progressText" class="muted center">جارٍ التحضير...</p>
+    </div>
+
+    <div id="resultWrap" hidden class="panel result-panel"></div>
+  </div>
+
+  <div class="panel danger-panel" id="clearPanel" hidden>
+    <h3>⚠️ حذف الكتاب المخزّن</h3>
+    <p class="muted">سيُحذف الكتاب نهائيًا من المتصفح.</p>
+    <button class="btn btn-danger" id="clearBtn">🗑️ حذف كل البيانات</button>
+  </div>
+
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/import.js"></script>
+<script>
+(async function(){
+  const dz = document.getElementById('dropzone');
+  const fi = document.getElementById('fileInput');
+  const pw = document.getElementById('progressWrap');
+  const pb = document.getElementById('progressBar');
+  const pt = document.getElementById('progressText');
+  const rw = document.getElementById('resultWrap');
+  const cp = document.getElementById('clearPanel');
+  const cb = document.getElementById('clearBtn');
+
+  // عرض زر الحذف إن كان هناك كتاب
+  if (await Importer.isImported()) cp.hidden = false;
+
+  dz.addEventListener('click', () => fi.click());
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+  dz.addEventListener('drop', e => {
+    e.preventDefault(); dz.classList.remove('drag');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  fi.addEventListener('change', () => {
+    if (fi.files[0]) handleFile(fi.files[0]);
+  });
+
+  async function handleFile(file) {
+    if (!file.name.toLowerCase().endsWith('.json')) {
+      UI.toast('❌ اختر ملف JSON', 'error'); return;
+    }
+    pw.hidden = false; rw.hidden = true;
+    pb.style.width = '0%';
+    pt.textContent = 'جارٍ القراءة...';
+
+    try {
+      const result = await Importer.importFile(file, (pct, msg) => {
+        pb.style.width = pct + '%';
+        pt.textContent = msg || `${pct}%`;
+      });
+
+      rw.hidden = false;
+      rw.innerHTML = `
+        <h3>✅ تم الاستيراد بنجاح</h3>
+        <p><b>${UI.esc(result.title)}</b></p>
+        <ul class="result-list">
+          <li>📚 ${result.chapters.toLocaleString('ar-EG')} فصلًا</li>
+          <li>📄 ${result.pages.toLocaleString('ar-EG')} صفحة</li>
+        </ul>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+          <a class="btn btn-gold" href="reader.html">📖 ابدأ القراءة</a>
+          <a class="btn btn-light" href="index.html">⌂ الرئيسية</a>
+        </div>
+      `;
+      UI.toast('✅ تم الاستيراد', 'success');
+      cp.hidden = false;
+    } catch (err) {
+      console.error(err);
+      rw.hidden = false;
+      rw.innerHTML = `<h3 class="err">❌ فشل الاستيراد</h3><p>${UI.esc(err.message)}</p>`;
+      UI.toast('❌ ' + err.message, 'error', 4000);
+    }
+  }
+
+  cb.addEventListener('click', async () => {
+    if (!confirm('حذف كل البيانات نهائيًا؟')) return;
+    await Importer.clearAll();
+    UI.toast('🗑️ تم الحذف', 'success');
+    setTimeout(() => location.href = 'index.html', 800);
+  });
+})();
+</script>
+<script src="js/pwa.js"></script>
+</body>
+</html>
