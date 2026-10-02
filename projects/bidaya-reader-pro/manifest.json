@@ -1,0 +1,25 @@
+{
+  "name": "بداية ريدر برو — قارئ الكتب التراثية",
+  "short_name": "بداية ريدر",
+  "description": "قارئ ومحرر ومكتبة كتب إسلامية وتراثية يعمل دون اتصال بالإنترنت",
+  "id": "bidaya-reader-pro",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#0f172a",
+  "theme_color": "#c79b3b",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "shortcuts": [
+    {"name": "المكتبة", "url": "./library.html", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]},
+    {"name": "استيراد كتاب", "url": "./import.html", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]},
+    {"name": "البحث", "url": "./search.html", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]}
+  ],
+  "categories": ["books", "education", "productivity"]
+}

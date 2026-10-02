@@ -1,0 +1,30 @@
+/* ═══ الجوال ═══ */
+@media (max-width:900px){
+  .topbar nav{display:none}
+  .menu-toggle{display:grid}
+  .sidebar{
+    position:fixed;inset-inline-start:0;top:var(--topbar-h);z-index:300;height:calc(100vh - var(--topbar-h));
+    transform:translateX(100%);box-shadow:0 0 40px rgba(0,0,0,.2);
+  }
+  html[dir="rtl"] .sidebar{transform:translateX(100%)}
+  .sidebar.open{transform:translateX(0)!important}
+  .sidebar-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:250;display:none}
+  .sidebar-backdrop.open{display:block}
+  .main{padding:18px 14px}
+  .hero{padding:36px 20px}
+  /* القارئ */
+  .reader-toc{position:fixed;z-index:300;transform:translateX(100%);transition:transform .3s;box-shadow:0 0 40px rgba(0,0,0,.2)}
+  .reader-toc.open{transform:translateX(0)!important}
+  .reader-content{padding:28px 18px}
+  .reader-mobile-nav{display:flex;position:fixed;bottom:0;inset-inline:0;background:var(--bg-elevated);border-top:1px solid var(--border);padding:8px;z-index:150;justify-content:space-around}
+  .reader-mobile-nav button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.68rem;color:var(--text-secondary);padding:4px 10px}
+  .reader-mobile-nav button svg{width:20px;height:20px}
+  .reader-mobile-nav button:hover{color:var(--gold)}
+  /* المحرر */
+  .editor-tree{position:fixed;z-index:300;transform:translateX(100%);transition:transform .3s;width:280px;box-shadow:0 0 40px rgba(0,0,0,.2)}
+  .editor-tree.open{transform:translateX(0)!important}
+  .rich-editor{padding:16px;font-size:1rem;min-height:320px}
+  .chapter-nav{flex-direction:column}
+  .chapter-nav button{max-width:none}
+  #toast-container{inset-inline:16px;bottom:70px;max-width:none}
+}

@@ -1,8 +1,8 @@
 {
   "format": "family-tree-pro",
   "version": 8,
-  "exported_at": "2026-09-30T19:24:10.170Z",
-  "total_people": 816,
+  "exported_at": "2026-09-26T13:11:14.872Z",
+  "total_people": 813,
   "total_generations": 15,
   "total_roots": 1,
   "people": [
@@ -121,7 +121,7 @@
     {
       "birth_date": "1995",
       "created_at": "2026-09-16T22:28:28",
-      "death_date": "",
+      "death_date": "2000",
       "father_id": 687,
       "father_name": "ناصر",
       "gender": "unknown",
@@ -132,7 +132,7 @@
       "name": "مقبل",
       "notes": "",
       "spouse_id": null,
-      "updated_at": "2026-09-30 19:22:13"
+      "updated_at": "2026-09-16T22:28:28"
     },
     {
       "birth_date": "",
@@ -13013,54 +13013,6 @@
       "image": "",
       "created_at": "2026-09-26 13:10:57",
       "updated_at": "2026-09-26 13:10:57"
-    },
-    {
-      "id": 1537,
-      "name": "محمد",
-      "father_id": 775,
-      "father_name": "صالح",
-      "mother_id": null,
-      "mother_name": null,
-      "gender": "unknown",
-      "birth_date": "1996",
-      "death_date": "",
-      "spouse_id": null,
-      "notes": "",
-      "image": "",
-      "created_at": "2026-09-30 19:20:39",
-      "updated_at": "2026-09-30 19:20:39"
-    },
-    {
-      "id": 1538,
-      "name": "سعيد",
-      "father_id": 775,
-      "father_name": "صالح",
-      "mother_id": null,
-      "mother_name": null,
-      "gender": "unknown",
-      "birth_date": "1996",
-      "death_date": "",
-      "spouse_id": null,
-      "notes": "",
-      "image": "",
-      "created_at": "2026-09-30 19:20:39",
-      "updated_at": "2026-09-30 19:20:39"
-    },
-    {
-      "id": 1539,
-      "name": "عبود",
-      "father_id": 775,
-      "father_name": "صالح",
-      "mother_id": null,
-      "mother_name": null,
-      "gender": "unknown",
-      "birth_date": "1996",
-      "death_date": "",
-      "spouse_id": null,
-      "notes": "",
-      "image": "",
-      "created_at": "2026-09-30 19:20:39",
-      "updated_at": "2026-09-30 19:20:39"
     }
   ],
   "marriages": []

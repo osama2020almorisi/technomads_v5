@@ -1,0 +1,24 @@
+/* ═══ الطباعة ═══ */
+@media print{
+  @page{size:A4;margin:2cm;counter-increment:page}
+  @page{bottom-center{content:counter(page) " / " counter(pages);font-size:9pt;color:#666}}
+  .topbar,.sidebar,.reader-toolbar,.reader-mobile-nav,.editor-tree,.editor-toolbar,
+  .pages-strip,.editor-status,.book-actions,.btn,.toast,#toast-container,
+  .modal-backdrop,.loading-overlay,.menu-toggle,.page-header .btn{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  .main,.reader-content,.editor-main{padding:0!important;background:#fff!important}
+  .layout,.reader-layout,.editor-layout{display:block!important}
+  .reader-toc{position:static;width:auto;height:auto;border:none;padding:0 0 20px}
+  .reader-toc h3{font-size:14pt;margin-bottom:10px}
+  .reader-toc .toc-item{color:#000;font-size:11pt;padding:2px 0}
+  .reader-page{max-width:none;font-size:12pt;line-height:1.9}
+  .reader-chapter-title{font-size:18pt;page-break-after:avoid;margin-bottom:16pt}
+  .reader-page h1,.reader-page h2,.reader-page h3{page-break-after:avoid;color:#000}
+  .reader-page p,.reader-page blockquote,.reader-page li{page-break-inside:avoid;color:#000}
+  .reader-page blockquote{background:#f5f0e1;border-inline-start:3pt solid #c79b3b}
+  mark{background:transparent;padding:0}
+  .book-print-header{text-align:center;margin-bottom:24pt;padding-bottom:12pt;border-bottom:2pt solid #c79b3b}
+  .book-print-header h1{font-size:22pt;margin-bottom:4pt}
+  .book-print-header .print-meta{font-size:10pt;color:#444}
+  .print-pagebreak{page-break-before:always}
+}

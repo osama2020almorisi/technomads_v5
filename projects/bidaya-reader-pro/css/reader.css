@@ -1,0 +1,157 @@
+/* ═══ القارئ ═══ */
+.reader-layout{display:flex;min-height:calc(100vh - var(--topbar-h))}
+
+/* ═══ فهرس القارئ — تصميم احترافي ═══ */
+.reader-toc{
+  width:340px;flex-shrink:0;background:var(--bg-elevated);
+  border-inline-end:1px solid var(--border);
+  position:sticky;top:var(--topbar-h);height:calc(100vh - var(--topbar-h));
+  display:flex;flex-direction:column;overflow:hidden;
+}
+
+/* ─── رأس الفهرس ─── */
+.toc-header{
+  padding:16px 18px 14px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;background:var(--bg-elevated);flex-shrink:0;
+}
+.toc-header .book-icon{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(135deg,#c79b3b,#e2bd63);
+  display:grid;place-items:center;font-size:1.3rem;color:#1a1408;
+  flex-shrink:0;box-shadow:0 3px 10px rgba(199,155,59,.3);
+}
+.toc-header .book-info{flex:1;min-width:0}
+.toc-header .book-info h3{
+  font-size:1rem;font-weight:800;font-family:var(--font-heading);
+  color:var(--text-primary);margin:0 0 2px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.toc-header .book-info .chapters-count{font-size:.78rem;color:var(--text-muted);font-weight:600}
+.toc-header .close-toc{
+  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  color:var(--text-secondary);background:var(--bg-secondary);transition:.2s;flex-shrink:0;
+}
+.toc-header .close-toc:hover{background:var(--gold-soft);color:var(--gold)}
+.toc-header .close-toc svg{width:16px;height:16px}
+
+/* ─── بحث في الفهرس ─── */
+.toc-search{padding:12px 16px;border-bottom:1px solid var(--border);flex-shrink:0;position:relative}
+.toc-search input{
+  width:100%;padding:10px 40px 10px 14px;border-radius:10px;
+  border:1.5px solid var(--border);background:var(--bg-secondary);color:var(--text-primary);
+  font-size:.88rem;font-family:var(--font-body);transition:.2s;outline:none;
+}
+.toc-search input:focus{border-color:var(--gold);background:var(--bg-elevated);box-shadow:0 0 0 3px var(--gold-soft)}
+.toc-search input::placeholder{color:var(--text-muted)}
+.toc-search .search-icon{
+  position:absolute;inset-inline-end:28px;top:50%;transform:translateY(-50%);
+  width:18px;height:18px;color:var(--gold);pointer-events:none;
+}
+
+/* ─── قائمة الفصول ─── */
+.toc-list-wrap{flex:1;overflow-y:auto;padding:8px 8px 20px;scrollbar-width:thin}
+.toc-list-wrap::-webkit-scrollbar{width:6px}
+.toc-list-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:6px}
+.toc-list-wrap::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+
+/* ─── عنصر فصل ─── */
+.toc-item{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;
+  cursor:pointer;transition:.15s;border:1.5px solid transparent;position:relative;
+  color:var(--text-secondary);background:transparent;width:100%;text-align:right;
+  font-family:inherit;font-size:.88rem;line-height:1.5;margin-bottom:2px;
+}
+.toc-item:hover{background:var(--gold-soft);color:var(--gold)}
+.toc-item.active{
+  background:var(--gold-soft);color:var(--gold);font-weight:700;border-color:var(--gold);
+}
+.toc-item .toc-icon{
+  width:24px;height:24px;display:grid;place-items:center;flex-shrink:0;
+  font-size:.95rem;transition:.2s;color:var(--gold);
+}
+.toc-item.active .toc-icon{transform:scale(1.1)}
+.toc-item .toc-title{
+  flex:1;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;
+  -webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.4;
+}
+.toc-item .toc-arrow{
+  width:20px;height:20px;display:grid;place-items:center;
+  color:var(--text-muted);transition:transform .2s;flex-shrink:0;
+}
+.toc-item .toc-arrow svg{width:14px;height:14px}
+.toc-item.expanded .toc-arrow{transform:rotate(-90deg);color:var(--gold)}
+
+/* ─── الفصول الفرعية ─── */
+.toc-children{
+  margin-inline-start:20px;padding-inline-start:10px;
+  border-inline-start:2px solid var(--border);
+  overflow:hidden;max-height:0;transition:max-height .3s ease;
+}
+.toc-children.open{max-height:5000px}
+.toc-children .toc-item{padding:8px 10px;font-size:.84rem}
+.toc-children .toc-item .toc-icon{font-size:.85rem;width:20px;height:20px}
+.toc-children .toc-children{
+  margin-inline-start:14px;border-inline-start:2px solid rgba(199,155,59,.25);
+}
+
+.toc-empty{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:.88rem}
+.toc-item mark{background:var(--gold-soft);color:var(--gold);font-weight:700;padding:0 2px;border-radius:3px}
+
+html[data-theme="dark"] .toc-header .book-icon{box-shadow:0 3px 10px rgba(226,189,99,.25)}
+html[data-theme="dark"] .toc-search input{background:rgba(255,255,255,.03)}
+
+/* ─── محتوى القارئ ─── */
+.reader-content{
+  flex:1;background:var(--reader-bg);color:var(--reader-text);
+  padding:48px clamp(20px,6vw,90px);min-width:0;transition:background .3s;
+}
+.reader-content.font-reader{font-family:var(--font-reader)}
+.reader-page{max-width:760px;margin:0 auto;font-size:1.15rem;line-height:2.1;text-align:justify}
+.reader-page h1,.reader-page h2,.reader-page h3,.reader-page h4{line-height:1.8;margin-bottom:.8em;color:var(--reader-text)}
+.reader-page p{margin-bottom:1em}
+.reader-page blockquote{
+  border-inline-start:4px solid var(--gold);padding:10px 20px;margin:1em 0;
+  background:var(--gold-soft);border-radius:8px;font-style:italic;
+}
+.reader-page hr{border:none;border-top:1px solid var(--border);margin:2em 0}
+.reader-page ul,.reader-page ol{padding-inline-start:1.6em;margin-bottom:1em}
+.reader-chapter-title{
+  font-family:var(--font-heading);font-size:1.7rem;text-align:center;margin-bottom:1.4em;
+  padding-bottom:.6em;border-bottom:2px solid var(--gold);display:flex;align-items:center;gap:14px;justify-content:center;
+}
+.reader-chapter-title::before,.reader-chapter-title::after{content:"❖";color:var(--gold);font-size:1.1rem}
+
+/* ─── شريط أدوات القارئ ─── */
+.reader-toolbar{
+  position:sticky;top:var(--topbar-h);z-index:100;background:var(--bg-elevated);
+  border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;
+  padding:8px 16px;flex-wrap:wrap;
+}
+.reader-toolbar .sep{width:1px;height:24px;background:var(--border);margin:0 6px}
+.reader-toolbar .page-info{font-size:.82rem;color:var(--text-secondary);font-weight:700;margin-inline-start:auto}
+.font-size-btn{width:32px;height:32px;border-radius:8px;font-weight:800;color:var(--text-secondary)}
+.font-size-btn:hover{background:var(--gold-soft);color:var(--gold)}
+
+/* ─── تنقل الفصول ─── */
+.chapter-nav{display:flex;justify-content:space-between;gap:14px;margin-top:48px;padding-top:24px;border-top:1px solid var(--border)}
+.chapter-nav button{
+  flex:1;padding:14px;border-radius:var(--radius);background:var(--bg-elevated);
+  border:1px solid var(--border);font-weight:700;font-size:.88rem;transition:.2s;max-width:280px;
+}
+.chapter-nav button:hover:not([disabled]){border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}
+.chapter-nav button[disabled]{opacity:.4;cursor:default}
+
+/* ─── تنقل الجوال ─── */
+.reader-mobile-nav{display:none}
+
+/* ─── بحث سريع ─── */
+.quick-search-results{max-height:50vh;overflow-y:auto}
+.quick-search-results .result-item{
+  padding:12px 14px;border-radius:10px;cursor:pointer;margin-bottom:6px;border:1px solid var(--border);
+}
+.quick-search-results .result-item:hover{background:var(--gold-soft);border-color:var(--gold)}
+
+/* ─── الجوال ─── */
+@media (max-width:900px){
+  .reader-toc{width:320px;max-width:88vw}
+}
