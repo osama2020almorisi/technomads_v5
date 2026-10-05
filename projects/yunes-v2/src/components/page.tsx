@@ -1,0 +1,1 @@
+import {Header,Footer,WhatsApp} from './site-shell';export function Shell({locale,children}:{locale:string;children:React.ReactNode}){return <><Header locale={locale}/>{children}<Footer locale={locale}/><WhatsApp/></>}

@@ -1,0 +1,1 @@
+export const site={name:'YUNES Travel & Education',shortName:'YUNES',descriptionAr:'خدمات سفر وتعليم واستشارات وتأشيرات باحترافية وثقة.',descriptionEn:'Professional travel, education, visa and advisory services.',whatsapp:'+967770200970',whatsappUrl:'https://wa.me/967770200970',email:'2025ooss@gmail.com',colors:{navy:'#0b1f3a',gold:'#d6a84f'}};

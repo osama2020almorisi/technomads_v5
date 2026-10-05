@@ -1,0 +1,1 @@
+export const nav=[['home','الرئيسية','Home','/'],['about','من نحن','About','/about'],['services','الخدمات','Services','/services'],['destinations','الوجهات','Destinations','/destinations'],['packages','الباقات','Packages','/packages'],['blog','المدونة','Blog','/blog'],['faq','الأسئلة الشائعة','FAQ','/faq'],['contact','اتصل بنا','Contact','/contact']];

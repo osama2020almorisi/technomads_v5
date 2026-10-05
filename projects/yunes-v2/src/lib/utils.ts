@@ -1,0 +1,1 @@
+import {clsx, type ClassValue} from 'clsx';import {twMerge} from 'tailwind-merge';export function cn(...inputs:ClassValue[]){return twMerge(clsx(inputs));}export function wa(text='مرحبًا، أريد الاستفسار عن خدمات YUNES Travel & Education'){return `https://wa.me/967770200970?text=${encodeURIComponent(text)}`;}

@@ -1,0 +1,1 @@
+import './globals.css';import {ThemeProvider} from '@/components/site-shell';import {ReactNode} from 'react';export default function RootLayout({children}:{children:ReactNode}){return <html suppressHydrationWarning><body><ThemeProvider>{children}</ThemeProvider></body></html>}
