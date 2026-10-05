@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f1722">
+<meta name="description" content="وِرد برو — قارئ كتب EPUB محلي احترافي: مكتبة ذكية، خطوط عربية فاخرة، تمييز وتعليقات، قراءة صوتية، وتصدير متعدد الصيغ.">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>وِرد برو | قارئ الكتب الاحترافي</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Almarai:wght@300;400;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@300;400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Aref+Ruqaa:wght@400;700&family=El+Messiri:wght@400;500;600;700&family=Cairo:wght@300;400;600;700;900&family=Changa:wght@300;400;600;800&family=Marhey:wght@300;400;700&family=Harmattan:wght@400;500;600;700&family=Lateef:wght@400;600;700&family=Vibes&family=Rakkas&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════ مكتبة الأيقونات SVG ═══════════ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3L19 19M19 5l-1.7 1.7M6.7 17.3L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.4 14.2A8.5 8.5 0 0 1 9.8 3.6a8.5 8.5 0 1 0 10.6 10.6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-import" viewBox="0 0 24 24"><path d="M12 3v10m0 0l-4-4m4 4l4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 15v3a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.8-3.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v17.5H7.5A2.5 2.5 0 0 0 5 22z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M5 19.5V4.5M9 7h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-bookopen" viewBox="0 0 24 24"><path d="M12 6.5C10 4.8 7.2 4 3.5 4v14c3.7 0 6.5.8 8.5 2.5 2-1.7 4.8-2.5 8.5-2.5V4c-3.7 0-6.5.8-8.5 2.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 6.5V20.5" stroke="currentColor" stroke-width="2"/></symbol>
+<symbol id="i-toc" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></symbol>
+<symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+<symbol id="i-bookmark-fill" viewBox="0 0 24 24"><path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z" fill="currentColor"/></symbol>
+<symbol id="i-note" viewBox="0 0 24 24"><path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13.5 6.5l3 3" stroke="currentColor" stroke-width="2"/></symbol>
+<symbol id="i-highlight" viewBox="0 0 24 24"><path d="M9 11l4 4M6 21l3.5-1L20 9.5a2.1 2.1 0 0 0-3-3L5 18.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 3h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".45"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.8v14.4L19 12z" fill="currentColor"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4" height="15" rx="1" fill="currentColor"/><rect x="14" y="4.5" width="4" height="15" rx="1" fill="currentColor"/></symbol>
+<symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></symbol>
+<symbol id="i-full" viewBox="0 0 24 24"><path d="M4 9V5a1 1 0 0 1 1-1h4M15 4h4a1 1 0 0 1 1 1v4M20 15v4a1 1 0 0 1-1 1h-4M9 20H5a1 1 0 0 1-1-1v-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-focus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+<symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M14.5 5.5L8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9.5 5.5L16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v11m0 0l-4-4m4 4l4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 14V3m0 0L8 7m4-4l4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6.5 7l1 13h9l1-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+<symbol id="i-star-fill" viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z" fill="currentColor"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15.5H4.5A1.5 1.5 0 0 1 3 14V4.5A1.5 1.5 0 0 1 4.5 3H14a1.5 1.5 0 0 1 1.5 1.5V5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+<symbol id="i-print" viewBox="0 0 24 24"><path d="M7 8V3.5h10V8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><rect x="3.5" y="8" width="17" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 14h10v6.5H7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3.5 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><circle cx="19" cy="12" r="1.7" fill="currentColor"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></symbol>
+<symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M18 14h.01M9 14h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.3" fill="currentColor"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.3S3.5 15.6 3.5 9.6a4.6 4.6 0 0 1 8.5-2.5 4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 10.7-8.5 10.7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+<symbol id="i-heart-fill" viewBox="0 0 24 24"><path d="M12 20.3S3.5 15.6 3.5 9.6a4.6 4.6 0 0 1 8.5-2.5 4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 10.7-8.5 10.7z" fill="currentColor"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 10h17M8 2.8V6M16 2.8V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-quote" viewBox="0 0 24 24"><path d="M9.5 7c-2.8.6-4.5 2.6-4.5 5.7V17h5v-5H7.2c.1-1.7 1-2.8 2.3-3.4zM19 7c-2.8.6-4.5 2.6-4.5 5.7V17h5v-5h-2.8c.1-1.7 1-2.8 2.3-3.4z" fill="currentColor"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="5.5" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="18.5" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.4 10.8l6.7-4M8.4 13.2l6.7 4" stroke="currentColor" stroke-width="2"/></symbol>
+<symbol id="i-font" viewBox="0 0 24 24"><path d="M5 18L10 6l5 12M6.6 14h6.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 18l3-7 3 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 12h17M12 3.5c2.5 2.3 3.8 5.2 3.8 8.5s-1.3 6.2-3.8 8.5c-2.5-2.3-3.8-5.2-3.8-8.5s1.3-6.2 3.8-8.5z" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+<symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z" fill="currentColor"/><path d="M18.5 15.5l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z" fill="currentColor" opacity=".55"/></symbol>
+<symbol id="i-text" viewBox="0 0 24 24"><path d="M4 6h16M4 10.5h16M4 15h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-voice" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-arrow-swap" viewBox="0 0 24 24"><path d="M7 4L3.5 7.5 7 11M3.5 7.5H17M17 13l3.5 3.5L17 20M20.5 16.5H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<!-- ═══════════ الشريط العلوي ═══════════ -->
+<header class="topbar">
+  <button id="menuBtn" class="iconbtn" aria-label="القائمة"><svg><use href="#i-menu"/></svg></button>
+  <a class="brand" href="#" id="brandHome">
+    <span class="brandmark"><svg><use href="#i-bookopen"/></svg></span>
+    <span class="brand-txt">وِرد <small>قارئ الكتب الاحترافي</small></span>
+  </a>
+  <div class="top-actions">
+    <button id="helpBtn" class="iconbtn" title="اختصارات لوحة المفاتيح" aria-label="المساعدة"><svg><use href="#i-keyboard"/></svg></button>
+    <button id="aboutBtn" class="iconbtn" title="حول التطبيق" aria-label="حول"><svg><use href="#i-info"/></svg></button>
+    <button id="themeBtn" class="iconbtn" title="تبديل المظهر" aria-label="المظهر"><svg class="ic-sun"><use href="#i-sun"/></svg><svg class="ic-moon"><use href="#i-moon"/></svg></button>
+    <button id="importBtn" class="primary"><svg><use href="#i-import"/></svg><span>استيراد كتاب</span></button>
+    <input id="fileInput" type="file" accept=".epub,.json,application/epub+zip,application/json" multiple hidden>
+  </div>
+</header>
+
+<div class="app">
+  <!-- ═══════════ الشريط الجانبي ═══════════ -->
+  <aside id="sidebar" class="sidebar">
+    <div class="side-head">
+      <div><span class="eyebrow">مساحة القراءة الخاصة</span><h2>مكتبتي</h2></div>
+      <button id="closeMenu" class="iconbtn mobile-only" aria-label="إغلاق"><svg><use href="#i-close"/></svg></button>
+    </div>
+
+    <label class="search">
+      <svg><use href="#i-search"/></svg>
+      <input id="searchInput" placeholder="ابحث في مكتبتك…">
+      <button id="clearSearch" class="mini-x" hidden aria-label="مسح"><svg><use href="#i-close"/></svg></button>
+    </label>
+
+    <button id="continueBtn" class="continue-card" hidden>
+      <span class="cc-label"><svg><use href="#i-bookopen"/></svg> متابعة القراءة</span>
+      <span class="cc-title" id="continueTitle">—</span>
+      <span class="cc-bar"><span id="continueFill"></span></span>
+    </button>
+
+    <nav class="filters">
+      <button class="filter active" data-filter="all">كل الكتب <b id="allCount">0</b></button>
+      <button class="filter" data-filter="reading">قيد القراءة</button>
+      <button class="filter" data-filter="unread">لم تبدأ بعد</button>
+      <button class="filter" data-filter="finished">مكتملة</button>
+      <button class="filter" data-filter="fav">المفضلة <svg class="flt-ic"><use href="#i-heart-fill"/></svg></button>
+    </nav>
+
+    <div class="side-section">
+      <span class="eyebrow">مجموعاتي</span>
+      <div id="categories" class="categories"></div>
+      <button id="addCategory" class="textbtn"><svg><use href="#i-plus"/></svg> إضافة مجموعة</button>
+    </div>
+
+    <div class="side-section storage-box">
+      <span class="eyebrow">التخزين المحلي</span>
+      <div class="storage-track"><span id="storageFill"></span></div>
+      <span class="muted tiny" id="storageInfo">—</span>
+    </div>
+
+    <div class="side-bottom">
+      <button id="exportBtn" class="side-btn"><svg><use href="#i-download"/></svg> تصدير / نسخ احتياطي</button>
+      <button id="importDataBtn" class="side-btn"><svg><use href="#i-upload"/></svg> استيراد بيانات (JSON)</button>
+      <span class="muted tiny center">تُحفظ كتبك وبياناتك على جهازك فقط</span>
+    </div>
+  </aside>
+
+  <!-- ═══════════ المحتوى الرئيسي ═══════════ -->
+  <main class="main">
+    <!-- عرض المكتبة -->
+    <section id="libraryView">
+      <div class="welcome">
+        <div class="welcome-txt">
+          <span class="eyebrow">مساحة هادئة لأفكار عظيمة</span>
+          <h1>كل كتاب، <em>رحلة جديدة.</em></h1>
+          <p>مكتبتك الرقمية الخاصة — بخطوط فاخرة، تمييز وتعليقات، قراءة صوتية وتصدير احترافي.</p>
+        </div>
+        <div class="welcome-art" aria-hidden="true"><svg><use href="#i-sparkle"/></svg></div>
+      </div>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="week-card">
+        <div class="week-head">
+          <span class="eyebrow"><svg class="ic-inline"><use href="#i-chart"/></svg> نشاط القراءة — آخر ٧ أيام</span>
+          <span class="muted tiny" id="weekTotal"></span>
+        </div>
+        <div class="week-bars" id="weekBars"></div>
+      </div>
+
+      <div class="section-heading">
+        <div><h2 id="listTitle">مكتبتك</h2><span class="muted" id="bookCount">0 كتاب</span></div>
+        <div class="heading-tools">
+          <div class="view-toggle">
+            <button id="viewGridBtn" class="vt active" title="عرض شبكي"><svg><use href="#i-grid"/></svg></button>
+            <button id="viewListBtn" class="vt" title="عرض قائمة"><svg><use href="#i-list"/></svg></button>
+          </div>
+          <select id="sortSelect" aria-label="ترتيب الكتب">
+            <option value="recent">الأحدث إضافة</option>
+            <option value="title">العنوان</option>
+            <option value="author">المؤلف</option>
+            <option value="progress">التقدم</option>
+            <option value="rating">التقييم</option>
+            <option value="time">وقت القراءة</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="bookGrid" class="book-grid"></div>
+
+      <div id="empty" class="empty">
+        <div class="empty-icon"><svg><use href="#i-book"/></svg></div>
+        <h3>ابدأ ببناء مكتبتك</h3>
+        <p>اسحب ملفات EPUB وأفلتها هنا، أو استورد أول كتاب لتبدأ الرحلة.</p>
+        <button class="primary" id="emptyImport"><svg><use href="#i-import"/></svg> استيراد كتاب</button>
+      </div>
+    </section>
+
+    <!-- عرض القارئ -->
+    <section id="readerView" hidden>
+      <div class="reader-toolbar">
+        <button id="backBtn" class="iconbtn"><svg><use href="#i-back"/></svg><span class="hide-sm">المكتبة</span></button>
+        <div class="reader-book-title" id="readerTitle">—</div>
+        <div class="reader-tools">
+          <button id="searchBookBtn" class="iconbtn" title="البحث في الكتاب"><svg><use href="#i-search"/></svg></button>
+          <button id="tocBtn" class="iconbtn" title="الفهرس والأدوات"><svg><use href="#i-toc"/></svg></button>
+          <button id="settingsBtn" class="iconbtn" title="إعدادات القراءة"><svg><use href="#i-font"/></svg></button>
+          <button id="focusBtn" class="iconbtn" title="وضع التركيز"><svg><use href="#i-focus"/></svg></button>
+          <button id="fullBtn" class="iconbtn" title="ملء الشاشة"><svg><use href="#i-full"/></svg></button>
+          <button id="moreBtn" class="iconbtn" title="تصدير ومشاركة"><svg><use href="#i-dots"/></svg></button>
+        </div>
+      </div>
+
+      <div class="reader-layout">
+        <aside id="readerPanel" class="reader-panel">
+          <div class="panel-tabs">
+            <button class="tab active" data-tab="toc">الفهرس</button>
+            <button class="tab" data-tab="marks">العلامات</button>
+            <button class="tab" data-tab="notes">ملاحظاتي</button>
+            <button class="tab" data-tab="highlights">تمييز</button>
+          </div>
+          <div id="panelContent"></div>
+        </aside>
+
+        <article class="reading-area" id="readingArea">
+          <div class="reading-paper" id="readingPaper">
+            <div class="chapter-kicker" id="chapterKicker">بداية القراءة</div>
+            <h1 id="chapterTitle">اختر فصلاً للبدء</h1>
+            <div class="chapter-meta" id="chapterMeta"></div>
+            <div id="chapterContent" class="chapter-content"></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="reader-footer">
+        <button id="prevBtn" class="navbtn"><svg><use href="#i-chev-r"/></svg><span>السابق</span></button>
+        <div class="progress-wrap">
+          <input type="range" id="progressRange" min="0" max="100" value="0" step="0.5" aria-label="شريط التقدم">
+          <span id="progressLabel">0%</span>
+        </div>
+        <button id="nextBtn" class="navbtn"><span>التالي</span><svg><use href="#i-chev-l"/></svg></button>
+      </div>
+      <div class="chapter-info" id="chapterInfo"></div>
+
+      <!-- شريط القراءة الصوتية -->
+      <div class="tts-bar" id="ttsBar" hidden>
+        <button id="ttsPlay" class="iconbtn" title="تشغيل / إيقاف مؤقت"><svg class="ic-play"><use href="#i-play"/></svg><svg class="ic-pause"><use href="#i-pause"/></svg></button>
+        <button id="ttsStop" class="iconbtn" title="إيقاف"><svg><use href="#i-stop"/></svg></button>
+        <select id="voiceSelect" title="اختيار الصوت"></select>
+        <label class="tts-rate"><span>السرعة</span><input type="range" id="voiceRate" min="0.5" max="2" step="0.1" value="0.95"></label>
+        <span class="tts-status" id="ttsStatus"></span>
+        <button id="ttsClose" class="iconbtn" title="إغلاق"><svg><use href="#i-close"/></svg></button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ═══════════ نافذة إعدادات القراءة ═══════════ -->
+<div id="settingsPop" class="settings-pop pop" hidden>
+  <div class="pop-head"><h3><svg class="ic-inline"><use href="#i-font"/></svg> مظهر القراءة</h3><button class="iconbtn pop-close" data-close="settingsPop"><svg><use href="#i-close"/></svg></button></div>
+
+  <div class="set-group">
+    <span class="set-label">نوع الخط</span>
+    <div class="font-grid" id="fontGrid"></div>
+  </div>
+
+  <div class="set-group">
+    <span class="set-label">حجم الخط <b id="fontSizeVal">21</b></span>
+    <div class="size-row">
+      <button class="size-preset" data-delta="-1"><svg><use href="#i-font"/></svg>−</button>
+      <input id="fontSize" type="range" min="14" max="40" value="21">
+      <button class="size-preset" data-delta="1">＋</button>
+    </div>
+    <div class="size-quick">
+      <button data-size="17">صغير</button><button data-size="21" class="active">متوسط</button><button data-size="25">كبير</button><button data-size="30">ضخم</button>
+    </div>
+  </div>
+
+  <div class="set-group">
+    <span class="set-label">تباعد الأسطر <b id="lineHeightVal">2.05</b></span>
+    <input id="lineHeight" type="range" min="1.4" max="3" step="0.05" value="2.05">
+  </div>
+
+  <div class="set-group">
+    <span class="set-label">تباعد الحروف <b id="letterSpacingVal">0</b></span>
+    <input id="letterSpacing" type="range" min="0" max="4" step="0.5" value="0">
+  </div>
+
+  <div class="set-group">
+    <span class="set-label">عرض الصفحة <b id="maxWidthVal">780</b></span>
+    <input id="maxWidth" type="range" min="560" max="1100" step="20" value="780">
+  </div>
+
+  <div class="set-group">
+    <span class="set-label">لون الورق</span>
+    <div class="paper-swatches" id="paperSwatches">
+      <button data-paper="paper" class="active" title="ورقي" style="--sw:#ffffff"></button>
+      <button data-paper="cream" title="كريمي" style="--sw:#f8f3e6"></button>
+      <button data-paper="sepia" title="سيبيا" style="--sw:#f1e5c8"></button>
+      <button data-paper="green" title="أخضر هادئ" style="--sw:#e9f2ea"></button>
+      <button data-paper="sky" title="سماوي" style="--sw:#e9f1f7"></button>
+      <button data-paper="night" title="ليلي" style="--sw:#232b31"></button>
+    </div>
+  </div>
+
+  <div class="set-group two-col">
+    <label class="set-check"><input type="checkbox" id="justifyToggle" checked><span>ضبط الأسطر (Justify)</span></label>
+    <label class="set-check"><input type="checkbox" id="dropCapToggle"><span>حرف استهلالي كبير</span></label>
+  </div>
+
+  <div class="set-group">
+    <span class="set-label">اتجاه النص</span>
+    <select id="direction" class="full-select">
+      <option value="auto">تلقائي (حسب الكتاب)</option>
+      <option value="rtl">من اليمين لليسار</option>
+      <option value="ltr">من اليسار لليمين</option>
+    </select>
+  </div>
+
+  <button id="resetPrefsBtn" class="textbtn full-reset"><svg class="ic-inline"><use href="#i-arrow-swap"/></svg> إعادة الإعدادات الافتراضية</button>
+</div>
+
+<!-- ═══════════ نافذة البحث في الكتاب ═══════════ -->
+<div id="searchPop" class="search-pop pop" hidden>
+  <div class="pop-head"><h3><svg class="ic-inline"><use href="#i-search"/></svg> البحث في الكتاب</h3><button class="iconbtn pop-close" data-close="searchPop"><svg><use href="#i-close"/></svg></button></div>
+  <label class="search big">
+    <svg><use href="#i-search"/></svg>
+    <input id="bookSearchInput" placeholder="اكتب كلمة أو عبارة…">
+  </label>
+  <div id="bookSearchResults" class="search-results"><p class="muted pad">ستظهر النتائج هنا مع كل فصل وموضعها.</p></div>
+</div>
+
+<!-- ═══════════ نافذة التصدير والمشاركة ═══════════ -->
+<div id="exportPop" class="export-pop pop" hidden>
+  <div class="pop-head"><h3><svg class="ic-inline"><use href="#i-download"/></svg> تصدير ومشاركة</h3><button class="iconbtn pop-close" data-close="exportPop"><svg><use href="#i-close"/></svg></button></div>
+  <div class="export-grid">
+    <button data-export-action="book-json"><svg><use href="#i-download"/></svg><b>نسخة وِرد كاملة</b><small>JSON يشمل الفصول والعلامات</small></button>
+    <button data-export-action="book-txt"><svg><use href="#i-text"/></svg><b>نص TXT</b><small>الفصل الحالي كنص خام</small></button>
+    <button data-export-action="book-md"><svg><use href="#i-note"/></svg><b>Markdown</b><small>الفصل الحالي منسقاً</small></button>
+    <button data-export-action="book-html"><svg><use href="#i-globe"/></svg><b>صفحة HTML</b><small>للأرشفة أو النشر</small></button>
+    <button data-export-action="book-print"><svg><use href="#i-print"/></svg><b>طباعة / PDF</b><small>عبر نافذة الطباعة</small></button>
+    <button data-export-action="book-copy"><svg><use href="#i-copy"/></svg><b>نسخ الفصل</b><small>إلى الحافظة</small></button>
+    <button data-export-action="marks-md"><svg><use href="#i-bookmark"/></svg><b>العلامات والملاحظات</b><small>ملف Markdown</small></button>
+    <button data-export-action="hl-md"><svg><use href="#i-highlight"/></svg><b>التمييزات</b><small>ملف Markdown</small></button>
+    <button data-export-action="book-share"><svg><use href="#i-share"/></svg><b>مشاركة</b><small>إن كانت متاحة في جهازك</small></button>
+  </div>
+</div>
+
+<!-- ═══════════ نافذة تصدير المكتبة ═══════════ -->
+<div id="libraryExportPop" class="export-pop pop" hidden>
+  <div class="pop-head"><h3><svg class="ic-inline"><use href="#i-download"/></svg> تصدير المكتبة</h3><button class="iconbtn pop-close" data-close="libraryExportPop"><svg><use href="#i-close"/></svg></button></div>
+  <div class="export-grid">
+    <button data-lib-export="full"><svg><use href="#i-download"/></svg><b>نسخة احتياطية كاملة</b><small>كل الكتب والفصول (JSON)</small></button>
+    <button data-lib-export="meta"><svg><use href="#i-book"/></svg><b>بيانات وصفية فقط</b><small>خفيفة: العناوين والتقدم</small></button>
+    <button data-lib-export="csv"><svg><use href="#i-list"/></svg><b>جدول CSV</b><small>للجداول والإحصاءات</small></button>
+  </div>
+</div>
+
+<!-- ═══════════ نافذة تعديل الكتاب ═══════════ -->
+<div id="editModal" class="modal" hidden>
+  <div class="modal-card">
+    <button class="modal-close iconbtn" data-close="editModal"><svg><use href="#i-close"/></svg></button>
+    <h2><svg class="ic-inline"><use href="#i-edit"/></svg> بيانات الكتاب</h2>
+    <label>العنوان<input id="editTitle"></label>
+    <label>المؤلف<input id="editAuthor"></label>
+    <label>التصنيف<input id="editCategory" placeholder="عام" list="catsList"></label>
+    <datalist id="catsList"></datalist>
+    <div class="edit-row">
+      <span class="set-label">تقييمك</span>
+      <div class="stars" id="editRating">
+        <button data-star="1"><svg><use href="#i-star"/></svg></button>
+        <button data-star="2"><svg><use href="#i-star"/></svg></button>
+        <button data-star="3"><svg><use href="#i-star"/></svg></button>
+        <button data-star="4"><svg><use href="#i-star"/></svg></button>
+        <button data-star="5"><svg><use href="#i-star"/></svg></button>
+      </div>
+    </div>
+    <label class="set-check"><input type="checkbox" id="editFav"><span>إضافة إلى المفضلة</span></label>
+    <div class="modal-actions">
+      <button class="ghost" data-close="editModal">إلغاء</button>
+      <button id="saveEdit" class="primary"><svg class="ic-inline"><use href="#i-check"/></svg> حفظ التعديلات</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ نافذة تأكيد ═══════════ -->
+<div id="confirmModal" class="modal" hidden>
+  <div class="modal-card small">
+    <h2 id="confirmTitle">تأكيد</h2>
+    <p class="muted" id="confirmText"></p>
+    <div class="modal-actions">
+      <button class="ghost" id="confirmCancel">إلغاء</button>
+      <button class="danger" id="confirmOk">تأكيد</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ نافذة إدخال نص (ملاحظات) ═══════════ -->
+<div id="promptModal" class="modal" hidden>
+  <div class="modal-card small">
+    <h2 id="promptTitle">ملاحظة</h2>
+    <textarea id="promptInput" rows="4" placeholder="اكتب هنا…"></textarea>
+    <div class="modal-actions">
+      <button class="ghost" id="promptCancel">إلغاء</button>
+      <button class="primary" id="promptOk">حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ نافذة الاختصارات ═══════════ -->
+<div id="shortcutsModal" class="modal" hidden>
+  <div class="modal-card">
+    <button class="modal-close iconbtn" data-close="shortcutsModal"><svg><use href="#i-close"/></svg></button>
+    <h2><svg class="ic-inline"><use href="#i-keyboard"/></svg> اختصارات لوحة المفاتيح</h2>
+    <div class="kbd-grid">
+      <div><span><kbd>←</kbd></span> الفصل التالي</div>
+      <div><span><kbd>→</kbd></span> الفصل السابق</div>
+      <div><span><kbd>B</kbd></span> إضافة علامة مرجعية</div>
+      <div><span><kbd>F</kbd></span> ملء الشاشة</div>
+      <div><span><kbd>T</kbd></span> تبديل المظهر الداكن</div>
+      <div><span><kbd>+</kbd>/<kbd>−</kbd></span> تكبير / تصغير الخط</div>
+      <div><span><kbd>S</kbd></span> البحث في الكتاب</div>
+      <div><span><kbd>Esc</kbd></span> إغلاق النوافذ</div>
+      <div><span><kbd>?</kbd></span> هذه النافذة</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ نافذة حول ═══════════ -->
+<div id="aboutModal" class="modal" hidden>
+  <div class="modal-card">
+    <button class="modal-close iconbtn" data-close="aboutModal"><svg><use href="#i-close"/></svg></button>
+    <div class="about-brand"><span class="brandmark lg"><svg><use href="#i-bookopen"/></svg></span></div>
+    <h2 class="center">وِرد برو <small class="ver">الإصدار 4.0</small></h2>
+    <p class="muted center">قارئ كتب EPUB محلي بالكامل — لا خوادم، لا تتبع. كتبك وبياناتك ملكك وحدك.</p>
+    <ul class="about-feats">
+      <li><svg><use href="#i-check"/></svg> مكتبة ذكية مع مجموعات وتقييم ومفضلة</li>
+      <li><svg><use href="#i-check"/></svg> 16 خطاً عربياً فاخراً للقراءة</li>
+      <li><svg><use href="#i-check"/></svg> تمييز النصوص بألوان متعددة وتعليقات</li>
+      <li><svg><use href="#i-check"/></svg> قراءة صوتية بأصوات وأنماط متعددة</li>
+      <li><svg><use href="#i-check"/></svg> بحث فوري داخل الكتاب</li>
+      <li><svg><use href="#i-check"/></svg> تصدير: JSON · TXT · Markdown · HTML · PDF</li>
+      <li><svg><use href="#i-check"/></svg> إحصاءات قراءة ووقت ونشاط أسبوعي</li>
+      <li><svg><use href="#i-check"/></svg> يعمل دون اتصال (PWA)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════ قائمة الكائن المحدد (تمييز) ═══════════ -->
+<div id="selPop" class="sel-pop" hidden>
+  <button data-hl="yellow" class="hl-dot" style="--dot:#ffe08a" title="تمييز أصفر"></button>
+  <button data-hl="green" class="hl-dot" style="--dot:#b8e6b0" title="تمييز أخضر"></button>
+  <button data-hl="blue" class="hl-dot" style="--dot:#aad4ff" title="تمييز أزرق"></button>
+  <button data-hl="pink" class="hl-dot" style="--dot:#ffc4dd" title="تمييز وردي"></button>
+  <button id="selNote" class="sel-act" title="إضافة ملاحظة على التحديد"><svg><use href="#i-note"/></svg></button>
+  <button id="selCopy" class="sel-act" title="نسخ التحديد"><svg><use href="#i-copy"/></svg></button>
+</div>
+
+<!-- نافذة معاينة الصورة -->
+<div id="imgViewer" class="img-viewer" hidden><img id="imgViewerImg" alt="معاينة"><button class="iconbtn iv-close" data-close="imgViewer"><svg><use href="#i-close"/></svg></button></div>
+
+<!-- منطقة الإفلات -->
+<div id="dropOverlay" class="drop-overlay" hidden>
+  <div class="drop-box"><svg><use href="#i-import"/></svg><h3>أفلت ملفات EPUB أو JSON هنا</h3><p>سيتم استيرادها إلى مكتبتك فوراً</p></div>
+</div>
+
+<div id="overlay" class="overlay"></div>
+<div id="toast" class="toast" role="status"></div>
+<button id="installBtn" class="install-btn" hidden><svg><use href="#i-download"/></svg> تثبيت التطبيق</button>
+
+<script src="app.js"></script>
+</body>
+</html>
