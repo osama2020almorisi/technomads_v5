@@ -1,16 +1,14 @@
 /* ============================================================
-   وِرد برو — قارئ EPUB محلي احترافي | الإصدار 4.1
+   وِرد برو — قارئ EPUB محلي احترافي | الإصدار 5.0
    ─────────────────────────────────────────────────────────────
-   إصلاحات جوهرية:
-   • بناء flat من spine (كل الصفحات) وليس من TOC فقط
-   • ترحيل تلقائي للكتب القديمة عند الفتح
-   • أرقام صفحات دقيقة في الفهرس والشريط السفلي
-   • تنقّل صفحة-بصفحة عبر progressRange
-   • إصلاح wrapText + fallback
-   • حفظ debounced بدل كل 30 ثانية
-   • دعم اللمس (touchend) لتحديد النص
-   • حفظ موضع التمرير عند إعادة رسم الفصل
-   • fetch مع timeout + polyfill Zlib
+   الإصلاحات الجوهرية:
+   • بناء flat من spine (كل الصفحات) + ترحيل تلقائي للقديمة
+   • أرقام صفحات دقيقة في الفهرس والشريط
+   • بحث ذكي عبر Web Worker (لا تجميد)
+   • فهرس قابل للبحث + lazy loading (500 عنصر فقط)
+   • القراءة الصوتية: دعم p, div, span, section
+   • إزالة التشكيل للـ TTS (اختياري)
+   • حفظ debounced، touchend، حفظ موضع التمرير
 ============================================================ */
 'use strict';
 
@@ -24,6 +22,13 @@ let filter = 'all', category = 'all', panelTab = 'toc', toastTimer;
 let gridView = true, confirmResolve = null, promptResolve = null;
 let editRatingVal = 0, rtAcc = 0, searchCache = new Map();
 let saveTimer = null;
+
+/* ---------- بحث: حالة العامل ---------- */
+let searchWorker = null;
+let searchIndexReady = false;
+let searchDebounceTimer = null;
+let searchSeq = 0;
+
 const HL_COLORS = { yellow:'#ffe08a', green:'#b8e6b0', blue:'#aad4ff', pink:'#ffc4dd' };
 
 const FONTS = [
@@ -48,7 +53,8 @@ const FONTS = [
 const DEFAULT_PREFS = {
   font:"'Amiri', serif", size:21, lineHeight:2.05, spacing:0, maxWidth:780,
   paper:'paper', dir:'auto', justify:true, dropCap:false,
-  voiceRate:0.95, voiceURI:null, dark:false
+  voiceRate:0.95, voiceURI:null, dark:false,
+  ttsStripTashkeel: true, ttsAutoNextPage: false
 };
 let prefs = { ...DEFAULT_PREFS };
 try { Object.assign(prefs, JSON.parse(localStorage.getItem('ward-prefs')||'{}')); } catch(e){}
@@ -69,7 +75,7 @@ function saveDebounced(book, delay=1500){
   saveTimer = setTimeout(()=>{ save(book).catch(()=>{}); }, delay);
 }
 
-/* وقت القراءة */
+/* ---------- وقت القراءة ---------- */
 function getRT(){ try{ return JSON.parse(localStorage.getItem('ward-rt')||'{"days":{},"total":0}'); }catch(e){ return {days:{},total:0}; } }
 function addRT(sec){ const rt=getRT(); const k=dayKey(); rt.days[k]=(rt.days[k]||0)+sec; rt.total+=sec; try{ localStorage.setItem('ward-rt',JSON.stringify(rt)); }catch(e){} }
 
@@ -97,9 +103,76 @@ const save   = b  => req('readwrite', s=>s.put(b));
 const remove = id => req('readwrite', s=>s.delete(id));
 const getAll = () => req('readonly',  s=>s.getAll());
 
+/* ---------- Web Worker للبحث ---------- */
+function initSearchWorker(){
+  if(searchWorker) return;
+  try{
+    searchWorker = new Worker('search-worker.js');
+    searchWorker.onmessage = (e) => {
+      const data = e.data || {};
+      if(data.type === 'INDEX_READY'){
+        searchIndexReady = true;
+        console.info('[Search] فهرس جاهز:', data.count, 'صفحة');
+      }
+      if(data.type === 'SEARCH_RESULTS'){
+        renderSearchResults(data);
+      }
+      if(data.type === 'ERROR'){
+        console.warn('[Search Worker]', data.error);
+      }
+    };
+    searchWorker.onerror = (err) => {
+      console.error('[Search Worker]', err);
+      searchWorker = null;
+    };
+  }catch(e){
+    console.warn('Web Worker غير مدعوم — سنستخدم البحث المتزامن');
+    searchWorker = null;
+  }
+}
+
+/* بناء فهرس نصّي في الخلفية — دفعات لتجنّب التجميد */
+async function buildSearchIndexInBackground(){
+  if(!active) return;
+  if(searchCache.has(active.id)){
+    if(searchWorker && !searchIndexReady){
+      searchWorker.postMessage({ type:'BUILD_INDEX', payload:{ bookId: active.id, index: searchCache.get(active.id) } });
+      searchIndexReady = true;
+    }
+    return;
+  }
+
+  const total = active.flat.length;
+  const idx = [];
+  const CHUNK = 50;
+
+  for(let start = 0; start < total; start += CHUNK){
+    const end = Math.min(start + CHUNK, total);
+    for(let i = start; i < end; i++){
+      const it = active.flat[i];
+      try{
+        const html = extractChapterContent(active, it);
+        const text = htmlToText(html);
+        idx.push({ i, label: it.label, text });
+      }catch(e){
+        idx.push({ i, label: it.label, text: '' });
+      }
+    }
+    // نمنح المتصفح فرصة للتنفس
+    await new Promise(r => setTimeout(r, 0));
+  }
+
+  searchCache.set(active.id, idx);
+
+  if(searchWorker){
+    searchWorker.postMessage({ type:'BUILD_INDEX', payload:{ bookId: active.id, index: idx } });
+    searchIndexReady = true;
+  }
+}
+
 /* ---------- ZIP ---------- */
-function u16(v,o){return v.getUint16(o,true)}
-function u32(v,o){return v.getUint32(o,true)}
+function u16(v,o){ return v.getUint16(o,true); }
+function u32(v,o){ return v.getUint32(o,true); }
 
 async function inflateRaw(uint8){
   if('DecompressionStream' in window){
@@ -114,16 +187,16 @@ async function unzip(file){
   const v = new DataView(buf), bytes = new Uint8Array(buf);
   let eocd = -1;
   const maxScan = Math.min(bytes.length, 65558);
-  for(let i=bytes.length-22; i>=bytes.length-maxScan; i--){
-    if(i<0) break;
-    if(u32(v,i)===0x06054b50){ eocd=i; break; }
+  for(let i = bytes.length-22; i >= bytes.length-maxScan; i--){
+    if(i < 0) break;
+    if(u32(v,i) === 0x06054b50){ eocd = i; break; }
   }
-  if(eocd<0) throw new Error('ملف ZIP غير صالح');
+  if(eocd < 0) throw new Error('ملف ZIP غير صالح');
   const count = u16(v, eocd+10);
   let pos = u32(v, eocd+16);
   const out = new Map();
-  for(let n=0; n<count; n++){
-    if(u32(v,pos)!==0x02014b50) break;
+  for(let n = 0; n < count; n++){
+    if(u32(v,pos) !== 0x02014b50) break;
     const method = u16(v,pos+10), size = u32(v,pos+20);
     const nl = u16(v,pos+28), el = u16(v,pos+30), cl = u16(v,pos+32);
     const off = u32(v,pos+42);
@@ -132,8 +205,8 @@ async function unzip(file){
     const start = lh+30+ln+le;
     const comp = bytes.slice(start, start+size);
     let data;
-    if(method===0) data = comp;
-    else if(method===8){
+    if(method === 0) data = comp;
+    else if(method === 8){
       try{ data = await inflateRaw(comp); }
       catch(e){ throw new Error('فشل فك ضغط «'+name+'» — '+e.message); }
     } else { pos += 46+nl+el+cl; continue; }
@@ -147,21 +220,21 @@ async function unzip(file){
 function parseXML(data){
   const t = enc.decode(data);
   const d = new DOMParser().parseFromString(t, 'application/xml');
-  return d.querySelector('parsererror') ? new DOMParser().parseFromString(t,'text/html') : d;
+  return d.querySelector('parsererror') ? new DOMParser().parseFromString(t, 'text/html') : d;
 }
 function attr(el,n){ return el ? (el.getAttribute(n)||'') : ''; }
 
-function cleanPath(base,href){
+function cleanPath(base, href){
   if(!href) return '';
   href = href.split('#')[0];
   if(!href) return '';
   try{ href = decodeURIComponent(href); }catch(e){}
   if(/^https?:\/\//i.test(href)){ try{ return new URL(href).pathname.replace(/^\/+/,''); }catch(e){ return href; } }
   if(base && !/^[a-z]+:/i.test(href)){
-    const stack=[];
+    const stack = [];
     for(const p of (base+'/'+href).split('/')){
-      if(p===''||p==='.') continue;
-      if(p==='..'){ stack.pop(); continue; }
+      if(p === '' || p === '.') continue;
+      if(p === '..'){ stack.pop(); continue; }
       stack.push(p);
     }
     return stack.join('/');
@@ -191,7 +264,7 @@ async function parseEpub(file){
   let opfData = z.get(opfPath);
   if(!opfData){
     const n = normalizePath(opfPath);
-    const k = [...z.keys()].find(k => normalizePath(k)===n);
+    const k = [...z.keys()].find(k => normalizePath(k) === n);
     if(k) opfData = z.get(k);
   }
   if(!opfData) throw new Error('ملف OPF غير موجود');
@@ -215,7 +288,8 @@ async function parseEpub(file){
   const spine = [];
   for(const it of opf.getElementsByTagName('itemref')){
     const m = manifest.get(attr(it,'idref'));
-    if(m) spine.push(m);
+    if(m && m.type && /xhtml|html|xml/i.test(m.type)) spine.push(m);
+    else if(m && !m.type) spine.push(m);
   }
   if(!spine.length) throw new Error('الكتاب لا يحتوي على فصول');
 
@@ -324,7 +398,7 @@ async function parseEpub(file){
 
   /* تخزين كل الموارد */
   const files = {};
-  for(const [name,data] of z) files[name] = data;
+  for(const [name, data] of z) files[name] = data;
   const fileIndex = {};
   for(const k of Object.keys(files)){
     const n = normalizePath(k);
@@ -358,7 +432,7 @@ async function parseEpub(file){
 function parseNavList(ol, navHref, opfBase){
   const base = navHref.includes('/') ? navHref.substring(0, navHref.lastIndexOf('/')) : '';
   return [...ol.children]
-    .filter(li => li.tagName.toLowerCase()==='li')
+    .filter(li => li.tagName.toLowerCase() === 'li')
     .map(li => {
       const a   = li.getElementsByTagName('a')[0] || li.getElementsByTagName('span')[0];
       const sub = li.getElementsByTagName('ol')[0];
@@ -376,7 +450,7 @@ function parseNcxPoint(n, ncxHref, opfBase){
   return {
     label: ((labelEl && labelEl.textContent) || 'فصل').trim(),
     href:  cleanPath(base, content ? content.getAttribute('src') : ''),
-    children: [...n.children].filter(x=>x.tagName==='navPoint').map(x => parseNcxPoint(x, ncxHref, opfBase))
+    children: [...n.children].filter(x => x.tagName === 'navPoint').map(x => parseNcxPoint(x, ncxHref, opfBase))
   };
 }
 
@@ -388,7 +462,7 @@ function getBookFile(path){
   const f = path.split('/').pop();
   if(active.fileIndex && active.fileIndex[f]) return active.files[active.fileIndex[f]];
   const k = Object.keys(active.files).find(k =>
-    normalizePath(k)===n || normalizePath(k).endsWith('/'+n) || n.endsWith('/'+normalizePath(k))
+    normalizePath(k) === n || normalizePath(k).endsWith('/'+n) || n.endsWith('/'+normalizePath(k))
   );
   return k ? active.files[k] : null;
 }
@@ -405,10 +479,10 @@ function chapterHTML(index){
   catch(e){ return '<p>تعذر فك ترميز الصفحة.</p>'; }
 
   const d = new DOMParser().parseFromString(html, 'text/html');
-  d.querySelectorAll('script,style,iframe,object,form,link[rel="stylesheet"]').forEach(x=>x.remove());
+  d.querySelectorAll('script,style,iframe,object,form,link[rel="stylesheet"]').forEach(x => x.remove());
   d.querySelectorAll('img[src]').forEach(img => {
     const src = img.getAttribute('src');
-    if(!src || /^https?:\/\//i.test(src) || src.indexOf('data:')===0) return;
+    if(!src || /^https?:\/\//i.test(src) || src.indexOf('data:') === 0) return;
     const base = item.href.includes('/') ? item.href.substring(0, item.href.lastIndexOf('/')) : '';
     const arr2 = getBookFile(cleanPath(base, src));
     if(arr2){
@@ -424,7 +498,7 @@ function extractChapterContent(book, item){
   let arr = book.files ? book.files[item.href] : null;
   if(!arr && book.files){
     const n = normalizePath(item.href);
-    const k = Object.keys(book.files).find(k => normalizePath(k)===n);
+    const k = Object.keys(book.files).find(k => normalizePath(k) === n);
     if(k) arr = book.files[k];
   }
   if(!arr && book.spine && book.spine[item.spineIndex] && book.files)
@@ -432,14 +506,14 @@ function extractChapterContent(book, item){
   if(!arr) return '';
   try{
     const d = new DOMParser().parseFromString(enc.decode(new Uint8Array(arr)), 'text/html');
-    d.querySelectorAll('script,style,iframe,object,form').forEach(x=>x.remove());
+    d.querySelectorAll('script,style,iframe,object,form').forEach(x => x.remove());
     if(item.fragment){
       const a = d.getElementById(item.fragment) || d.querySelector('[name="'+item.fragment+'"]');
       if(a){
         const box = d.createElement('div');
-        let n2 = (a.tagName==='SPAN'||a.tagName==='A') ? a.parentElement : a;
+        let n2 = (a.tagName === 'SPAN' || a.tagName === 'A') ? a.parentElement : a;
         let cnt = 0;
-        while(n2 && cnt<200){
+        while(n2 && cnt < 200){
           box.appendChild(n2.cloneNode(true));
           let nx = n2.nextElementSibling;
           while(!nx && n2.parentElement && n2.parentElement !== d.body){
@@ -459,25 +533,25 @@ function extractChapterContent(book, item){
 
 function htmlToText(html){
   const d = new DOMParser().parseFromString(html,'text/html');
-  d.querySelectorAll('script,style').forEach(x=>x.remove());
-  d.querySelectorAll('br').forEach(x=>x.replaceWith('\n'));
-  d.querySelectorAll('p,div,li,h1,h2,h3,h4,h5,h6,blockquote,tr').forEach(x=>x.append('\n'));
+  d.querySelectorAll('script,style').forEach(x => x.remove());
+  d.querySelectorAll('br').forEach(x => x.replaceWith('\n'));
+  d.querySelectorAll('p,div,li,h1,h2,h3,h4,h5,h6,blockquote,tr').forEach(x => x.append('\n'));
   return (d.body.textContent||'').replace(/\n{3,}/g,'\n\n').trim();
 }
 function htmlToMD(html){
   const d = new DOMParser().parseFromString(html,'text/html');
-  d.querySelectorAll('script,style').forEach(x=>x.remove());
+  d.querySelectorAll('script,style').forEach(x => x.remove());
   const walk = el => {
     let out = '';
     for(const n of el.childNodes){
-      if(n.nodeType===3){ out += n.textContent.replace(/\s+/g,' '); continue; }
-      if(n.nodeType!==1) continue;
+      if(n.nodeType === 3){ out += n.textContent.replace(/\s+/g,' '); continue; }
+      if(n.nodeType !== 1) continue;
       const t = n.tagName.toLowerCase(); const inner = walk(n).trim();
       if(/^h[1-6]$/.test(t)) out += '\n\n' + '#'.repeat(+t[1]) + ' ' + inner + '\n\n';
-      else if(t==='p') out += '\n\n' + inner + '\n\n';
-      else if(t==='blockquote') out += '\n\n> ' + inner.replace(/\n/g,'\n> ') + '\n\n';
-      else if(t==='li') out += '\n- ' + inner;
-      else if(t==='img') out += '\n\n![صورة](' + (n.getAttribute('src')||'') + ')\n\n';
+      else if(t === 'p') out += '\n\n' + inner + '\n\n';
+      else if(t === 'blockquote') out += '\n\n> ' + inner.replace(/\n/g,'\n> ') + '\n\n';
+      else if(t === 'li') out += '\n- ' + inner;
+      else if(t === 'img') out += '\n\n![صورة](' + (n.getAttribute('src')||'') + ')\n\n';
       else out += inner;
     }
     return out;
@@ -485,7 +559,7 @@ function htmlToMD(html){
   return walk(d.body).replace(/\n{3,}/g,'\n\n').trim();
 }
 
-/* ---------- التمييز (مُصلَح) ---------- */
+/* ---------- التمييز ---------- */
 function wrapText(root, query, cls, hlid){
   if(!query || !root) return false;
   const norm = s => s.replace(/\s+/g,' ').toLowerCase();
@@ -502,7 +576,7 @@ function wrapText(root, query, cls, hlid){
   let full = '', map = [];
   for(const nd of nodes){
     const t = nd.nodeValue;
-    for(let i=0; i<t.length; i++){
+    for(let i = 0; i < t.length; i++){
       if(/\s/.test(t[i])){
         if(full && !full.endsWith(' ')){ full += ' '; map.push(i); }
       } else {
@@ -550,18 +624,18 @@ function wrapText(root, query, cls, hlid){
 }
 function applyHighlights(){
   if(!active) return;
-  (active.highlights||[]).forEach(h=>{
+  (active.highlights||[]).forEach(h => {
     if(h.chapter === current) wrapText($('#chapterContent'), h.text, 'hl-'+h.color, h.id);
   });
 }
 function removeHighlight(id){
   if(!active) return;
-  active.highlights = (active.highlights||[]).filter(h=>h.id !== id);
+  active.highlights = (active.highlights||[]).filter(h => h.id !== id);
   saveDebounced(active, 300);
-  $$('#chapterContent [data-hlid]').forEach(s=>{
+  $$('#chapterContent [data-hlid]').forEach(s => {
     if(s.dataset.hlid === String(id)) s.replaceWith(...s.childNodes);
   });
-  if(panelTab==='highlights') renderPanel();
+  if(panelTab === 'highlights') renderPanel();
 }
 
 /* ---------- اختيار النص ---------- */
@@ -594,13 +668,13 @@ function setupSelection(){
     if(e.target.closest && e.target.closest('#selPop')) return;
     scheduleShow();
   });
-  $('#readingArea').addEventListener('scroll', ()=>{ pop.hidden = true; });
+  $('#readingArea').addEventListener('scroll', () => { pop.hidden = true; });
 
   pop.addEventListener('click', e => {
     const dot = e.target.closest('[data-hl]');
     if(dot && active){
       const text = pop.dataset.text;
-      const ex = (active.highlights||[]).find(h => h.chapter===current && h.text===text);
+      const ex = (active.highlights||[]).find(h => h.chapter === current && h.text === text);
       if(ex) ex.color = dot.dataset.hl;
       else active.highlights.push({ id:uid(), chapter:current, text, color:dot.dataset.hl, note:'', created:Date.now() });
       saveDebounced(active, 200);
@@ -616,18 +690,18 @@ function setupSelection(){
     if(e.target.closest('#selCopy')){
       const t = pop.dataset.text; pop.hidden = true;
       window.getSelection().removeAllRanges();
-      if(navigator.clipboard) navigator.clipboard.writeText(t).then(()=>notify('✓ تم النسخ')).catch(()=>notify('✗ تعذر النسخ'));
+      if(navigator.clipboard) navigator.clipboard.writeText(t).then(() => notify('✓ تم النسخ')).catch(() => notify('✗ تعذر النسخ'));
       return;
     }
     if(e.target.closest('#selNote')){
       const text = pop.dataset.text; pop.hidden = true;
       window.getSelection().removeAllRanges();
-      promptDlg('ملاحظة على الاقتباس').then(v=>{
+      promptDlg('ملاحظة على الاقتباس').then(v => {
         if(v && active){
           active.notes.push({ text:v, quote:text, chapter:current, chapterLabel:active.flat[current].label });
           saveDebounced(active, 200);
           notify('✓ أُضيفت الملاحظة');
-          if(panelTab==='notes') renderPanel();
+          if(panelTab === 'notes') renderPanel();
         }
       });
     }
@@ -639,13 +713,13 @@ function render(){
   const q = ($('#searchInput') ? $('#searchInput').value : '').toLowerCase();
   $('#clearSearch').hidden = !q;
 
-  const shown = books.filter(b=>{
-    const pf = filter==='all' ? true
-            : filter==='reading'  ? (b.progress>0 && b.progress<100)
-            : filter==='unread'   ? (b.progress===0)
-            : filter==='finished' ? (b.progress>=100)
-            : filter==='fav'      ? b.fav : true;
-    const pc = category==='all' || b.category === category;
+  const shown = books.filter(b => {
+    const pf = filter === 'all' ? true
+            : filter === 'reading'  ? (b.progress > 0 && b.progress < 100)
+            : filter === 'unread'   ? (b.progress === 0)
+            : filter === 'finished' ? (b.progress >= 100)
+            : filter === 'fav'      ? b.fav : true;
+    const pc = category === 'all' || b.category === category;
     const pq = !q || (b.title+' '+b.author+' '+(b.category||'')).toLowerCase().includes(q);
     return pf && pc && pq;
   });
@@ -654,12 +728,12 @@ function render(){
   $('#bookCount').textContent = shown.length + ' كتاب';
 
   const sv = $('#sortSelect') ? $('#sortSelect').value : 'recent';
-  const sorted = [...shown].sort((a,b)=>{
-    if(sv==='title')    return a.title.localeCompare(b.title,'ar');
-    if(sv==='author')   return a.author.localeCompare(b.author,'ar');
-    if(sv==='progress') return (b.progress||0)-(a.progress||0);
-    if(sv==='rating')   return (b.rating||0)-(a.rating||0);
-    if(sv==='time')     return (b.secondsRead||0)-(a.secondsRead||0);
+  const sorted = [...shown].sort((a,b) => {
+    if(sv === 'title')    return a.title.localeCompare(b.title,'ar');
+    if(sv === 'author')   return a.author.localeCompare(b.author,'ar');
+    if(sv === 'progress') return (b.progress||0)-(a.progress||0);
+    if(sv === 'rating')   return (b.rating||0)-(a.rating||0);
+    if(sv === 'time')     return (b.secondsRead||0)-(a.secondsRead||0);
     return (b.added||0)-(a.added||0);
   });
 
@@ -667,7 +741,7 @@ function render(){
   $('#viewGridBtn').classList.toggle('active', gridView);
   $('#viewListBtn').classList.toggle('active', !gridView);
 
-  $('#bookGrid').innerHTML = sorted.map((b,i)=>`
+  $('#bookGrid').innerHTML = sorted.map((b,i) => `
     <div class="book-card" style="animation-delay:${Math.min(i*35,350)}ms">
       <div class="cover" data-open="${b.id}">
         ${b.cover ? '<img src="'+b.cover+'" alt="">' : '<span class="cover-letter">'+esc((b.title||'ك').slice(0,1))+'</span>'}
@@ -676,12 +750,12 @@ function render(){
       <div class="card-body">
         <h3 title="${esc(b.title)}" data-open="${b.id}">${esc(b.title)}</h3>
         <p class="author">${esc(b.author)}</p>
-        ${b.rating ? '<div class="card-stars">'+[1,2,3,4,5].map(s=>'<svg class="'+(s<=b.rating?'':'off')+'"><use href="#i-'+(s<=b.rating?'star-fill':'star')+'"/></svg>').join('')+'</div>' : ''}
+        ${b.rating ? '<div class="card-stars">'+[1,2,3,4,5].map(s => '<svg class="'+(s <= b.rating ? '' : 'off')+'"><use href="#i-'+(s <= b.rating ? 'star-fill' : 'star')+'"/></svg>').join('')+'</div>' : ''}
         <div class="mini-progress"><span style="width:${b.progress||0}%"></span></div>
         <div class="card-foot">
-          <span>${b.progress||0}%${b.secondsRead?' · '+fmtDur(b.secondsRead):''}</span>
+          <span>${b.progress||0}%${b.secondsRead ? ' · '+fmtDur(b.secondsRead) : ''}</span>
           <div class="card-actions">
-            <button data-fav="${b.id}" class="${b.fav?'fav-on':''}" title="مفضلة"><svg><use href="#i-heart${b.fav?'-fill':''}"/></svg></button>
+            <button data-fav="${b.id}" class="${b.fav ? 'fav-on' : ''}" title="مفضلة"><svg><use href="#i-heart${b.fav ? '-fill' : ''}"/></svg></button>
             <button data-edit="${b.id}" title="تعديل"><svg><use href="#i-edit"/></svg></button>
             <button data-export="${b.id}" title="تصدير JSON"><svg><use href="#i-download"/></svg></button>
             <button data-del="${b.id}" title="حذف"><svg><use href="#i-trash"/></svg></button>
@@ -694,35 +768,35 @@ function render(){
 
   $('#stats').innerHTML = [
     ['إجمالي الكتب', books.length, 'i-book'],
-    ['قيد القراءة', books.filter(b=>b.progress>0 && b.progress<100).length, 'i-bookopen'],
-    ['مكتملة', books.filter(b=>b.progress>=100).length, 'i-check'],
+    ['قيد القراءة', books.filter(b => b.progress > 0 && b.progress < 100).length, 'i-bookopen'],
+    ['مكتملة', books.filter(b => b.progress >= 100).length, 'i-check'],
     ['وقت القراءة', fmtDur(getRT().total), 'i-clock'],
-  ].map(x=>'<div class="stat"><span class="st-ic"><svg><use href="#'+x[2]+'"/></svg></span><div><span>'+x[0]+'</span><strong>'+x[1]+'</strong></div></div>').join('');
+  ].map(x => '<div class="stat"><span class="st-ic"><svg><use href="#'+x[2]+'"/></svg></span><div><span>'+x[0]+'</span><strong>'+x[1]+'</strong></div></div>').join('');
 
   const rt = getRT(); const days = []; let weekTotal = 0;
-  for(let i=6; i>=0; i--){
+  for(let i = 6; i >= 0; i--){
     const d = new Date(); d.setDate(d.getDate()-i);
     const v = (rt.days[dayKey(d)]||0);
     weekTotal += v;
-    days.push({ label: d.toLocaleDateString('ar',{weekday:'short'}), v, today: i===0 });
+    days.push({ label: d.toLocaleDateString('ar',{weekday:'short'}), v, today: i === 0 });
   }
-  const max = Math.max.apply(null, days.map(d=>d.v).concat([60]));
+  const max = Math.max.apply(null, days.map(d => d.v).concat([60]));
   $('#weekBars').innerHTML = days.map(d =>
-    '<div class="wbar '+(d.today?'today':'')+'" title="'+fmtDur(d.v)+'">'+
-    '<b>'+(d.v?fmtDur(d.v):'')+'</b>'+
-    '<span class="col" style="height:'+Math.max(3,d.v/max*100)+'%"></span>'+
+    '<div class="wbar '+(d.today ? 'today' : '')+'" title="'+fmtDur(d.v)+'">'+
+    '<b>'+(d.v ? fmtDur(d.v) : '')+'</b>'+
+    '<span class="col" style="height:'+Math.max(3, d.v/max*100)+'%"></span>'+
     '<small>'+d.label+'</small></div>').join('');
   $('#weekTotal').textContent = fmtDur(weekTotal);
 
   const cats = [...new Set(books.map(b => b.category||'عام'))];
   $('#categories').innerHTML =
-    '<button class="category '+(category==='all'?'active':'')+'" data-cat="all">كل المجموعات</button>' +
-    cats.map(c=>{
-      const n = books.filter(b => (b.category||'عام')===c).length;
-      return '<button class="category '+(category===c?'active':'')+'" data-cat="'+esc(c)+'"><span>'+esc(c)+'</span><span class="muted tiny">'+n+'</span></button>';
+    '<button class="category '+(category === 'all' ? 'active' : '')+'" data-cat="all">كل المجموعات</button>' +
+    cats.map(c => {
+      const n = books.filter(b => (b.category||'عام') === c).length;
+      return '<button class="category '+(category === c ? 'active' : '')+'" data-cat="'+esc(c)+'"><span>'+esc(c)+'</span><span class="muted tiny">'+n+'</span></button>';
     }).join('');
 
-  const cont = books.filter(b=>b.progress>0 && b.progress<100).sort((a,b)=>(b.lastOpened||0)-(a.lastOpened||0))[0];
+  const cont = books.filter(b => b.progress > 0 && b.progress < 100).sort((a,b) => (b.lastOpened||0)-(a.lastOpened||0))[0];
   $('#continueBtn').hidden = !cont;
   if(cont){
     $('#continueTitle').textContent = cont.title;
@@ -731,12 +805,12 @@ function render(){
   }
 
   if(navigator.storage && navigator.storage.estimate){
-    navigator.storage.estimate().then(e=>{
+    navigator.storage.estimate().then(e => {
       const used  = (e.usage/1048576).toFixed(1);
       const quota = (e.quota/1073741824).toFixed(1);
       $('#storageInfo').textContent = used+' م.ب مستخدمة من '+quota+' ج.ب متاحة';
-      $('#storageFill').style.width = Math.min(100,(e.usage/e.quota)*100)+'%';
-    }).catch(()=>{});
+      $('#storageFill').style.width = Math.min(100, (e.usage/e.quota)*100)+'%';
+    }).catch(() => {});
   }
 }
 
@@ -751,7 +825,7 @@ async function importEpub(file){
   try{
     notify('⏳ جارٍ استيراد «'+file.name+'»…');
     const b = await parseEpub(file);
-    const dup = books.find(x => x.title===b.title && x.author===b.author);
+    const dup = books.find(x => x.title === b.title && x.author === b.author);
     if(dup){
       const ok = await confirmDlg('كتاب مكرر', '«'+b.title+'» موجود مسبقاً في مكتبتك. هل تريد إضافة نسخة أخرى؟');
       if(!ok) return;
@@ -789,14 +863,14 @@ async function importBookFromJSON(file){
 function convertJSONToBook(data){
   const bm = data.book||{}, chapters = data.chapters||[];
   const files = {}, flat = [];
-  chapters.forEach((ch,i)=>{
+  chapters.forEach((ch,i) => {
     const href = ch.href || ('chapter_'+i+'.html');
     files[href] = Array.from(new TextEncoder().encode(ch.content||''));
     flat.push({
       label: ch.title || ('صفحة '+(i+1)),
       href,
       fragment: ch.fragment||'',
-      spineIndex: (ch.spineIndex!=null ? ch.spineIndex : i)
+      spineIndex: (ch.spineIndex != null ? ch.spineIndex : i)
     });
   });
   const fileIndex = {};
@@ -814,19 +888,19 @@ function convertJSONToBook(data){
     files, fileIndex,
     spine: flat.map(f => ({ href:f.href, type:'application/xhtml+xml' })),
     toc: data.toc||[], flat, opfBase:'',
-    marks: (data.bookmarks||[]).map(m=>({
-      label: m.label||m.chapterLabel||('صفحة '+((m.chapterIndex!=null?m.chapterIndex:m.chapter)||0)+1),
-      chapter: (m.chapterIndex!=null?m.chapterIndex:m.chapter)||0,
-      at: m.createdAt||Date.now()
+    marks: (data.bookmarks||[]).map(m => ({
+      label: m.label || m.chapterLabel || ('صفحة '+((m.chapterIndex != null ? m.chapterIndex : m.chapter)||0)+1),
+      chapter: (m.chapterIndex != null ? m.chapterIndex : m.chapter)||0,
+      at: m.createdAt || Date.now()
     })),
-    notes: (data.notes||[]).map(n=>({
+    notes: (data.notes||[]).map(n => ({
       text:n.text, quote:n.quote||'',
-      chapter:(n.chapterIndex!=null?n.chapterIndex:n.chapter)||0,
+      chapter:(n.chapterIndex != null ? n.chapterIndex : n.chapter)||0,
       chapterLabel:n.chapterLabel||''
     })),
-    highlights: (data.highlights||[]).map(h=>({
-      id: h.id||uid(),
-      chapter: (h.chapter!=null?h.chapter:h.chapterIndex)||0,
+    highlights: (data.highlights||[]).map(h => ({
+      id: h.id || uid(),
+      chapter: (h.chapter != null ? h.chapter : h.chapterIndex)||0,
       text: h.text, color: h.color||'yellow', note: h.note||'', created: h.created||Date.now()
     })),
     sourceFormat: 'json', originalFileName: null
@@ -835,7 +909,7 @@ function convertJSONToBook(data){
 
 /* ---------- التصدير ---------- */
 function exportBookToJSON(bookId){
-  const b = books.find(x=>x.id===bookId);
+  const b = books.find(x => x.id === bookId);
   if(!b){ notify('الكتاب غير موجود'); return; }
   try{
     notify('⏳ جارٍ تحضير ملف التصدير…');
@@ -848,15 +922,15 @@ function exportBookToJSON(bookId){
         sourceFormat:b.sourceFormat||'epub', originalFileName:b.originalFileName||null
       },
       toc: JSON.parse(JSON.stringify(b.toc||[])),
-      flatIndex: (b.flat||[]).map((f,i)=>({ index:i, label:f.label, href:f.href, fragment:f.fragment||'', spineIndex:f.spineIndex })),
-      chapters: (b.flat||[]).map((it,i)=>{
+      flatIndex: (b.flat||[]).map((f,i) => ({ index:i, label:f.label, href:f.href, fragment:f.fragment||'', spineIndex:f.spineIndex })),
+      chapters: (b.flat||[]).map((it,i) => {
         const c = extractChapterContent(b, it);
         return { index:i, title:it.label, href:it.href, fragment:it.fragment||'', spineIndex:it.spineIndex, content:c,
                  wordCount:(c.match(/[\p{L}\p{N}]+/gu)||[]).length };
       }),
-      bookmarks: (b.marks||[]).map(m=>({ chapterIndex:m.chapter, label:m.label, createdAt:m.at })),
-      notes: (b.notes||[]).map(n=>({ chapterIndex:n.chapter, chapterLabel:n.chapterLabel, text:n.text, quote:n.quote||'' })),
-      highlights: (b.highlights||[]).map(h=>({ chapter:h.chapter, text:h.text, color:h.color, note:h.note||'', created:h.created }))
+      bookmarks: (b.marks||[]).map(m => ({ chapterIndex:m.chapter, label:m.label, createdAt:m.at })),
+      notes: (b.notes||[]).map(n => ({ chapterIndex:n.chapter, chapterLabel:n.chapterLabel, text:n.text, quote:n.quote||'' })),
+      highlights: (b.highlights||[]).map(h => ({ chapter:h.chapter, text:h.text, color:h.color, note:h.note||'', created:h.created }))
     };
     const blob = new Blob([JSON.stringify(data,null,2)], { type:'application/json;charset=utf-8' });
     const safe = (b.title||'book').replace(/[\\/:*?"<>|]/g,'_').slice(0,80);
@@ -874,7 +948,7 @@ function exportLibraryToJSON(full){
     const data = {
       format:'ward-library-v1', formatVersion:'1.0', exportedAt:new Date().toISOString(),
       totalBooks: books.length,
-      books: books.map(b=>({
+      books: books.map(b => ({
         book:{
           title:b.title, author:b.author, category:b.category, added:b.added, wordCount:b.wordCount,
           progress:b.progress, last:b.last, secondsRead:b.secondsRead||0, rating:b.rating||0, fav:!!b.fav,
@@ -882,14 +956,14 @@ function exportLibraryToJSON(full){
           sourceFormat:b.sourceFormat||'epub'
         },
         toc: b.toc||[],
-        flatIndex: (b.flat||[]).map((f,i)=>({ index:i, label:f.label, href:f.href, fragment:f.fragment||'', spineIndex:f.spineIndex })),
-        chapters: full ? (b.flat||[]).map((it,i)=>{
+        flatIndex: (b.flat||[]).map((f,i) => ({ index:i, label:f.label, href:f.href, fragment:f.fragment||'', spineIndex:f.spineIndex })),
+        chapters: full ? (b.flat||[]).map((it,i) => {
           const c = extractChapterContent(b, it);
           return { index:i, title:it.label, href:it.href, fragment:it.fragment||'', spineIndex:it.spineIndex, content:c };
         }) : [],
-        bookmarks: (b.marks||[]).map(m=>({ chapterIndex:m.chapter, label:m.label, createdAt:m.at })),
-        notes: (b.notes||[]).map(n=>({ chapterIndex:n.chapter, chapterLabel:n.chapterLabel, text:n.text, quote:n.quote||'' })),
-        highlights: (b.highlights||[]).map(h=>({ chapter:h.chapter, text:h.text, color:h.color, note:h.note||'', created:h.created }))
+        bookmarks: (b.marks||[]).map(m => ({ chapterIndex:m.chapter, label:m.label, createdAt:m.at })),
+        notes: (b.notes||[]).map(n => ({ chapterIndex:n.chapter, chapterLabel:n.chapterLabel, text:n.text, quote:n.quote||'' })),
+        highlights: (b.highlights||[]).map(h => ({ chapter:h.chapter, text:h.text, color:h.color, note:h.note||'', created:h.created }))
       }))
     };
     const blob = new Blob([JSON.stringify(data)], { type:'application/json;charset=utf-8' });
@@ -912,7 +986,7 @@ function exportMarksMD(b){
   (b.marks||[]).forEach(m => L.push('- '+m.label+' — صفحة '+(m.chapter+1)+' ('+todayStr(m.at)+')'));
   if(!(b.marks||[]).length) L.push('- لا توجد');
   L.push('','## الملاحظات');
-  (b.notes||[]).forEach(n=>{
+  (b.notes||[]).forEach(n => {
     if(n.quote) L.push('> '+n.quote,'');
     L.push('- '+n.text+' — '+(n.chapterLabel||('صفحة '+(n.chapter+1))));
   });
@@ -923,7 +997,7 @@ function exportMarksMD(b){
 function exportHlMD(b){
   const L = ['# تمييزات: '+b.title,''];
   const names = { yellow:'أصفر', green:'أخضر', blue:'أزرق', pink:'وردي' };
-  (b.highlights||[]).forEach(h => L.push('> '+h.text, '\n— '+(names[h.color]||h.color)+' · صفحة '+(h.chapter+1)+(h.note?(' · ملاحظة: '+h.note):'')+'\n'));
+  (b.highlights||[]).forEach(h => L.push('> '+h.text, '\n— '+(names[h.color]||h.color)+' · صفحة '+(h.chapter+1)+(h.note ? (' · ملاحظة: '+h.note) : '')+'\n'));
   if(!(b.highlights||[]).length) L.push('لا توجد تمييزات بعد.');
   download(new Blob([L.join('\n')], { type:'text/markdown;charset=utf-8' }), (b.title||'book')+'-تمييزات.md');
   notify('✓ تم تصدير التمييزات');
@@ -940,21 +1014,21 @@ function printChapter(){
   'img{max-width:100%}.meta{text-align:center;color:#888;font-size:12px;font-family:\'Tajawal\',sans-serif;margin-bottom:30px}</style></head>'+
   '<body><h1>'+esc(item.label)+'</h1><div class="meta">'+esc(active.title)+' — '+esc(active.author)+'</div>'+html+'</body></html>');
   w.document.close(); w.focus();
-  setTimeout(()=>{ try{ w.print(); }catch(e){} }, 600);
+  setTimeout(() => { try{ w.print(); }catch(e){} }, 600);
 }
 
 /* ============================================================
    فتح الكتاب — مع ترحيل تلقائي للكتب القديمة
 ============================================================ */
 async function openBook(id){
-  active = books.find(b=>b.id===id);
+  active = books.find(b => b.id === id);
   if(!active){ notify('الكتاب غير موجود'); return; }
 
   /* ترحيل: إن كان flat أقصر من spine، أعد بناءه من spine */
   if(active.spine && active.flat && active.flat.length < active.spine.length){
     console.info('[ترحيل] إعادة بناء flat من spine…');
     const hrefToSpine = new Map();
-    active.spine.forEach((m,i)=>{
+    active.spine.forEach((m,i) => {
       hrefToSpine.set(normalizePath(m.href), i);
       const f = normalizePath(m.href.split('/').pop());
       if(!hrefToSpine.has(f)) hrefToSpine.set(f, i);
@@ -974,7 +1048,7 @@ async function openBook(id){
         if(node.children) collect(node.children);
       }
     })(active.toc);
-    active.flat = active.spine.map((m,i)=>({
+    active.flat = active.spine.map((m,i) => ({
       label: labelMap.get(i) || ('صفحة '+(i+1)),
       href: m.href,
       fragment: fragMap.get(i) || '',
@@ -984,6 +1058,10 @@ async function openBook(id){
   }
 
   if(!active.flat || !active.flat.length){ notify('هذا الكتاب لا يحتوي على صفحات قابلة للقراءة'); return; }
+
+  /* إعادة تعيين حالة البحث */
+  searchIndexReady = false;
+  if(searchWorker) searchWorker.postMessage({ type:'CLEAR' });
 
   active.lastOpened = Date.now();
   saveDebounced(active, 500);
@@ -999,6 +1077,9 @@ async function openBook(id){
   $('#readerPanel').classList.remove('open');
   applyReaderPrefs();
   window.scrollTo(0,0);
+
+  /* ابنِ فهرس البحث في الخلفية بعد ثانية */
+  setTimeout(() => buildSearchIndexInBackground(), 1000);
 }
 function back(){
   if(rtAcc){ addRT(rtAcc); rtAcc = 0; }
@@ -1014,17 +1095,20 @@ function back(){
 }
 async function showChapter(i){
   if(!active) return;
+
+  /* إيقاف TTS إن كان يعمل */
+  if(tts.playing) stopTTS();
+
   current = Math.max(0, Math.min(i, active.flat.length-1));
   const item = active.flat[current];
   const totalPages = active.flat.length;
 
-  /* kicker: صفحة X من Y */
   $('#chapterKicker').textContent = 'صفحة '+(current+1)+' من '+totalPages;
   $('#chapterTitle').textContent = item.label;
 
   const content = $('#chapterContent');
   content.innerHTML = '<div style="text-align:center;padding:34px;color:var(--muted)">⏳</div>';
-  setTimeout(()=>{ content.innerHTML = chapterHTML(current); afterChapterRender(); }, 10);
+  setTimeout(() => { content.innerHTML = chapterHTML(current); afterChapterRender(); }, 10);
 
   const p = Math.round((current+1)/totalPages*100);
   active.progress = p;
@@ -1047,20 +1131,22 @@ function afterChapterRender(){
   const totalPages = active.flat.length;
   $('#chapterInfo').textContent = 'صفحة '+(current+1)+' من '+totalPages;
   $('#readingPaper').classList.toggle('dropcap', !!prefs.dropCap);
-  $$('#chapterContent img').forEach(img=>{
+  $$('#chapterContent img').forEach(img => {
     img.onclick = () => { $('#imgViewerImg').src = img.src; $('#imgViewer').hidden = false; };
   });
 }
 
-/* ---------- لوحة الفهرس ---------- */
+/* ============================================================
+   لوحة الفهرس — مع بحث داخلي + lazy loading
+============================================================ */
 function renderPanel(){
   const el = $('#panelContent');
   if(!el || !active) return;
 
   if(panelTab === 'toc'){
-    /* خريطة سريعة: مسار مُطبَّع → spineIndex */
+    /* بناء مسطّح للفهرس — بدون DOM */
     const map = new Map();
-    (active.spine||[]).forEach((s,i)=>{
+    (active.spine||[]).forEach((s,i) => {
       map.set(normalizePath(s.href), i);
       map.set(normalizePath(s.href.split('/').pop()), i);
     });
@@ -1071,23 +1157,67 @@ function renderPanel(){
       return ix;
     };
 
-    let html = '';
-    (function build(nodes, depth){
-      for(const node of nodes){
+    const flatToc = [];
+    (function collect(nodes, depth){
+      for(const node of (nodes||[])){
         const ix = resolveIdx(node.href);
-        const has = node.children && node.children.length;
-        const cls = 'tree-item' + (ix===current ? ' current' : '') + (ix==null ? ' no-target' : '');
-        const page = ix != null ? (ix+1) : '';
-        html += '<button class="'+cls+'" data-index="'+(ix!=null ? ix : '')+'" style="padding-inline-start:'+(8+depth*13)+'px">'+
-                '<span class="tree-toggle">'+(has?'›':'·')+'</span>'+
-                '<span class="tree-label">'+esc(node.label)+'</span>'+
-                (page ? '<span class="tree-page">'+page+'</span>' : '')+
-                '</button>';
-        if(has){ html += '<div class="tree-children">'; build(node.children, depth+1); html += '</div>'; }
+        flatToc.push({
+          label: node.label || '',
+          index: ix,
+          depth,
+          hasChildren: !!(node.children && node.children.length)
+        });
+        if(node.children) collect(node.children, depth + 1);
       }
     })(active.toc, 0);
 
-    el.innerHTML = html || '<p class="empty-panel">الفهرس فارغ</p>';
+    const MAX_VISIBLE = 500;
+    let html = '';
+
+    /* شريط بحث داخل الفهرس */
+    html += '<label class="search big toc-search">' +
+            '<svg><use href="#i-search"/></svg>' +
+            '<input id="tocFilter" placeholder="ابحث في الفهرس… ('+flatToc.length.toLocaleString('ar')+' عنوان)">' +
+            '</label>';
+
+    html += '<div id="tocList"></div>';
+    el.innerHTML = html;
+
+    const paintToc = (items, limit) => {
+      const list = $('#tocList');
+      if(!list) return;
+      const slice = limit ? items.slice(0, limit) : items;
+      list.innerHTML = slice.map(n => {
+        const cls = 'tree-item' + (n.index === current ? ' current' : '') + (n.index == null ? ' no-target' : '');
+        const page = n.index != null ? (n.index + 1) : '';
+        return '<button class="'+cls+'" data-index="'+(n.index != null ? n.index : '')+'" style="padding-inline-start:'+(8 + n.depth * 13)+'px">' +
+               '<span class="tree-toggle">'+(n.hasChildren ? '›' : '·')+'</span>' +
+               '<span class="tree-label">'+esc(n.label)+'</span>' +
+               (page ? '<span class="tree-page">'+page+'</span>' : '') +
+               '</button>';
+      }).join('');
+      /* زر «تحميل المزيد» */
+      if(limit && items.length > limit){
+        const more = document.createElement('button');
+        more.className = 'note-add';
+        more.textContent = '⬇ تحميل المزيد ('+(items.length - limit).toLocaleString('ar')+' عنوان)';
+        more.onclick = () => paintToc(items, null);
+        list.appendChild(more);
+      }
+    };
+
+    paintToc(flatToc, flatToc.length > MAX_VISIBLE ? MAX_VISIBLE : null);
+
+    /* بحث فوري في الفهرس */
+    const filterInput = $('#tocFilter');
+    if(filterInput){
+      filterInput.oninput = (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        if(!q){ paintToc(flatToc, flatToc.length > MAX_VISIBLE ? MAX_VISIBLE : null); return; }
+        const filtered = flatToc.filter(n => n.label.toLowerCase().includes(q));
+        paintToc(filtered, 1000);
+      };
+    }
   } else if(panelTab === 'marks'){
     el.innerHTML = (active.marks||[]).length
       ? active.marks.map((m,i) =>
@@ -1109,7 +1239,7 @@ function renderPanel(){
       ? active.highlights.map((h,i) =>
         '<div class="hl-row"><span class="hl-dot-s" style="background:'+(HL_COLORS[h.color]||'#ffe08a')+'"></span>'+
         '<div class="grow"><button class="textbtn" data-hljump="'+i+'">'+
-        esc(h.text.slice(0,90))+(h.text.length>90?'…':'')+
+        esc(h.text.slice(0,90))+(h.text.length > 90 ? '…' : '')+
         ' <small class="muted">— صفحة '+(h.chapter+1)+'</small></button></div>'+
         '<button class="row-del" data-hldel="'+i+'"><svg><use href="#i-trash"/></svg></button></div>').join('')
       : '<p class="empty-panel">حدّد أي نص أثناء القراءة ثم اختر لوناً للتمييز.</p>';
@@ -1129,68 +1259,104 @@ function addBookmark(){
   }
   if(panelTab === 'marks') renderPanel();
   const b = $('#bookmarkBtn');
-  if(b){ b.style.color='var(--accent)'; setTimeout(()=>b.style.color='',600); }
+  if(b){ b.style.color = 'var(--accent)'; setTimeout(() => b.style.color = '', 600); }
 }
 
-/* ---------- البحث في الكتاب ---------- */
-function buildSearchIndex(){
-  if(searchCache.has(active.id)) return searchCache.get(active.id);
-  const idx = (active.flat||[]).map((it,i) => ({
-    i, label: it.label, text: htmlToText(extractChapterContent(active, it))
-  }));
-  searchCache.set(active.id, idx);
-  return idx;
-}
+/* ============================================================
+   البحث داخل الكتاب — عبر Worker
+============================================================ */
 function doBookSearch(q){
   const box = $('#bookSearchResults');
-  if(!active || !q || q.trim().length < 2){
+  if(!active){ box.innerHTML = '<p class="muted pad">افتح كتاباً أولاً.</p>'; return; }
+  if(!q || q.trim().length < 2){
     box.innerHTML = '<p class="muted pad">اكتب كلمة من حرفين على الأقل.</p>';
     return;
   }
-  const idx = buildSearchIndex();
-  const lq = q.toLowerCase();
+  box.innerHTML = '<div class="sr-count">جارٍ البحث…</div>';
+
+  clearTimeout(searchDebounceTimer);
+  searchDebounceTimer = setTimeout(async () => {
+    const query = q.trim();
+
+    if(!searchIndexReady || !searchCache.has(active.id)){
+      box.innerHTML = '<div class="sr-count">⏳ جارٍ فهرسة الكتاب ('+active.flat.length+' صفحة)…</div>';
+      await buildSearchIndexInBackground();
+    }
+
+    if(searchWorker && searchCache.has(active.id)){
+      searchWorker.postMessage({ type:'BUILD_INDEX', payload:{ bookId: active.id, index: searchCache.get(active.id) } });
+      searchWorker.postMessage({ type:'SEARCH', payload:{ bookId: active.id, query, maxPerPage: 4, maxTotal: 200 } });
+      return;
+    }
+
+    fallbackSearch(query);
+  }, 180);
+}
+function fallbackSearch(query){
+  const idx = searchCache.get(active.id) || [];
+  const q = query.toLowerCase();
+  const results = [];
   let total = 0;
-  const out = [];
+
   for(const ch of idx){
-    const t = ch.text;
+    const text = ch.text;
+    if(!text) continue;
+    const lower = text.toLowerCase();
     let pos = 0, cnt = 0;
-    while(cnt < 4){
-      const f = t.toLowerCase().indexOf(lq, pos);
+    while(cnt < 4 && total < 200){
+      const f = lower.indexOf(q, pos);
       if(f < 0) break;
-      const s = Math.max(0, f-45), e = Math.min(t.length, f+q.length+45);
-      out.push({ ch:ch.i, label:ch.label, pre:t.slice(s,f), hit:t.slice(f,f+q.length), post:t.slice(f+q.length,e) });
-      pos = f+q.length; cnt++; total++;
+      const s = Math.max(0, f - 60);
+      const e = Math.min(text.length, f + q.length + 60);
+      results.push({ chapter: ch.i, label: ch.label, pre: text.slice(s, f), hit: text.slice(f, f + q.length), post: text.slice(f + q.length, e) });
+      pos = f + q.length;
+      cnt++; total++;
     }
   }
-  if(!out.length){ box.innerHTML = '<p class="empty-panel">لا نتائج مطابقة.</p>'; return; }
-  box.innerHTML = out.slice(0,40).map(r =>
-    '<button class="sr-item" data-srjump="'+r.ch+'" data-srq="'+esc(q)+'">'+
-    '<span class="sr-chap">'+esc(r.label)+' — صفحة '+(r.ch+1)+'</span>'+
-    '<span class="sr-snippet">…'+esc(r.pre)+'<mark>'+esc(r.hit)+'</mark>'+esc(r.post)+'…</span></button>').join('')+
-    '<div class="sr-count">'+total.toLocaleString('ar')+' نتيجة</div>';
+  renderSearchResults({ results, total, query });
 }
-function jumpSearch(ch,q){
+function renderSearchResults({ results, total, query }){
+  const box = $('#bookSearchResults');
+  if(!box) return;
+
+  if(!results || !results.length){
+    box.innerHTML = '<p class="empty-panel">لا نتائج مطابقة.</p>';
+    return;
+  }
+
+  box.innerHTML = results.map(r =>
+    '<button class="sr-item" data-srjump="'+r.chapter+'" data-srq="'+esc(query)+'">'+
+    '<span class="sr-chap">'+esc(r.label)+' — صفحة '+(r.chapter+1)+'</span>'+
+    '<span class="sr-snippet">…'+esc(r.pre)+'<mark>'+esc(r.hit)+'</mark>'+esc(r.post)+'…</span>'+
+    '</button>').join('')+
+    '<div class="sr-count">'+total.toLocaleString('ar')+' نتيجة'+
+    (total > results.length ? ' (يُعرض '+results.length+')' : '')+'</div>';
+}
+function jumpSearch(ch, q){
   $('#searchPop').hidden = true;
-  showChapter(ch).then(()=>{
-    setTimeout(()=>{
+  showChapter(ch).then(() => {
+    setTimeout(() => {
       const root = $('#chapterContent');
       const lq = q.toLowerCase();
       const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
       const jobs = [];
       let n;
-      while((n = walker.nextNode())){ if(n.nodeValue.toLowerCase().indexOf(lq) > -1) jobs.push(n); }
+      while((n = walker.nextNode())){
+        if(n.nodeValue.toLowerCase().indexOf(lq) > -1) jobs.push(n);
+      }
       for(const nd of jobs){
         const frag = document.createDocumentFragment();
         let t = nd.nodeValue, lower = t.toLowerCase();
         while(true){
           const f = lower.indexOf(lq);
           if(f < 0) break;
-          if(f > 0) frag.append(t.slice(0,f));
+          if(f > 0) frag.append(t.slice(0, f));
           const m = document.createElement('mark');
           m.className = 'sr-hit';
-          m.textContent = t.slice(f, f+q.length);
+          m.textContent = t.slice(f, f + q.length);
           frag.append(m);
-          t = t.slice(f+q.length); lower = lower.slice(f+q.length);
+          t = t.slice(f + q.length);
+          lower = lower.slice(f + q.length);
         }
         frag.append(t);
         nd.replaceWith(frag);
@@ -1201,56 +1367,157 @@ function jumpSearch(ch,q){
   });
 }
 
-/* ---------- القراءة الصوتية ---------- */
-const tts = { queue:[], i:0, playing:false, paused:false };
+/* ============================================================
+   القراءة الصوتية — مع دعم div/span + إزالة التشكيل
+============================================================ */
+const tts = { queue:[], i:0, playing:false, paused:false, safetyTimer:null };
+
+function stripTashkeel(text){
+  if(!prefs.ttsStripTashkeel) return text;
+  return text
+    .replace(/[\u064B-\u065F]/g, '')
+    .replace(/\u0670/g, '')
+    .replace(/\u06D6-\u06ED/g, '')
+    .replace(/\u0640/g, '');
+}
+
 function buildVoiceList(){
   const sel = $('#voiceSelect'); if(!sel) return;
   const vs = speechSynthesis.getVoices();
-  const ar = vs.filter(v => v.lang.indexOf('ar') === 0);
+  const ar   = vs.filter(v => v.lang.indexOf('ar') === 0);
   const rest = vs.filter(v => v.lang.indexOf('ar') !== 0);
   sel.innerHTML = ar.concat(rest).map(v =>
     '<option value="'+esc(v.voiceURI)+'"'+(v.voiceURI === prefs.voiceURI ? ' selected' : '')+'>'+
     esc(v.name)+' ('+v.lang+')</option>').join('');
 }
+
+function extractParagraphs(){
+  const root = $('#chapterContent');
+  if(!root) return [];
+
+  const paras = [];
+  const seen = new Set();
+
+  /* 1) الوسوم الدلالية */
+  const semantic = root.querySelectorAll('p,h1,h2,h3,h4,h5,h6,blockquote,li');
+  semantic.forEach(el => {
+    if(el.querySelector('p,h1,h2,h3,h4,h5,h6,blockquote,li')) return;
+    const t = (el.textContent || '').replace(/\s+/g,' ').trim();
+    if(t.length < 2 || seen.has(t)) return;
+    seen.add(t);
+    paras.push(el);
+  });
+
+  /* 2) div/span مباشرة (الكتب الإسلامية والتراثية) */
+  if(!paras.length){
+    const divs = root.querySelectorAll('div, span, section, article');
+    divs.forEach(el => {
+      if(el.querySelector('div, span, section, article, p, li')) return;
+      const t = (el.textContent || '').replace(/\s+/g,' ').trim();
+      if(t.length < 5 || seen.has(t)) return;
+      seen.add(t);
+      paras.push(el);
+    });
+  }
+
+  /* 3) الملاذ الأخير: قسّم النص الكامل بالجمل */
+  if(!paras.length){
+    const fullText = root.textContent || '';
+    const sentences = fullText
+      .split(/(?<=[.!?؟।])\s+|\n{2,}/)
+      .map(s => s.trim())
+      .filter(s => s.length > 10);
+    if(sentences.length){
+      sentences.forEach((sent, idx) => {
+        const fake = document.createElement('span');
+        fake.textContent = sent;
+        fake.style.display = 'inline';
+        fake.dataset.ttsFake = idx;
+        paras.push(fake);
+      });
+      paras.forEach(p => { if(p.dataset.ttsFake) root.appendChild(p); });
+    }
+  }
+
+  return paras;
+}
+
 function ttsSpeakFrom(){
   if(!('speechSynthesis' in window)){ notify('القراءة الصوتية غير مدعومة في متصفحك'); return; }
   stopTTS();
-  const paras = [...$('#chapterContent').querySelectorAll('p,h1,h2,h3,h4,h5,h6,blockquote,li')]
-    .filter(e => e.textContent.trim().length > 1);
-  if(!paras.length){ notify('لا يوجد نص للقراءة'); return; }
-  tts.queue = paras; tts.i = 0; tts.playing = true; tts.paused = false;
+
+  const paras = extractParagraphs();
+  if(!paras.length){ notify('لا يوجد نص قابل للقراءة في هذه الصفحة'); return; }
+
+  tts.queue = paras;
+  tts.i = 0;
+  tts.playing = true;
+  tts.paused = false;
   $('#ttsBar').hidden = false;
   $('#ttsBar').classList.add('playing');
   speakNext();
 }
+
 function speakNext(){
-  if(!tts.playing || tts.i >= tts.queue.length){ stopTTS(true); notify('انتهت القراءة الصوتية'); return; }
+  if(!tts.playing || tts.i >= tts.queue.length){
+    stopTTS(true);
+    notify('انتهت القراءة الصوتية');
+    /* الانتقال التلقائي للصفحة التالية إن فُعّل */
+    if(prefs.ttsAutoNextPage && active && current < active.flat.length - 1){
+      setTimeout(() => showChapter(current+1).then(ttsSpeakFrom), 1200);
+    }
+    return;
+  }
+
   const el = tts.queue[tts.i];
   $$('.tts-active').forEach(x => x.classList.remove('tts-active'));
   el.classList.add('tts-active');
-  el.scrollIntoView({ behavior:'smooth', block:'center' });
-  const u = new SpeechSynthesisUtterance(el.textContent.trim());
+  try{ el.scrollIntoView({ behavior:'smooth', block:'center' }); }catch(e){}
+
+  const rawText = (el.textContent || '').trim();
+  const cleanText = stripTashkeel(rawText);
+  if(!cleanText){ tts.i++; speakNext(); return; }
+
+  const u = new SpeechSynthesisUtterance(cleanText);
   const vs = speechSynthesis.getVoices();
   const chosen = vs.find(v => v.voiceURI === $('#voiceSelect').value) || vs.find(v => v.lang.indexOf('ar') === 0);
   if(chosen) u.voice = chosen;
-  u.lang = (chosen && chosen.lang) || (/[\u0600-\u06ff]/.test(el.textContent) ? 'ar-SA' : 'en-US');
+  u.lang = (chosen && chosen.lang) || (/[\u0600-\u06ff]/.test(cleanText) ? 'ar-SA' : 'en-US');
   u.rate = parseFloat($('#voiceRate').value) || 0.95;
+
   $('#ttsStatus').textContent = 'فقرة '+(tts.i+1)+'/'+tts.queue.length;
-  u.onend = () => { if(!tts.playing) return; tts.i++; speakNext(); };
-  u.onerror = () => { if(tts.playing){ tts.i++; speakNext(); } };
+
+  const advance = () => {
+    clearTimeout(tts.safetyTimer);
+    if(!tts.playing) return;
+    tts.i++;
+    speakNext();
+  };
+  u.onend = advance;
+  u.onerror = advance;
+
+  /* مؤقت أمان: إذا لم يُستدعَ onend خلال دقيقتين، انتقل للفقرة التالية */
+  clearTimeout(tts.safetyTimer);
+  tts.safetyTimer = setTimeout(() => {
+    if(tts.playing){ tts.i++; speakNext(); }
+  }, 120000);
+
   speechSynthesis.speak(u);
 }
+
 function stopTTS(finished){
   tts.playing = false; tts.paused = false;
+  clearTimeout(tts.safetyTimer);
   try{ speechSynthesis.cancel(); }catch(e){}
   $$('.tts-active').forEach(x => x.classList.remove('tts-active'));
   const bar = $('#ttsBar');
   if(bar){
     bar.classList.remove('playing');
-    if(finished === true) setTimeout(()=>bar.hidden = true, 800);
+    if(finished === true) setTimeout(() => bar.hidden = true, 800);
     else bar.hidden = true;
   }
 }
+
 function toggleTTS(){
   if(tts.playing){
     if(tts.paused){ speechSynthesis.resume(); tts.paused = false; $('#ttsBar').classList.add('playing'); }
@@ -1302,7 +1569,7 @@ window.addEventListener('beforeinstallprompt', e => {
   const b = $('#installBtn'); if(b) b.hidden = false;
 });
 if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
-  try{ navigator.serviceWorker.register('sw.js').catch(()=>{}); }catch(e){}
+  try{ navigator.serviceWorker.register('sw.js').catch(() => {}); }catch(e){}
 }
 
 /* ============================================================
@@ -1409,7 +1676,7 @@ function bindEvents(){
     $$('#editRating [data-star]').forEach(b => {
       const on = +b.dataset.star <= editRatingVal;
       b.classList.toggle('on', on);
-      b.innerHTML = '<svg><use href="#i-star'+(on?'-fill':'')+'"/></svg>';
+      b.innerHTML = '<svg><use href="#i-star'+(on ? '-fill' : '')+'"/></svg>';
     });
   }
   $$('#editRating [data-star]').forEach(b => b.onclick = () => {
@@ -1430,9 +1697,9 @@ function bindEvents(){
   };
 
   /* القارئ */
-  $('#backBtn').onclick = back;
-  $('#prevBtn').onclick = () => showChapter(current-1);
-  $('#nextBtn').onclick = () => showChapter(current+1);
+  $('#backBtn').onclick  = back;
+  $('#prevBtn').onclick  = () => showChapter(current-1);
+  $('#nextBtn').onclick  = () => showChapter(current+1);
   $('#progressRange').oninput = e => {
     if(!active) return;
     const total = active.flat.length;
@@ -1452,7 +1719,7 @@ function bindEvents(){
   };
   $('#fullBtn').onclick = () => {
     if(document.fullscreenElement) document.exitFullscreen();
-    else { const rv = $('#readerView'); if(rv.requestFullscreen) rv.requestFullscreen().catch(()=>{}); }
+    else { const rv = $('#readerView'); if(rv.requestFullscreen) rv.requestFullscreen().catch(() => {}); }
   };
 
   /* اللوحة */
@@ -1543,12 +1810,12 @@ function bindEvents(){
     }
     else if(act === 'book-print'){ printChapter(); }
     else if(act === 'book-copy'){
-      if(navigator.clipboard) navigator.clipboard.writeText(htmlToText(chapterExport())).then(()=>notify('✓ نُسخت الصفحة إلى الحافظة')).catch(()=>notify('✗ تعذر النسخ'));
+      if(navigator.clipboard) navigator.clipboard.writeText(htmlToText(chapterExport())).then(() => notify('✓ نُسخت الصفحة إلى الحافظة')).catch(() => notify('✗ تعذر النسخ'));
     }
     else if(act === 'marks-md'){ exportMarksMD(active); }
     else if(act === 'hl-md'){ exportHlMD(active); }
     else if(act === 'book-share'){
-      if(navigator.share) navigator.share({ title:item.label+' — '+active.title, text:htmlToText(chapterExport()).slice(0,4000) }).catch(()=>{});
+      if(navigator.share) navigator.share({ title:item.label+' — '+active.title, text:htmlToText(chapterExport()).slice(0,4000) }).catch(() => {});
       else notify('المشاركة غير مدعومة في هذا المتصفح');
     }
   };
@@ -1632,6 +1899,7 @@ function bindEvents(){
 (async () => {
   document.body.classList.toggle('dark', !!prefs.dark);
   buildFontGrid();
+  initSearchWorker();
   try{
     await openDB();
     books = await getAll();
