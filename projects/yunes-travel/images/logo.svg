@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 90" width="100%" height="100%">
+  <defs>
+    <!-- Primary Brand Blue Gradient -->
+    <linearGradient id="yunesBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A2B4C"/>
+      <stop offset="100%" stop-color="#2A4365"/>
+    </linearGradient>
+
+    <!-- Vibrant Royal Blue / Purple for Accents -->
+    <linearGradient id="yunesAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3182CE"/>
+      <stop offset="100%" stop-color="#4C51BF"/>
+    </linearGradient>
+
+    <!-- Warm Gold Gradient for Flight & Success -->
+    <linearGradient id="yunesGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC94B"/>
+      <stop offset="100%" stop-color="#D69E2E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ICON CONTAINER (Positioned Right for Arabic/RTL) -->
+  <g transform="translate(295, 8)">
+    <!-- Flight Arc Background -->
+    <path d="M 10,65 C 25,20 65,15 72,35 C 76,48 55,75 20,72" 
+          fill="none" stroke="url(#yunesAccent)" stroke-width="4.5" stroke-linecap="round"/>
+    
+    <!-- Dotted Flight Trail -->
+    <path d="M 5,50 C 20,10 60,5 75,25" 
+          fill="none" stroke="url(#yunesGold)" stroke-width="2.5" stroke-dasharray="3,3"/>
+
+    <!-- Airplane Symbol -->
+    <g transform="translate(68, 18) rotate(-15) scale(0.9)">
+      <path d="M 0,0 L 14,-14 L 10,-14 L 0,-4 L -12,-6 L -14,-2 L -6,3 L -8,11 L -4,11 L 0,4 Z" 
+            fill="url(#yunesGold)"/>
+    </g>
+
+    <!-- Open Book / Graduation Cap Combo -->
+    <!-- Cap Diamond -->
+    <polygon points="38,22 62,32 38,42 14,32" fill="url(#yunesBlue)"/>
+    <!-- Cap Base -->
+    <path d="M 24,37 L 24,46 C 24,51 52,51 52,46 L 52,37 Z" fill="#1A202C"/>
+    <!-- Tassel -->
+    <path d="M 52,33 L 57,44 L 55,54" fill="none" stroke="url(#yunesGold)" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="55" cy="55" r="1.8" fill="url(#yunesGold)"/>
+
+    <!-- Graduation Book Pages Base -->
+    <path d="M 16,58 Q 38,51 60,58 L 60,63 Q 38,56 16,63 Z" fill="url(#yunesAccent)"/>
+  </g>
+
+  <!-- TEXT BRANDING (Aligned Correctly for Header) -->
+  <!-- Main Name: YUNES -->
+  <text x="275" y="42" text-anchor="end" 
+        font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+        font-weight="900" font-size="34" fill="url(#yunesBlue)" letter-spacing="1.5">YUNES</text>
+
+  <!-- Subtitle Arabic: يونس للسفر والتعليم -->
+  <text x="275" y="65" text-anchor="end" 
+        font-family="'Cairo', 'Tahoma', 'Segoe UI', sans-serif" 
+        font-weight="700" font-size="15" fill="#2B6CB0" direction="rtl">للسفر والتعليم الدولي</text>
+
+  <!-- Decorative Separator Line -->
+  <line x1="70" y1="74" x2="275" y2="74" stroke="url(#yunesGold)" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Subtitle English: TRAVEL & EDUCATION -->
+  <text x="275" y="85" text-anchor="end" 
+        font-family="system-ui, -apple-system, sans-serif" 
+        font-weight="600" font-size="9.5" fill="#718096" letter-spacing="1.8">TRAVEL &amp; EDUCATION SERVICES</text>
+</svg>

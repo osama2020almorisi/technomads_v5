@@ -1,0 +1,20 @@
+{
+  "name": "YUNES Travel & Education",
+  "short_name": "YUNES",
+  "description": "خدمات السفر والتعليم والاستشارات والوجهات والباقات",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f1d",
+  "theme_color": "#3a4bdc",
+  "orientation": "portrait",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "images/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

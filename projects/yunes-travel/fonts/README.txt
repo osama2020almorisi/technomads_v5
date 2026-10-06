@@ -1,0 +1,1 @@
+للاستخدام دون إنترنت: ضع هنا ملفات Tajawal أو Cairo بصيغ WOFF2، ثم أضف @font-face في css/style.css.
