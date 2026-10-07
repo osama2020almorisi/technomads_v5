@@ -1,0 +1,14 @@
+{
+  "name": "وِرد برو — قارئ الكتب الاحترافي",
+  "short_name": "وِرد برو",
+  "description": "قارئ EPUB محلي احترافي بخطوط عربية فاخرة وتمييز وتصدير",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#0e141b",
+  "theme_color": "#0f766e",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
