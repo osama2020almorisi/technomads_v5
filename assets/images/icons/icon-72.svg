@@ -1,14 +1,124 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">TechNomads 72 icon</title>
-  <desc id="desc">TechNomads brand illustration</desc>
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2A2D7C"/>
-      <stop offset="1" stop-color="#4ECDC4"/>
-    </linearGradient>
-  </defs>
-  <circle cx="256" cy="256" r="226" fill="url(#g)"/>
-  <circle cx="256" cy="256" r="176" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3"/>
-  <path d="M256 104 L390 350 H122 Z" fill="none" stroke="#fff" stroke-width="28" stroke-linejoin="round"/>
-  <circle cx="256" cy="256" r="30" fill="#FF6B6B" stroke="#fff" stroke-width="10"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<title id="title">TechNomads — Next-Gen Brand Identity</title>
+<desc id="desc">A sleek, futuristic logo combining a laptop, smartphone, code glyphs, wireless connectivity, and digital circuit nodes in a glowing neon layout.</desc>
+<defs>
+  <!-- Background Radial Gradient -->
+  <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+    <stop offset="0%" stop-color="#081E36"/>
+    <stop offset="60%" stop-color="#030E1C"/>
+    <stop offset="100%" stop-color="#01050A"/>
+  </radialGradient>
+
+  <!-- Core Neon Color Palette -->
+  <linearGradient id="cyanNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#00F7FF"/>
+    <stop offset="50%" stop-color="#0088FF"/>
+    <stop offset="100%" stop-color="#00FF9D"/>
+  </linearGradient>
+
+  <linearGradient id="accentLine" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#00FF9D"/>
+    <stop offset="50%" stop-color="#00F7FF"/>
+    <stop offset="100%" stop-color="#0088FF"/>
+  </linearGradient>
+
+  <!-- Glassmorphism Glass Screen -->
+  <linearGradient id="glassPanel" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#0C2B4A" stop-opacity="0.85"/>
+    <stop offset="100%" stop-color="#031324" stop-opacity="0.95"/>
+  </linearGradient>
+
+  <!-- Advanced Dual Glow Filters -->
+  <filter id="hyperGlow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="7" result="blur1"/>
+    <feGaussianBlur stdDeviation="2" result="blur2"/>
+    <feMerge>
+      <feMergeNode in="blur1"/>
+      <feMergeNode in="blur2"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+
+  <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur stdDeviation="3.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<!-- Outer Container Frame -->
+<rect x="16" y="16" width="480" height="480" rx="84" fill="url(#bgGrad)" stroke="#133D5B" stroke-width="2.5"/>
+
+<!-- Background Tech Grid & Circuits -->
+<g stroke="url(#cyanNeon)" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round">
+  <!-- Outer Tech Circuit Lines -->
+  <path d="M 50 200 H 110 L 145 165 H 180"/>
+  <path d="M 50 312 H 105 L 135 342 H 175"/>
+  <path d="M 462 200 H 402 L 367 165 H 332"/>
+  <path d="M 462 312 H 407 L 377 342 H 337"/>
+</g>
+<g fill="#030E1C" stroke="url(#cyanNeon)" stroke-width="2.5" opacity="0.8">
+  <circle cx="50" cy="200" r="5"/>
+  <circle cx="50" cy="312" r="5"/>
+  <circle cx="462" cy="200" r="5"/>
+  <circle cx="462" cy="312" r="5"/>
+</g>
+
+<!-- Tech Halo Ring -->
+<circle cx="256" cy="256" r="180" fill="none" stroke="url(#cyanNeon)" stroke-width="1.5" stroke-dasharray="8 6 3 6" opacity="0.45" filter="url(#softGlow)"/>
+
+<!-- Computer Unit (Center Stage) -->
+<g filter="url(#hyperGlow)">
+  <!-- Main Display Outer Frame -->
+  <rect x="120" y="145" width="224" height="148" rx="14" fill="url(#glassPanel)" stroke="url(#cyanNeon)" stroke-width="4.5"/>
+  
+  <!-- Stand & Base Structure -->
+  <path d="M 212 293 L 200 338 H 264 L 252 293 Z" fill="#071A2E" stroke="url(#cyanNeon)" stroke-width="2.5" stroke-linejoin="round"/>
+  <rect x="172" y="338" width="120" height="10" rx="5" fill="#08233D" stroke="url(#cyanNeon)" stroke-width="2.5"/>
+</g>
+
+<!-- Central Code Symbol inside Screen (< />) -->
+<g fill="none" stroke="url(#accentLine)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#hyperGlow)">
+  <path d="M 175 198 L 155 219 L 175 240"/>
+  <path d="M 289 198 L 309 219 L 289 240"/>
+  <path d="M 248 190 L 216 248"/>
+</g>
+
+<!-- Smartphone Overlay (Right Alignment) -->
+<g filter="url(#hyperGlow)">
+  <rect x="325" y="202" width="76" height="146" rx="16" fill="url(#glassPanel)" stroke="url(#cyanNeon)" stroke-width="4"/>
+  <!-- Inner Screen Border -->
+  <rect x="332" y="215" width="62" height="110" rx="8" fill="#020B16" stroke="#00F7FF" stroke-width="1" opacity="0.6"/>
+  <!-- Home Indicator Line -->
+  <line x1="353" y1="337" x2="373" y2="337" stroke="#00FF9D" stroke-width="3" stroke-linecap="round"/>
+</g>
+
+<!-- Code Glyph Preview inside Mobile Display -->
+<g fill="none" stroke="#00F7FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+  <path d="M 353 260 L 346 267 L 353 274"/>
+  <path d="M 373 260 L 380 267 L 373 274"/>
+</g>
+
+<!-- Top Wireless Connectivity Signal -->
+<g fill="none" stroke="url(#cyanNeon)" stroke-width="5" stroke-linecap="round" filter="url(#hyperGlow)">
+  <path d="M 188 112 A 80 80 0 0 1 284 112"/>
+  <path d="M 204 126 A 55 55 0 0 1 268 126"/>
+  <path d="M 220 140 A 30 30 0 0 1 252 140"/>
+</g>
+
+<!-- Innovation Spark (Nomad Compass Star) -->
+<g transform="translate(390, 108)" filter="url(#hyperGlow)">
+  <path d="M 0 -16 Q 0 0 16 0 Q 0 0 0 16 Q 0 0 -16 0 Q 0 0 0 -16 Z" fill="#00FF9D"/>
+  <circle cx="0" cy="0" r="2.5" fill="#FFFFFF"/>
+</g>
+
+<!-- Ambient Light Particles -->
+<g fill="#00F7FF" opacity="0.8" filter="url(#softGlow)">
+  <circle cx="115" cy="110" r="2"/>
+  <circle cx="410" cy="385" r="2.5"/>
+  <circle cx="100" cy="380" r="2"/>
+</g>
+
 </svg>
