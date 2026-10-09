@@ -1,0 +1,613 @@
+{
+  "project": "TechNomads Portfolio Image Pack",
+  "format": "SVG vector artwork",
+  "count_projects": 67,
+  "images_per_project": 4,
+  "total_images": 268,
+  "path_pattern": "images/projects/{project-id}/cover.svg and gallery-1.svg ... gallery-3.svg",
+  "projects": [
+    {
+      "id": "Am-main",
+      "cover": "images/projects/Am-main/cover.svg",
+      "gallery": [
+        "images/projects/Am-main/gallery-1.svg",
+        "images/projects/Am-main/gallery-2.svg",
+        "images/projects/Am-main/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "Cinema",
+      "cover": "images/projects/Cinema/cover.svg",
+      "gallery": [
+        "images/projects/Cinema/gallery-1.svg",
+        "images/projects/Cinema/gallery-2.svg",
+        "images/projects/Cinema/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "Cleaning Services",
+      "cover": "images/projects/Cleaning Services/cover.svg",
+      "gallery": [
+        "images/projects/Cleaning Services/gallery-1.svg",
+        "images/projects/Cleaning Services/gallery-2.svg",
+        "images/projects/Cleaning Services/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "HarMur-Service-PRO",
+      "cover": "images/projects/HarMur-Service-PRO/cover.svg",
+      "gallery": [
+        "images/projects/HarMur-Service-PRO/gallery-1.svg",
+        "images/projects/HarMur-Service-PRO/gallery-2.svg",
+        "images/projects/HarMur-Service-PRO/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "Link_management_v2",
+      "cover": "images/projects/Link_management_v2/cover.svg",
+      "gallery": [
+        "images/projects/Link_management_v2/gallery-1.svg",
+        "images/projects/Link_management_v2/gallery-2.svg",
+        "images/projects/Link_management_v2/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "MedicalAnalysisApp",
+      "cover": "images/projects/MedicalAnalysisApp/cover.svg",
+      "gallery": [
+        "images/projects/MedicalAnalysisApp/gallery-1.svg",
+        "images/projects/MedicalAnalysisApp/gallery-2.svg",
+        "images/projects/MedicalAnalysisApp/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "The_wisdom",
+      "cover": "images/projects/The_wisdom/cover.svg",
+      "gallery": [
+        "images/projects/The_wisdom/gallery-1.svg",
+        "images/projects/The_wisdom/gallery-2.svg",
+        "images/projects/The_wisdom/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "The_wisdom1",
+      "cover": "images/projects/The_wisdom1/cover.svg",
+      "gallery": [
+        "images/projects/The_wisdom1/gallery-1.svg",
+        "images/projects/The_wisdom1/gallery-2.svg",
+        "images/projects/The_wisdom1/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "The_wisdom2",
+      "cover": "images/projects/The_wisdom2/cover.svg",
+      "gallery": [
+        "images/projects/The_wisdom2/gallery-1.svg",
+        "images/projects/The_wisdom2/gallery-2.svg",
+        "images/projects/The_wisdom2/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "Tree2",
+      "cover": "images/projects/Tree2/cover.svg",
+      "gallery": [
+        "images/projects/Tree2/gallery-1.svg",
+        "images/projects/Tree2/gallery-2.svg",
+        "images/projects/Tree2/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "Yemeni",
+      "cover": "images/projects/Yemeni/cover.svg",
+      "gallery": [
+        "images/projects/Yemeni/gallery-1.svg",
+        "images/projects/Yemeni/gallery-2.svg",
+        "images/projects/Yemeni/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "age-calculator",
+      "cover": "images/projects/age-calculator/cover.svg",
+      "gallery": [
+        "images/projects/age-calculator/gallery-1.svg",
+        "images/projects/age-calculator/gallery-2.svg",
+        "images/projects/age-calculator/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "age-calculator-app",
+      "cover": "images/projects/age-calculator-app/cover.svg",
+      "gallery": [
+        "images/projects/age-calculator-app/gallery-1.svg",
+        "images/projects/age-calculator-app/gallery-2.svg",
+        "images/projects/age-calculator-app/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "age-calculator-app-v2",
+      "cover": "images/projects/age-calculator-app-v2/cover.svg",
+      "gallery": [
+        "images/projects/age-calculator-app-v2/gallery-1.svg",
+        "images/projects/age-calculator-app-v2/gallery-2.svg",
+        "images/projects/age-calculator-app-v2/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "age-calculator-app-v2-standalone",
+      "cover": "images/projects/age-calculator-app-v2-standalone/cover.svg",
+      "gallery": [
+        "images/projects/age-calculator-app-v2-standalone/gallery-1.svg",
+        "images/projects/age-calculator-app-v2-standalone/gallery-2.svg",
+        "images/projects/age-calculator-app-v2-standalone/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "al-mohaseb-pro",
+      "cover": "images/projects/al-mohaseb-pro/cover.svg",
+      "gallery": [
+        "images/projects/al-mohaseb-pro/gallery-1.svg",
+        "images/projects/al-mohaseb-pro/gallery-2.svg",
+        "images/projects/al-mohaseb-pro/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "aman_travel_system",
+      "cover": "images/projects/aman_travel_system/cover.svg",
+      "gallery": [
+        "images/projects/aman_travel_system/gallery-1.svg",
+        "images/projects/aman_travel_system/gallery-2.svg",
+        "images/projects/aman_travel_system/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "app-store",
+      "cover": "images/projects/app-store/cover.svg",
+      "gallery": [
+        "images/projects/app-store/gallery-1.svg",
+        "images/projects/app-store/gallery-2.svg",
+        "images/projects/app-store/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "bidaya-reader-pro",
+      "cover": "images/projects/bidaya-reader-pro/cover.svg",
+      "gallery": [
+        "images/projects/bidaya-reader-pro/gallery-1.svg",
+        "images/projects/bidaya-reader-pro/gallery-2.svg",
+        "images/projects/bidaya-reader-pro/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "bidaya_reader",
+      "cover": "images/projects/bidaya_reader/cover.svg",
+      "gallery": [
+        "images/projects/bidaya_reader/gallery-1.svg",
+        "images/projects/bidaya_reader/gallery-2.svg",
+        "images/projects/bidaya_reader/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "booking-system",
+      "cover": "images/projects/booking-system/cover.svg",
+      "gallery": [
+        "images/projects/booking-system/gallery-1.svg",
+        "images/projects/booking-system/gallery-2.svg",
+        "images/projects/booking-system/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "brand-identity",
+      "cover": "images/projects/brand-identity/cover.svg",
+      "gallery": [
+        "images/projects/brand-identity/gallery-1.svg",
+        "images/projects/brand-identity/gallery-2.svg",
+        "images/projects/brand-identity/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "code-editor",
+      "cover": "images/projects/code-editor/cover.svg",
+      "gallery": [
+        "images/projects/code-editor/gallery-1.svg",
+        "images/projects/code-editor/gallery-2.svg",
+        "images/projects/code-editor/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "code-lab",
+      "cover": "images/projects/code-lab/cover.svg",
+      "gallery": [
+        "images/projects/code-lab/gallery-1.svg",
+        "images/projects/code-lab/gallery-2.svg",
+        "images/projects/code-lab/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "color-generator",
+      "cover": "images/projects/color-generator/cover.svg",
+      "gallery": [
+        "images/projects/color-generator/gallery-1.svg",
+        "images/projects/color-generator/gallery-2.svg",
+        "images/projects/color-generator/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "color-generator-entertainment",
+      "cover": "images/projects/color-generator-entertainment/cover.svg",
+      "gallery": [
+        "images/projects/color-generator-entertainment/gallery-1.svg",
+        "images/projects/color-generator-entertainment/gallery-2.svg",
+        "images/projects/color-generator-entertainment/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "delivery-app",
+      "cover": "images/projects/delivery-app/cover.svg",
+      "gallery": [
+        "images/projects/delivery-app/gallery-1.svg",
+        "images/projects/delivery-app/gallery-2.svg",
+        "images/projects/delivery-app/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "ecommerce-website",
+      "cover": "images/projects/ecommerce-website/cover.svg",
+      "gallery": [
+        "images/projects/ecommerce-website/gallery-1.svg",
+        "images/projects/ecommerce-website/gallery-2.svg",
+        "images/projects/ecommerce-website/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "educational-app",
+      "cover": "images/projects/educational-app/cover.svg",
+      "gallery": [
+        "images/projects/educational-app/gallery-1.svg",
+        "images/projects/educational-app/gallery-2.svg",
+        "images/projects/educational-app/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "fileuploader",
+      "cover": "images/projects/fileuploader/cover.svg",
+      "gallery": [
+        "images/projects/fileuploader/gallery-1.svg",
+        "images/projects/fileuploader/gallery-2.svg",
+        "images/projects/fileuploader/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "financial-accountant",
+      "cover": "images/projects/financial-accountant/cover.svg",
+      "gallery": [
+        "images/projects/financial-accountant/gallery-1.svg",
+        "images/projects/financial-accountant/gallery-2.svg",
+        "images/projects/financial-accountant/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "harmurservice-V1",
+      "cover": "images/projects/harmurservice-V1/cover.svg",
+      "gallery": [
+        "images/projects/harmurservice-V1/gallery-1.svg",
+        "images/projects/harmurservice-V1/gallery-2.svg",
+        "images/projects/harmurservice-V1/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "health-system",
+      "cover": "images/projects/health-system/cover.svg",
+      "gallery": [
+        "images/projects/health-system/gallery-1.svg",
+        "images/projects/health-system/gallery-2.svg",
+        "images/projects/health-system/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "image-editor",
+      "cover": "images/projects/image-editor/cover.svg",
+      "gallery": [
+        "images/projects/image-editor/gallery-1.svg",
+        "images/projects/image-editor/gallery-2.svg",
+        "images/projects/image-editor/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "image-editor-entertainment",
+      "cover": "images/projects/image-editor-entertainment/cover.svg",
+      "gallery": [
+        "images/projects/image-editor-entertainment/gallery-1.svg",
+        "images/projects/image-editor-entertainment/gallery-2.svg",
+        "images/projects/image-editor-entertainment/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "localStorage",
+      "cover": "images/projects/localStorage/cover.svg",
+      "gallery": [
+        "images/projects/localStorage/gallery-1.svg",
+        "images/projects/localStorage/gallery-2.svg",
+        "images/projects/localStorage/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "localStorage-V1",
+      "cover": "images/projects/localStorage-V1/cover.svg",
+      "gallery": [
+        "images/projects/localStorage-V1/gallery-1.svg",
+        "images/projects/localStorage-V1/gallery-2.svg",
+        "images/projects/localStorage-V1/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "localStorage-V2",
+      "cover": "images/projects/localStorage-V2/cover.svg",
+      "gallery": [
+        "images/projects/localStorage-V2/gallery-1.svg",
+        "images/projects/localStorage-V2/gallery-2.svg",
+        "images/projects/localStorage-V2/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "logo-design",
+      "cover": "images/projects/logo-design/cover.svg",
+      "gallery": [
+        "images/projects/logo-design/gallery-1.svg",
+        "images/projects/logo-design/gallery-2.svg",
+        "images/projects/logo-design/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "marketing-campaign",
+      "cover": "images/projects/marketing-campaign/cover.svg",
+      "gallery": [
+        "images/projects/marketing-campaign/gallery-1.svg",
+        "images/projects/marketing-campaign/gallery-2.svg",
+        "images/projects/marketing-campaign/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "memory-game-entertainment",
+      "cover": "images/projects/memory-game-entertainment/cover.svg",
+      "gallery": [
+        "images/projects/memory-game-entertainment/gallery-1.svg",
+        "images/projects/memory-game-entertainment/gallery-2.svg",
+        "images/projects/memory-game-entertainment/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "memory-game-projects",
+      "cover": "images/projects/memory-game-projects/cover.svg",
+      "gallery": [
+        "images/projects/memory-game-projects/gallery-1.svg",
+        "images/projects/memory-game-projects/gallery-2.svg",
+        "images/projects/memory-game-projects/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "pharmacy-website",
+      "cover": "images/projects/pharmacy-website/cover.svg",
+      "gallery": [
+        "images/projects/pharmacy-website/gallery-1.svg",
+        "images/projects/pharmacy-website/gallery-2.svg",
+        "images/projects/pharmacy-website/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "play-entertainment",
+      "cover": "images/projects/play-entertainment/cover.svg",
+      "gallery": [
+        "images/projects/play-entertainment/gallery-1.svg",
+        "images/projects/play-entertainment/gallery-2.svg",
+        "images/projects/play-entertainment/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "project-structure",
+      "cover": "images/projects/project-structure/cover.svg",
+      "gallery": [
+        "images/projects/project-structure/gallery-1.svg",
+        "images/projects/project-structure/gallery-2.svg",
+        "images/projects/project-structure/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "project_airline_booking",
+      "cover": "images/projects/project_airline_booking/cover.svg",
+      "gallery": [
+        "images/projects/project_airline_booking/gallery-1.svg",
+        "images/projects/project_airline_booking/gallery-2.svg",
+        "images/projects/project_airline_booking/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "quiz-game",
+      "cover": "images/projects/quiz-game/cover.svg",
+      "gallery": [
+        "images/projects/quiz-game/gallery-1.svg",
+        "images/projects/quiz-game/gallery-2.svg",
+        "images/projects/quiz-game/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "quiz-platform",
+      "cover": "images/projects/quiz-platform/cover.svg",
+      "gallery": [
+        "images/projects/quiz-platform/gallery-1.svg",
+        "images/projects/quiz-platform/gallery-2.svg",
+        "images/projects/quiz-platform/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "rang",
+      "cover": "images/projects/rang/cover.svg",
+      "gallery": [
+        "images/projects/rang/gallery-1.svg",
+        "images/projects/rang/gallery-2.svg",
+        "images/projects/rang/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "rang-website",
+      "cover": "images/projects/rang-website/cover.svg",
+      "gallery": [
+        "images/projects/rang-website/gallery-1.svg",
+        "images/projects/rang-website/gallery-2.svg",
+        "images/projects/rang-website/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "rang-website2",
+      "cover": "images/projects/rang-website2/cover.svg",
+      "gallery": [
+        "images/projects/rang-website2/gallery-1.svg",
+        "images/projects/rang-website2/gallery-2.svg",
+        "images/projects/rang-website2/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "ranj-paint",
+      "cover": "images/projects/ranj-paint/cover.svg",
+      "gallery": [
+        "images/projects/ranj-paint/gallery-1.svg",
+        "images/projects/ranj-paint/gallery-2.svg",
+        "images/projects/ranj-paint/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "structure-explorer",
+      "cover": "images/projects/structure-explorer/cover.svg",
+      "gallery": [
+        "images/projects/structure-explorer/gallery-1.svg",
+        "images/projects/structure-explorer/gallery-2.svg",
+        "images/projects/structure-explorer/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "the-age",
+      "cover": "images/projects/the-age/cover.svg",
+      "gallery": [
+        "images/projects/the-age/gallery-1.svg",
+        "images/projects/the-age/gallery-2.svg",
+        "images/projects/the-age/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "travel-agency",
+      "cover": "images/projects/travel-agency/cover.svg",
+      "gallery": [
+        "images/projects/travel-agency/gallery-1.svg",
+        "images/projects/travel-agency/gallery-2.svg",
+        "images/projects/travel-agency/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "tree",
+      "cover": "images/projects/tree/cover.svg",
+      "gallery": [
+        "images/projects/tree/gallery-1.svg",
+        "images/projects/tree/gallery-2.svg",
+        "images/projects/tree/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "treemix_app",
+      "cover": "images/projects/treemix_app/cover.svg",
+      "gallery": [
+        "images/projects/treemix_app/gallery-1.svg",
+        "images/projects/treemix_app/gallery-2.svg",
+        "images/projects/treemix_app/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "ward-epub",
+      "cover": "images/projects/ward-epub/cover.svg",
+      "gallery": [
+        "images/projects/ward-epub/gallery-1.svg",
+        "images/projects/ward-epub/gallery-2.svg",
+        "images/projects/ward-epub/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "ward-reader",
+      "cover": "images/projects/ward-reader/cover.svg",
+      "gallery": [
+        "images/projects/ward-reader/gallery-1.svg",
+        "images/projects/ward-reader/gallery-2.svg",
+        "images/projects/ward-reader/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "ward-reader2",
+      "cover": "images/projects/ward-reader2/cover.svg",
+      "gallery": [
+        "images/projects/ward-reader2/gallery-1.svg",
+        "images/projects/ward-reader2/gallery-2.svg",
+        "images/projects/ward-reader2/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "ward-reader3",
+      "cover": "images/projects/ward-reader3/cover.svg",
+      "gallery": [
+        "images/projects/ward-reader3/gallery-1.svg",
+        "images/projects/ward-reader3/gallery-2.svg",
+        "images/projects/ward-reader3/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "wifi-auto-connect",
+      "cover": "images/projects/wifi-auto-connect/cover.svg",
+      "gallery": [
+        "images/projects/wifi-auto-connect/gallery-1.svg",
+        "images/projects/wifi-auto-connect/gallery-2.svg",
+        "images/projects/wifi-auto-connect/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "wifi-extractor",
+      "cover": "images/projects/wifi-extractor/cover.svg",
+      "gallery": [
+        "images/projects/wifi-extractor/gallery-1.svg",
+        "images/projects/wifi-extractor/gallery-2.svg",
+        "images/projects/wifi-extractor/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "wit",
+      "cover": "images/projects/wit/cover.svg",
+      "gallery": [
+        "images/projects/wit/gallery-1.svg",
+        "images/projects/wit/gallery-2.svg",
+        "images/projects/wit/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "y-main",
+      "cover": "images/projects/y-main/cover.svg",
+      "gallery": [
+        "images/projects/y-main/gallery-1.svg",
+        "images/projects/y-main/gallery-2.svg",
+        "images/projects/y-main/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "yunes-travel",
+      "cover": "images/projects/yunes-travel/cover.svg",
+      "gallery": [
+        "images/projects/yunes-travel/gallery-1.svg",
+        "images/projects/yunes-travel/gallery-2.svg",
+        "images/projects/yunes-travel/gallery-3.svg"
+      ]
+    },
+    {
+      "id": "yunes-v2",
+      "cover": "images/projects/yunes-v2/cover.svg",
+      "gallery": [
+        "images/projects/yunes-v2/gallery-1.svg",
+        "images/projects/yunes-v2/gallery-2.svg",
+        "images/projects/yunes-v2/gallery-3.svg"
+      ]
+    }
+  ]
+}

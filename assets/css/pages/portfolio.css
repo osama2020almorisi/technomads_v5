@@ -1174,3 +1174,29 @@ summary::-webkit-details-marker{color:var(--accent)}
   .project-card:hover{transform:none}
   .project-card-overlay{display:none}
 }
+
+/* ============================================
+   LOCAL SVG IMAGES SUPPORT
+   ============================================ */
+.project-card-image,
+.modal-gallery-image {
+    background: linear-gradient(135deg, #2A2D7C 0%, #4ECDC4 100%);
+}
+
+/* SVG images preserve aspect ratio */
+.project-card-image[src$=".svg"] {
+    object-fit: cover;
+    object-position: center;
+    background: #1a1a2e;
+}
+
+.modal-gallery-image[src$=".svg"] {
+    object-fit: contain;
+    background: #0a0a1a;
+    padding: 20px;
+}
+
+/* Placeholder state before image loads */
+.project-card-image:not([src]) {
+    background: linear-gradient(135deg, #2A2D7C, #4ECDC4);
+}

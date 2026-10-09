@@ -1,94 +1,48 @@
 /* ============================================
    portfolio.js - نظام إدارة المشاريع الذكي
    TechNomads - Smart Portfolio System
-   نسخة v3.0 - مع 67 مشروعاً
+   نسخة v4.0 — الصور المحلية 100%
    ============================================ */
 
 (function() {
     'use strict';
 
     const CONFIG = {
-        projectsPath: 'projects/',
-        fallbackImage: 'https://placehold.co/800x600/2A2D7C/FFFFFF?text=TechNomads',
+        // 🎯 مسار الصور المحلية
+        imagesPath: 'assets/images/projects/',
+        fallbackImage: 'assets/images/illustrations/empty.svg',
         cacheDuration: 3600000,
         itemsPerPage: 12
     };
 
     // ============================================
-    // UNIQUE IMAGES FOR EACH PROJECT
+    // 🎯 دالة الصور المحلية — تقرأ من assets/images/projects/
+    // كل مشروع له مجلد باسم id داخل المجلد الرئيسي
     // ============================================
-    const PROJECT_IMAGES = {
-        // ===== المشاريع الأصلية =====
-        'ecommerce-website': { cover: 'https://picsum.photos/id/20/800/600', gallery: ['https://picsum.photos/id/21/800/600', 'https://picsum.photos/id/22/800/600', 'https://picsum.photos/id/23/800/600'] },
-        'pharmacy-website': { cover: 'https://picsum.photos/id/24/800/600', gallery: ['https://picsum.photos/id/25/800/600', 'https://picsum.photos/id/26/800/600', 'https://picsum.photos/id/27/800/600'] },
-        'booking-system': { cover: 'https://picsum.photos/id/28/800/600', gallery: ['https://picsum.photos/id/29/800/600', 'https://picsum.photos/id/30/800/600', 'https://picsum.photos/id/31/800/600'] },
-        'financial-accountant': { cover: 'https://picsum.photos/id/32/800/600', gallery: ['https://picsum.photos/id/33/800/600', 'https://picsum.photos/id/34/800/600', 'https://picsum.photos/id/35/800/600'] },
-        'health-system': { cover: 'https://picsum.photos/id/36/800/600', gallery: ['https://picsum.photos/id/37/800/600', 'https://picsum.photos/id/38/800/600', 'https://picsum.photos/id/39/800/600'] },
-        'Cinema': { cover: 'https://picsum.photos/id/40/800/600', gallery: ['https://picsum.photos/id/41/800/600', 'https://picsum.photos/id/42/800/600', 'https://picsum.photos/id/43/800/600'] },
-        'travel-agency': { cover: 'https://picsum.photos/id/44/800/600', gallery: ['https://picsum.photos/id/45/800/600', 'https://picsum.photos/id/46/800/600', 'https://picsum.photos/id/47/800/600'] },
-        'app-store': { cover: 'https://picsum.photos/id/48/800/600', gallery: ['https://picsum.photos/id/49/800/600', 'https://picsum.photos/id/50/800/600', 'https://picsum.photos/id/51/800/600'] },
-        'quiz-platform': { cover: 'https://picsum.photos/id/52/800/600', gallery: ['https://picsum.photos/id/53/800/600', 'https://picsum.photos/id/54/800/600', 'https://picsum.photos/id/55/800/600'] },
-        'wit': { cover: 'https://picsum.photos/id/56/800/600', gallery: ['https://picsum.photos/id/57/800/600', 'https://picsum.photos/id/58/800/600', 'https://picsum.photos/id/59/800/600'] },
-        'project-structure': { cover: 'https://picsum.photos/id/60/800/600', gallery: ['https://picsum.photos/id/61/800/600', 'https://picsum.photos/id/62/800/600', 'https://picsum.photos/id/63/800/600'] },
-        'Cleaning Services': { cover: 'https://picsum.photos/id/64/800/600', gallery: ['https://picsum.photos/id/65/800/600', 'https://picsum.photos/id/66/800/600', 'https://picsum.photos/id/67/800/600'] },
-        'delivery-app': { cover: 'https://picsum.photos/id/68/800/600', gallery: ['https://picsum.photos/id/69/800/600', 'https://picsum.photos/id/70/800/600', 'https://picsum.photos/id/71/800/600'] },
-        'educational-app': { cover: 'https://picsum.photos/id/72/800/600', gallery: ['https://picsum.photos/id/73/800/600', 'https://picsum.photos/id/74/800/600', 'https://picsum.photos/id/75/800/600'] },
-        'MedicalAnalysisApp': { cover: 'https://picsum.photos/id/76/800/600', gallery: ['https://picsum.photos/id/77/800/600', 'https://picsum.photos/id/78/800/600', 'https://picsum.photos/id/79/800/600'] },
-        'treemix_app': { cover: 'https://picsum.photos/id/80/800/600', gallery: ['https://picsum.photos/id/81/800/600', 'https://picsum.photos/id/82/800/600', 'https://picsum.photos/id/83/800/600'] },
-        'brand-identity': { cover: 'https://picsum.photos/id/84/800/600', gallery: ['https://picsum.photos/id/85/800/600', 'https://picsum.photos/id/86/800/600', 'https://picsum.photos/id/87/800/600'] },
-        'logo-design': { cover: 'https://picsum.photos/id/88/800/600', gallery: ['https://picsum.photos/id/89/800/600', 'https://picsum.photos/id/90/800/600', 'https://picsum.photos/id/91/800/600'] },
-        'age-calculator': { cover: 'https://picsum.photos/id/92/800/600', gallery: ['https://picsum.photos/id/93/800/600', 'https://picsum.photos/id/94/800/600', 'https://picsum.photos/id/95/800/600'] },
-        'code-editor': { cover: 'https://picsum.photos/id/96/800/600', gallery: ['https://picsum.photos/id/97/800/600', 'https://picsum.photos/id/98/800/600', 'https://picsum.photos/id/99/800/600'] },
-        'color-generator': { cover: 'https://picsum.photos/id/100/800/600', gallery: ['https://picsum.photos/id/101/800/600', 'https://picsum.photos/id/102/800/600', 'https://picsum.photos/id/103/800/600'] },
-        'image-editor': { cover: 'https://picsum.photos/id/104/800/600', gallery: ['https://picsum.photos/id/105/800/600', 'https://picsum.photos/id/106/800/600', 'https://picsum.photos/id/107/800/600'] },
-        'fileuploader': { cover: 'https://picsum.photos/id/108/800/600', gallery: ['https://picsum.photos/id/109/800/600', 'https://picsum.photos/id/110/800/600', 'https://picsum.photos/id/111/800/600'] },
-        'localStorage': { cover: 'https://picsum.photos/id/112/800/600', gallery: ['https://picsum.photos/id/113/800/600', 'https://picsum.photos/id/114/800/600', 'https://picsum.photos/id/115/800/600'] },
-        'wifi-auto-connect': { cover: 'https://picsum.photos/id/116/800/600', gallery: ['https://picsum.photos/id/117/800/600', 'https://picsum.photos/id/118/800/600', 'https://picsum.photos/id/119/800/600'] },
-        'wifi-extractor': { cover: 'https://picsum.photos/id/120/800/600', gallery: ['https://picsum.photos/id/121/800/600', 'https://picsum.photos/id/122/800/600', 'https://picsum.photos/id/123/800/600'] },
-        'memory-game-entertainment': { cover: 'https://picsum.photos/id/124/800/600', gallery: ['https://picsum.photos/id/125/800/600', 'https://picsum.photos/id/126/800/600', 'https://picsum.photos/id/127/800/600'] },
-        'memory-game-projects': { cover: 'https://picsum.photos/id/200/800/600', gallery: ['https://picsum.photos/id/201/800/600', 'https://picsum.photos/id/202/800/600', 'https://picsum.photos/id/203/800/600'] },
-        'marketing-campaign': { cover: 'https://picsum.photos/id/128/800/600', gallery: ['https://picsum.photos/id/129/800/600', 'https://picsum.photos/id/130/800/600', 'https://picsum.photos/id/131/800/600'] },
-        'age-calculator-app': { cover: 'https://picsum.photos/id/132/800/600', gallery: ['https://picsum.photos/id/133/800/600', 'https://picsum.photos/id/134/800/600', 'https://picsum.photos/id/135/800/600'] },
-        'age-calculator-app-v2': { cover: 'https://picsum.photos/id/136/800/600', gallery: ['https://picsum.photos/id/137/800/600', 'https://picsum.photos/id/138/800/600', 'https://picsum.photos/id/139/800/600'] },
-        'HarMur-Service-PRO': { cover: 'https://picsum.photos/id/140/800/600', gallery: ['https://picsum.photos/id/141/800/600', 'https://picsum.photos/id/142/800/600', 'https://picsum.photos/id/143/800/600'] },
-        'harmurservice-V1': { cover: 'https://picsum.photos/id/144/800/600', gallery: ['https://picsum.photos/id/145/800/600', 'https://picsum.photos/id/146/800/600', 'https://picsum.photos/id/147/800/600'] },
-        'aman_travel_system': { cover: 'https://picsum.photos/id/148/800/600', gallery: ['https://picsum.photos/id/149/800/600', 'https://picsum.photos/id/150/800/600', 'https://picsum.photos/id/151/800/600'] },
-        'localStorage-V1': { cover: 'https://picsum.photos/id/152/800/600', gallery: ['https://picsum.photos/id/153/800/600', 'https://picsum.photos/id/154/800/600', 'https://picsum.photos/id/155/800/600'] },
-        'localStorage-V2': { cover: 'https://picsum.photos/id/156/800/600', gallery: ['https://picsum.photos/id/157/800/600', 'https://picsum.photos/id/158/800/600', 'https://picsum.photos/id/159/800/600'] },
-        'Yemeni': { cover: 'https://picsum.photos/id/160/800/600', gallery: ['https://picsum.photos/id/161/800/600', 'https://picsum.photos/id/162/800/600', 'https://picsum.photos/id/163/800/600'] },
-        'project_airline_booking': { cover: 'https://picsum.photos/id/164/800/600', gallery: ['https://picsum.photos/id/165/800/600', 'https://picsum.photos/id/166/800/600', 'https://picsum.photos/id/167/800/600'] },
-        'Am-main': { cover: 'https://picsum.photos/id/168/800/600', gallery: ['https://picsum.photos/id/169/800/600', 'https://picsum.photos/id/170/800/600', 'https://picsum.photos/id/171/800/600'] },
-        'y-main': { cover: 'https://picsum.photos/id/172/800/600', gallery: ['https://picsum.photos/id/173/800/600', 'https://picsum.photos/id/174/800/600', 'https://picsum.photos/id/175/800/600'] },
-        'play-entertainment': { cover: 'https://picsum.photos/id/176/800/600', gallery: ['https://picsum.photos/id/177/800/600', 'https://picsum.photos/id/178/800/600', 'https://picsum.photos/id/179/800/600'] },
-        'the-age': { cover: 'https://picsum.photos/id/180/800/600', gallery: ['https://picsum.photos/id/181/800/600', 'https://picsum.photos/id/182/800/600', 'https://picsum.photos/id/183/800/600'] },
-        'code-lab': { cover: 'https://picsum.photos/id/184/800/600', gallery: ['https://picsum.photos/id/185/800/600', 'https://picsum.photos/id/186/800/600', 'https://picsum.photos/id/187/800/600'] },
-        'color-generator-entertainment': { cover: 'https://picsum.photos/id/188/800/600', gallery: ['https://picsum.photos/id/189/800/600', 'https://picsum.photos/id/190/800/600', 'https://picsum.photos/id/191/800/600'] },
-        'image-editor-entertainment': { cover: 'https://picsum.photos/id/192/800/600', gallery: ['https://picsum.photos/id/193/800/600', 'https://picsum.photos/id/194/800/600', 'https://picsum.photos/id/195/800/600'] },
-        'quiz-game': { cover: 'https://picsum.photos/id/196/800/600', gallery: ['https://picsum.photos/id/197/800/600', 'https://picsum.photos/id/198/800/600', 'https://picsum.photos/id/199/800/600'] },
-        'structure-explorer': { cover: 'https://picsum.photos/id/204/800/600', gallery: ['https://picsum.photos/id/205/800/600','https://picsum.photos/id/206/800/600','https://picsum.photos/id/207/800/600'] },
-
-        // ===== المشاريع الجديدة =====
-        'al-mohaseb-pro': { cover: 'https://picsum.photos/id/310/800/600', gallery: ['https://picsum.photos/id/311/800/600', 'https://picsum.photos/id/312/800/600', 'https://picsum.photos/id/313/800/600'] },
-        'bidaya_reader': { cover: 'https://picsum.photos/id/320/800/600', gallery: ['https://picsum.photos/id/321/800/600', 'https://picsum.photos/id/322/800/600', 'https://picsum.photos/id/323/800/600'] },
-        'bidaya-reader-pro': { cover: 'https://picsum.photos/id/330/800/600', gallery: ['https://picsum.photos/id/331/800/600', 'https://picsum.photos/id/332/800/600', 'https://picsum.photos/id/333/800/600'] },
-        'ward-epub': { cover: 'https://picsum.photos/id/340/800/600', gallery: ['https://picsum.photos/id/341/800/600'] },
-        'ward-reader': { cover: 'https://picsum.photos/id/342/800/600', gallery: ['https://picsum.photos/id/343/800/600'] },
-        'ward-reader2': { cover: 'https://picsum.photos/id/344/800/600', gallery: ['https://picsum.photos/id/345/800/600'] },
-        'ward-reader3': { cover: 'https://picsum.photos/id/346/800/600', gallery: ['https://picsum.photos/id/347/800/600'] },
-        'rang': { cover: 'https://picsum.photos/id/350/800/600', gallery: ['https://picsum.photos/id/351/800/600', 'https://picsum.photos/id/352/800/600', 'https://picsum.photos/id/353/800/600'] },
-        'rang-website': { cover: 'https://picsum.photos/id/360/800/600', gallery: ['https://picsum.photos/id/361/800/600', 'https://picsum.photos/id/362/800/600', 'https://picsum.photos/id/363/800/600'] },
-        'rang-website2': { cover: 'https://picsum.photos/id/370/800/600', gallery: ['https://picsum.photos/id/371/800/600', 'https://picsum.photos/id/372/800/600', 'https://picsum.photos/id/373/800/600'] },
-        'ranj-paint': { cover: 'https://picsum.photos/id/380/800/600', gallery: ['https://picsum.photos/id/381/800/600', 'https://picsum.photos/id/382/800/600'] },
-        'The_wisdom': { cover: 'https://picsum.photos/id/390/800/600', gallery: ['https://picsum.photos/id/391/800/600', 'https://picsum.photos/id/392/800/600'] },
-        'The_wisdom1': { cover: 'https://picsum.photos/id/393/800/600', gallery: ['https://picsum.photos/id/394/800/600'] },
-        'The_wisdom2': { cover: 'https://picsum.photos/id/395/800/600', gallery: ['https://picsum.photos/id/396/800/600'] },
-        'tree': { cover: 'https://picsum.photos/id/400/800/600', gallery: ['https://picsum.photos/id/401/800/600', 'https://picsum.photos/id/402/800/600'] },
-        'Tree2': { cover: 'https://picsum.photos/id/403/800/600', gallery: ['https://picsum.photos/id/404/800/600'] },
-        'yunes-travel': { cover: 'https://picsum.photos/id/410/800/600', gallery: ['https://picsum.photos/id/411/800/600', 'https://picsum.photos/id/412/800/600', 'https://picsum.photos/id/413/800/600'] },
-        'yunes-v2': { cover: 'https://picsum.photos/id/420/800/600', gallery: ['https://picsum.photos/id/421/800/600', 'https://picsum.photos/id/422/800/600', 'https://picsum.photos/id/423/800/600'] },
-        'Link_management_v2': { cover: 'https://picsum.photos/id/430/800/600', gallery: ['https://picsum.photos/id/431/800/600'] },
-        'age-calculator-app-v2-standalone': { cover: 'https://picsum.photos/id/440/800/600', gallery: ['https://picsum.photos/id/441/800/600'] }
-    };
+    function getProjectImages(projectId) {
+        // بعض المشاريع لها أسماء مختلفة عن id
+        // نضع هنا الأسماء البديلة إن وُجدت
+        var aliases = {
+            'memory-game-projects': 'memory-game-projects',
+            'play-entertainment': 'play-entertainment',
+            'the-age': 'the-age',
+            'structure-explorer': 'structure-explorer',
+            'age-calculator-app-v2-standalone': 'age-calculator-app-v2-standalone',
+            'Cleaning Services': 'Cleaning Services'
+        };
+        
+        var folderName = aliases[projectId] || projectId;
+        var folder = CONFIG.imagesPath + folderName + '/';
+        
+        return {
+            cover: folder + 'cover.svg',
+            gallery: [
+                folder + 'gallery-1.svg',
+                folder + 'gallery-2.svg',
+                folder + 'gallery-3.svg'
+            ]
+        };
+    }
 
     // ============================================
     // ALL PROJECTS - جميع المشاريع (67 مشروع)
@@ -99,7 +53,7 @@
         { id:'pharmacy-website', name:'نظام إدارة الصيدلية', category:'web', description:'نظام متكامل لإدارة الصيدليات والمخزون والطلبات والوصفات الطبية', technologies:['HTML','CSS','JavaScript','PHP','MySQL'], date:'2024-02-20', featured:true, hasVersions:true, keywords:['صيدلية','أدوية','مخزون','وصفات','مبيعات'], link:'projects/pharmacy-website/index.html', rating:4.7 },
         { id:'booking-system', name:'نظام الحجز الإلكتروني', category:'web', description:'نظام حجز متكامل للفنادق والمنتجعات مع لوحة تحكم متطورة', technologies:['HTML','CSS','JavaScript','PHP'], date:'2023-12-10', featured:true, keywords:['حجز','فنادق','منتجعات','سياحة','غرف'], link:'projects/booking-system/index.html', rating:4.6 },
         { id:'financial-accountant', name:'النظام المالي والمحاسبي', category:'web', description:'نظام محاسبي متكامل لإدارة الحسابات والفواتير والميزانيات والتقارير المالية', technologies:['HTML','CSS','JavaScript','PHP','MySQL','Chart.js'], date:'2024-03-01', featured:true, keywords:['محاسبة','مالي','فواتير','حسابات','ميزانية','تقارير'], link:'projects/financial-accountant/index.html', rating:4.9 },
-        { id:'al-mohaseb-pro', name:'المحاسب برو — al-mohaseb-pro', category:'web', description:'نظام محاسبي احترافي متقدم مع لوحة تحكم، عملاء، فواتير، منتجات، مصروفات، تقارير، وإعدادات. نظام متكامل بواجهات حديثة.', technologies:['HTML','CSS','JavaScript','LocalStorage','PWA'], date:'2024-09-01', featured:true, hasVersions:true, keywords:['محاسبة','فواتير','عملاء','منتجات','مصروفات','تقارير','برو','محاسب'], link:'projects/al-mohaseb-pro/index.html', rating:4.9, version:'1.0' },
+        { id:'al-mohaseb-pro', name:'المحاسب برو — al-mohaseb-pro', category:'web', description:'نظام محاسبي احترافي متقدم مع لوحة تحكم، عملاء، فواتير، منتجات، مصروفات، تقارير، وإعدادات.', technologies:['HTML','CSS','JavaScript','LocalStorage','PWA'], date:'2024-09-01', featured:true, hasVersions:true, keywords:['محاسبة','فواتير','عملاء','منتجات','مصروفات','تقارير','برو'], link:'projects/al-mohaseb-pro/index.html', rating:4.9, version:'1.0' },
         { id:'health-system', name:'نظام إدارة المستشفيات', category:'web', description:'نظام متكامل لإدارة المستشفيات والمواعيد والمرضى والسجلات الطبية', technologies:['HTML','CSS','JavaScript','PHP','MySQL'], date:'2024-01-05', keywords:['مستشفى','مرضى','مواعيد','طبي','سجلات'], link:'projects/health-system/index.html', rating:4.5 },
         { id:'Cinema', name:'نظام حجز تذاكر السينما', category:'web', description:'منصة متكاملة لعرض الأفلام وحجز التذاكر عبر الإنترنت', technologies:['HTML','CSS','JavaScript'], date:'2023-11-20', keywords:['سينما','أفلام','تذاكر','حجز','ترفيه'], link:'projects/Cinema/index.html', rating:4.3 },
         { id:'travel-agency', name:'نظام وكالة السفر', category:'web', description:'نظام متكامل لحجز الرحلات والفنادق وتأشيرات السفر والعمرة', technologies:['HTML','CSS','JavaScript','PHP','MySQL'], date:'2024-02-01', hasVersions:true, keywords:['سفر','سياحة','رحلات','فنادق','تأشيرات','عمرة'], link:'projects/travel-agency/index.html', rating:4.4 },
@@ -112,34 +66,34 @@
         { id:'y-main', name:'نظام السفر اليمني المتكامل', category:'web', description:'منصة متكاملة للسفر والسياحة مع نظام حجز متقدم وفنادق وتأشيرات', technologies:['HTML','CSS','JavaScript','PHP','MySQL'], date:'2024-02-01', parent:'travel-agency', keywords:['يمني','سفر','سياحة','فنادق','تأشيرات'], link:'projects/travel-agency/y-main/y-main/index.html', rating:4.5 },
         // ===== مواقع RANG =====
         { id:'rang', name:'موقع RANG', category:'web', description:'موقع خدمات دهانات وديكور مع 8 أقسام خدمات و20+ صفحة داخلية.', technologies:['HTML','CSS','JavaScript'], date:'2024-06-15', hasVersions:true, keywords:['rang','رنج','دهانات','ديكور','خدمات'], link:'projects/rang/index.html', rating:4.4 },
-        { id:'rang-website', name:'RANG Website الكامل', category:'web', description:'الموقع الكامل لـRANG مع 11 قسماً: مدن (40 صفحة)، دهانات، مظلات، بيوت شعر، هناجر، ترميم، عزل مائي، تنسيق حدائق، برجولات، سواتر، مقاولات، ديكورات.', technologies:['HTML','CSS','JavaScript'], date:'2024-07-01', featured:true, hasVersions:true, keywords:['rang','رنج','دهانات','مظلات','بيوت شعر','هناجر','ترميم','عزل','برجولات','سواتر','مقاولات'], link:'projects/rang-website/index.html', rating:4.7 },
+        { id:'rang-website', name:'RANG Website الكامل', category:'web', description:'الموقع الكامل لـRANG مع 11 قسماً: مدن (40 صفحة)، دهانات، مظلات، بيوت شعر، هناجر، ترميم، عزل مائي، تنسيق حدائق، برجولات، سواتر، مقاولات، ديكورات.', technologies:['HTML','CSS','JavaScript'], date:'2024-07-01', featured:true, hasVersions:true, keywords:['rang','رنج','دهانات','مظلات','هناجر','ترميم','عزل','برجولات','سواتر','مقاولات'], link:'projects/rang-website/index.html', rating:4.7 },
         { id:'rang-website2', name:'RANG Website V2', category:'web', description:'النسخة الثانية من موقع RANG مع تحسينات شاملة في الأداء والتصميم وSEO.', technologies:['HTML','CSS','JavaScript','SEO'], date:'2024-08-01', hasVersions:true, keywords:['rang','رنج','V2','دهانات','مظلات','ديكور'], link:'projects/rang-website2/index.html', rating:4.8, version:'2.0' },
         { id:'ranj-paint', name:'Ranj Paint', category:'web', description:'موقع خدمات دهانات احترافي مع معرض أعمال، خدمات، ومدونة.', technologies:['HTML','CSS','JavaScript'], date:'2024-05-20', keywords:['ranj','paint','دهانات','معرض','خدمات'], link:'projects/ranj-paint/index.html', rating:4.3 },
         // ===== وكالات السفر الجديدة =====
-        { id:'yunes-travel', name:'Yunes Travel', category:'web', description:'موقع وكالة سفر حديث مع خدمات (تأشيرات، تذاكر، فنادق، عمرة، سياحة، تعليم)، مدن، مدونة، وباقات.', technologies:['HTML','CSS','JavaScript','PWA'], date:'2024-09-15', featured:true, hasVersions:true, keywords:['yunes','سفر','تأشيرات','تذاكر','فنادق','عمرة','سياحة','تعليم','باقات'], link:'projects/yunes-travel/index.html', rating:4.8 },
-        { id:'yunes-v2', name:'Yunes Travel V2 (Next.js)', category:'web', description:'النسخة الثانية من Yunes Travel باستخدام Next.js + Prisma + Tailwind مع دعم i18n (عربي/إنجليزي) ولوحة تحكم.', technologies:['Next.js','React','TypeScript','Prisma','Tailwind','i18n'], date:'2024-10-01', featured:true, keywords:['yunes','next.js','react','typescript','prisma','tailwind'], link:'projects/yunes-v2/', rating:5.0, version:'2.0' },
-        
+        { id:'yunes-travel', name:'Yunes Travel', category:'web', description:'موقع وكالة سفر حديث مع خدمات (تأشيرات، تذاكر، فنادق، عمرة، سياحة، تعليم)، مدن، مدونة، وباقات.', technologies:['HTML','CSS','JavaScript','PWA'], date:'2024-09-15', featured:true, hasVersions:true, keywords:['yunes','سفر','تأشيرات','تذاكر','فنادق','عمرة','سياحة','تعليم'], link:'projects/yunes-travel/index.html', rating:4.8 },
+        { id:'yunes-v2', name:'Yunes Travel V2 (Next.js)', category:'web', description:'النسخة الثانية من Yunes Travel باستخدام Next.js + Prisma + Tailwind مع دعم i18n.', technologies:['Next.js','React','TypeScript','Prisma','Tailwind','i18n'], date:'2024-10-01', featured:true, keywords:['yunes','next.js','react','typescript','prisma','tailwind'], link:'projects/yunes-v2/', rating:5.0, version:'2.0' },
+
         // ========== التطبيقات ==========
         { id:'delivery-app', name:'تطبيق التوصيل الذكي', category:'app', description:'تطبيق متكامل لتوصيل الطلبات مع تتبع مباشر للمندوبين', technologies:['HTML','CSS','JavaScript','PHP','MySQL','Google Maps API'], date:'2024-01-20', featured:true, keywords:['توصيل','طلبات','مندوبين','تتبع','GPS'], link:'projects/delivery-app/index.html', rating:4.7 },
         { id:'educational-app', name:'التطبيق التعليمي', category:'app', description:'منصة تعليمية تفاعلية للأطفال مع دروس تفاعلية وألعاب تعليمية', technologies:['HTML','CSS','JavaScript','PHP'], date:'2023-12-15', keywords:['تعليم','أطفال','دروس','ألعاب','تفاعلي'], link:'projects/educational-app/index.html', rating:4.4 },
         { id:'MedicalAnalysisApp', name:'تحليل البيانات الطبية', category:'app', description:'تطبيق متخصص لتحليل البيانات الطبية وإنشاء التقارير وإدارة المرضى', technologies:['HTML','CSS','JavaScript','PHP','MySQL','Chart.js'], date:'2024-02-10', hasVersions:true, keywords:['طبي','تحاليل','بيانات','تقارير','مرضى'], link:'projects/MedicalAnalysisApp/index.html', rating:4.8 },
         { id:'treemix_app', name:'تطبيق Treemix', category:'app', description:'تطبيق متخصص في تحليل البيانات وعرضها بشكل تفاعلي مع لوحة تحكم متقدمة', technologies:['HTML','CSS','JavaScript'], date:'2024-01-25', keywords:['Treemix','بيانات','تحليل','تفاعلي'], link:'projects/treemix_app/index.html', rating:4.2 },
         // ===== القرّاء والكتب =====
-        { id:'bidaya_reader', name:'قارئ البداية والنهاية', category:'app', description:'قارئ كتب إلكترونية متكامل مع دعم EPUB، إشارات مرجعية، سجل قراءة، بحث، واستيراد. مع PWA للعمل دون اتصال.', technologies:['HTML','CSS','JavaScript','IndexedDB','EPUB.js','PWA'], date:'2024-08-15', featured:true, hasVersions:true, keywords:['قارئ','كتب','epub','قراءة','إشارات','مكتبة'], link:'projects/bidaya_reader/index.html', rating:4.9 },
-        { id:'bidaya-reader-pro', name:'قارئ البداية الاحترافي', category:'app', description:'النسخة الاحترافية من قارئ البداية مع محرر، مكتبة، تصدير (PDF, DOCX, EPUB, TXT, JSON, HTML)، واستيراد شامل.', technologies:['HTML','CSS','JavaScript','IndexedDB','PDF.js','JSZip','PWA'], date:'2024-09-10', featured:true, hasVersions:true, keywords:['قارئ','محرر','تصدير','epub','pdf','docx','مكتبة','pro'], link:'projects/bidaya-reader-pro/index.html', rating:5.0, version:'2.0' },
+        { id:'bidaya_reader', name:'قارئ البداية والنهاية', category:'app', description:'قارئ كتب إلكترونية متكامل مع دعم EPUB، إشارات مرجعية، سجل قراءة، بحث، واستيراد.', technologies:['HTML','CSS','JavaScript','IndexedDB','EPUB.js','PWA'], date:'2024-08-15', featured:true, hasVersions:true, keywords:['قارئ','كتب','epub','قراءة','إشارات','مكتبة'], link:'projects/bidaya_reader/index.html', rating:4.9 },
+        { id:'bidaya-reader-pro', name:'قارئ البداية الاحترافي', category:'app', description:'النسخة الاحترافية من قارئ البداية مع محرر، مكتبة، تصدير شامل واستيراد.', technologies:['HTML','CSS','JavaScript','IndexedDB','PDF.js','JSZip','PWA'], date:'2024-09-10', featured:true, hasVersions:true, keywords:['قارئ','محرر','تصدير','epub','pdf','docx','مكتبة','pro'], link:'projects/bidaya-reader-pro/index.html', rating:5.0, version:'2.0' },
         { id:'ward-epub', name:'قارئ Ward EPUB', category:'app', description:'قارئ EPUB خفيف وسريع مع دعم كامل لملفات الكتب الإلكترونية.', technologies:['HTML','CSS','JavaScript','EPUB.js'], date:'2024-07-20', keywords:['ward','قارئ','epub','كتب'], link:'projects/ward-epub/index.html', rating:4.3 },
         { id:'ward-reader', name:'قارئ Ward', category:'app', description:'قارئ كتب خفيف مع بحث وعمل دون اتصال.', technologies:['HTML','CSS','JavaScript','PWA'], date:'2024-07-25', hasVersions:true, keywords:['ward','قارئ','كتب','بحث'], link:'projects/ward-reader/index.html', rating:4.4 },
         { id:'ward-reader2', name:'قارئ Ward V2', category:'app', description:'النسخة الثانية من قارئ Ward مع تحسينات في الأداء والواجهة.', technologies:['HTML','CSS','JavaScript','PWA'], date:'2024-08-05', hasVersions:true, keywords:['ward','قارئ','V2','كتب'], link:'projects/ward-reader2/index.html', rating:4.5 },
         { id:'ward-reader3', name:'قارئ Ward V3', category:'app', description:'النسخة الثالثة من قارئ Ward — الأكثر تطوراً مع تحسينات شاملة.', technologies:['HTML','CSS','JavaScript','PWA'], date:'2024-08-20', hasVersions:true, keywords:['ward','قارئ','V3','كتب','مطور'], link:'projects/ward-reader3/index.html', rating:4.6 },
         // ===== ديوان الحكمة =====
-        { id:'The_wisdom', name:'ديوان الحكمة V1', category:'app', description:'تطبيق ديوان الحكمة — مجموعة من الحكم والأقوال المرتبة، مع بحث ومشاركة. الإصدار الأول.', technologies:['HTML','CSS','JavaScript','JSON'], date:'2024-05-01', hasVersions:true, keywords:['ديوان','حكمة','أقوال','حكم','wisdom','V1'], link:'projects/The_wisdom/index.html', rating:4.2 },
-        { id:'The_wisdom1', name:'ديوان الحكمة Cloud', category:'app', description:'نسخة سحابية من ديوان الحكمة مع Firebase للعمل عبر الأجهزة.', technologies:['HTML','CSS','JavaScript','Firebase','PWA'], date:'2024-06-20', hasVersions:true, keywords:['ديوان','حكمة','firebase','cloud','سحابة'], link:'projects/The_wisdom1/index.html', rating:4.4 },
+        { id:'The_wisdom', name:'ديوان الحكمة V1', category:'app', description:'تطبيق ديوان الحكمة — مجموعة من الحكم والأقوال المرتبة، مع بحث ومشاركة.', technologies:['HTML','CSS','JavaScript','JSON'], date:'2024-05-01', hasVersions:true, keywords:['ديوان','حكمة','أقوال','حكم','wisdom','V1'], link:'projects/The_wisdom/index.html', rating:4.2 },
+        { id:'The_wisdom1', name:'ديوان الحكمة Cloud', category:'app', description:'نسخة سحابية من ديوان الحكمة مع Firebase للعمل عبر الأجهزة.', technologies:['HTML','CSS','JavaScript','Firebase','PWA'], date:'2024-06-20', hasVersions:true, keywords:['ديوان','حكمة','firebase','cloud'], link:'projects/The_wisdom1/index.html', rating:4.4 },
         { id:'The_wisdom2', name:'ديوان الحكمة V2', category:'app', description:'الإصدار الثاني من ديوان الحكمة مع تحسينات في الأداء والتصميم.', technologies:['HTML','CSS','JavaScript','PWA'], date:'2024-07-15', hasVersions:true, keywords:['ديوان','حكمة','V2','wisdom'], link:'projects/The_wisdom2/index.html', rating:4.5, version:'2.0' },
-        
+
         // ========== التصميم ==========
         { id:'brand-identity', name:'هوية العلامة التجارية', category:'design', description:'تصميم هوية بصرية متكاملة لعلامة تجارية تشمل الشعار والألوان والخطوط', technologies:['Adobe Illustrator','Adobe Photoshop','Figma'], date:'2024-01-10', featured:true, keywords:['هوية','علامة تجارية','شعار','ألوان','تصميم'], link:'projects/brand-identity/index.html', rating:4.9 },
         { id:'logo-design', name:'تصميم شعارات احترافية', category:'design', description:'مجموعة من التصاميم المبتكرة للشعارات لهوية العلامات التجارية', technologies:['Adobe Illustrator','Adobe Photoshop'], date:'2023-12-05', keywords:['شعارات','تصميم','هوية','علامة تجارية'], link:'projects/logo-design/index.html', rating:4.7 },
-        
+
         // ========== الأدوات ==========
         { id:'age-calculator', name:'حاسبة العمر المتطورة', category:'tool', description:'أداة متطورة لحساب العمر بدقة مع تفاصيل اليوم والشهر والسنة وإدارة أعياد الميلاد', technologies:['HTML','CSS','JavaScript'], date:'2024-01-25', hasVersions:true, keywords:['عمر','حاسبة','أعياد ميلاد','تواريخ'], link:'projects/age-calculator/index.html', rating:4.6 },
         { id:'code-editor', name:'محرر الأكواد', category:'tool', description:'محرر أكواد متقدم مع تمييز الصيغ وتصحيح الأخطاء', technologies:['HTML','CSS','JavaScript','CodeMirror'], date:'2024-02-05', keywords:['محرر','أكواد','برمجة','تصحيح'], link:'projects/code-editor/index.html', rating:4.5 },
@@ -150,36 +104,36 @@
         { id:'wifi-auto-connect', name:'الاتصال التلقائي بالواي فاي', category:'tool', description:'أداة ذكية للاتصال التلقائي بشبكات الواي فاي', technologies:['HTML','CSS','JavaScript'], date:'2024-01-12', keywords:['واي فاي','اتصال','شبكات','تلقائي'], link:'projects/wifi-auto-connect/index.html', rating:4.0 },
         { id:'wifi-extractor', name:'مستخرج الواي فاي', category:'tool', description:'أداة لاستخراج معلومات شبكات الواي فاي', technologies:['HTML','CSS','JavaScript'], date:'2024-01-08', keywords:['واي فاي','استخراج','شبكات','معلومات'], link:'projects/wifi-extractor/index.html', rating:3.9 },
         // ===== الشجرة =====
-        { id:'tree', name:'مستكشف الشجرة', category:'tool', description:'أداة لاستكشاف وعرض هيكلية المجلدات والملفات بشكل شجري مع بيانات JSON.', technologies:['HTML','CSS','JavaScript','JSON'], date:'2024-06-01', featured:true, hasVersions:true, keywords:['شجرة','tree','مجلدات','ملفات','هيكل','استكشاف'], link:'projects/tree/Index.html', rating:4.6 },
+        { id:'tree', name:'مستكشف الشجرة', category:'tool', description:'أداة لاستكشاف وعرض هيكلية المجلدات والملفات بشكل شجري مع بيانات JSON.', technologies:['HTML','CSS','JavaScript','JSON'], date:'2024-06-01', featured:true, hasVersions:true, keywords:['شجرة','tree','مجلدات','ملفات','هيكل'], link:'projects/tree/Index.html', rating:4.6 },
         { id:'Tree2', name:'مستكشف الشجرة V2', category:'tool', description:'النسخة المحسّنة من مستكشف الشجرة مع واجهة أفضل وأداء أسرع.', technologies:['HTML','CSS','JavaScript','JSON'], date:'2024-07-20', hasVersions:true, keywords:['شجرة','tree','V2','هيكل'], link:'projects/Tree2/index.html', rating:4.5 },
         // ===== أدوات إضافية =====
         { id:'Link_management_v2', name:'إدارة الروابط V2', category:'tool', description:'النسخة الثانية من أداة إدارة الروابط — أسرع وأذكى.', technologies:['HTML','CSS','JavaScript'], date:'2024-08-10', hasVersions:true, keywords:['روابط','إدارة','links','V2'], link:'projects/Link_management_v2/index.html', rating:4.2 },
         { id:'age-calculator-app-v2-standalone', name:'حاسبة العمر V2 (مستقل)', category:'tool', description:'النسخة المستقلة V2 من حاسبة العمر — بدون حاجة للمشروع الأصلي.', technologies:['HTML','CSS','JavaScript'], date:'2024-09-05', hasVersions:true, keywords:['عمر','حاسبة','V2','مستقل'], link:'projects/age-calculator-app-v2/index.html', rating:4.5 },
-        
+
         // ========== الألعاب ==========
-        { id:'memory-game-entertainment', name:'لعبة الذاكرة - Entertainment', category:'game', description:'لعبة ممتعة لتنشيط الذاكرة والتركيز مع مستويات متعددة', technologies:['HTML','CSS','JavaScript'], date:'2024-01-08', keywords:['لعبة','ذاكرة','تركيز','مستويات','entertainment'], link:'entertainment/memory-game.html', rating:4.5 },
+        { id:'memory-game-entertainment', name:'لعبة الذاكرة - Entertainment', category:'game', description:'لعبة ممتعة لتنشيط الذاكرة والتركيز مع مستويات متعددة', technologies:['HTML','CSS','JavaScript'], date:'2024-01-08', keywords:['لعبة','ذاكرة','تركيز','مستويات'], link:'entertainment/memory-game.html', rating:4.5 },
         { id:'play-entertainment', name:'Play - Entertainment', category:'game', description:'منصة ألعاب تفاعلية متكاملة للترفيه والتسلية', technologies:['HTML','CSS','JavaScript'], date:'2024-01-15', keywords:['ألعاب','ترفيه','تفاعلي','play'], link:'entertainment/play.html', rating:4.3 },
         { id:'the-age', name:'The Age', category:'game', description:'لعبة تفاعلية ممتعة تعتمد على حساب العمر والتحديات', technologies:['HTML','CSS','JavaScript'], date:'2024-01-20', keywords:['عمر','لعبة','تحديات','تفاعلي'], link:'entertainment/the-age.html', rating:4.2 },
         { id:'code-lab', name:'Code Lab', category:'game', description:'معمل برمجة تفاعلي لتعلم البرمجة من خلال الألعاب', technologies:['HTML','CSS','JavaScript'], date:'2024-02-01', keywords:['برمجة','تعلم','ألعاب','تفاعلي'], link:'entertainment/code-lab.html', rating:4.6 },
-        { id:'color-generator-entertainment', name:'Color Generator - Entertainment', category:'game', description:'أداة تفاعلية لتوليد الألوان بشكل ممتع ومسلي', technologies:['HTML','CSS','JavaScript'], date:'2024-01-25', keywords:['ألوان','توليد','تفاعلي','entertainment'], link:'entertainment/color-generator.html', rating:4.1 },
-        { id:'image-editor-entertainment', name:'Image Editor - Entertainment', category:'game', description:'محرر صور تفاعلي مع تأثيرات ممتعة للترفيه', technologies:['HTML','CSS','JavaScript','Canvas API'], date:'2024-02-05', keywords:['صور','تحرير','تفاعلي','entertainment'], link:'entertainment/image-editor.html', rating:4.4 },
+        { id:'color-generator-entertainment', name:'Color Generator - Entertainment', category:'game', description:'أداة تفاعلية لتوليد الألوان بشكل ممتع ومسلي', technologies:['HTML','CSS','JavaScript'], date:'2024-01-25', keywords:['ألوان','توليد','تفاعلي'], link:'entertainment/color-generator.html', rating:4.1 },
+        { id:'image-editor-entertainment', name:'Image Editor - Entertainment', category:'game', description:'محرر صور تفاعلي مع تأثيرات ممتعة للترفيه', technologies:['HTML','CSS','JavaScript','Canvas API'], date:'2024-02-05', keywords:['صور','تحرير','تفاعلي'], link:'entertainment/image-editor.html', rating:4.4 },
         { id:'quiz-game', name:'Quiz Game', category:'game', description:'لعبة أسئلة وثقافة عامة ممتعة مع مستويات متعددة', technologies:['HTML','CSS','JavaScript'], date:'2024-02-10', keywords:['أسئلة','ثقافة','لعبة','مستويات'], link:'entertainment/quiz-game.html', rating:4.7 },
-        { id:'memory-game-projects', name:'لعبة الذاكرة - Projects', category:'game', description:'لعبة الذاكرة الاحترافية من مشاريعنا - إصدار متطور مع تصميم عصري', technologies:['HTML','CSS','JavaScript'], date:'2024-02-15', keywords:['لعبة','ذاكرة','احترافي','projects'], link:'projects/memory-game/index.html', rating:4.8, featured:true },
-        
+        { id:'memory-game-projects', name:'لعبة الذاكرة - Projects', category:'game', description:'لعبة الذاكرة الاحترافية من مشاريعنا - إصدار متطور مع تصميم عصري', technologies:['HTML','CSS','JavaScript'], date:'2024-02-15', keywords:['لعبة','ذاكرة','احترافي'], link:'projects/memory-game/index.html', rating:4.8, featured:true },
+
         // ========== التسويق ==========
         { id:'marketing-campaign', name:'حملة تسويقية رقمية', category:'marketing', description:'حملة تسويق متكاملة عبر وسائل التواصل الاجتماعي والإعلانات', technologies:['SEO','Social Media','Google Ads','Analytics'], date:'2024-02-20', keywords:['تسويق','إعلانات','سوشيال ميديا','SEO'], link:'projects/marketing-campaign/index.html', rating:4.6 },
-        
+
         // ========== مشاريع فرعية ==========
         { id:'age-calculator-app', name:'حاسبة العمر - الإصدار الأول', category:'tool', description:'تطبيق متكامل لحساب العمر وإدارة أعياد الميلاد', technologies:['HTML','CSS','JavaScript'], date:'2024-01-10', parent:'age-calculator', keywords:['عمر','حاسبة','أعياد ميلاد','V1'], link:'projects/age-calculator/age-calculator-app/index.html', rating:4.3 },
         { id:'age-calculator-app-v2', name:'حاسبة العمر - الإصدار الثاني', category:'tool', description:'نسخة مطورة من حاسبة العمر مع ميزات إضافية', technologies:['HTML','CSS','JavaScript'], date:'2024-02-15', parent:'age-calculator', keywords:['عمر','حاسبة','أعياد ميلاد','V2'], link:'projects/age-calculator/age-calculator-app-v2/index.html', rating:4.6 },
-        { id:'HarMur-Service-PRO', name:'خدمات التنظيف - الاحترافية', category:'web', description:'منصة متكاملة لخدمات التنظيف مع نظام حجز متقدم', technologies:['HTML','CSS','JavaScript','PHP'], date:'2024-02-01', parent:'Cleaning Services', keywords:['تنظيف','PRO','احترافي','خدمات'], link:'projects/Cleaning%20Services/HarMur-Service-PRO/index.html', rating:4.7 },
+        { id:'HarMur-Service-PRO', name:'خدمات التنظيف - الاحترافية', category:'web', description:'منصة متكاملة لخدمات التنظيف مع نظام حجز متقدم', technologies:['HTML','CSS','JavaScript','PHP'], date:'2024-02-01', parent:'Cleaning Services', keywords:['تنظيف','PRO','احترافي'], link:'projects/Cleaning%20Services/HarMur-Service-PRO/index.html', rating:4.7 },
         { id:'harmurservice-V1', name:'خدمات التنظيف - V1', category:'web', description:'النسخة الأولى من منصة خدمات التنظيف', technologies:['HTML','CSS','JavaScript'], date:'2024-01-15', parent:'Cleaning Services', keywords:['تنظيف','V1','خدمات'], link:'projects/Cleaning%20Services/harmurservice-V1/index.html', rating:4.2 },
-        { id:'aman_travel_system', name:'نظام أمان للسفر', category:'web', description:'نظام متكامل لحجز الرحلات والعمرة والتأشيرات', technologies:['HTML','CSS','JavaScript','PHP'], date:'2024-01-20', parent:'travel-agency', keywords:['أمان','سفر','رحلات','عمرة','تأشيرات'], link:'projects/travel-agency/aman_travel_system/index.html', rating:4.4 },
+        { id:'aman_travel_system', name:'نظام أمان للسفر', category:'web', description:'نظام متكامل لحجز الرحلات والعمرة والتأشيرات', technologies:['HTML','CSS','JavaScript','PHP'], date:'2024-01-20', parent:'travel-agency', keywords:['أمان','سفر','رحلات','عمرة'], link:'projects/travel-agency/aman_travel_system/index.html', rating:4.4 },
         { id:'Yemeni', name:'الوكالة اليمنية للسفر', category:'web', description:'منصة حجز السفر اليمنية المتكاملة', technologies:['HTML','CSS','JavaScript'], date:'2024-01-15', parent:'travel-agency', keywords:['يمني','سفر','وكالة','حجز'], link:'projects/travel-agency/Yemeni/index.html', rating:4.1 },
-        { id:'project_airline_booking', name:'نظام حجز الطيران', category:'web', description:'نظام متكامل لحجز تذاكر الطيران', technologies:['HTML','CSS','JavaScript','PHP'], date:'2024-01-10', parent:'travel-agency', keywords:['طيران','حجز','تذاكر','رحلات'], link:'projects/travel-agency/project_airline_booking/%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D8%AD%D8%AC%D8%B2-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86/index.html', rating:4.3 },
+        { id:'project_airline_booking', name:'نظام حجز الطيران', category:'web', description:'نظام متكامل لحجز تذاكر الطيران', technologies:['HTML','CSS','JavaScript','PHP'], date:'2024-01-10', parent:'travel-agency', keywords:['طيران','حجز','تذاكر'], link:'projects/travel-agency/project_airline_booking/%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D8%AD%D8%AC%D8%B2-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86/index.html', rating:4.3 },
         { id:'localStorage-V1', name:'التخزين المحلي V1', category:'tool', description:'الإصدار الأول من نظام إدارة التخزين المحلي', technologies:['HTML','CSS','JavaScript'], date:'2024-01-05', parent:'localStorage', keywords:['تخزين','محلي','V1'], link:'projects/localStorage/localStorage-V1/index.html', rating:3.8 },
-        { id:'localStorage-V2', name:'التخزين المحلي V2', category:'tool', description:'الإصدار المطور من نظام إدارة التخزين المحلي', technologies:['HTML','CSS','JavaScript'], date:'2024-02-10', parent:'localStorage', keywords:['تخزين','محلي','V2','مطور'], link:'projects/localStorage/localStorage-V2/index.html', rating:4.2 },
-        { id:'structure-explorer', name:'مستكشف هيكلية المشاريع', category:'tool', description:'أداة متقدمة لاستكشاف وعرض هيكلية أي مجلد مشروع بشكل شجري مع إمكانية نسخ الهيكلية وطي/فتح المجلدات.', technologies:['HTML','CSS','JavaScript','Local File API'], date:'2024-06-24', featured:true, hasVersions:true, keywords:['هيكلية','مشاريع','استكشاف','مجلدات','ملفات','شجري','نسخ'], link:'projects/project-structure/structure-explorer.html', rating:5.0, version:'2.0' }
+        { id:'localStorage-V2', name:'التخزين المحلي V2', category:'tool', description:'الإصدار المطور من نظام إدارة التخزين المحلي', technologies:['HTML','CSS','JavaScript'], date:'2024-02-10', parent:'localStorage', keywords:['تخزين','محلي','V2'], link:'projects/localStorage/localStorage-V2/index.html', rating:4.2 },
+        { id:'structure-explorer', name:'مستكشف هيكلية المشاريع', category:'tool', description:'أداة متقدمة لاستكشاف وعرض هيكلية أي مجلد مشروع بشكل شجري.', technologies:['HTML','CSS','JavaScript','Local File API'], date:'2024-06-24', featured:true, hasVersions:true, keywords:['هيكلية','مشاريع','استكشاف','مجلدات','شجري'], link:'projects/project-structure/structure-explorer.html', rating:5.0, version:'2.0' }
     ];
 
     const CATEGORIES = {
@@ -323,42 +277,17 @@
         }, 3000);
     }
 
-    function getProjectImages(projectId) {
-        if (PROJECT_IMAGES[projectId]) return PROJECT_IMAGES[projectId];
-        var hash = projectId.split('').reduce(function(acc, char) { return acc + char.charCodeAt(0); }, 0);
-        var uniqueId = (hash % 200) + 1;
-        return {
-            cover: 'https://picsum.photos/id/' + uniqueId + '/800/600',
-            gallery: [
-                'https://picsum.photos/id/' + (uniqueId + 1) + '/800/600',
-                'https://picsum.photos/id/' + (uniqueId + 2) + '/800/600',
-                'https://picsum.photos/id/' + (uniqueId + 3) + '/800/600'
-            ]
-        };
-    }
-
     async function loadProjects() {
-        var cached = localStorage.getItem('portfolio_projects');
-        var cacheTime = localStorage.getItem('portfolio_cache_time');
-        if (cached && cacheTime && (Date.now() - parseInt(cacheTime)) < CONFIG.cacheDuration) {
-            try {
-                projects = JSON.parse(cached);
-                if (projects.length > 60) return; // تم التحديث
-            } catch(e) {}
-        }
         projects = PROJECTS_DB.map(function(project) {
             var images = getProjectImages(project.id);
-            return {
-                ...project,
+            return Object.assign({}, project, {
                 images: images.gallery,
                 coverImage: images.cover,
                 views: parseInt(localStorage.getItem('view_' + project.id)) || 0
-            };
+            });
         });
         projects.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
-        localStorage.setItem('portfolio_projects', JSON.stringify(projects));
-        localStorage.setItem('portfolio_cache_time', Date.now().toString());
-        console.log('✅ ' + projects.length + ' projects loaded');
+        console.log('✅ ' + projects.length + ' projects loaded (local images)');
     }
 
     function setupTechFilters() {
@@ -650,7 +579,7 @@
         var stars = renderStars(project.rating || 0);
         return '<article class="project-card" data-project-id="' + project.id + '" data-category="' + project.category + '">' +
             '<div class="project-card-media">' +
-                '<img src="' + project.coverImage + '" alt="' + project.name + '" class="project-card-image" loading="lazy" width="800" height="600">' +
+                '<img src="' + project.coverImage + '" alt="' + project.name + '" class="project-card-image" loading="lazy" width="800" height="600" onerror="this.onerror=null;this.src=\'' + CONFIG.fallbackImage + '\';">' +
                 '<div class="project-card-overlay">' +
                     '<a href="' + project.link + '" class="view-project-btn" onclick="event.stopPropagation();">' +
                         '<i class="fa-solid fa-eye"></i> عرض التفاصيل' +
@@ -777,8 +706,8 @@
             return '<div class="modal-gallery"><img src="' + project.coverImage + '" alt="' + project.name + '" class="modal-gallery-image"></div>';
         }
         return '<div class="modal-gallery">' +
-            '<img src="' + project.images[0] + '" alt="' + project.name + '" class="modal-gallery-image" id="modalGalleryImage">' +
-            (project.images.length > 1 ? 
+            '<img src="' + project.images[0] + '" alt="' + project.name + '" class="modal-gallery-image" id="modalGalleryImage" onerror="this.onerror=null;this.src=\'' + CONFIG.fallbackImage + '\';">' +
+            (project.images.length > 1 ?
                 '<div class="gallery-nav">' +
                     '<button id="galleryPrev" aria-label="السابق"><i class="fa-solid fa-chevron-left"></i></button>' +
                     '<button id="galleryNext" aria-label="التالي"><i class="fa-solid fa-chevron-right"></i></button>' +
@@ -944,7 +873,7 @@
 
     window.PortfolioSystem = {
         projects: function() { return projects; },
-        refresh: function() { localStorage.removeItem('portfolio_projects'); loadProjects().then(function() { renderProjects(); }); },
+        refresh: function() { loadProjects().then(function() { renderProjects(); }); },
         shareProject: shareProject,
         updateOpenGraph: updateOpenGraph,
         resetOpenGraph: resetOpenGraph,
@@ -956,6 +885,5 @@
     window.resetOpenGraph = resetOpenGraph;
     window.shareProject = shareProject;
 
-    console.log('✅ Portfolio System Ready with ' + projects.length + ' projects');
-
+    console.log('✅ Portfolio System Ready — Local Images Mode');
 })();

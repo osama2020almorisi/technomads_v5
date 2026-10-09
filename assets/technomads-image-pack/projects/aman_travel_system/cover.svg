@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#071a35"/><stop offset=".55" stop-color="#10182b"/><stop offset="1" stop-color="#06b6d4" stop-opacity=".3"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#06b6d4"/><stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#06b6d4" stroke-opacity=".14"/>
+    </pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000" flood-opacity=".65"/>
+    </filter>
+  </defs>
+  
+  <rect width="800" height="600" rx="34" fill="url(#bg)"/>
+  <rect width="800" height="600" rx="34" fill="url(#grid)"/>
+  <circle cx="110" cy="110" r="140" fill="#06b6d4" opacity=".08"/>
+  <circle cx="700" cy="480" r="180" fill="#2563eb" opacity=".09"/>
+  <path d="M0 475 Q250 400 430 505 T800 470 V600 H0Z" fill="url(#shine)" opacity=".09"/>
+  
+  <g filter="url(#shadow)" transform="translate(0 4) rotate(-7 400 300)">
+    <rect x="150" y="125" width="500" height="310" rx="28" fill="#0a1327" stroke="#06b6d4" stroke-width="3"/>
+    <rect x="170" y="145" width="460" height="270" rx="17" fill="#111d37"/>
+    
+    <!-- رمز أمان السفر الاحترافي -->
+    <g transform="translate(300, 200) scale(1.5)">
+      <!-- درع أمان رقمي -->
+      <path d="M 0 -30 C 20 -40, 40 -40, 60 -30 V 20 C 60 50, 0 65, -60 20 V -30 C -40 -40, -20 -40, 0 -30" 
+            fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+      
+      <!-- بوصلة رقمية (مؤشر موقع) -->
+      <circle cx="0" cy="0" r="30" fill="none" stroke="#06b6d4" stroke-width="2"/>
+      <line x1="0" y1="-30" x2="0" y2="30" stroke="#06b6d4" stroke-width="2"/>
+      <line x1="-30" y1="0" x2="30" y2="0" stroke="#06b6d4" stroke-width="2"/>
+      <polyline points="-8,-8 0,-25 8,-8" fill="#06b6d4"/>
+      
+      <!-- طائرة عابرة للقارات -->
+      <path d="M 15 15 L 20 -15 L 35 15 L 30 20 L 22 18 L 18 25 L 12 25 L 14 18 L 10 20 Z" 
+            fill="#2563eb" stroke="#ffffff" stroke-width="1"/>
+      
+      <!-- شبكة بيانات (نقاط اتصال) -->
+      <circle cx="-20" cy="-20" r="2" fill="#ffffff" opacity="0.6"/>
+      <circle cx="20" cy="20" r="2" fill="#ffffff" opacity="0.6"/>
+      <path d="M -20 -20 Q 0 -10, 20 -20" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.4"/>
+    </g>
+  </g>
+  
+  <g>
+    <rect x="28" y="24" width="190" height="38" rx="19" fill="#07111f" stroke="#06b6d4" stroke-opacity=".7"/>
+    <circle cx="49" cy="43" r="6" fill="#06b6d4"/>
+    <text x="64" y="49" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="2" fill="#d7e8ff">TECHNOMADS / TRAVEL</text>
+    <rect x="28" y="488" width="744" height="84" rx="22" fill="#08111f" fill-opacity=".92" stroke="#06b6d4" stroke-opacity=".55"/>
+    <rect x="48" y="506" width="48" height="48" rx="14" fill="url(#shine)"/>
+    <text x="72" y="540" text-anchor="middle" font-size="29" font-weight="700" fill="#061324" font-family="Arial,sans-serif">✈</text>
+    <text x="115" y="524" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#f2f7ff">نظام أمان للسفر</text>
+    <text x="115" y="549" font-family="Arial,sans-serif" font-size="13" letter-spacing="2" fill="#06b6d4">AMAN_TRAVEL_SYSTEM</text>
+    <rect x="695" y="515" width="54" height="34" rx="17" fill="#06b6d4" fill-opacity=".18" stroke="#06b6d4"/>
+    <text x="722" y="537" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#e7f7ff">01</text>
+  </g>
+</svg>

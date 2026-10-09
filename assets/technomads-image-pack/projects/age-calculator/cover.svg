@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <!-- التدرجات اللونية الخلفية -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070d1e"/>
+      <stop offset="60%" stop-color="#0f1933"/>
+      <stop offset="100%" stop-color="#082b4c"/>
+    </linearGradient>
+
+    <!-- تدرج النيون الحديث (السماوي والأرجواني) -->
+    <linearGradient id="neonCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+
+    <linearGradient id="neonPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+
+    <linearGradient id="goldGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#f43f5e"/>
+    </linearGradient>
+
+    <!-- نمط الشبكة التقنية -->
+    <pattern id="techGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.08"/>
+      <circle cx="32" cy="0" r="1.5" fill="#38bdf8" opacity="0.3"/>
+    </pattern>
+
+    <!-- التأثيرات والظلال الضوئية -->
+    <filter id="ultraGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur1"/>
+      <feGaussianBlur stdDeviation="4" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="heavyShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="800" height="600" rx="32" fill="url(#bgGrad)"/>
+  <rect width="800" height="600" rx="32" fill="url(#techGrid)"/>
+
+  <!-- Ambient Light Orbs -->
+  <circle cx="400" cy="270" r="220" fill="#38bdf8" opacity="0.06" filter="url(#ultraGlow)"/>
+  <circle cx="400" cy="270" r="120" fill="#6366f1" opacity="0.08" filter="url(#ultraGlow)"/>
+
+  <!-- ================= MAIN CENTERPIECE (PRO ICON) ================= -->
+  <g filter="url(#heavyShadow)">
+    
+    <!-- Outer Holographic Rings -->
+    <g transform="translate(400, 260)">
+      <!-- External Tech Dial -->
+      <circle cx="0" cy="0" r="155" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.25" stroke-dasharray="4, 12"/>
+      <circle cx="0" cy="0" r="142" fill="#081329" fill-opacity="0.8" stroke="url(#neonCyan)" stroke-width="2" stroke-opacity="0.8"/>
+      
+      <!-- Rotating Scale Marks -->
+      <circle cx="0" cy="0" r="128" fill="none" stroke="#818cf8" stroke-width="3" stroke-dasharray="2, 18" stroke-opacity="0.6"/>
+      <circle cx="0" cy="0" r="118" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="40, 8, 10, 8" stroke-opacity="0.4"/>
+
+      <!-- Inner Glow Backdrop -->
+      <circle cx="0" cy="0" r="105" fill="#0e1a38" stroke="url(#neonPurple)" stroke-width="2"/>
+
+      <!-- Digital Tech Accents Around Hourglass -->
+      <path d="M -90 0 A 90 90 0 0 1 0 -90" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" filter="url(#ultraGlow)"/>
+      <path d="M 90 0 A 90 90 0 0 1 0 90" fill="none" stroke="#c084fc" stroke-width="4" stroke-linecap="round" filter="url(#ultraGlow)"/>
+
+      <!-- Floating Tech Nodes -->
+      <circle cx="-90" cy="0" r="5" fill="#38bdf8" filter="url(#ultraGlow)"/>
+      <circle cx="90" cy="0" r="5" fill="#c084fc" filter="url(#ultraGlow)"/>
+      <circle cx="0" cy="-90" r="4" fill="#38bdf8"/>
+      <circle cx="0" cy="90" r="4" fill="#c084fc"/>
+
+      <!-- CENTER ICON: Advanced Futuristic Hourglass & Calendar Symbol -->
+      <g filter="url(#ultraGlow)">
+        <!-- Hourglass Outer Frame -->
+        <path d="M -42 -62 L 42 -62 L 42 -52 Q 22 -20 5 0 Q 22 20 42 52 L 42 62 L -42 62 L -42 52 Q -22 20 -5 0 Q -22 -20 -42 -52 Z" 
+              fill="#061024" fill-opacity="0.6" stroke="url(#neonCyan)" stroke-width="3.5" stroke-linejoin="round"/>
+
+        <!-- Top and Bottom Neon Plates -->
+        <rect x="-48" y="-67" width="96" height="8" rx="4" fill="url(#neonCyan)"/>
+        <rect x="-48" y="59" width="96" height="8" rx="4" fill="url(#neonCyan)"/>
+
+        <!-- Sand/Energy Upper Chamber -->
+        <path d="M -32 -50 L 32 -50 Q 18 -22 0 -5 Q -18 -22 -32 -50 Z" fill="url(#neonCyan)" opacity="0.75"/>
+        
+        <!-- Falling Energy Stream -->
+        <line x1="0" y1="-5" x2="0" y2="25" stroke="#38bdf8" stroke-width="3" stroke-dasharray="4, 3" stroke-linecap="round"/>
+
+        <!-- Sand/Energy Lower Chamber (Accumulated Age/Time) -->
+        <path d="M -36 50 L 36 50 Q 22 25 0 18 Q -22 25 -36 50 Z" fill="url(#neonPurple)" opacity="0.9"/>
+
+        <!-- Floating Digital Time Particles -->
+        <circle cx="-12" cy="-30" r="2" fill="#ffffff" opacity="0.9"/>
+        <circle cx="10" cy="-22" r="1.5" fill="#ffffff" opacity="0.8"/>
+        <circle cx="15" cy="38" r="2" fill="#ffffff" opacity="0.9"/>
+        <circle cx="-10" cy="42" r="1.5" fill="#ffffff" opacity="0.7"/>
+      </g>
+
+      <!-- Calendar Badges Floating Side Icons -->
+      <g transform="translate(-75, -45)" filter="url(#ultraGlow)">
+        <rect x="-14" y="-14" width="28" height="28" rx="8" fill="#091833" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="0" y="5" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">YRS</text>
+      </g>
+      <g transform="translate(75, 45)" filter="url(#ultraGlow)">
+        <rect x="-14" y="-14" width="28" height="28" rx="8" fill="#091833" stroke="#c084fc" stroke-width="1.5"/>
+        <text x="0" y="5" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#c084fc" text-anchor="middle">DAYS</text>
+      </g>
+
+    </g>
+  </g>
+
+  <!-- ================= TOP HEADER BADGE ================= -->
+  <g transform="translate(35, 30)">
+    <rect x="0" y="0" width="230" height="40" rx="20" fill="#061021" fill-opacity="0.9" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.6"/>
+    <circle cx="22" cy="20" r="6" fill="#38bdf8" filter="url(#ultraGlow)"/>
+    <text x="38" y="25" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="800" letter-spacing="1.5" fill="#e0f2fe">AGE CALCULATOR PRO</text>
+  </g>
+
+  <!-- ================= BOTTOM INFO PANEL ================= -->
+  <g transform="translate(28, 488)">
+    <!-- Main Card Backdrop -->
+    <rect x="0" y="0" width="744" height="84" rx="24" fill="#060d1f" fill-opacity="0.92" stroke="url(#neonCyan)" stroke-width="1.5" filter="url(#heavyShadow)"/>
+    
+    <!-- Left Neon Icon Box -->
+    <g transform="translate(18, 18)">
+      <rect x="0" y="0" width="48" height="48" rx="16" fill="url(#neonCyan)" filter="url(#ultraGlow)"/>
+      <path d="M 16 24 L 32 24 M 24 16 L 24 32" stroke="#040d1a" stroke-width="4" stroke-linecap="round"/>
+    </g>
+
+    <!-- Project Title (Arabic & English) -->
+    <text x="82" y="37" font-family="'Segoe UI', Tahoma, Arial, sans-serif" font-size="23" font-weight="800" fill="#ffffff">حاسبة العمر المتطورة</text>
+    <text x="82" y="60" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="2.5" fill="#38bdf8">PRECISION AGE &amp; TIME ANALYTICS</text>
+
+    <!-- Version Badge -->
+    <g transform="translate(650, 25)">
+      <rect x="0" y="0" width="70" height="34" rx="12" fill="#101f42" stroke="#818cf8" stroke-width="1.5"/>
+      <text x="35" y="22" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="bold" fill="#38bdf8" text-anchor="middle">v2.0</text>
+    </g>
+  </g>
+</svg>

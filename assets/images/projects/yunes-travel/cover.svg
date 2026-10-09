@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <!-- Dynamic Gold & Deep Dark Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181105"/>
+      <stop offset="40%" stop-color="#090f1d"/>
+      <stop offset="100%" stop-color="#050a12"/>
+    </linearGradient>
+
+    <linearGradient id="goldShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="30%" stop-color="#f59e0b"/>
+      <stop offset="70%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+
+    <linearGradient id="amberGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+
+    <!-- Tech Grid Pattern -->
+    <pattern id="techGrid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.12"/>
+      <circle cx="28" cy="0" r="1.5" fill="#f59e0b" opacity="0.25"/>
+    </pattern>
+
+    <!-- Advanced Ultra Glow & Depth Filters -->
+    <filter id="goldUltraGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur1"/>
+      <feGaussianBlur stdDeviation="4" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="heavyShadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#000000" flood-opacity="0.85"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base & Grid -->
+  <rect width="800" height="600" rx="34" fill="url(#bgGrad)"/>
+  <rect width="800" height="600" rx="34" fill="url(#techGrid)"/>
+
+  <!-- Ambient Light Orbs -->
+  <circle cx="400" cy="260" r="230" fill="#f59e0b" opacity="0.07" filter="url(#goldUltraGlow)"/>
+  <circle cx="400" cy="260" r="140" fill="#fbbf24" opacity="0.08" filter="url(#goldUltraGlow)"/>
+  <path d="M0 475 Q250 400 430 505 T800 470 V600 H0Z" fill="url(#goldShine)" opacity=".08"/>
+
+  <!-- ================= LUXURY CENTRAL ICON (YUNES TRAVEL EMBLEM V2) ================= -->
+  <g filter="url(#heavyShadow)">
+    <g transform="translate(400, 260)">
+      
+      <!-- Outer Tech & Navigation Rings -->
+      <circle cx="0" cy="0" r="156" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4, 12"/>
+      <circle cx="0" cy="0" r="144" fill="#081120" fill-opacity="0.9" stroke="url(#goldShine)" stroke-width="2.5" stroke-opacity="0.85"/>
+      <circle cx="0" cy="0" r="130" fill="none" stroke="#fbbf24" stroke-width="3" stroke-dasharray="2, 16" stroke-opacity="0.6"/>
+      <circle cx="0" cy="0" r="108" fill="#0a172a" stroke="url(#goldShine)" stroke-width="2"/>
+
+      <!-- Orbit Arcs -->
+      <path d="M -92 0 A 92 92 0 0 1 0 -92" fill="none" stroke="#fbbf24" stroke-width="4" stroke-linecap="round" filter="url(#goldUltraGlow)"/>
+      <path d="M 92 0 A 92 92 0 0 1 0 92" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" filter="url(#goldUltraGlow)"/>
+
+      <!-- Illuminated Nodes -->
+      <circle cx="-92" cy="0" r="5" fill="#fef08a" filter="url(#goldUltraGlow)"/>
+      <circle cx="92" cy="0" r="5" fill="#f59e0b" filter="url(#goldUltraGlow)"/>
+
+      <!-- Compass Rose Backdrop -->
+      <polygon points="0,-85 10,-22 0,0 -10,-22" fill="url(#goldShine)" opacity="0.9"/>
+      <polygon points="0,85 10,22 0,0 -10,22" fill="#d97706" opacity="0.75"/>
+      <polygon points="-85,0 -22,-10 0,0 -22,10" fill="#d97706" opacity="0.75"/>
+      <polygon points="85,0 22,-10 0,0 22,10" fill="url(#goldShine)" opacity="0.9"/>
+
+      <!-- Center Globe Sphere -->
+      <g filter="url(#goldUltraGlow)">
+        <circle cx="0" cy="0" r="56" fill="#060d19" stroke="url(#goldShine)" stroke-width="3.5"/>
+        <ellipse cx="0" cy="0" rx="56" ry="22" fill="none" stroke="#fef08a" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="0" cy="0" rx="22" ry="56" fill="none" stroke="#fef08a" stroke-width="1.5" opacity="0.7"/>
+        <line x1="-56" y1="0" x2="56" y2="0" stroke="#fbbf24" stroke-width="1.5" opacity="0.6"/>
+        <line x1="0" y1="-56" x2="0" y2="56" stroke="#fbbf24" stroke-width="1.5" opacity="0.6"/>
+      </g>
+
+      <!-- Dynamic Gold Jet Soaring Across Globe -->
+      <path d="M -70 38 Q -32 -18 48 -45" fill="none" stroke="url(#goldShine)" stroke-width="4.5" stroke-linecap="round" filter="url(#goldUltraGlow)"/>
+      <g transform="translate(48, -45) rotate(35)" filter="url(#goldUltraGlow)">
+        <path d="M 0 -24 L 7 -7 L 26 2 L 26 10 L 7 3 L 4 20 L 12 25 L 12 30 L 0 26 L -12 30 L -12 25 L -4 20 L -7 3 L -26 10 L -26 2 L -7 -7 Z" 
+              fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+      </g>
+
+      <!-- Floating Badges -->
+      <g transform="translate(-88, -52)" filter="url(#goldUltraGlow)">
+        <rect x="0" y="0" width="42" height="28" rx="8" fill="#081120" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="21" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#fef08a">LUX</text>
+      </g>
+      <g transform="translate(50, 26)" filter="url(#goldUltraGlow)">
+        <rect x="0" y="0" width="44" height="28" rx="8" fill="#081120" stroke="#f59e0b" stroke-width="1.5"/>
+        <text x="22" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#fbbf24">SAFE</text>
+      </g>
+
+    </g>
+  </g>
+
+  <!-- ================= TOP BADGE ================= -->
+  <g transform="translate(35, 30)">
+    <rect x="0" y="0" width="220" height="40" rx="20" fill="#06111f" fill-opacity="0.9" stroke="#fbbf24" stroke-width="1.5" stroke-opacity="0.7"/>
+    <circle cx="22" cy="20" r="6" fill="#fbbf24" filter="url(#goldUltraGlow)"/>
+    <text x="38" y="25" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="800" letter-spacing="1.5" fill="#d7e8ff">TECHNOMADS / TRAVEL</text>
+  </g>
+
+  <!-- ================= BOTTOM PANEL ================= -->
+  <g transform="translate(28, 488)">
+    <rect x="0" y="0" width="744" height="84" rx="24" fill="#08111f" fill-opacity="0.92" stroke="#fbbf24" stroke-width="1.5" stroke-opacity="0.6" filter="url(#heavyShadow)"/>
+    
+    <!-- Left Icon Box -->
+    <g transform="translate(20, 18)">
+      <rect x="0" y="0" width="48" height="48" rx="14" fill="url(#goldShine)" filter="url(#goldUltraGlow)"/>
+      <text x="24" y="34" text-anchor="middle" font-size="28" font-weight="700" fill="#061324" font-family="Arial,sans-serif">✈</text>
+    </g>
+
+    <!-- Project Title -->
+    <text x="84" y="37" font-family="'Segoe UI', Tahoma, Arial, sans-serif" font-size="24" font-weight="800" fill="#f2f7ff">Yunes Travel</text>
+    <text x="84" y="60" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="2.5" fill="#fbbf24">YUNES-TRAVEL-SYSTEM</text>
+
+    <!-- Version Badge -->
+    <g transform="translate(660, 25)">
+      <rect x="0" y="0" width="60" height="34" rx="12" fill="#fbbf24" fill-opacity="0.18" stroke="#fbbf24" stroke-width="1.5"/>
+      <text x="30" y="22" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="bold" fill="#e7f7ff" text-anchor="middle">01</text>
+    </g>
+  </g>
+</svg>

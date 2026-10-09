@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <!-- التدرجات اللونية الخلفية للمشروع الطبي -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#071f20"/>
+      <stop offset=".55" stop-color="#10182b"/>
+      <stop offset="1" stop-color="#10b981" stop-opacity=".3"/>
+    </linearGradient>
+    
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#10b981"/>
+      <stop offset="1" stop-color="#14b8a6"/>
+    </linearGradient>
+    
+    <linearGradient id="medGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#0d9488"/>
+    </linearGradient>
+
+    <!-- نمط الشبكة التقنية -->
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#10b981" stroke-opacity=".14"/>
+    </pattern>
+
+    <!-- المؤثرات والظلال -->
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000" flood-opacity=".65"/>
+    </filter>
+    
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- الخلفية الأساسية للمشروع -->
+  <rect width="800" height="600" rx="34" fill="url(#bg)"/>
+  <rect width="800" height="600" rx="34" fill="url(#grid)"/>
+  <circle cx="110" cy="110" r="140" fill="#10b981" opacity=".08"/>
+  <circle cx="700" cy="480" r="180" fill="#14b8a6" opacity=".09"/>
+  <path d="M0 475 Q250 400 430 505 T800 470 V600 H0Z" fill="url(#shine)" opacity=".09"/>
+
+  <!-- ================= الأيقونة المركزية الطبية بدلاً من الشاشة ================= -->
+  <g filter="url(#shadow)" transform="translate(400, 260)">
+    <!-- إطار دائري احترافي محيط بالأيقونة -->
+    <circle cx="0" cy="0" r="140" fill="#0a1327" stroke="#10b981" stroke-width="3.5" stroke-opacity=".8"/>
+    <circle cx="0" cy="0" r="122" fill="#111d37" stroke="#14b8a6" stroke-width="2" stroke-dasharray="6,8" opacity=".7"/>
+    <circle cx="0" cy="0" r="102" fill="#071723" stroke="#10b981" stroke-width="1" opacity=".4"/>
+
+    <!-- الأيقونة الرئيسية المضيئة (سماعة طبية + نبض القلب الرقمي) -->
+    <g filter="url(#glow)">
+      <!-- درع/صليب طبي خلفي ناعم -->
+      <path d="M -20 -50 L 20 -50 L 20 -20 L 50 -20 L 50 20 L 20 20 L 20 50 L -20 50 L -20 20 L -50 20 L -50 -20 L -20 -20 Z" 
+            fill="#10b981" fill-opacity="0.12" stroke="#10b981" stroke-width="2" stroke-linejoin="round"/>
+
+      <!-- السماعة الطبية النيون (Stethoscope) -->
+      <path d="M -45 -40 C -45 10, -20 35, 0 35 C 20 35, 45 10, 45 -40" 
+            fill="none" stroke="url(#medGrad)" stroke-width="6" stroke-linecap="round"/>
+      
+      <!-- أنبوب السماعة السفلي والجرس -->
+      <path d="M 0 35 L 0 55" fill="none" stroke="url(#medGrad)" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="0" cy="62" r="12" fill="#0a1327" stroke="#10b981" stroke-width="4"/>
+      <circle cx="0" cy="62" r="5" fill="#34d399"/>
+
+      <!-- أذني السماعة -->
+      <circle cx="-45" cy="-42" r="5" fill="#10b981"/>
+      <circle cx="45" cy="-42" r="5" fill="#10b981"/>
+
+      <!-- خط نبض القلب الرقمي M-Pulse في المنتصف -->
+      <path d="M -60 0 L -25 0 L -15 -22 L -5 22 L 8 -28 L 18 15 L 28 0 L 60 0" 
+            fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- حلقات بيانات وتقنية عائمة حول الأيقونة -->
+    <circle cx="0" cy="0" r="85" fill="none" stroke="#14b8a6" stroke-width="2" stroke-dasharray="20,40" opacity=".6"/>
+  </g>
+
+  <!-- ================= العناصر والشعارات النصية ================= -->
+  <g>
+    <!-- الشريط العلوي -->
+    <rect x="28" y="24" width="220" height="38" rx="19" fill="#07111f" stroke="#10b981" stroke-opacity=".7"/>
+    <circle cx="49" cy="43" r="6" fill="#10b981"/>
+    <text x="64" y="49" font-family="Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="1.5" fill="#d7e8ff">TECHNOMADS / MEDICAL</text>
+
+    <!-- الشريط السفلي للمشروع الطبي -->
+    <rect x="28" y="488" width="744" height="84" rx="22" fill="#08111f" fill-opacity=".92" stroke="#10b981" stroke-opacity=".55"/>
+    <rect x="48" y="506" width="48" height="48" rx="14" fill="url(#shine)"/>
+    <text x="72" y="540" text-anchor="middle" font-size="29" font-weight="700" fill="#061324" font-family="Arial,sans-serif">✚</text>
+    
+    <!-- النصوص الطبية الصحيحة والجديدة -->
+    <text x="115" y="524" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#f2f7ff">النظام الطبي الرقمي - الإصدار الأول</text>
+    <text x="115" y="549" font-family="Arial,sans-serif" font-size="13" letter-spacing="2" fill="#10b981">MEDICAL-DIGITAL-SYSTEM</text>
+    
+    <!-- رقم الإصدار -->
+    <rect x="695" y="515" width="54" height="34" rx="17" fill="#10b981" fill-opacity=".18" stroke="#10b981"/>
+    <text x="722" y="537" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#e7f7ff">01</text>
+  </g>
+</svg>

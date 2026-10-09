@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#040e21"/>
+      <stop offset=".5" stop-color="#091833"/>
+      <stop offset="1" stop-color="#00f2fe" stop-opacity=".25"/>
+    </linearGradient>
+    
+    <linearGradient id="cyberShine" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#00f2fe"/>
+      <stop offset="1" stop-color="#4facfe"/>
+    </linearGradient>
+
+    <linearGradient id="cubeGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#00f2fe" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#0052d4" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <!-- Pattern -->
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#00f2fe" stroke-opacity=".1"/>
+      <circle cx="30" cy="0" r="1" fill="#00f2fe" opacity="0.3"/>
+    </pattern>
+
+    <!-- Filters -->
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="22" stdDeviation="20" flood-color="#000" flood-opacity=".8"/>
+    </filter>
+
+    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Base & Grid -->
+  <rect width="800" height="600" rx="34" fill="url(#bg)"/>
+  <rect width="800" height="600" rx="34" fill="url(#grid)"/>
+  
+  <!-- Ambient Light -->
+  <circle cx="400" cy="250" r="200" fill="#00f2fe" opacity=".08" filter="url(#neonGlow)"/>
+  <path d="M0 475 Q250 400 430 505 T800 470 V600 H0Z" fill="url(#cyberShine)" opacity=".08"/>
+
+  <!-- ================= LARGE CLEAR 3D ICON ================= -->
+  <g filter="url(#shadow)" transform="translate(400, 245)">
+    <g filter="url(#neonGlow)" transform="scale(2.3)">
+      
+      <!-- Top Face -->
+      <polygon points="0,-45 40,-22 0,0 -40,-22" fill="#00f2fe" opacity="0.95"/>
+      
+      <!-- Right Face -->
+      <polygon points="0,0 40,-22 40,25 0,47" fill="url(#cubeGradient)"/>
+      
+      <!-- Left Face -->
+      <polygon points="0,0 -40,-22 -40,25 0,47" fill="#003399" opacity="0.95"/>
+
+      <!-- Inner Wireframe Accent -->
+      <polygon points="0,-25 20,-12 0,0 -20,-12" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+      <polygon points="0,0 20,-12 20,12 0,24" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+      <polygon points="0,0 -20,-12 -20,12 0,24" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+
+      <!-- Core Indicator Bulbs -->
+      <circle cx="-25" cy="5" r="2" fill="#00f2fe"/>
+      <circle cx="25" cy="5" r="2" fill="#ffffff"/>
+    </g>
+
+    <!-- Badges Flanking the Large Icon -->
+    <g transform="translate(-140, -100)" filter="url(#neonGlow)">
+      <rect x="0" y="0" width="52" height="28" rx="8" fill="#040b19" stroke="#00f2fe" stroke-width="1.5"/>
+      <text x="26" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#00f2fe">DATA</text>
+    </g>
+
+    <g transform="translate(90, 80)" filter="url(#neonGlow)">
+      <rect x="0" y="0" width="52" height="28" rx="8" fill="#040b19" stroke="#4facfe" stroke-width="1.5"/>
+      <text x="26" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff">V2.0</text>
+    </g>
+  </g>
+
+  <!-- ================= TOP BADGE AND BOTTOM PANEL ================= -->
+  <g>
+    <!-- Upper Badge -->
+    <rect x="28" y="24" width="210" height="38" rx="19" fill="#040e21" stroke="#00f2fe" stroke-opacity=".7"/>
+    <circle cx="49" cy="43" r="6" fill="#00f2fe" filter="url(#neonGlow)"/>
+    <text x="64" y="49" font-family="Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#d7e8ff">TECHNOMADS / DIGITAL</text>
+    
+    <!-- Bottom Panel -->
+    <rect x="28" y="488" width="744" height="84" rx="22" fill="#040e21" fill-opacity=".92" stroke="#00f2fe" stroke-opacity=".55"/>
+    <rect x="48" y="506" width="48" height="48" rx="14" fill="url(#cyberShine)" filter="url(#neonGlow)"/>
+    <text x="72" y="540" text-anchor="middle" font-size="29" font-weight="700" fill="#040e21" font-family="Arial,sans-serif">⌘</text>
+    <text x="115" y="524" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#f2f7ff">التخزين المحلي V2</text>
+    <text x="115" y="549" font-family="Arial,sans-serif" font-size="13" letter-spacing="2" fill="#00f2fe">LOCALSTORAGE-V2</text>
+    
+    <!-- Version Tag -->
+    <rect x="695" y="515" width="54" height="34" rx="17" fill="#00f2fe" fill-opacity=".18" stroke="#00f2fe"/>
+    <text x="722" y="537" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#e7f7ff">01</text>
+  </g>
+</svg>

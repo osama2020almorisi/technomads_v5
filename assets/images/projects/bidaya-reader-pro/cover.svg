@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <!-- Background Gradients (Hone) -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#1c1036"/>
+      <stop offset=".55" stop-color="#10182b"/>
+      <stop offset="1" stop-color="#a855f7" stop-opacity=".3"/>
+    </linearGradient>
+    
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#a855f7"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+    
+    <!-- Neon Reader Gradient for Icon -->
+    <linearGradient id="readerGlow" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ec4899"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+
+    <!-- Tech Grid Pattern -->
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#a855f7" stroke-opacity=".14"/>
+    </pattern>
+
+    <!-- Filters -->
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000" flood-opacity=".65"/>
+    </filter>
+
+    <filter id="iconGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base & Grid -->
+  <rect width="800" height="600" rx="34" fill="url(#bg)"/>
+  <rect width="800" height="600" rx="34" fill="url(#grid)"/>
+  <circle cx="110" cy="110" r="140" fill="#a855f7" opacity=".08"/>
+  <circle cx="700" cy="480" r="180" fill="#ec4899" opacity=".09"/>
+  <path d="M0 475 Q250 400 430 505 T800 470 V600 H0Z" fill="url(#shine)" opacity=".09"/>
+
+  <!-- ================= LUXURY CENTRAL ICON (Replaces Tilted Screen) ================= -->
+  <g filter="url(#shadow)" transform="translate(400, 260)">
+    
+    <!-- Outer Glow Circle -->
+    <circle cx="0" cy="0" r="145" fill="#0a1327" stroke="#a855f7" stroke-width="3" stroke-opacity=".8"/>
+    <circle cx="0" cy="0" r="128" fill="#111d37" stroke="#ec4899" stroke-width="2" stroke-dasharray="6,6" opacity=".6"/>
+
+    <!-- ICON DESIGN: Neon Book, Reader & Progress (Bidaya Reader Pro) -->
+    <g filter="url(#iconGlow)">
+      <!-- External Tech Rings -->
+      <circle cx="0" cy="0" r="105" fill="none" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="15,40" opacity=".5"/>
+      <circle cx="0" cy="0" r="90" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="40,20" opacity=".3"/>
+
+      <!-- CENTER ICON: Advanced Futuristic Open Book -->
+      <!-- Spine -->
+      <path d="M 0,-60 L 0,60" fill="none" stroke="url(#shine)" stroke-width="5" stroke-linecap="round"/>
+      
+      <!-- Right Pages (Bidaya - Open) -->
+      <path d="M 0,-60 C 25,-60, 45,-50, 45,0 C 45,50, 25,60, 0,60 Z" fill="#061024" fill-opacity="0.8" stroke="url(#readerGlow)" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 12,-45 L 33,-45 M 12,-30 L 33,-30 M 12,-15 L 33,-15 M 12,0 L 33,0 M 12,15 L 33,15" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      
+      <!-- Left Pages (Reader - Process) -->
+      <path d="M 0,-60 C -25,-60, -45,-50, -45,0 C -45,50, -25,60, 0,60 Z" fill="#061024" fill-opacity="0.8" stroke="url(#readerGlow)" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M -12,-45 L -33,-45 M -12,-30 L -33,-30 M -12,-15 L -33,-15" fill="none" stroke="#ec4899" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+
+      <!-- Center Glow Points -->
+      <circle cx="0" cy="-60" r="5" fill="#ec4899"/>
+      <circle cx="0" cy="60" r="5" fill="#a855f7"/>
+
+      <!-- Floating Reader Indicators -->
+      <g transform="translate(-75, -50)">
+        <rect x="0" y="0" width="30" height="30" rx="8" fill="#ec4899" fill-opacity="0.3" stroke="#ec4899"/>
+        <text x="15" y="19" text-anchor="middle" font-size="10" font-weight="bold" fill="#ec4899">TEXT</text>
+      </g>
+      <g transform="translate(45, 20)">
+        <rect x="0" y="0" width="30" height="30" rx="8" fill="#a855f7" fill-opacity="0.3" stroke="#a855f7"/>
+        <text x="15" y="19" text-anchor="middle" font-size="10" font-weight="bold" fill="#a855f7">PRO</text>
+      </g>
+    </g>
+
+  </g>
+
+  <!-- ================= TOP BADGE AND BOTTOM PANEL ================= -->
+  <g>
+    <!-- Upper Badge -->
+    <rect x="28" y="24" width="200" height="38" rx="19" fill="#07111f" stroke="#a855f7" stroke-opacity=".7"/>
+    <circle cx="49" cy="43" r="6" fill="#a855f7"/>
+    <text x="64" y="49" font-family="Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#d7e8ff">TECHNOMADS / READER</text>
+    
+    <!-- Bottom Panel -->
+    <rect x="28" y="488" width="744" height="84" rx="22" fill="#08111f" fill-opacity=".92" stroke="#a855f7" stroke-opacity=".55"/>
+    <rect x="48" y="506" width="48" height="48" rx="14" fill="url(#shine)"/>
+    <text x="72" y="540" text-anchor="middle" font-size="29" font-weight="700" fill="#061324" font-family="Arial,sans-serif">▤</text>
+    <text x="115" y="524" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#f2f7ff">قارئ البداية الاحترافي</text>
+    <text x="115" y="549" font-family="Arial,sans-serif" font-size="13" letter-spacing="2" fill="#a855f7">BIDAYA-READER-PRO</text>
+    
+    <!-- Version Tag -->
+    <rect x="695" y="515" width="54" height="34" rx="17" fill="#a855f7" fill-opacity=".18" stroke="#a855f7"/>
+    <text x="722" y="537" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#e7f7ff">01</text>
+  </g>
+</svg>
