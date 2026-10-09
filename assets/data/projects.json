@@ -1,0 +1,74 @@
+[
+  {
+    "title": "بوابة أعمال",
+    "category": "web",
+    "description": "منصة ويب مؤسسية",
+    "icon": "fa-building"
+  },
+  {
+    "title": "متجر نوفا",
+    "category": "web",
+    "description": "متجر إلكتروني سريع",
+    "icon": "fa-cart-shopping"
+  },
+  {
+    "title": "تطبيق رحلتي",
+    "category": "apps",
+    "description": "تطبيق سفر وخدمات",
+    "icon": "fa-plane"
+  },
+  {
+    "title": "مدير المهام",
+    "category": "apps",
+    "description": "تطبيق إنتاجية",
+    "icon": "fa-list-check"
+  },
+  {
+    "title": "محلل المبيعات",
+    "category": "tools",
+    "description": "لوحة تحليل بيانات",
+    "icon": "fa-chart-line"
+  },
+  {
+    "title": "مولد الفواتير",
+    "category": "tools",
+    "description": "أداة فواتير بسيطة",
+    "icon": "fa-file-invoice"
+  },
+  {
+    "title": "أكاديمية كود",
+    "category": "web",
+    "description": "منصة تعليمية",
+    "icon": "fa-graduation-cap"
+  },
+  {
+    "title": "توصيل الآن",
+    "category": "apps",
+    "description": "تطبيق طلبات وتوصيل",
+    "icon": "fa-motorcycle"
+  },
+  {
+    "title": "محول الملفات",
+    "category": "tools",
+    "description": "أداة تحويل محلية",
+    "icon": "fa-file-arrow-right"
+  },
+  {
+    "title": "لعبة المتاهة",
+    "category": "games",
+    "description": "لعبة متصفح تفاعلية",
+    "icon": "fa-gamepad"
+  },
+  {
+    "title": "سباق النجوم",
+    "category": "games",
+    "description": "لعبة Arcade",
+    "icon": "fa-star"
+  },
+  {
+    "title": "لوحة المشاريع",
+    "category": "web",
+    "description": "إدارة مشاريع وفرق",
+    "icon": "fa-diagram-project"
+  }
+]

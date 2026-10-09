@@ -1,0 +1,44 @@
+[
+  {
+    "id": "web",
+    "icon": "fa-globe",
+    "title": "تطوير المواقع والمنصات",
+    "en": "Web Development",
+    "description": "مواقع شركات، متاجر، منصات وخدمات ويب سريعة ومتجاوبة وقابلة للتوسع."
+  },
+  {
+    "id": "apps",
+    "icon": "fa-mobile-screen-button",
+    "title": "تطبيقات الهاتف",
+    "en": "Mobile Apps",
+    "description": "تجارب Android وiOS حديثة مع واجهات سهلة وربط بالخدمات والواجهات البرمجية."
+  },
+  {
+    "id": "uiux",
+    "icon": "fa-pen-ruler",
+    "title": "UI/UX وتجربة المستخدم",
+    "en": "UI/UX Design",
+    "description": "تصميم واجهات واضحة ومريحة تبدأ من فهم المستخدم وتنتهي بنظام بصري متكامل."
+  },
+  {
+    "id": "automation",
+    "icon": "fa-gears",
+    "title": "الأتمتة والأدوات",
+    "en": "Automation & Tools",
+    "description": "أدوات داخلية وحلول أتمتة تقلل الأعمال المتكررة وتحسن سير العمل."
+  },
+  {
+    "id": "branding",
+    "icon": "fa-palette",
+    "title": "الهوية الرقمية",
+    "en": "Digital Branding",
+    "description": "هوية رقمية متناسقة تشمل الشعار والألوان والمكونات البصرية وقواعد الاستخدام."
+  },
+  {
+    "id": "consulting",
+    "icon": "fa-lightbulb",
+    "title": "الاستشارات التقنية",
+    "en": "Technology Consulting",
+    "description": "مساعدة عملية في اختيار التقنيات وبناء خارطة طريق واقعية للمشروع."
+  }
+]

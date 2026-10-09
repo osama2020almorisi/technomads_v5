@@ -1,0 +1,173 @@
+/* ============================================================
+   CONTACT PAGE STYLES
+   ============================================================ */
+
+/* ===== Page Hero ===== */
+.page-hero{
+  padding:150px 0 70px;
+  background:radial-gradient(circle at 80% 20%,rgba(78,205,196,.18),transparent 30%),
+             radial-gradient(circle at 15% 80%,rgba(255,107,107,.12),transparent 25%),
+             linear-gradient(135deg,#171a55 0%,#2A2D7C 48%,#195e6b 100%);
+  color:#fff;
+  text-align:center;
+}
+.page-hero h1{color:#fff;margin-bottom:12px}
+.page-hero p{color:#e9edff;opacity:.9;max-width:700px;margin:12px auto 0}
+.page-hero .badge{background:rgba(255,255,255,.11)!important;color:#fff!important;border:1px solid rgba(255,255,255,.14)}
+
+/* ===== Contact Grid ===== */
+.contact-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:25px;
+  align-items:start;
+}
+
+/* ===== Form Card ===== */
+.contact-form-card .card-body{padding:32px 28px}
+.contact-title{
+  font-size:1.6rem;
+  margin:0 0 6px;
+}
+.contact-subtitle{
+  color:var(--muted);
+  font-size:.92rem;
+  margin:0;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1 / -1}
+.field label{
+  font-size:.88rem;
+  font-weight:700;
+  color:var(--text);
+}
+.field .required{color:var(--secondary)}
+.field input,
+.field select,
+.field textarea{
+  padding:12px 14px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--surface);
+  color:var(--text);
+  font-family:inherit;
+  font-size:.92rem;
+  transition:border-color .2s,box-shadow .2s;
+  width:100%;
+}
+.field textarea{resize:vertical;min-height:120px}
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(78,205,196,.15);
+}
+.field .field-error{
+  color:var(--danger);
+  font-size:.78rem;
+  display:none;
+}
+.field.invalid input,
+.field.invalid select,
+.field.invalid textarea{
+  border-color:var(--danger);
+}
+.field.invalid .field-error{display:block}
+
+/* ===== Contact Info ===== */
+.contact-info{
+  display:grid;
+  gap:12px;
+}
+
+.contact-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--surface);
+  transition:all .25s var(--ease);
+  text-decoration:none;
+  color:inherit;
+}
+.contact-item:not(.static):hover{
+  transform:translateY(-3px);
+  border-color:var(--accent);
+  box-shadow:var(--shadow-md);
+}
+.contact-item.static{cursor:default}
+
+.contact-icon{
+  width:46px;
+  height:46px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:rgba(78,205,196,.12);
+  color:var(--accent-dark);
+  font-size:1.1rem;
+}
+.contact-item strong{
+  display:block;
+  font-size:.95rem;
+  color:var(--text);
+  margin-bottom:2px;
+}
+.contact-item p{
+  margin:0;
+  font-size:.82rem;
+  color:var(--muted);
+}
+.contact-arrow{
+  margin-inline-start:auto;
+  color:var(--muted);
+  font-size:.8rem;
+  transition:transform .2s,color .2s;
+}
+.contact-item:hover .contact-arrow{
+  transform:translateX(-4px);
+  color:var(--accent);
+}
+
+/* ===== Map ===== */
+.map{
+  min-height:300px;
+  border-radius:20px;
+  overflow:hidden;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+}
+.map iframe{display:block;width:100%;height:100%;min-height:300px}
+
+/* ===== Responsive ===== */
+@media(max-width:900px){
+  .page-hero{padding:120px 0 60px}
+  .contact-grid{grid-template-columns:1fr;gap:20px}
+  .contact-form-card .card-body{padding:24px 20px}
+}
+
+@media(max-width:640px){
+  .page-hero h1{font-size:1.8rem;line-height:1.25}
+  .page-hero p{font-size:.95rem}
+  .contact-title{font-size:1.3rem}
+  .form-grid{grid-template-columns:1fr;gap:14px}
+  .field input,
+  .field select,
+  .field textarea{padding:11px 13px;font-size:.9rem}
+  .contact-item{padding:14px}
+  .contact-icon{width:42px;height:42px;font-size:1rem}
+  .contact-item strong{font-size:.9rem}
+  .contact-item p{font-size:.78rem}
+  .map{min-height:240px}
+  .map iframe{min-height:240px}
+}

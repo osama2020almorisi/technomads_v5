@@ -1,0 +1,4 @@
+export function initShare(){
+ const data=()=>({title:document.title,text:document.querySelector('meta[name="description"]')?.content||"",url:location.href});
+ document.querySelectorAll("[data-share]").forEach(btn=>btn.addEventListener("click",async()=>{const d=data();if(navigator.share){try{await navigator.share(d)}catch{}return}const type=btn.dataset.share;const u=encodeURIComponent(d.url),t=encodeURIComponent(d.title),text=encodeURIComponent(d.text);const urls={facebook:`https://www.facebook.com/sharer/sharer.php?u=${u}`,twitter:`https://twitter.com/intent/tweet?url=${u}&text=${t}`,linkedin:`https://www.linkedin.com/sharing/share-offsite/?url=${u}`,whatsapp:`https://wa.me/?text=${t}%20${u}`,telegram:`https://t.me/share/url?url=${u}&text=${t}`};if(type==="copy"){await navigator.clipboard?.writeText(d.url);btn.setAttribute("title","تم نسخ الرابط");return}if(urls[type])window.open(urls[type],"_blank","noopener,noreferrer,width=650,height=550")}));
+}

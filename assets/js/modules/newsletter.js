@@ -1,0 +1,1 @@
+export function initNewsletter(){document.querySelectorAll("[data-newsletter]").forEach(form=>form.addEventListener("submit",e=>{e.preventDefault();const msg=form.querySelector("[data-newsletter-message]");if(msg)msg.textContent="تم تسجيل بريدك بنجاح. شكرًا لك!";form.reset()}))}

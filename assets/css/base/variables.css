@@ -1,0 +1,15 @@
+:root{
+--primary:#2A2D7C;--primary-dark:#1E215E;--primary-light:#4549A5;
+--secondary:#FF6B6B;--secondary-dark:#E95454;--accent:#4ECDC4;--accent-dark:#35AAA2;
+--dark:#1A1A1A;--light:#F8F9FA;--white:#fff;
+--bg:#F8F9FA;--surface:#fff;--surface-2:#F1F3F7;--text:#20232A;--muted:#68707C;
+--border:#E4E7EC;--success:#22A06B;--warning:#F4B740;--danger:#DC3545;
+--gradient:linear-gradient(135deg,#2A2D7C 0%,#4ECDC4 100%);
+--brand-gradient:linear-gradient(135deg,#2A2D7C 0%,#4ECDC4 55%,#FF6B6B 100%);
+--shadow-sm:0 5px 18px rgba(26,26,26,.06);--shadow-md:0 12px 35px rgba(26,26,26,.10);--shadow-lg:0 25px 70px rgba(26,26,26,.15);
+--radius-sm:8px;--radius-md:14px;--radius-lg:22px;--radius-xl:30px;--pill:999px;
+--container:1240px;--pad:18px;--nav:76px;
+--font:"Tajawal",Arial,Tahoma,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+--ease:cubic-bezier(.2,.8,.2,1);--fast:160ms;--normal:280ms;--slow:500ms;
+}
+[data-theme=dark]{--bg:#101117;--surface:#191B23;--surface-2:#232631;--text:#F3F5F8;--muted:#A8AFBB;--border:#303440;--shadow-sm:0 5px 18px rgba(0,0,0,.25);--shadow-md:0 12px 35px rgba(0,0,0,.32);--shadow-lg:0 25px 70px rgba(0,0,0,.45)}

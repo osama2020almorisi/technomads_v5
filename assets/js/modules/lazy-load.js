@@ -1,0 +1,1 @@
+export function initLazyLoad(){document.querySelectorAll("img[data-src]").forEach(img=>{const load=()=>{img.src=img.dataset.src;img.removeAttribute("data-src")};if("loading"in HTMLImageElement.prototype)load();else{const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){load();o.unobserve(img)}}));o.observe(img)}})}

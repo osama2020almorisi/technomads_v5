@@ -1,0 +1,2 @@
+import {storage} from "../core/storage.js";
+export function initCookies(){const b=document.querySelector(".cookie-banner");if(!b||storage.get("cookiesAccepted",false))return;b.classList.add("show");b.querySelector("[data-cookie-accept]")?.addEventListener("click",()=>{storage.set("cookiesAccepted",true);b.classList.remove("show")});b.querySelector("[data-cookie-close]")?.addEventListener("click",()=>b.classList.remove("show"))}

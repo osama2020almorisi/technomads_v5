@@ -1,0 +1,1 @@
+.share-buttons{display:flex;flex-wrap:wrap;gap:8px}.share-btn{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;background:var(--surface-2);color:var(--text);transition:.2s}.share-btn:hover{background:var(--primary);color:#fff;transform:translateY(-2px)}

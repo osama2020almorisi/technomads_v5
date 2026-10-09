@@ -1,0 +1,165 @@
+/* ============================================================
+   SERVICES PAGE STYLES
+   ============================================================ */
+
+/* ===== Page Hero ===== */
+.page-hero{
+  padding:150px 0 70px;
+  background:radial-gradient(circle at 80% 20%,rgba(78,205,196,.18),transparent 30%),
+             radial-gradient(circle at 15% 80%,rgba(255,107,107,.12),transparent 25%),
+             linear-gradient(135deg,#171a55 0%,#2A2D7C 48%,#195e6b 100%);
+  color:#fff;
+  text-align:center;
+}
+.page-hero h1{color:#fff;margin-bottom:12px}
+.page-hero p{color:#e9edff;opacity:.9;max-width:700px;margin:12px auto 0}
+.page-hero .badge{background:rgba(255,255,255,.11)!important;color:#fff!important;border:1px solid rgba(255,255,255,.14)}
+.page-hero .gradient-text{color:#ff9b9b;background:none;-webkit-text-fill-color:unset}
+
+/* ===== Tabs ===== */
+.tabs-header{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:32px;
+  padding-bottom:16px;
+  border-bottom:2px solid var(--border);
+}
+.tab-btn-service{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 20px;
+  border-radius:999px;
+  background:var(--surface-2);
+  color:var(--text);
+  font-family:inherit;
+  font-size:.92rem;
+  font-weight:700;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:all .25s var(--ease);
+}
+.tab-btn-service:hover{
+  background:var(--surface);
+  border-color:var(--accent);
+  color:var(--accent-dark);
+}
+.tab-btn-service.active{
+  background:var(--gradient);
+  color:#fff;
+  box-shadow:0 8px 20px rgba(42,45,124,.25);
+}
+.tab-btn-service i{font-size:.9rem}
+
+/* ===== Tab Pane ===== */
+.tab-pane{display:none;animation:fadeUp .4s var(--ease)}
+.tab-pane.active{display:block}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:none}
+}
+
+/* ===== Service Cards Grid ===== */
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+/* ===== Service Features List ===== */
+.service-features-list{
+  list-style:none;
+  padding:0;
+  margin:14px 0;
+}
+.service-features-list li{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:5px 0;
+  color:var(--muted);
+  font-size:.9rem;
+}
+.service-features-list li i{color:var(--accent);font-size:.8rem}
+
+/* ===== Service Price ===== */
+.service-price{
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:999px;
+  background:rgba(78,205,196,.12);
+  color:var(--accent-dark);
+  font-size:.82rem;
+  font-weight:800;
+  margin:10px 0 14px;
+}
+
+/* ===== Service Link ===== */
+.service-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--primary);
+  font-weight:700;
+  transition:all .2s;
+}
+.service-link:hover{gap:12px;color:var(--accent-dark)}
+
+/* ===== Process ===== */
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.process-step{
+  position:relative;
+  padding:25px;
+  text-align:center;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  transition:transform .25s var(--ease),box-shadow .25s;
+}
+.process-step:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-md);
+}
+.process-number{
+  width:45px;
+  height:45px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 15px;
+  border-radius:50%;
+  background:var(--gradient);
+  color:#fff;
+  font-weight:800;
+}
+
+/* ===== Tech Item ===== */
+.tech-item .card-body{padding:30px 20px}
+.tech-item i{
+  font-size:2.6rem;
+  color:var(--accent);
+  margin-bottom:12px;
+  display:block;
+}
+.tech-item .card-title{font-size:1rem;margin:0}
+
+/* ===== Responsive ===== */
+@media(max-width:900px){
+  .page-hero{padding:120px 0 60px}
+  .service-grid{grid-template-columns:repeat(2,1fr)}
+  .process{grid-template-columns:repeat(2,1fr)}
+  .tabs-header{
+    overflow-x:auto;
+    flex-wrap:nowrap;
+    justify-content:flex-start;
+    padding-bottom:12px;
+    scrollbar-width:thin;
+    -webkit-overflow-scrolling:touch;
+  }
+  .tab-btn-service{flex-shrink:0;font-size:.85rem;padding:9px 16px}
+}
+
+@media(max-width:560px){
+  .service-grid,.process{grid-template-columns:1fr}
+  .page-hero h1{font-size:1.85rem}
+  .tab-btn-service{font-size:.8rem;padding:8px 14px;gap:6px}
+  .tab-btn-service i{font-size:.8rem}
+}

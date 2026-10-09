@@ -1,0 +1,62 @@
+/* TechNomads — نقطة الدخول الرئيسية للأنماط */
+@import url("./base/reset.css");
+@import url("./base/variables.css");
+@import url("./base/typography.css");
+@import url("./base/utilities.css");
+@import url("./base/animations.css");
+@import url("./components/navbar.css");
+@import url("./components/footer.css");
+@import url("./components/buttons.css");
+@import url("./components/cards.css");
+@import url("./components/forms.css");
+@import url("./components/loader.css");
+@import url("./components/back-to-top.css");
+@import url("./components/cookie-banner.css");
+@import url("./components/share-buttons.css");
+@import url("./components/install-prompt.css");
+@import url("./components/chat-widget.css");
+@import url("./components/section-header.css");
+@import url("./components/mobile-bottom-nav.css");
+html{overflow-x:hidden}body{overflow-x:hidden;transition:background-color .25s,color .25s}
+.page-content{padding-top:var(--nav)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(78,205,196,.12);color:var(--accent-dark);font-weight:800;font-size:.78rem}
+.page-hero{padding:150px 0 70px;background:var(--gradient);color:#fff;text-align:center}.page-hero h1,.page-hero p{color:#fff}.page-hero p{max-width:700px;margin:12px auto 0;opacity:.9}
+/* Premium mobile polish */
+:focus-visible{outline:3px solid rgba(78,205,196,.75);outline-offset:3px}
+@media(max-width:980px){
+ body{padding-bottom:92px}
+ .site-header{height:68px}
+ .page-content{padding-top:68px}
+ .navbar{padding-inline:14px}
+ .brand{font-size:1.02rem;gap:7px}
+ .brand img{width:34px;height:34px}
+ .nav-actions{gap:5px}
+ .icon-btn,.nav-toggle{width:42px;height:42px;border-radius:13px}
+}
+/* ===== عنوان Hero بتدرج ثلاثي متموج (متاح لكل الصفحات) ===== */
+.hero-gradient-text{
+  display:inline-block;
+  background:linear-gradient(
+    270deg,
+    #2A2D7C 0%,
+    #4ECDC4 35%,
+    #FF6B6B 70%,
+    #2A2D7C 100%
+  );
+  background-size:300% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+  font-weight:900;
+  animation:heroWave 6s ease-in-out infinite;
+}
+
+@keyframes heroWave{
+  0%, 100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-gradient-text{animation:none}
+}

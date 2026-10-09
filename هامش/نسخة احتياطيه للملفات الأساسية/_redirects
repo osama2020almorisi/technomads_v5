@@ -1,0 +1,9 @@
+# السماح بوصول محركات البحث إلى ملفات XML
+/sitemap.xml /sitemap.xml 200
+/sitemap-pages.xml /sitemap-pages.xml 200
+/sitemap-projects.xml /sitemap-projects.xml 200
+/sitemap-entertainment.xml /sitemap-entertainment.xml 200
+/robots.txt /robots.txt 200
+
+# إعادة توجيه كل شيء آخر إلى index.html
+/* /index.html 200

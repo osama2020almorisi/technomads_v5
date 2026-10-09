@@ -1,0 +1,1 @@
+export const Events=(()=>{const bus=new EventTarget();return{on:(name,fn)=>bus.addEventListener(name,fn),emit:(name,detail={})=>bus.dispatchEvent(new CustomEvent(name,{detail})),off:(name,fn)=>bus.removeEventListener(name,fn)}})();

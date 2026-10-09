@@ -1,0 +1,1 @@
+export function initOffline(){const el=document.querySelector("[data-network-status]");const update=()=>{if(el)el.textContent=navigator.onLine?"متصل":"غير متصل";document.body.classList.toggle("offline",!navigator.onLine)};addEventListener("online",update);addEventListener("offline",update);update()}

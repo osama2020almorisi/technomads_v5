@@ -1,0 +1,7 @@
+.site-header{position:fixed;inset:0 0 auto;z-index:1000;height:var(--nav);background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid transparent;transition:.25s}
+.site-header.scrolled{border-color:var(--border);box-shadow:var(--shadow-sm)}
+.navbar{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:1.2rem}.brand img{width:42px;height:42px}
+.nav-links{display:flex;align-items:center;gap:5px}.nav-links a{padding:10px 13px;border-radius:10px;font-weight:600;color:var(--muted)}.nav-links a:hover,.nav-links a.active{color:var(--primary);background:rgba(42,45,124,.08)}
+.nav-actions{display:flex;align-items:center;gap:8px}.nav-toggle{display:none;width:44px;height:44px;border-radius:10px;background:var(--surface-2);color:var(--text)}
+@media(max-width:980px){.nav-toggle{display:grid;place-items:center}.nav-links{position:absolute;top:calc(100% + 8px);right:var(--pad);left:var(--pad);display:none;padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg)}.nav-links.open{display:flex;flex-direction:column;align-items:stretch}.nav-links a{text-align:center}}

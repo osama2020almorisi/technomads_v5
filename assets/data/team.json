@@ -1,0 +1,57 @@
+[
+  {
+    "name": "أسامة المريسي",
+    "role": "المؤسس والمدير التقني",
+    "skills": [
+      "Architecture",
+      "Web",
+      "Flutter",
+      "AI"
+    ]
+  },
+  {
+    "name": "ليان أحمد",
+    "role": "مصممة UI/UX",
+    "skills": [
+      "Figma",
+      "UX Research",
+      "Design Systems"
+    ]
+  },
+  {
+    "name": "عمر خالد",
+    "role": "مهندس Frontend",
+    "skills": [
+      "JavaScript",
+      "CSS",
+      "PWA"
+    ]
+  },
+  {
+    "name": "سارة محمد",
+    "role": "مهندسة تطبيقات",
+    "skills": [
+      "Flutter",
+      "Android",
+      "APIs"
+    ]
+  },
+  {
+    "name": "ياسر علي",
+    "role": "مهندس Backend",
+    "skills": [
+      "APIs",
+      "Databases",
+      "Security"
+    ]
+  },
+  {
+    "name": "نور حسن",
+    "role": "محتوى وتسويق رقمي",
+    "skills": [
+      "SEO",
+      "Content",
+      "Analytics"
+    ]
+  }
+]

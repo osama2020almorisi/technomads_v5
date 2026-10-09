@@ -1,54 +1,175 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصفحة غير موجودة - TechNomads</title>
-    <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #1a1a3e, #2A2D7C);
-            color: white;
-            text-align: center;
-        }
-        .error-container h1 {
-            font-size: 6rem;
-            margin: 0;
-            color: #4ECDC4;
-        }
-        .error-container h2 {
-            font-size: 2rem;
-        }
-        .error-container p {
-            opacity: 0.8;
-        }
-        .error-container a {
-            color: #4ECDC4;
-            text-decoration: none;
-            border: 2px solid #4ECDC4;
-            padding: 10px 30px;
-            border-radius: 30px;
-            display: inline-block;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-        .error-container a:hover {
-            background: #4ECDC4;
-            color: #1a1a3e;
-        }
-    </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<!-- ===== SEO ===== -->
+<title>404 | TechNomads — الصفحة غير موجودة</title>
+<meta name="description" content="الصفحة المطلوبة غير موجودة على موقع TechNomads. جرب العودة للرئيسية أو استكشاف المشاريع.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#2A2D7C">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- ===== PWA + Icons ===== -->
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/images/icons/favicon.svg">
+<link rel="apple-touch-icon" href="assets/images/icons/apple-touch-icon.svg">
+
+<!-- ===== Preconnect ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+<!-- ===== Stylesheets ===== -->
+<link rel="stylesheet" href="assets/fonts/tajawal/fonts.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/pages/404.css">
+
+<!-- ===== Open Graph ===== -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TechNomads">
+<meta property="og:title" content="404 | TechNomads">
+<meta property="og:description" content="الصفحة المطلوبة غير موجودة.">
+<meta property="og:image" content="https://te-2026.netlify.app/assets/images/og/og-1.svg">
+
+<!-- ===== Google Analytics ===== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5EH1RRD7XQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5EH1RRD7XQ');
+</script>
 </head>
 <body>
-    <div class="error-container">
-        <h1>404</h1>
-        <h2>الصفحة غير موجودة</h2>
-        <p>عذراً، الصفحة التي تبحث عنها غير متوفرة</p>
-        <a href="/">العودة إلى الرئيسية</a>
-    </div>
+<a class="skip-link" href="#main">تخطي إلى المحتوى</a>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+ <div class="container navbar">
+  <a class="brand" href="index.html" aria-label="TechNomads">
+   <img src="assets/images/logo/logo-icon.svg" alt="" width="42" height="42">
+   <span>TechNomads</span>
+  </a>
+  <nav class="nav-links" aria-label="التنقل الرئيسي">
+   <a href="index.html">الرئيسية</a><a href="about.html">من نحن</a><a href="services.html">الخدمات</a>
+   <a href="portfolio.html">المشاريع</a><a href="team.html">الفريق</a><a href="pricing.html">الأسعار</a>
+   <a href="faq.html">الأسئلة</a><a href="contact.html">تواصل</a>
+  </nav>
+  <div class="nav-actions">
+   <button class="icon-btn" data-theme-toggle aria-label="تبديل الوضع الليلي"><i class="fa-solid fa-moon"></i></button>
+   <button class="nav-toggle" aria-label="فتح القائمة" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+  </div>
+ </div>
+</header>
+
+<main id="main" class="page-content">
+
+<!-- ===== 404 SECTION ===== -->
+<section class="error-page" aria-labelledby="error-title">
+ <div class="container">
+  <img class="error-illustration" src="assets/images/illustrations/404.svg" alt="صفحة غير موجودة" loading="eager">
+  <div class="error-code">404</div>
+  <h1 id="error-title">يبدو أنك خرجت عن المسار</h1>
+  <p class="lead">الصفحة التي تبحث عنها غير متاحة أو تم نقلها إلى مكان آخر.</p>
+  <div class="error-actions">
+   <a class="btn btn-primary" href="index.html"><i class="fa-solid fa-home"></i> الرئيسية</a>
+   <a class="btn btn-outline" href="portfolio.html"><i class="fa-solid fa-briefcase"></i> استكشف المشاريع</a>
+   <a class="btn btn-ghost" href="contact.html"><i class="fa-solid fa-envelope"></i> تواصل معنا</a>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="error-suggestions">
+   <h3><i class="fa-solid fa-compass"></i> روابط سريعة</h3>
+   <div class="error-suggestions-grid">
+    <a href="services.html"><i class="fa-solid fa-cogs"></i> الخدمات</a>
+    <a href="portfolio.html"><i class="fa-solid fa-folder-open"></i> المشاريع</a>
+    <a href="team.html"><i class="fa-solid fa-users"></i> الفريق</a>
+    <a href="pricing.html"><i class="fa-solid fa-tags"></i> الأسعار</a>
+    <a href="faq.html"><i class="fa-solid fa-circle-question"></i> الأسئلة</a>
+    <a href="contact.html"><i class="fa-solid fa-paper-plane"></i> تواصل</a>
+   </div>
+  </div>
+ </div>
+</section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+ <div class="container footer-grid">
+  <div class="footer-brand">
+   <a class="brand" href="index.html">
+    <img src="assets/images/logo/logo-white.svg" alt="TechNomads" width="36" height="36">
+    <span>TechNomads</span>
+   </a>
+   <p>حلول رقمية سريعة وأنيقة تُبنى من الفكرة إلى الإطلاق. منذ 8 سنوات في خدمة السوق اليمني والعربي.</p>
+  </div>
+  <div>
+   <h3 class="footer-title">الشركة</h3>
+   <div class="footer-links">
+    <a href="about.html">من نحن</a>
+    <a href="portfolio.html">أعمالنا</a>
+    <a href="team.html">الفريق</a>
+    <a href="contact.html">تواصل</a>
+   </div>
+  </div>
+  <div>
+   <h3 class="footer-title">الخدمات</h3>
+   <div class="footer-links">
+    <a href="services.html">الويب</a>
+    <a href="services.html">التطبيقات</a>
+    <a href="services.html">UI/UX</a>
+    <a href="services.html">الأتمتة</a>
+   </div>
+  </div>
+  <div>
+   <h3 class="footer-title">روابط</h3>
+   <div class="footer-links">
+    <a href="pricing.html">الأسعار</a>
+    <a href="faq.html">الأسئلة</a>
+    <a href="privacy.html">الخصوصية</a>
+    <a href="terms.html">الشروط</a>
+   </div>
+  </div>
+ </div>
+ <div class="container footer-bottom">
+  <span>© 2026 TechNomads — جميع الحقوق محفوظة</span>
+  <span>نصنع المستقبل الرقمي <span class="footer-status"><i aria-hidden="true"></i> متصلون</span></span>
+ </div>
+</footer>
+
+<!-- ===== Chat Widget ===== -->
+<div class="chat-panel" aria-label="الدعم الفني">
+ <h3>كيف يمكننا مساعدتك؟</h3>
+ <p>اختر وسيلة التواصل المناسبة.</p>
+ <div class="chat-options">
+  <a class="chat-option" data-chat-whatsapp href="https://wa.me/967770200970" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+  <a class="chat-option" data-chat-telegram href="https://t.me/Osama7702" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i> Telegram</a>
+  <a class="chat-option" data-chat-email href="mailto:2025ooss@gmail.com"><i class="fa-solid fa-envelope"></i> البريد الإلكتروني</a>
+ </div>
+</div>
+<button class="chat-launcher" aria-label="فتح الدعم" aria-expanded="false"><i class="fa-solid fa-headset"></i></button>
+<button class="back-to-top" aria-label="العودة للأعلى"><i class="fa-solid fa-arrow-up"></i></button>
+
+<!-- ===== Cookie Banner ===== -->
+<div class="cookie-banner">
+ <h3>خصوصيتك مهمة</h3>
+ <p>نستخدم التخزين المحلي لحفظ تفضيلات الموقع مثل الوضع واللغة. لا نبيع بياناتك.</p>
+ <div class="cookie-actions">
+  <button class="btn btn-primary btn-sm" data-cookie-accept>موافق</button>
+  <button class="btn btn-ghost btn-sm" data-cookie-close>إغلاق</button>
+ </div>
+</div>
+
+<!-- ===== Page Loader ===== -->
+<div class="page-loader">
+ <div class="loader-inner">
+  <img class="loader-logo" src="assets/images/logo/logo-icon.svg" alt="">
+  <div class="loader-ring" aria-label="جار التحميل"></div>
+ </div>
+</div>
+
+<script type="module" src="assets/js/main.js"></script>
 </body>
 </html>
