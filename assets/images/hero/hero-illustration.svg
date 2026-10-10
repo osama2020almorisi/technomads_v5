@@ -1,68 +1,58 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="620" viewBox="0 0 720 620" role="img" aria-labelledby="title desc">
-<title id="title">TechNomads digital products</title>
-<desc id="desc">واجهة حاسوب وهاتف وتطبيقات رقمية حول هوية TechNomads</desc>
+<title id="title">TechNomads Digital Products</title><desc id="desc">3D laptop, mobile app and floating interface cards</desc>
 <defs>
- <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2A2D7C"/><stop offset=".55" stop-color="#3d5fa4"/><stop offset="1" stop-color="#4ECDC4"/></linearGradient>
- <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#20266f"/><stop offset="1" stop-color="#0f8d92"/></linearGradient>
- <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF6B6B"/><stop offset="1" stop-color="#4ECDC4"/></linearGradient>
- <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="28" stdDeviation="28" flood-color="#020514" flood-opacity=".42"/></filter>
- <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
- <clipPath id="laptopClip"><rect x="94" y="98" width="492" height="310" rx="24"/></clipPath>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10173b"/><stop offset=".52" stop-color="#2A2D7C"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#62F5F0"/><stop offset=".55" stop-color="#28A9F6"/><stop offset="1" stop-color="#8A65FF"/></linearGradient>
+ <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF8A83"/><stop offset="1" stop-color="#FF5D9E"/></linearGradient>
+ <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#141E5B"/><stop offset=".55" stop-color="#20266f"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#A8F8FF" stop-opacity=".26"/><stop offset="1" stop-color="#9A7BFF" stop-opacity=".08"/></linearGradient>
+ <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity=".58"/></filter>
+ <filter id="glow"><feGaussianBlur stdDeviation="16"/></filter>
+ <clipPath id="screenClip"><rect x="95" y="88" width="460" height="300" rx="23"/></clipPath>
 </defs>
-<circle cx="370" cy="310" r="240" fill="#4ECDC4" opacity=".12" filter="url(#soft)"/>
-<circle cx="590" cy="95" r="70" fill="#FF6B6B" opacity=".10"/>
-<g opacity=".38" stroke="#fff" stroke-width="1.2"><path d="M36 160L130 95l70 52 88-85 90 80 88-46 90 64"/><path d="M55 470l90-55 70 32 96-70 96 55 90-70"/></g>
-<g fill="#fff" opacity=".5"><circle cx="130" cy="95" r="4"/><circle cx="288" cy="62" r="4"/><circle cx="466" cy="52" r="4"/><circle cx="646" cy="160" r="4"/><circle cx="145" cy="415" r="4"/><circle cx="311" cy="377" r="4"/><circle cx="502" cy="392" r="4"/></g>
-
-<!-- Laptop -->
+<rect width="720" height="620" rx="34" fill="#090f29"/>
+<circle cx="372" cy="294" r="230" fill="#4ECDC4" opacity=".13" filter="url(#glow)"/>
+<circle cx="575" cy="110" r="82" fill="#FF6B6B" opacity=".12" filter="url(#glow)"/>
+<path d="M0 470C130 405 190 545 335 460S560 390 720 300V620H0Z" fill="url(#bg)" opacity=".75"/>
+<g opacity=".22" stroke="#8EEFF5" stroke-width="1.5"><path d="M28 120Q140 35 230 120T435 105T690 130"/><path d="M20 520Q140 430 245 500T470 470T700 500"/></g>
 <g filter="url(#shadow)">
- <rect x="72" y="76" width="536" height="350" rx="34" fill="#11152e" stroke="#ffffff" stroke-opacity=".18" stroke-width="2"/>
- <rect x="94" y="98" width="492" height="310" rx="24" fill="url(#screen)"/>
- <g clip-path="url(#laptopClip)">
-  <circle cx="510" cy="135" r="130" fill="#4ECDC4" opacity=".15"/>
-  <path d="M94 360C205 274 250 342 345 262s151-34 241-103v270H94Z" fill="#2A2D7C" opacity=".55"/>
-  <rect x="121" y="125" width="145" height="13" rx="6" fill="#fff" opacity=".45"/>
-  <rect x="121" y="151" width="96" height="8" rx="4" fill="#fff" opacity=".2"/>
-  <rect x="121" y="184" width="214" height="132" rx="18" fill="#fff" opacity=".08" stroke="#fff" stroke-opacity=".12"/>
-  <rect x="145" y="207" width="92" height="11" rx="5" fill="#4ECDC4"/>
-  <rect x="145" y="231" width="145" height="7" rx="3" fill="#fff" opacity=".22"/>
-  <rect x="145" y="250" width="112" height="7" rx="3" fill="#fff" opacity=".15"/>
-  <rect x="362" y="184" width="188" height="58" rx="16" fill="#fff" opacity=".08"/>
-  <circle cx="392" cy="213" r="14" fill="#FF6B6B"/>
-  <rect x="418" y="203" width="98" height="8" rx="4" fill="#fff" opacity=".25"/>
-  <rect x="418" y="218" width="70" height="6" rx="3" fill="#fff" opacity=".14"/>
-  <rect x="362" y="258" width="188" height="58" rx="16" fill="#fff" opacity=".08"/>
-  <circle cx="392" cy="287" r="14" fill="#4ECDC4"/>
-  <rect x="418" y="277" width="98" height="8" rx="4" fill="#fff" opacity=".25"/>
-  <rect x="418" y="292" width="70" height="6" rx="3" fill="#fff" opacity=".14"/>
-  <rect x="121" y="342" width="429" height="28" rx="14" fill="#fff" opacity=".06"/>
+ <rect x="88" y="100" width="475" height="310" rx="28" fill="#111832" stroke="#9FEFF7" stroke-opacity=".36" stroke-width="2"/>
+ <rect x="105" y="117" width="441" height="276" rx="20" fill="url(#screen)"/>
+ <g clip-path="url(#screenClip)">
+  <circle cx="475" cy="155" r="120" fill="#4ECDC4" opacity=".15"/>
+  <path d="M100 350C220 240 290 350 375 265S490 230 555 175V410H100Z" fill="#302D91" opacity=".8"/>
+  <rect x="130" y="145" width="105" height="9" rx="4" fill="#D6F7FF" opacity=".7"/>
+  <rect x="130" y="165" width="72" height="5" rx="2" fill="#D6F7FF" opacity=".3"/>
+  <rect x="130" y="200" width="190" height="128" rx="15" fill="url(#glass)" stroke="#9AEFF6" stroke-opacity=".25"/>
+  <rect x="151" y="221" width="91" height="8" rx="4" fill="#4ECDC4"/>
+  <rect x="151" y="241" width="138" height="6" rx="3" fill="#E9F8FF" opacity=".4"/>
+  <rect x="151" y="258" width="108" height="6" rx="3" fill="#E9F8FF" opacity=".24"/>
+  <rect x="151" y="286" width="53" height="24" rx="8" fill="url(#coral)"/>
+  <rect x="337" y="200" width="180" height="53" rx="14" fill="url(#glass)" stroke="#B6F7FF" stroke-opacity=".18"/>
+  <circle cx="362" cy="226" r="12" fill="url(#coral)"/><rect x="384" y="217" width="99" height="6" rx="3" fill="#fff" opacity=".52"/><rect x="384" y="231" width="66" height="5" rx="2" fill="#fff" opacity=".24"/>
+  <rect x="337" y="266" width="180" height="62" rx="14" fill="url(#glass)" stroke="#B6F7FF" stroke-opacity=".18"/>
+  <circle cx="362" cy="297" r="12" fill="#4ECDC4"/><rect x="384" y="287" width="99" height="6" rx="3" fill="#fff" opacity=".52"/><rect x="384" y="301" width="66" height="5" rx="2" fill="#fff" opacity=".24"/>
  </g>
- <path d="M36 426h612l-32 42H68Z" fill="#171b39" stroke="#fff" stroke-opacity=".16" stroke-width="2"/>
- <path d="M287 434h130l12 17H275Z" fill="#fff" opacity=".12"/>
+ <path d="M52 411H600L648 449Q651 457 635 461H42Q25 457 32 449Z" fill="#202845" stroke="#B4F5FF" stroke-opacity=".32" stroke-width="2"/>
+ <path d="M265 421H397L413 440H249Z" fill="#8AEAF0" opacity=".22"/>
 </g>
-
-<!-- Phone -->
-<g filter="url(#shadow)" transform="rotate(-7 505 365)">
- <rect x="470" y="258" width="180" height="330" rx="32" fill="#0b0e20" stroke="#fff" stroke-opacity=".2" stroke-width="2"/>
- <rect x="482" y="274" width="156" height="298" rx="24" fill="#f7f8ff"/>
- <rect x="527" y="282" width="66" height="16" rx="8" fill="#0c1023"/>
- <rect x="497" y="316" width="126" height="58" rx="16" fill="url(#glow)"/>
- <circle cx="518" cy="345" r="15" fill="#fff" opacity=".95"/>
- <path d="M514 345l4 4 9-10" fill="none" stroke="#2A2D7C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
- <rect x="500" y="392" width="120" height="15" rx="7" fill="#20255f" opacity=".85"/>
- <rect x="500" y="420" width="56" height="74" rx="14" fill="#2A2D7C" opacity=".12"/>
- <rect x="564" y="420" width="56" height="74" rx="14" fill="#4ECDC4" opacity=".18"/>
- <rect x="500" y="510" width="120" height="10" rx="5" fill="#2A2D7C" opacity=".12"/>
- <rect x="500" y="530" width="84" height="8" rx="4" fill="#2A2D7C" opacity=".08"/>
+<g transform="rotate(7 522 385)" filter="url(#shadow)">
+ <rect x="472" y="250" width="164" height="310" rx="30" fill="#090d20" stroke="#9FF5FF" stroke-opacity=".55" stroke-width="2"/>
+ <rect x="484" y="266" width="140" height="278" rx="22" fill="#F5F7FF"/>
+ <rect x="524" y="274" width="62" height="14" rx="7" fill="#11162C"/>
+ <rect x="498" y="310" width="112" height="48" rx="13" fill="url(#cyan)"/>
+ <circle cx="520" cy="334" r="12" fill="#fff"/><path d="m515 334 4 4 7-8" fill="none" stroke="#252D7B" stroke-width="2.5" stroke-linecap="round"/>
+ <rect x="500" y="374" width="108" height="10" rx="5" fill="#252D7B" opacity=".8"/>
+ <rect x="500" y="396" width="49" height="65" rx="11" fill="#252D7B" opacity=".13"/><rect x="559" y="396" width="49" height="65" rx="11" fill="#4ECDC4" opacity=".24"/>
+ <rect x="500" y="477" width="108" height="8" rx="4" fill="#252D7B" opacity=".16"/><rect x="500" y="494" width="76" height="7" rx="3" fill="#252D7B" opacity=".1"/>
 </g>
-
-<!-- Floating product cards -->
 <g filter="url(#shadow)">
- <rect x="20" y="405" width="190" height="92" rx="20" fill="#10142c" fill-opacity=".92" stroke="#fff" stroke-opacity=".14"/>
- <circle cx="53" cy="439" r="17" fill="#FF6B6B"/><path d="M47 439h12M53 433v12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
- <rect x="81" y="426" width="96" height="8" rx="4" fill="#fff" opacity=".32"/><rect x="81" y="443" width="72" height="6" rx="3" fill="#fff" opacity=".14"/><rect x="39" y="468" width="135" height="7" rx="3" fill="#4ECDC4" opacity=".65"/>
- <rect x="506" y="82" width="184" height="88" rx="20" fill="#10142c" fill-opacity=".9" stroke="#fff" stroke-opacity=".14"/>
- <circle cx="539" cy="116" r="17" fill="#4ECDC4"/><path d="M531 117l6 6 11-13" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
- <rect x="567" y="103" width="92" height="8" rx="4" fill="#fff" opacity=".3"/><rect x="567" y="121" width="68" height="6" rx="3" fill="#fff" opacity=".14"/><rect x="524" y="145" width="136" height="7" rx="3" fill="#FF6B6B" opacity=".65"/>
+ <rect x="26" y="365" width="164" height="82" rx="18" fill="#111832" stroke="#B6F7FF" stroke-opacity=".3"/>
+ <circle cx="56" cy="394" r="15" fill="url(#coral)"/><path d="M50 394h12M56 388v12" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+ <rect x="80" y="384" width="89" height="7" rx="3" fill="#fff" opacity=".4"/><rect x="80" y="399" width="63" height="5" rx="2" fill="#fff" opacity=".22"/><rect x="43" y="423" width="125" height="6" rx="3" fill="#4ECDC4" opacity=".8"/>
+ <rect x="510" y="74" width="175" height="75" rx="18" fill="#111832" stroke="#B6F7FF" stroke-opacity=".3"/>
+ <circle cx="540" cy="102" r="14" fill="#4ECDC4"/><path d="m534 102 5 5 8-10" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+ <rect x="562" y="94" width="97" height="6" rx="3" fill="#fff" opacity=".42"/><rect x="562" y="108" width="65" height="5" rx="2" fill="#fff" opacity=".22"/>
 </g>
+<g fill="#D9FFFF"><circle cx="60" cy="91" r="4"/><circle cx="657" cy="207" r="4"/><circle cx="215" cy="505" r="3"/><circle cx="435" cy="65" r="3"/></g>
 </svg>

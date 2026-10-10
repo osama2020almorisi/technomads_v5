@@ -1,14 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">TechNomads Service</title>
-  <desc id="desc">TechNomads brand illustration</desc>
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2A2D7C"/>
-      <stop offset="1" stop-color="#4ECDC4"/>
-    </linearGradient>
-  </defs>
-  <circle cx="256" cy="256" r="226" fill="url(#g)"/>
-  <circle cx="256" cy="256" r="176" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3"/>
-  <path d="M256 104 L390 350 H122 Z" fill="none" stroke="#fff" stroke-width="28" stroke-linejoin="round"/>
-  <circle cx="256" cy="256" r="30" fill="#FF6B6B" stroke="#fff" stroke-width="10"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="620" viewBox="0 0 720 620" role="img" aria-labelledby="title desc">
+<title id="title">Brand identity</title><desc id="desc">3D-style illustration for Brand identity</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10173b"/><stop offset=".52" stop-color="#2A2D7C"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#62F5F0"/><stop offset=".55" stop-color="#28A9F6"/><stop offset="1" stop-color="#8A65FF"/></linearGradient>
+ <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF8A83"/><stop offset="1" stop-color="#FF5D9E"/></linearGradient>
+ <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#141E5B"/><stop offset=".55" stop-color="#20266f"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#A8F8FF" stop-opacity=".26"/><stop offset="1" stop-color="#9A7BFF" stop-opacity=".08"/></linearGradient>
+ <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity=".58"/></filter>
+ <filter id="glow"><feGaussianBlur stdDeviation="16"/></filter>
+ <clipPath id="screenClip"><rect x="95" y="88" width="460" height="300" rx="23"/></clipPath>
+</defs><rect width="720" height="620" rx="28" fill="#0A102B"/><circle cx="360" cy="300" r="220" fill="#FF6B6B" opacity=".12" filter="url(#glow)"/><g filter="url(#shadow)"><rect x="150" y="140" width="420" height="340" rx="28" fill="#141B3C" stroke="#A9F6FF" stroke-opacity=".35" stroke-width="3"/><rect x="180" y="175" width="360" height="120" rx="20" fill="url(#bg)"/><circle cx="235" cy="235" r="30" fill="none" stroke="url(#cyan)" stroke-width="10"/><circle cx="235" cy="235" r="10" fill="#fff"/><rect x="285" y="217" width="200" height="12" rx="6" fill="#fff" opacity=".8"/><rect x="285" y="240" width="130" height="8" rx="4" fill="#fff" opacity=".35"/><rect x="182" y="325" width="72" height="72" rx="18" fill="#4ECDC4"/><rect x="270" y="325" width="72" height="72" rx="18" fill="#FF6B6B"/><rect x="358" y="325" width="72" height="72" rx="18" fill="#8C7BFF"/><rect x="446" y="325" width="72" height="72" rx="18" fill="#202D5D"/><rect x="182" y="420" width="260" height="8" rx="4" fill="#fff" opacity=".25"/></g></svg>

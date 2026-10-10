@@ -1,14 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">TechNomads Service</title>
-  <desc id="desc">TechNomads brand illustration</desc>
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2A2D7C"/>
-      <stop offset="1" stop-color="#4ECDC4"/>
-    </linearGradient>
-  </defs>
-  <circle cx="256" cy="256" r="226" fill="url(#g)"/>
-  <circle cx="256" cy="256" r="176" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3"/>
-  <path d="M256 104 L390 350 H122 Z" fill="none" stroke="#fff" stroke-width="28" stroke-linejoin="round"/>
-  <circle cx="256" cy="256" r="30" fill="#FF6B6B" stroke="#fff" stroke-width="10"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="620" viewBox="0 0 720 620" role="img" aria-labelledby="title desc">
+<title id="title">UI UX design</title><desc id="desc">3D-style illustration for UI UX design</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10173b"/><stop offset=".52" stop-color="#2A2D7C"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#62F5F0"/><stop offset=".55" stop-color="#28A9F6"/><stop offset="1" stop-color="#8A65FF"/></linearGradient>
+ <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF8A83"/><stop offset="1" stop-color="#FF5D9E"/></linearGradient>
+ <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#141E5B"/><stop offset=".55" stop-color="#20266f"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#A8F8FF" stop-opacity=".26"/><stop offset="1" stop-color="#9A7BFF" stop-opacity=".08"/></linearGradient>
+ <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity=".58"/></filter>
+ <filter id="glow"><feGaussianBlur stdDeviation="16"/></filter>
+ <clipPath id="screenClip"><rect x="95" y="88" width="460" height="300" rx="23"/></clipPath>
+</defs><rect width="720" height="620" rx="28" fill="#0A102B"/><circle cx="360" cy="300" r="220" fill="#9B8AFF" opacity=".12" filter="url(#glow)"/><g filter="url(#shadow)"><rect x="115" y="150" width="240" height="300" rx="24" fill="#151D46" stroke="#A9F6FF" stroke-opacity=".35" stroke-width="3"/><rect x="140" y="182" width="190" height="90" rx="16" fill="url(#cyan)"/><circle cx="185" cy="227" r="20" fill="#fff" opacity=".9"/><rect x="164" y="300" width="145" height="10" rx="5" fill="#fff" opacity=".5"/><rect x="164" y="322" width="110" height="8" rx="4" fill="#fff" opacity=".25"/><rect x="164" y="355" width="145" height="54" rx="13" fill="#9B8AFF" opacity=".3"/><rect x="385" y="110" width="220" height="340" rx="24" fill="#151D46" stroke="#A9F6FF" stroke-opacity=".35" stroke-width="3"/><rect x="410" y="145" width="170" height="16" rx="8" fill="#fff" opacity=".55"/><rect x="410" y="182" width="170" height="90" rx="15" fill="url(#glass)"/><path d="M428 245l33-30 29 18 38-38" fill="none" stroke="#9B8AFF" stroke-width="7" stroke-linecap="round"/><rect x="410" y="294" width="170" height="12" rx="6" fill="#fff" opacity=".3"/><rect x="410" y="318" width="120" height="8" rx="4" fill="#fff" opacity=".2"/><rect x="410" y="354" width="170" height="55" rx="13" fill="url(#coral)" opacity=".8"/></g></svg>

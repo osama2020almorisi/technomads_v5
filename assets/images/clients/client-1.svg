@@ -1,14 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">Client 1</title>
-  <desc id="desc">TechNomads brand illustration</desc>
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2A2D7C"/>
-      <stop offset="1" stop-color="#4ECDC4"/>
-    </linearGradient>
-  </defs>
-  <circle cx="256" cy="256" r="226" fill="url(#g)"/>
-  <circle cx="256" cy="256" r="176" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3"/>
-  <path d="M256 104 L390 350 H122 Z" fill="none" stroke="#fff" stroke-width="28" stroke-linejoin="round"/>
-  <circle cx="256" cy="256" r="30" fill="#FF6B6B" stroke="#fff" stroke-width="10"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" role="img" aria-labelledby="title desc">
+<title id="title">Abstract brand mark 1</title><desc id="desc">Decorative placeholder brand mark, not a real client logo</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10173b"/><stop offset=".52" stop-color="#2A2D7C"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#62F5F0"/><stop offset=".55" stop-color="#28A9F6"/><stop offset="1" stop-color="#8A65FF"/></linearGradient>
+ <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF8A83"/><stop offset="1" stop-color="#FF5D9E"/></linearGradient>
+ <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#141E5B"/><stop offset=".55" stop-color="#20266f"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#A8F8FF" stop-opacity=".26"/><stop offset="1" stop-color="#9A7BFF" stop-opacity=".08"/></linearGradient>
+ <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity=".58"/></filter>
+ <filter id="glow"><feGaussianBlur stdDeviation="16"/></filter>
+ <clipPath id="screenClip"><rect x="95" y="88" width="460" height="300" rx="23"/></clipPath>
+</defs><rect width="80" height="80" rx="20" fill="#101735"/><path d="M22 48V18l38 40V28" fill="none" stroke="#4ECDC4" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><text x="40" y="75" text-anchor="middle" font-family="Arial" font-size="7" fill="#fff">Nexora</text></svg>

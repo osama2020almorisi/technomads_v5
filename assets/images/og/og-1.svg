@@ -1,14 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">TechNomads Open Graph 1</title>
-  <desc id="desc">TechNomads brand illustration</desc>
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2A2D7C"/>
-      <stop offset="1" stop-color="#4ECDC4"/>
-    </linearGradient>
-  </defs>
-  <circle cx="256" cy="256" r="226" fill="url(#g)"/>
-  <circle cx="256" cy="256" r="176" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3"/>
-  <path d="M256 104 L390 350 H122 Z" fill="none" stroke="#fff" stroke-width="28" stroke-linejoin="round"/>
-  <circle cx="256" cy="256" r="30" fill="#FF6B6B" stroke="#fff" stroke-width="10"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+<title id="title">TechNomads Digital products</title><desc id="desc">Social preview for Digital products</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10173b"/><stop offset=".52" stop-color="#2A2D7C"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#62F5F0"/><stop offset=".55" stop-color="#28A9F6"/><stop offset="1" stop-color="#8A65FF"/></linearGradient>
+ <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF8A83"/><stop offset="1" stop-color="#FF5D9E"/></linearGradient>
+ <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#141E5B"/><stop offset=".55" stop-color="#20266f"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#A8F8FF" stop-opacity=".26"/><stop offset="1" stop-color="#9A7BFF" stop-opacity=".08"/></linearGradient>
+ <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity=".58"/></filter>
+ <filter id="glow"><feGaussianBlur stdDeviation="16"/></filter>
+ <clipPath id="screenClip"><rect x="95" y="88" width="460" height="300" rx="23"/></clipPath>
+</defs><rect width="1200" height="630" fill="#09112D"/><circle cx="1020" cy="80" r="300" fill="#4ECDC4" opacity=".12"/><path d="M0 500C250 350 410 610 680 425S1010 400 1200 230V630H0Z" fill="url(#bg)" opacity=".65"/><rect x="52" y="48" width="1096" height="534" rx="38" fill="#101735" stroke="#9CEFF5" stroke-opacity=".18" stroke-width="2"/><g transform="translate(92 92) scale(.62)"><circle cx="64" cy="64" r="43" fill="none" stroke="url(#cyan)" stroke-width="12"/><circle cx="64" cy="64" r="17" fill="url(#cyan)"/><circle cx="99" cy="34" r="8" fill="#FF6B6B"/></g><text x="205" y="156" font-family="Arial,sans-serif" font-size="40" font-weight="800" fill="#fff">TechNomads</text><text x="95" y="300" font-family="Arial,sans-serif" font-size="58" font-weight="800" fill="#fff">Digital products</text><text x="98" y="362" font-family="Arial,sans-serif" font-size="27" fill="#C4D6F7">Build Your Digital Future</text><rect x="98" y="420" width="235" height="9" rx="4" fill="#4ECDC4"/><g transform="translate(740 180)"><rect x="0" y="0" width="300" height="220" rx="24" fill="#151D46" stroke="#9CEFF5" stroke-opacity=".35" stroke-width="3"/><rect x="15" y="15" width="270" height="190" rx="15" fill="url(#screen)"/><rect x="40" y="45" width="100" height="9" rx="4" fill="#4ECDC4"/><rect x="40" y="66" width="140" height="6" rx="3" fill="#fff" opacity=".3"/><rect x="40" y="92" width="110" height="76" rx="12" fill="url(#glass)"/><rect x="165" y="92" width="95" height="30" rx="10" fill="url(#coral)"/><rect x="165" y="132" width="95" height="36" rx="10" fill="url(#glass)"/><path d="M-40 220h380l-28 35H-10Z" fill="#202845" stroke="#9CEFF5" stroke-opacity=".25"/></g><g transform="translate(1000 325) rotate(8)"><rect width="118" height="210" rx="24" fill="#080D20" stroke="#9CEFF5" stroke-opacity=".6" stroke-width="2"/><rect x="9" y="10" width="100" height="190" rx="17" fill="#F5F7FF"/><rect x="22" y="45" width="74" height="48" rx="12" fill="url(#cyan)"/><rect x="22" y="107" width="74" height="8" rx="4" fill="#252D7B" opacity=".35"/><rect x="22" y="125" width="50" height="6" rx="3" fill="#252D7B" opacity=".18"/></g></svg>
