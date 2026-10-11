@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="800" viewBox="0 0 1440 800" role="img" aria-labelledby="title desc">
+<title id="title">TechNomads hero background</title><desc id="desc">Abstract blue cyan purple technology background</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10173b"/><stop offset=".52" stop-color="#2A2D7C"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#62F5F0"/><stop offset=".55" stop-color="#28A9F6"/><stop offset="1" stop-color="#8A65FF"/></linearGradient>
+ <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF8A83"/><stop offset="1" stop-color="#FF5D9E"/></linearGradient>
+ <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#141E5B"/><stop offset=".55" stop-color="#20266f"/><stop offset="1" stop-color="#087f91"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#A8F8FF" stop-opacity=".26"/><stop offset="1" stop-color="#9A7BFF" stop-opacity=".08"/></linearGradient>
+ <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity=".58"/></filter>
+ <filter id="glow"><feGaussianBlur stdDeviation="16"/></filter>
+ <clipPath id="screenClip"><rect x="95" y="88" width="460" height="300" rx="23"/></clipPath>
+</defs><rect width="1440" height="800" fill="#09112d"/><circle cx="1120" cy="170" r="290" fill="#2A2D7C" opacity=".5"/><circle cx="1300" cy="650" r="320" fill="#4ECDC4" opacity=".25"/><circle cx="350" cy="120" r="230" fill="#8C65FF" opacity=".18"/><path d="M0 580C220 440 390 680 650 510S1110 420 1440 220V800H0Z" fill="url(#bg)" opacity=".68"/><g fill="none" stroke="#9EEFF7" stroke-opacity=".17" stroke-width="2"><path d="M0 180Q170 70 330 180T650 180T980 180T1440 180"/><path d="M0 650Q170 540 330 650T650 650T980 650T1440 650"/></g><g fill="#fff" opacity=".3"><circle cx="190" cy="240" r="4"/><circle cx="510" cy="110" r="4"/><circle cx="980" cy="570" r="4"/><circle cx="1240" cy="320" r="4"/></g></svg>
