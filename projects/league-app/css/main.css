@@ -1,0 +1,225 @@
+/* ============================================================
+   MAIN.CSS — نقطة تجميع كل ملفات CSS
+   League Manager App — Design System v2.0
+   ============================================================ */
+
+/* ============================================================
+   IMPORT ORDER MATTERS — لا تُغيّر الترتيب
+   ============================================================ */
+
+/* 1. Tokens (Variables) — يجب أن يكون الأول */
+@import url("./tokens.css");
+
+/* 2. Base (Reset + Typography) */
+@import url("./base.css");
+
+/* 3. Layout (Grid + Container + Utilities) */
+@import url("./layout.css");
+
+/* 4. Components (Buttons, Cards, Forms, Modals, Nav, FAB) */
+@import url("./components.css");
+
+/* 5. Screens (Page-specific styles) */
+@import url("./screens.css");
+
+/* 6. Animations (Keyframes + Motion) */
+@import url("./animations.css");
+
+/* 7. Glass (Glassmorphism + Ambient Effects) */
+@import url("./glass.css");
+
+/* 8. Dark Mode Refinements — يجب أن يكون الأخير */
+@import url("./dark.css");
+
+/* ============================================================
+   GLOBAL BASE STYLES
+   ============================================================ */
+
+html {
+  scroll-padding-top: calc(var(--topbar-height) + var(--space-4));
+}
+
+body {
+  overscroll-behavior-y: none;
+}
+
+/* Smooth font rendering */
+body,
+button,
+input,
+select,
+textarea {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent layout shift */
+img {
+  display: block;
+  background: var(--surface-2);
+}
+
+/* App container */
+#app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+#app[hidden] {
+  display: none;
+}
+
+/* Screen host */
+#pageHost {
+  display: contents;
+}
+
+/* Modal root */
+#modalRoot {
+  position: relative;
+  z-index: var(--z-modal);
+}
+
+/* Toast region */
+#toastRegion {
+  pointer-events: none;
+}
+
+#toastRegion > * {
+  pointer-events: auto;
+}
+
+/* ============================================================
+   GLOBAL LOADING STATE
+   ============================================================ */
+
+body.loading {
+  pointer-events: none;
+  cursor: wait;
+}
+
+body.loading::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  background-size: 200% 100%;
+  animation: gradientShift 1.5s ease-in-out infinite;
+  z-index: 9999;
+}
+
+/* ============================================================
+   PRINT OVERRIDES
+   ============================================================ */
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .topbar,
+  .bottom-nav,
+  .fab,
+  .toast-region,
+  .button-row,
+  .tabs,
+  .search-row,
+  .admin-tabs {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .card,
+  .table-wrap,
+  .admin-row {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    break-inside: avoid;
+  }
+
+  .hero-card,
+  .live-hero,
+  .admin-hero,
+  .team-hero {
+    background: #f5f5f5 !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+
+  .hero-card h2,
+  .hero-card p,
+  .admin-hero h1,
+  .admin-hero p,
+  .team-hero h1,
+  .team-hero p {
+    color: #000 !important;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .hero-card {
+    animation: none;
+  }
+
+  .live-hero {
+    animation: none;
+  }
+
+  .fab:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   HIGH CONTRAST MODE
+   ============================================================ */
+
+@media (prefers-contrast: high) {
+  :root {
+    --border-subtle: rgba(0, 0, 0, 0.25);
+    --border-default: rgba(0, 0, 0, 0.35);
+    --border-strong: rgba(0, 0, 0, 0.50);
+  }
+
+  .card,
+  .btn,
+  .input-control,
+  .select-control {
+    border-width: 2px;
+  }
+}
+
+/* ============================================================
+   SAFE AREA SUPPORT
+   ============================================================ */
+
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
