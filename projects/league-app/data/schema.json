@@ -1,10 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "League App data",
+  "title": "League App Data",
   "type": "object",
   "required": [
     "version",
-    "updatedAt",
     "league",
     "teams",
     "players",
@@ -31,12 +30,6 @@
         "season": {
           "type": "string"
         },
-        "logo": {
-          "type": "string"
-        },
-        "country": {
-          "type": "string"
-        },
         "settings": {
           "type": "object"
         }
@@ -59,8 +52,7 @@
         "required": [
           "id",
           "teamId",
-          "name",
-          "position"
+          "name"
         ]
       }
     },
@@ -70,29 +62,11 @@
         "type": "object",
         "required": [
           "id",
-          "round",
           "homeTeamId",
           "awayTeamId",
-          "date",
-          "status",
-          "score"
+          "status"
         ]
       }
-    },
-    "events": {
-      "type": "array"
-    },
-    "discipline": {
-      "type": "array"
-    },
-    "ratings": {
-      "type": "array"
-    },
-    "auditLog": {
-      "type": "array"
-    },
-    "fanVotes": {
-      "type": "array"
     }
   }
 }

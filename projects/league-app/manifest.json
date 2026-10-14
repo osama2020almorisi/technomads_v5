@@ -1,32 +1,27 @@
 {
   "id": "./index.html",
-  "name": "League App — مدير الدوري",
-  "short_name": "مدير الدوري",
-  "description": "تطبيق محلي لإدارة الفرق والمباريات والترتيب والإحصائيات والانضباط.",
+  "name": "League App - مركز البطولة",
+  "short_name": "League",
+  "description": "إدارة ومتابعة دوري كرة القدم محليًا",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#0A0E13",
+  "background_color": "#F7F9FB",
   "theme_color": "#0B6E4F",
-  "categories": [
-    "sports",
-    "utilities"
-  ],
   "icons": [
     {
       "src": "icon-192.svg",
       "sizes": "192x192",
       "type": "image/svg+xml",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ]
 }
