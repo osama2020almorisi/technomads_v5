@@ -294,7 +294,7 @@
 }
 
 /* ============================================================
-   STANDINGS SCREEN
+   STANDINGS SCREEN — Full Mobile Support
    ============================================================ */
 
 .screen-standings {
@@ -304,9 +304,28 @@
 
 .screen-standings .table-wrap {
   animation: fadeInUp 0.35s var(--ease-out) both;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  display: block;
+  width: 100%;
 }
 
-/* Highlight champion row */
+.screen-standings .standings-table {
+  min-width: 620px;
+  width: 100%;
+}
+
+.screen-standings .standings-table tbody {
+  display: table-row-group;
+}
+
+.screen-standings .standings-table tbody tr {
+  display: table-row;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
 .standings-table tr.rank-1 {
   background: linear-gradient(90deg,
     color-mix(in srgb, var(--color-gold-500) 12%, transparent),
@@ -315,6 +334,71 @@
 
 .standings-table tr.rank-1 .points-cell {
   color: var(--color-gold-600);
+}
+
+/* Legend */
+.screen-standings .legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin: var(--space-2) var(--space-1) var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  color: var(--text-tertiary);
+  font-size: var(--text-xs);
+}
+
+/* ============================================================
+   STATS SCREEN — Full Mobile Support
+   ============================================================ */
+
+.screen-stats {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.screen-stats .stats-tabs {
+  margin: var(--space-2) 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.screen-stats .stats-list {
+  display: grid;
+  gap: var(--space-2);
+  min-height: 200px;
+}
+
+.screen-stats .player-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+}
+
+/* ============================================================
+   MATCHES SCREEN — Full Mobile Support
+   ============================================================ */
+
+.screen-matches {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.screen-matches .tabs {
+  margin: var(--space-2) 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.screen-matches .match-list {
+  display: grid;
+  gap: var(--space-3);
+  min-height: 200px;
 }
 
 /* ============================================================
