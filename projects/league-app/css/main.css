@@ -1,9 +1,104 @@
+/* ============================================================
+   MAIN.CSS — نقطة تجميع كل ملفات CSS
+   League Manager App — Design System v2.0
+   ============================================================ */
+
+/* الترتيب مهم جداً — لا تُغيّره */
 @import url("tokens.css");
 @import url("base.css");
 @import url("layout.css");
+@import url("icons.css");
 @import url("components.css");
+@import url("pitch.css");
 @import url("screens.css");
 @import url("animations.css");
 @import url("glass.css");
 @import url("dark.css");
 @import url("mobile.css");
+
+/* ============================================================
+   GLOBAL OVERRIDES
+   ============================================================ */
+html {
+  scroll-padding-top: calc(var(--topbar-h) + 16px);
+}
+
+#app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+#app[hidden] {
+  display: none;
+}
+
+#modal-root {
+  position: relative;
+  z-index: var(--z-modal);
+}
+
+#toast-region {
+  pointer-events: none;
+}
+
+#toast-region > * {
+  pointer-events: auto;
+}
+
+/* ============================================================
+   LOADING STATE
+   ============================================================ */
+body.loading {
+  pointer-events: none;
+  cursor: wait;
+}
+
+body.loading::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  background-size: 200% 100%;
+  animation: gradientShift 1.5s ease-in-out infinite;
+  z-index: 9999;
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    padding: 0;
+  }
+
+  .topbar,
+  .bottom-nav,
+  .fab,
+  .toast-region {
+    display: none !important;
+  }
+
+  .container {
+    max-width: none;
+    padding: 0;
+  }
+
+  .card,
+  .panel,
+  .table-wrap {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    break-inside: avoid;
+  }
+
+  .hero,
+  .team-hero {
+    background: #f5f5f5 !important;
+    color: #000 !important;
+  }
+}

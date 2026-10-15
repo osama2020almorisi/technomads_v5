@@ -1,1 +1,397 @@
-@media(max-width:420px){.container{padding:16px 12px 25px}.topbar{padding:0 12px}.hero{padding:24px 18px}.hero-stats{gap:16px}.hero-stats strong{font-size:1.25rem}.team-card{padding:12px;border-radius:18px}.toolbar{gap:7px}.setting-row{padding:13px;border-radius:17px}.bottom-nav{padding-inline:2px}.nav-icon{font-size:1.12rem}.nav-item{letter-spacing:-.2px}.page-heading{gap:8px}}@media(min-width:560px){.match-strip{grid-auto-columns:minmax(270px,42%)}}
+/* ============================================================
+   MOBILE.CSS — تحسينات الهاتف الاحترافية
+   Full Mobile Support with Touch, Safe Area, Responsive
+   ============================================================ */
+
+/* ============================================================
+   SAFE AREA — دعم iPhone Notch
+   ============================================================ */
+@supports (padding: env(safe-area-inset-top)) {
+  .topbar {
+    padding-top: max(0px, env(safe-area-inset-top));
+    height: calc(var(--topbar-h) + env(safe-area-inset-top));
+  }
+
+  .bottom-nav {
+    padding-bottom: calc(6px + env(safe-area-inset-bottom));
+    height: calc(var(--nav-h) + env(safe-area-inset-bottom));
+  }
+
+  body {
+    padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 20px);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .fab {
+    bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 18px);
+  }
+}
+
+/* ============================================================
+   TOUCH TARGETS — أهداف اللمس
+   ============================================================ */
+@media (pointer: coarse) {
+  .nav-item {
+    min-height: 56px;
+  }
+
+  .button {
+    min-height: 48px;
+  }
+
+  .icon-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .quick-card {
+    min-height: 100px;
+  }
+
+  .setting-row {
+    min-height: 68px;
+  }
+
+  /* Disable hover effects on touch */
+  .team-card:hover,
+  .match-card:hover,
+  .result-row:hover,
+  .player-row:hover,
+  .setting-row:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   SMALL PHONES (< 380px)
+   ============================================================ */
+@media (max-width: 380px) {
+  :root {
+    --nav-h: 64px;
+    --topbar-h: 62px;
+    --radius: 18px;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 14px 12px 28px;
+  }
+
+  .topbar {
+    padding-inline: 12px;
+  }
+
+  .brand b {
+    font-size: 0.78rem;
+    max-width: 100px;
+  }
+
+  .brand small {
+    font-size: 0.62rem;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+    font-size: 1.15rem;
+    border-radius: 12px;
+  }
+
+  .icon-button {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    font-size: 1rem;
+  }
+
+  .hero {
+    padding: 24px 18px;
+    border-radius: var(--radius-xl);
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 0.82rem;
+    max-width: 100%;
+  }
+
+  .hero-stats {
+    gap: 8px;
+    margin: 20px 0 16px;
+  }
+
+  .hero-stats > div {
+    padding: 10px 6px;
+  }
+
+  .hero-stats > div strong {
+    font-size: 1.2rem;
+  }
+
+  .hero-stats > div span {
+    font-size: 0.65rem;
+  }
+
+  .stat-card {
+    padding: 14px 10px;
+  }
+
+  .stat-card strong {
+    font-size: 1.4rem;
+  }
+
+  .quick-grid,
+  .teams-grid,
+  .stats-grid {
+    gap: 10px;
+  }
+
+  .quick-card {
+    padding: 16px 10px;
+  }
+
+  .quick-icon-bg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav-item > span:last-child {
+    font-size: 0.58rem;
+  }
+
+  .nav-item .nav-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .match-team .team-crest,
+  .team-crest {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+
+  .score {
+    font-size: 1.15rem;
+    min-width: 60px;
+    padding: 5px 10px;
+  }
+
+  .pitch-player-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+    border-width: 2px;
+  }
+
+  .pitch-player-name {
+    font-size: 0.56rem;
+    max-width: 60px;
+  }
+
+  .bench-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   MEDIUM PHONES (380-560px)
+   ============================================================ */
+@media (min-width: 381px) and (max-width: 560px) {
+  .container {
+    padding: 16px 14px 28px;
+  }
+}
+
+/* ============================================================
+   TABLETS (561-767px)
+   ============================================================ */
+@media (min-width: 561px) and (max-width: 767px) {
+  .container {
+    padding: 24px 20px 32px;
+  }
+
+  .teams-grid,
+  .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .quick-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .match-strip {
+    grid-auto-columns: minmax(280px, 48%);
+  }
+}
+
+/* ============================================================
+   DESKTOP (768px+)
+   ============================================================ */
+@media (min-width: 768px) {
+  .container {
+    padding: 32px 26px 40px;
+  }
+
+  .teams-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .quick-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .bottom-nav {
+    inset-inline: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100%, 640px);
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .fab {
+    inset-inline-start: max(24px, calc((100vw - var(--container-max)) / 2));
+  }
+
+  .match-strip {
+    grid-auto-columns: minmax(280px, 32%);
+  }
+}
+
+/* ============================================================
+   LANDSCAPE MODE
+   ============================================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero {
+    padding: 20px 16px;
+  }
+
+  .hero-stats {
+    margin: 16px 0 12px;
+  }
+
+  .nav-item > span:last-child {
+    display: none;
+  }
+
+  .nav-item {
+    padding: 10px 4px;
+  }
+
+  .nav-item .nav-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* ============================================================
+   HIGH DPI DISPLAYS
+   ============================================================ */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .brand-mark,
+  .team-crest,
+  .avatar {
+    text-rendering: geometricPrecision;
+  }
+}
+
+/* ============================================================
+   NOTCH/PUNCH-HOLE DEVICES
+   ============================================================ */
+@media (display-mode: standalone) {
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  /* Allow text selection in inputs */
+  input,
+  textarea {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+}
+
+/* ============================================================
+   DARK MODE MOBILE REFINEMENTS
+   ============================================================ */
+@media (max-width: 560px) {
+  [data-theme="dark"] .hero {
+    background: radial-gradient(circle at 90% 10%, rgba(212, 175, 55, 0.20), transparent 45%),
+                linear-gradient(135deg, #041F14 0%, #063827 58%, #095C42 100%);
+  }
+}
+
+/* ============================================================
+   FONT SIZE BOOST FOR SMALL SCREENS
+   ============================================================ */
+@media (max-width: 340px) {
+  body {
+    font-size: 13px;
+  }
+
+  .nav-item > span:last-child {
+    font-size: 0.52rem;
+  }
+
+  .section-title h2 {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================================
+   PREVENT ZOOM ON INPUT FOCUS (iOS)
+   ============================================================ */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* But keep visual size normal */
+  .field,
+  input.field,
+  select.field {
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================================
+   SMOOTH MOMENTUM SCROLLING
+   ============================================================ */
+.overflow-x-auto,
+.match-strip,
+.tabs,
+.table-wrap {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* ============================================================
+   HIDE SCROLLBARS ON MOBILE
+   ============================================================ */
+@media (max-width: 767px) {
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  * {
+    scrollbar-width: none;
+  }
+}

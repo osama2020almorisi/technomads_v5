@@ -1,0 +1,359 @@
+/* ============================================================
+   ICONS.CSS — مكتبة الأيقونات SVG الاحترافية
+   Unified icon system: consistent sizing, colors, animations
+   ============================================================ */
+
+/* ============================================================
+   ICON BASE
+   ============================================================ */
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 2;
+  stroke: currentColor;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.125em;
+  flex-shrink: 0;
+}
+
+/* Sizes */
+.icon-xs { width: 0.875rem; height: 0.875rem; }
+.icon-sm { width: 1rem; height: 1rem; }
+.icon-md { width: 1.25rem; height: 1.25rem; }
+.icon-lg { width: 1.5rem; height: 1.5rem; }
+.icon-xl { width: 2rem; height: 2rem; }
+.icon-2xl { width: 2.5rem; height: 2.5rem; }
+
+/* Colors */
+.icon-primary { color: var(--primary-500); }
+.icon-gold { color: var(--gold-500); }
+.icon-danger { color: var(--danger); }
+.icon-success { color: var(--success); }
+.icon-warning { color: var(--warning); }
+.icon-muted { color: var(--text-muted); }
+
+/* Filled variant */
+.icon-filled {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* ============================================================
+   NAV ICONS — أيقونات التنقل السفلي (نحيفة)
+   ============================================================ */
+.nav-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.8;
+  transition: transform var(--duration-normal) var(--ease-spring),
+              stroke-width var(--duration-normal);
+}
+
+.nav-item.active .nav-icon svg {
+  stroke-width: 2.4;
+}
+
+/* ============================================================
+   QUICK ACTION ICONS
+   ============================================================ */
+.quick-icon-bg svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.8;
+}
+
+/* ============================================================
+   BUTTON ICONS
+   ============================================================ */
+.button svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.2;
+}
+
+.button-sm svg {
+  width: 14px;
+  height: 14px;
+}
+
+.button-lg svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ============================================================
+   STAT ICONS
+   ============================================================ */
+.stat-card .stat-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--primary-50);
+  color: var(--primary-500);
+  margin: 0 auto 8px;
+}
+
+.stat-card .stat-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ============================================================
+   STATUS ICONS (Inline)
+   ============================================================ */
+.status-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 0;
+  flex-shrink: 0;
+}
+
+/* Live indicator */
+.live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--danger);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--danger);
+  opacity: 0.4;
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ============================================================
+   TROPHY / MEDAL ICONS
+   ============================================================ */
+.icon-trophy {
+  filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.4));
+}
+
+.icon-trophy.gold {
+  color: var(--gold-500);
+}
+
+.icon-trophy.silver {
+  color: #c0c8cd;
+}
+
+.icon-trophy.bronze {
+  color: #d4a373;
+}
+
+/* ============================================================
+   PLAYER POSITION ICONS
+   ============================================================ */
+.pos-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-weight: 900;
+  font-size: 0.65rem;
+  letter-spacing: -0.02em;
+}
+
+.pos-icon.gk {
+  background: linear-gradient(135deg, #FFE066, #F5C400);
+  color: #5a4a05;
+}
+
+.pos-icon.df {
+  background: linear-gradient(135deg, #7EB8F5, #4A8FE7);
+  color: #0d2b52;
+}
+
+.pos-icon.mf {
+  background: linear-gradient(135deg, #5FB88E, #2E8B57);
+  color: #05261b;
+}
+
+.pos-icon.fw {
+  background: linear-gradient(135deg, #FFA07A, #E63946);
+  color: #4a0810;
+}
+
+/* ============================================================
+   CARD TYPE ICONS (للانضباط)
+   ============================================================ */
+.card-icon {
+  display: inline-block;
+  width: 14px;
+  height: 18px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.card-icon.yellow {
+  background: linear-gradient(135deg, #FFE066, #F5C400);
+  box-shadow: 0 2px 8px rgba(245, 196, 0, 0.4);
+}
+
+.card-icon.red {
+  background: linear-gradient(135deg, #E63946, #C42835);
+  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.4);
+}
+
+/* ============================================================
+   BADGE ICONS (Notifications)
+   ============================================================ */
+.badge-icon {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+.badge-icon[data-badge]::after {
+  content: attr(data-badge);
+  position: absolute;
+  top: -4px;
+  inset-inline-end: -4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--danger);
+  color: #fff;
+  border-radius: 99px;
+  font-size: 0.6rem;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--surface);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   ARROW / CHEVRON ICONS
+   ============================================================ */
+.arrow-right,
+.arrow-left {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.arrow-right:hover {
+  transform: translateX(2px);
+}
+
+.arrow-left:hover {
+  transform: translateX(-2px);
+}
+
+[dir="rtl"] .arrow-right {
+  transform: rotate(180deg);
+}
+
+[dir="rtl"] .arrow-left {
+  transform: rotate(180deg);
+}
+
+/* ============================================================
+   ICON ANIMATIONS
+   ============================================================ */
+.icon-spin {
+  animation: iconSpin 1s linear infinite;
+}
+
+@keyframes iconSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.icon-pulse {
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.95); }
+}
+
+.icon-bounce {
+  animation: iconBounce 1.5s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.icon-shake {
+  animation: iconShake 0.5s ease-in-out;
+}
+
+@keyframes iconShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+/* ============================================================
+   ICON IN PILL / BADGE
+   ============================================================ */
+.pill svg,
+.badge svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5;
+}
+
+/* ============================================================
+   ICON IN TAB
+   ============================================================ */
+.tab svg {
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+  margin-inline-end: 4px;
+  stroke-width: 2.2;
+}
+
+/* ============================================================
+   FEATURE ICON (Big decorative)
+   ============================================================ */
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: var(--primary-50);
+  color: var(--primary-500);
+  margin-bottom: 16px;
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+
+.feature-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke-width: 1.8;
+}
+
+.feature-icon:hover {
+  transform: scale(1.08) rotate(-5deg);
+}

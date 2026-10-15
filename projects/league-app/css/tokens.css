@@ -1,1 +1,216 @@
- :root{--green:#0B6E4F;--green2:#0a513d;--gold:#D4AF37;--bg:#F7F9FB;--surface:#fff;--surface2:#edf2f4;--text:#17221f;--muted:#73817c;--danger:#E63946;--success:#06D6A0;--warning:#F4A261;--line:rgba(18,45,36,.1);--shadow:0 12px 36px rgba(15,48,38,.08);--radius:22px;--nav-h:68px;color-scheme:light}
+/* ============================================================
+   TOKENS.CSS — نظام التصميم الاحترافي الكامل
+   Colors | Typography | Spacing | Radius | Shadows | Motion
+   ============================================================ */
+
+:root {
+
+  /* ============================================================
+     PRIMARY — أخضر زمردي فاخر
+     ============================================================ */
+  --primary-50:  #e8f5ef;
+  --primary-100: #c8e9d8;
+  --primary-200: #96d4b7;
+  --primary-300: #5fba92;
+  --primary-400: #2b9f6f;
+  --primary-500: #0B6E4F;
+  --primary-600: #095c42;
+  --primary-700: #074a35;
+  --primary-800: #053828;
+  --primary-900: #03261b;
+
+  /* ============================================================
+     GOLD — ذهبي ملكي (للتميزات)
+     ============================================================ */
+  --gold-100: #faf3d4;
+  --gold-200: #f5e7a8;
+  --gold-300: #f0d97a;
+  --gold-400: #e5c95a;
+  --gold-500: #D4AF37;
+  --gold-600: #b8951f;
+  --gold-700: #8f7315;
+
+  /* ============================================================
+     SEMANTIC — ألوان الحالة
+     ============================================================ */
+  --danger: #E63946;
+  --danger-soft: rgba(230, 57, 70, 0.12);
+  --success: #06D6A0;
+  --success-soft: rgba(6, 214, 160, 0.12);
+  --warning: #F4A261;
+  --warning-soft: rgba(244, 162, 97, 0.12);
+  --info: #4385F5;
+  --info-soft: rgba(67, 133, 245, 0.12);
+
+  /* ============================================================
+     SURFACES — الأسطح (4 مستويات)
+     ============================================================ */
+  --bg: #F7F9FB;
+  --surface: #ffffff;
+  --surface-2: #edf2f4;
+  --surface-3: #e0e7eb;
+  --surface-elevated: #ffffff;
+  --overlay: rgba(10, 14, 19, 0.5);
+
+  /* ============================================================
+     TEXT — النصوص
+     ============================================================ */
+  --text: #17221f;
+  --text-secondary: #4b5754;
+  --text-muted: #73817c;
+  --text-disabled: #a8b0ac;
+  --text-inverse: #ffffff;
+
+  /* ============================================================
+     BORDERS — الحدود
+     ============================================================ */
+  --line: rgba(18, 45, 36, 0.08);
+  --line-strong: rgba(18, 45, 36, 0.15);
+  --line-gold: rgba(212, 175, 55, 0.3);
+
+  /* ============================================================
+     GRADIENTS — التدرجات
+     ============================================================ */
+  --gradient-primary: linear-gradient(135deg, #0B6E4F 0%, #12A878 100%);
+  --gradient-hero: radial-gradient(circle at 90% 10%, rgba(212, 175, 55, 0.25), transparent 40%),
+                   linear-gradient(135deg, #073B30 0%, #0B6E4F 58%, #12A878 100%);
+  --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #F0D97A 50%, #D4AF37 100%);
+  --gradient-dark: linear-gradient(135deg, #03261B 0%, #053828 50%, #074A35 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+  --gradient-mesh: radial-gradient(circle at 20% 20%, rgba(11,110,79,0.08), transparent 40%),
+                   radial-gradient(circle at 80% 80%, rgba(212,175,55,0.06), transparent 40%),
+                   radial-gradient(circle at 50% 50%, rgba(67,133,245,0.03), transparent 50%);
+
+  /* ============================================================
+     SHADOWS — الظلال (7 مستويات)
+     ============================================================ */
+  --shadow-xs: 0 1px 2px rgba(15, 48, 38, 0.04);
+  --shadow-sm: 0 2px 6px rgba(15, 48, 38, 0.06);
+  --shadow: 0 12px 36px rgba(15, 48, 38, 0.08);
+  --shadow-md: 0 4px 16px rgba(15, 48, 38, 0.10);
+  --shadow-lg: 0 18px 44px rgba(15, 48, 38, 0.12);
+  --shadow-xl: 0 28px 64px rgba(15, 48, 38, 0.16);
+  --shadow-2xl: 0 40px 80px rgba(15, 48, 38, 0.20);
+
+  /* ============================================================
+     GLOWS — التوهجات
+     ============================================================ */
+  --glow-green: 0 8px 32px rgba(11, 110, 79, 0.28);
+  --glow-green-strong: 0 0 0 6px rgba(11, 110, 79, 0.15), 0 12px 48px rgba(11, 110, 79, 0.35);
+  --glow-gold: 0 8px 32px rgba(212, 175, 55, 0.35);
+  --glow-gold-strong: 0 0 0 6px rgba(212, 175, 55, 0.20), 0 12px 48px rgba(212, 175, 55, 0.45);
+  --glow-danger: 0 8px 32px rgba(230, 57, 70, 0.32);
+
+  /* ============================================================
+     RADIUS — الزوايا
+     ============================================================ */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius: 22px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+  --radius-full: 9999px;
+
+  /* ============================================================
+     SPACING — المسافات (8-point grid)
+     ============================================================ */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* ============================================================
+     TYPOGRAPHY — الخطوط
+     ============================================================ */
+  --font-display: "Cairo", "Tajawal", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Cairo", "Tajawal", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Cairo", monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-black: 900;
+
+  /* ============================================================
+     MOTION — الحركة
+     ============================================================ */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  /* ============================================================
+     LAYOUT
+     ============================================================ */
+  --nav-h: 72px;
+  --topbar-h: 68px;
+  --container-max: 1120px;
+  --fab-size: 56px;
+
+  /* ============================================================
+     Z-INDEX
+     ============================================================ */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 500;
+  --z-toast: 800;
+  --z-splash: 900;
+
+  color-scheme: light;
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme="dark"] {
+  --bg: #0A0E13;
+  --surface: #121A20;
+  --surface-2: #1B262D;
+  --surface-3: #253038;
+  --surface-elevated: #1A252C;
+  --overlay: rgba(0, 0, 0, 0.7);
+
+  --text: #EDF5F1;
+  --text-secondary: #B8C5BF;
+  --text-muted: #9AACA5;
+  --text-disabled: #4D5754;
+
+  --line: rgba(220, 245, 235, 0.08);
+  --line-strong: rgba(220, 245, 235, 0.15);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 28px 64px rgba(0, 0, 0, 0.55);
+  --shadow-2xl: 0 40px 80px rgba(0, 0, 0, 0.6);
+
+  --gradient-primary: linear-gradient(135deg, #074A35 0%, #0B6E4F 100%);
+  --gradient-hero: radial-gradient(circle at 90% 10%, rgba(212, 175, 55, 0.18), transparent 40%),
+                   linear-gradient(135deg, #041F14 0%, #063827 58%, #095C42 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(18,26,32,0.9), rgba(18,26,32,0.7));
+
+  color-scheme: dark;
+}
