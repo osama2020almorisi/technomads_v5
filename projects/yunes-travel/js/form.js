@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // ===== رقم الواتساب (بدون + وبدون مسافات) =====
-  const WHATSAPP_NUMBER = '967770200970';
+  const WHATSAPP_NUMBER = '967771829992';
 
   // ===== البريد الإلكتروني =====
-  const EMAIL = '2025ooss@gmail.com';
+  const EMAIL = 'mryunes40@gmail.com';
 
   // ===== دالة إرسال عبر واتساب =====
   function sendToWhatsApp(form) {

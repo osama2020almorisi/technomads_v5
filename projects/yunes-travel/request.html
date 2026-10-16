@@ -11,6 +11,494 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="css/dark.css">
+  
+  <!-- ===== أنماط القائمة المخصصة + حقول DV ===== -->
+  <style>
+    /* ============================================
+       🎨 قائمة منسدلة مخصصة احترافية
+       ============================================ */
+    .custom-select {
+      position: relative;
+      width: 100%;
+      user-select: none;
+    }
+
+    /* زر القائمة */
+    .custom-select-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 13px 16px;
+      background: #fbfcff;
+      border: 2px solid #e5e9f2;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      color: #39425b;
+      text-align: right;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: inherit;
+      min-height: 50px;
+    }
+
+    .custom-select-trigger:hover {
+      border-color: #c8d0e6;
+      background: #fff;
+    }
+
+    .custom-select-trigger:focus {
+      outline: none;
+    }
+
+    .custom-select.open .custom-select-trigger {
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(58, 75, 220, 0.10);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .custom-select-value {
+      flex: 1;
+      text-align: right;
+      color: #39425b;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .custom-select-value[data-placeholder]:not([data-value]) {
+      color: #9aa2b8;
+      font-weight: 500;
+    }
+
+    .custom-select.has-value .custom-select-value {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    /* سهم القائمة */
+    .custom-select-arrow {
+      color: var(--primary);
+      font-size: 14px;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+      font-weight: 900;
+    }
+
+    .custom-select.open .custom-select-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* القائمة المنسدلة */
+    .custom-select-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 2px solid var(--primary);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 15px 40px rgba(23, 32, 58, 0.15);
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .custom-select.open .custom-select-dropdown {
+      max-height: 360px;
+      opacity: 1;
+      visibility: visible;
+      padding: 6px 0;
+    }
+
+    /* كل خيار */
+    .custom-select-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #39425b;
+      position: relative;
+      border-radius: 8px;
+      margin: 0 6px;
+    }
+
+    .custom-select-option:hover {
+      background: #f5f6ff;
+      color: var(--primary);
+      transform: translateX(-4px);
+    }
+
+    .custom-select-option.selected {
+      background: linear-gradient(135deg, #eef0ff, #e0e5ff);
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .custom-select-option.selected::before {
+      content: '✓';
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 16px;
+    }
+
+    /* أيقونة كل خيار */
+    .cs-opt-icon {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #eef0ff, #e0e5ff);
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .custom-select-option:hover .cs-opt-icon {
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      transform: scale(1.08) rotate(-5deg);
+    }
+
+    .custom-select-option.selected .cs-opt-icon {
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+    }
+
+    .cs-opt-text {
+      flex: 1;
+      text-align: right;
+      line-height: 1.4;
+    }
+
+    /* شارة "جديد" */
+    .cs-opt-badge {
+      font-size: 10px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ff3b3b, #d40000);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      animation: csBadgePulse 1.8s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes csBadgePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 2px 8px rgba(255, 59, 59, 0.4); }
+      50% { transform: scale(1.06); box-shadow: 0 4px 14px rgba(255, 59, 59, 0.7); }
+    }
+
+    /* ===== الخيار DV-2027 المميز ===== */
+    .custom-select-option.special {
+      background: linear-gradient(135deg, rgba(245, 166, 35, 0.08), rgba(95, 44, 170, 0.05));
+      border: 1px solid rgba(245, 166, 35, 0.3);
+      margin: 6px;
+      padding: 14px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .custom-select-option.special::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(245, 166, 35, 0.25), transparent);
+      transition: left 0.7s ease;
+      pointer-events: none;
+    }
+
+    .custom-select-option.special:hover::after {
+      left: 150%;
+    }
+
+    .custom-select-option.special .cs-opt-icon {
+      background: linear-gradient(135deg, #ffd700, #f5a623, #d48806);
+      animation: csFirePulse 1.5s ease-in-out infinite;
+      box-shadow: 0 4px 15px rgba(245, 166, 35, 0.5);
+    }
+
+    @keyframes csFirePulse {
+      0%, 100% { transform: scale(1) rotate(-3deg); }
+      50% { transform: scale(1.12) rotate(3deg); }
+    }
+
+    .custom-select-option.special .cs-opt-text {
+      font-weight: 900;
+      color: #d48806;
+    }
+
+    .custom-select-option.special:hover {
+      background: linear-gradient(135deg, rgba(245, 166, 35, 0.15), rgba(95, 44, 170, 0.10));
+      border-color: rgba(245, 166, 35, 0.6);
+      color: #d48806;
+      transform: translateX(-4px) scale(1.01);
+    }
+
+    .custom-select-option.special.selected {
+      background: linear-gradient(135deg, rgba(245, 166, 35, 0.20), rgba(255, 107, 53, 0.12));
+      border-color: #f5a623;
+    }
+
+    .custom-select-option.special.selected .cs-opt-text {
+      color: #d48806;
+    }
+
+    /* عند اختيار DV: عرض القيمة بلون ذهبي */
+    .custom-select.has-value.dv-selected .custom-select-value {
+      background: linear-gradient(90deg, #d48806, #f5a623, #d48806);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+    }
+
+    .custom-select.has-value.dv-selected .custom-select-trigger {
+      border-color: #f5a623;
+      background: linear-gradient(135deg, #fff9e6, #fffbf0);
+    }
+
+    /* ===== قسم DV المخصص ===== */
+    .dv-fields {
+      display: none;
+      animation: dvFieldsFadeIn 0.5s ease;
+      margin-top: 4px;
+      grid-column: 1 / -1;
+    }
+
+    .dv-fields.show {
+      display: block;
+    }
+
+    @keyframes dvFieldsFadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dv-fields-header {
+      background: linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 100%);
+      border: 1px solid rgba(245, 166, 35, 0.4);
+      border-radius: 18px;
+      padding: 18px 22px;
+      margin: 14px 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .dv-fields-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #f5a623, #ffd700, #f5a623, transparent);
+      background-size: 200% 100%;
+      animation: dvHeaderLine 2.5s linear infinite;
+    }
+
+    @keyframes dvHeaderLine {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .dv-fields-header .dv-head-flag {
+      font-size: 32px;
+      animation: dvFlagWaveSmall 3s ease-in-out infinite;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    @keyframes dvFlagWaveSmall {
+      0%, 100% { transform: rotate(-6deg); }
+      50% { transform: rotate(6deg); }
+    }
+
+    .dv-fields-header .dv-head-text {
+      flex: 1;
+    }
+
+    .dv-fields-header h4 {
+      font-size: 16px;
+      font-weight: 900;
+      margin: 0 0 4px;
+      background: linear-gradient(90deg, #fff, #ffd700);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .dv-fields-header p {
+      font-size: 12.5px;
+      margin: 0;
+      color: #c8b8ff;
+      line-height: 1.5;
+    }
+
+    .dv-fields .field label {
+      color: #d48806;
+      font-weight: 800;
+    }
+
+    .dv-confirm-box {
+      background: linear-gradient(135deg, rgba(245, 166, 35, 0.08), rgba(95, 44, 170, 0.06));
+      border: 1px dashed rgba(245, 166, 35, 0.4);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-top: 12px;
+      font-size: 13.5px;
+      color: #d48806;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    /* ===== الجوال ===== */
+    @media (max-width: 640px) {
+      .custom-select-trigger {
+        padding: 12px 14px;
+        font-size: 14.5px;
+        min-height: 48px;
+      }
+      
+      .custom-select-dropdown {
+        max-height: 340px;
+      }
+      
+      .custom-select-option {
+        padding: 11px 14px;
+        font-size: 14px;
+        gap: 8px;
+      }
+      
+      .cs-opt-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+      }
+      
+      .cs-opt-badge {
+        font-size: 9px;
+        padding: 2px 6px;
+      }
+      
+      .custom-select-option.special {
+        padding: 13px 14px;
+      }
+
+      .dv-fields-header {
+        padding: 14px 16px;
+      }
+      .dv-fields-header .dv-head-flag {
+        font-size: 26px;
+      }
+      .dv-fields-header h4 {
+        font-size: 14px;
+      }
+      .dv-fields-header p {
+        font-size: 11.5px;
+      }
+    }
+
+    /* ===== Dark Mode ===== */
+    body.dark .custom-select-trigger {
+      background: #0f1626;
+      border-color: #2a3450;
+      color: #eef1ff;
+    }
+
+    body.dark .custom-select-trigger:hover {
+      border-color: #3a4560;
+      background: #131a2d;
+    }
+
+    body.dark .custom-select.open .custom-select-trigger {
+      border-color: var(--primary);
+      background: #131a2d;
+      box-shadow: 0 0 0 4px rgba(58, 75, 220, 0.20);
+    }
+
+    body.dark .custom-select-value {
+      color: #eef1ff;
+    }
+
+    body.dark .custom-select-value[data-placeholder]:not([data-value]) {
+      color: #7a839e;
+    }
+
+    body.dark .custom-select.has-value .custom-select-value {
+      color: #8fa3ff;
+    }
+
+    body.dark .custom-select-dropdown {
+      background: #131a2d;
+      border-color: var(--primary);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    body.dark .custom-select-option {
+      color: #cbd2e8;
+    }
+
+    body.dark .custom-select-option:hover {
+      background: #1a2340;
+      color: #8fa3ff;
+    }
+
+    body.dark .custom-select-option.selected {
+      background: linear-gradient(135deg, #1e2740, #252f4a);
+      color: #8fa3ff;
+    }
+
+    body.dark .cs-opt-icon {
+      background: linear-gradient(135deg, #1e2740, #252f4a);
+    }
+
+    body.dark .custom-select-option.special {
+      background: linear-gradient(135deg, rgba(245, 166, 35, 0.10), rgba(95, 44, 170, 0.06));
+      border-color: rgba(245, 166, 35, 0.35);
+    }
+
+    body.dark .custom-select-option.special .cs-opt-text {
+      color: #ffd700;
+    }
+
+    body.dark .custom-select-option.special:hover {
+      background: linear-gradient(135deg, rgba(245, 166, 35, 0.18), rgba(95, 44, 170, 0.12));
+      border-color: rgba(245, 166, 35, 0.6);
+    }
+
+    body.dark .custom-select.has-value.dv-selected .custom-select-trigger {
+      background: linear-gradient(135deg, #1a0f2e, #2d1b4e);
+      border-color: #f5a623;
+    }
+
+    body.dark .dv-fields .field label {
+      color: #ffd700;
+    }
+
+    body.dark .dv-confirm-box {
+      color: #ffd700;
+    }
+  </style>
 </head>
 
 <body>
@@ -53,42 +541,179 @@
   <section class="section">
     <div class="container form reveal">
       <div class="notice">📱 يمكنك الإرسال عبر واتساب مباشرة، أو عبر البريد الإلكتروني — اختر الطريقة المناسبة لك.</div>
-      <form data-demo-form>
+      
+      <form data-demo-form id="serviceRequestForm">
         <div class="form-grid">
+          
           <div class="field">
             <label>الاسم الكامل</label>
             <input type="text" name="الاسم" required>
           </div>
+          
           <div class="field">
             <label>رقم الهاتف / واتساب</label>
             <input type="tel" name="رقم التواصل" required>
           </div>
-          <div class="field">
-            <label>نوع الخدمة</label>
-            <select name="نوع الخدمة" required>
-              <option value="">اختر</option>
-              <option>دراسة وقبول</option>
-              <option>تأشيرة</option>
-              <option>تذاكر طيران</option>
-              <option>فندق</option>
-              <option>برنامج سياحي</option>
-              <option>استشارة</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>الوجهة</label>
-            <input type="text" name="الوجهة">
-          </div>
+          
+          <!-- ===== نوع الخدمة - القائمة المخصصة ===== -->
           <div class="field full">
+            <label>نوع الخدمة</label>
+            
+            <div class="custom-select" id="customServiceSelect">
+              
+              <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span class="custom-select-value" data-placeholder="اختر نوع الخدمة">
+                  اختر نوع الخدمة
+                </span>
+                <span class="custom-select-arrow">▾</span>
+              </button>
+              
+              <div class="custom-select-dropdown" role="listbox">
+                
+                <div class="custom-select-option special" data-value="قرعة DV-2027" role="option">
+                  <span class="cs-opt-icon">🔥</span>
+                  <span class="cs-opt-text">قرعة DV-2027 (اللوتري الأمريكي)</span>
+                  <span class="cs-opt-badge">جديد</span>
+                </div>
+                
+                <div class="custom-select-option" data-value="دراسة وقبول" role="option">
+                  <span class="cs-opt-icon">🎓</span>
+                  <span class="cs-opt-text">دراسة وقبول</span>
+                </div>
+                
+                <div class="custom-select-option" data-value="تأشيرة" role="option">
+                  <span class="cs-opt-icon">🛂</span>
+                  <span class="cs-opt-text">تأشيرة</span>
+                </div>
+                
+                <div class="custom-select-option" data-value="تذاكر طيران" role="option">
+                  <span class="cs-opt-icon">✈️</span>
+                  <span class="cs-opt-text">تذاكر طيران</span>
+                </div>
+                
+                <div class="custom-select-option" data-value="فندق" role="option">
+                  <span class="cs-opt-icon">🏨</span>
+                  <span class="cs-opt-text">فندق</span>
+                </div>
+                
+                <div class="custom-select-option" data-value="برنامج سياحي" role="option">
+                  <span class="cs-opt-icon">🧭</span>
+                  <span class="cs-opt-text">برنامج سياحي</span>
+                </div>
+                
+                <div class="custom-select-option" data-value="استشارة" role="option">
+                  <span class="cs-opt-icon">💬</span>
+                  <span class="cs-opt-text">استشارة</span>
+                </div>
+                
+              </div>
+              
+              <input type="hidden" name="نوع الخدمة" id="serviceType" required>
+              
+            </div>
+          </div>
+
+          <!-- ===== الحقول المخصصة DV-2027 ===== -->
+          <div class="dv-fields" id="dvFields">
+            
+            <div class="dv-fields-header">
+              <span class="dv-head-flag">🇺🇸</span>
+              <div class="dv-head-text">
+                <h4>بيانات التسجيل في قرعة DV-2027</h4>
+                <p>ساعدنا بمعرفة بياناتك لتحضير ملفك بأسرع وقت</p>
+              </div>
+            </div>
+
+            <div class="form-grid" style="grid-template-columns:repeat(2,1fr);gap:18px">
+              
+              <div class="field">
+                <label>📧 البريد الإلكتروني</label>
+                <input type="email" name="البريد الإلكتروني" placeholder="example@gmail.com">
+              </div>
+              
+              <div class="field">
+                <label>🌍 الدولة</label>
+                <input type="text" name="الدولة" placeholder="مثال: اليمن">
+              </div>
+              
+              <div class="field">
+                <label>🎂 تاريخ الميلاد</label>
+                <input type="date" name="تاريخ الميلاد">
+              </div>
+              
+              <div class="field">
+                <label>👤 الجنس</label>
+                <select name="الجنس">
+                  <option value="">اختر</option>
+                  <option>ذكر</option>
+                  <option>أنثى</option>
+                </select>
+              </div>
+              
+              <div class="field">
+                <label>💍 الحالة الاجتماعية</label>
+                <select name="الحالة الاجتماعية">
+                  <option value="">اختر</option>
+                  <option>أعزب</option>
+                  <option>متزوج</option>
+                  <option>مطلق</option>
+                  <option>أرمل</option>
+                </select>
+              </div>
+              
+              <div class="field">
+                <label>🎓 المؤهل الدراسي</label>
+                <select name="المؤهل الدراسي">
+                  <option value="">اختر</option>
+                  <option>ثانوية عامة</option>
+                  <option>دبلوم</option>
+                  <option>بكالوريوس</option>
+                  <option>ماجستير</option>
+                  <option>دكتوراه</option>
+                </select>
+              </div>
+              
+              <div class="field">
+                <label>🛂 هل لديك جواز سفر ساري؟</label>
+                <select name="جواز السفر">
+                  <option value="">اختر</option>
+                  <option>نعم — ساري المفعول</option>
+                  <option>لا — لم أحصل عليه بعد</option>
+                  <option>منتهي الصلاحية</option>
+                </select>
+              </div>
+              
+              <div class="field">
+                <label>📍 المحافظة / المدينة</label>
+                <input type="text" name="المحافظة" placeholder="مثال: صنعاء">
+              </div>
+              
+            </div>
+
+            <div class="field full" style="margin-top:18px">
+              <label>📝 ملاحظات إضافية</label>
+              <textarea name="ملاحظات DV" placeholder="أي معلومات إضافية تريد إضافتها لطلبك (اختياري)" style="min-height:100px"></textarea>
+            </div>
+
+            <div class="dv-confirm-box">
+              💡 <strong>ملاحظة:</strong> التسجيل في قرعة DV مجاني تماماً. سيتواصل معك فريقنا لتأكيد البيانات وإرشادك للخطوات التالية.
+            </div>
+          </div>
+
+          <!-- ===== تفاصيل الطلب العامة ===== -->
+          <div class="field full" id="generalDetailsField">
             <label>تفاصيل الطلب</label>
             <textarea name="تفاصيل الطلب" placeholder="اكتب هدفك والموعد والميزانية وأي معلومات مهمة"></textarea>
           </div>
+
+          <!-- ===== الأزرار ===== -->
           <div class="field">
             <button type="submit" class="btn btn-primary" data-method="whatsapp">📱 إرسال عبر واتساب</button>
           </div>
           <div class="field">
             <button type="submit" class="btn btn-outline" data-method="email">✉️ إرسال عبر البريد</button>
           </div>
+          
         </div>
       </form>
     </div>
@@ -115,7 +740,7 @@
         <p class="footer-sub">بوابتك للسفر والتعليم — من الاستشارة الأولى حتى وصولك</p>
         
         <div class="footer-socials">
-          <a href="https://wa.me/967770200970" target="_blank" class="wa" aria-label="واتساب">
+          <a href="https://wa.me/967771829992" target="_blank" class="wa" aria-label="واتساب">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.93 11.93 0 0 0 12.05 0C5.5 0 .17 5.33.17 11.88c0 2.09.55 4.13 1.6 5.93L0 24l6.34-1.66a11.86 11.86 0 0 0 5.7 1.45h.01c6.55 0 11.88-5.33 11.88-11.88 0-3.17-1.24-6.16-3.41-8.43zm-8.47 18.3h-.01a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.73.98 1-3.64-.24-.37a9.83 9.83 0 0 1-1.51-5.26c0-5.44 4.43-9.87 9.88-9.87 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.98c0 5.44-4.43 9.87-9.88 9.87zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15s-.77.97-.94 1.17c-.17.2-.35.22-.65.08-.3-.15-1.26-.47-2.4-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37s-1.04 1.02-1.04 2.48 1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/></svg>
           </a>
           <a href="https://facebook.com" target="_blank" class="fb" aria-label="فيسبوك">
@@ -127,7 +752,7 @@
           <a href="https://t.me/" target="_blank" class="tg" aria-label="تيليجرام">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.94 0C5.35 0 0 5.35 0 11.94c0 6.6 5.35 11.95 11.94 11.95 6.6 0 11.95-5.35 11.95-11.95C23.89 5.35 18.54 0 11.94 0zm5.85 8.16l-1.97 9.3c-.15.66-.54.82-1.09.51l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.6.3l.22-3.07 5.6-5.06c.24-.21-.05-.33-.38-.12l-6.9 4.35-2.98-.93c-.65-.2-.66-.65.13-.96l11.65-4.5c.54-.2 1.01.13.8.91z"/></svg>
           </a>
-          <a href="mailto:2025ooss@gmail.com" class="em" aria-label="البريد">
+          <a href="mailto:mryunes40@gmail.com" class="em" aria-label="البريد">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           </a>
         </div>
@@ -153,8 +778,8 @@
         </div>
         
         <div class="footer-contact">
-          <span><span class="ico">📞</span>+967 770 200 970</span>
-          <span><span class="ico">✉️</span>2025ooss@gmail.com</span>
+          <span><span class="ico">📞</span>+967 771 829 992</span>
+          <span><span class="ico">✉️</span>mryunes40@gmail.com</span>
           <span><span class="ico">📍</span>اليمن</span>
         </div>
         
@@ -171,7 +796,7 @@
   <button class="backtop" aria-label="العودة للأعلى">↑</button>
   <div class="toast"></div>
 
-  <a href="https://wa.me/967770200970" target="_blank" class="whatsapp-float" aria-label="تواصل عبر واتساب">
+  <a href="https://wa.me/967771829992" target="_blank" class="whatsapp-float" aria-label="تواصل عبر واتساب">
     <svg viewBox="0 0 32 32" width="32" height="32" fill="#fff">
       <path d="M16.004 0h-.008C7.174 0 .001 7.174.001 16c0 3.5 1.128 6.746 3.045 9.375L1.056 31.375l6.186-1.945A15.917 15.917 0 0 0 16.004 32C24.826 32 32 24.826 32 16S24.826 0 16.004 0zm9.297 22.605c-.388 1.093-2.26 2.135-3.104 2.211-.844.076-1.633.35-5.516-1.154-4.69-1.824-7.646-6.594-7.876-6.9-.23-.306-1.876-2.498-1.876-4.767 0-2.269 1.19-3.385 1.61-3.847.42-.462.914-.578 1.22-.578.305 0 .611.003.879.016.282.014.66-.107 1.032.787.383.918 1.302 3.183 1.417 3.414.115.23.192.5.038.807-.153.306-.23.497-.46.766-.23.269-.485.601-.692.807-.23.23-.47.48-.202.94.269.46 1.193 1.968 2.56 3.19 1.757 1.566 3.24 2.052 3.7 2.283.46.23.729.192 1.001-.115.269-.306 1.156-1.35 1.464-1.812.306-.46.611-.383 1.033-.23.42.153 2.677 1.262 3.138 1.492.46.23.767.344.88.536.115.192.115 1.11-.273 2.203z"/>
     </svg>
@@ -183,6 +808,85 @@
   <script src="js/filter.js"></script>
   <script src="js/slider.js"></script>
   <script src="js/reveal.js"></script>
+
+  <!-- ===== 🎨 سكريبت القائمة المخصصة + حقول DV ===== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const customSelect = document.getElementById('customServiceSelect');
+      if (!customSelect) return;
+
+      const trigger = customSelect.querySelector('.custom-select-trigger');
+      const valueEl = customSelect.querySelector('.custom-select-value');
+      const dropdown = customSelect.querySelector('.custom-select-dropdown');
+      const options = customSelect.querySelectorAll('.custom-select-option');
+      const hiddenInput = customSelect.querySelector('#serviceType');
+      const dvFields = document.getElementById('dvFields');
+      const generalDetailsField = document.getElementById('generalDetailsField');
+
+      // فتح/إغلاق القائمة
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        customSelect.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', customSelect.classList.contains('open'));
+      });
+
+      // اختيار قيمة
+      options.forEach(opt => {
+        opt.addEventListener('click', () => {
+          const value = opt.dataset.value;
+          const text = opt.querySelector('.cs-opt-text').textContent.trim();
+
+          // تحديث القيمة الظاهرة
+          valueEl.textContent = text;
+          valueEl.setAttribute('data-value', value);
+
+          // تحديث القيمة المخفية
+          hiddenInput.value = value;
+
+          // تحديث الأنماط
+          customSelect.classList.add('has-value');
+          customSelect.classList.remove('dv-selected');
+          if (value === 'قرعة DV-2027') {
+            customSelect.classList.add('dv-selected');
+          }
+
+          // تحديث الخيار المحدد
+          options.forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+
+          // إغلاق القائمة
+          customSelect.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+
+          // إظهار/إخفاء حقول DV
+          if (value === 'قرعة DV-2027') {
+            if (dvFields) dvFields.classList.add('show');
+            if (generalDetailsField) generalDetailsField.style.display = 'none';
+          } else {
+            if (dvFields) dvFields.classList.remove('show');
+            if (generalDetailsField) generalDetailsField.style.display = 'block';
+          }
+        });
+      });
+
+      // إغلاق عند الضغط خارج القائمة
+      document.addEventListener('click', (e) => {
+        if (!customSelect.contains(e.target)) {
+          customSelect.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // إغلاق عند الضغط على ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && customSelect.classList.contains('open')) {
+          customSelect.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  </script>
+
   <script>
     if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js');
   </script>
