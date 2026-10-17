@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>تحديث الملفات المؤقتة</title>
+<style>
+  body { font-family: Tahoma, sans-serif; background:#1a1a2e; color:#eee;
+         display:flex; justify-content:center; align-items:center;
+         min-height:100vh; margin:0; text-align:center; padding:20px; }
+  .box { background:#16213e; padding:36px 28px; border-radius:16px; max-width:420px; }
+  h1 { color:#4ecca3; font-size:20px; }
+  p { color:#ccc; font-size:14px; line-height:1.7; }
+  .spinner { width:44px; height:44px; border:4px solid #4ecca3;
+             border-top-color:transparent; border-radius:50%;
+             margin:20px auto; animation:spin .8s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .btn { display:inline-block; margin-top:16px; padding:10px 24px;
+         background:#4ecca3; color:#1a1a2e; border-radius:8px;
+         font-weight:bold; text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>🔄 تحديث الملفات المؤقتة</h1>
+  <div class="spinner"></div>
+  <p id="msg">يتم مسح الملفات المؤقتة القديمة فقط، <b>بياناتك محفوظة</b>...</p>
+  <a href="/" class="btn" id="btn">الانتقال للمشروع</a>
+</div>
+<script>
+(async function () {
+  const msg = document.getElementById('msg');
+  try {
+    // مسح ذاكرة التخزين المؤقت فقط (Cache Storage)
+    if ('caches' in window) {
+      const names = await caches.keys();
+      await Promise.all(names.map(n => caches.delete(n)));
+    }
+    // إلغاء Service Workers (اختياري، لكنه آمن)
+    if ('serviceWorker' in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister()));
+    }
+    // ⚠️ لا نمس localStorage أو sessionStorage أو IndexedDB
+    msg.innerHTML = 'تم مسح الملفات المؤقتة ✅ <br><b>بياناتك سليمة.</b> جاري النقل...';
+    setTimeout(() => {
+      window.location.replace('/?refresh=' + Date.now());
+    }, 800);
+  } catch (e) {
+    msg.textContent = 'حدث خطأ، جاري النقل...';
+    setTimeout(() => window.location.replace('/?refresh=' + Date.now()), 1000);
+  }
+})();
+</script>
+</body>
+</html>
