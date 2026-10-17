@@ -4,14 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<title>جاري التحقق من التحديثات...</title>
+<title>تحديث مشروع Yunes Travel</title>
 <style>
   * { box-sizing: border-box; }
   body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: #0f172a;
+    background: #0b1220;
     color: #e2e8f0;
     display: flex;
     justify-content: center;
@@ -22,32 +20,32 @@
     text-align: center;
   }
   .card {
-    background: #1e293b;
-    padding: 40px 28px;
+    background: #111a2e;
+    padding: 38px 26px;
     border-radius: 18px;
     box-shadow: 0 10px 40px rgba(0,0,0,.5);
     max-width: 440px;
     width: 100%;
-    border: 1px solid #334155;
+    border: 1px solid #1e2a44;
   }
   .icon {
-    width: 60px; height: 60px;
+    width: 56px; height: 56px;
     border: 4px solid #38bdf8;
     border-top-color: transparent;
     border-radius: 50%;
-    margin: 0 auto 20px;
-    animation: spin 0.9s linear infinite;
+    margin: 0 auto 18px;
+    animation: spin .9s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-  h1 { font-size: 20px; margin: 0 0 10px; color: #38bdf8; }
+  h1 { font-size: 19px; margin: 0 0 10px; color: #38bdf8; }
   p { font-size: 14px; line-height: 1.8; color: #94a3b8; margin: 6px 0; }
-  .status { font-size: 13px; color: #64748b; min-height: 20px; margin-top: 14px; }
+  .status { font-size: 13px; color: #64748b; min-height: 20px; margin-top: 12px; }
   .btn {
     display: inline-block;
-    margin-top: 22px;
+    margin-top: 20px;
     padding: 11px 26px;
     background: #38bdf8;
-    color: #0f172a;
+    color: #0b1220;
     border: none;
     border-radius: 10px;
     font-size: 15px;
@@ -58,30 +56,27 @@
   }
   .btn:hover { background: #0ea5e9; }
   .hidden { display: none; }
-  .safe { font-size: 12px; color: #22c55e; margin-top: 18px; }
+  .safe { font-size: 12px; color: #22c55e; margin-top: 16px; }
 </style>
 </head>
 <body>
 <div class="card">
   <div class="icon" id="icon"></div>
-  <h1 id="title">جاري التحقق من التحديثات</h1>
-  <p id="msg">نبحث عن أحدث إصدار من المشروع...</p>
+  <h1 id="title">تحديث مشروع Yunes Travel</h1>
+  <p id="msg">يتم تجهيز أحدث نسخة من المشروع...</p>
   <p class="status" id="status"></p>
-  <a href="/" class="btn hidden" id="btn">الانتقال إلى المشروع</a>
-  <p class="safe">🔒 بياناتك محفوظة ولن تُحذف</p>
+  <a href="/projects/yunes-travel/" class="btn hidden" id="btn">فتح المشروع المحدث</a>
+  <p class="safe">🔒 لن يتم حذف أي بيانات</p>
 </div>
 
 <script>
 (function () {
   "use strict";
 
-  // ===== الإعدادات =====
-  // المسار الذي يُرجع رقم الإصدار (ملف ثابت أو API)
-  var VERSION_URL = "/version.json";
-  // المفتاح الذي نخزن فيه الإصدار (خاص بهذه الصفحة فقط)
-  var STORAGE_KEY = "__app_version__";
-  // الصفحة الرئيسية التي نعيد التوجيه إليها
-  var HOME_URL = "/";
+  // ===== الإعدادات الخاصة بمشروع Yunes Travel فقط =====
+  var PROJECT_URL = "/projects/yunes-travel/";
+  var VERSION_URL = "/projects/yunes-travel/version.json"; // اختياري
+  var STORAGE_KEY = "__yunes_travel_version__";
 
   var statusEl = document.getElementById("status");
   var msgEl = document.getElementById("msg");
@@ -91,84 +86,76 @@
 
   function log(t) {
     statusEl.textContent = t;
-    try { console.log("[CheckUpdate]", t); } catch (e) {}
+    try { console.log("[YunesRefresh]", t); } catch (e) {}
   }
 
-  function goHome(version) {
-    // إعادة التوجيه مع معامل الإصدار لكسر التخزين المؤقت للصفحة فقط
-    var target = HOME_URL + "?v=" + encodeURIComponent(version || Date.now());
-    log("جاري فتح أحدث إصدار...");
-    // replace بدلاً من href لكي لا يبقى زر الرجوع عالقاً في صفحة التحديث
+  // إعادة التوجيه برابط قصير (بدون محتوى HTML)
+  function goToProject(version) {
+    var v = encodeURIComponent(String(version || Date.now()).slice(0, 40));
+    var target = PROJECT_URL + "?v=" + v;
+    log("جاري فتح أحدث نسخة...");
     window.location.replace(target);
   }
 
   function showButton(version) {
     iconEl.classList.add("hidden");
     titleEl.textContent = "التحديث جاهز";
-    msgEl.textContent = "اضغط الزر للانتقال إلى أحدث إصدار من المشروع.";
+    msgEl.textContent = "اضغط الزر لفتح أحدث نسخة من المشروع.";
     btn.classList.remove("hidden");
-    var target = HOME_URL + "?v=" + encodeURIComponent(version || Date.now());
-    btn.href = target;
-    // في حال فشل window.location.replace، زر احتياطي
+    var v = encodeURIComponent(String(version || Date.now()).slice(0, 40));
+    btn.href = PROJECT_URL + "?v=" + v;
     btn.addEventListener("click", function (e) {
       e.preventDefault();
-      window.location.replace(target);
+      window.location.replace(btn.href);
     });
   }
 
-  // ===== المحاولة =====
   (async function () {
     try {
-      log("طلب رقم الإصدار من الخادم...");
+      log("محاولة قراءة رقم إصدار المشروع...");
 
-      // طلب الملف مع كسر التخزين المؤقت لضمان أحدث نسخة
-      var url = VERSION_URL + "?t=" + Date.now();
-      var res = await fetch(url, {
-        cache: "no-store",
-        headers: { "Cache-Control": "no-cache" }
-      });
-
-      if (!res.ok) throw new Error("HTTP " + res.status);
-
-      var text = (await res.text()).trim();
-
-      // دعم صيغتين: نص خام أو JSON {version: "..."}
-      var serverVersion = text;
+      // محاولة قراءة version.json إن وجد (اختياري)
+      var serverVersion = "";
       try {
-        var json = JSON.parse(text);
-        if (json && json.version) serverVersion = String(json.version);
-      } catch (e) {}
-
-      if (!serverVersion) throw new Error("إصدار فارغ");
-
-      log("الإصدار على الخادم: " + serverVersion);
-
-      var localVersion = "";
-      try { localVersion = localStorage.getItem(STORAGE_KEY) || ""; } catch (e) {}
-
-      if (localVersion && localVersion === serverVersion) {
-        // لا يوجد تحديث
-        log("لديك أحدث إصدار بالفعل.");
-        iconEl.classList.add("hidden");
-        titleEl.textContent = "أنت محدّث ✅";
-        msgEl.textContent = "لا توجد تحديثات جديدة. سيتم نقلك للمشروع...";
-        setTimeout(function () { goHome(serverVersion); }, 700);
-        setTimeout(function () { showButton(serverVersion); }, 2500);
-      } else {
-        // يوجد تحديث
-        log("تم اكتشاف تحديث جديد! جاري التحضير...");
-        msgEl.textContent = "تم العثور على إصدار أحدث. يتم تحضيره...";
-        try { localStorage.setItem(STORAGE_KEY, serverVersion); } catch (e) {}
-        setTimeout(function () { goHome(serverVersion); }, 700);
-        setTimeout(function () { showButton(serverVersion); }, 2500);
+        var res = await fetch(VERSION_URL + "?t=" + Date.now(), {
+          cache: "no-store"
+        });
+        if (res.ok) {
+          var text = (await res.text()).trim();
+          try {
+            var json = JSON.parse(text);
+            if (json && json.version) serverVersion = String(json.version);
+          } catch (e) {
+            // إذا كان النص قصيراً (أقل من 40 حرفاً) نعتبره إصداراً
+            if (text && text.length < 40) serverVersion = text;
+          }
+        }
+      } catch (e) {
+        // لا مشكلة، سنستخدم الطابع الزمني
       }
 
+      // التحقق من عدم وجود محتوى HTML في الإصدار (حماية من خطأ 414)
+      if (serverVersion && /<[a-z][\s\S]*>/i.test(serverVersion)) {
+        serverVersion = ""; // تجاهل أي محتوى HTML
+      }
+
+      if (!serverVersion) {
+        serverVersion = "t" + Date.now(); // إصدار مؤقت قصير
+      }
+
+      log("الإصدار: " + serverVersion);
+
+      // حفظ الإصدار (اختياري، لا يؤثر على بيانات المستخدم)
+      try { localStorage.setItem(STORAGE_KEY, serverVersion); } catch (e) {}
+
+      msgEl.textContent = "تم تجهيز النسخة. سيتم نقلك الآن...";
+      setTimeout(function () { goToProject(serverVersion); }, 700);
+      setTimeout(function () { showButton(serverVersion); }, 2500);
+
     } catch (err) {
-      // فشل الاتصال أو عدم وجود version.json → ننتقل للمشروع بأمان دون أي مسح
-      try { console.warn("[CheckUpdate]", err); } catch (e) {}
+      // في حال أي خطأ، ننتقل للمشروع مباشرة
       log("تعذر التحقق، سيتم فتح المشروع مباشرة.");
-      msgEl.textContent = "لم نتمكن من التحقق من الإصدار، لكن كل شيء يعمل. سيتم فتح المشروع...";
-      setTimeout(function () { goHome(Date.now()); }, 900);
+      setTimeout(function () { goToProject(Date.now()); }, 900);
       setTimeout(function () { showButton(Date.now()); }, 2500);
     }
   })();
