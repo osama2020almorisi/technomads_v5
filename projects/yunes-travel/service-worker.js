@@ -1,18 +1,19 @@
-// Service Worker بسيط للتخزين المؤقت
-const CACHE_NAME = 'yunes-v1';
+// Service Worker - Fixed v3
+const CACHE_NAME = 'yunes-v3';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/css/responsive.css',
-  '/css/dark.css',
-  '/js/main.js',
-  '/js/scroll.js',
-  '/js/form.js',
-  '/js/filter.js',
-  '/js/slider.js',
-  '/js/reveal.js',
-  '/images/logo.svg'
+  './',
+  './index.html',
+  './css/style.css',
+  './css/responsive.css',
+  './css/dark.css',
+  './js/main.js',
+  './js/scroll.js',
+  './js/form.js',
+  './js/filter.js',
+  './js/slider.js',
+  './js/reveal.js',
+  './js/dv-popup.js',
+  './images/logo.svg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -26,7 +27,12 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((names) => {
       return Promise.all(
-        names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n))
+        names.map(n => {
+          if (n !== CACHE_NAME) {
+            console.log('Deleting old cache:', n);
+            return caches.delete(n);
+          }
+        })
       );
     })
   );
@@ -34,6 +40,22 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  // للـ HTML و CSS و JS: جيب من الشبكة أولاً
+  if (event.request.destination === 'document' || 
+      event.request.destination === 'style' || 
+      event.request.destination === 'script') {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          return response;
+        })
+        .catch(() => {
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+  // للباقي: الكاش أولاً
   event.respondWith(
     caches.match(event.request).then((response) => {
       return response || fetch(event.request);
