@@ -1,0 +1,162 @@
+/* ============================================================
+   MAIN.CSS — نقطة تجميع كل ملفات CSS
+   League Manager App — Design System v2.0
+   ============================================================ */
+
+/* ============================================================
+   IMPORT ORDER MATTERS — لا تُغيّر الترتيب
+   ============================================================ */
+
+/* 1. Tokens (Variables) — يجب أن يكون الأول */
+@import url("./tokens.css");
+
+/* 2. Base (Reset + Typography) */
+@import url("./base.css");
+
+/* 3. Layout (Grid + Container + Utilities) */
+@import url("./layout.css");
+
+/* 4. Components (Buttons, Cards, Forms, Modals, Nav, FAB) */
+@import url("./components.css");
+
+/* 5. Screens (Page-specific styles) */
+@import url("./screens.css");
+
+/* 6. Animations (Keyframes + Motion) */
+@import url("./animations.css");
+
+/* 7. Glass (Glassmorphism + Ambient Effects) */
+@import url("./glass.css");
+
+/* 8. Dark Mode Refinements — يجب أن يكون الأخير */
+@import url("./dark.css");
+
+/* 9. Mobile Refinements — بعد كل شيء */
+@import url("./mobile.css");
+
+/* ============================================================
+   GLOBAL BASE STYLES
+   ============================================================ */
+
+html {
+  scroll-padding-top: calc(var(--topbar-height) + var(--space-4));
+}
+
+body {
+  overscroll-behavior-y: none;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  background: var(--surface-2);
+}
+
+#app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+#app[hidden] {
+  display: none;
+}
+
+#pageHost {
+  display: contents;
+}
+
+#modalRoot {
+  position: relative;
+  z-index: var(--z-modal);
+}
+
+#toastRegion {
+  pointer-events: none;
+}
+
+#toastRegion > * {
+  pointer-events: auto;
+}
+
+/* ============================================================
+   GLOBAL LOADING STATE
+   ============================================================ */
+
+body.loading {
+  pointer-events: none;
+  cursor: wait;
+}
+
+body.loading::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  background-size: 200% 100%;
+  animation: gradientShift 1.5s ease-in-out infinite;
+  z-index: 9999;
+}
+
+/* ============================================================
+   PRINT OVERRIDES
+   ============================================================ */
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .topbar,
+  .bottom-nav,
+  .fab,
+  .toast-region,
+  .button-row,
+  .tabs,
+  .search-row,
+  .admin-tabs {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .card,
+  .table-wrap,
+  .admin-row {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    break-inside: avoid;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

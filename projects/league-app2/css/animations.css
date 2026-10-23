@@ -1,0 +1,633 @@
+/* ============================================================
+   ANIMATIONS.CSS — كل الـ keyframes والحركات
+   ============================================================ */
+
+/* ============================================================
+   ENTRANCE ANIMATIONS
+   ============================================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpFromBottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================================
+   LOADING ANIMATIONS
+   ============================================================ */
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-160%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinReverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 8px rgba(230, 57, 70, 0);
+  }
+}
+
+/* ============================================================
+   INTERACTION ANIMATIONS
+   ============================================================ */
+
+@keyframes navBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  70% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes tapPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-4px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(4px);
+  }
+}
+
+/* ============================================================
+   RIPPLE EFFECT
+   ============================================================ */
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   BACKGROUND ANIMATIONS
+   ============================================================ */
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes ambientFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 30px) scale(0.95);
+  }
+}
+
+@keyframes blurPulse {
+  0%, 100% {
+    filter: blur(40px);
+    opacity: 0.35;
+  }
+  50% {
+    filter: blur(60px);
+    opacity: 0.55;
+  }
+}
+
+/* ============================================================
+   CREST / BADGE ANIMATIONS
+   ============================================================ */
+
+@keyframes crestGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 4px color-mix(in srgb, var(--team-color, var(--color-primary-500)) 15%, transparent),
+      0 0 24px color-mix(in srgb, var(--team-color, var(--color-primary-500)) 40%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px color-mix(in srgb, var(--team-color, var(--color-primary-500)) 20%, transparent),
+      0 0 36px color-mix(in srgb, var(--team-color, var(--color-primary-500)) 55%, transparent);
+  }
+}
+
+@keyframes crownFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(5deg);
+  }
+}
+
+@keyframes trophyShine {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ============================================================
+   CONFETTI (احتفال الأهداف)
+   ============================================================ */
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes confettiBurst {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+.confetti-piece {
+  position: fixed;
+  width: 10px;
+  height: 14px;
+  pointer-events: none;
+  z-index: 999;
+  top: -20px;
+  animation: confettiFall 3s linear forwards;
+}
+
+.confetti-piece:nth-child(odd) {
+  background: var(--color-primary-500);
+  border-radius: 2px;
+}
+
+.confetti-piece:nth-child(even) {
+  background: var(--color-gold-500);
+  border-radius: 50%;
+}
+
+.confetti-piece:nth-child(3n) {
+  background: var(--color-danger);
+}
+
+.confetti-piece:nth-child(4n) {
+  background: var(--color-info);
+}
+
+.confetti-piece:nth-child(5n) {
+  background: var(--color-warning);
+}
+
+/* ============================================================
+   COUNT-UP (للأرقام)
+   ============================================================ */
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.count-up {
+  animation: countUp 0.5s var(--ease-out) both;
+}
+
+/* ============================================================
+   PROGRESS RING
+   ============================================================ */
+
+.progress-ring {
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.progress-ring circle {
+  transition: stroke-dashoffset 1s var(--ease-out);
+}
+
+.progress-ring .track {
+  stroke: var(--surface-2);
+  fill: none;
+}
+
+.progress-ring .progress {
+  stroke: var(--color-primary-500);
+  fill: none;
+  stroke-linecap: round;
+}
+
+/* ============================================================
+   SPARK CHART
+   ============================================================ */
+
+.spark-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 32px;
+}
+
+.spark-bar {
+  flex: 1;
+  background: var(--color-primary-500);
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  min-height: 4px;
+  transition: height 0.6s var(--ease-out);
+  animation: fadeInUp 0.4s var(--ease-out) both;
+}
+
+.spark-bar:nth-child(1) { animation-delay: 0.02s; }
+.spark-bar:nth-child(2) { animation-delay: 0.04s; }
+.spark-bar:nth-child(3) { animation-delay: 0.06s; }
+.spark-bar:nth-child(4) { animation-delay: 0.08s; }
+.spark-bar:nth-child(5) { animation-delay: 0.10s; }
+
+/* ============================================================
+   STAGGER (تتابع عناصر)
+   ============================================================ */
+
+.stagger > * {
+  animation: fadeInUp 0.4s var(--ease-out) both;
+}
+
+.stagger > *:nth-child(1) { animation-delay: 0s; }
+.stagger > *:nth-child(2) { animation-delay: 0.05s; }
+.stagger > *:nth-child(3) { animation-delay: 0.1s; }
+.stagger > *:nth-child(4) { animation-delay: 0.15s; }
+.stagger > *:nth-child(5) { animation-delay: 0.2s; }
+.stagger > *:nth-child(6) { animation-delay: 0.25s; }
+.stagger > *:nth-child(7) { animation-delay: 0.3s; }
+.stagger > *:nth-child(8) { animation-delay: 0.35s; }
+
+/* ============================================================
+   TOAST / NOTIFICATION
+   ============================================================ */
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+}
+
+/* ============================================================
+   PULL-TO-REFRESH
+   ============================================================ */
+
+@keyframes ptr-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ptr-pull {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   PULSE DOT (Live)
+   ============================================================ */
+
+@keyframes livePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(230, 57, 70, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(230, 57, 70, 0);
+  }
+}
+
+/* ============================================================
+   AMBIENT BACKGROUND (خلفية متحركة)
+   ============================================================ */
+
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.ambient-bg::before,
+.ambient-bg::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: ambientFloat 20s ease-in-out infinite;
+}
+
+.ambient-bg::before {
+  background: radial-gradient(circle, rgba(11, 110, 79, 0.18), transparent 70%);
+  top: -100px;
+  inset-inline-end: -100px;
+}
+
+.ambient-bg::after {
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.14), transparent 70%);
+  bottom: -100px;
+  inset-inline-start: -100px;
+  animation-delay: -10s;
+}
+
+/* ============================================================
+   SKELETON SHIMMER (خلفية متلألئة)
+   ============================================================ */
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface-2) 0%,
+    var(--surface-1) 20%,
+    var(--surface-3) 50%,
+    var(--surface-1) 80%,
+    var(--surface-2) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+/* ============================================================
+   PARALLAX HERO
+   ============================================================ */
+
+.parallax-hero {
+  transform: translateZ(0);
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ============================================================
+   REDUCED MOTION (احترام تفضيلات المستخدم)
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .confetti-piece,
+  .ambient-bg::before,
+  .ambient-bg::after {
+    display: none;
+  }
+}

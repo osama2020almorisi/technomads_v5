@@ -1,0 +1,592 @@
+{
+  "version": 1,
+  "updatedAt": "2026-10-14T18:00:00.000Z",
+  "league": {
+    "name": "دوري المحترفين اليمني",
+    "season": "2026/2027",
+    "logo": "",
+    "country": "YE",
+    "settings": {
+      "winPoints": 3,
+      "drawPoints": 1,
+      "lossPoints": 0,
+      "yellowForSuspension": 3,
+      "resetCardsAfterRounds": 0,
+      "tiebreakers": [
+        "points",
+        "h2h",
+        "h2hDiff",
+        "h2hGoals",
+        "diff",
+        "goals",
+        "wins",
+        "fairplay",
+        "draw"
+      ],
+      "pointsDeduction": [],
+      "qualificationSpots": {
+        "champions": 4,
+        "europa": 2,
+        "relegation": 3
+      }
+    }
+  },
+  "teams": [
+    {
+      "id": "t1",
+      "name": "الهلال الساحلي",
+      "shortName": "الهلال",
+      "logo": "",
+      "founded": 1968,
+      "stadium": "ملعب الشهداء",
+      "colors": { "primary": "#0B4EA2", "secondary": "#FFFFFF" },
+      "coach": "سامي النعاش",
+      "group": "A"
+    },
+    {
+      "id": "t2",
+      "name": "أهلي صنعاء",
+      "shortName": "الأهلي",
+      "logo": "",
+      "founded": 1960,
+      "stadium": "ملعب الظرافي",
+      "colors": { "primary": "#C8102E", "secondary": "#FFD700" },
+      "coach": "أمين السنيني",
+      "group": "A"
+    },
+    {
+      "id": "t3",
+      "name": "الوحدة صنعاء",
+      "shortName": "الوحدة",
+      "logo": "",
+      "founded": 1954,
+      "stadium": "ملعب الوحدة",
+      "colors": { "primary": "#00843D", "secondary": "#FFFFFF" },
+      "coach": "محمد النفيعي",
+      "group": "A"
+    },
+    {
+      "id": "t4",
+      "name": "شعب إب",
+      "shortName": "الشعب",
+      "logo": "",
+      "founded": 1954,
+      "stadium": "ملعب إب الدولي",
+      "colors": { "primary": "#1E40AF", "secondary": "#FBBF24" },
+      "coach": "أحمد علي",
+      "group": "A"
+    },
+    {
+      "id": "t5",
+      "name": "اليرموك",
+      "shortName": "اليرموك",
+      "logo": "",
+      "founded": 1975,
+      "stadium": "ملعب اليرموك",
+      "colors": { "primary": "#16A34A", "secondary": "#FFFFFF" },
+      "coach": "خالد المهدي",
+      "group": "A"
+    },
+    {
+      "id": "t6",
+      "name": "شباب الجيل",
+      "shortName": "الجيل",
+      "logo": "",
+      "founded": 1978,
+      "stadium": "ملعب الجيل",
+      "colors": { "primary": "#000000", "secondary": "#FFD700" },
+      "coach": "عبدالله الحداد",
+      "group": "A"
+    },
+    {
+      "id": "t7",
+      "name": "التلال",
+      "shortName": "التلال",
+      "logo": "",
+      "founded": 1964,
+      "stadium": "ملعب التلال",
+      "colors": { "primary": "#DC2626", "secondary": "#FFFFFF" },
+      "coach": "علي الفقيه",
+      "group": "B"
+    },
+    {
+      "id": "t8",
+      "name": "شعب حضرموت",
+      "shortName": "شعب حضرموت",
+      "logo": "",
+      "founded": 1970,
+      "stadium": "ملعب سيئون",
+      "colors": { "primary": "#059669", "secondary": "#FCD34D" },
+      "coach": "فهد بامطرف",
+      "group": "B"
+    },
+    {
+      "id": "t9",
+      "name": "سلام الغرفة",
+      "shortName": "السلام",
+      "logo": "",
+      "founded": 1982,
+      "stadium": "ملعب الغرفة",
+      "colors": { "primary": "#7C3AED", "secondary": "#FFFFFF" },
+      "coach": "ناصر الجابري",
+      "group": "B"
+    },
+    {
+      "id": "t10",
+      "name": "اتحاد حضرموت",
+      "shortName": "اتحاد حضرموت",
+      "logo": "",
+      "founded": 1974,
+      "stadium": "ملعب المكلا",
+      "colors": { "primary": "#0891B2", "secondary": "#F97316" },
+      "coach": "يوسف باحميد",
+      "group": "B"
+    },
+    {
+      "id": "t11",
+      "name": "فجر عدن",
+      "shortName": "فجر عدن",
+      "logo": "",
+      "founded": 1985,
+      "stadium": "ملعب 22 مايو",
+      "colors": { "primary": "#EA580C", "secondary": "#1E3A8A" },
+      "coach": "سالم الحضرمي",
+      "group": "B"
+    },
+    {
+      "id": "t12",
+      "name": "شمسان",
+      "shortName": "شمسان",
+      "logo": "",
+      "founded": 1972,
+      "stadium": "ملعب الشهيد الحبيشي",
+      "colors": { "primary": "#F59E0B", "secondary": "#1F2937" },
+      "coach": "عمار الردفاني",
+      "group": "B"
+    }
+  ],
+  "players": [
+    { "id": "p1", "teamId": "t1", "name": "علي الحبيشي", "number": 1, "position": "GK", "birthdate": "1995-03-12", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p2", "teamId": "t1", "name": "ماجد الحكيمي", "number": 12, "position": "GK", "birthdate": "1998-07-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p3", "teamId": "t1", "name": "أحمد الصلوي", "number": 2, "position": "DF", "birthdate": "1996-05-08", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p4", "teamId": "t1", "name": "سالم العماري", "number": 3, "position": "DF", "birthdate": "1994-11-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p5", "teamId": "t1", "name": "محمد الفقيه", "number": 4, "position": "DF", "birthdate": "1997-02-20", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p6", "teamId": "t1", "name": "عبدالله المقطري", "number": 5, "position": "DF", "birthdate": "1993-09-03", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p7", "teamId": "t1", "name": "نايف الزبيري", "number": 6, "position": "DF", "birthdate": "1999-01-18", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p8", "teamId": "t1", "name": "أنس الشرعبي", "number": 13, "position": "DF", "birthdate": "2000-04-25", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p9", "teamId": "t1", "name": "وليد القباطي", "number": 7, "position": "MF", "birthdate": "1996-08-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p10", "teamId": "t1", "name": "جمال الحيمي", "number": 8, "position": "MF", "birthdate": "1995-12-05", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p11", "teamId": "t1", "name": "خالد الشرجبي", "number": 10, "position": "MF", "birthdate": "1997-06-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p12", "teamId": "t1", "name": "إبراهيم الحاشدي", "number": 14, "position": "MF", "birthdate": "1998-10-11", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p13", "teamId": "t1", "name": "عمار الأصبحي", "number": 16, "position": "MF", "birthdate": "1999-03-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p14", "teamId": "t1", "name": "فهد المخلافي", "number": 17, "position": "MF", "birthdate": "2001-05-09", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p15", "teamId": "t1", "name": "بشار العزي", "number": 18, "position": "MF", "birthdate": "2000-08-17", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p16", "teamId": "t1", "name": "أحمد العبسي", "number": 20, "position": "MF", "birthdate": "1997-11-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p17", "teamId": "t1", "name": "ياسر الجابري", "number": 9, "position": "FW", "birthdate": "1994-07-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p18", "teamId": "t1", "name": "سامي الحرازي", "number": 11, "position": "FW", "birthdate": "1996-01-25", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p19", "teamId": "t1", "name": "مروان الرعيني", "number": 19, "position": "FW", "birthdate": "1998-04-07", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p20", "teamId": "t1", "name": "زياد المطري", "number": 21, "position": "FW", "birthdate": "2000-09-14", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p21", "teamId": "t2", "name": "حسن الجرادي", "number": 1, "position": "GK", "birthdate": "1994-02-11", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p22", "teamId": "t2", "name": "أمين الوصابي", "number": 12, "position": "GK", "birthdate": "1997-06-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p23", "teamId": "t2", "name": "أحمد الشامي", "number": 2, "position": "DF", "birthdate": "1995-04-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p24", "teamId": "t2", "name": "ناصر الأهدل", "number": 3, "position": "DF", "birthdate": "1996-10-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p25", "teamId": "t2", "name": "عبدالرحمن الحبيشي", "number": 4, "position": "DF", "birthdate": "1993-08-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p26", "teamId": "t2", "name": "مراد الشامي", "number": 5, "position": "DF", "birthdate": "1997-01-12", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p27", "teamId": "t2", "name": "أيمن المقطري", "number": 6, "position": "DF", "birthdate": "1998-03-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p28", "teamId": "t2", "name": "سامي الحيمي", "number": 13, "position": "DF", "birthdate": "1999-07-08", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p29", "teamId": "t2", "name": "خالد الشيباني", "number": 7, "position": "MF", "birthdate": "1995-11-20", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p30", "teamId": "t2", "name": "أحمد الأصبحي", "number": 8, "position": "MF", "birthdate": "1996-05-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p31", "teamId": "t2", "name": "ياسر الشرعبي", "number": 10, "position": "MF", "birthdate": "1994-09-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p32", "teamId": "t2", "name": "فهد العزي", "number": 14, "position": "MF", "birthdate": "1998-02-18", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p33", "teamId": "t2", "name": "زياد الرعيني", "number": 16, "position": "MF", "birthdate": "1999-06-11", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p34", "teamId": "t2", "name": "إبراهيم المخلافي", "number": 17, "position": "MF", "birthdate": "2000-10-05", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p35", "teamId": "t2", "name": "أمين العبسي", "number": 18, "position": "MF", "birthdate": "2001-01-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p36", "teamId": "t2", "name": "عبدالله الجابري", "number": 20, "position": "MF", "birthdate": "1996-12-03", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p37", "teamId": "t2", "name": "محمد الحرازي", "number": 9, "position": "FW", "birthdate": "1995-08-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p38", "teamId": "t2", "name": "سالم الرعيني", "number": 11, "position": "FW", "birthdate": "1997-04-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p39", "teamId": "t2", "name": "نايف المطري", "number": 19, "position": "FW", "birthdate": "1999-07-26", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p40", "teamId": "t2", "name": "خالد المقطري", "number": 21, "position": "FW", "birthdate": "2000-11-09", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p41", "teamId": "t3", "name": "سامي الوصابي", "number": 1, "position": "GK", "birthdate": "1995-05-03", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p42", "teamId": "t3", "name": "ماجد الشرعبي", "number": 12, "position": "GK", "birthdate": "1998-09-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p43", "teamId": "t3", "name": "أحمد الحاشدي", "number": 2, "position": "DF", "birthdate": "1994-07-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p44", "teamId": "t3", "name": "خالد الشامي", "number": 3, "position": "DF", "birthdate": "1996-01-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p45", "teamId": "t3", "name": "عمار الأهدل", "number": 4, "position": "DF", "birthdate": "1993-04-07", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p46", "teamId": "t3", "name": "ياسر الحبيشي", "number": 5, "position": "DF", "birthdate": "1997-10-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p47", "teamId": "t3", "name": "فهد الصلوي", "number": 6, "position": "DF", "birthdate": "1998-12-05", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p48", "teamId": "t3", "name": "نايف الحيمي", "number": 13, "position": "DF", "birthdate": "2000-02-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p49", "teamId": "t3", "name": "سالم العماري", "number": 7, "position": "MF", "birthdate": "1995-09-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p50", "teamId": "t3", "name": "مروان المقطري", "number": 8, "position": "MF", "birthdate": "1996-03-11", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p51", "teamId": "t3", "name": "زياد الفقيه", "number": 10, "position": "MF", "birthdate": "1994-06-26", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p52", "teamId": "t3", "name": "بشار الجابري", "number": 14, "position": "MF", "birthdate": "1998-08-18", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p53", "teamId": "t3", "name": "أمين العبسي", "number": 16, "position": "MF", "birthdate": "1999-11-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p54", "teamId": "t3", "name": "جمال الشيباني", "number": 17, "position": "MF", "birthdate": "2000-04-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p55", "teamId": "t3", "name": "عبدالله الحرازي", "number": 18, "position": "MF", "birthdate": "1997-07-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p56", "teamId": "t3", "name": "سعيد المخلافي", "number": 20, "position": "MF", "birthdate": "2001-02-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p57", "teamId": "t3", "name": "وليد الرعيني", "number": 9, "position": "FW", "birthdate": "1995-12-11", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p58", "teamId": "t3", "name": "مروان الأصبحي", "number": 11, "position": "FW", "birthdate": "1997-03-07", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p59", "teamId": "t3", "name": "أحمد المطري", "number": 19, "position": "FW", "birthdate": "1999-08-23", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p60", "teamId": "t3", "name": "نايف العزي", "number": 21, "position": "FW", "birthdate": "2001-05-16", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p61", "teamId": "t4", "name": "عمار الشيباني", "number": 1, "position": "GK", "birthdate": "1996-04-08", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p62", "teamId": "t4", "name": "خالد الفقيه", "number": 12, "position": "GK", "birthdate": "1999-08-21", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p63", "teamId": "t4", "name": "سامي الجابري", "number": 2, "position": "DF", "birthdate": "1995-01-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p64", "teamId": "t4", "name": "ياسر المقطري", "number": 3, "position": "DF", "birthdate": "1994-05-17", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p65", "teamId": "t4", "name": "أحمد الشرجبي", "number": 4, "position": "DF", "birthdate": "1997-09-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p66", "teamId": "t4", "name": "بشار العماري", "number": 5, "position": "DF", "birthdate": "1998-11-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p67", "teamId": "t4", "name": "جمال الصلوي", "number": 6, "position": "DF", "birthdate": "1996-06-25", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p68", "teamId": "t4", "name": "نايف الوصابي", "number": 13, "position": "DF", "birthdate": "2000-03-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p69", "teamId": "t4", "name": "عبدالله الحبيشي", "number": 7, "position": "MF", "birthdate": "1995-07-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p70", "teamId": "t4", "name": "سالم الحاشدي", "number": 8, "position": "MF", "birthdate": "1994-12-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p71", "teamId": "t4", "name": "أيمن الأصبحي", "number": 10, "position": "MF", "birthdate": "1997-02-08", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p72", "teamId": "t4", "name": "ماجد الشامي", "number": 14, "position": "MF", "birthdate": "1999-06-17", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p73", "teamId": "t4", "name": "فهد الحيمي", "number": 16, "position": "MF", "birthdate": "2000-08-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p74", "teamId": "t4", "name": "أنس الجابري", "number": 17, "position": "MF", "birthdate": "1998-01-23", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p75", "teamId": "t4", "name": "خالد المخلافي", "number": 18, "position": "MF", "birthdate": "2001-03-11", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p76", "teamId": "t4", "name": "تركي الأهدل", "number": 20, "position": "MF", "birthdate": "1996-10-05", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p77", "teamId": "t4", "name": "عمار العزي", "number": 9, "position": "FW", "birthdate": "1994-04-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p78", "teamId": "t4", "name": "سعيد الرعيني", "number": 11, "position": "FW", "birthdate": "1997-08-26", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p79", "teamId": "t4", "name": "حسن المطري", "number": 19, "position": "FW", "birthdate": "1999-12-02", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p80", "teamId": "t4", "name": "زياد الحرازي", "number": 21, "position": "FW", "birthdate": "2001-06-09", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p81", "teamId": "t5", "name": "أحمد النعاش", "number": 1, "position": "GK", "birthdate": "1995-06-12", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p82", "teamId": "t5", "name": "ماجد السنيني", "number": 12, "position": "GK", "birthdate": "1998-10-25", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p83", "teamId": "t5", "name": "سامي النفيعي", "number": 2, "position": "DF", "birthdate": "1996-02-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p84", "teamId": "t5", "name": "خالد الحداد", "number": 3, "position": "DF", "birthdate": "1994-08-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p85", "teamId": "t5", "name": "عبدالله الفقيه", "number": 4, "position": "DF", "birthdate": "1997-11-09", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p86", "teamId": "t5", "name": "ياسر المهدي", "number": 5, "position": "DF", "birthdate": "1999-01-21", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p87", "teamId": "t5", "name": "فهد بامطرف", "number": 6, "position": "DF", "birthdate": "1995-04-05", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p88", "teamId": "t5", "name": "بشار الجابري", "number": 13, "position": "DF", "birthdate": "2000-07-18", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p89", "teamId": "t5", "name": "عمار باحميد", "number": 7, "position": "MF", "birthdate": "1996-09-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p90", "teamId": "t5", "name": "سالم الحضرمي", "number": 8, "position": "MF", "birthdate": "1994-05-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p91", "teamId": "t5", "name": "نايف الردفاني", "number": 10, "position": "MF", "birthdate": "1997-12-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p92", "teamId": "t5", "name": "أحمد الجابري", "number": 14, "position": "MF", "birthdate": "1999-03-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p93", "teamId": "t5", "name": "مروان الشامي", "number": 16, "position": "MF", "birthdate": "1998-06-08", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p94", "teamId": "t5", "name": "سعيد العماري", "number": 17, "position": "MF", "birthdate": "2000-09-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p95", "teamId": "t5", "name": "ماجد الفقيه", "number": 18, "position": "MF", "birthdate": "2001-01-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p96", "teamId": "t5", "name": "حسن الصلوي", "number": 20, "position": "MF", "birthdate": "1995-10-17", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p97", "teamId": "t5", "name": "أيمن المقطري", "number": 9, "position": "FW", "birthdate": "1994-02-26", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p98", "teamId": "t5", "name": "تركي الشرعبي", "number": 11, "position": "FW", "birthdate": "1997-07-03", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p99", "teamId": "t5", "name": "زياد الأصبحي", "number": 19, "position": "FW", "birthdate": "1999-10-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p100", "teamId": "t5", "name": "نايف العبسي", "number": 21, "position": "FW", "birthdate": "2001-04-22", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p101", "teamId": "t6", "name": "خالد الحداد", "number": 1, "position": "GK", "birthdate": "1994-09-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p102", "teamId": "t6", "name": "أحمد الشيباني", "number": 12, "position": "GK", "birthdate": "1997-12-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p103", "teamId": "t6", "name": "سامي العزي", "number": 2, "position": "DF", "birthdate": "1996-05-11", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p104", "teamId": "t6", "name": "خالد المخلافي", "number": 3, "position": "DF", "birthdate": "1995-10-04", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p105", "teamId": "t6", "name": "ياسر الحرازي", "number": 4, "position": "DF", "birthdate": "1998-02-17", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p106", "teamId": "t6", "name": "عبدالله الرعيني", "number": 5, "position": "DF", "birthdate": "1996-11-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p107", "teamId": "t6", "name": "فهد الحاشدي", "number": 6, "position": "DF", "birthdate": "1999-04-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p108", "teamId": "t6", "name": "ماجد الوصابي", "number": 13, "position": "DF", "birthdate": "2000-06-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p109", "teamId": "t6", "name": "بشار الأهدل", "number": 7, "position": "MF", "birthdate": "1995-08-09", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p110", "teamId": "t6", "name": "نايف الحبيشي", "number": 8, "position": "MF", "birthdate": "1997-01-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p111", "teamId": "t6", "name": "أمين المطري", "number": 10, "position": "MF", "birthdate": "1994-03-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p112", "teamId": "t6", "name": "جمال الشامي", "number": 14, "position": "MF", "birthdate": "1999-05-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p113", "teamId": "t6", "name": "مروان الجابري", "number": 16, "position": "MF", "birthdate": "1998-08-11", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p114", "teamId": "t6", "name": "سالم الصلوي", "number": 17, "position": "MF", "birthdate": "2000-10-24", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p115", "teamId": "t6", "name": "خالد الفقيه", "number": 18, "position": "MF", "birthdate": "2001-02-06", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p116", "teamId": "t6", "name": "أحمد الشرجبي", "number": 20, "position": "MF", "birthdate": "1996-07-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p117", "teamId": "t6", "name": "تركي العزي", "number": 9, "position": "FW", "birthdate": "1995-09-02", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p118", "teamId": "t6", "name": "عمار المقطري", "number": 11, "position": "FW", "birthdate": "1997-12-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p119", "teamId": "t6", "name": "زياد الحيمي", "number": 19, "position": "FW", "birthdate": "1999-03-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p120", "teamId": "t6", "name": "نايف الشرعبي", "number": 21, "position": "FW", "birthdate": "2001-08-13", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p121", "teamId": "t7", "name": "سامي الجابري", "number": 1, "position": "GK", "birthdate": "1995-01-05", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p122", "teamId": "t7", "name": "خالد الحداد", "number": 12, "position": "GK", "birthdate": "1998-05-18", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p123", "teamId": "t7", "name": "أحمد الفقيه", "number": 2, "position": "DF", "birthdate": "1996-07-01", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p124", "teamId": "t7", "name": "ياسر المهدي", "number": 3, "position": "DF", "birthdate": "1994-10-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p125", "teamId": "t7", "name": "عبدالله النفيعي", "number": 4, "position": "DF", "birthdate": "1997-03-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p126", "teamId": "t7", "name": "بشار السنيني", "number": 5, "position": "DF", "birthdate": "1995-06-10", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p127", "teamId": "t7", "name": "مروان النعاش", "number": 6, "position": "DF", "birthdate": "1998-09-23", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p128", "teamId": "t7", "name": "فهد بامطرف", "number": 13, "position": "DF", "birthdate": "2000-12-06", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p129", "teamId": "t7", "name": "سالم الحضرمي", "number": 7, "position": "MF", "birthdate": "1995-02-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p130", "teamId": "t7", "name": "نايف الردفاني", "number": 8, "position": "MF", "birthdate": "1996-05-04", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p131", "teamId": "t7", "name": "جمال باحميد", "number": 10, "position": "MF", "birthdate": "1994-08-17", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p132", "teamId": "t7", "name": "سعيد الجابري", "number": 14, "position": "MF", "birthdate": "1999-10-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p133", "teamId": "t7", "name": "أيمن الشامي", "number": 16, "position": "MF", "birthdate": "1998-01-12", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p134", "teamId": "t7", "name": "زياد العبسي", "number": 17, "position": "MF", "birthdate": "2000-03-25", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p135", "teamId": "t7", "name": "ماجد الصلوي", "number": 18, "position": "MF", "birthdate": "2001-06-07", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p136", "teamId": "t7", "name": "حسن الحيمي", "number": 20, "position": "MF", "birthdate": "1997-09-20", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p137", "teamId": "t7", "name": "تركي العماري", "number": 9, "position": "FW", "birthdate": "1995-11-03", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p138", "teamId": "t7", "name": "خالد المقطري", "number": 11, "position": "FW", "birthdate": "1997-02-16", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p139", "teamId": "t7", "name": "أحمد الرعيني", "number": 19, "position": "FW", "birthdate": "1999-05-01", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p140", "teamId": "t7", "name": "سامي الأصبحي", "number": 21, "position": "FW", "birthdate": "2001-08-14", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p141", "teamId": "t8", "name": "نايف الحضرمي", "number": 1, "position": "GK", "birthdate": "1996-03-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p142", "teamId": "t8", "name": "سالم بامطرف", "number": 12, "position": "GK", "birthdate": "1999-07-02", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p143", "teamId": "t8", "name": "خالد باحميد", "number": 2, "position": "DF", "birthdate": "1995-09-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p144", "teamId": "t8", "name": "أحمد الجابري", "number": 3, "position": "DF", "birthdate": "1994-12-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p145", "teamId": "t8", "name": "ماجد الردفاني", "number": 4, "position": "DF", "birthdate": "1997-04-10", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p146", "teamId": "t8", "name": "عبدالله الحضرمي", "number": 5, "position": "DF", "birthdate": "1998-07-23", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p147", "teamId": "t8", "name": "فهد السنيني", "number": 6, "position": "DF", "birthdate": "1996-10-06", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p148", "teamId": "t8", "name": "سامي النعاش", "number": 13, "position": "DF", "birthdate": "2000-01-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p149", "teamId": "t8", "name": "ياسر المهدي", "number": 7, "position": "MF", "birthdate": "1996-04-02", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p150", "teamId": "t8", "name": "مروان الجابري", "number": 8, "position": "MF", "birthdate": "1995-07-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p151", "teamId": "t8", "name": "بشار الردفاني", "number": 10, "position": "MF", "birthdate": "1994-10-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p152", "teamId": "t8", "name": "جمال بامطرف", "number": 14, "position": "MF", "birthdate": "1999-01-10", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p153", "teamId": "t8", "name": "خالد الحضرمي", "number": 16, "position": "MF", "birthdate": "1998-04-23", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p154", "teamId": "t8", "name": "زياد باحميد", "number": 17, "position": "MF", "birthdate": "2000-07-06", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p155", "teamId": "t8", "name": "حسن النعاش", "number": 18, "position": "MF", "birthdate": "2001-10-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p156", "teamId": "t8", "name": "تركي السنيني", "number": 20, "position": "MF", "birthdate": "1997-01-01", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p157", "teamId": "t8", "name": "نايف الجابري", "number": 9, "position": "FW", "birthdate": "1995-03-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p158", "teamId": "t8", "name": "أحمد الردفاني", "number": 11, "position": "FW", "birthdate": "1997-06-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p159", "teamId": "t8", "name": "ماجد الحضرمي", "number": 19, "position": "FW", "birthdate": "1999-09-10", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p160", "teamId": "t8", "name": "سالم باحميد", "number": 21, "position": "FW", "birthdate": "2001-12-23", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p161", "teamId": "t9", "name": "بشار الجابري", "number": 1, "position": "GK", "birthdate": "1996-06-07", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p162", "teamId": "t9", "name": "نايف المهدي", "number": 12, "position": "GK", "birthdate": "1999-09-20", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p163", "teamId": "t9", "name": "سالم النعاش", "number": 2, "position": "DF", "birthdate": "1995-12-03", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p164", "teamId": "t9", "name": "أحمد السنيني", "number": 3, "position": "DF", "birthdate": "1994-03-16", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p165", "teamId": "t9", "name": "خالد النفيعي", "number": 4, "position": "DF", "birthdate": "1997-06-29", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p166", "teamId": "t9", "name": "ماجد الحداد", "number": 5, "position": "DF", "birthdate": "1998-09-12", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p167", "teamId": "t9", "name": "ياسر الفقيه", "number": 6, "position": "DF", "birthdate": "1996-12-25", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p168", "teamId": "t9", "name": "عبدالله الحضرمي", "number": 13, "position": "DF", "birthdate": "2000-03-10", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p169", "teamId": "t9", "name": "سامي بامطرف", "number": 7, "position": "MF", "birthdate": "1995-05-23", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p170", "teamId": "t9", "name": "خالد باحميد", "number": 8, "position": "MF", "birthdate": "1996-08-06", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p171", "teamId": "t9", "name": "مروان الردفاني", "number": 10, "position": "MF", "birthdate": "1994-11-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p172", "teamId": "t9", "name": "بشار الجابري", "number": 14, "position": "MF", "birthdate": "1999-02-02", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p173", "teamId": "t9", "name": "جمال النعاش", "number": 16, "position": "MF", "birthdate": "1998-05-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p174", "teamId": "t9", "name": "زياد السنيني", "number": 17, "position": "MF", "birthdate": "2000-08-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p175", "teamId": "t9", "name": "حسن الحداد", "number": 18, "position": "MF", "birthdate": "2001-11-10", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p176", "teamId": "t9", "name": "تركي الفقيه", "number": 20, "position": "MF", "birthdate": "1997-02-23", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p177", "teamId": "t9", "name": "نايف المهدي", "number": 9, "position": "FW", "birthdate": "1995-05-08", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p178", "teamId": "t9", "name": "أحمد بامطرف", "number": 11, "position": "FW", "birthdate": "1997-08-21", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p179", "teamId": "t9", "name": "ماجد الحضرمي", "number": 19, "position": "FW", "birthdate": "1999-11-04", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p180", "teamId": "t9", "name": "سالم النعاش", "number": 21, "position": "FW", "birthdate": "2001-02-17", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p181", "teamId": "t10", "name": "خالد بامطرف", "number": 1, "position": "GK", "birthdate": "1995-08-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p182", "teamId": "t10", "name": "سامي باحميد", "number": 12, "position": "GK", "birthdate": "1998-12-13", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p183", "teamId": "t10", "name": "أحمد الحضرمي", "number": 2, "position": "DF", "birthdate": "1996-03-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p184", "teamId": "t10", "name": "نايف الجابري", "number": 3, "position": "DF", "birthdate": "1994-06-09", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p185", "teamId": "t10", "name": "ماجد الردفاني", "number": 4, "position": "DF", "birthdate": "1997-09-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p186", "teamId": "t10", "name": "خالد السنيني", "number": 5, "position": "DF", "birthdate": "1998-12-05", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p187", "teamId": "t10", "name": "عبدالله النعاش", "number": 6, "position": "DF", "birthdate": "1996-03-18", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p188", "teamId": "t10", "name": "ياسر المهدي", "number": 13, "position": "DF", "birthdate": "2000-06-01", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p189", "teamId": "t10", "name": "بشار بامطرف", "number": 7, "position": "MF", "birthdate": "1995-09-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p190", "teamId": "t10", "name": "سالم باحميد", "number": 8, "position": "MF", "birthdate": "1996-12-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p191", "teamId": "t10", "name": "مروان الحضرمي", "number": 10, "position": "MF", "birthdate": "1994-03-10", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p192", "teamId": "t10", "name": "جمال الجابري", "number": 14, "position": "MF", "birthdate": "1999-06-23", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p193", "teamId": "t10", "name": "زياد الردفاني", "number": 16, "position": "MF", "birthdate": "1998-09-06", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p194", "teamId": "t10", "name": "حسن السنيني", "number": 17, "position": "MF", "birthdate": "2000-12-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p195", "teamId": "t10", "name": "تركي النعاش", "number": 18, "position": "MF", "birthdate": "2001-03-04", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p196", "teamId": "t10", "name": "أيمن المهدي", "number": 20, "position": "MF", "birthdate": "1997-06-17", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p197", "teamId": "t10", "name": "خالد بامطرف", "number": 9, "position": "FW", "birthdate": "1995-09-30", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p198", "teamId": "t10", "name": "سامي باحميد", "number": 11, "position": "FW", "birthdate": "1997-01-13", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p199", "teamId": "t10", "name": "ماجد الحضرمي", "number": 19, "position": "FW", "birthdate": "1999-04-26", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p200", "teamId": "t10", "name": "نايف الجابري", "number": 21, "position": "FW", "birthdate": "2001-07-09", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p201", "teamId": "t11", "name": "أحمد الحضرمي", "number": 1, "position": "GK", "birthdate": "1996-11-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p202", "teamId": "t11", "name": "سالم الردفاني", "number": 12, "position": "GK", "birthdate": "1999-03-05", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p203", "teamId": "t11", "name": "خالد النعاش", "number": 2, "position": "DF", "birthdate": "1995-06-18", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p204", "teamId": "t11", "name": "ماجد السنيني", "number": 3, "position": "DF", "birthdate": "1994-09-01", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p205", "teamId": "t11", "name": "أحمد الجابري", "number": 4, "position": "DF", "birthdate": "1997-12-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p206", "teamId": "t11", "name": "بشار بامطرف", "number": 5, "position": "DF", "birthdate": "1998-03-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p207", "teamId": "t11", "name": "فهد باحميد", "number": 6, "position": "DF", "birthdate": "1996-06-09", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p208", "teamId": "t11", "name": "عبدالله الحضرمي", "number": 13, "position": "DF", "birthdate": "2000-09-22", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p209", "teamId": "t11", "name": "ياسر الردفاني", "number": 7, "position": "MF", "birthdate": "1995-01-05", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p210", "teamId": "t11", "name": "سعيد النعاش", "number": 8, "position": "MF", "birthdate": "1996-04-18", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p211", "teamId": "t11", "name": "مروان بامطرف", "number": 10, "position": "MF", "birthdate": "1994-07-01", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p212", "teamId": "t11", "name": "جمال باحميد", "number": 14, "position": "MF", "birthdate": "1999-10-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p213", "teamId": "t11", "name": "زياد الحضرمي", "number": 16, "position": "MF", "birthdate": "1998-01-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p214", "teamId": "t11", "name": "حسن الردفاني", "number": 17, "position": "MF", "birthdate": "2000-04-10", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p215", "teamId": "t11", "name": "تركي النعاش", "number": 18, "position": "MF", "birthdate": "2001-07-23", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p216", "teamId": "t11", "name": "أيمن السنيني", "number": 20, "position": "MF", "birthdate": "1997-10-06", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p217", "teamId": "t11", "name": "خالد الجابري", "number": 9, "position": "FW", "birthdate": "1995-02-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p218", "teamId": "t11", "name": "سامي بامطرف", "number": 11, "position": "FW", "birthdate": "1997-05-04", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p219", "teamId": "t11", "name": "ماجد باحميد", "number": 19, "position": "FW", "birthdate": "1999-08-17", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p220", "teamId": "t11", "name": "نايف الحضرمي", "number": 21, "position": "FW", "birthdate": "2001-11-30", "nationality": "YE", "photo": "", "status": "active" },
+
+    { "id": "p221", "teamId": "t12", "name": "خالد الردفاني", "number": 1, "position": "GK", "birthdate": "1995-04-14", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p222", "teamId": "t12", "name": "سالم النعاش", "number": 12, "position": "GK", "birthdate": "1998-07-27", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p223", "teamId": "t12", "name": "أحمد الجابري", "number": 2, "position": "DF", "birthdate": "1996-10-10", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p224", "teamId": "t12", "name": "نايف بامطرف", "number": 3, "position": "DF", "birthdate": "1994-01-23", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p225", "teamId": "t12", "name": "ماجد باحميد", "number": 4, "position": "DF", "birthdate": "1997-04-06", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p226", "teamId": "t12", "name": "بشار الحضرمي", "number": 5, "position": "DF", "birthdate": "1998-07-19", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p227", "teamId": "t12", "name": "عبدالله الردفاني", "number": 6, "position": "DF", "birthdate": "1996-10-02", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p228", "teamId": "t12", "name": "فهد النعاش", "number": 13, "position": "DF", "birthdate": "2000-01-15", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p229", "teamId": "t12", "name": "ياسر السنيني", "number": 7, "position": "MF", "birthdate": "1995-04-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p230", "teamId": "t12", "name": "سعيد الردفاني", "number": 8, "position": "MF", "birthdate": "1996-08-11", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p231", "teamId": "t12", "name": "مروان النعاش", "number": 10, "position": "MF", "birthdate": "1994-11-24", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p232", "teamId": "t12", "name": "جمال بامطرف", "number": 14, "position": "MF", "birthdate": "1999-02-07", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p233", "teamId": "t12", "name": "زياد باحميد", "number": 16, "position": "MF", "birthdate": "1998-05-20", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p234", "teamId": "t12", "name": "حسن الحضرمي", "number": 17, "position": "MF", "birthdate": "2000-08-03", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p235", "teamId": "t12", "name": "تركي الردفاني", "number": 18, "position": "MF", "birthdate": "2001-11-16", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p236", "teamId": "t12", "name": "أيمن الجابري", "number": 20, "position": "MF", "birthdate": "1997-02-28", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p237", "teamId": "t12", "name": "خالد بامطرف", "number": 9, "position": "FW", "birthdate": "1995-05-13", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p238", "teamId": "t12", "name": "سامي الحضرمي", "number": 11, "position": "FW", "birthdate": "1997-08-26", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p239", "teamId": "t12", "name": "ماجد النعاش", "number": 19, "position": "FW", "birthdate": "1999-12-09", "nationality": "YE", "photo": "", "status": "active" },
+    { "id": "p240", "teamId": "t12", "name": "نايف الردفاني", "number": 21, "position": "FW", "birthdate": "2001-03-22", "nationality": "YE", "photo": "", "status": "active" }
+  ],
+  "matches": [
+    { "id": "m1", "round": 1, "homeTeamId": "t1", "awayTeamId": "t12", "date": "2026-09-14T18:00:00.000Z", "stadium": "ملعب الشهداء", "referee": "علي المقطري", "status": "finished", "score": { "home": 2, "away": 1 }, "events": [
+      { "id": "e1", "type": "goal", "playerId": "p17", "teamId": "t1", "minute": 15 },
+      { "id": "e2", "type": "goal", "playerId": "p237", "teamId": "t12", "minute": 35 },
+      { "id": "e3", "type": "yellow", "playerId": "p4", "teamId": "t1", "minute": 42 },
+      { "id": "e4", "type": "goal", "playerId": "p18", "teamId": "t1", "minute": 68 },
+      { "id": "e5", "type": "substitution", "playerId": "p19", "teamId": "t1", "minute": 75 }
+    ], "ratings": {} },
+
+    { "id": "m2", "round": 1, "homeTeamId": "t11", "awayTeamId": "t2", "date": "2026-09-15T18:00:00.000Z", "stadium": "ملعب 22 مايو", "referee": "سامي الجابري", "status": "finished", "score": { "home": 0, "away": 2 }, "events": [
+      { "id": "e6", "type": "goal", "playerId": "p37", "teamId": "t2", "minute": 22 },
+      { "id": "e7", "type": "yellow", "playerId": "p203", "teamId": "t11", "minute": 55 },
+      { "id": "e8", "type": "goal", "playerId": "p38", "teamId": "t2", "minute": 78 }
+    ], "ratings": {} },
+
+    { "id": "m3", "round": 1, "homeTeamId": "t3", "awayTeamId": "t10", "date": "2026-09-16T18:00:00.000Z", "stadium": "ملعب الوحدة", "referee": "أحمد الجابري", "status": "finished", "score": { "home": 3, "away": 1 }, "events": [
+      { "id": "e9", "type": "goal", "playerId": "p57", "teamId": "t3", "minute": 12 },
+      { "id": "e10", "type": "goal", "playerId": "p58", "teamId": "t3", "minute": 34 },
+      { "id": "e11", "type": "goal", "playerId": "p197", "teamId": "t10", "minute": 56 },
+      { "id": "e12", "type": "yellow", "playerId": "p45", "teamId": "t3", "minute": 68 },
+      { "id": "e13", "type": "goal", "playerId": "p59", "teamId": "t3", "minute": 88 }
+    ], "ratings": {} },
+
+    { "id": "m4", "round": 1, "homeTeamId": "t9", "awayTeamId": "t4", "date": "2026-09-17T18:00:00.000Z", "stadium": "ملعب الغرفة", "referee": "خالد النعاش", "status": "finished", "score": { "home": 1, "away": 1 }, "events": [
+      { "id": "e14", "type": "goal", "playerId": "p177", "teamId": "t9", "minute": 28 },
+      { "id": "e15", "type": "goal", "playerId": "p77", "teamId": "t4", "minute": 71 }
+    ], "ratings": {} },
+
+    { "id": "m5", "round": 1, "homeTeamId": "t5", "awayTeamId": "t8", "date": "2026-09-18T18:00:00.000Z", "stadium": "ملعب اليرموك", "referee": "فهد الشامي", "status": "finished", "score": { "home": 2, "away": 0 }, "events": [
+      { "id": "e16", "type": "goal", "playerId": "p97", "teamId": "t5", "minute": 8 },
+      { "id": "e17", "type": "yellow", "playerId": "p144", "teamId": "t8", "minute": 40 },
+      { "id": "e18", "type": "goal", "playerId": "p98", "teamId": "t5", "minute": 63 }
+    ], "ratings": {} },
+
+    { "id": "m6", "round": 1, "homeTeamId": "t7", "awayTeamId": "t6", "date": "2026-09-19T18:00:00.000Z", "stadium": "ملعب التلال", "referee": "علي المقطري", "status": "finished", "score": { "home": 1, "away": 3 }, "events": [
+      { "id": "e19", "type": "goal", "playerId": "p117", "teamId": "t6", "minute": 14 },
+      { "id": "e20", "type": "goal", "playerId": "p137", "teamId": "t7", "minute": 33 },
+      { "id": "e21", "type": "goal", "playerId": "p118", "teamId": "t6", "minute": 55 },
+      { "id": "e22", "type": "goal", "playerId": "p119", "teamId": "t6", "minute": 82 }
+    ], "ratings": {} },
+
+    { "id": "m7", "round": 2, "homeTeamId": "t11", "awayTeamId": "t1", "date": "2026-09-20T18:00:00.000Z", "stadium": "ملعب 22 مايو", "referee": "سامي بامطرف", "status": "finished", "score": { "home": 1, "away": 3 }, "events": [
+      { "id": "e23", "type": "goal", "playerId": "p17", "teamId": "t1", "minute": 18 },
+      { "id": "e24", "type": "goal", "playerId": "p217", "teamId": "t11", "minute": 34 },
+      { "id": "e25", "type": "goal", "playerId": "p18", "teamId": "t1", "minute": 62 },
+      { "id": "e26", "type": "yellow", "playerId": "p207", "teamId": "t11", "minute": 74 },
+      { "id": "e27", "type": "goal", "playerId": "p19", "teamId": "t1", "minute": 90 }
+    ], "ratings": {} },
+
+    { "id": "m8", "round": 2, "homeTeamId": "t12", "awayTeamId": "t10", "date": "2026-09-21T18:00:00.000Z", "stadium": "ملعب الشهيد الحبيشي", "referee": "أحمد الجابري", "status": "finished", "score": { "home": 0, "away": 0 }, "events": [
+      { "id": "e28", "type": "yellow", "playerId": "p224", "teamId": "t12", "minute": 30 },
+      { "id": "e29", "type": "yellow", "playerId": "p183", "teamId": "t10", "minute": 55 },
+      { "id": "e30", "type": "red", "playerId": "p185", "teamId": "t10", "minute": 88 }
+    ], "ratings": {} },
+
+    { "id": "m9", "round": 2, "homeTeamId": "t9", "awayTeamId": "t2", "date": "2026-09-22T18:00:00.000Z", "stadium": "ملعب الغرفة", "referee": "خالد الحداد", "status": "finished", "score": { "home": 0, "away": 1 }, "events": [
+      { "id": "e31", "type": "goal", "playerId": "p37", "teamId": "t2", "minute": 43 },
+      { "id": "e32", "type": "yellow", "playerId": "p167", "teamId": "t9", "minute": 67 }
+    ], "ratings": {} },
+
+    { "id": "m10", "round": 2, "homeTeamId": "t3", "awayTeamId": "t8", "date": "2026-09-23T18:00:00.000Z", "stadium": "ملعب الوحدة", "referee": "أحمد الجابري", "status": "finished", "score": { "home": 2, "away": 2 }, "events": [
+      { "id": "e33", "type": "goal", "playerId": "p57", "teamId": "t3", "minute": 10 },
+      { "id": "e34", "type": "goal", "playerId": "p157", "teamId": "t8", "minute": 26 },
+      { "id": "e35", "type": "goal", "playerId": "p58", "teamId": "t3", "minute": 55 },
+      { "id": "e36", "type": "goal", "playerId": "p158", "teamId": "t8", "minute": 80 }
+    ], "ratings": {} },
+
+    { "id": "m11", "round": 2, "homeTeamId": "t7", "awayTeamId": "t4", "date": "2026-09-24T18:00:00.000Z", "stadium": "ملعب التلال", "referee": "سامي النعاش", "status": "finished", "score": { "home": 0, "away": 1 }, "events": [
+      { "id": "e37", "type": "goal", "playerId": "p77", "teamId": "t4", "minute": 33 },
+      { "id": "e38", "type": "yellow", "playerId": "p126", "teamId": "t7", "minute": 70 }
+    ], "ratings": {} },
+
+    { "id": "m12", "round": 2, "homeTeamId": "t5", "awayTeamId": "t6", "date": "2026-09-25T18:00:00.000Z", "stadium": "ملعب اليرموك", "referee": "علي الفقيه", "status": "finished", "score": { "home": 1, "away": 1 }, "events": [
+      { "id": "e39", "type": "goal", "playerId": "p97", "teamId": "t5", "minute": 20 },
+      { "id": "e40", "type": "goal", "playerId": "p117", "teamId": "t6", "minute": 72 }
+    ], "ratings": {} },
+
+    { "id": "m13", "round": 3, "homeTeamId": "t1", "awayTeamId": "t10", "date": "2026-09-26T18:00:00.000Z", "stadium": "ملعب الشهداء", "referee": "نايف المهدي", "status": "finished", "score": { "home": 2, "away": 0 }, "events": [
+      { "id": "e41", "type": "goal", "playerId": "p17", "teamId": "t1", "minute": 22 },
+      { "id": "e42", "type": "yellow", "playerId": "p186", "teamId": "t10", "minute": 50 },
+      { "id": "e43", "type": "goal", "playerId": "p18", "teamId": "t1", "minute": 75 }
+    ], "ratings": {} },
+
+    { "id": "m14", "round": 3, "homeTeamId": "t9", "awayTeamId": "t11", "date": "2026-09-27T18:00:00.000Z", "stadium": "ملعب الغرفة", "referee": "سالم الردفاني", "status": "finished", "score": { "home": 2, "away": 0 }, "events": [
+      { "id": "e44", "type": "goal", "playerId": "p177", "teamId": "t9", "minute": 35 },
+      { "id": "e45", "type": "goal", "playerId": "p178", "teamId": "t9", "minute": 67 }
+    ], "ratings": {} },
+
+    { "id": "m15", "round": 3, "homeTeamId": "t12", "awayTeamId": "t8", "date": "2026-09-28T18:00:00.000Z", "stadium": "ملعب الشهيد الحبيشي", "referee": "خالد الحضرمي", "status": "finished", "score": { "home": 3, "away": 0 }, "events": [
+      { "id": "e46", "type": "goal", "playerId": "p237", "teamId": "t12", "minute": 15 },
+      { "id": "e47", "type": "goal", "playerId": "p238", "teamId": "t12", "minute": 48 },
+      { "id": "e48", "type": "goal", "playerId": "p239", "teamId": "t12", "minute": 82 }
+    ], "ratings": {} },
+
+    { "id": "m16", "round": 3, "homeTeamId": "t7", "awayTeamId": "t2", "date": "2026-09-29T18:00:00.000Z", "stadium": "ملعب التلال", "referee": "أحمد الجابري", "status": "finished", "score": { "home": 0, "away": 2 }, "events": [
+      { "id": "e49", "type": "goal", "playerId": "p37", "teamId": "t2", "minute": 28 },
+      { "id": "e50", "type": "goal", "playerId": "p38", "teamId": "t2", "minute": 63 }
+    ], "ratings": {} },
+
+    { "id": "m17", "round": 3, "homeTeamId": "t3", "awayTeamId": "t6", "date": "2026-09-30T18:00:00.000Z", "stadium": "ملعب الوحدة", "referee": "فهد الشامي", "status": "finished", "score": { "home": 1, "away": 1 }, "events": [
+      { "id": "e51", "type": "goal", "playerId": "p57", "teamId": "t3", "minute": 40 },
+      { "id": "e52", "type": "goal", "playerId": "p117", "teamId": "t6", "minute": 74 }
+    ], "ratings": {} },
+
+    { "id": "m18", "round": 3, "homeTeamId": "t5", "awayTeamId": "t4", "date": "2026-10-01T18:00:00.000Z", "stadium": "ملعب اليرموك", "referee": "علي المقطري", "status": "finished", "score": { "home": 2, "away": 2 }, "events": [
+      { "id": "e53", "type": "goal", "playerId": "p97", "teamId": "t5", "minute": 18 },
+      { "id": "e54", "type": "goal", "playerId": "p77", "teamId": "t4", "minute": 33 },
+      { "id": "e55", "type": "goal", "playerId": "p98", "teamId": "t5", "minute": 60 },
+      { "id": "e56", "type": "goal", "playerId": "p78", "teamId": "t4", "minute": 87 }
+    ], "ratings": {} },
+
+    { "id": "m19", "round": 4, "homeTeamId": "t9", "awayTeamId": "t1", "date": "2026-10-02T18:00:00.000Z", "stadium": "ملعب الغرفة", "referee": "سامي الجابري", "status": "finished", "score": { "home": 1, "away": 1 }, "events": [
+      { "id": "e57", "type": "goal", "playerId": "p177", "teamId": "t9", "minute": 30 },
+      { "id": "e58", "type": "goal", "playerId": "p17", "teamId": "t1", "minute": 68 }
+    ], "ratings": {} },
+
+    { "id": "m20", "round": 4, "homeTeamId": "t10", "awayTeamId": "t8", "date": "2026-10-03T18:00:00.000Z", "stadium": "ملعب المكلا", "referee": "خالد الحضرمي", "status": "finished", "score": { "home": 2, "away": 1 }, "events": [
+      { "id": "e59", "type": "goal", "playerId": "p197", "teamId": "t10", "minute": 14 },
+      { "id": "e60", "type": "goal", "playerId": "p157", "teamId": "t8", "minute": 45 },
+      { "id": "e61", "type": "goal", "playerId": "p198", "teamId": "t10", "minute": 88 }
+    ], "ratings": {} },
+
+    { "id": "m21", "round": 4, "homeTeamId": "t7", "awayTeamId": "t11", "date": "2026-10-04T18:00:00.000Z", "stadium": "ملعب التلال", "referee": "علي المقطري", "status": "finished", "score": { "home": 3, "away": 1 }, "events": [
+      { "id": "e62", "type": "goal", "playerId": "p137", "teamId": "t7", "minute": 22 },
+      { "id": "e63", "type": "goal", "playerId": "p138", "teamId": "t7", "minute": 48 },
+      { "id": "e64", "type": "goal", "playerId": "p217", "teamId": "t11", "minute": 60 },
+      { "id": "e65", "type": "goal", "playerId": "p137", "teamId": "t7", "minute": 87 }
+    ], "ratings": {} },
+
+    { "id": "m22", "round": 4, "homeTeamId": "t12", "awayTeamId": "t6", "date": "2026-10-05T18:00:00.000Z", "stadium": "ملعب الشهيد الحبيشي", "referee": "أحمد الجابري", "status": "finished", "score": { "home": 0, "away": 2 }, "events": [
+      { "id": "e66", "type": "goal", "playerId": "p117", "teamId": "t6", "minute": 35 },
+      { "id": "e67", "type": "goal", "playerId": "p118", "teamId": "t6", "minute": 75 }
+    ], "ratings": {} },
+
+    { "id": "m23", "round": 4, "homeTeamId": "t5", "awayTeamId": "t2", "date": "2026-10-15T18:00:00.000Z", "stadium": "ملعب اليرموك", "referee": "سامي الحضرمي", "status": "live", "score": { "home": 1, "away": 1 }, "events": [
+      { "id": "e68", "type": "goal", "playerId": "p97", "teamId": "t5", "minute": 22 },
+      { "id": "e69", "type": "goal", "playerId": "p37", "teamId": "t2", "minute": 55 }
+    ], "ratings": {} },
+
+    { "id": "m24", "round": 4, "homeTeamId": "t3", "awayTeamId": "t4", "date": "2026-10-16T18:00:00.000Z", "stadium": "ملعب الوحدة", "referee": "أحمد الجابري", "status": "upcoming", "score": { "home": 0, "away": 0 }, "events": [], "ratings": {} },
+
+    { "id": "m25", "round": 5, "homeTeamId": "t1", "awayTeamId": "t8", "date": "2026-10-17T18:00:00.000Z", "stadium": "ملعب الشهداء", "referee": "نايف المهدي", "status": "upcoming", "score": { "home": 0, "away": 0 }, "events": [], "ratings": {} },
+
+    { "id": "m26", "round": 5, "homeTeamId": "t7", "awayTeamId": "t9", "date": "2026-10-18T18:00:00.000Z", "stadium": "ملعب التلال", "referee": "علي الفقيه", "status": "upcoming", "score": { "home": 0, "away": 0 }, "events": [], "ratings": {} },
+
+    { "id": "m27", "round": 5, "homeTeamId": "t10", "awayTeamId": "t6", "date": "2026-10-19T18:00:00.000Z", "stadium": "ملعب المكلا", "referee": "سالم الردفاني", "status": "upcoming", "score": { "home": 0, "away": 0 }, "events": [], "ratings": {} },
+
+    { "id": "m28", "round": 5, "homeTeamId": "t5", "awayTeamId": "t11", "date": "2026-10-20T18:00:00.000Z", "stadium": "ملعب اليرموك", "referee": "خالد الحضرمي", "status": "upcoming", "score": { "home": 0, "away": 0 }, "events": [], "ratings": {} },
+
+    { "id": "m29", "round": 5, "homeTeamId": "t12", "awayTeamId": "t4", "date": "2026-10-21T18:00:00.000Z", "stadium": "ملعب الشهيد الحبيشي", "referee": "أحمد الجابري", "status": "upcoming", "score": { "home": 0, "away": 0 }, "events": [], "ratings": {} },
+
+    { "id": "m30", "round": 5, "homeTeamId": "t3", "awayTeamId": "t2", "date": "2026-10-22T18:00:00.000Z", "stadium": "ملعب الوحدة", "referee": "فهد الشامي", "status": "upcoming", "score": { "home": 0, "away": 0 }, "events": [], "ratings": {} }
+  ],
+  "events": [],
+  "discipline": [
+    {
+      "playerId": "p185",
+      "matchesSuspended": 1,
+      "reason": "بطاقة حمراء مباشرة",
+      "date": "2026-09-21"
+    }
+  ],
+  "ratings": [
+    { "id": "r1", "playerId": "p17", "matchId": "m1", "score": 9, "voter": "المدرب", "type": "coach", "timestamp": "2026-09-14T20:00:00.000Z" },
+    { "id": "r2", "playerId": "p18", "matchId": "m1", "score": 8.5, "voter": "المدرب", "type": "coach", "timestamp": "2026-09-14T20:00:00.000Z" },
+    { "id": "r3", "playerId": "p37", "matchId": "m2", "score": 8, "voter": "المدرب", "type": "coach", "timestamp": "2026-09-15T20:00:00.000Z" },
+    { "id": "r4", "playerId": "p57", "matchId": "m3", "score": 9.5, "voter": "المدرب", "type": "coach", "timestamp": "2026-09-16T20:00:00.000Z" },
+    { "id": "r5", "playerId": "p177", "matchId": "m4", "score": 7.5, "voter": "المدرب", "type": "coach", "timestamp": "2026-09-17T20:00:00.000Z" }
+  ],
+  "auditLog": [],
+  "fanVotes": []
+}
