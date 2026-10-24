@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0B6E4F">
+  <meta name="description" content="تطبيق إدارة الدوري الرياضي — المباريات، الترتيب، الإحصائيات، الانضباط ولوحة الإدارة">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="دوري النخبة">
+  <meta name="color-scheme" content="light dark">
+  <title>الإحصائيات · دوري النخبة</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icon-192.svg">
+  <link rel="apple-touch-icon" href="icon-192.svg">
+  <link rel="preload" href="fonts/Cairo-900-arabic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/main.css">
+  <script>
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem('league.prefs.v1') || '{}');
+        var th = p.theme === 'dark' || p.theme === 'light' ? p.theme : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', th);
+        if (p.lang === 'en') { document.documentElement.lang = 'en'; document.documentElement.dir = 'ltr'; }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body data-page="stats" data-title="stats">
+
+  <!-- Top Bar -->
+  <header class="topbar glass" id="topbar">
+    <div class="topbar-inner">
+      <a class="topbar-brand" href="index.html" aria-label="الرئيسية">
+        <span class="topbar-logo" id="topbar-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 4 5.5v6.2c0 4.7 3.4 8.6 8 9.8 4.6-1.2 8-5.1 8-9.8V5.5z"/><path d="m12 8 2.6 1.9-1 3.1h-3.2l-1-3.1z" fill="currentColor"/><path d="M12 8V5.6M14.6 9.9l2.3-.8M13.6 13l1.4 2M10.4 13 9 15M9.4 9.9l-2.3-.8"/></svg></span>
+        <span class="topbar-titles">
+          <span class="topbar-title" id="topbar-title">دوري النخبة</span>
+          <span class="topbar-sub" id="topbar-sub"></span>
+        </span>
+        <span class="role-pill hidden" id="role-pill">الإدارة</span>
+      </a>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="btn-search" type="button" aria-label="بحث" data-i18n-aria="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+        <button class="icon-btn" id="btn-updates" type="button" aria-label="التحقق من التحديثات" data-i18n-aria="checkUpdates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/></svg></button>
+        <button class="icon-btn" id="btn-theme" type="button" aria-label="الوضع الداكن" data-i18n-aria="darkMode"><span data-theme-icon style="display:contents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="app-main" id="main">
+    <div class="container" id="page"></div>
+  </main>
+
+  <!-- FAB -->
+  <div class="fab-backdrop" id="fab-backdrop"></div>
+  <div class="fab-menu" id="fab-menu" aria-label="إجراءات سريعة"></div>
+  <button class="fab" id="fab" type="button" aria-label="إجراءات سريعة" aria-expanded="false" data-i18n-aria="quickActions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+
+  <!-- Bottom Nav (6 items) -->
+  <nav class="bottom-nav glass" id="bottom-nav" aria-label="التنقل الرئيسي">
+    <div class="bottom-nav-inner">
+      <a class="nav-item" href="index.html" data-nav="home">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg></span>
+        <span class="nav-label" data-i18n="home">الرئيسية</span>
+      </a>
+      <a class="nav-item" href="matches.html" data-nav="matches">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m12 7 4.2 3-1.6 5h-5.2l-1.6-5z"/><path d="M12 7V3.2M16.2 10l3.6-1.3M14.6 15l2.3 3.3M9.4 15l-2.3 3.3M7.8 10 4.2 8.7"/></svg></span>
+        <span class="nav-label" data-i18n="matches">المباريات</span>
+      </a>
+      <a class="nav-item" href="standings.html" data-nav="standings">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span>
+        <span class="nav-label" data-i18n="standings">الترتيب</span>
+      </a>
+      <a class="nav-item active" href="stats.html" data-nav="stats" aria-current="page">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx="1"/><rect x="12" y="8" width="3" height="10" rx="1"/><rect x="17" y="5" width="3" height="13" rx="1"/></svg></span>
+        <span class="nav-label" data-i18n="stats">الإحصائيات</span>
+      </a>
+      <a class="nav-item" href="admin.html" data-nav="admin">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <span class="nav-label" data-i18n="admin">الإدارة</span>
+      </a>
+      <a class="nav-item" href="settings.html" data-nav="settings">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span>
+        <span class="nav-label" data-i18n="settings">الإعدادات</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Toast Region + Modal Root -->
+  <div class="toast-region" id="toast-region" aria-live="polite"></div>
+  <div class="modal-root" id="modal-root"></div>
+
+  <!-- Scripts -->
+  <script src="js/core.js"></script>
+  <script src="js/engines.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/shared.js"></script>
+  <script src="js/pages/stats.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

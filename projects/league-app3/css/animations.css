@@ -1,0 +1,58 @@
+/* =========================================================
+   animations.css — All motion
+   ========================================================= */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
+@keyframes popIn { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); } 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes sheetUp { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes sheetDown { from { transform: none; } to { transform: translateY(100%); } }
+@keyframes modalIn { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes toastIn { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: none; } }
+@keyframes toastOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-14px) scale(0.96); } }
+@keyframes navBounce { 0% { transform: translateY(0) scale(1); } 30% { transform: translateY(-5px) scale(1.12); } 55% { transform: translateY(1px) scale(0.96); } 75% { transform: translateY(-1px) scale(1.03); } 100% { transform: none; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.75); } }
+@keyframes shimmerBar { from { background-position: 0% 0; } to { background-position: 200% 0; } }
+@keyframes skeletonWave { to { transform: translateX(100%); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes rotate { to { transform: rotate(360deg); } }
+@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes scoreBump { 0% { transform: scale(1); } 40% { transform: scale(1.35); color: var(--brand-gold-300); } 100% { transform: scale(1); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-10px); } 40% { transform: translateX(9px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(4px); } }
+@keyframes splashPop { 0% { opacity: 0; transform: scale(0.6) rotate(-8deg); } 100% { opacity: 1; transform: none; } }
+@keyframes splashLoad { 0% { transform: translateX(-120%); } 100% { transform: translateX(320%); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5); } 50% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); } }
+
+/* Page transitions (MPA) */
+body.page-enter .app-main { animation: pageIn 420ms var(--ease-out) both; }
+body.page-leave .app-main { animation: pageOut 180ms var(--ease) both; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes pageOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-6px); } }
+@view-transition { navigation: auto; }
+
+/* Reveal on scroll — content is visible by default; only enhanced when JS adds .reveal-ready */
+.reveal-ready [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.reveal-ready [data-reveal].revealed { opacity: 1; transform: none; }
+
+.stagger > * { animation: fadeUp 520ms var(--ease-out) both; }
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 40ms; }
+.stagger > *:nth-child(3) { animation-delay: 80ms; }
+.stagger > *:nth-child(4) { animation-delay: 120ms; }
+.stagger > *:nth-child(5) { animation-delay: 160ms; }
+.stagger > *:nth-child(6) { animation-delay: 200ms; }
+.stagger > *:nth-child(7) { animation-delay: 240ms; }
+.stagger > *:nth-child(8) { animation-delay: 280ms; }
+.stagger > *:nth-child(9) { animation-delay: 320ms; }
+.stagger > *:nth-child(10) { animation-delay: 360ms; }
+.stagger > *:nth-child(n+11) { animation-delay: 400ms; }
+
+.anim-fade-up { animation: fadeUp 520ms var(--ease-out) both; }
+.anim-scale-in { animation: scaleIn 420ms var(--ease-out) both; }
+.anim-float { animation: float 3.4s ease-in-out infinite; }
+.anim-glow { animation: glow 2.2s ease-in-out infinite; }
+.ripple { position: absolute; border-radius: 50%; transform: scale(0); background: currentColor; opacity: 0.18; pointer-events: none; animation: rippleAnim 600ms var(--ease-out); }
+@keyframes rippleAnim { to { transform: scale(2.6); opacity: 0; } }

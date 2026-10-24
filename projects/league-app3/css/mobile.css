@@ -1,0 +1,59 @@
+/* =========================================================
+   mobile.css — Mobile Refinements
+   ========================================================= */
+@media (hover: none) {
+  .card-interactive:hover, .match-card:hover, .quick-item:hover { transform: none; box-shadow: var(--shadow-sm); }
+}
+@media (max-width: 380px) {
+  :root { --fs-3xl: 1.625rem; --fs-score: 2.5rem; }
+  .container { padding-inline: 12px; }
+  .h-scroll { margin-inline: -12px; padding-inline: 12px; }
+  .nav-label { font-size: 9.5px; }
+  .nav-item .nav-icon { width: 38px; }
+  .quick-grid { gap: 6px; }
+  .quick-item { padding: 12px 4px; font-size: 10.5px; }
+  .home-hero h1 { font-size: 1.5rem; }
+  .match-card-compact { width: 240px; }
+  .tab { font-size: 12px; padding-inline: 4px; }
+  .event-type-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid .span-2 { grid-column: span 1; }
+  .topbar-sub { display: none; }
+}
+@media (max-width: 340px) {
+  .nav-label { font-size: 9px; }
+  .nav-item svg { width: 20px; height: 20px; }
+}
+@media (min-width: 600px) {
+  .modal-overlay { align-items: center; padding: var(--sp-6); }
+  .modal { border-radius: var(--r-2xl); animation: modalIn 320ms var(--ease-out) both; padding-bottom: 0; }
+  .modal-overlay.leaving .modal { animation: fadeOut 200ms var(--ease) both; }
+  .modal-grip { display: none; }
+  .teams-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .vote-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 900px) {
+  .teams-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .fab { inset-inline-start: max(16px, calc((100vw - var(--container-wide)) / 2 + 16px)); }
+  .fab-menu { inset-inline-start: max(16px, calc((100vw - var(--container-wide)) / 2 + 16px)); }
+  .nav-label { font-size: 11.5px; }
+}
+@media (display-mode: standalone) {
+  body { user-select: none; -webkit-user-select: none; }
+  input, textarea, .selectable { user-select: text; -webkit-user-select: text; }
+}
+input, select, textarea { font-size: 16px; }
+@media (min-width: 600px) { input, select, textarea { font-size: var(--fs-md); } }
+
+@media (max-width: 480px) {
+  .team-hero .crest-2xl { width: 84px; height: 84px; }
+}
+
+/* ---------- Desktop: use the wide container so content aligns with header & nav ---------- */
+@media (min-width: 1024px) {
+  :root { --container: var(--container-wide); }
+  #matches-list .stack-3 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); }
+  .vote-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .bench-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pitch { max-width: 520px; margin-inline: auto; }
+}

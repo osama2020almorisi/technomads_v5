@@ -1,0 +1,7437 @@
+{
+  "version": 1,
+  "updatedAt": "2026-10-23T20:07:58.667Z",
+  "league": {
+    "name": "دوري النخبة",
+    "nameEn": "Elite League",
+    "season": "2026/2027",
+    "logo": "",
+    "country": "YE",
+    "settings": {
+      "winPoints": 3,
+      "drawPoints": 1,
+      "lossPoints": 0,
+      "yellowForSuspension": 3,
+      "redCardBan": 2,
+      "resetCardsAfterRounds": 0,
+      "tiebreakers": [
+        "points",
+        "h2h",
+        "h2hDiff",
+        "h2hGoals",
+        "diff",
+        "goals",
+        "wins",
+        "fairplay",
+        "draw"
+      ],
+      "pointsDeduction": [
+        {
+          "id": "pd1",
+          "teamId": "t11",
+          "amount": 3,
+          "reason": "مخالفة لوائح التسجيل",
+          "reasonEn": "Registration breach",
+          "date": "2026-10-14T20:07:00"
+        }
+      ],
+      "qualificationSpots": {
+        "champions": 4,
+        "europa": 2,
+        "relegation": 3
+      }
+    }
+  },
+  "teams": [
+    {
+      "id": "t1",
+      "name": "النسور الذهبية",
+      "nameEn": "Golden Eagles",
+      "shortName": "النسور",
+      "shortNameEn": "EAG",
+      "logo": "",
+      "founded": 1957,
+      "stadium": "ملعب الثورة",
+      "stadiumEn": "Al-Thawra Stadium",
+      "city": "صنعاء",
+      "colors": {
+        "primary": "#0B4EA2",
+        "secondary": "#FFFFFF"
+      },
+      "coach": "أحمد الحربي",
+      "group": "A"
+    },
+    {
+      "id": "t2",
+      "name": "الصقور الحمراء",
+      "nameEn": "Red Falcons",
+      "shortName": "الصقور",
+      "shortNameEn": "FAL",
+      "logo": "",
+      "founded": 1962,
+      "stadium": "ملعب 22 مايو",
+      "stadiumEn": "22 May Stadium",
+      "city": "عدن",
+      "colors": {
+        "primary": "#C8102E",
+        "secondary": "#FFD700"
+      },
+      "coach": "خالد العمري",
+      "group": "A"
+    },
+    {
+      "id": "t3",
+      "name": "الأمواج الزرقاء",
+      "nameEn": "Blue Waves",
+      "shortName": "الأمواج",
+      "shortNameEn": "WAV",
+      "logo": "",
+      "founded": 1970,
+      "stadium": "ملعب العلفي",
+      "stadiumEn": "Al-Olofi Stadium",
+      "city": "الحديدة",
+      "colors": {
+        "primary": "#0077B6",
+        "secondary": "#90E0EF"
+      },
+      "coach": "سامي النجار",
+      "group": "A"
+    },
+    {
+      "id": "t4",
+      "name": "الفرسان",
+      "nameEn": "Knights FC",
+      "shortName": "الفرسان",
+      "shortNameEn": "KNI",
+      "logo": "",
+      "founded": 1965,
+      "stadium": "ملعب الشهداء",
+      "stadiumEn": "Martyrs Stadium",
+      "city": "تعز",
+      "colors": {
+        "primary": "#1B1B1B",
+        "secondary": "#D4AF37"
+      },
+      "coach": "منصور القاضي",
+      "group": "A"
+    },
+    {
+      "id": "t5",
+      "name": "الأخضر الملكي",
+      "nameEn": "Royal Greens",
+      "shortName": "الأخضر",
+      "shortNameEn": "ROY",
+      "logo": "",
+      "founded": 1975,
+      "stadium": "ملعب الكبسي",
+      "stadiumEn": "Al-Kibsi Stadium",
+      "city": "إب",
+      "colors": {
+        "primary": "#0B6E4F",
+        "secondary": "#F1FAEE"
+      },
+      "coach": "ياسر الشامي",
+      "group": "A"
+    },
+    {
+      "id": "t6",
+      "name": "نجوم الشرق",
+      "nameEn": "Eastern Stars",
+      "shortName": "النجوم",
+      "shortNameEn": "STA",
+      "logo": "",
+      "founded": 1980,
+      "stadium": "ملعب بارادم",
+      "stadiumEn": "Baradem Stadium",
+      "city": "المكلا",
+      "colors": {
+        "primary": "#6A0DAD",
+        "secondary": "#F4F4F4"
+      },
+      "coach": "فهد باوزير",
+      "group": "A"
+    },
+    {
+      "id": "t7",
+      "name": "الشعلة",
+      "nameEn": "Al-Shoula",
+      "shortName": "الشعلة",
+      "shortNameEn": "SHO",
+      "logo": "",
+      "founded": 1968,
+      "stadium": "ملعب الحبيشي",
+      "stadiumEn": "Al-Habishi Stadium",
+      "city": "عدن",
+      "colors": {
+        "primary": "#F77F00",
+        "secondary": "#003049"
+      },
+      "coach": "رامي الصبري",
+      "group": "B"
+    },
+    {
+      "id": "t8",
+      "name": "الوحدة",
+      "nameEn": "Al-Wahda",
+      "shortName": "الوحدة",
+      "shortNameEn": "WAH",
+      "logo": "",
+      "founded": 1990,
+      "stadium": "ملعب الظرافي",
+      "stadiumEn": "Al-Dhorafi Stadium",
+      "city": "صنعاء",
+      "colors": {
+        "primary": "#2A9D8F",
+        "secondary": "#FFFFFF"
+      },
+      "coach": "عادل المقطري",
+      "group": "B"
+    },
+    {
+      "id": "t9",
+      "name": "التلال",
+      "nameEn": "Al-Tilal",
+      "shortName": "التلال",
+      "shortNameEn": "TIL",
+      "logo": "",
+      "founded": 1905,
+      "stadium": "ملعب التلال",
+      "stadiumEn": "Al-Tilal Ground",
+      "city": "عدن",
+      "colors": {
+        "primary": "#9B2226",
+        "secondary": "#E9D8A6"
+      },
+      "coach": "نبيل الحامد",
+      "group": "B"
+    },
+    {
+      "id": "t10",
+      "name": "الأهلي",
+      "nameEn": "Al-Ahli",
+      "shortName": "الأهلي",
+      "shortNameEn": "AHL",
+      "logo": "",
+      "founded": 1952,
+      "stadium": "ملعب الأهلي",
+      "stadiumEn": "Al-Ahli Ground",
+      "city": "صنعاء",
+      "colors": {
+        "primary": "#D62828",
+        "secondary": "#FFFFFF"
+      },
+      "coach": "مراد الوصابي",
+      "group": "B"
+    },
+    {
+      "id": "t11",
+      "name": "شباب الجبل",
+      "nameEn": "Mountain Youth",
+      "shortName": "الجبل",
+      "shortNameEn": "MTN",
+      "logo": "",
+      "founded": 1984,
+      "stadium": "ملعب ذمار",
+      "stadiumEn": "Dhamar Stadium",
+      "city": "ذمار",
+      "colors": {
+        "primary": "#3A5A40",
+        "secondary": "#DAD7CD"
+      },
+      "coach": "وليد الحداد",
+      "group": "B"
+    },
+    {
+      "id": "t12",
+      "name": "الهلال الساحلي",
+      "nameEn": "Coastal Hilal",
+      "shortName": "الهلال",
+      "shortNameEn": "HIL",
+      "logo": "",
+      "founded": 1971,
+      "stadium": "ملعب الساحل",
+      "stadiumEn": "Coastal Arena",
+      "city": "الحديدة",
+      "colors": {
+        "primary": "#023E8A",
+        "secondary": "#ADE8F4"
+      },
+      "coach": "جمال السقاف",
+      "group": "B"
+    }
+  ],
+  "players": [
+    {
+      "id": "p1",
+      "teamId": "t1",
+      "name": "علي الأغبري",
+      "nameEn": "Ali Al-Aghbari",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "2005-01-15",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p2",
+      "teamId": "t1",
+      "name": "عبدالله الجابري",
+      "nameEn": "Abdullah Al-Jaberi",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "2003-04-15",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p3",
+      "teamId": "t1",
+      "name": "ماجد العولقي",
+      "nameEn": "Majed Al-Awlaqi",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "2004-09-20",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p4",
+      "teamId": "t1",
+      "name": "مازن الجابري",
+      "nameEn": "Mazen Al-Jaberi",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "1996-12-26",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p5",
+      "teamId": "t1",
+      "name": "رائد اليافعي",
+      "nameEn": "Raed Al-Yafei",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "2000-05-07",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p6",
+      "teamId": "t1",
+      "name": "إبراهيم العبسي",
+      "nameEn": "Ibrahim Al-Absi",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "1997-11-14",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p7",
+      "teamId": "t1",
+      "name": "رائد العبسي",
+      "nameEn": "Raed Al-Absi",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "1992-12-15",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p8",
+      "teamId": "t1",
+      "name": "سيف العبسي",
+      "nameEn": "Saif Al-Absi",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "1994-04-18",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p9",
+      "teamId": "t1",
+      "name": "طارق الزبيدي",
+      "nameEn": "Tareq Al-Zubaidi",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "2001-01-28",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p10",
+      "teamId": "t1",
+      "name": "نادر المخلافي",
+      "nameEn": "Nader Al-Mikhlafi",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "1998-02-20",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p11",
+      "teamId": "t1",
+      "name": "خالد القحطاني",
+      "nameEn": "Khaled Al-Qahtani",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "2005-08-09",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p12",
+      "teamId": "t1",
+      "name": "سالم السقطري",
+      "nameEn": "Salem Al-Soqotri",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "1998-02-10",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p13",
+      "teamId": "t1",
+      "name": "بلال البكري",
+      "nameEn": "Bilal Al-Bakri",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "2004-09-17",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p14",
+      "teamId": "t1",
+      "name": "يوسف الصلوي",
+      "nameEn": "Yousef Al-Salwi",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "2001-10-18",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p15",
+      "teamId": "t1",
+      "name": "يوسف الأغبري",
+      "nameEn": "Yousef Al-Aghbari",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "1995-04-20",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p16",
+      "teamId": "t1",
+      "name": "أنس الردفاني",
+      "nameEn": "Anas Al-Radfani",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "2005-11-18",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p17",
+      "teamId": "t1",
+      "name": "يوسف المخلافي",
+      "nameEn": "Yousef Al-Mikhlafi",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "1993-11-06",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p18",
+      "teamId": "t1",
+      "name": "فيصل باسنيد",
+      "nameEn": "Faisal Basnid",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "2001-08-14",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p19",
+      "teamId": "t1",
+      "name": "أحمد الحسني",
+      "nameEn": "Ahmed Al-Hasani",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "2000-09-25",
+      "nationality": "MA",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p20",
+      "teamId": "t1",
+      "name": "وائل الكثيري",
+      "nameEn": "Wael Al-Kathiri",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "2003-09-05",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p21",
+      "teamId": "t2",
+      "name": "عماد الردفاني",
+      "nameEn": "Emad Al-Radfani",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "1997-02-22",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p22",
+      "teamId": "t2",
+      "name": "رائد اليافعي",
+      "nameEn": "Raed Al-Yafei",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "1995-07-27",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p23",
+      "teamId": "t2",
+      "name": "وائل المخلافي",
+      "nameEn": "Wael Al-Mikhlafi",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "1996-08-25",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p24",
+      "teamId": "t2",
+      "name": "عمر الأغبري",
+      "nameEn": "Omar Al-Aghbari",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "1997-06-24",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p25",
+      "teamId": "t2",
+      "name": "زياد السروري",
+      "nameEn": "Ziad Al-Sarouri",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "2003-01-03",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p26",
+      "teamId": "t2",
+      "name": "عماد الشرعبي",
+      "nameEn": "Emad Al-Sharabi",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "2002-06-21",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p27",
+      "teamId": "t2",
+      "name": "أنس اليافعي",
+      "nameEn": "Anas Al-Yafei",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "1994-12-18",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p28",
+      "teamId": "t2",
+      "name": "عبدالله السقطري",
+      "nameEn": "Abdullah Al-Soqotri",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "1996-10-21",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p29",
+      "teamId": "t2",
+      "name": "سيف الأغبري",
+      "nameEn": "Saif Al-Aghbari",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "2000-03-16",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p30",
+      "teamId": "t2",
+      "name": "حسن الردفاني",
+      "nameEn": "Hassan Al-Radfani",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "1994-08-05",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p31",
+      "teamId": "t2",
+      "name": "حسن السروري",
+      "nameEn": "Hassan Al-Sarouri",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "1996-03-07",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p32",
+      "teamId": "t2",
+      "name": "طارق الأغبري",
+      "nameEn": "Tareq Al-Aghbari",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "1999-10-25",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p33",
+      "teamId": "t2",
+      "name": "سالم السروري",
+      "nameEn": "Salem Al-Sarouri",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "2002-02-14",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p34",
+      "teamId": "t2",
+      "name": "مازن الشرعبي",
+      "nameEn": "Mazen Al-Sharabi",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "2000-11-21",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p35",
+      "teamId": "t2",
+      "name": "فيصل النعماني",
+      "nameEn": "Faisal Al-Nomani",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "1996-11-15",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p36",
+      "teamId": "t2",
+      "name": "عمر العبسي",
+      "nameEn": "Omar Al-Absi",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "1998-08-02",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p37",
+      "teamId": "t2",
+      "name": "زياد البكري",
+      "nameEn": "Ziad Al-Bakri",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "2005-05-19",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p38",
+      "teamId": "t2",
+      "name": "فيصل الحسني",
+      "nameEn": "Faisal Al-Hasani",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "1998-03-15",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p39",
+      "teamId": "t2",
+      "name": "محمد الزبيدي",
+      "nameEn": "Mohammed Al-Zubaidi",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "1995-07-13",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p40",
+      "teamId": "t2",
+      "name": "علي النعماني",
+      "nameEn": "Ali Al-Nomani",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "1996-10-08",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p41",
+      "teamId": "t3",
+      "name": "هشام الصلوي",
+      "nameEn": "Hisham Al-Salwi",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "1992-08-11",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p42",
+      "teamId": "t3",
+      "name": "خالد الصلوي",
+      "nameEn": "Khaled Al-Salwi",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "1999-07-01",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p43",
+      "teamId": "t3",
+      "name": "أحمد السروري",
+      "nameEn": "Ahmed Al-Sarouri",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "2005-04-07",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p44",
+      "teamId": "t3",
+      "name": "ماجد المطري",
+      "nameEn": "Majed Al-Matari",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "2000-08-27",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p45",
+      "teamId": "t3",
+      "name": "وائل المطري",
+      "nameEn": "Wael Al-Matari",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "1996-09-15",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p46",
+      "teamId": "t3",
+      "name": "سيف الحسني",
+      "nameEn": "Saif Al-Hasani",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "1994-09-03",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p47",
+      "teamId": "t3",
+      "name": "أحمد الردفاني",
+      "nameEn": "Ahmed Al-Radfani",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "2004-05-06",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p48",
+      "teamId": "t3",
+      "name": "علي اليافعي",
+      "nameEn": "Ali Al-Yafei",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "1999-11-11",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p49",
+      "teamId": "t3",
+      "name": "أحمد العبسي",
+      "nameEn": "Ahmed Al-Absi",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "1999-12-12",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p50",
+      "teamId": "t3",
+      "name": "عماد المخلافي",
+      "nameEn": "Emad Al-Mikhlafi",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "2005-03-25",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p51",
+      "teamId": "t3",
+      "name": "ماجد الشرعبي",
+      "nameEn": "Majed Al-Sharabi",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "1995-07-08",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p52",
+      "teamId": "t3",
+      "name": "بلال اليافعي",
+      "nameEn": "Bilal Al-Yafei",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "2001-05-13",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p53",
+      "teamId": "t3",
+      "name": "حمزة العولقي",
+      "nameEn": "Hamza Al-Awlaqi",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "2002-07-14",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p54",
+      "teamId": "t3",
+      "name": "نادر باسنيد",
+      "nameEn": "Nader Basnid",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "1992-09-26",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p55",
+      "teamId": "t3",
+      "name": "بلال الهمداني",
+      "nameEn": "Bilal Al-Hamdani",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "1999-08-25",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p56",
+      "teamId": "t3",
+      "name": "عماد المخلافي",
+      "nameEn": "Emad Al-Mikhlafi",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "1997-08-05",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p57",
+      "teamId": "t3",
+      "name": "عماد الشرعبي",
+      "nameEn": "Emad Al-Sharabi",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "1995-12-18",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p58",
+      "teamId": "t3",
+      "name": "سيف الزبيدي",
+      "nameEn": "Saif Al-Zubaidi",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "1997-04-01",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p59",
+      "teamId": "t3",
+      "name": "ماجد النعماني",
+      "nameEn": "Majed Al-Nomani",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "1995-02-20",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p60",
+      "teamId": "t3",
+      "name": "وائل النعماني",
+      "nameEn": "Wael Al-Nomani",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "1992-06-23",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p61",
+      "teamId": "t4",
+      "name": "طارق المطري",
+      "nameEn": "Tareq Al-Matari",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "1998-11-15",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p62",
+      "teamId": "t4",
+      "name": "عبدالله اليافعي",
+      "nameEn": "Abdullah Al-Yafei",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "1998-02-27",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p63",
+      "teamId": "t4",
+      "name": "علي المطري",
+      "nameEn": "Ali Al-Matari",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "1996-05-26",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p64",
+      "teamId": "t4",
+      "name": "مازن الأغبري",
+      "nameEn": "Mazen Al-Aghbari",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "1992-08-20",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p65",
+      "teamId": "t4",
+      "name": "عمر الزبيدي",
+      "nameEn": "Omar Al-Zubaidi",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "1999-06-15",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p66",
+      "teamId": "t4",
+      "name": "نادر الزبيدي",
+      "nameEn": "Nader Al-Zubaidi",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "1997-01-20",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p67",
+      "teamId": "t4",
+      "name": "وائل الأغبري",
+      "nameEn": "Wael Al-Aghbari",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "2005-03-18",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p68",
+      "teamId": "t4",
+      "name": "رائد الكثيري",
+      "nameEn": "Raed Al-Kathiri",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "1997-08-11",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p69",
+      "teamId": "t4",
+      "name": "خالد الأغبري",
+      "nameEn": "Khaled Al-Aghbari",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "2005-04-28",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p70",
+      "teamId": "t4",
+      "name": "علي الشرعبي",
+      "nameEn": "Ali Al-Sharabi",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "2003-08-18",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p71",
+      "teamId": "t4",
+      "name": "محمد البكري",
+      "nameEn": "Mohammed Al-Bakri",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "1996-10-12",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p72",
+      "teamId": "t4",
+      "name": "خالد الحسني",
+      "nameEn": "Khaled Al-Hasani",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "1999-10-06",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p73",
+      "teamId": "t4",
+      "name": "حمزة العولقي",
+      "nameEn": "Hamza Al-Awlaqi",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "2001-02-20",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p74",
+      "teamId": "t4",
+      "name": "حمزة النعماني",
+      "nameEn": "Hamza Al-Nomani",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "2002-05-06",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p75",
+      "teamId": "t4",
+      "name": "نادر الردفاني",
+      "nameEn": "Nader Al-Radfani",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "1995-01-03",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p76",
+      "teamId": "t4",
+      "name": "يوسف الزبيدي",
+      "nameEn": "Yousef Al-Zubaidi",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "1992-06-17",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p77",
+      "teamId": "t4",
+      "name": "علي الزبيدي",
+      "nameEn": "Ali Al-Zubaidi",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "2003-09-23",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p78",
+      "teamId": "t4",
+      "name": "عمر العولقي",
+      "nameEn": "Omar Al-Awlaqi",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "1995-04-12",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p79",
+      "teamId": "t4",
+      "name": "ماجد الشرعبي",
+      "nameEn": "Majed Al-Sharabi",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "1999-03-28",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p80",
+      "teamId": "t4",
+      "name": "مازن المخلافي",
+      "nameEn": "Mazen Al-Mikhlafi",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "1992-03-14",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p81",
+      "teamId": "t5",
+      "name": "عماد الهمداني",
+      "nameEn": "Emad Al-Hamdani",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "2005-10-14",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p82",
+      "teamId": "t5",
+      "name": "مازن الأغبري",
+      "nameEn": "Mazen Al-Aghbari",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "2000-04-25",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p83",
+      "teamId": "t5",
+      "name": "عبدالله السقطري",
+      "nameEn": "Abdullah Al-Soqotri",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "1994-04-22",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p84",
+      "teamId": "t5",
+      "name": "بلال البكري",
+      "nameEn": "Bilal Al-Bakri",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "1993-11-06",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p85",
+      "teamId": "t5",
+      "name": "مازن النعماني",
+      "nameEn": "Mazen Al-Nomani",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "2001-03-28",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p86",
+      "teamId": "t5",
+      "name": "حسن العولقي",
+      "nameEn": "Hassan Al-Awlaqi",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "1995-05-06",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p87",
+      "teamId": "t5",
+      "name": "بلال العبسي",
+      "nameEn": "Bilal Al-Absi",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "2005-09-06",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p88",
+      "teamId": "t5",
+      "name": "طارق العولقي",
+      "nameEn": "Tareq Al-Awlaqi",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "2003-09-01",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p89",
+      "teamId": "t5",
+      "name": "عماد العبسي",
+      "nameEn": "Emad Al-Absi",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "1997-01-23",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p90",
+      "teamId": "t5",
+      "name": "عمر العولقي",
+      "nameEn": "Omar Al-Awlaqi",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "2000-04-27",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p91",
+      "teamId": "t5",
+      "name": "عماد الأغبري",
+      "nameEn": "Emad Al-Aghbari",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "2003-06-18",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p92",
+      "teamId": "t5",
+      "name": "مازن باسنيد",
+      "nameEn": "Mazen Basnid",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "2002-04-16",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p93",
+      "teamId": "t5",
+      "name": "هشام الهمداني",
+      "nameEn": "Hisham Al-Hamdani",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "1998-08-09",
+      "nationality": "SA",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p94",
+      "teamId": "t5",
+      "name": "وائل القحطاني",
+      "nameEn": "Wael Al-Qahtani",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "1994-02-12",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p95",
+      "teamId": "t5",
+      "name": "حمزة الردفاني",
+      "nameEn": "Hamza Al-Radfani",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "1992-10-22",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p96",
+      "teamId": "t5",
+      "name": "عمر الهمداني",
+      "nameEn": "Omar Al-Hamdani",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "1997-04-10",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p97",
+      "teamId": "t5",
+      "name": "خالد المخلافي",
+      "nameEn": "Khaled Al-Mikhlafi",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "1994-04-07",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p98",
+      "teamId": "t5",
+      "name": "وائل الكثيري",
+      "nameEn": "Wael Al-Kathiri",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "1997-11-10",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p99",
+      "teamId": "t5",
+      "name": "خالد النعماني",
+      "nameEn": "Khaled Al-Nomani",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "1992-10-04",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p100",
+      "teamId": "t5",
+      "name": "ماجد المطري",
+      "nameEn": "Majed Al-Matari",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "2003-07-27",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p101",
+      "teamId": "t6",
+      "name": "نادر البكري",
+      "nameEn": "Nader Al-Bakri",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "2003-01-03",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p102",
+      "teamId": "t6",
+      "name": "ماجد الردفاني",
+      "nameEn": "Majed Al-Radfani",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "1992-07-19",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p103",
+      "teamId": "t6",
+      "name": "طارق باسنيد",
+      "nameEn": "Tareq Basnid",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "1994-10-08",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p104",
+      "teamId": "t6",
+      "name": "نادر النعماني",
+      "nameEn": "Nader Al-Nomani",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "1995-02-26",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p105",
+      "teamId": "t6",
+      "name": "عمر الأغبري",
+      "nameEn": "Omar Al-Aghbari",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "2005-02-21",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p106",
+      "teamId": "t6",
+      "name": "سالم العبسي",
+      "nameEn": "Salem Al-Absi",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "1997-09-24",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p107",
+      "teamId": "t6",
+      "name": "ماجد الزبيدي",
+      "nameEn": "Majed Al-Zubaidi",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "2003-10-20",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p108",
+      "teamId": "t6",
+      "name": "عماد المطري",
+      "nameEn": "Emad Al-Matari",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "2004-07-17",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p109",
+      "teamId": "t6",
+      "name": "مازن الردفاني",
+      "nameEn": "Mazen Al-Radfani",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "1999-02-10",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p110",
+      "teamId": "t6",
+      "name": "سيف الصلوي",
+      "nameEn": "Saif Al-Salwi",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "1997-02-09",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p111",
+      "teamId": "t6",
+      "name": "أنس الشرعبي",
+      "nameEn": "Anas Al-Sharabi",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "2000-01-04",
+      "nationality": "JO",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p112",
+      "teamId": "t6",
+      "name": "بلال الصلوي",
+      "nameEn": "Bilal Al-Salwi",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "2003-06-15",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p113",
+      "teamId": "t6",
+      "name": "بلال البكري",
+      "nameEn": "Bilal Al-Bakri",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "2002-05-22",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p114",
+      "teamId": "t6",
+      "name": "عمر القحطاني",
+      "nameEn": "Omar Al-Qahtani",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "1993-12-28",
+      "nationality": "MA",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p115",
+      "teamId": "t6",
+      "name": "ماجد البكري",
+      "nameEn": "Majed Al-Bakri",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "2001-04-27",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p116",
+      "teamId": "t6",
+      "name": "سيف الحسني",
+      "nameEn": "Saif Al-Hasani",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "2000-01-15",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p117",
+      "teamId": "t6",
+      "name": "حمزة البكري",
+      "nameEn": "Hamza Al-Bakri",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "1996-12-15",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p118",
+      "teamId": "t6",
+      "name": "عمر باسنيد",
+      "nameEn": "Omar Basnid",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "1994-08-09",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p119",
+      "teamId": "t6",
+      "name": "عماد السروري",
+      "nameEn": "Emad Al-Sarouri",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "2000-08-06",
+      "nationality": "SD",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p120",
+      "teamId": "t6",
+      "name": "رائد الردفاني",
+      "nameEn": "Raed Al-Radfani",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "2000-06-26",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p121",
+      "teamId": "t7",
+      "name": "أحمد الجابري",
+      "nameEn": "Ahmed Al-Jaberi",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "1999-09-01",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p122",
+      "teamId": "t7",
+      "name": "أنس الكثيري",
+      "nameEn": "Anas Al-Kathiri",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "1997-05-25",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p123",
+      "teamId": "t7",
+      "name": "طارق الصلوي",
+      "nameEn": "Tareq Al-Salwi",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "2004-03-13",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p124",
+      "teamId": "t7",
+      "name": "ماجد الهمداني",
+      "nameEn": "Majed Al-Hamdani",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "2001-07-08",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p125",
+      "teamId": "t7",
+      "name": "علي الصلوي",
+      "nameEn": "Ali Al-Salwi",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "1992-05-26",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p126",
+      "teamId": "t7",
+      "name": "ماجد الردفاني",
+      "nameEn": "Majed Al-Radfani",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "1994-10-16",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p127",
+      "teamId": "t7",
+      "name": "محمد اليافعي",
+      "nameEn": "Mohammed Al-Yafei",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "1992-10-09",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p128",
+      "teamId": "t7",
+      "name": "مازن النعماني",
+      "nameEn": "Mazen Al-Nomani",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "1992-09-27",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p129",
+      "teamId": "t7",
+      "name": "إبراهيم الردفاني",
+      "nameEn": "Ibrahim Al-Radfani",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "1996-04-22",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p130",
+      "teamId": "t7",
+      "name": "يوسف الحسني",
+      "nameEn": "Yousef Al-Hasani",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "1997-01-15",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p131",
+      "teamId": "t7",
+      "name": "يوسف الهمداني",
+      "nameEn": "Yousef Al-Hamdani",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "2005-09-05",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p132",
+      "teamId": "t7",
+      "name": "سيف الأغبري",
+      "nameEn": "Saif Al-Aghbari",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "1997-01-14",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p133",
+      "teamId": "t7",
+      "name": "هشام النعماني",
+      "nameEn": "Hisham Al-Nomani",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "2000-09-11",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p134",
+      "teamId": "t7",
+      "name": "حمزة الجابري",
+      "nameEn": "Hamza Al-Jaberi",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "2003-02-02",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p135",
+      "teamId": "t7",
+      "name": "بلال السقطري",
+      "nameEn": "Bilal Al-Soqotri",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "2001-07-05",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p136",
+      "teamId": "t7",
+      "name": "رائد الحسني",
+      "nameEn": "Raed Al-Hasani",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "1993-12-26",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p137",
+      "teamId": "t7",
+      "name": "إبراهيم المطري",
+      "nameEn": "Ibrahim Al-Matari",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "1997-02-25",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p138",
+      "teamId": "t7",
+      "name": "يوسف الكثيري",
+      "nameEn": "Yousef Al-Kathiri",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "2004-01-06",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p139",
+      "teamId": "t7",
+      "name": "مازن القحطاني",
+      "nameEn": "Mazen Al-Qahtani",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "2004-04-07",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p140",
+      "teamId": "t7",
+      "name": "عبدالله العبسي",
+      "nameEn": "Abdullah Al-Absi",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "1993-01-26",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p141",
+      "teamId": "t8",
+      "name": "أنس القحطاني",
+      "nameEn": "Anas Al-Qahtani",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "2000-06-09",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p142",
+      "teamId": "t8",
+      "name": "أنس الردفاني",
+      "nameEn": "Anas Al-Radfani",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "2005-04-14",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p143",
+      "teamId": "t8",
+      "name": "حمزة الأغبري",
+      "nameEn": "Hamza Al-Aghbari",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "1994-12-15",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p144",
+      "teamId": "t8",
+      "name": "بلال الصلوي",
+      "nameEn": "Bilal Al-Salwi",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "1994-03-19",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p145",
+      "teamId": "t8",
+      "name": "حسن المخلافي",
+      "nameEn": "Hassan Al-Mikhlafi",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "1994-12-23",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p146",
+      "teamId": "t8",
+      "name": "طارق باسنيد",
+      "nameEn": "Tareq Basnid",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "2001-07-28",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p147",
+      "teamId": "t8",
+      "name": "مازن الشرعبي",
+      "nameEn": "Mazen Al-Sharabi",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "1994-07-13",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p148",
+      "teamId": "t8",
+      "name": "حمزة القحطاني",
+      "nameEn": "Hamza Al-Qahtani",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "1996-05-05",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p149",
+      "teamId": "t8",
+      "name": "عمر العبسي",
+      "nameEn": "Omar Al-Absi",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "1993-09-04",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p150",
+      "teamId": "t8",
+      "name": "أنس الزبيدي",
+      "nameEn": "Anas Al-Zubaidi",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "2001-04-28",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p151",
+      "teamId": "t8",
+      "name": "وائل الهمداني",
+      "nameEn": "Wael Al-Hamdani",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "1994-06-09",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p152",
+      "teamId": "t8",
+      "name": "خالد الصلوي",
+      "nameEn": "Khaled Al-Salwi",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "1998-02-04",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p153",
+      "teamId": "t8",
+      "name": "حسن الأغبري",
+      "nameEn": "Hassan Al-Aghbari",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "2005-08-26",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p154",
+      "teamId": "t8",
+      "name": "بلال العولقي",
+      "nameEn": "Bilal Al-Awlaqi",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "2004-09-14",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p155",
+      "teamId": "t8",
+      "name": "عبدالله الأغبري",
+      "nameEn": "Abdullah Al-Aghbari",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "1994-01-21",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p156",
+      "teamId": "t8",
+      "name": "بلال الشرعبي",
+      "nameEn": "Bilal Al-Sharabi",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "1992-10-21",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p157",
+      "teamId": "t8",
+      "name": "عماد المخلافي",
+      "nameEn": "Emad Al-Mikhlafi",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "1995-02-26",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p158",
+      "teamId": "t8",
+      "name": "عبدالله الشرعبي",
+      "nameEn": "Abdullah Al-Sharabi",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "1995-01-24",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p159",
+      "teamId": "t8",
+      "name": "خالد النعماني",
+      "nameEn": "Khaled Al-Nomani",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "2002-12-01",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p160",
+      "teamId": "t8",
+      "name": "محمد الكثيري",
+      "nameEn": "Mohammed Al-Kathiri",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "1995-07-05",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p161",
+      "teamId": "t9",
+      "name": "أحمد المطري",
+      "nameEn": "Ahmed Al-Matari",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "1998-04-04",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p162",
+      "teamId": "t9",
+      "name": "أنس المطري",
+      "nameEn": "Anas Al-Matari",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "1998-03-27",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p163",
+      "teamId": "t9",
+      "name": "وائل السقطري",
+      "nameEn": "Wael Al-Soqotri",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "1992-11-10",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p164",
+      "teamId": "t9",
+      "name": "عبدالله النعماني",
+      "nameEn": "Abdullah Al-Nomani",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "1993-06-23",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p165",
+      "teamId": "t9",
+      "name": "وائل الكثيري",
+      "nameEn": "Wael Al-Kathiri",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "2000-07-15",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p166",
+      "teamId": "t9",
+      "name": "أنس الشرعبي",
+      "nameEn": "Anas Al-Sharabi",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "2003-02-20",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p167",
+      "teamId": "t9",
+      "name": "عماد النعماني",
+      "nameEn": "Emad Al-Nomani",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "1992-10-16",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p168",
+      "teamId": "t9",
+      "name": "عبدالله اليافعي",
+      "nameEn": "Abdullah Al-Yafei",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "2002-05-24",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p169",
+      "teamId": "t9",
+      "name": "رائد الزبيدي",
+      "nameEn": "Raed Al-Zubaidi",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "1999-03-26",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p170",
+      "teamId": "t9",
+      "name": "إبراهيم القحطاني",
+      "nameEn": "Ibrahim Al-Qahtani",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "2004-07-21",
+      "nationality": "IQ",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p171",
+      "teamId": "t9",
+      "name": "يوسف المخلافي",
+      "nameEn": "Yousef Al-Mikhlafi",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "1996-05-28",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p172",
+      "teamId": "t9",
+      "name": "خالد الأغبري",
+      "nameEn": "Khaled Al-Aghbari",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "2001-08-14",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p173",
+      "teamId": "t9",
+      "name": "يوسف الجابري",
+      "nameEn": "Yousef Al-Jaberi",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "1992-12-04",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p174",
+      "teamId": "t9",
+      "name": "حسن الحسني",
+      "nameEn": "Hassan Al-Hasani",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "1998-03-11",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p175",
+      "teamId": "t9",
+      "name": "أحمد الزبيدي",
+      "nameEn": "Ahmed Al-Zubaidi",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "2003-02-24",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p176",
+      "teamId": "t9",
+      "name": "علي الزبيدي",
+      "nameEn": "Ali Al-Zubaidi",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "1997-12-21",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p177",
+      "teamId": "t9",
+      "name": "عماد اليافعي",
+      "nameEn": "Emad Al-Yafei",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "1995-09-26",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p178",
+      "teamId": "t9",
+      "name": "رائد الهمداني",
+      "nameEn": "Raed Al-Hamdani",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "1995-02-22",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p179",
+      "teamId": "t9",
+      "name": "حمزة الشرعبي",
+      "nameEn": "Hamza Al-Sharabi",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "2000-06-28",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p180",
+      "teamId": "t9",
+      "name": "حمزة العولقي",
+      "nameEn": "Hamza Al-Awlaqi",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "1997-10-23",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p181",
+      "teamId": "t10",
+      "name": "فيصل السقطري",
+      "nameEn": "Faisal Al-Soqotri",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "1995-01-04",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p182",
+      "teamId": "t10",
+      "name": "فيصل الهمداني",
+      "nameEn": "Faisal Al-Hamdani",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "1999-01-05",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p183",
+      "teamId": "t10",
+      "name": "عمر الأغبري",
+      "nameEn": "Omar Al-Aghbari",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "1998-04-12",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p184",
+      "teamId": "t10",
+      "name": "وائل الجابري",
+      "nameEn": "Wael Al-Jaberi",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "1995-08-23",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p185",
+      "teamId": "t10",
+      "name": "نادر الشرعبي",
+      "nameEn": "Nader Al-Sharabi",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "2004-04-04",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p186",
+      "teamId": "t10",
+      "name": "أحمد الشرعبي",
+      "nameEn": "Ahmed Al-Sharabi",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "1992-02-19",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p187",
+      "teamId": "t10",
+      "name": "عبدالله النعماني",
+      "nameEn": "Abdullah Al-Nomani",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "1993-06-23",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p188",
+      "teamId": "t10",
+      "name": "حمزة المخلافي",
+      "nameEn": "Hamza Al-Mikhlafi",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "1995-10-23",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p189",
+      "teamId": "t10",
+      "name": "خالد النعماني",
+      "nameEn": "Khaled Al-Nomani",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "1992-06-22",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p190",
+      "teamId": "t10",
+      "name": "عبدالله السقطري",
+      "nameEn": "Abdullah Al-Soqotri",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "2003-10-09",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p191",
+      "teamId": "t10",
+      "name": "سيف القحطاني",
+      "nameEn": "Saif Al-Qahtani",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "2002-08-01",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p192",
+      "teamId": "t10",
+      "name": "رائد القحطاني",
+      "nameEn": "Raed Al-Qahtani",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "1996-08-21",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p193",
+      "teamId": "t10",
+      "name": "ماجد النعماني",
+      "nameEn": "Majed Al-Nomani",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "2000-07-09",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p194",
+      "teamId": "t10",
+      "name": "فيصل المطري",
+      "nameEn": "Faisal Al-Matari",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "1997-08-28",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p195",
+      "teamId": "t10",
+      "name": "نادر الأغبري",
+      "nameEn": "Nader Al-Aghbari",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "2001-02-10",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p196",
+      "teamId": "t10",
+      "name": "عبدالله النعماني",
+      "nameEn": "Abdullah Al-Nomani",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "2003-04-09",
+      "nationality": "EG",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p197",
+      "teamId": "t10",
+      "name": "عماد المخلافي",
+      "nameEn": "Emad Al-Mikhlafi",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "2000-12-12",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p198",
+      "teamId": "t10",
+      "name": "حسن القحطاني",
+      "nameEn": "Hassan Al-Qahtani",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "1995-06-04",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p199",
+      "teamId": "t10",
+      "name": "رائد الهمداني",
+      "nameEn": "Raed Al-Hamdani",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "1993-05-03",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p200",
+      "teamId": "t10",
+      "name": "حسن الشرعبي",
+      "nameEn": "Hassan Al-Sharabi",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "2001-02-03",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p201",
+      "teamId": "t11",
+      "name": "سالم الحسني",
+      "nameEn": "Salem Al-Hasani",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "1999-12-05",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p202",
+      "teamId": "t11",
+      "name": "مازن باسنيد",
+      "nameEn": "Mazen Basnid",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "1995-06-28",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p203",
+      "teamId": "t11",
+      "name": "أنس الحسني",
+      "nameEn": "Anas Al-Hasani",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "1997-10-28",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p204",
+      "teamId": "t11",
+      "name": "فيصل الهمداني",
+      "nameEn": "Faisal Al-Hamdani",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "2001-11-19",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p205",
+      "teamId": "t11",
+      "name": "عماد الشرعبي",
+      "nameEn": "Emad Al-Sharabi",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "2000-07-26",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p206",
+      "teamId": "t11",
+      "name": "حسن العولقي",
+      "nameEn": "Hassan Al-Awlaqi",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "2000-08-20",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p207",
+      "teamId": "t11",
+      "name": "حمزة العبسي",
+      "nameEn": "Hamza Al-Absi",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "1996-06-03",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p208",
+      "teamId": "t11",
+      "name": "عبدالله السقطري",
+      "nameEn": "Abdullah Al-Soqotri",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "1993-02-19",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p209",
+      "teamId": "t11",
+      "name": "خالد الأغبري",
+      "nameEn": "Khaled Al-Aghbari",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "1998-02-12",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p210",
+      "teamId": "t11",
+      "name": "بلال الجابري",
+      "nameEn": "Bilal Al-Jaberi",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "2004-03-13",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p211",
+      "teamId": "t11",
+      "name": "يوسف المخلافي",
+      "nameEn": "Yousef Al-Mikhlafi",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "1995-01-22",
+      "nationality": "SD",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p212",
+      "teamId": "t11",
+      "name": "سالم المطري",
+      "nameEn": "Salem Al-Matari",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "1994-10-11",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p213",
+      "teamId": "t11",
+      "name": "سيف القحطاني",
+      "nameEn": "Saif Al-Qahtani",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "1994-07-17",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p214",
+      "teamId": "t11",
+      "name": "ماجد اليافعي",
+      "nameEn": "Majed Al-Yafei",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "1997-08-03",
+      "nationality": "JO",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p215",
+      "teamId": "t11",
+      "name": "سالم اليافعي",
+      "nameEn": "Salem Al-Yafei",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "2005-08-05",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p216",
+      "teamId": "t11",
+      "name": "هشام الصلوي",
+      "nameEn": "Hisham Al-Salwi",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "1993-03-13",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p217",
+      "teamId": "t11",
+      "name": "يوسف البكري",
+      "nameEn": "Yousef Al-Bakri",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "1998-05-20",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p218",
+      "teamId": "t11",
+      "name": "هشام الجابري",
+      "nameEn": "Hisham Al-Jaberi",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "1994-05-17",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p219",
+      "teamId": "t11",
+      "name": "إبراهيم الجابري",
+      "nameEn": "Ibrahim Al-Jaberi",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "2005-11-04",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p220",
+      "teamId": "t11",
+      "name": "رائد المخلافي",
+      "nameEn": "Raed Al-Mikhlafi",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "2003-11-24",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p221",
+      "teamId": "t12",
+      "name": "وائل المطري",
+      "nameEn": "Wael Al-Matari",
+      "number": 1,
+      "position": "GK",
+      "birthdate": "2000-06-26",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p222",
+      "teamId": "t12",
+      "name": "فيصل الجابري",
+      "nameEn": "Faisal Al-Jaberi",
+      "number": 22,
+      "position": "GK",
+      "birthdate": "1994-03-27",
+      "nationality": "SA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p223",
+      "teamId": "t12",
+      "name": "أنس السقطري",
+      "nameEn": "Anas Al-Soqotri",
+      "number": 2,
+      "position": "DF",
+      "birthdate": "2001-01-27",
+      "nationality": "EG",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p224",
+      "teamId": "t12",
+      "name": "طارق الأغبري",
+      "nameEn": "Tareq Al-Aghbari",
+      "number": 3,
+      "position": "DF",
+      "birthdate": "1998-01-08",
+      "nationality": "SD",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p225",
+      "teamId": "t12",
+      "name": "علي الحسني",
+      "nameEn": "Ali Al-Hasani",
+      "number": 4,
+      "position": "DF",
+      "birthdate": "2000-06-09",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p226",
+      "teamId": "t12",
+      "name": "عبدالله الردفاني",
+      "nameEn": "Abdullah Al-Radfani",
+      "number": 5,
+      "position": "DF",
+      "birthdate": "2001-12-07",
+      "nationality": "EG",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p227",
+      "teamId": "t12",
+      "name": "عماد باسنيد",
+      "nameEn": "Emad Basnid",
+      "number": 15,
+      "position": "DF",
+      "birthdate": "1992-11-16",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p228",
+      "teamId": "t12",
+      "name": "محمد الزبيدي",
+      "nameEn": "Mohammed Al-Zubaidi",
+      "number": 23,
+      "position": "DF",
+      "birthdate": "2002-06-17",
+      "nationality": "MA",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p229",
+      "teamId": "t12",
+      "name": "عبدالله الزبيدي",
+      "nameEn": "Abdullah Al-Zubaidi",
+      "number": 26,
+      "position": "DF",
+      "birthdate": "1996-04-02",
+      "nationality": "YE",
+      "photo": "",
+      "status": "injured"
+    },
+    {
+      "id": "p230",
+      "teamId": "t12",
+      "name": "إبراهيم الكثيري",
+      "nameEn": "Ibrahim Al-Kathiri",
+      "number": 6,
+      "position": "MF",
+      "birthdate": "2001-04-12",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p231",
+      "teamId": "t12",
+      "name": "محمد الجابري",
+      "nameEn": "Mohammed Al-Jaberi",
+      "number": 8,
+      "position": "MF",
+      "birthdate": "2003-06-08",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p232",
+      "teamId": "t12",
+      "name": "يوسف الصلوي",
+      "nameEn": "Yousef Al-Salwi",
+      "number": 10,
+      "position": "MF",
+      "birthdate": "1993-02-27",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p233",
+      "teamId": "t12",
+      "name": "أحمد الجابري",
+      "nameEn": "Ahmed Al-Jaberi",
+      "number": 14,
+      "position": "MF",
+      "birthdate": "2004-09-24",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p234",
+      "teamId": "t12",
+      "name": "رائد البكري",
+      "nameEn": "Raed Al-Bakri",
+      "number": 16,
+      "position": "MF",
+      "birthdate": "1992-09-28",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p235",
+      "teamId": "t12",
+      "name": "عماد الكثيري",
+      "nameEn": "Emad Al-Kathiri",
+      "number": 18,
+      "position": "MF",
+      "birthdate": "2005-04-13",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p236",
+      "teamId": "t12",
+      "name": "أنس الشرعبي",
+      "nameEn": "Anas Al-Sharabi",
+      "number": 7,
+      "position": "FW",
+      "birthdate": "2000-07-08",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p237",
+      "teamId": "t12",
+      "name": "زياد الأغبري",
+      "nameEn": "Ziad Al-Aghbari",
+      "number": 9,
+      "position": "FW",
+      "birthdate": "1992-12-14",
+      "nationality": "OM",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p238",
+      "teamId": "t12",
+      "name": "حسن باسنيد",
+      "nameEn": "Hassan Basnid",
+      "number": 11,
+      "position": "FW",
+      "birthdate": "2005-10-26",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p239",
+      "teamId": "t12",
+      "name": "علي الزبيدي",
+      "nameEn": "Ali Al-Zubaidi",
+      "number": 17,
+      "position": "FW",
+      "birthdate": "1997-07-10",
+      "nationality": "SD",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": "p240",
+      "teamId": "t12",
+      "name": "بلال الكثيري",
+      "nameEn": "Bilal Al-Kathiri",
+      "number": 19,
+      "position": "FW",
+      "birthdate": "2001-10-09",
+      "nationality": "YE",
+      "photo": "",
+      "status": "active"
+    }
+  ],
+  "matches": [
+    {
+      "id": "m1",
+      "round": 1,
+      "homeTeamId": "t1",
+      "awayTeamId": "t12",
+      "date": "2026-10-02T15:00:00",
+      "stadium": "ملعب الثورة",
+      "referee": "هاني البعداني",
+      "status": "finished",
+      "score": {
+        "home": 1,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkfu3zib",
+          "type": "yellow",
+          "minute": 17,
+          "teamId": "t12",
+          "playerId": "p237"
+        },
+        {
+          "id": "e_mvlejjkf6oqoe",
+          "type": "yellow",
+          "minute": 34,
+          "teamId": "t12",
+          "playerId": "p231"
+        },
+        {
+          "id": "e_mvlejjkei1gqf",
+          "type": "red",
+          "minute": 43,
+          "teamId": "t1",
+          "playerId": "p4"
+        },
+        {
+          "id": "e_mvlejjke2rvcq",
+          "type": "yellow",
+          "minute": 49,
+          "teamId": "t1",
+          "playerId": "p11"
+        },
+        {
+          "id": "e_mvlejjkfxpf4i",
+          "type": "yellow",
+          "minute": 55,
+          "teamId": "t12",
+          "playerId": "p225"
+        },
+        {
+          "id": "e_mvlejjkewaktq",
+          "type": "yellow",
+          "minute": 58,
+          "teamId": "t1",
+          "playerId": "p6"
+        },
+        {
+          "id": "e_mvlejjkfgutp6",
+          "type": "sub",
+          "minute": 59,
+          "teamId": "t1",
+          "playerId": "p5",
+          "playerOutId": "p17"
+        },
+        {
+          "id": "e_mvlejjke9c4vm",
+          "type": "goal",
+          "minute": 75,
+          "teamId": "t12",
+          "playerId": "p237",
+          "assistId": "p232"
+        },
+        {
+          "id": "e_mvlejjkf9mqby",
+          "type": "sub",
+          "minute": 82,
+          "teamId": "t1",
+          "playerId": "p7",
+          "playerOutId": "p6"
+        },
+        {
+          "id": "e_mvlejjkfplylg",
+          "type": "sub",
+          "minute": 82,
+          "teamId": "t12",
+          "playerId": "p235",
+          "playerOutId": "p223"
+        },
+        {
+          "id": "e_mvlejjkeel8sk",
+          "type": "goal",
+          "minute": 85,
+          "teamId": "t1",
+          "playerId": "p15",
+          "assistId": "p9"
+        },
+        {
+          "id": "e_mvlejjkfqtj2v",
+          "type": "sub",
+          "minute": 87,
+          "teamId": "t12",
+          "playerId": "p233",
+          "playerOutId": "p230"
+        },
+        {
+          "id": "e_mvlejjkfx6d4e",
+          "type": "sub",
+          "minute": 88,
+          "teamId": "t1",
+          "playerId": "p8",
+          "playerOutId": "p6"
+        },
+        {
+          "id": "e_mvlejjkfmlkjx",
+          "type": "sub",
+          "minute": 89,
+          "teamId": "t12",
+          "playerId": "p234",
+          "playerOutId": "p232"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p2",
+            "p4",
+            "p6",
+            "p9",
+            "p3",
+            "p13",
+            "p11",
+            "p15",
+            "p20",
+            "p18",
+            "p17"
+          ],
+          "bench": [
+            "p1",
+            "p5",
+            "p7",
+            "p8",
+            "p10",
+            "p14",
+            "p16"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p222",
+            "p228",
+            "p227",
+            "p225",
+            "p223",
+            "p230",
+            "p231",
+            "p232",
+            "p236",
+            "p237",
+            "p238"
+          ],
+          "bench": [
+            "p221",
+            "p234",
+            "p235",
+            "p233",
+            "p239",
+            "p240"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 60,
+          "away": 40
+        },
+        "shots": {
+          "home": 11,
+          "away": 10
+        },
+        "shotsOnTarget": {
+          "home": 5,
+          "away": 3
+        },
+        "corners": {
+          "home": 3,
+          "away": 1
+        },
+        "fouls": {
+          "home": 10,
+          "away": 14
+        },
+        "offsides": {
+          "home": 3,
+          "away": 2
+        }
+      }
+    },
+    {
+      "id": "m2",
+      "round": 1,
+      "homeTeamId": "t11",
+      "awayTeamId": "t2",
+      "date": "2026-10-02T17:30:00",
+      "stadium": "ملعب ذمار",
+      "referee": "نشوان عبيد",
+      "status": "finished",
+      "score": {
+        "home": 1,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkgyfcaw",
+          "type": "yellow",
+          "minute": 22,
+          "teamId": "t2",
+          "playerId": "p25"
+        },
+        {
+          "id": "e_mvlejjkgqdnfs",
+          "type": "sub",
+          "minute": 59,
+          "teamId": "t11",
+          "playerId": "p204",
+          "playerOutId": "p213"
+        },
+        {
+          "id": "e_mvlejjkgjqgw3",
+          "type": "sub",
+          "minute": 65,
+          "teamId": "t11",
+          "playerId": "p209",
+          "playerOutId": "p220"
+        },
+        {
+          "id": "e_mvlejjkgrtiwg",
+          "type": "sub",
+          "minute": 67,
+          "teamId": "t2",
+          "playerId": "p23",
+          "playerOutId": "p39"
+        },
+        {
+          "id": "e_mvlejjkgpn83q",
+          "type": "sub",
+          "minute": 69,
+          "teamId": "t2",
+          "playerId": "p28",
+          "playerOutId": "p37"
+        },
+        {
+          "id": "e_mvlejjkgb9vfi",
+          "type": "sub",
+          "minute": 72,
+          "teamId": "t2",
+          "playerId": "p30",
+          "playerOutId": "p35"
+        },
+        {
+          "id": "e_mvlejjkfmel9g",
+          "type": "goal",
+          "minute": 82,
+          "teamId": "t2",
+          "playerId": "p31",
+          "assistId": "p25"
+        },
+        {
+          "id": "e_mvlejjkghogju",
+          "type": "yellow",
+          "minute": 85,
+          "teamId": "t11",
+          "playerId": "p220"
+        },
+        {
+          "id": "e_mvlejjkgxg6uu",
+          "type": "sub",
+          "minute": 87,
+          "teamId": "t11",
+          "playerId": "p203",
+          "playerOutId": "p220"
+        },
+        {
+          "id": "e_mvlejjkgd8sqs",
+          "type": "yellow",
+          "minute": 88,
+          "teamId": "t2",
+          "playerId": "p33"
+        },
+        {
+          "id": "e_mvlejjkfe8dbf",
+          "type": "penalty",
+          "minute": 90,
+          "teamId": "t11",
+          "playerId": "p219",
+          "assistId": null
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p201",
+            "p206",
+            "p205",
+            "p208",
+            "p207",
+            "p210",
+            "p212",
+            "p213",
+            "p218",
+            "p219",
+            "p220"
+          ],
+          "bench": [
+            "p202",
+            "p204",
+            "p203",
+            "p209",
+            "p215",
+            "p214",
+            "p216"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p22",
+            "p27",
+            "p26",
+            "p25",
+            "p24",
+            "p33",
+            "p35",
+            "p31",
+            "p39",
+            "p38",
+            "p37"
+          ],
+          "bench": [
+            "p21",
+            "p23",
+            "p28",
+            "p30",
+            "p32",
+            "p34",
+            "p36"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 50,
+          "away": 50
+        },
+        "shots": {
+          "home": 13,
+          "away": 6
+        },
+        "shotsOnTarget": {
+          "home": 2,
+          "away": 2
+        },
+        "corners": {
+          "home": 5,
+          "away": 6
+        },
+        "fouls": {
+          "home": 12,
+          "away": 6
+        },
+        "offsides": {
+          "home": 4,
+          "away": 2
+        }
+      }
+    },
+    {
+      "id": "m3",
+      "round": 1,
+      "homeTeamId": "t3",
+      "awayTeamId": "t10",
+      "date": "2026-10-02T17:30:00",
+      "stadium": "ملعب العلفي",
+      "referee": "محمد العامري",
+      "status": "finished",
+      "score": {
+        "home": 0,
+        "away": 2
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkgmdy6n",
+          "type": "goal",
+          "minute": 32,
+          "teamId": "t10",
+          "playerId": "p195",
+          "assistId": "p183"
+        },
+        {
+          "id": "e_mvlejjkge76lc",
+          "type": "yellow",
+          "minute": 42,
+          "teamId": "t10",
+          "playerId": "p187"
+        },
+        {
+          "id": "e_mvlejjkgnbk9c",
+          "type": "sub",
+          "minute": 58,
+          "teamId": "t10",
+          "playerId": "p194",
+          "playerOutId": "p198"
+        },
+        {
+          "id": "e_mvlejjkgn7b2t",
+          "type": "sub",
+          "minute": 62,
+          "teamId": "t3",
+          "playerId": "p47",
+          "playerOutId": "p58"
+        },
+        {
+          "id": "e_mvlejjkgf9jc2",
+          "type": "red",
+          "minute": 66,
+          "teamId": "t10",
+          "playerId": "p186"
+        },
+        {
+          "id": "e_mvlejjkgyqs0w",
+          "type": "sub",
+          "minute": 69,
+          "teamId": "t10",
+          "playerId": "p185",
+          "playerOutId": "p193"
+        },
+        {
+          "id": "e_mvlejjkgzc7lw",
+          "type": "sub",
+          "minute": 70,
+          "teamId": "t10",
+          "playerId": "p189",
+          "playerOutId": "p195"
+        },
+        {
+          "id": "e_mvlejjkg1u4x8",
+          "type": "yellow",
+          "minute": 74,
+          "teamId": "t10",
+          "playerId": "p183"
+        },
+        {
+          "id": "e_mvlejjkgrvkat",
+          "type": "sub",
+          "minute": 77,
+          "teamId": "t3",
+          "playerId": "p49",
+          "playerOutId": "p45"
+        },
+        {
+          "id": "e_mvlejjkg2hjih",
+          "type": "goal",
+          "minute": 81,
+          "teamId": "t10",
+          "playerId": "p198",
+          "assistId": "p199"
+        },
+        {
+          "id": "e_mvlejjkg1yxzq",
+          "type": "sub",
+          "minute": 84,
+          "teamId": "t3",
+          "playerId": "p43",
+          "playerOutId": "p58"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p42",
+            "p46",
+            "p48",
+            "p45",
+            "p44",
+            "p55",
+            "p53",
+            "p54",
+            "p56",
+            "p57",
+            "p58"
+          ],
+          "bench": [
+            "p41",
+            "p47",
+            "p43",
+            "p49",
+            "p52",
+            "p51",
+            "p50",
+            "p60",
+            "p59"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p181",
+            "p183",
+            "p186",
+            "p187",
+            "p188",
+            "p192",
+            "p193",
+            "p195",
+            "p197",
+            "p198",
+            "p199"
+          ],
+          "bench": [
+            "p182",
+            "p185",
+            "p189",
+            "p194",
+            "p191",
+            "p190",
+            "p200"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 47,
+          "away": 53
+        },
+        "shots": {
+          "home": 9,
+          "away": 12
+        },
+        "shotsOnTarget": {
+          "home": 3,
+          "away": 4
+        },
+        "corners": {
+          "home": 6,
+          "away": 7
+        },
+        "fouls": {
+          "home": 11,
+          "away": 9
+        },
+        "offsides": {
+          "home": 4,
+          "away": 2
+        }
+      }
+    },
+    {
+      "id": "m4",
+      "round": 1,
+      "homeTeamId": "t9",
+      "awayTeamId": "t4",
+      "date": "2026-10-02T20:00:00",
+      "stadium": "ملعب التلال",
+      "referee": "صالح الحيدري",
+      "status": "finished",
+      "score": {
+        "home": 1,
+        "away": 0
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkgetesq",
+          "type": "goal",
+          "minute": 47,
+          "teamId": "t9",
+          "playerId": "p177",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkgt6i8c",
+          "type": "sub",
+          "minute": 60,
+          "teamId": "t9",
+          "playerId": "p167",
+          "playerOutId": "p177"
+        },
+        {
+          "id": "e_mvlejjkgr8wg3",
+          "type": "sub",
+          "minute": 65,
+          "teamId": "t9",
+          "playerId": "p173",
+          "playerOutId": "p165"
+        },
+        {
+          "id": "e_mvlejjkggkeza",
+          "type": "sub",
+          "minute": 71,
+          "teamId": "t9",
+          "playerId": "p174",
+          "playerOutId": "p163"
+        },
+        {
+          "id": "e_mvlejjkgppqvs",
+          "type": "sub",
+          "minute": 78,
+          "teamId": "t4",
+          "playerId": "p65",
+          "playerOutId": "p74"
+        },
+        {
+          "id": "e_mvlejjkg0m61q",
+          "type": "sub",
+          "minute": 80,
+          "teamId": "t4",
+          "playerId": "p63",
+          "playerOutId": "p69"
+        },
+        {
+          "id": "e_mvlejjkg0cd1f",
+          "type": "sub",
+          "minute": 87,
+          "teamId": "t4",
+          "playerId": "p64",
+          "playerOutId": "p77"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p161",
+            "p165",
+            "p164",
+            "p166",
+            "p163",
+            "p170",
+            "p171",
+            "p172",
+            "p176",
+            "p180",
+            "p177"
+          ],
+          "bench": [
+            "p162",
+            "p167",
+            "p173",
+            "p174",
+            "p175",
+            "p178",
+            "p179"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p61",
+            "p67",
+            "p69",
+            "p66",
+            "p68",
+            "p74",
+            "p72",
+            "p71",
+            "p78",
+            "p76",
+            "p77"
+          ],
+          "bench": [
+            "p62",
+            "p65",
+            "p64",
+            "p63",
+            "p70",
+            "p75",
+            "p79",
+            "p80"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 54,
+          "away": 46
+        },
+        "shots": {
+          "home": 11,
+          "away": 6
+        },
+        "shotsOnTarget": {
+          "home": 5,
+          "away": 1
+        },
+        "corners": {
+          "home": 2,
+          "away": 6
+        },
+        "fouls": {
+          "home": 11,
+          "away": 8
+        },
+        "offsides": {
+          "home": 1,
+          "away": 3
+        }
+      }
+    },
+    {
+      "id": "m5",
+      "round": 1,
+      "homeTeamId": "t5",
+      "awayTeamId": "t8",
+      "date": "2026-10-02T20:00:00",
+      "stadium": "ملعب الكبسي",
+      "referee": "أكرم الصبيحي",
+      "status": "finished",
+      "score": {
+        "home": 0,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkhxw23q",
+          "type": "yellow",
+          "minute": 17,
+          "teamId": "t5",
+          "playerId": "p88"
+        },
+        {
+          "id": "e_mvlejjkh9aa6v",
+          "type": "goal",
+          "minute": 26,
+          "teamId": "t8",
+          "playerId": "p150",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkhtwrqe",
+          "type": "yellow",
+          "minute": 45,
+          "teamId": "t5",
+          "playerId": "p98"
+        },
+        {
+          "id": "e_mvlejjkh97rc1",
+          "type": "sub",
+          "minute": 66,
+          "teamId": "t5",
+          "playerId": "p89",
+          "playerOutId": "p97"
+        },
+        {
+          "id": "e_mvlejjkhxwxp3",
+          "type": "sub",
+          "minute": 67,
+          "teamId": "t8",
+          "playerId": "p149",
+          "playerOutId": "p145"
+        },
+        {
+          "id": "e_mvlejjkh9k84s",
+          "type": "sub",
+          "minute": 67,
+          "teamId": "t8",
+          "playerId": "p144",
+          "playerOutId": "p151"
+        },
+        {
+          "id": "e_mvlejjkhnqzp7",
+          "type": "yellow",
+          "minute": 75,
+          "teamId": "t8",
+          "playerId": "p159"
+        },
+        {
+          "id": "e_mvlejjkhgmnnw",
+          "type": "yellow",
+          "minute": 78,
+          "teamId": "t5",
+          "playerId": "p86"
+        },
+        {
+          "id": "e_mvlejjkheu8v3",
+          "type": "sub",
+          "minute": 78,
+          "teamId": "t8",
+          "playerId": "p143",
+          "playerOutId": "p159"
+        },
+        {
+          "id": "e_mvlejjkhnwtig",
+          "type": "sub",
+          "minute": 79,
+          "teamId": "t5",
+          "playerId": "p83",
+          "playerOutId": "p94"
+        },
+        {
+          "id": "e_mvlejjkhm102h",
+          "type": "sub",
+          "minute": 84,
+          "teamId": "t5",
+          "playerId": "p84",
+          "playerOutId": "p98"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p81",
+            "p86",
+            "p88",
+            "p87",
+            "p85",
+            "p94",
+            "p92",
+            "p90",
+            "p100",
+            "p97",
+            "p98"
+          ],
+          "bench": [
+            "p82",
+            "p84",
+            "p83",
+            "p89",
+            "p91",
+            "p95",
+            "p99",
+            "p96"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p141",
+            "p147",
+            "p146",
+            "p145",
+            "p148",
+            "p151",
+            "p155",
+            "p150",
+            "p159",
+            "p158",
+            "p157"
+          ],
+          "bench": [
+            "p142",
+            "p149",
+            "p144",
+            "p143",
+            "p152",
+            "p153",
+            "p156"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 50,
+          "away": 50
+        },
+        "shots": {
+          "home": 11,
+          "away": 7
+        },
+        "shotsOnTarget": {
+          "home": 2,
+          "away": 4
+        },
+        "corners": {
+          "home": 3,
+          "away": 7
+        },
+        "fouls": {
+          "home": 15,
+          "away": 6
+        },
+        "offsides": {
+          "home": 0,
+          "away": 2
+        }
+      }
+    },
+    {
+      "id": "m6",
+      "round": 1,
+      "homeTeamId": "t7",
+      "awayTeamId": "t6",
+      "date": "2026-10-02T21:30:00",
+      "stadium": "ملعب الحبيشي",
+      "referee": "عبدالرحمن الكاف",
+      "status": "finished",
+      "score": {
+        "home": 2,
+        "away": 0
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkhqp5qe",
+          "type": "goal",
+          "minute": 18,
+          "teamId": "t7",
+          "playerId": "p131",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkhmw8bm",
+          "type": "yellow",
+          "minute": 26,
+          "teamId": "t7",
+          "playerId": "p124"
+        },
+        {
+          "id": "e_mvlejjkhwul1y",
+          "type": "goal",
+          "minute": 32,
+          "teamId": "t7",
+          "playerId": "p136",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkhosr45",
+          "type": "yellow",
+          "minute": 38,
+          "teamId": "t7",
+          "playerId": "p139"
+        },
+        {
+          "id": "e_mvlejjkh8vn99",
+          "type": "yellow",
+          "minute": 48,
+          "teamId": "t7",
+          "playerId": "p126"
+        },
+        {
+          "id": "e_mvlejjkhhisqb",
+          "type": "sub",
+          "minute": 59,
+          "teamId": "t6",
+          "playerId": "p104",
+          "playerOutId": "p105"
+        },
+        {
+          "id": "e_mvlejjkhng821",
+          "type": "sub",
+          "minute": 67,
+          "teamId": "t7",
+          "playerId": "p127",
+          "playerOutId": "p131"
+        },
+        {
+          "id": "e_mvlejjkh0zm1r",
+          "type": "sub",
+          "minute": 72,
+          "teamId": "t7",
+          "playerId": "p129",
+          "playerOutId": "p136"
+        },
+        {
+          "id": "e_mvlejjkh6bpvf",
+          "type": "sub",
+          "minute": 76,
+          "teamId": "t6",
+          "playerId": "p107",
+          "playerOutId": "p116"
+        },
+        {
+          "id": "e_mvlejjkhffv1h",
+          "type": "sub",
+          "minute": 81,
+          "teamId": "t6",
+          "playerId": "p103",
+          "playerOutId": "p109"
+        },
+        {
+          "id": "e_mvlejjkhm3544",
+          "type": "sub",
+          "minute": 89,
+          "teamId": "t7",
+          "playerId": "p128",
+          "playerOutId": "p123"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p121",
+            "p126",
+            "p125",
+            "p124",
+            "p123",
+            "p130",
+            "p131",
+            "p132",
+            "p139",
+            "p140",
+            "p136"
+          ],
+          "bench": [
+            "p122",
+            "p129",
+            "p127",
+            "p128",
+            "p133",
+            "p134",
+            "p135",
+            "p137",
+            "p138"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p102",
+            "p105",
+            "p108",
+            "p106",
+            "p109",
+            "p110",
+            "p112",
+            "p115",
+            "p118",
+            "p116",
+            "p120"
+          ],
+          "bench": [
+            "p101",
+            "p104",
+            "p107",
+            "p103",
+            "p113"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 44,
+          "away": 56
+        },
+        "shots": {
+          "home": 13,
+          "away": 9
+        },
+        "shotsOnTarget": {
+          "home": 6,
+          "away": 3
+        },
+        "corners": {
+          "home": 5,
+          "away": 3
+        },
+        "fouls": {
+          "home": 7,
+          "away": 13
+        },
+        "offsides": {
+          "home": 0,
+          "away": 4
+        }
+      }
+    },
+    {
+      "id": "m7",
+      "round": 2,
+      "homeTeamId": "t11",
+      "awayTeamId": "t1",
+      "date": "2026-10-09T15:00:00",
+      "stadium": "ملعب ذمار",
+      "referee": "نشوان عبيد",
+      "status": "finished",
+      "score": {
+        "home": 2,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkhnx1dx",
+          "type": "yellow",
+          "minute": 16,
+          "teamId": "t1",
+          "playerId": "p18"
+        },
+        {
+          "id": "e_mvlejjkhe92hy",
+          "type": "goal",
+          "minute": 18,
+          "teamId": "t11",
+          "playerId": "p205",
+          "assistId": "p216"
+        },
+        {
+          "id": "e_mvlejjkhcro5s",
+          "type": "penalty",
+          "minute": 26,
+          "teamId": "t11",
+          "playerId": "p212",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkhm1toi",
+          "type": "yellow",
+          "minute": 26,
+          "teamId": "t1",
+          "playerId": "p3"
+        },
+        {
+          "id": "e_mvlejjkhjbg6p",
+          "type": "goal",
+          "minute": 42,
+          "teamId": "t1",
+          "playerId": "p20",
+          "assistId": "p17"
+        },
+        {
+          "id": "e_mvlejjkhz2vqf",
+          "type": "yellow",
+          "minute": 48,
+          "teamId": "t11",
+          "playerId": "p207"
+        },
+        {
+          "id": "e_mvlejjkh1h1f8",
+          "type": "red",
+          "minute": 49,
+          "teamId": "t11",
+          "playerId": "p207"
+        },
+        {
+          "id": "e_mvlejjkhmtb81",
+          "type": "sub",
+          "minute": 62,
+          "teamId": "t11",
+          "playerId": "p208",
+          "playerOutId": "p204"
+        },
+        {
+          "id": "e_mvlejjkhnxj26",
+          "type": "sub",
+          "minute": 79,
+          "teamId": "t11",
+          "playerId": "p203",
+          "playerOutId": "p212"
+        },
+        {
+          "id": "e_mvlejjkhlo6uh",
+          "type": "sub",
+          "minute": 81,
+          "teamId": "t1",
+          "playerId": "p8",
+          "playerOutId": "p18"
+        },
+        {
+          "id": "e_mvlejjkhiew97",
+          "type": "sub",
+          "minute": 84,
+          "teamId": "t11",
+          "playerId": "p209",
+          "playerOutId": "p214"
+        },
+        {
+          "id": "e_mvlejjkhuanbt",
+          "type": "sub",
+          "minute": 84,
+          "teamId": "t1",
+          "playerId": "p9",
+          "playerOutId": "p6"
+        },
+        {
+          "id": "e_mvlejjkh19rv0",
+          "type": "sub",
+          "minute": 85,
+          "teamId": "t1",
+          "playerId": "p4",
+          "playerOutId": "p18"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p201",
+            "p205",
+            "p207",
+            "p204",
+            "p206",
+            "p213",
+            "p212",
+            "p214",
+            "p220",
+            "p216",
+            "p218"
+          ],
+          "bench": [
+            "p202",
+            "p203",
+            "p209",
+            "p208",
+            "p210",
+            "p215",
+            "p219"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p1",
+            "p7",
+            "p3",
+            "p6",
+            "p5",
+            "p13",
+            "p11",
+            "p10",
+            "p18",
+            "p17",
+            "p20"
+          ],
+          "bench": [
+            "p2",
+            "p9",
+            "p4",
+            "p8",
+            "p14",
+            "p15",
+            "p16"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 41,
+          "away": 59
+        },
+        "shots": {
+          "home": 9,
+          "away": 11
+        },
+        "shotsOnTarget": {
+          "home": 4,
+          "away": 2
+        },
+        "corners": {
+          "home": 5,
+          "away": 2
+        },
+        "fouls": {
+          "home": 15,
+          "away": 6
+        },
+        "offsides": {
+          "home": 3,
+          "away": 0
+        }
+      }
+    },
+    {
+      "id": "m8",
+      "round": 2,
+      "homeTeamId": "t12",
+      "awayTeamId": "t10",
+      "date": "2026-10-09T17:30:00",
+      "stadium": "ملعب الساحل",
+      "referee": "محمد العامري",
+      "status": "finished",
+      "score": {
+        "home": 1,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjki4aknm",
+          "type": "yellow",
+          "minute": 22,
+          "teamId": "t12",
+          "playerId": "p237"
+        },
+        {
+          "id": "e_mvlejjkix9oe2",
+          "type": "penalty",
+          "minute": 56,
+          "teamId": "t10",
+          "playerId": "p195",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjki8bkt2",
+          "type": "red",
+          "minute": 56,
+          "teamId": "t12",
+          "playerId": "p223"
+        },
+        {
+          "id": "e_mvlejjki0690d",
+          "type": "sub",
+          "minute": 59,
+          "teamId": "t12",
+          "playerId": "p230",
+          "playerOutId": "p233"
+        },
+        {
+          "id": "e_mvlejjki9b7x5",
+          "type": "sub",
+          "minute": 60,
+          "teamId": "t10",
+          "playerId": "p188",
+          "playerOutId": "p200"
+        },
+        {
+          "id": "e_mvlejjkike393",
+          "type": "sub",
+          "minute": 66,
+          "teamId": "t10",
+          "playerId": "p187",
+          "playerOutId": "p189"
+        },
+        {
+          "id": "e_mvlejjkixz4zw",
+          "type": "yellow",
+          "minute": 75,
+          "teamId": "t12",
+          "playerId": "p227"
+        },
+        {
+          "id": "e_mvlejjkix8988",
+          "type": "sub",
+          "minute": 79,
+          "teamId": "t12",
+          "playerId": "p234",
+          "playerOutId": "p228"
+        },
+        {
+          "id": "e_mvlejjkiisp2r",
+          "type": "goal",
+          "minute": 80,
+          "teamId": "t12",
+          "playerId": "p236",
+          "assistId": "p225"
+        },
+        {
+          "id": "e_mvlejjki00od5",
+          "type": "sub",
+          "minute": 82,
+          "teamId": "t10",
+          "playerId": "p192",
+          "playerOutId": "p199"
+        },
+        {
+          "id": "e_mvlejjkird36c",
+          "type": "sub",
+          "minute": 87,
+          "teamId": "t12",
+          "playerId": "p231",
+          "playerOutId": "p228"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p221",
+            "p227",
+            "p225",
+            "p228",
+            "p223",
+            "p235",
+            "p233",
+            "p232",
+            "p236",
+            "p239",
+            "p237"
+          ],
+          "bench": [
+            "p222",
+            "p234",
+            "p231",
+            "p230",
+            "p240",
+            "p238"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p182",
+            "p183",
+            "p189",
+            "p185",
+            "p186",
+            "p195",
+            "p194",
+            "p193",
+            "p200",
+            "p199",
+            "p198"
+          ],
+          "bench": [
+            "p181",
+            "p187",
+            "p188",
+            "p192",
+            "p191",
+            "p190",
+            "p197"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 55,
+          "away": 45
+        },
+        "shots": {
+          "home": 13,
+          "away": 7
+        },
+        "shotsOnTarget": {
+          "home": 3,
+          "away": 3
+        },
+        "corners": {
+          "home": 0,
+          "away": 4
+        },
+        "fouls": {
+          "home": 12,
+          "away": 13
+        },
+        "offsides": {
+          "home": 2,
+          "away": 0
+        }
+      }
+    },
+    {
+      "id": "m9",
+      "round": 2,
+      "homeTeamId": "t9",
+      "awayTeamId": "t2",
+      "date": "2026-10-09T17:30:00",
+      "stadium": "ملعب التلال",
+      "referee": "صالح الحيدري",
+      "status": "finished",
+      "score": {
+        "home": 2,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjki0k1br",
+          "type": "goal",
+          "minute": 1,
+          "teamId": "t9",
+          "playerId": "p176",
+          "assistId": "p166"
+        },
+        {
+          "id": "e_mvlejjkiezjpp",
+          "type": "goal",
+          "minute": 7,
+          "teamId": "t9",
+          "playerId": "p172",
+          "assistId": "p179"
+        },
+        {
+          "id": "e_mvlejjkidiwnj",
+          "type": "goal",
+          "minute": 19,
+          "teamId": "t2",
+          "playerId": "p36",
+          "assistId": "p35"
+        },
+        {
+          "id": "e_mvlejjkidcl3x",
+          "type": "yellow",
+          "minute": 54,
+          "teamId": "t2",
+          "playerId": "p38"
+        },
+        {
+          "id": "e_mvlejjkiozfgn",
+          "type": "yellow",
+          "minute": 56,
+          "teamId": "t2",
+          "playerId": "p27"
+        },
+        {
+          "id": "e_mvlejjkitrs89",
+          "type": "red",
+          "minute": 58,
+          "teamId": "t2",
+          "playerId": "p35"
+        },
+        {
+          "id": "e_mvlejjkipjcjs",
+          "type": "sub",
+          "minute": 59,
+          "teamId": "t9",
+          "playerId": "p163",
+          "playerOutId": "p179"
+        },
+        {
+          "id": "e_mvlejjkikyaqk",
+          "type": "sub",
+          "minute": 59,
+          "teamId": "t2",
+          "playerId": "p26",
+          "playerOutId": "p38"
+        },
+        {
+          "id": "e_mvlejjkilcxai",
+          "type": "sub",
+          "minute": 62,
+          "teamId": "t2",
+          "playerId": "p31",
+          "playerOutId": "p33"
+        },
+        {
+          "id": "e_mvlejjkihdriu",
+          "type": "sub",
+          "minute": 72,
+          "teamId": "t9",
+          "playerId": "p174",
+          "playerOutId": "p172"
+        },
+        {
+          "id": "e_mvlejjkippqp5",
+          "type": "sub",
+          "minute": 72,
+          "teamId": "t2",
+          "playerId": "p28",
+          "playerOutId": "p38"
+        },
+        {
+          "id": "e_mvlejjki1gg10",
+          "type": "sub",
+          "minute": 74,
+          "teamId": "t9",
+          "playerId": "p171",
+          "playerOutId": "p166"
+        },
+        {
+          "id": "e_mvlejjkifry27",
+          "type": "yellow",
+          "minute": 81,
+          "teamId": "t2",
+          "playerId": "p24"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p161",
+            "p165",
+            "p164",
+            "p166",
+            "p167",
+            "p172",
+            "p175",
+            "p170",
+            "p177",
+            "p179",
+            "p176"
+          ],
+          "bench": [
+            "p162",
+            "p163",
+            "p174",
+            "p171",
+            "p173",
+            "p178",
+            "p180"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p21",
+            "p23",
+            "p24",
+            "p27",
+            "p25",
+            "p35",
+            "p30",
+            "p33",
+            "p36",
+            "p37",
+            "p38"
+          ],
+          "bench": [
+            "p22",
+            "p28",
+            "p26",
+            "p31",
+            "p32",
+            "p34",
+            "p39"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 45,
+          "away": 55
+        },
+        "shots": {
+          "home": 15,
+          "away": 6
+        },
+        "shotsOnTarget": {
+          "home": 5,
+          "away": 3
+        },
+        "corners": {
+          "home": 4,
+          "away": 2
+        },
+        "fouls": {
+          "home": 13,
+          "away": 12
+        },
+        "offsides": {
+          "home": 2,
+          "away": 1
+        }
+      }
+    },
+    {
+      "id": "m10",
+      "round": 2,
+      "homeTeamId": "t3",
+      "awayTeamId": "t8",
+      "date": "2026-10-09T20:00:00",
+      "stadium": "ملعب العلفي",
+      "referee": "أكرم الصبيحي",
+      "status": "finished",
+      "score": {
+        "home": 1,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjki0r6qy",
+          "type": "goal",
+          "minute": 9,
+          "teamId": "t3",
+          "playerId": "p50",
+          "assistId": "p57"
+        },
+        {
+          "id": "e_mvlejjkinsn6j",
+          "type": "yellow",
+          "minute": 14,
+          "teamId": "t8",
+          "playerId": "p157"
+        },
+        {
+          "id": "e_mvlejjkizfyni",
+          "type": "yellow",
+          "minute": 36,
+          "teamId": "t8",
+          "playerId": "p147"
+        },
+        {
+          "id": "e_mvlejjkiy5x1p",
+          "type": "sub",
+          "minute": 61,
+          "teamId": "t3",
+          "playerId": "p43",
+          "playerOutId": "p54"
+        },
+        {
+          "id": "e_mvlejjkie21in",
+          "type": "sub",
+          "minute": 62,
+          "teamId": "t3",
+          "playerId": "p48",
+          "playerOutId": "p47"
+        },
+        {
+          "id": "e_mvlejjkiwluvl",
+          "type": "sub",
+          "minute": 63,
+          "teamId": "t8",
+          "playerId": "p144",
+          "playerOutId": "p155"
+        },
+        {
+          "id": "e_mvlejjki9ov3n",
+          "type": "sub",
+          "minute": 76,
+          "teamId": "t3",
+          "playerId": "p46",
+          "playerOutId": "p59"
+        },
+        {
+          "id": "e_mvlejjkikyxv4",
+          "type": "yellow",
+          "minute": 78,
+          "teamId": "t8",
+          "playerId": "p150"
+        },
+        {
+          "id": "e_mvlejjkir7ba9",
+          "type": "yellow",
+          "minute": 83,
+          "teamId": "t3",
+          "playerId": "p45"
+        },
+        {
+          "id": "e_mvlejjkie79bc",
+          "type": "sub",
+          "minute": 84,
+          "teamId": "t8",
+          "playerId": "p143",
+          "playerOutId": "p147"
+        },
+        {
+          "id": "e_mvlejjki49mza",
+          "type": "penalty",
+          "minute": 85,
+          "teamId": "t8",
+          "playerId": "p157",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkjpbkyq",
+          "type": "sub",
+          "minute": 88,
+          "teamId": "t8",
+          "playerId": "p149",
+          "playerOutId": "p159"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p41",
+            "p49",
+            "p45",
+            "p44",
+            "p47",
+            "p50",
+            "p54",
+            "p55",
+            "p57",
+            "p56",
+            "p59"
+          ],
+          "bench": [
+            "p42",
+            "p46",
+            "p43",
+            "p48",
+            "p53",
+            "p52",
+            "p51",
+            "p60",
+            "p58"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p141",
+            "p147",
+            "p146",
+            "p145",
+            "p148",
+            "p155",
+            "p150",
+            "p152",
+            "p159",
+            "p157",
+            "p158"
+          ],
+          "bench": [
+            "p142",
+            "p144",
+            "p143",
+            "p149",
+            "p153",
+            "p151",
+            "p156"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 47,
+          "away": 53
+        },
+        "shots": {
+          "home": 11,
+          "away": 9
+        },
+        "shotsOnTarget": {
+          "home": 3,
+          "away": 3
+        },
+        "corners": {
+          "home": 3,
+          "away": 1
+        },
+        "fouls": {
+          "home": 7,
+          "away": 7
+        },
+        "offsides": {
+          "home": 0,
+          "away": 3
+        }
+      }
+    },
+    {
+      "id": "m11",
+      "round": 2,
+      "homeTeamId": "t7",
+      "awayTeamId": "t4",
+      "date": "2026-10-09T20:00:00",
+      "stadium": "ملعب الحبيشي",
+      "referee": "عبدالرحمن الكاف",
+      "status": "finished",
+      "score": {
+        "home": 0,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkjn5f74",
+          "type": "owngoal",
+          "minute": 2,
+          "teamId": "t4",
+          "playerId": "p128"
+        },
+        {
+          "id": "e_mvlejjkja3dsj",
+          "type": "yellow",
+          "minute": 38,
+          "teamId": "t7",
+          "playerId": "p126"
+        },
+        {
+          "id": "e_mvlejjkj4erjf",
+          "type": "sub",
+          "minute": 58,
+          "teamId": "t7",
+          "playerId": "p124",
+          "playerOutId": "p131"
+        },
+        {
+          "id": "e_mvlejjkjpjve6",
+          "type": "yellow",
+          "minute": 63,
+          "teamId": "t4",
+          "playerId": "p79"
+        },
+        {
+          "id": "e_mvlejjkjkv81g",
+          "type": "sub",
+          "minute": 68,
+          "teamId": "t7",
+          "playerId": "p127",
+          "playerOutId": "p128"
+        },
+        {
+          "id": "e_mvlejjkk0lee4",
+          "type": "sub",
+          "minute": 71,
+          "teamId": "t4",
+          "playerId": "p67",
+          "playerOutId": "p79"
+        },
+        {
+          "id": "e_mvlejjkj88gdk",
+          "type": "yellow",
+          "minute": 74,
+          "teamId": "t7",
+          "playerId": "p137"
+        },
+        {
+          "id": "e_mvlejjkj5agif",
+          "type": "sub",
+          "minute": 74,
+          "teamId": "t4",
+          "playerId": "p66",
+          "playerOutId": "p69"
+        },
+        {
+          "id": "e_mvlejjkjsrd4o",
+          "type": "sub",
+          "minute": 78,
+          "teamId": "t7",
+          "playerId": "p123",
+          "playerOutId": "p131"
+        },
+        {
+          "id": "e_mvlejjkjevjmf",
+          "type": "sub",
+          "minute": 82,
+          "teamId": "t4",
+          "playerId": "p68",
+          "playerOutId": "p69"
+        },
+        {
+          "id": "e_mvlejjkjmpl9z",
+          "type": "yellow",
+          "minute": 83,
+          "teamId": "t4",
+          "playerId": "p76"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p121",
+            "p128",
+            "p126",
+            "p125",
+            "p129",
+            "p130",
+            "p131",
+            "p132",
+            "p139",
+            "p138",
+            "p137"
+          ],
+          "bench": [
+            "p122",
+            "p127",
+            "p124",
+            "p123",
+            "p133",
+            "p134",
+            "p135",
+            "p136",
+            "p140"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p62",
+            "p65",
+            "p63",
+            "p64",
+            "p69",
+            "p70",
+            "p71",
+            "p72",
+            "p77",
+            "p76",
+            "p79"
+          ],
+          "bench": [
+            "p61",
+            "p66",
+            "p68",
+            "p67",
+            "p74",
+            "p75",
+            "p80",
+            "p78"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 41,
+          "away": 59
+        },
+        "shots": {
+          "home": 11,
+          "away": 5
+        },
+        "shotsOnTarget": {
+          "home": 2,
+          "away": 3
+        },
+        "corners": {
+          "home": 3,
+          "away": 5
+        },
+        "fouls": {
+          "home": 12,
+          "away": 8
+        },
+        "offsides": {
+          "home": 1,
+          "away": 2
+        }
+      }
+    },
+    {
+      "id": "m12",
+      "round": 2,
+      "homeTeamId": "t5",
+      "awayTeamId": "t6",
+      "date": "2026-10-09T21:30:00",
+      "stadium": "ملعب الكبسي",
+      "referee": "هاني البعداني",
+      "status": "finished",
+      "score": {
+        "home": 2,
+        "away": 2
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkkczfmc",
+          "type": "yellow",
+          "minute": 11,
+          "teamId": "t5",
+          "playerId": "p96"
+        },
+        {
+          "id": "e_mvlejjkk3qpb6",
+          "type": "goal",
+          "minute": 22,
+          "teamId": "t5",
+          "playerId": "p94",
+          "assistId": "p85"
+        },
+        {
+          "id": "e_mvlejjkkmhq4p",
+          "type": "yellow",
+          "minute": 36,
+          "teamId": "t6",
+          "playerId": "p112"
+        },
+        {
+          "id": "e_mvlejjkkc4fr2",
+          "type": "penalty",
+          "minute": 45,
+          "teamId": "t6",
+          "playerId": "p116",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkksml4l",
+          "type": "goal",
+          "minute": 50,
+          "teamId": "t5",
+          "playerId": "p84",
+          "assistId": "p96"
+        },
+        {
+          "id": "e_mvlejjkk45sh4",
+          "type": "yellow",
+          "minute": 60,
+          "teamId": "t5",
+          "playerId": "p98"
+        },
+        {
+          "id": "e_mvlejjkkcuw9p",
+          "type": "sub",
+          "minute": 60,
+          "teamId": "t6",
+          "playerId": "p103",
+          "playerOutId": "p120"
+        },
+        {
+          "id": "e_mvlejjkksu20h",
+          "type": "sub",
+          "minute": 62,
+          "teamId": "t6",
+          "playerId": "p104",
+          "playerOutId": "p105"
+        },
+        {
+          "id": "e_mvlejjkk79v7n",
+          "type": "yellow",
+          "minute": 78,
+          "teamId": "t5",
+          "playerId": "p94"
+        },
+        {
+          "id": "e_mvlejjkkdec8h",
+          "type": "sub",
+          "minute": 80,
+          "teamId": "t5",
+          "playerId": "p86",
+          "playerOutId": "p94"
+        },
+        {
+          "id": "e_mvlejjkks17ru",
+          "type": "goal",
+          "minute": 82,
+          "teamId": "t6",
+          "playerId": "p120",
+          "assistId": "p105"
+        },
+        {
+          "id": "e_mvlejjkkaumq2",
+          "type": "sub",
+          "minute": 83,
+          "teamId": "t5",
+          "playerId": "p88",
+          "playerOutId": "p96"
+        },
+        {
+          "id": "e_mvlejjkkyi0db",
+          "type": "sub",
+          "minute": 87,
+          "teamId": "t6",
+          "playerId": "p109",
+          "playerOutId": "p120"
+        },
+        {
+          "id": "e_mvlejjkk9v2zh",
+          "type": "sub",
+          "minute": 89,
+          "teamId": "t5",
+          "playerId": "p87",
+          "playerOutId": "p98"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p81",
+            "p83",
+            "p84",
+            "p89",
+            "p85",
+            "p94",
+            "p92",
+            "p95",
+            "p96",
+            "p98",
+            "p99"
+          ],
+          "bench": [
+            "p82",
+            "p86",
+            "p87",
+            "p88",
+            "p91",
+            "p90",
+            "p100",
+            "p97"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p101",
+            "p108",
+            "p107",
+            "p106",
+            "p105",
+            "p115",
+            "p113",
+            "p112",
+            "p120",
+            "p118",
+            "p116"
+          ],
+          "bench": [
+            "p102",
+            "p109",
+            "p104",
+            "p103",
+            "p110"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 48,
+          "away": 52
+        },
+        "shots": {
+          "home": 10,
+          "away": 12
+        },
+        "shotsOnTarget": {
+          "home": 5,
+          "away": 5
+        },
+        "corners": {
+          "home": 0,
+          "away": 1
+        },
+        "fouls": {
+          "home": 9,
+          "away": 9
+        },
+        "offsides": {
+          "home": 2,
+          "away": 0
+        }
+      }
+    },
+    {
+      "id": "m13",
+      "round": 3,
+      "homeTeamId": "t1",
+      "awayTeamId": "t10",
+      "date": "2026-10-16T15:00:00",
+      "stadium": "ملعب الثورة",
+      "referee": "محمد العامري",
+      "status": "finished",
+      "score": {
+        "home": 3,
+        "away": 0
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkke8d1b",
+          "type": "owngoal",
+          "minute": 30,
+          "teamId": "t1",
+          "playerId": "p188"
+        },
+        {
+          "id": "e_mvlejjkkugwnc",
+          "type": "goal",
+          "minute": 35,
+          "teamId": "t1",
+          "playerId": "p11",
+          "assistId": "p5"
+        },
+        {
+          "id": "e_mvlejjkkv1hbb",
+          "type": "goal",
+          "minute": 44,
+          "teamId": "t1",
+          "playerId": "p13",
+          "assistId": "p11"
+        },
+        {
+          "id": "e_mvlejjkkwx33j",
+          "type": "yellow",
+          "minute": 62,
+          "teamId": "t10",
+          "playerId": "p186"
+        },
+        {
+          "id": "e_mvlejjkksik4i",
+          "type": "sub",
+          "minute": 64,
+          "teamId": "t1",
+          "playerId": "p4",
+          "playerOutId": "p6"
+        },
+        {
+          "id": "e_mvlejjkkui57d",
+          "type": "sub",
+          "minute": 68,
+          "teamId": "t10",
+          "playerId": "p183",
+          "playerOutId": "p198"
+        },
+        {
+          "id": "e_mvlejjkk8d9zn",
+          "type": "sub",
+          "minute": 72,
+          "teamId": "t10",
+          "playerId": "p192",
+          "playerOutId": "p185"
+        },
+        {
+          "id": "e_mvlejjkkl7oml",
+          "type": "sub",
+          "minute": 78,
+          "teamId": "t1",
+          "playerId": "p3",
+          "playerOutId": "p9"
+        },
+        {
+          "id": "e_mvlejjkki0fbr",
+          "type": "sub",
+          "minute": 79,
+          "teamId": "t10",
+          "playerId": "p189",
+          "playerOutId": "p186"
+        },
+        {
+          "id": "e_mvlejjkkusgxa",
+          "type": "yellow",
+          "minute": 84,
+          "teamId": "t10",
+          "playerId": "p190"
+        },
+        {
+          "id": "e_mvlejjkkbbulk",
+          "type": "sub",
+          "minute": 87,
+          "teamId": "t1",
+          "playerId": "p7",
+          "playerOutId": "p13"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p1",
+            "p6",
+            "p9",
+            "p5",
+            "p8",
+            "p13",
+            "p11",
+            "p10",
+            "p18",
+            "p16",
+            "p17"
+          ],
+          "bench": [
+            "p2",
+            "p4",
+            "p3",
+            "p7",
+            "p14",
+            "p15",
+            "p20"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p181",
+            "p188",
+            "p186",
+            "p187",
+            "p185",
+            "p190",
+            "p191",
+            "p195",
+            "p200",
+            "p199",
+            "p198"
+          ],
+          "bench": [
+            "p182",
+            "p183",
+            "p189",
+            "p192",
+            "p194",
+            "p193",
+            "p197"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 54,
+          "away": 46
+        },
+        "shots": {
+          "home": 16,
+          "away": 9
+        },
+        "shotsOnTarget": {
+          "home": 5,
+          "away": 3
+        },
+        "corners": {
+          "home": 5,
+          "away": 5
+        },
+        "fouls": {
+          "home": 10,
+          "away": 7
+        },
+        "offsides": {
+          "home": 0,
+          "away": 3
+        }
+      }
+    },
+    {
+      "id": "m14",
+      "round": 3,
+      "homeTeamId": "t9",
+      "awayTeamId": "t11",
+      "date": "2026-10-16T17:30:00",
+      "stadium": "ملعب التلال",
+      "referee": "صالح الحيدري",
+      "status": "finished",
+      "score": {
+        "home": 0,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkkleiua",
+          "type": "yellow",
+          "minute": 17,
+          "teamId": "t9",
+          "playerId": "p166"
+        },
+        {
+          "id": "e_mvlejjkkx6usr",
+          "type": "sub",
+          "minute": 64,
+          "teamId": "t11",
+          "playerId": "p205",
+          "playerOutId": "p214"
+        },
+        {
+          "id": "e_mvlejjkkroy76",
+          "type": "sub",
+          "minute": 66,
+          "teamId": "t9",
+          "playerId": "p165",
+          "playerOutId": "p163"
+        },
+        {
+          "id": "e_mvlejjkka0b22",
+          "type": "penalty",
+          "minute": 76,
+          "teamId": "t11",
+          "playerId": "p218",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkkr623k",
+          "type": "sub",
+          "minute": 82,
+          "teamId": "t9",
+          "playerId": "p170",
+          "playerOutId": "p171"
+        },
+        {
+          "id": "e_mvlejjkkv59dp",
+          "type": "yellow",
+          "minute": 83,
+          "teamId": "t9",
+          "playerId": "p167"
+        },
+        {
+          "id": "e_mvlejjkkg6lfa",
+          "type": "sub",
+          "minute": 84,
+          "teamId": "t9",
+          "playerId": "p174",
+          "playerOutId": "p176"
+        },
+        {
+          "id": "e_mvlejjkk42m5u",
+          "type": "sub",
+          "minute": 84,
+          "teamId": "t11",
+          "playerId": "p204",
+          "playerOutId": "p207"
+        },
+        {
+          "id": "e_mvlejjkkyhdd9",
+          "type": "sub",
+          "minute": 86,
+          "teamId": "t11",
+          "playerId": "p206",
+          "playerOutId": "p213"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p162",
+            "p167",
+            "p163",
+            "p166",
+            "p164",
+            "p175",
+            "p172",
+            "p171",
+            "p176",
+            "p177",
+            "p179"
+          ],
+          "bench": [
+            "p161",
+            "p165",
+            "p170",
+            "p174",
+            "p173",
+            "p180",
+            "p178"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p201",
+            "p209",
+            "p207",
+            "p208",
+            "p203",
+            "p213",
+            "p212",
+            "p214",
+            "p219",
+            "p218",
+            "p216"
+          ],
+          "bench": [
+            "p202",
+            "p204",
+            "p206",
+            "p205",
+            "p210",
+            "p215",
+            "p220"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 42,
+          "away": 58
+        },
+        "shots": {
+          "home": 11,
+          "away": 6
+        },
+        "shotsOnTarget": {
+          "home": 3,
+          "away": 2
+        },
+        "corners": {
+          "home": 5,
+          "away": 3
+        },
+        "fouls": {
+          "home": 8,
+          "away": 7
+        },
+        "offsides": {
+          "home": 2,
+          "away": 0
+        }
+      }
+    },
+    {
+      "id": "m15",
+      "round": 3,
+      "homeTeamId": "t12",
+      "awayTeamId": "t8",
+      "date": "2026-10-16T17:30:00",
+      "stadium": "ملعب الساحل",
+      "referee": "أكرم الصبيحي",
+      "status": "finished",
+      "score": {
+        "home": 1,
+        "away": 2
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkkyw2j0",
+          "type": "goal",
+          "minute": 9,
+          "teamId": "t12",
+          "playerId": "p234",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkknjqd3",
+          "type": "goal",
+          "minute": 16,
+          "teamId": "t8",
+          "playerId": "p147",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkk6rvay",
+          "type": "owngoal",
+          "minute": 22,
+          "teamId": "t8",
+          "playerId": "p227"
+        },
+        {
+          "id": "e_mvlejjkk56n1z",
+          "type": "yellow",
+          "minute": 53,
+          "teamId": "t12",
+          "playerId": "p240"
+        },
+        {
+          "id": "e_mvlejjkk6574m",
+          "type": "sub",
+          "minute": 63,
+          "teamId": "t12",
+          "playerId": "p231",
+          "playerOutId": "p227"
+        },
+        {
+          "id": "e_mvlejjkkutsna",
+          "type": "yellow",
+          "minute": 69,
+          "teamId": "t12",
+          "playerId": "p228"
+        },
+        {
+          "id": "e_mvlejjkk4c4z4",
+          "type": "sub",
+          "minute": 70,
+          "teamId": "t8",
+          "playerId": "p143",
+          "playerOutId": "p157"
+        },
+        {
+          "id": "e_mvlejjkktlyu9",
+          "type": "sub",
+          "minute": 77,
+          "teamId": "t8",
+          "playerId": "p149",
+          "playerOutId": "p155"
+        },
+        {
+          "id": "e_mvlejjkkcfcgp",
+          "type": "sub",
+          "minute": 85,
+          "teamId": "t12",
+          "playerId": "p230",
+          "playerOutId": "p225"
+        },
+        {
+          "id": "e_mvlejjkkuen2a",
+          "type": "sub",
+          "minute": 88,
+          "teamId": "t8",
+          "playerId": "p148",
+          "playerOutId": "p145"
+        },
+        {
+          "id": "e_mvlejjkkdp7hn",
+          "type": "sub",
+          "minute": 89,
+          "teamId": "t12",
+          "playerId": "p232",
+          "playerOutId": "p223"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p222",
+            "p223",
+            "p227",
+            "p228",
+            "p225",
+            "p235",
+            "p234",
+            "p233",
+            "p240",
+            "p237",
+            "p236"
+          ],
+          "bench": [
+            "p221",
+            "p232",
+            "p231",
+            "p230",
+            "p239",
+            "p238"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p142",
+            "p147",
+            "p146",
+            "p145",
+            "p144",
+            "p153",
+            "p152",
+            "p155",
+            "p158",
+            "p159",
+            "p157"
+          ],
+          "bench": [
+            "p141",
+            "p143",
+            "p149",
+            "p148",
+            "p151",
+            "p150",
+            "p156"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 52,
+          "away": 48
+        },
+        "shots": {
+          "home": 8,
+          "away": 7
+        },
+        "shotsOnTarget": {
+          "home": 5,
+          "away": 3
+        },
+        "corners": {
+          "home": 8,
+          "away": 3
+        },
+        "fouls": {
+          "home": 9,
+          "away": 12
+        },
+        "offsides": {
+          "home": 1,
+          "away": 0
+        }
+      }
+    },
+    {
+      "id": "m16",
+      "round": 3,
+      "homeTeamId": "t7",
+      "awayTeamId": "t2",
+      "date": "2026-10-16T20:00:00",
+      "stadium": "ملعب الحبيشي",
+      "referee": "عبدالرحمن الكاف",
+      "status": "finished",
+      "score": {
+        "home": 3,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkk3m3ul",
+          "type": "goal",
+          "minute": 21,
+          "teamId": "t7",
+          "playerId": "p137",
+          "assistId": "p136"
+        },
+        {
+          "id": "e_mvlejjkkslg94",
+          "type": "goal",
+          "minute": 33,
+          "teamId": "t7",
+          "playerId": "p134",
+          "assistId": "p125"
+        },
+        {
+          "id": "e_mvlejjkkvmnpm",
+          "type": "yellow",
+          "minute": 43,
+          "teamId": "t7",
+          "playerId": "p128"
+        },
+        {
+          "id": "e_mvlejjkktkato",
+          "type": "yellow",
+          "minute": 45,
+          "teamId": "t7",
+          "playerId": "p136"
+        },
+        {
+          "id": "e_mvlejjkk4ucrv",
+          "type": "goal",
+          "minute": 58,
+          "teamId": "t2",
+          "playerId": "p34",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkk6bga9",
+          "type": "goal",
+          "minute": 64,
+          "teamId": "t7",
+          "playerId": "p134",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjkkqcrqc",
+          "type": "sub",
+          "minute": 66,
+          "teamId": "t2",
+          "playerId": "p23",
+          "playerOutId": "p27"
+        },
+        {
+          "id": "e_mvlejjkkfut1b",
+          "type": "sub",
+          "minute": 71,
+          "teamId": "t7",
+          "playerId": "p126",
+          "playerOutId": "p128"
+        },
+        {
+          "id": "e_mvlejjkkeica9",
+          "type": "sub",
+          "minute": 71,
+          "teamId": "t2",
+          "playerId": "p24",
+          "playerOutId": "p35"
+        },
+        {
+          "id": "e_mvlejjkk3sv37",
+          "type": "sub",
+          "minute": 71,
+          "teamId": "t2",
+          "playerId": "p31",
+          "playerOutId": "p34"
+        },
+        {
+          "id": "e_mvlejjkkchfxg",
+          "type": "sub",
+          "minute": 82,
+          "teamId": "t7",
+          "playerId": "p123",
+          "playerOutId": "p137"
+        },
+        {
+          "id": "e_mvlejjkko688q",
+          "type": "sub",
+          "minute": 82,
+          "teamId": "t7",
+          "playerId": "p127",
+          "playerOutId": "p137"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p121",
+            "p128",
+            "p125",
+            "p129",
+            "p124",
+            "p134",
+            "p132",
+            "p133",
+            "p136",
+            "p139",
+            "p137"
+          ],
+          "bench": [
+            "p122",
+            "p123",
+            "p126",
+            "p127",
+            "p135",
+            "p131",
+            "p130",
+            "p140",
+            "p138"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p22",
+            "p26",
+            "p28",
+            "p27",
+            "p25",
+            "p34",
+            "p35",
+            "p30",
+            "p38",
+            "p36",
+            "p37"
+          ],
+          "bench": [
+            "p21",
+            "p24",
+            "p23",
+            "p31",
+            "p32",
+            "p33",
+            "p39"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 41,
+          "away": 59
+        },
+        "shots": {
+          "home": 11,
+          "away": 6
+        },
+        "shotsOnTarget": {
+          "home": 5,
+          "away": 2
+        },
+        "corners": {
+          "home": 6,
+          "away": 7
+        },
+        "fouls": {
+          "home": 6,
+          "away": 11
+        },
+        "offsides": {
+          "home": 4,
+          "away": 1
+        }
+      }
+    },
+    {
+      "id": "m17",
+      "round": 3,
+      "homeTeamId": "t3",
+      "awayTeamId": "t6",
+      "date": "2026-10-16T20:00:00",
+      "stadium": "ملعب العلفي",
+      "referee": "هاني البعداني",
+      "status": "finished",
+      "score": {
+        "home": 3,
+        "away": 0
+      },
+      "events": [
+        {
+          "id": "e_mvlejjkkj5e0r",
+          "type": "goal",
+          "minute": 5,
+          "teamId": "t3",
+          "playerId": "p53",
+          "assistId": "p43"
+        },
+        {
+          "id": "e_mvlejjkk6uhqr",
+          "type": "goal",
+          "minute": 29,
+          "teamId": "t3",
+          "playerId": "p55",
+          "assistId": "p60"
+        },
+        {
+          "id": "e_mvlejjkky1u8b",
+          "type": "goal",
+          "minute": 47,
+          "teamId": "t3",
+          "playerId": "p55",
+          "assistId": "p43"
+        },
+        {
+          "id": "e_mvlejjkk36vkt",
+          "type": "sub",
+          "minute": 69,
+          "teamId": "t3",
+          "playerId": "p46",
+          "playerOutId": "p43"
+        },
+        {
+          "id": "e_mvlejjkk4fwg3",
+          "type": "yellow",
+          "minute": 79,
+          "teamId": "t6",
+          "playerId": "p116"
+        },
+        {
+          "id": "e_mvlejjklxkk6g",
+          "type": "sub",
+          "minute": 81,
+          "teamId": "t6",
+          "playerId": "p105",
+          "playerOutId": "p109"
+        },
+        {
+          "id": "e_mvlejjkkrtok6",
+          "type": "sub",
+          "minute": 82,
+          "teamId": "t6",
+          "playerId": "p106",
+          "playerOutId": "p109"
+        },
+        {
+          "id": "e_mvlejjkka8iye",
+          "type": "sub",
+          "minute": 82,
+          "teamId": "t6",
+          "playerId": "p104",
+          "playerOutId": "p107"
+        },
+        {
+          "id": "e_mvlejjkkv1xct",
+          "type": "sub",
+          "minute": 83,
+          "teamId": "t3",
+          "playerId": "p45",
+          "playerOutId": "p59"
+        },
+        {
+          "id": "e_mvlejjkkctdwz",
+          "type": "sub",
+          "minute": 84,
+          "teamId": "t3",
+          "playerId": "p44",
+          "playerOutId": "p48"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p42",
+            "p47",
+            "p48",
+            "p49",
+            "p43",
+            "p53",
+            "p55",
+            "p52",
+            "p56",
+            "p60",
+            "p59"
+          ],
+          "bench": [
+            "p41",
+            "p44",
+            "p46",
+            "p45",
+            "p51",
+            "p50",
+            "p54",
+            "p57",
+            "p58"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p102",
+            "p109",
+            "p107",
+            "p103",
+            "p108",
+            "p113",
+            "p115",
+            "p112",
+            "p120",
+            "p116",
+            "p118"
+          ],
+          "bench": [
+            "p101",
+            "p106",
+            "p104",
+            "p105",
+            "p110"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 46,
+          "away": 54
+        },
+        "shots": {
+          "home": 10,
+          "away": 7
+        },
+        "shotsOnTarget": {
+          "home": 7,
+          "away": 2
+        },
+        "corners": {
+          "home": 8,
+          "away": 4
+        },
+        "fouls": {
+          "home": 9,
+          "away": 8
+        },
+        "offsides": {
+          "home": 2,
+          "away": 1
+        }
+      }
+    },
+    {
+      "id": "m18",
+      "round": 3,
+      "homeTeamId": "t5",
+      "awayTeamId": "t4",
+      "date": "2026-10-16T21:30:00",
+      "stadium": "ملعب الكبسي",
+      "referee": "نشوان عبيد",
+      "status": "finished",
+      "score": {
+        "home": 0,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjklm6l8x",
+          "type": "goal",
+          "minute": 54,
+          "teamId": "t4",
+          "playerId": "p77",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjklzaw81",
+          "type": "sub",
+          "minute": 63,
+          "teamId": "t5",
+          "playerId": "p87",
+          "playerOutId": "p89"
+        },
+        {
+          "id": "e_mvlejjklv3h3p",
+          "type": "sub",
+          "minute": 64,
+          "teamId": "t5",
+          "playerId": "p84",
+          "playerOutId": "p90"
+        },
+        {
+          "id": "e_mvlejjklmggx3",
+          "type": "sub",
+          "minute": 68,
+          "teamId": "t5",
+          "playerId": "p85",
+          "playerOutId": "p97"
+        },
+        {
+          "id": "e_mvlejjkl8zwwd",
+          "type": "sub",
+          "minute": 71,
+          "teamId": "t4",
+          "playerId": "p69",
+          "playerOutId": "p67"
+        },
+        {
+          "id": "e_mvlejjklh7bwc",
+          "type": "sub",
+          "minute": 75,
+          "teamId": "t4",
+          "playerId": "p68",
+          "playerOutId": "p65"
+        },
+        {
+          "id": "e_mvlejjkln0lq5",
+          "type": "yellow",
+          "minute": 88,
+          "teamId": "t4",
+          "playerId": "p71"
+        },
+        {
+          "id": "e_mvlejjkl81hix",
+          "type": "sub",
+          "minute": 88,
+          "teamId": "t4",
+          "playerId": "p64",
+          "playerOutId": "p65"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p82",
+            "p83",
+            "p86",
+            "p88",
+            "p89",
+            "p90",
+            "p91",
+            "p92",
+            "p96",
+            "p97",
+            "p98"
+          ],
+          "bench": [
+            "p81",
+            "p84",
+            "p87",
+            "p85",
+            "p94",
+            "p95",
+            "p100",
+            "p99"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p61",
+            "p63",
+            "p66",
+            "p67",
+            "p65",
+            "p71",
+            "p74",
+            "p72",
+            "p76",
+            "p79",
+            "p77"
+          ],
+          "bench": [
+            "p62",
+            "p68",
+            "p64",
+            "p69",
+            "p70",
+            "p75",
+            "p80",
+            "p78"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 50,
+          "away": 50
+        },
+        "shots": {
+          "home": 9,
+          "away": 10
+        },
+        "shotsOnTarget": {
+          "home": 4,
+          "away": 3
+        },
+        "corners": {
+          "home": 3,
+          "away": 6
+        },
+        "fouls": {
+          "home": 10,
+          "away": 10
+        },
+        "offsides": {
+          "home": 1,
+          "away": 3
+        }
+      }
+    },
+    {
+      "id": "m19",
+      "round": 4,
+      "homeTeamId": "t9",
+      "awayTeamId": "t1",
+      "date": "2026-10-23T16:47:00",
+      "stadium": "ملعب التلال",
+      "referee": "صالح الحيدري",
+      "status": "finished",
+      "score": {
+        "home": 3,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjklof2rk",
+          "type": "yellow",
+          "minute": 29,
+          "teamId": "t1",
+          "playerId": "p8"
+        },
+        {
+          "id": "e_mvlejjkl491yb",
+          "type": "goal",
+          "minute": 36,
+          "teamId": "t9",
+          "playerId": "p173",
+          "assistId": "p176"
+        },
+        {
+          "id": "e_mvlejjklekzkx",
+          "type": "goal",
+          "minute": 47,
+          "teamId": "t9",
+          "playerId": "p176",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjklpqttj",
+          "type": "goal",
+          "minute": 47,
+          "teamId": "t1",
+          "playerId": "p17",
+          "assistId": "p16"
+        },
+        {
+          "id": "e_mvlejjklucv7a",
+          "type": "sub",
+          "minute": 60,
+          "teamId": "t1",
+          "playerId": "p4",
+          "playerOutId": "p11"
+        },
+        {
+          "id": "e_mvlejjkl103vq",
+          "type": "sub",
+          "minute": 60,
+          "teamId": "t1",
+          "playerId": "p7",
+          "playerOutId": "p14"
+        },
+        {
+          "id": "e_mvlejjklsx3ii",
+          "type": "sub",
+          "minute": 77,
+          "teamId": "t9",
+          "playerId": "p171",
+          "playerOutId": "p165"
+        },
+        {
+          "id": "e_mvlejjklf6oe2",
+          "type": "sub",
+          "minute": 79,
+          "teamId": "t9",
+          "playerId": "p172",
+          "playerOutId": "p170"
+        },
+        {
+          "id": "e_mvlejjklt63h4",
+          "type": "goal",
+          "minute": 81,
+          "teamId": "t9",
+          "playerId": "p177",
+          "assistId": "p166"
+        },
+        {
+          "id": "e_mvlejjkl7hai7",
+          "type": "sub",
+          "minute": 83,
+          "teamId": "t9",
+          "playerId": "p163",
+          "playerOutId": "p174"
+        },
+        {
+          "id": "e_mvlejjklemquy",
+          "type": "sub",
+          "minute": 87,
+          "teamId": "t1",
+          "playerId": "p6",
+          "playerOutId": "p16"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p161",
+            "p166",
+            "p165",
+            "p167",
+            "p164",
+            "p174",
+            "p173",
+            "p170",
+            "p176",
+            "p177",
+            "p179"
+          ],
+          "bench": [
+            "p162",
+            "p163",
+            "p172",
+            "p171",
+            "p175",
+            "p180",
+            "p178"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p2",
+            "p3",
+            "p5",
+            "p9",
+            "p8",
+            "p13",
+            "p11",
+            "p14",
+            "p16",
+            "p20",
+            "p17"
+          ],
+          "bench": [
+            "p1",
+            "p6",
+            "p4",
+            "p7",
+            "p10",
+            "p15",
+            "p18"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 54,
+          "away": 46
+        },
+        "shots": {
+          "home": 14,
+          "away": 6
+        },
+        "shotsOnTarget": {
+          "home": 7,
+          "away": 3
+        },
+        "corners": {
+          "home": 0,
+          "away": 2
+        },
+        "fouls": {
+          "home": 15,
+          "away": 11
+        },
+        "offsides": {
+          "home": 2,
+          "away": 0
+        }
+      }
+    },
+    {
+      "id": "m20",
+      "round": 4,
+      "homeTeamId": "t10",
+      "awayTeamId": "t8",
+      "date": "2026-10-23T19:17:00",
+      "stadium": "ملعب الأهلي",
+      "referee": "أكرم الصبيحي",
+      "status": "live",
+      "score": {
+        "home": 0,
+        "away": 1
+      },
+      "events": [
+        {
+          "id": "e_mvlejjklc8r66",
+          "type": "goal",
+          "minute": 1,
+          "teamId": "t8",
+          "playerId": "p151",
+          "assistId": null
+        },
+        {
+          "id": "e_mvlejjklw2x34",
+          "type": "yellow",
+          "minute": 15,
+          "teamId": "t10",
+          "playerId": "p191"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p182",
+            "p187",
+            "p186",
+            "p185",
+            "p183",
+            "p190",
+            "p191",
+            "p192",
+            "p199",
+            "p197",
+            "p200"
+          ],
+          "bench": [
+            "p181",
+            "p188",
+            "p189",
+            "p195",
+            "p193",
+            "p194",
+            "p198"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p142",
+            "p143",
+            "p148",
+            "p144",
+            "p147",
+            "p155",
+            "p152",
+            "p151",
+            "p158",
+            "p157",
+            "p156"
+          ],
+          "bench": [
+            "p141",
+            "p149",
+            "p146",
+            "p145",
+            "p150",
+            "p153",
+            "p159"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 38,
+          "away": 62
+        },
+        "shots": {
+          "home": 8,
+          "away": 7
+        },
+        "shotsOnTarget": {
+          "home": 4,
+          "away": 3
+        },
+        "corners": {
+          "home": 0,
+          "away": 1
+        },
+        "fouls": {
+          "home": 10,
+          "away": 11
+        },
+        "offsides": {
+          "home": 3,
+          "away": 0
+        }
+      },
+      "minute": 35
+    },
+    {
+      "id": "m21",
+      "round": 4,
+      "homeTeamId": "t7",
+      "awayTeamId": "t11",
+      "date": "2026-10-23T19:47:00",
+      "stadium": "ملعب الحبيشي",
+      "referee": "عبدالرحمن الكاف",
+      "status": "live",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "events": [],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p122",
+            "p123",
+            "p128",
+            "p124",
+            "p126",
+            "p131",
+            "p133",
+            "p134",
+            "p137",
+            "p136",
+            "p139"
+          ],
+          "bench": [
+            "p121",
+            "p125",
+            "p129",
+            "p127",
+            "p135",
+            "p130",
+            "p132",
+            "p140",
+            "p138"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p201",
+            "p206",
+            "p207",
+            "p208",
+            "p205",
+            "p212",
+            "p210",
+            "p214",
+            "p220",
+            "p218",
+            "p219"
+          ],
+          "bench": [
+            "p202",
+            "p204",
+            "p203",
+            "p209",
+            "p213",
+            "p215",
+            "p216"
+          ]
+        }
+      },
+      "stats": {
+        "possession": {
+          "home": 60,
+          "away": 40
+        },
+        "shots": {
+          "home": 6,
+          "away": 3
+        },
+        "shotsOnTarget": {
+          "home": 3,
+          "away": 3
+        },
+        "corners": {
+          "home": 6,
+          "away": 0
+        },
+        "fouls": {
+          "home": 12,
+          "away": 11
+        },
+        "offsides": {
+          "home": 3,
+          "away": 3
+        }
+      },
+      "minute": 20
+    },
+    {
+      "id": "m22",
+      "round": 4,
+      "homeTeamId": "t12",
+      "awayTeamId": "t6",
+      "date": "2026-10-23T21:37:00",
+      "stadium": "ملعب الساحل",
+      "referee": "هاني البعداني",
+      "status": "scheduled",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "events": [],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p221",
+            "p223",
+            "p225",
+            "p227",
+            "p228",
+            "p234",
+            "p231",
+            "p235",
+            "p237",
+            "p236",
+            "p238"
+          ],
+          "bench": [
+            "p222",
+            "p230",
+            "p233",
+            "p232",
+            "p240",
+            "p239"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p101",
+            "p109",
+            "p108",
+            "p103",
+            "p107",
+            "p115",
+            "p113",
+            "p112",
+            "p118",
+            "p116",
+            "p120"
+          ],
+          "bench": [
+            "p102",
+            "p104",
+            "p106",
+            "p105",
+            "p110"
+          ]
+        }
+      },
+      "stats": null
+    },
+    {
+      "id": "m23",
+      "round": 4,
+      "homeTeamId": "t5",
+      "awayTeamId": "t2",
+      "date": "2026-10-23T23:07:00",
+      "stadium": "ملعب الكبسي",
+      "referee": "نشوان عبيد",
+      "status": "scheduled",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "events": [],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p81",
+            "p85",
+            "p87",
+            "p88",
+            "p84",
+            "p94",
+            "p95",
+            "p90",
+            "p96",
+            "p97",
+            "p100"
+          ],
+          "bench": [
+            "p82",
+            "p83",
+            "p86",
+            "p89",
+            "p91",
+            "p92",
+            "p98",
+            "p99"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p22",
+            "p27",
+            "p28",
+            "p26",
+            "p24",
+            "p34",
+            "p32",
+            "p31",
+            "p38",
+            "p36",
+            "p37"
+          ],
+          "bench": [
+            "p21",
+            "p23",
+            "p25",
+            "p33",
+            "p35",
+            "p30",
+            "p39"
+          ]
+        }
+      },
+      "stats": null
+    },
+    {
+      "id": "m24",
+      "round": 4,
+      "homeTeamId": "t3",
+      "awayTeamId": "t4",
+      "date": "2026-10-24T01:07:00",
+      "stadium": "ملعب العلفي",
+      "referee": "محمد العامري",
+      "status": "scheduled",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "events": [],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p42",
+            "p43",
+            "p49",
+            "p47",
+            "p45",
+            "p54",
+            "p50",
+            "p55",
+            "p57",
+            "p59",
+            "p60"
+          ],
+          "bench": [
+            "p41",
+            "p46",
+            "p44",
+            "p48",
+            "p53",
+            "p51",
+            "p52",
+            "p56",
+            "p58"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p62",
+            "p67",
+            "p66",
+            "p65",
+            "p69",
+            "p70",
+            "p74",
+            "p71",
+            "p76",
+            "p77",
+            "p80"
+          ],
+          "bench": [
+            "p61",
+            "p64",
+            "p68",
+            "p63",
+            "p75",
+            "p72",
+            "p79",
+            "p78"
+          ]
+        }
+      },
+      "stats": null
+    },
+    {
+      "id": "m25",
+      "round": 5,
+      "homeTeamId": "t1",
+      "awayTeamId": "t8",
+      "date": "2026-10-30T15:00:00",
+      "stadium": "ملعب الثورة",
+      "referee": "أكرم الصبيحي",
+      "status": "scheduled",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "events": [],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p1",
+            "p4",
+            "p8",
+            "p3",
+            "p9",
+            "p15",
+            "p10",
+            "p11",
+            "p20",
+            "p17",
+            "p16"
+          ],
+          "bench": [
+            "p2",
+            "p5",
+            "p6",
+            "p7",
+            "p13",
+            "p14",
+            "p18"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p142",
+            "p145",
+            "p144",
+            "p148",
+            "p143",
+            "p150",
+            "p153",
+            "p151",
+            "p156",
+            "p157",
+            "p158"
+          ],
+          "bench": [
+            "p141",
+            "p147",
+            "p149",
+            "p146",
+            "p155",
+            "p152",
+            "p159"
+          ]
+        }
+      },
+      "stats": null
+    },
+    {
+      "id": "m26",
+      "round": 5,
+      "homeTeamId": "t7",
+      "awayTeamId": "t9",
+      "date": "2026-10-30T17:30:00",
+      "stadium": "ملعب الحبيشي",
+      "referee": "عبدالرحمن الكاف",
+      "status": "scheduled",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "events": [],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p122",
+            "p129",
+            "p123",
+            "p127",
+            "p128",
+            "p130",
+            "p131",
+            "p132",
+            "p137",
+            "p139",
+            "p136"
+          ],
+          "bench": [
+            "p121",
+            "p126",
+            "p124",
+            "p125",
+            "p133",
+            "p135",
+            "p134",
+            "p138",
+            "p140"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p162",
+            "p163",
+            "p164",
+            "p167",
+            "p165",
+            "p171",
+            "p170",
+            "p175",
+            "p177",
+            "p178",
+            "p179"
+          ],
+          "bench": [
+            "p161",
+            "p166",
+            "p172",
+            "p173",
+            "p174",
+            "p176",
+            "p180"
+          ]
+        }
+      },
+      "stats": null
+    },
+    {
+      "id": "m27",
+      "round": 5,
+      "homeTeamId": "t10",
+      "awayTeamId": "t6",
+      "date": "2026-10-30T17:30:00",
+      "stadium": "ملعب الأهلي",
+      "referee": "هاني البعداني",
+      "status": "scheduled",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "events": [],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p182",
+            "p183",
+            "p189",
+            "p188",
+            "p185",
+            "p194",
+            "p193",
+            "p195",
+            "p197",
+            "p198",
+            "p199"
+          ],
+          "bench": [
+            "p181",
+            "p186",
+            "p187",
+            "p192",
+            "p191",
+            "p190",
+            "p200"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p101",
+            "p105",
+            "p108",
+            "p106",
+            "p109",
+            "p115",
+            "p113",
+            "p110",
+            "p120",
+            "p118",
+            "p116"
+          ],
+          "bench": [
+            "p102",
+            "p107",
+            "p103",
+            "p104",
+            "p112"
+          ]
+        }
+      },
+      "stats": null
+    },
+    {
+      "id": "m28",
+      "round": 5,
+      "homeTeamId": "t5",
+      "awayTeamId": "t11",
+      "date": "2026-10-30T20:00:00",
+      "stadium": "ملعب الكبسي",
+      "referee": "نشوان عبيد",
+      "status": "scheduled",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "events": [],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p81",
+            "p87",
+            "p86",
+            "p85",
+            "p84",
+            "p91",
+            "p90",
+            "p95",
+            "p99",
+            "p98",
+            "p100"
+          ],
+          "bench": [
+            "p82",
+            "p83",
+            "p89",
+            "p88",
+            "p92",
+            "p94",
+            "p97",
+            "p96"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p202",
+            "p205",
+            "p204",
+            "p208",
+            "p207",
+            "p210",
+            "p212",
+            "p214",
+            "p216",
+            "p218",
+            "p219"
+          ],
+          "bench": [
+            "p201",
+            "p203",
+            "p206",
+            "p209",
+            "p213",
+            "p215",
+            "p220"
+          ]
+        }
+      },
+      "stats": null
+    },
+    {
+      "id": "m29",
+      "round": 5,
+      "homeTeamId": "t12",
+      "awayTeamId": "t4",
+      "date": "2026-10-30T20:00:00",
+      "stadium": "ملعب الساحل",
+      "referee": "محمد العامري",
+      "status": "scheduled",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "events": [],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p221",
+            "p227",
+            "p225",
+            "p223",
+            "p228",
+            "p233",
+            "p230",
+            "p232",
+            "p239",
+            "p240",
+            "p238"
+          ],
+          "bench": [
+            "p222",
+            "p231",
+            "p235",
+            "p234",
+            "p237",
+            "p236"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p62",
+            "p63",
+            "p68",
+            "p69",
+            "p65",
+            "p74",
+            "p72",
+            "p75",
+            "p76",
+            "p77",
+            "p78"
+          ],
+          "bench": [
+            "p61",
+            "p67",
+            "p64",
+            "p66",
+            "p71",
+            "p70",
+            "p79",
+            "p80"
+          ]
+        }
+      },
+      "stats": null
+    },
+    {
+      "id": "m30",
+      "round": 5,
+      "homeTeamId": "t3",
+      "awayTeamId": "t2",
+      "date": "2026-10-30T21:30:00",
+      "stadium": "ملعب العلفي",
+      "referee": "صالح الحيدري",
+      "status": "scheduled",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "events": [],
+      "lineups": {
+        "home": {
+          "formation": "4-3-3",
+          "starters": [
+            "p42",
+            "p48",
+            "p49",
+            "p44",
+            "p43",
+            "p51",
+            "p55",
+            "p50",
+            "p60",
+            "p59",
+            "p58"
+          ],
+          "bench": [
+            "p41",
+            "p46",
+            "p45",
+            "p47",
+            "p52",
+            "p53",
+            "p54",
+            "p57",
+            "p56"
+          ]
+        },
+        "away": {
+          "formation": "4-3-3",
+          "starters": [
+            "p22",
+            "p25",
+            "p26",
+            "p27",
+            "p24",
+            "p30",
+            "p31",
+            "p32",
+            "p37",
+            "p36",
+            "p38"
+          ],
+          "bench": [
+            "p21",
+            "p23",
+            "p28",
+            "p35",
+            "p33",
+            "p34",
+            "p39"
+          ]
+        }
+      },
+      "stats": null
+    }
+  ],
+  "discipline": [
+    {
+      "id": "d1",
+      "playerId": "p47",
+      "teamId": "t3",
+      "type": "ban",
+      "matches": 1,
+      "reason": "سلوك غير رياضي تجاه الحكم",
+      "reasonEn": "Unsporting behaviour toward referee",
+      "date": "2026-10-17T20:07:00",
+      "createdBy": "admin"
+    },
+    {
+      "id": "d2",
+      "playerId": "p130",
+      "teamId": "t7",
+      "type": "fine",
+      "amount": 500,
+      "reason": "تأخر عن موعد المباراة",
+      "reasonEn": "Late arrival to match",
+      "date": "2026-10-19T20:07:00",
+      "createdBy": "admin"
+    }
+  ],
+  "ratings": [],
+  "auditLog": [
+    {
+      "id": "a1",
+      "at": "2026-10-23T19:07:58.667Z",
+      "user": "system",
+      "action": "create",
+      "entity": "league",
+      "entityId": "league",
+      "summary": "تهيئة البيانات التجريبية"
+    }
+  ],
+  "fanVotes": [],
+  "meta": {
+    "anchorDate": "2026-10-23T20:07:58.677Z",
+    "note": "Dates are rebased relative to anchorDate on first load so the demo always looks current."
+  }
+}

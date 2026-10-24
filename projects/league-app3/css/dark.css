@@ -1,0 +1,49 @@
+/* =========================================================
+   dark.css — Dark Mode
+   ========================================================= */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0A0E13;
+  --bg-elevated: #121821;
+  --surface: #121821;
+  --surface-2: #19212C;
+  --surface-3: #232D3A;
+  --surface-inverse: #F7F9FB;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --divider: rgba(255, 255, 255, 0.05);
+  --text: #F2F5F8;
+  --text-2: #C3CBD5;
+  --text-3: #8B96A4;
+  --text-4: #5C6775;
+  --brand-primary: #19A87A;
+  --brand-primary-soft: rgba(25, 168, 122, 0.12);
+  --brand-primary-soft-2: rgba(25, 168, 122, 0.2);
+  --brand-gold-600: #E2C15A;
+  --glass-bg: rgba(14, 19, 26, 0.72);
+  --glass-bg-strong: rgba(14, 19, 26, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.35), 0 20px 48px rgba(0, 0, 0, 0.45);
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.45), 0 32px 80px rgba(0, 0, 0, 0.55);
+  --neu-raise: 4px 4px 12px rgba(0, 0, 0, 0.45), -3px -3px 10px rgba(255, 255, 255, 0.03);
+  --neu-inset: inset 2px 2px 6px rgba(0, 0, 0, 0.4), inset -2px -2px 6px rgba(255, 255, 255, 0.02);
+  --grad-hero: radial-gradient(120% 140% at 100% 0%, #11825D 0%, #0A5A40 38%, #04261B 100%);
+}
+[data-theme="dark"] .toast { background: #1E2733; color: #F2F5F8; border: 1px solid rgba(255, 255, 255, 0.08); }
+[data-theme="dark"] .skeleton::after { background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent); }
+[data-theme="dark"] .modal-overlay { background: rgba(0, 0, 0, 0.66); }
+[data-theme="dark"] .select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238B96A4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); }
+[data-theme="dark"] .switch .thumb { background: #F2F5F8; }
+[data-theme="dark"] .pos-GK { color: #F4A261; } [data-theme="dark"] .pos-DF { color: #6EA8FF; }
+[data-theme="dark"] .pos-MF { color: #06D6A0; } [data-theme="dark"] .pos-FW { color: #FF6B76; }
+[data-theme="dark"] .alert-danger { color: #FF8A93; } [data-theme="dark"] .alert-warning { color: #F7B98A; }
+[data-theme="dark"] .alert-info { color: #8AB4FF; } [data-theme="dark"] .alert-success { color: #4BE3BA; }
+[data-theme="dark"] .badge-success { color: #3DDFB2; } [data-theme="dark"] .badge-warning { color: #F7B98A; }
+[data-theme="dark"] .decision-type.fine { color: #F7B98A; } [data-theme="dark"] .decision-type.cancel { color: #3DDFB2; }
+[data-theme="dark"] .audit-dot.create { color: #3DDFB2; }
+[data-theme="dark"] .leader-stats div { background: rgba(255, 255, 255, 0.3); }
+[data-theme="dark"] .chip.active { color: #04261B; }
+[data-theme="dark"] .btn-primary, [data-theme="dark"] .fab { background: linear-gradient(135deg, #14916A 0%, #0B6E4F 100%); }
