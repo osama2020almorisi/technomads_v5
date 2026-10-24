@@ -522,12 +522,15 @@
     },
 
     set(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
+      const normalized = theme === 'dark' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', normalized);
+      document.documentElement.style.colorScheme = normalized;
       if (window.Core?.Storage) {
-        Core.Storage.set(Core.Storage.KEYS.THEME, theme);
+        Core.Storage.set(Core.Storage.KEYS.THEME, normalized);
       }
-      this.updateMetaThemeColor(theme);
-      this.updateIcon(theme);
+      this.updateMetaThemeColor(normalized);
+      this.updateIcon(normalized);
+      window.dispatchEvent(new CustomEvent('league:themechange', { detail: { theme: normalized } }));
     },
 
     toggle() {
@@ -549,10 +552,13 @@
     updateIcon(theme) {
       const btn = document.getElementById('themeToggle');
       if (!btn) return;
-      btn.setAttribute(
-        'aria-label',
-        theme === 'dark' ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الداكن'
-      );
+      const dark = theme === 'dark';
+      btn.setAttribute('aria-label', dark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الداكن');
+      btn.setAttribute('title', dark ? 'الوضع الداكن — اضغط للتبديل' : 'الوضع الفاتح — اضغط للتبديل');
+      btn.setAttribute('aria-pressed', String(dark));
+      btn.innerHTML = dark
+        ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>'
+        : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/></svg>';
     },
 
     getLanguage() {

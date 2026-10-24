@@ -1,0 +1,115 @@
+/* ============================================================
+   POLISH LAYER — motion, navigation, responsiveness and contrast
+   ============================================================ */
+:root {
+  --motion-fast: 160ms;
+  --motion-medium: 260ms;
+  --motion-slow: 420ms;
+}
+html { scroll-behavior: smooth; }
+body {
+  background-image:
+    radial-gradient(ellipse at 8% 0%, color-mix(in srgb, var(--color-primary-500) 7%, transparent), transparent 38%),
+    radial-gradient(ellipse at 95% 18%, color-mix(in srgb, var(--color-accent, #4ECDC4) 7%, transparent), transparent 34%);
+}
+button, a, input, select, textarea, .card, .team-card, .match-card, .stat-card {
+  -webkit-tap-highlight-color: transparent;
+}
+button, .icon-button, .nav-item, .fab {
+  touch-action: manipulation;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-primary-500) 65%, white);
+  outline-offset: 3px;
+}
+.icon-button {
+  transition: transform var(--motion-fast) ease, background var(--motion-fast) ease, border-color var(--motion-fast) ease;
+}
+.icon-button:active { transform: scale(.92); }
+#themeToggle svg { transition: transform 300ms cubic-bezier(.2,.8,.2,1); }
+#themeToggle:active svg { transform: rotate(-18deg) scale(.88); }
+.topbar {
+  padding-top: max(env(safe-area-inset-top), 0px);
+}
+.bottom-nav {
+  padding-bottom: max(env(safe-area-inset-bottom), 5px);
+  backdrop-filter: blur(22px) saturate(1.35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+  border-top: 1px solid var(--border-default);
+}
+.nav-item {
+  position: relative;
+  min-height: 56px;
+  border-radius: 14px;
+  transition: color var(--motion-fast) ease, transform var(--motion-fast) ease, background var(--motion-fast) ease;
+}
+.nav-item:active { transform: scale(.94); }
+.nav-item.active {
+  color: var(--color-primary-600);
+}
+[data-theme="dark"] .nav-item.active { color: var(--color-primary-300); }
+.nav-item.active svg { filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--color-primary-500) 22%, transparent)); }
+.screen:not([hidden]) {
+  animation: screenReveal 320ms cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes screenReveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card, .hero-card, .admin-stat, .stat-card, .team-card, .match-card {
+  transition: transform var(--motion-medium) ease, box-shadow var(--motion-medium) ease, border-color var(--motion-medium) ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .card:hover, .team-card:hover, .match-card:hover, .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: color-mix(in srgb, var(--color-primary-500) 28%, var(--border-default));
+  }
+}
+.hero-card {
+  isolation: isolate;
+  overflow: hidden;
+}
+.hero-card::after {
+  content: "";
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  inset-inline-end: -70px;
+  bottom: -100px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 50%;
+  box-shadow: 0 0 0 22px rgba(255,255,255,.035), 0 0 0 46px rgba(255,255,255,.025);
+  pointer-events: none;
+  z-index: -1;
+}
+input, select, textarea {
+  transition: border-color var(--motion-fast) ease, box-shadow var(--motion-fast) ease, background var(--motion-fast) ease;
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-500) 16%, transparent);
+}
+[data-theme="dark"] .card,
+[data-theme="dark"] .table-wrap,
+[data-theme="dark"] .modal,
+[data-theme="dark"] .admin-shell {
+  border-color: var(--border-default);
+}
+@media (max-width: 480px) {
+  .bottom-nav { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; padding-inline: 4px; }
+  .nav-item { min-height: 58px; gap: 4px; padding: 6px 1px; }
+  .nav-item span { font-size: clamp(8px, 2.35vw, 10px); letter-spacing: -.15px; }
+  .nav-item svg { width: 21px; height: 21px; }
+  .page-heading { gap: 10px; }
+  .page-heading h1 { font-size: clamp(1.35rem, 5vw, 1.8rem); }
+  .hero-card { border-radius: 22px; }
+  .fab { bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 14px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}

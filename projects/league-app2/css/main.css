@@ -34,6 +34,9 @@
 /* 9. Mobile Refinements — بعد كل شيء */
 @import url("./mobile.css");
 
+/* 10. Interaction, navigation and visual polish */
+@import url("./polish.css");
+
 /* ============================================================
    GLOBAL BASE STYLES
    ============================================================ */

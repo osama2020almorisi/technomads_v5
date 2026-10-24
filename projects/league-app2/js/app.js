@@ -173,6 +173,12 @@
        GLOBAL CLICK HANDLER
        ============================================================ */
     wireGlobalClicks() {
+      const themeToggle = document.getElementById('themeToggle');
+      if (themeToggle && !themeToggle.dataset.themeBound) {
+        themeToggle.dataset.themeBound = 'true';
+        themeToggle.addEventListener('click', () => UI.ThemeManager.toggle());
+      }
+
       document.addEventListener('click', e => {
         // 1. data-go → Navigate
         const goBtn = e.target.closest('[data-go]');
