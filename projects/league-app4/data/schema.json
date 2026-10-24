@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "league-app/schema.json",
+  "title": "League App Data",
+  "description": "Reference schema for importing/exporting league data. Only league.name, teams, players and matches are mandatory.",
+  "type": "object",
+  "required": ["league", "teams", "players", "matches"],
+  "properties": {
+    "version": { "type": "integer", "minimum": 1, "default": 1 },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "meta": {
+      "type": "object",
+      "description": "Optional. If anchorDate is present, all match dates are shifted relative to the moment of import (used by the demo data).",
+      "properties": { "anchorDate": { "type": "string", "format": "date-time" } }
+    },
+    "league": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "season": { "type": "string" },
+        "logo": { "type": "string", "description": "URL or base64 data URI" },
+        "country": { "type": "string", "description": "ISO-3166 alpha-2" },
+        "settings": {
+          "type": "object",
+          "properties": {
+            "winPoints": { "type": "number", "default": 3 },
+            "drawPoints": { "type": "number", "default": 1 },
+            "lossPoints": { "type": "number", "default": 0 },
+            "yellowForSuspension": { "type": "integer", "default": 3 },
+            "redCardBan": { "type": "integer", "default": 2 },
+            "resetCardsAfterRounds": { "type": "integer", "default": 0, "description": "0 = never reset" },
+            "tiebreakers": {
+              "type": "array",
+              "items": { "enum": ["points", "h2h", "h2hDiff", "h2hGoals", "diff", "goals", "wins", "fairplay", "draw"] }
+            },
+            "pointsDeduction": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["teamId", "amount", "reason"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "teamId": { "type": "string" },
+                  "amount": { "type": "number" },
+                  "reason": { "type": "string" },
+                  "date": { "type": "string" }
+                }
+              }
+            },
+            "qualificationSpots": {
+              "type": "object",
+              "properties": {
+                "champions": { "type": "integer", "default": 4 },
+                "europa": { "type": "integer", "default": 2 },
+                "relegation": { "type": "integer", "default": 3 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "teams": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "nameEn": { "type": "string" },
+          "shortName": { "type": "string" },
+          "shortNameEn": { "type": "string" },
+          "logo": { "type": "string" },
+          "founded": { "type": "integer" },
+          "stadium": { "type": "string" },
+          "city": { "type": "string" },
+          "colors": {
+            "type": "object",
+            "properties": {
+              "primary": { "type": "string", "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$" },
+              "secondary": { "type": "string", "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$" }
+            }
+          },
+          "coach": { "type": "string" },
+          "group": { "type": "string" }
+        }
+      }
+    },
+    "players": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "teamId", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "teamId": { "type": "string" },
+          "name": { "type": "string" },
+          "nameEn": { "type": "string" },
+          "number": { "type": "integer" },
+          "position": { "enum": ["GK", "DF", "MF", "FW"] },
+          "birthdate": { "type": "string", "format": "date" },
+          "nationality": { "type": "string" },
+          "photo": { "type": "string" },
+          "status": { "enum": ["active", "injured", "suspended", "inactive"] }
+        }
+      }
+    },
+    "matches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "homeTeamId", "awayTeamId"],
+        "properties": {
+          "id": { "type": "string" },
+          "round": { "type": "integer" },
+          "homeTeamId": { "type": "string" },
+          "awayTeamId": { "type": "string" },
+          "date": { "type": "string" },
+          "stadium": { "type": "string" },
+          "referee": { "type": "string" },
+          "status": { "enum": ["scheduled", "live", "finished", "postponed"] },
+          "minute": { "type": "integer" },
+          "score": {
+            "type": "object",
+            "properties": { "home": { "type": "integer" }, "away": { "type": "integer" } }
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "minute", "teamId"],
+              "properties": {
+                "id": { "type": "string" },
+                "type": { "enum": ["goal", "penalty", "owngoal", "yellow", "red", "sub"] },
+                "minute": { "type": "integer" },
+                "teamId": { "type": "string", "description": "For owngoal: the team that BENEFITS from the goal" },
+                "playerId": { "type": "string", "description": "For sub: the player coming in" },
+                "assistId": { "type": ["string", "null"] },
+                "playerOutId": { "type": "string" },
+                "auto": { "type": "boolean", "description": "true for a red generated by a second yellow" }
+              }
+            }
+          },
+          "lineups": {
+            "type": ["object", "null"],
+            "properties": {
+              "home": { "$ref": "#/$defs/lineup" },
+              "away": { "$ref": "#/$defs/lineup" }
+            }
+          },
+          "stats": {
+            "type": ["object", "null"],
+            "description": "Each key holds {home, away}: possession, shots, shotsOnTarget, corners, fouls, offsides"
+          }
+        }
+      }
+    },
+    "discipline": {
+      "type": "array",
+      "description": "Manual committee decisions",
+      "items": {
+        "type": "object",
+        "required": ["id", "playerId", "type", "date"],
+        "properties": {
+          "id": { "type": "string" },
+          "playerId": { "type": "string" },
+          "teamId": { "type": "string" },
+          "type": { "enum": ["ban", "cancel", "fine", "reset"] },
+          "matches": { "type": "integer" },
+          "amount": { "type": "number" },
+          "reason": { "type": "string" },
+          "date": { "type": "string" }
+        }
+      }
+    },
+    "ratings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "matchId": { "type": "string" },
+          "playerId": { "type": "string" },
+          "rating": { "type": "number", "minimum": 1, "maximum": 10 }
+        }
+      }
+    },
+    "auditLog": { "type": "array" },
+    "fanVotes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "matchId": { "type": "string" },
+          "playerId": { "type": "string" },
+          "voterId": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "lineup": {
+      "type": "object",
+      "properties": {
+        "formation": { "type": "string" },
+        "starters": { "type": "array", "items": { "type": "string" } },
+        "bench": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

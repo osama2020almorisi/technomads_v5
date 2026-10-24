@@ -1,0 +1,29 @@
+/* =========================================================
+   glass.css — Glassmorphism
+   ========================================================= */
+.glass {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: saturate(180%) blur(var(--glass-blur));
+  backdrop-filter: saturate(180%) blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+.glass-strong {
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: saturate(180%) blur(28px);
+  backdrop-filter: saturate(180%) blur(28px);
+}
+.topbar.glass { border: none; border-bottom: 1px solid var(--border); }
+.bottom-nav.glass { border: none; border-top: 1px solid var(--border); box-shadow: 0 -6px 24px rgba(10, 14, 19, 0.06); }
+.fab-action.glass { border: 1px solid var(--border); color: var(--text); }
+.admin-tabs.glass { border: none; background: linear-gradient(180deg, var(--bg) 60%, transparent); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.glass-card {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass, .glass-strong, .glass-card { background: var(--surface); }
+}

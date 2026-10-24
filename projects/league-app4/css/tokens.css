@@ -1,0 +1,156 @@
+/* =========================================================
+   tokens.css — Design Tokens
+   ========================================================= */
+:root {
+  /* Brand */
+  --brand-primary: #0B6E4F;
+  --brand-primary-600: #095C42;
+  --brand-primary-700: #074A35;
+  --brand-primary-400: #14916A;
+  --brand-primary-300: #3FB68F;
+  --brand-primary-soft: rgba(11, 110, 79, 0.10);
+  --brand-primary-soft-2: rgba(11, 110, 79, 0.18);
+  --brand-gold: #D4AF37;
+  --brand-gold-600: #B8942A;
+  --brand-gold-300: #E8CD72;
+  --brand-gold-soft: rgba(212, 175, 55, 0.16);
+
+  /* Semantic */
+  --danger: #E63946;
+  --danger-soft: rgba(230, 57, 70, 0.12);
+  --success: #06D6A0;
+  --success-soft: rgba(6, 214, 160, 0.14);
+  --warning: #F4A261;
+  --warning-soft: rgba(244, 162, 97, 0.16);
+  --info: #3A86FF;
+  --info-soft: rgba(58, 134, 255, 0.12);
+  --card-yellow: #FFD60A;
+  --card-red: #E63946;
+
+  /* Surfaces (light) */
+  --bg: #F7F9FB;
+  --bg-elevated: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-2: #F1F4F7;
+  --surface-3: #E7ECF1;
+  --surface-inverse: #0A0E13;
+  --border: rgba(10, 14, 19, 0.08);
+  --border-strong: rgba(10, 14, 19, 0.14);
+  --divider: rgba(10, 14, 19, 0.06);
+
+  /* Text */
+  --text: #0A0E13;
+  --text-2: #3D4652;
+  --text-3: #6B7684;
+  --text-4: #9AA4B0;
+  --text-inverse: #FFFFFF;
+  --text-on-primary: #FFFFFF;
+
+  /* Zones */
+  --zone-champions: #0B6E4F;
+  --zone-europa: #3A86FF;
+  --zone-relegation: #E63946;
+
+  /* Typography */
+  --font-ar: 'Cairo', 'Tajawal', system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif;
+  --font-body: 'Tajawal', 'Cairo', system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --fs-2xs: 0.6875rem;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-md: 0.9375rem;
+  --fs-lg: 1.0625rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 1.875rem;
+  --fs-4xl: 2.5rem;
+  --fs-score: 3rem;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-heavy: 800;
+  --fw-black: 900;
+
+  --lh-tight: 1.2;
+  --lh-snug: 1.35;
+  --lh-normal: 1.55;
+
+  /* Spacing (4px grid) */
+  --sp-0: 0;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 28px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* Radius */
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+  --r-2xl: 32px;
+  --r-full: 999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(10, 14, 19, 0.05);
+  --shadow-sm: 0 1px 2px rgba(10, 14, 19, 0.04), 0 2px 8px rgba(10, 14, 19, 0.05);
+  --shadow-md: 0 2px 4px rgba(10, 14, 19, 0.04), 0 8px 24px rgba(10, 14, 19, 0.08);
+  --shadow-lg: 0 4px 12px rgba(10, 14, 19, 0.06), 0 20px 48px rgba(10, 14, 19, 0.12);
+  --shadow-xl: 0 12px 32px rgba(10, 14, 19, 0.10), 0 32px 80px rgba(10, 14, 19, 0.16);
+  --shadow-primary: 0 8px 24px rgba(11, 110, 79, 0.32);
+  --shadow-gold: 0 8px 28px rgba(212, 175, 55, 0.36);
+  --neu-raise: 6px 6px 14px rgba(10, 14, 19, 0.06), -6px -6px 14px rgba(255, 255, 255, 0.9);
+  --neu-inset: inset 2px 2px 6px rgba(10, 14, 19, 0.07), inset -2px -2px 6px rgba(255, 255, 255, 0.9);
+
+  /* Gradients */
+  --grad-primary: linear-gradient(135deg, #0B6E4F 0%, #0E8A63 50%, #075239 100%);
+  --grad-hero: radial-gradient(120% 140% at 100% 0%, #14916A 0%, #0B6E4F 38%, #063D2C 100%);
+  --grad-gold: linear-gradient(135deg, #F3DE8A 0%, #D4AF37 45%, #A8862A 100%);
+  --grad-gold-soft: linear-gradient(135deg, rgba(243, 222, 138, 0.28) 0%, rgba(212, 175, 55, 0.14) 100%);
+  --grad-live: linear-gradient(120deg, #063D2C, #0B6E4F, #0A0E13, #0B6E4F, #063D2C);
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-bg-strong: rgba(255, 255, 255, 0.86);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-blur: 20px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 150ms;
+  --dur: 300ms;
+  --dur-slow: 500ms;
+
+  /* Layout */
+  --topbar-h: 60px;
+  --nav-h: 68px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --container: 760px;
+  --container-wide: 1080px;
+
+  /* Z-index */
+  --z-base: 1;
+  --z-sticky: 20;
+  --z-topbar: 40;
+  --z-nav: 50;
+  --z-fab: 55;
+  --z-overlay: 80;
+  --z-modal: 90;
+  --z-toast: 100;
+  --z-splash: 120;
+
+  color-scheme: light;
+}
