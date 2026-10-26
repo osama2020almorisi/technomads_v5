@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-23T20:07:58.667Z",
+  "updatedAt": "2026-10-26T18:37:33.927Z",
   "league": {
-    "name": "دوري النخبة",
-    "nameEn": "Elite League",
+    "name": "دوري الغارقه",
+    "nameEn": "sunken league",
     "season": "2026/2027",
     "logo": "",
     "country": "YE",
@@ -32,7 +32,7 @@
           "amount": 3,
           "reason": "مخالفة لوائح التسجيل",
           "reasonEn": "Registration breach",
-          "date": "2026-10-14T20:07:00"
+          "date": "2026-10-15T19:48:00"
         }
       ],
       "qualificationSpots": {
@@ -3148,7 +3148,7 @@
       "round": 1,
       "homeTeamId": "t1",
       "awayTeamId": "t12",
-      "date": "2026-10-02T15:00:00",
+      "date": "2026-10-03T14:41:00",
       "stadium": "ملعب الثورة",
       "referee": "هاني البعداني",
       "status": "finished",
@@ -3347,7 +3347,7 @@
       "round": 1,
       "homeTeamId": "t11",
       "awayTeamId": "t2",
-      "date": "2026-10-02T17:30:00",
+      "date": "2026-10-03T17:11:00",
       "stadium": "ملعب ذمار",
       "referee": "نشوان عبيد",
       "status": "finished",
@@ -3526,7 +3526,7 @@
       "round": 1,
       "homeTeamId": "t3",
       "awayTeamId": "t10",
-      "date": "2026-10-02T17:30:00",
+      "date": "2026-10-03T17:11:00",
       "stadium": "ملعب العلفي",
       "referee": "محمد العامري",
       "status": "finished",
@@ -3707,7 +3707,7 @@
       "round": 1,
       "homeTeamId": "t9",
       "awayTeamId": "t4",
-      "date": "2026-10-02T20:00:00",
+      "date": "2026-10-03T19:41:00",
       "stadium": "ملعب التلال",
       "referee": "صالح الحيدري",
       "status": "finished",
@@ -3858,7 +3858,7 @@
       "round": 1,
       "homeTeamId": "t5",
       "awayTeamId": "t8",
-      "date": "2026-10-02T20:00:00",
+      "date": "2026-10-03T19:41:00",
       "stadium": "ملعب الكبسي",
       "referee": "أكرم الصبيحي",
       "status": "finished",
@@ -4037,7 +4037,7 @@
       "round": 1,
       "homeTeamId": "t7",
       "awayTeamId": "t6",
-      "date": "2026-10-02T21:30:00",
+      "date": "2026-10-03T21:11:00",
       "stadium": "ملعب الحبيشي",
       "referee": "عبدالرحمن الكاف",
       "status": "finished",
@@ -4216,7 +4216,7 @@
       "round": 2,
       "homeTeamId": "t11",
       "awayTeamId": "t1",
-      "date": "2026-10-09T15:00:00",
+      "date": "2026-10-10T14:41:00",
       "stadium": "ملعب ذمار",
       "referee": "نشوان عبيد",
       "status": "finished",
@@ -4410,7 +4410,7 @@
       "round": 2,
       "homeTeamId": "t12",
       "awayTeamId": "t10",
-      "date": "2026-10-09T17:30:00",
+      "date": "2026-10-10T17:11:00",
       "stadium": "ملعب الساحل",
       "referee": "محمد العامري",
       "status": "finished",
@@ -4588,7 +4588,7 @@
       "round": 2,
       "homeTeamId": "t9",
       "awayTeamId": "t2",
-      "date": "2026-10-09T17:30:00",
+      "date": "2026-10-10T17:11:00",
       "stadium": "ملعب التلال",
       "referee": "صالح الحيدري",
       "status": "finished",
@@ -4782,7 +4782,7 @@
       "round": 2,
       "homeTeamId": "t3",
       "awayTeamId": "t8",
-      "date": "2026-10-09T20:00:00",
+      "date": "2026-10-10T19:41:00",
       "stadium": "ملعب العلفي",
       "referee": "أكرم الصبيحي",
       "status": "finished",
@@ -4970,7 +4970,7 @@
       "round": 2,
       "homeTeamId": "t7",
       "awayTeamId": "t4",
-      "date": "2026-10-09T20:00:00",
+      "date": "2026-10-10T19:41:00",
       "stadium": "ملعب الحبيشي",
       "referee": "عبدالرحمن الكاف",
       "status": "finished",
@@ -5150,7 +5150,7 @@
       "round": 2,
       "homeTeamId": "t5",
       "awayTeamId": "t6",
-      "date": "2026-10-09T21:30:00",
+      "date": "2026-10-10T21:11:00",
       "stadium": "ملعب الكبسي",
       "referee": "هاني البعداني",
       "status": "finished",
@@ -5351,7 +5351,7 @@
       "round": 3,
       "homeTeamId": "t1",
       "awayTeamId": "t10",
-      "date": "2026-10-16T15:00:00",
+      "date": "2026-10-17T14:41:00",
       "stadium": "ملعب الثورة",
       "referee": "محمد العامري",
       "status": "finished",
@@ -5530,7 +5530,7 @@
       "round": 3,
       "homeTeamId": "t9",
       "awayTeamId": "t11",
-      "date": "2026-10-16T17:30:00",
+      "date": "2026-10-17T17:11:00",
       "stadium": "ملعب التلال",
       "referee": "صالح الحيدري",
       "status": "finished",
@@ -5694,7 +5694,7 @@
       "round": 3,
       "homeTeamId": "t12",
       "awayTeamId": "t8",
-      "date": "2026-10-16T17:30:00",
+      "date": "2026-10-17T17:11:00",
       "stadium": "ملعب الساحل",
       "referee": "أكرم الصبيحي",
       "status": "finished",
@@ -5872,7 +5872,7 @@
       "round": 3,
       "homeTeamId": "t7",
       "awayTeamId": "t2",
-      "date": "2026-10-16T20:00:00",
+      "date": "2026-10-17T19:41:00",
       "stadium": "ملعب الحبيشي",
       "referee": "عبدالرحمن الكاف",
       "status": "finished",
@@ -6062,7 +6062,7 @@
       "round": 3,
       "homeTeamId": "t3",
       "awayTeamId": "t6",
-      "date": "2026-10-16T20:00:00",
+      "date": "2026-10-17T19:41:00",
       "stadium": "ملعب العلفي",
       "referee": "هاني البعداني",
       "status": "finished",
@@ -6235,7 +6235,7 @@
       "round": 3,
       "homeTeamId": "t5",
       "awayTeamId": "t4",
-      "date": "2026-10-16T21:30:00",
+      "date": "2026-10-17T21:11:00",
       "stadium": "ملعب الكبسي",
       "referee": "نشوان عبيد",
       "status": "finished",
@@ -6394,7 +6394,7 @@
       "round": 4,
       "homeTeamId": "t9",
       "awayTeamId": "t1",
-      "date": "2026-10-23T16:47:00",
+      "date": "2026-10-24T16:28:00",
       "stadium": "ملعب التلال",
       "referee": "صالح الحيدري",
       "status": "finished",
@@ -6575,7 +6575,7 @@
       "round": 4,
       "homeTeamId": "t10",
       "awayTeamId": "t8",
-      "date": "2026-10-23T19:17:00",
+      "date": "2026-10-24T18:58:00",
       "stadium": "ملعب الأهلي",
       "referee": "أكرم الصبيحي",
       "status": "live",
@@ -6678,14 +6678,14 @@
           "away": 0
         }
       },
-      "minute": 35
+      "minute": 90
     },
     {
       "id": "m21",
       "round": 4,
       "homeTeamId": "t7",
       "awayTeamId": "t11",
-      "date": "2026-10-23T19:47:00",
+      "date": "2026-10-24T19:28:00",
       "stadium": "ملعب الحبيشي",
       "referee": "عبدالرحمن الكاف",
       "status": "live",
@@ -6774,14 +6774,14 @@
           "away": 3
         }
       },
-      "minute": 20
+      "minute": 90
     },
     {
       "id": "m22",
       "round": 4,
       "homeTeamId": "t12",
       "awayTeamId": "t6",
-      "date": "2026-10-23T21:37:00",
+      "date": "2026-10-24T21:18:00",
       "stadium": "ملعب الساحل",
       "referee": "هاني البعداني",
       "status": "scheduled",
@@ -6846,7 +6846,7 @@
       "round": 4,
       "homeTeamId": "t5",
       "awayTeamId": "t2",
-      "date": "2026-10-23T23:07:00",
+      "date": "2026-10-24T22:48:00",
       "stadium": "ملعب الكبسي",
       "referee": "نشوان عبيد",
       "status": "scheduled",
@@ -6915,7 +6915,7 @@
       "round": 4,
       "homeTeamId": "t3",
       "awayTeamId": "t4",
-      "date": "2026-10-24T01:07:00",
+      "date": "2026-10-25T00:48:00",
       "stadium": "ملعب العلفي",
       "referee": "محمد العامري",
       "status": "scheduled",
@@ -6986,7 +6986,7 @@
       "round": 5,
       "homeTeamId": "t1",
       "awayTeamId": "t8",
-      "date": "2026-10-30T15:00:00",
+      "date": "2026-10-31T14:41:00",
       "stadium": "ملعب الثورة",
       "referee": "أكرم الصبيحي",
       "status": "scheduled",
@@ -7054,7 +7054,7 @@
       "round": 5,
       "homeTeamId": "t7",
       "awayTeamId": "t9",
-      "date": "2026-10-30T17:30:00",
+      "date": "2026-10-31T17:11:00",
       "stadium": "ملعب الحبيشي",
       "referee": "عبدالرحمن الكاف",
       "status": "scheduled",
@@ -7124,7 +7124,7 @@
       "round": 5,
       "homeTeamId": "t10",
       "awayTeamId": "t6",
-      "date": "2026-10-30T17:30:00",
+      "date": "2026-10-31T17:11:00",
       "stadium": "ملعب الأهلي",
       "referee": "هاني البعداني",
       "status": "scheduled",
@@ -7190,7 +7190,7 @@
       "round": 5,
       "homeTeamId": "t5",
       "awayTeamId": "t11",
-      "date": "2026-10-30T20:00:00",
+      "date": "2026-10-31T19:41:00",
       "stadium": "ملعب الكبسي",
       "referee": "نشوان عبيد",
       "status": "scheduled",
@@ -7259,7 +7259,7 @@
       "round": 5,
       "homeTeamId": "t12",
       "awayTeamId": "t4",
-      "date": "2026-10-30T20:00:00",
+      "date": "2026-10-31T19:41:00",
       "stadium": "ملعب الساحل",
       "referee": "محمد العامري",
       "status": "scheduled",
@@ -7327,7 +7327,7 @@
       "round": 5,
       "homeTeamId": "t3",
       "awayTeamId": "t2",
-      "date": "2026-10-30T21:30:00",
+      "date": "2026-10-31T21:11:00",
       "stadium": "ملعب العلفي",
       "referee": "صالح الحيدري",
       "status": "scheduled",
@@ -7402,7 +7402,7 @@
       "matches": 1,
       "reason": "سلوك غير رياضي تجاه الحكم",
       "reasonEn": "Unsporting behaviour toward referee",
-      "date": "2026-10-17T20:07:00",
+      "date": "2026-10-18T19:48:00",
       "createdBy": "admin"
     },
     {
@@ -7413,12 +7413,462 @@
       "amount": 500,
       "reason": "تأخر عن موعد المباراة",
       "reasonEn": "Late arrival to match",
-      "date": "2026-10-19T20:07:00",
+      "date": "2026-10-20T19:48:00",
       "createdBy": "admin"
     }
   ],
   "ratings": [],
   "auditLog": [
+    {
+      "id": "a_mvn0y2gh4gq9r",
+      "at": "2026-10-24T23:22:54.065Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "m20",
+      "summary": "PNG",
+      "diff": null
+    },
+    {
+      "id": "a_mvn0wfsveevxb",
+      "at": "2026-10-24T23:21:38.047Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "round-4",
+      "summary": "PNG",
+      "diff": null
+    },
+    {
+      "id": "a_mvn0w15qx552a",
+      "at": "2026-10-24T23:21:19.070Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "pdf",
+      "summary": "PDF report",
+      "diff": null
+    },
+    {
+      "id": "a_mvn0vb9ucfp8i",
+      "at": "2026-10-24T23:20:45.522Z",
+      "user": "admin",
+      "action": "update",
+      "entity": "league",
+      "entityId": "league",
+      "summary": "تعديل بيانات البطولة",
+      "diff": {
+        "nameEn": {
+          "from": "Elite League",
+          "to": "sunken league"
+        }
+      }
+    },
+    {
+      "id": "a_mvn0touubxbda",
+      "at": "2026-10-24T23:19:29.814Z",
+      "user": "admin",
+      "action": "update",
+      "entity": "league",
+      "entityId": "league",
+      "summary": "تعديل بيانات البطولة",
+      "diff": {
+        "name": {
+          "from": "دوري النخبة",
+          "to": "دوري الغارقه"
+        }
+      }
+    },
+    {
+      "id": "a_mvn0t0tskjs68",
+      "at": "2026-10-24T23:18:58.672Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "pdf",
+      "summary": "PDF report",
+      "diff": null
+    },
+    {
+      "id": "a_mvn0r2srveu3o",
+      "at": "2026-10-24T23:17:27.915Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "round-4",
+      "summary": "PNG",
+      "diff": null
+    },
+    {
+      "id": "a_mvn0p5uk4zkc2",
+      "at": "2026-10-24T23:15:58.556Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "round-4",
+      "summary": "PNG",
+      "diff": null
+    },
+    {
+      "id": "a_mvn0p2yfy8tce",
+      "at": "2026-10-24T23:15:54.807Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "round-4",
+      "summary": "PNG",
+      "diff": null
+    },
+    {
+      "id": "a_mvn0oxh8g2soi",
+      "at": "2026-10-24T23:15:47.708Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "round-4",
+      "summary": "PNG",
+      "diff": null
+    },
+    {
+      "id": "a_mvmwp9dhqdh06",
+      "at": "2026-10-24T21:24:04.661Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "m20",
+      "summary": "PNG",
+      "diff": null
+    },
+    {
+      "id": "a_mvmwoa0nyxu5n",
+      "at": "2026-10-24T21:23:18.839Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "m20",
+      "summary": "PNG",
+      "diff": null
+    },
+    {
+      "id": "a_mvmwo2p85tmiz",
+      "at": "2026-10-24T21:23:09.356Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "m20",
+      "summary": "PNG",
+      "diff": null
+    },
+    {
+      "id": "a_mvmvlr7lwr3et",
+      "at": "2026-10-24T20:53:21.537Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "m20",
+      "summary": "PDF",
+      "diff": null
+    },
+    {
+      "id": "a_mvmu1lla0jn3l",
+      "at": "2026-10-24T20:09:41.518Z",
+      "user": "admin",
+      "action": "create",
+      "entity": "export",
+      "entityId": "pdf",
+      "summary": "PDF report",
+      "diff": null
+    },
+    {
+      "id": "a_mvmtz09xu7xc2",
+      "at": "2026-10-24T20:07:40.581Z",
+      "user": "admin",
+      "action": "update",
+      "entity": "settings",
+      "entityId": "league",
+      "summary": "تعديل قواعد البطولة",
+      "diff": {
+        "tiebreakers": {
+          "from": [
+            "points",
+            "h2hDiff",
+            "goals",
+            "h2h",
+            "h2hGoals",
+            "diff",
+            "wins",
+            "draw",
+            "fairplay"
+          ],
+          "to": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "fairplay",
+            "draw"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a_mvmtyyaekfguq",
+      "at": "2026-10-24T20:07:38.006Z",
+      "user": "admin",
+      "action": "update",
+      "entity": "settings",
+      "entityId": "league",
+      "summary": "تعديل قواعد البطولة",
+      "diff": {
+        "tiebreakers": {
+          "from": [
+            "points",
+            "h2hDiff",
+            "h2h",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "draw",
+            "fairplay"
+          ],
+          "to": [
+            "points",
+            "h2hDiff",
+            "goals",
+            "h2h",
+            "h2hGoals",
+            "diff",
+            "wins",
+            "draw",
+            "fairplay"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a_mvmtyolgr713g",
+      "at": "2026-10-24T20:07:25.444Z",
+      "user": "admin",
+      "action": "update",
+      "entity": "settings",
+      "entityId": "league",
+      "summary": "تعديل قواعد البطولة",
+      "diff": {
+        "tiebreakers": {
+          "from": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "draw",
+            "fairplay"
+          ],
+          "to": [
+            "points",
+            "h2hDiff",
+            "h2h",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "draw",
+            "fairplay"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a_mvmtyns2f693t",
+      "at": "2026-10-24T20:07:24.386Z",
+      "user": "admin",
+      "action": "update",
+      "entity": "settings",
+      "entityId": "league",
+      "summary": "تعديل قواعد البطولة",
+      "diff": {
+        "tiebreakers": {
+          "from": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "wins",
+            "goals",
+            "draw",
+            "fairplay"
+          ],
+          "to": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "draw",
+            "fairplay"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a_mvmtymh1yqtxe",
+      "at": "2026-10-24T20:07:22.693Z",
+      "user": "admin",
+      "action": "update",
+      "entity": "settings",
+      "entityId": "league",
+      "summary": "تعديل قواعد البطولة",
+      "diff": {
+        "tiebreakers": {
+          "from": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "draw",
+            "fairplay"
+          ],
+          "to": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "wins",
+            "goals",
+            "draw",
+            "fairplay"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a_mvmtykvtpruvp",
+      "at": "2026-10-24T20:07:20.633Z",
+      "user": "admin",
+      "action": "update",
+      "entity": "settings",
+      "entityId": "league",
+      "summary": "تعديل قواعد البطولة",
+      "diff": {
+        "tiebreakers": {
+          "from": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "fairplay",
+            "draw"
+          ],
+          "to": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "draw",
+            "fairplay"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a_mvmtyjwxf46ud",
+      "at": "2026-10-24T20:07:19.377Z",
+      "user": "admin",
+      "action": "update",
+      "entity": "settings",
+      "entityId": "league",
+      "summary": "تعديل قواعد البطولة",
+      "diff": {
+        "tiebreakers": {
+          "from": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "draw",
+            "fairplay"
+          ],
+          "to": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "fairplay",
+            "draw"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a_mvmtyipx5qj6j",
+      "at": "2026-10-24T20:07:17.829Z",
+      "user": "admin",
+      "action": "update",
+      "entity": "settings",
+      "entityId": "league",
+      "summary": "تعديل قواعد البطولة",
+      "diff": {
+        "tiebreakers": {
+          "from": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "fairplay",
+            "draw"
+          ],
+          "to": [
+            "points",
+            "h2h",
+            "h2hDiff",
+            "h2hGoals",
+            "diff",
+            "goals",
+            "wins",
+            "draw",
+            "fairplay"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a_mvmtijagrpw06",
+      "at": "2026-10-24T19:54:52.072Z",
+      "user": "admin",
+      "action": "login",
+      "entity": "session",
+      "entityId": "admin",
+      "summary": "تسجيل دخول المسؤول",
+      "diff": null
+    },
     {
       "id": "a1",
       "at": "2026-10-23T19:07:58.667Z",
@@ -7429,9 +7879,5 @@
       "summary": "تهيئة البيانات التجريبية"
     }
   ],
-  "fanVotes": [],
-  "meta": {
-    "anchorDate": "2026-10-23T20:07:58.677Z",
-    "note": "Dates are rebased relative to anchorDate on first load so the demo always looks current."
-  }
+  "fanVotes": []
 }
