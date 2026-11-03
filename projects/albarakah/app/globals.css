@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────── متغيرات الألوان (Light / Dark) ───────── */
+@layer base {
+  :root {
+    --background: 43 70% 95%;          /* بيج فاتح #FAF3E0 تقريباً */
+    --foreground: 152 40% 10%;
+    --card: 40 80% 98%;
+    --card-foreground: 152 40% 10%;
+    --popover: 40 80% 98%;
+    --popover-foreground: 152 40% 10%;
+    --primary: 153 42% 18%;            /* أخضر داكن #1B4332 */
+    --primary-foreground: 43 70% 95%;
+    --secondary: 43 74% 46%;           /* عسلي #D4A017 */
+    --secondary-foreground: 152 40% 8%;
+    --muted: 40 45% 89%;
+    --muted-foreground: 30 14% 34%;
+    --accent: 43 74% 46%;
+    --accent-foreground: 152 40% 8%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 38 35% 82%;
+    --input: 38 35% 80%;
+    --ring: 43 74% 46%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 152 35% 5%;
+    --foreground: 40 55% 92%;
+    --card: 152 30% 8%;
+    --card-foreground: 40 55% 92%;
+    --popover: 152 30% 8%;
+    --popover-foreground: 40 55% 92%;
+    --primary: 45 91% 53%;             /* ذهبي #F5C518 */
+    --primary-foreground: 152 40% 6%;
+    --secondary: 43 74% 46%;
+    --secondary-foreground: 152 40% 6%;
+    --muted: 152 22% 13%;
+    --muted-foreground: 40 18% 68%;
+    --accent: 43 74% 46%;
+    --accent-foreground: 152 40% 6%;
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 152 18% 17%;
+    --input: 152 18% 20%;
+    --ring: 45 91% 53%;
+  }
+
+  * { @apply border-border; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+
+  /* العربية: خط Cairo للنص والعناوين */
+  html[dir="rtl"] body,
+  html[dir="rtl"] .font-display,
+  html[dir="rtl"] .font-sans { font-family: var(--font-cairo), system-ui, sans-serif; }
+
+  ::selection { @apply bg-honey/30 text-foreground; }
+
+  :focus-visible { outline-color: hsl(var(--ring)); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* نص بتدرج ذهبي */
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-gold via-honey-300 to-honey bg-clip-text text-transparent;
+  }
+
+  /* بطاقة زجاجية */
+  .glass {
+    @apply border border-white/40 bg-white/55 backdrop-blur-xl backdrop-saturate-150 dark:border-white/10 dark:bg-white/[0.04];
+  }
+
+  /* نقش حبيبي خفيف لإحساس فاخر */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: .07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .scrollbar-none { scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+}

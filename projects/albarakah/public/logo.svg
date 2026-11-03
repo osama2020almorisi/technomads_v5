@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 72" role="img" aria-label="AlBarakah Naturals">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F5C518"/><stop offset="1" stop-color="#B07F0F"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(4 4)">
+    <rect width="64" height="64" rx="18" fill="#1B4332"/>
+    <path d="M32 14c10 6 12.5 22 0 36C19.5 36 22 20 32 14z" fill="url(#g)"/>
+    <path d="M32 21c-2.6 7-2.6 15 0 23" fill="none" stroke="#1B4332" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M32 14c1.5-4.5 6-7 11-6.5-1.5 4.6-5.8 7.2-11 6.5z" fill="#74B08E"/>
+  </g>
+  <text x="84" y="40" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="600" fill="#1B4332">AlBarakah</text>
+  <text x="86" y="62" font-family="Inter, Arial, sans-serif" font-size="12.5" font-weight="600" letter-spacing="6.5" fill="#B07F0F">NATURALS</text>
+</svg>
