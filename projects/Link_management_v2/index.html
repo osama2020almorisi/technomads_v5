@@ -328,9 +328,27 @@
         }
 
         .category.open .category-links {
-            max-height: 2000px;
+            max-height: 400px;
+            overflow-y: auto;
+            overflow-x: hidden;
             opacity: 1;
             padding: 0 14px 14px 14px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+
+        .category.open .category-links::-webkit-scrollbar {
+            width: 6px;
+        }
+        .category.open .category-links::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .category.open .category-links::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+        .category.open .category-links::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         /* ========== CARD STYLE ========== */
@@ -1573,7 +1591,7 @@
         }
         function selectIcon(icon) { selectedIcon = icon; renderIconPicker(); }
 
-        // ========== RENDER (معدل ليكون مطوياً افتراضياً) ==========
+        // ========== RENDER ==========
         function renderLinks() {
             const container = document.getElementById('linksContainer');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -1590,7 +1608,6 @@
             
             let html = '';
             for (const [cat, items] of Object.entries(groups)) {
-                // التصنيفات تبدأ مغلقة (لا يوجد class 'open')
                 html += `
                 <div class="category" id="cat-${cat.replace(/\s/g, '-')}">
                     <div class="category-title" onclick="toggleCategory(this)">
@@ -1692,7 +1709,6 @@
             closeAddSheet();
             showToast('✅ تم إضافة الرابط بنجاح');
             
-            // فتح التصنيف الذي تمت الإضافة إليه تلقائياً
             setTimeout(() => {
                 const catId = 'cat-' + category.replace(/\s/g, '-');
                 const catDiv = document.getElementById(catId);
